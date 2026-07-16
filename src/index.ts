@@ -4,14 +4,14 @@
 // Components
 export { Avatar, type AvatarProps } from "./components/avatar";
 export {
-  Card,
+  CardContainer,
   CardHeader,
   CardTitle,
   CardDescription,
   CardAction,
   CardContent,
   CardDivider,
-  type CardProps,
+  type CardContainerProps,
 } from "./components/card";
 export { Badge, type BadgeProps, type BadgeVariant } from "./components/badge";
 export {
@@ -20,6 +20,21 @@ export {
   type ButtonVariant,
   type ButtonSize,
 } from "./components/button";
+export {
+  IconButton,
+  type IconButtonProps,
+  type IconButtonVariant,
+  type IconButtonSize,
+} from "./components/icon-button";
+export { SearchInput, type SearchInputProps } from "./components/search-input";
+export { GlobalNav, type GlobalNavProps } from "./components/global-nav";
+export {
+  Sidebar,
+  SidebarItem,
+  SidebarSeparator,
+  type SidebarProps,
+  type SidebarItemProps,
+} from "./components/sidebar";
 export { ActionTile, type ActionTileProps } from "./components/action-tile";
 export {
   Checklist,
@@ -34,7 +49,7 @@ export { TypingIndicator, type TypingIndicatorProps } from "./components/typing-
 export { ToolCall, type ToolCallProps } from "./components/tool-call";
 export { Reasoning, type ReasoningProps } from "./components/reasoning";
 export { CodeBlock, type CodeBlockProps } from "./components/code-block";
-export { PromptInput, type PromptInputProps } from "./components/prompt-input";
+export { InputBar, type InputBarProps } from "./components/input-bar";
 
 // Hooks
 export { useAutoScroll, type UseAutoScrollOptions } from "./hooks/use-auto-scroll";

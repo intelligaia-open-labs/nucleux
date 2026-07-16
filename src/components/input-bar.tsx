@@ -2,7 +2,7 @@ import * as React from "react";
 import { ArrowUp, Square } from "lucide-react";
 import { cn } from "../lib/utils";
 
-export interface PromptInputProps
+export interface InputBarProps
   extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "onSubmit" | "value" | "onChange"> {
   /** Controlled value of the input. */
   value: string;
@@ -22,7 +22,7 @@ export interface PromptInputProps
  * Auto-resizing chat composer. Enter submits, Shift+Enter inserts a newline.
  * While `loading`, the send button becomes a stop button wired to `onStop`.
  */
-export const PromptInput = React.forwardRef<HTMLTextAreaElement, PromptInputProps>(
+export const InputBar = React.forwardRef<HTMLTextAreaElement, InputBarProps>(
   (
     {
       value,
@@ -105,4 +105,4 @@ export const PromptInput = React.forwardRef<HTMLTextAreaElement, PromptInputProp
     );
   },
 );
-PromptInput.displayName = "PromptInput";
+InputBar.displayName = "InputBar";

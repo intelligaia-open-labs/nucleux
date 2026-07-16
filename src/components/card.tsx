@@ -5,7 +5,7 @@ import { cn } from "../lib/utils";
  * Composable card surface. Compose the parts to match the design:
  *
  * ```tsx
- * <Card>
+ * <CardContainer>
  *   <CardHeader>
  *     <div>
  *       <CardTitle>Recent meeting</CardTitle>
@@ -15,12 +15,14 @@ import { cn } from "../lib/utils";
  *   </CardHeader>
  *   <CardDivider />
  *   <CardContent>…</CardContent>
- * </Card>
+ * </CardContainer>
  * ```
+ *
+ * Named `CardContainer` to mirror the canonical Figma component.
  */
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface CardContainerProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Card = React.forwardRef<HTMLDivElement, CardProps>(
+export const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
@@ -32,7 +34,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     />
   ),
 );
-Card.displayName = "Card";
+CardContainer.displayName = "CardContainer";
 
 /** Card header. Lays children out in a row with space-between by default. */
 export const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(

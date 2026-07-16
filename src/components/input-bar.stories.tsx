@@ -1,12 +1,12 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { PromptInput } from "./prompt-input";
+import { InputBar } from "./input-bar";
 
 const meta = {
-  title: "Chat/PromptInput",
-  component: PromptInput,
+  title: "Chat/InputBar",
+  component: InputBar,
   parameters: { layout: "centered" },
-} satisfies Meta<typeof PromptInput>;
+} satisfies Meta<typeof InputBar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -18,7 +18,7 @@ export const Default: Story = {
     const [log, setLog] = useState<string[]>([]);
     return (
       <div className="w-[28rem] space-y-3">
-        <PromptInput
+        <InputBar
           value={value}
           onValueChange={setValue}
           onSubmit={(v) => {
@@ -42,7 +42,7 @@ export const Loading: Story = {
     const [value, setValue] = useState("Generating a response…");
     return (
       <div className="w-[28rem]">
-        <PromptInput value={value} onValueChange={setValue} onSubmit={() => {}} loading onStop={() => {}} />
+        <InputBar value={value} onValueChange={setValue} onSubmit={() => {}} loading onStop={() => {}} />
       </div>
     );
   },

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import {
-  Card,
+  CardContainer,
   CardAction,
   CardContent,
   CardDescription,
@@ -12,17 +12,17 @@ import { Avatar } from "./avatar";
 import { Badge } from "./badge";
 
 const meta = {
-  title: "Primitives/Card",
-  component: Card,
+  title: "Primitives/CardContainer",
+  component: CardContainer,
   parameters: { layout: "centered" },
-} satisfies Meta<typeof Card>;
+} satisfies Meta<typeof CardContainer>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const RecentMeeting: Story = {
   render: () => (
-    <Card className="w-[36rem]">
+    <CardContainer className="w-[36rem]">
       <CardHeader>
         <div>
           <CardTitle>Recent meeting</CardTitle>
@@ -41,6 +41,6 @@ export const RecentMeeting: Story = {
         <Badge variant="success">Summarized</Badge>
         <span className="text-xs text-muted-foreground">2h ago</span>
       </CardContent>
-    </Card>
+    </CardContainer>
   ),
 };
