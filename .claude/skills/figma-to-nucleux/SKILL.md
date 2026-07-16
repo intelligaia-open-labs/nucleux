@@ -133,10 +133,11 @@ gives the consumer a copy-paste starting point.
 
 ## Step 6 — Verify
 
+Run the full end-to-end harness (see the **`validate-component`** skill), and add
+each new component to the `cases` array in `src/test/components.test.tsx` first:
+
 ```bash
-pnpm typecheck        # must be clean
-pnpm build            # bundle + css must succeed
-pnpm build-storybook  # every story (incl. the example) must compile
+pnpm validate   # typecheck → vitest (render + a11y + interaction) → build → build-storybook
 ```
 
 Then visually compare the rendered story against the screenshot from Step 1 and

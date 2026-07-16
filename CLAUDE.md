@@ -28,7 +28,11 @@ Agentic UI component library for React (AI chat / agent interfaces).
 ## Commands
 
 - `pnpm dev` — Storybook. `pnpm typecheck` — `tsc --noEmit`. `pnpm build` — library bundle.
-- Verify changes with `pnpm typecheck` before considering work done.
+- `pnpm test` — Vitest (render + a11y + interaction). `pnpm validate` — full chain
+  (typecheck → test → build → build-storybook).
+- Verify changes with `pnpm validate` before considering work done. New components
+  must be added to the `cases` array in `src/test/components.test.tsx` — see the
+  **`validate-component`** skill.
 
 ## Building components from Figma
 
