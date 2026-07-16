@@ -54,6 +54,10 @@ const preset: Config = {
           DEFAULT: "hsl(var(--nx-success))",
           foreground: "hsl(var(--nx-success-foreground))",
         },
+        warning: {
+          DEFAULT: "hsl(var(--nx-warning))",
+          foreground: "hsl(var(--nx-warning-foreground))",
+        },
       },
       borderRadius: {
         lg: "var(--nx-radius)",

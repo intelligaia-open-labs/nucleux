@@ -41,6 +41,10 @@
     --nx-success: 142 76% 36%;
     --nx-success-foreground: 210 40% 98%;
 
+    /* Warning  amber-500 #f59e0b */
+    --nx-warning: 38 92% 50%;
+    --nx-warning-foreground: 48 96% 9%;
+
     --nx-border: 214 32% 91%; /* slate-200  #e2e8f0 */
     --nx-input: 214 32% 91%;
     --nx-ring: 222 47% 11%;
@@ -73,6 +77,9 @@
 
     --nx-success: 142 64% 40%;
     --nx-success-foreground: 210 40% 98%;
+
+    --nx-warning: 41 96% 60%;
+    --nx-warning-foreground: 48 96% 9%;
 
     --nx-border: 217 33% 20%;
     --nx-input: 217 33% 20%;

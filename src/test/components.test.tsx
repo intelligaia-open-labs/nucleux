@@ -7,6 +7,7 @@ import { Home, Mic } from "lucide-react";
 
 import {
   ActionTile,
+  Alert,
   Avatar,
   Badge,
   Button,
@@ -19,6 +20,7 @@ import {
   CardTitle,
   Checklist,
   ChecklistItem,
+  Chip,
   CodeBlock,
   GettingStartedPill,
   GlobalNav,
@@ -27,12 +29,15 @@ import {
   Message,
   Reasoning,
   SearchInput,
+  Separator,
   Sidebar,
   SidebarItem,
   SidebarSeparator,
   StreamingText,
+  Switch,
   Thread,
   ToolCall,
+  Tooltip,
   TypingIndicator,
 } from "../index";
 
@@ -87,6 +92,19 @@ const cases: { name: string; ui: ReactElement }[] = [
     ui: <ActionTile icon={<Mic />} title="Record" description="Capture live." />,
   },
   { name: "GettingStartedPill", ui: <GettingStartedPill current={2} total={4} /> },
+  { name: "Chip", ui: <Chip dot>Design</Chip> },
+  { name: "Chip (removable)", ui: <Chip onRemove={() => {}}>React</Chip> },
+  { name: "Alert", ui: <Alert variant="info" title="Heads up">Body text</Alert> },
+  { name: "Switch", ui: <Switch defaultChecked aria-label="Toggle" /> },
+  { name: "Separator", ui: <Separator /> },
+  {
+    name: "Tooltip",
+    ui: (
+      <Tooltip content="Ask Nebula">
+        <Button>Trigger</Button>
+      </Tooltip>
+    ),
+  },
   { name: "SearchInput", ui: <SearchInput aria-label="Search" /> },
   {
     name: "GlobalNav",
@@ -191,6 +209,16 @@ describe("interaction: components behave", () => {
     textarea.focus();
     await userEvent.keyboard("{Enter}");
     expect(onSubmit).toHaveBeenCalledWith("hi");
+  });
+
+  it("Switch toggles checked state and fires onCheckedChange", async () => {
+    const onCheckedChange = vi.fn();
+    render(<Switch aria-label="Toggle" onCheckedChange={onCheckedChange} />);
+    const sw = screen.getByRole("switch");
+    expect(sw).toHaveAttribute("aria-checked", "false");
+    await userEvent.click(sw);
+    expect(onCheckedChange).toHaveBeenCalledWith(true);
+    expect(sw).toHaveAttribute("aria-checked", "true");
   });
 
   it("ToolCall toggles its details panel", async () => {

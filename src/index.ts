@@ -14,6 +14,11 @@ export {
   type CardContainerProps,
 } from "./components/card";
 export { Badge, type BadgeProps, type BadgeVariant } from "./components/badge";
+export { Chip, type ChipProps } from "./components/chip";
+export { Alert, type AlertProps, type AlertVariant } from "./components/alert";
+export { Switch, type SwitchProps, type SwitchSize } from "./components/switch";
+export { Separator, type SeparatorProps } from "./components/separator";
+export { Tooltip, type TooltipProps, type TooltipSide } from "./components/tooltip";
 export {
   Button,
   type ButtonProps,
