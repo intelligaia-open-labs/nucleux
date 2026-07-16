@@ -1,0 +1,5 @@
+# Normalize line endings to LF in the repo (checked out natively on each OS).
+* text=auto eol=lf
+
+# Binary / generated lockfile: leave untouched
+pnpm-lock.yaml -text

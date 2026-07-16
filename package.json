@@ -1,0 +1,85 @@
+{
+  "name": "nucleux",
+  "version": "0.0.1",
+  "description": "Agentic UI components for building AI chat and agent interfaces in React.",
+  "keywords": [
+    "react",
+    "ai",
+    "agent",
+    "agentic",
+    "chat",
+    "llm",
+    "components",
+    "ui",
+    "tailwind",
+    "streaming"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/nucleux.css",
+    "./preset": {
+      "types": "./dist/preset.d.ts",
+      "import": "./dist/preset.js",
+      "require": "./dist/preset.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "pnpm build:js && pnpm build:css",
+    "build:js": "tsup && node scripts/add-use-client.mjs",
+    "build:css": "tailwindcss -i ./src/styles/globals.css -o ./dist/nucleux.css --minify",
+    "build-storybook": "storybook build",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
+    "clean": "rimraf dist storybook-static"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.469.0",
+    "tailwind-merge": "^2.6.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/addon-themes": "^8.4.7",
+    "@storybook/react": "^8.4.7",
+    "@storybook/react-vite": "^8.4.7",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
+    "storybook": "^8.4.7",
+    "tailwindcss": "^3.4.17",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

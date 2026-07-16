@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Nucleux design tokens.
+ *
+ * These CSS variables define the default theme. Override them anywhere in your
+ * app (on :root, a wrapper element, or a `.dark` scope) to re-theme every
+ * Nucleux component at once. Values are HSL channels (no `hsl()` wrapper) so
+ * Tailwind can compose them with opacity modifiers.
+ */
+@layer base {
+  :root {
+    --nx-background: 0 0% 100%;
+    --nx-foreground: 240 10% 4%;
+
+    --nx-muted: 240 5% 96%;
+    --nx-muted-foreground: 240 4% 46%;
+
+    --nx-primary: 240 6% 10%;
+    --nx-primary-foreground: 0 0% 98%;
+
+    --nx-accent: 240 5% 96%;
+    --nx-accent-foreground: 240 6% 10%;
+
+    --nx-destructive: 0 72% 51%;
+    --nx-destructive-foreground: 0 0% 98%;
+
+    --nx-success: 142 71% 45%;
+    --nx-success-foreground: 0 0% 98%;
+
+    --nx-border: 240 6% 90%;
+    --nx-input: 240 6% 90%;
+    --nx-ring: 240 6% 10%;
+
+    --nx-radius: 0.75rem;
+  }
+
+  .dark {
+    --nx-background: 240 10% 4%;
+    --nx-foreground: 0 0% 98%;
+
+    --nx-muted: 240 4% 16%;
+    --nx-muted-foreground: 240 5% 65%;
+
+    --nx-primary: 0 0% 98%;
+    --nx-primary-foreground: 240 6% 10%;
+
+    --nx-accent: 240 4% 16%;
+    --nx-accent-foreground: 0 0% 98%;
+
+    --nx-destructive: 0 63% 45%;
+    --nx-destructive-foreground: 0 0% 98%;
+
+    --nx-success: 142 64% 40%;
+    --nx-success-foreground: 0 0% 98%;
+
+    --nx-border: 240 4% 20%;
+    --nx-input: 240 4% 20%;
+    --nx-ring: 240 5% 84%;
+  }
+}
