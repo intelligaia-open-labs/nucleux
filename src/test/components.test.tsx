@@ -18,6 +18,7 @@ import {
   CardDivider,
   CardHeader,
   CardTitle,
+  Checkbox,
   Checklist,
   ChecklistItem,
   Chip,
@@ -26,15 +27,27 @@ import {
   GlobalNav,
   IconButton,
   InputBar,
+  LinkButton,
+  Menu,
+  MenuItem,
+  MenuSeparator,
   Message,
   Reasoning,
+  RichCheckboxGroup,
+  RichCheckboxOption,
   SearchInput,
   Separator,
   Sidebar,
   SidebarItem,
   SidebarSeparator,
   StreamingText,
+  SuggestionChip,
+  Suggestions,
   Switch,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
   Thread,
   ToolCall,
   Tooltip,
@@ -149,6 +162,42 @@ const cases: { name: string; ui: ReactElement }[] = [
       </Thread>
     ),
   },
+  { name: "LinkButton", ui: <LinkButton href="#">Learn more</LinkButton> },
+  { name: "Checkbox", ui: <Checkbox defaultChecked aria-label="Accept" /> },
+  {
+    name: "Tabs",
+    ui: (
+      <Tabs defaultValue="a">
+        <TabsList>
+          <TabsTrigger value="a">A</TabsTrigger>
+          <TabsTrigger value="b">B</TabsTrigger>
+        </TabsList>
+        <TabsContent value="a">Panel A</TabsContent>
+        <TabsContent value="b">Panel B</TabsContent>
+      </Tabs>
+    ),
+  },
+  {
+    name: "Menu",
+    ui: (
+      <Menu>
+        <MenuItem>Try again</MenuItem>
+        <MenuSeparator />
+        <MenuItem>Delete</MenuItem>
+      </Menu>
+    ),
+  },
+  { name: "Suggestions", ui: <Suggestions items={["Highlights", "Action items"]} /> },
+  { name: "SuggestionChip", ui: <SuggestionChip>Show highlights</SuggestionChip> },
+  {
+    name: "RichCheckboxGroup",
+    ui: (
+      <RichCheckboxGroup label="Include">
+        <RichCheckboxOption label="Summary" description="AI summary" defaultChecked />
+        <RichCheckboxOption label="Transcript" description="Full text" />
+      </RichCheckboxGroup>
+    ),
+  },
 ];
 
 describe("smoke: every component renders", () => {
@@ -219,6 +268,34 @@ describe("interaction: components behave", () => {
     await userEvent.click(sw);
     expect(onCheckedChange).toHaveBeenCalledWith(true);
     expect(sw).toHaveAttribute("aria-checked", "true");
+  });
+
+  it("Checkbox toggles checked state", async () => {
+    const onCheckedChange = vi.fn();
+    render(<Checkbox aria-label="Accept" onCheckedChange={onCheckedChange} />);
+    const box = screen.getByRole("checkbox", { name: "Accept" });
+    expect(box).toHaveAttribute("aria-checked", "false");
+    await userEvent.click(box);
+    expect(onCheckedChange).toHaveBeenCalledWith(true);
+    expect(box).toHaveAttribute("aria-checked", "true");
+  });
+
+  it("Tabs switches the active panel on trigger click", async () => {
+    render(
+      <Tabs defaultValue="a">
+        <TabsList>
+          <TabsTrigger value="a">A</TabsTrigger>
+          <TabsTrigger value="b">B</TabsTrigger>
+        </TabsList>
+        <TabsContent value="a">Panel A</TabsContent>
+        <TabsContent value="b">Panel B</TabsContent>
+      </Tabs>,
+    );
+    expect(screen.getByText("Panel A")).toBeInTheDocument();
+    expect(screen.queryByText("Panel B")).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole("tab", { name: "B" }));
+    expect(screen.getByText("Panel B")).toBeInTheDocument();
+    expect(screen.queryByText("Panel A")).not.toBeInTheDocument();
   });
 
   it("ToolCall toggles its details panel", async () => {

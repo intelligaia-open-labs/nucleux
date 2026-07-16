@@ -31,6 +31,35 @@ export {
   type IconButtonVariant,
   type IconButtonSize,
 } from "./components/icon-button";
+export { LinkButton, type LinkButtonProps } from "./components/link-button";
+export { Checkbox, type CheckboxProps } from "./components/checkbox";
+export {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  type TabsProps,
+  type TabsTriggerProps,
+  type TabsContentProps,
+} from "./components/tabs";
+export {
+  Menu,
+  MenuItem,
+  MenuSeparator,
+  MenuLabel,
+  type MenuItemProps,
+} from "./components/menu";
+export {
+  Suggestions,
+  SuggestionChip,
+  type SuggestionsProps,
+} from "./components/suggestions";
+export {
+  RichCheckboxGroup,
+  RichCheckboxOption,
+  type RichCheckboxGroupProps,
+  type RichCheckboxOptionProps,
+} from "./components/rich-checkbox-group";
 export { SearchInput, type SearchInputProps } from "./components/search-input";
 export { GlobalNav, type GlobalNavProps } from "./components/global-nav";
 export {
