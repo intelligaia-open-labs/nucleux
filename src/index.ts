@@ -37,6 +37,10 @@ export {
 } from "./components/sidebar";
 export { ActionTile, type ActionTileProps } from "./components/action-tile";
 export {
+  GettingStartedPill,
+  type GettingStartedPillProps,
+} from "./components/getting-started-pill";
+export {
   Checklist,
   ChecklistItem,
   type ChecklistProps,
