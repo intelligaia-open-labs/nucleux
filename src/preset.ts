@@ -37,6 +37,15 @@ const preset: Config = {
           DEFAULT: "hsl(var(--nx-accent))",
           foreground: "hsl(var(--nx-accent-foreground))",
         },
+        info: {
+          DEFAULT: "hsl(var(--nx-info))",
+          foreground: "hsl(var(--nx-info-foreground))",
+        },
+        brand: {
+          DEFAULT: "hsl(var(--nx-brand))",
+          foreground: "hsl(var(--nx-brand-foreground))",
+          muted: "hsl(var(--nx-brand-muted))",
+        },
         destructive: {
           DEFAULT: "hsl(var(--nx-destructive))",
           foreground: "hsl(var(--nx-destructive-foreground))",

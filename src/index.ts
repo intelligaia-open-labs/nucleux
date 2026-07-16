@@ -3,6 +3,30 @@
 
 // Components
 export { Avatar, type AvatarProps } from "./components/avatar";
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardAction,
+  CardContent,
+  CardDivider,
+  type CardProps,
+} from "./components/card";
+export { Badge, type BadgeProps, type BadgeVariant } from "./components/badge";
+export {
+  Button,
+  type ButtonProps,
+  type ButtonVariant,
+  type ButtonSize,
+} from "./components/button";
+export { ActionTile, type ActionTileProps } from "./components/action-tile";
+export {
+  Checklist,
+  ChecklistItem,
+  type ChecklistProps,
+  type ChecklistItemProps,
+} from "./components/checklist";
 export { Message, type MessageProps } from "./components/message";
 export { Thread, type ThreadProps } from "./components/thread";
 export { StreamingText, type StreamingTextProps } from "./components/streaming-text";

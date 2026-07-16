@@ -5,59 +5,77 @@
 /**
  * Nucleux design tokens.
  *
- * These CSS variables define the default theme. Override them anywhere in your
- * app (on :root, a wrapper element, or a `.dark` scope) to re-theme every
- * Nucleux component at once. Values are HSL channels (no `hsl()` wrapper) so
- * Tailwind can compose them with opacity modifiers.
+ * These CSS variables define the default theme, mapped from the Figma design
+ * system (a Tailwind "slate" palette). Override them anywhere in your app (on
+ * :root, a wrapper element, or a `.dark` scope) to re-theme every Nucleux
+ * component at once. Values are HSL channels (no `hsl()` wrapper) so Tailwind
+ * can compose them with opacity modifiers, e.g. `bg-success/15`.
  */
 @layer base {
   :root {
     --nx-background: 0 0% 100%;
-    --nx-foreground: 240 10% 4%;
+    --nx-foreground: 222 47% 5%; /* slate-950  #020617 */
 
-    --nx-muted: 240 5% 96%;
-    --nx-muted-foreground: 240 4% 46%;
+    --nx-muted: 210 40% 96%; /* slate-100 */
+    --nx-muted-foreground: 215 16% 47%; /* slate-500  #64748b */
 
-    --nx-primary: 240 6% 10%;
-    --nx-primary-foreground: 0 0% 98%;
+    --nx-primary: 222 47% 11%; /* slate-900  #0f172a */
+    --nx-primary-foreground: 210 40% 98%; /* slate-50   #f8fafc */
 
-    --nx-accent: 240 5% 96%;
-    --nx-accent-foreground: 240 6% 10%;
+    --nx-accent: 210 40% 96%; /* slate-100 */
+    --nx-accent-foreground: 222 47% 11%;
+
+    /* Blue CTA (e.g. the "Connect" button)  blue-600 #2563eb */
+    --nx-info: 221 83% 53%;
+    --nx-info-foreground: 210 40% 98%;
+
+    /* Brand accent used for feature icons  violet-500 #8b5cf6 / violet-50 bg */
+    --nx-brand: 258 90% 66%;
+    --nx-brand-foreground: 0 0% 100%;
+    --nx-brand-muted: 250 100% 98%; /* violet-50  #f5f3ff */
 
     --nx-destructive: 0 72% 51%;
-    --nx-destructive-foreground: 0 0% 98%;
+    --nx-destructive-foreground: 210 40% 98%;
 
-    --nx-success: 142 71% 45%;
-    --nx-success-foreground: 0 0% 98%;
+    /* Success  green-600 #16a34a */
+    --nx-success: 142 76% 36%;
+    --nx-success-foreground: 210 40% 98%;
 
-    --nx-border: 240 6% 90%;
-    --nx-input: 240 6% 90%;
-    --nx-ring: 240 6% 10%;
+    --nx-border: 214 32% 91%; /* slate-200  #e2e8f0 */
+    --nx-input: 214 32% 91%;
+    --nx-ring: 222 47% 11%;
 
-    --nx-radius: 0.75rem;
+    --nx-radius: 0.75rem; /* rounded-xl (12px) card corners */
   }
 
   .dark {
-    --nx-background: 240 10% 4%;
-    --nx-foreground: 0 0% 98%;
+    --nx-background: 222 47% 5%;
+    --nx-foreground: 210 40% 98%;
 
-    --nx-muted: 240 4% 16%;
-    --nx-muted-foreground: 240 5% 65%;
+    --nx-muted: 217 33% 17%; /* slate-800 */
+    --nx-muted-foreground: 215 20% 65%; /* slate-400 */
 
-    --nx-primary: 0 0% 98%;
-    --nx-primary-foreground: 240 6% 10%;
+    --nx-primary: 210 40% 98%;
+    --nx-primary-foreground: 222 47% 11%;
 
-    --nx-accent: 240 4% 16%;
-    --nx-accent-foreground: 0 0% 98%;
+    --nx-accent: 217 33% 17%;
+    --nx-accent-foreground: 210 40% 98%;
+
+    --nx-info: 217 91% 60%; /* blue-500 */
+    --nx-info-foreground: 210 40% 98%;
+
+    --nx-brand: 258 90% 66%;
+    --nx-brand-foreground: 0 0% 100%;
+    --nx-brand-muted: 259 46% 16%;
 
     --nx-destructive: 0 63% 45%;
-    --nx-destructive-foreground: 0 0% 98%;
+    --nx-destructive-foreground: 210 40% 98%;
 
     --nx-success: 142 64% 40%;
-    --nx-success-foreground: 0 0% 98%;
+    --nx-success-foreground: 210 40% 98%;
 
-    --nx-border: 240 4% 20%;
-    --nx-input: 240 4% 20%;
-    --nx-ring: 240 5% 84%;
+    --nx-border: 217 33% 20%;
+    --nx-input: 217 33% 20%;
+    --nx-ring: 213 27% 84%;
   }
 }
