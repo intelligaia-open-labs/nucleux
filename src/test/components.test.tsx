@@ -7,6 +7,7 @@ import { Home, Mic } from "lucide-react";
 
 import {
   ActionTile,
+  AgentComposer,
   Alert,
   Avatar,
   Badge,
@@ -37,6 +38,11 @@ import {
   MenuItem,
   MenuSeparator,
   Message,
+  ModularConsent,
+  NavItem,
+  NavPanel,
+  NavPanelHeader,
+  NavSection,
   Radio,
   RadioGroup,
   Reasoning,
@@ -263,6 +269,35 @@ const cases: { name: string; ui: ReactElement }[] = [
       </Dialog>
     ),
   },
+  {
+    name: "ModularConsent",
+    ui: (
+      <ModularConsent
+        title="Allow workspace access?"
+        description="Choose what the assistant can access."
+        permissions={[
+          { id: "read", label: "Read files", description: "Attached files only", defaultChecked: true },
+          { id: "act", label: "Run actions", description: "Ask before connecting tools" },
+        ]}
+      />
+    ),
+  },
+  {
+    name: "AgentComposer",
+    ui: <AgentComposer value="" onValueChange={() => {}} onSubmit={() => {}} aria-label="Task" />,
+  },
+  {
+    name: "NavPanel",
+    ui: (
+      <NavPanel>
+        <NavPanelHeader meta="84 patterns">Library</NavPanelHeader>
+        <NavSection title="Onboarding" collapsible>
+          <NavItem active>Disclosure</NavItem>
+          <NavItem>Consent</NavItem>
+        </NavSection>
+      </NavPanel>
+    ),
+  },
 ];
 
 describe("smoke: every component renders", () => {
@@ -391,6 +426,30 @@ describe("interaction: components behave", () => {
     expect(screen.getByRole("dialog")).toBeInTheDocument();
     await userEvent.keyboard("{Escape}");
     expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+
+  it("ModularConsent returns granted permission ids on allow", async () => {
+    const onAllow = vi.fn();
+    render(
+      <ModularConsent
+        title="Allow access?"
+        permissions={[
+          { id: "read", label: "Read", defaultChecked: true },
+          { id: "act", label: "Act" },
+        ]}
+        onAllow={onAllow}
+      />,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Allow selected" }));
+    expect(onAllow).toHaveBeenCalledWith(["read"]);
+  });
+
+  it("AgentComposer submits on Enter", async () => {
+    const onSubmit = vi.fn();
+    render(<AgentComposer value="do it" onValueChange={() => {}} onSubmit={onSubmit} />);
+    screen.getByRole("textbox").focus();
+    await userEvent.keyboard("{Enter}");
+    expect(onSubmit).toHaveBeenCalledWith("do it");
   });
 
   it("ToolCall toggles its details panel", async () => {

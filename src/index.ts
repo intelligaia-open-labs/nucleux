@@ -99,6 +99,21 @@ export {
   type GettingStartedPillProps,
 } from "./components/getting-started-pill";
 export {
+  ModularConsent,
+  type ModularConsentProps,
+  type ConsentPermission,
+} from "./components/modular-consent";
+export { AgentComposer, type AgentComposerProps } from "./components/agent-composer";
+export {
+  NavPanel,
+  NavPanelHeader,
+  NavSection,
+  NavItem,
+  type NavPanelHeaderProps,
+  type NavSectionProps,
+  type NavItemProps,
+} from "./components/nav-panel";
+export {
   Checklist,
   ChecklistItem,
   type ChecklistProps,
