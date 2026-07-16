@@ -60,6 +60,30 @@ export {
   type RichCheckboxGroupProps,
   type RichCheckboxOptionProps,
 } from "./components/rich-checkbox-group";
+export {
+  RadioGroup,
+  Radio,
+  type RadioGroupProps,
+  type RadioProps,
+} from "./components/radio-group";
+export { Select, type SelectProps } from "./components/select";
+export {
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  type DialogProps,
+} from "./components/dialog";
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+} from "./components/table";
 export { SearchInput, type SearchInputProps } from "./components/search-input";
 export { GlobalNav, type GlobalNavProps } from "./components/global-nav";
 export {

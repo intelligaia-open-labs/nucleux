@@ -23,6 +23,11 @@ import {
   ChecklistItem,
   Chip,
   CodeBlock,
+  Dialog,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
   GettingStartedPill,
   GlobalNav,
   IconButton,
@@ -32,10 +37,13 @@ import {
   MenuItem,
   MenuSeparator,
   Message,
+  Radio,
+  RadioGroup,
   Reasoning,
   RichCheckboxGroup,
   RichCheckboxOption,
   SearchInput,
+  Select,
   Separator,
   Sidebar,
   SidebarItem,
@@ -44,6 +52,12 @@ import {
   SuggestionChip,
   Suggestions,
   Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
   Tabs,
   TabsContent,
   TabsList,
@@ -198,6 +212,57 @@ const cases: { name: string; ui: ReactElement }[] = [
       </RichCheckboxGroup>
     ),
   },
+  {
+    name: "RadioGroup",
+    ui: (
+      <RadioGroup defaultValue="a" label="Choice">
+        <Radio value="a" aria-label="A" />
+        <Radio value="b" aria-label="B" />
+      </RadioGroup>
+    ),
+  },
+  {
+    name: "Select",
+    ui: (
+      <Select aria-label="Speed" defaultValue="a">
+        <option value="a">Instant</option>
+        <option value="b">Balanced</option>
+      </Select>
+    ),
+  },
+  {
+    name: "Table",
+    ui: (
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>Sync</TableCell>
+            <TableCell>Done</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    ),
+  },
+  {
+    name: "Dialog",
+    ui: (
+      <Dialog open onOpenChange={() => {}}>
+        <DialogHeader>
+          <DialogTitle>Save this as memory?</DialogTitle>
+          <DialogDescription>This can personalize future actions.</DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <span>Footer</span>
+        </DialogFooter>
+      </Dialog>
+    ),
+  },
 ];
 
 describe("smoke: every component renders", () => {
@@ -296,6 +361,36 @@ describe("interaction: components behave", () => {
     await userEvent.click(screen.getByRole("tab", { name: "B" }));
     expect(screen.getByText("Panel B")).toBeInTheDocument();
     expect(screen.queryByText("Panel A")).not.toBeInTheDocument();
+  });
+
+  it("RadioGroup selects a single value", async () => {
+    const onValueChange = vi.fn();
+    render(
+      <RadioGroup defaultValue="a" label="Choice" onValueChange={onValueChange}>
+        <Radio value="a" aria-label="A" />
+        <Radio value="b" aria-label="B" />
+      </RadioGroup>,
+    );
+    const [a, b] = screen.getAllByRole("radio");
+    expect(a).toHaveAttribute("aria-checked", "true");
+    await userEvent.click(b!);
+    expect(onValueChange).toHaveBeenCalledWith("b");
+    expect(b).toHaveAttribute("aria-checked", "true");
+    expect(a).toHaveAttribute("aria-checked", "false");
+  });
+
+  it("Dialog closes on Escape", async () => {
+    const onOpenChange = vi.fn();
+    render(
+      <Dialog open onOpenChange={onOpenChange}>
+        <DialogHeader>
+          <DialogTitle>Title</DialogTitle>
+        </DialogHeader>
+      </Dialog>,
+    );
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    await userEvent.keyboard("{Escape}");
+    expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
   it("ToolCall toggles its details panel", async () => {
