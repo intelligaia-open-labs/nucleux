@@ -37,6 +37,32 @@ Call these Figma MCP tools for the target node, in this order:
 Only call `get_design_context` when you need the exact reference code for a
 fiddly sub-node; metadata + screenshot + variables usually suffice and cost less.
 
+## Step 1b — Resolve instances to the canonical library (source of truth)
+
+**The full Figma file is the source of truth; a screen only tells you WHICH
+components appear and HOW they're arranged.** Do not infer a component's full API
+from a single screen instance — that instance is one variant in one state.
+
+- Each `<instance name="…">` in a screen references a master component in the
+  library. The instance `name` is the component's canonical name — match it
+  exactly (`Card Container`, not your guess `Card`; `Input Bar`, not `PromptInput`).
+- To recover a component's **real variant/prop set**, call `get_design_context`
+  on a representative instance (it returns the resolved styles + component
+  properties like `variant`/`size`/`state`), and sample instances across
+  different screens to see every variant/state before finalizing the API.
+- Instance **frequency across the file** signals importance and how general the
+  component must be. In this file (AI-UX-Pattern): `Button` (×529),
+  `Card Container` (×179), `Icon Button` (×174), `Input Bar` (×115),
+  `Primitive Chip` (×101), `Badge` (×74), plus `Tabs`, `Switch`, `Alert`,
+  `Code Block`, `Tooltip`, `Separator`, `Menu`, `Select & Combobox`, nav/sidebars.
+- The whole `Components` page metadata is multi-MB — never read it whole. Save
+  the tool-result file and extract with a script: enumerate `<instance … name>`
+  frequencies and locate sections, then drill into specific node ids.
+- Gotcha: screenshots can mislead on exact token values — the dashboard "Connect"
+  button *looked* blue-600 but the canonical component is **blue-500 + slate
+  border + shadow-sm + rounded-lg + semibold**. Always confirm against the
+  component, not the pixels.
+
 ## Step 2 — Map design variables to `--nx-*` tokens
 
 Nucleux themes via CSS variables in `src/styles/globals.css` (see the
