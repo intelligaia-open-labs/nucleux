@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/tokens",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -14,7 +14,8 @@
     "./styles.css": "./dist/styles.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "tsup src/preset.ts --format esm,cjs --dts --clean && tailwindcss -i ./src/globals.css -o ./dist/styles.css --minify"
@@ -32,5 +33,17 @@
     "tailwindcss": "^3.4.17",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2"
-  }
+  },
+  "description": "Design tokens (CSS variables) + Tailwind preset for Nucleux — Nucleux agentic UI for React.",
+  "keywords": [
+    "nucleux",
+    "react",
+    "ui",
+    "components",
+    "agentic",
+    "ai",
+    "tailwind",
+    "tokens"
+  ],
+  "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme"
 }

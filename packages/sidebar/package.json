@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/sidebar",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -14,7 +14,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "tsup"
@@ -42,5 +43,16 @@
     "url": "git+https://github.com/intelligaia-open-labs/nucleux.git",
     "directory": "packages/sidebar"
   },
-  "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme"
+  "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
+  "description": "Collapsed icon navigation rail — Nucleux agentic UI for React.",
+  "keywords": [
+    "nucleux",
+    "react",
+    "ui",
+    "components",
+    "agentic",
+    "ai",
+    "tailwind",
+    "sidebar"
+  ]
 }
