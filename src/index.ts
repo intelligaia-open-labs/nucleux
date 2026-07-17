@@ -19,6 +19,38 @@ export { Alert, type AlertProps, type AlertVariant } from "./components/alert";
 export { Switch, type SwitchProps, type SwitchSize } from "./components/switch";
 export { Separator, type SeparatorProps } from "./components/separator";
 export { Tooltip, type TooltipProps, type TooltipSide } from "./components/tooltip";
+export { Progress, type ProgressProps, type ProgressSize } from "./components/progress";
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+  type AccordionProps,
+  type AccordionItemProps,
+} from "./components/accordion";
+export {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "./components/breadcrumb";
+export {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  type PopoverProps,
+  type PopoverContentProps,
+} from "./components/popover";
+export {
+  Toast,
+  ToastProvider,
+  useToast,
+  type ToastProps,
+  type ToastVariant,
+  type ToastOptions,
+  type ToastProviderProps,
+} from "./components/toast";
 export {
   Button,
   type ButtonProps,

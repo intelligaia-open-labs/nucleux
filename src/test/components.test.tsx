@@ -6,11 +6,20 @@ import { axe } from "jest-axe";
 import { Home, Mic } from "lucide-react";
 
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
   ActionTile,
   AgentComposer,
   Alert,
   Avatar,
   Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
   Button,
   CardAction,
   CardContainer,
@@ -43,6 +52,10 @@ import {
   NavPanel,
   NavPanelHeader,
   NavSection,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Progress,
   Radio,
   RadioGroup,
   Reasoning,
@@ -69,9 +82,12 @@ import {
   TabsList,
   TabsTrigger,
   Thread,
+  Toast,
+  ToastProvider,
   ToolCall,
   Tooltip,
   TypingIndicator,
+  useToast,
 } from "../index";
 
 /**
@@ -298,6 +314,42 @@ const cases: { name: string; ui: ReactElement }[] = [
       </NavPanel>
     ),
   },
+  { name: "Progress", ui: <Progress value={60} aria-label="Upload progress" /> },
+  {
+    name: "Breadcrumb",
+    ui: (
+      <Breadcrumb>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Details</BreadcrumbPage>
+        </BreadcrumbItem>
+      </Breadcrumb>
+    ),
+  },
+  {
+    name: "Accordion",
+    ui: (
+      <Accordion type="single" defaultValue="a">
+        <AccordionItem value="a">
+          <AccordionTrigger>Question</AccordionTrigger>
+          <AccordionContent>Answer</AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    ),
+  },
+  {
+    name: "Popover",
+    ui: (
+      <Popover defaultOpen>
+        <PopoverTrigger>Open</PopoverTrigger>
+        <PopoverContent>Popover body</PopoverContent>
+      </Popover>
+    ),
+  },
+  { name: "Toast", ui: <Toast title="Saved" description="Done" variant="success" onClose={() => {}} /> },
 ];
 
 describe("smoke: every component renders", () => {
@@ -450,6 +502,55 @@ describe("interaction: components behave", () => {
     screen.getByRole("textbox").focus();
     await userEvent.keyboard("{Enter}");
     expect(onSubmit).toHaveBeenCalledWith("do it");
+  });
+
+  it("Accordion expands and collapses a panel", async () => {
+    render(
+      <Accordion type="single">
+        <AccordionItem value="a">
+          <AccordionTrigger>Question</AccordionTrigger>
+          <AccordionContent>Answer</AccordionContent>
+        </AccordionItem>
+      </Accordion>,
+    );
+    const trigger = screen.getByRole("button", { name: "Question" });
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    await userEvent.click(trigger);
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByText("Answer")).toBeInTheDocument();
+  });
+
+  it("Popover opens on trigger and closes on Escape", async () => {
+    render(
+      <Popover>
+        <PopoverTrigger>Open</PopoverTrigger>
+        <PopoverContent>Body</PopoverContent>
+      </Popover>,
+    );
+    expect(screen.queryByText("Body")).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Open" }));
+    expect(screen.getByText("Body")).toBeInTheDocument();
+    await userEvent.keyboard("{Escape}");
+    expect(screen.queryByText("Body")).not.toBeInTheDocument();
+  });
+
+  it("useToast queues a toast that can be dismissed", async () => {
+    function Harness() {
+      const { toast } = useToast();
+      return (
+        <button onClick={() => toast({ title: "Hello", duration: 0 })}>trigger</button>
+      );
+    }
+    render(
+      <ToastProvider>
+        <Harness />
+      </ToastProvider>,
+    );
+    expect(screen.queryByText("Hello")).not.toBeInTheDocument();
+    await userEvent.click(screen.getByText("trigger"));
+    expect(screen.getByText("Hello")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Dismiss" }));
+    expect(screen.queryByText("Hello")).not.toBeInTheDocument();
   });
 
   it("ToolCall toggles its details panel", async () => {
