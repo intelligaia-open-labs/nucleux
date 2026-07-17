@@ -1,12 +1,12 @@
 import type { Config } from "tailwindcss";
-import preset from "./src/preset";
+import preset from "./packages/tokens/src/preset";
 
 /**
- * Internal Tailwind config used to build the library's shipped stylesheet
- * (`dist/nucleux.css`) and to power Storybook. Consumers of the published
- * package use `nucleux/preset` instead — see src/preset.ts.
+ * Root Tailwind config — powers Storybook by scanning every package's source
+ * and applying the shipped `@nucleux/tokens` preset. Consumers of the published
+ * packages use `@nucleux/tokens/preset` instead.
  */
 export default {
   presets: [preset],
-  content: ["./src/**/*.{ts,tsx}", "./.storybook/**/*.{ts,tsx}"],
+  content: ["./packages/*/src/**/*.{ts,tsx}", "./.storybook/**/*.{ts,tsx}"],
 } satisfies Config;

@@ -12,8 +12,15 @@ description: >-
 # Figma → Nucleux component harness
 
 A repeatable pipeline for converting a Figma screen into **refactored, shippable**
-components for the `nucleux` npm package — not a monolithic screen dump. The
+components for the `@nucleux` monorepo — not a monolithic screen dump. The
 guiding principle: **extract reusable primitives, compose the screen from them.**
+
+> **Monorepo note:** each component is its own package at
+> `packages/<name>/src/index.tsx` with a co-located `*.stories.tsx`, re-exported
+> by the `@nucleux/react` umbrella (`packages/react/src/index.ts`). Screen
+> compositions live in `packages/react/src/examples/`. See `CLAUDE.md` →
+> "Adding a new component" for the exact per-package steps. Where this doc says
+> `src/components/` / `src/index.ts`, read the monorepo equivalents.
 
 ## Prerequisites
 

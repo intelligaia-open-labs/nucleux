@@ -1,0 +1,36 @@
+{
+  "name": "@nucleux/tokens",
+  "version": "0.1.0",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    "./preset": {
+      "types": "./dist/preset.d.ts",
+      "import": "./dist/preset.js",
+      "require": "./dist/preset.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/preset.ts --format esm,cjs --dts --clean && tailwindcss -i ./src/globals.css -o ./dist/styles.css --minify"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelligaia-open-labs/nucleux.git",
+    "directory": "packages/tokens"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}

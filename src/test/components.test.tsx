@@ -88,7 +88,7 @@ import {
   Tooltip,
   TypingIndicator,
   useToast,
-} from "../index";
+} from "@nucleux/react";
 
 /**
  * Every exported component with a valid, minimal render. Drives the smoke +
