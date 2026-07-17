@@ -16,6 +16,11 @@ Proves a component is production-ready across every layer, in one command:
 pnpm validate    # typecheck → test → build → build-storybook
 ```
 
+> **Monorepo note:** run all commands from the repo root. `pnpm build` builds
+> every `@nucleux` package topologically; `pnpm test` resolves `@nucleux/*` to
+> source. The `cases` array still lives in `src/test/components.test.tsx` and
+> imports from `@nucleux/react`.
+
 Each stage gates the next, so the first failure stops the chain.
 
 ## What each stage checks

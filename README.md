@@ -1,83 +1,97 @@
 # Nucleux
 
-**Agentic UI components for React.** Nucleux is a headless-friendly, Tailwind-powered
-component library for building AI chat and agent interfaces — streaming messages,
-tool-call cards, reasoning panels, auto-scrolling transcripts, and a smart prompt
-composer.
+**Agentic UI components for React** — a monorepo of composable, accessible,
+Tailwind-powered components for building AI chat and agent interfaces. Install
+the whole kit or a single component.
 
-> Status: early scaffold (`v0.0.1`). API may change.
+> Status: pre-release (`0.1.0`). Published under the `@nucleux` scope.
 
-## Features
+## Install
 
-- 🧩 **Agent-native primitives** — `Message`, `Thread`, `ToolCall`, `Reasoning`,
-  `StreamingText`, `TypingIndicator`, `PromptInput`, `CodeBlock`, `Avatar`.
-- 🎨 **Themeable via CSS variables** — light/dark out of the box, restyle everything
-  by overriding a handful of tokens.
-- 📦 **Ships ESM + CJS + types** — tree-shakeable, `"use client"` safe for Next.js
-  App Router.
-- ⚡ **Dependency-light** — `clsx`, `tailwind-merge`, and `lucide-react` only.
-
-## Installation
+**Everything** (one package, tree-shakeable):
 
 ```bash
-pnpm add nucleux
-# peer deps
-pnpm add react react-dom
+pnpm add @nucleux/react @nucleux/tokens
 ```
+
+**A single component** (minimal footprint):
+
+```bash
+pnpm add @nucleux/button @nucleux/tokens
+```
+
+`react` / `react-dom` are peer dependencies. `@nucleux/tokens` ships the theme
+CSS and the Tailwind preset (see Setup).
 
 ## Setup
 
-1. Import the stylesheet once, near your app root:
+1. Import the token stylesheet once, near your app root:
 
    ```ts
-   import "nucleux/styles.css";
+   import "@nucleux/tokens/styles.css";
    ```
 
-2. **(Optional)** If you use Tailwind in your app and want to compose Nucleux
-   tokens/utilities, add the preset to your `tailwind.config.ts`:
+2. Add the preset to your `tailwind.config.ts` and include the packages in
+   `content` so their utility classes are generated:
 
    ```ts
-   import nucleux from "nucleux/preset";
+   import nucleux from "@nucleux/tokens/preset";
 
    export default {
      presets: [nucleux],
-     content: ["./src/**/*.{ts,tsx}", "./node_modules/nucleux/dist/**/*.js"],
+     content: ["./src/**/*.{ts,tsx}", "./node_modules/@nucleux/**/dist/**/*.js"],
    };
    ```
 
 ## Usage
 
 ```tsx
+// Full package
+import { Button, Dialog, DialogHeader, DialogTitle } from "@nucleux/react";
+
+// …or just what you need
+import { Button } from "@nucleux/button";
+```
+
+```tsx
 import { useState } from "react";
-import { Thread, Message, PromptInput, ToolCall } from "nucleux";
-import "nucleux/styles.css";
+import { Thread, Message, AgentComposer } from "@nucleux/react";
+import "@nucleux/tokens/styles.css";
 
 export function Chat() {
-  const [messages, setMessages] = useState([
-    { id: "1", role: "assistant", content: "Hey! What can I build for you?" },
-  ]);
   const [input, setInput] = useState("");
-
   return (
     <div className="flex h-[32rem] flex-col">
-      <Thread autoScrollKey={messages.length}>
-        {messages.map((m) => (
-          <Message key={m.id} role={m.role} content={m.content} streaming={m.streaming} />
-        ))}
+      <Thread>
+        <Message role="assistant" content="Hey! What can I build for you?" />
       </Thread>
       <div className="p-4">
-        <PromptInput
-          value={input}
-          onValueChange={setInput}
-          onSubmit={(text) =>
-            setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: "user", content: text }])
-          }
-        />
+        <AgentComposer value={input} onValueChange={setInput} onSubmit={() => setInput("")} />
       </div>
     </div>
   );
 }
 ```
+
+## Packages
+
+- **`@nucleux/react`** — umbrella; re-exports every component + hooks + `cn`.
+- **`@nucleux/<component>`** — one package per component (`@nucleux/button`,
+  `@nucleux/dialog`, `@nucleux/tabs`, …).
+- **`@nucleux/tokens`** — theme CSS variables (`--nx-*`) + Tailwind preset.
+- **`@nucleux/utils`** — `cn()` + shared types.
+- **`@nucleux/hooks`** — `useAutoScroll`, `useCopyToClipboard`.
+
+### Components
+
+Primitives (Button, IconButton, LinkButton, Badge, Chip, Checkbox,
+Radio/RadioGroup, Switch, Select, Separator, Avatar, CardContainer, Alert,
+Tooltip, SearchInput, Progress, Accordion) · Navigation (GlobalNav, Sidebar,
+NavPanel, Tabs, Menu, Breadcrumb) · Overlays (Dialog, Popover, Toast) · Data
+(Table) · Forms (RichCheckboxGroup, ModularConsent) · Agent/Chat (Message,
+Thread, InputBar, AgentComposer, StreamingText, TypingIndicator, ToolCall,
+Reasoning, CodeBlock, Suggestions) · Patterns (ActionTile, Checklist,
+GettingStartedPill).
 
 ## Theming
 
@@ -86,32 +100,30 @@ Every component reads its colors from CSS variables (`--nx-*`). Override them on
 
 ```css
 :root {
-  --nx-primary: 262 83% 58%; /* HSL channels, no hsl() wrapper */
+  --nx-info: 262 83% 58%; /* HSL channels, no hsl() wrapper */
   --nx-radius: 1rem;
 }
 ```
 
-## Development
+## Development (monorepo)
+
+pnpm workspace. Dev/test/typecheck resolve `@nucleux/*` to source (no build
+needed); `pnpm build` emits each package's `dist/`.
 
 ```bash
 pnpm install
-pnpm dev            # Storybook at http://localhost:6006
-pnpm typecheck      # tsc --noEmit
-pnpm build          # bundle to dist/ (JS + types + css)
-pnpm build-storybook
+pnpm dev             # Storybook at http://localhost:6006
+pnpm typecheck       # tsc across all packages
+pnpm test            # Vitest (render + a11y + interaction)
+pnpm build           # build every package (topological)
+pnpm validate        # typecheck → test → build → build-storybook
 ```
 
-### Project layout
-
 ```
-src/
-  components/   # one file per component (+ co-located *.stories.tsx)
-  hooks/        # reusable behavior (auto-scroll, clipboard)
-  lib/          # cn() util and shared types
-  styles/       # globals.css — design tokens
-  preset.ts     # shippable Tailwind preset
-  index.ts      # public barrel export
-.storybook/     # Storybook config
+packages/
+  <component>/   # one package per component (@nucleux/<name>)
+  utils/  hooks/  tokens/   # shared internals
+  react/                    # umbrella (@nucleux/react)
 ```
 
 ## License

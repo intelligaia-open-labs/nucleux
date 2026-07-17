@@ -1,3 +1,6 @@
+packages:
+  - "packages/*"
+
 # Allow these packages to run their install/build scripts (pnpm blocks them by
 # default for security). esbuild ships a native binary via its postinstall.
 allowBuilds:
