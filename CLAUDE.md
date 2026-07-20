@@ -25,8 +25,10 @@ packages/
   hooks/         -> @nucleux/hooks
   tokens/        -> @nucleux/tokens   (globals.css + preset.ts)
   react/         -> @nucleux/react    (umbrella; re-exports everything; holds examples)
+  mcp/           -> @nucleux/mcp      (MCP server for AI agents; ships generated catalog.json)
 src/test/        -> the validation suite (imports @nucleux/react)
 scripts/         -> alias-map.json (drives Storybook/Vitest source aliases), build helpers
+                    gen-mcp-catalog.mjs (regenerates packages/mcp/src/catalog.json from packages/*)
 ```
 
 Dev/test/typecheck resolve `@nucleux/*` to **source** via aliases (`vitest.config.ts`,

@@ -81,6 +81,28 @@ export function Chat() {
 - **`@nucleux/tokens`** — theme CSS variables (`--nx-*`) + Tailwind preset.
 - **`@nucleux/utils`** — `cn()` + shared types.
 - **`@nucleux/hooks`** — `useAutoScroll`, `useCopyToClipboard`.
+- **`@nucleux/mcp`** — MCP server so AI coding agents can discover and correctly
+  use the library (see below).
+
+## MCP server (for AI coding agents)
+
+`@nucleux/mcp` exposes the whole library over the Model Context Protocol —
+searchable components, verbatim `Props`, install/import lines, and full example
+compositions — generated from the packages themselves, so agents get the real
+API instead of guessing.
+
+```bash
+# Claude Code
+claude mcp add nucleux -- npx -y @nucleux/mcp
+```
+
+```jsonc
+// Claude Desktop / Cursor / Windsurf mcp config
+{ "mcpServers": { "nucleux": { "command": "npx", "args": ["-y", "@nucleux/mcp"] } } }
+```
+
+Tools: `list_components`, `search_components`, `get_component`, `get_setup`,
+`list_examples`, `get_example`. See [`packages/mcp`](packages/mcp/README.md).
 
 ### Components
 

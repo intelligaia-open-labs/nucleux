@@ -1,0 +1,51 @@
+{
+  "name": "@nucleux/mcp",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Model Context Protocol server for the Nucleux agentic UI component library — lets AI coding agents discover, search, and correctly use @nucleux components.",
+  "bin": {
+    "nucleux-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "prebuild": "node ../../scripts/gen-mcp-catalog.mjs",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "@types/node": "^22.10.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelligaia-open-labs/nucleux.git",
+    "directory": "packages/mcp"
+  },
+  "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
+  "keywords": [
+    "nucleux",
+    "mcp",
+    "model-context-protocol",
+    "react",
+    "ui",
+    "components",
+    "agentic",
+    "ai",
+    "design-system"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
