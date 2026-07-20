@@ -38,6 +38,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  FollowUp,
   GettingStartedPill,
   GlobalNav,
   IconButton,
@@ -64,6 +65,11 @@ import {
   SearchInput,
   Select,
   Separator,
+  Sheet,
+  SheetBody,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
   Sidebar,
   SidebarItem,
   SidebarSeparator,
@@ -350,6 +356,29 @@ const cases: { name: string; ui: ReactElement }[] = [
     ),
   },
   { name: "Toast", ui: <Toast title="Saved" description="Done" variant="success" onClose={() => {}} /> },
+  {
+    name: "FollowUp",
+    ui: (
+      <FollowUp
+        answer="Three deals are at risk this quarter."
+        assumption={{ label: "Assumed:", value: "Q3", hint: "tap to change" }}
+      />
+    ),
+  },
+  {
+    name: "Sheet",
+    ui: (
+      <Sheet open onOpenChange={() => {}} side="right">
+        <SheetHeader>
+          <SheetTitle>Sources</SheetTitle>
+        </SheetHeader>
+        <SheetBody>Body</SheetBody>
+        <SheetFooter>
+          <span>Footer</span>
+        </SheetFooter>
+      </Sheet>
+    ),
+  },
 ];
 
 describe("smoke: every component renders", () => {
@@ -464,6 +493,20 @@ describe("interaction: components behave", () => {
     expect(onValueChange).toHaveBeenCalledWith("b");
     expect(b).toHaveAttribute("aria-checked", "true");
     expect(a).toHaveAttribute("aria-checked", "false");
+  });
+
+  it("Sheet closes on Escape", async () => {
+    const onOpenChange = vi.fn();
+    render(
+      <Sheet open onOpenChange={onOpenChange}>
+        <SheetHeader>
+          <SheetTitle>Sources</SheetTitle>
+        </SheetHeader>
+      </Sheet>,
+    );
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    await userEvent.keyboard("{Escape}");
+    expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
   it("Dialog closes on Escape", async () => {

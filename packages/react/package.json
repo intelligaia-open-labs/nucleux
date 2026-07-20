@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/react",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -39,6 +39,7 @@
     "@nucleux/chip": "workspace:*",
     "@nucleux/code-block": "workspace:*",
     "@nucleux/dialog": "workspace:*",
+    "@nucleux/follow-up": "workspace:*",
     "@nucleux/getting-started-pill": "workspace:*",
     "@nucleux/global-nav": "workspace:*",
     "@nucleux/hooks": "workspace:*",
@@ -57,6 +58,7 @@
     "@nucleux/search-input": "workspace:*",
     "@nucleux/select": "workspace:*",
     "@nucleux/separator": "workspace:*",
+    "@nucleux/sheet": "workspace:*",
     "@nucleux/sidebar": "workspace:*",
     "@nucleux/streaming-text": "workspace:*",
     "@nucleux/suggestions": "workspace:*",

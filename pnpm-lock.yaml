@@ -446,6 +446,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/follow-up:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/getting-started-pill:
     dependencies:
       '@nucleux/badge':
@@ -827,6 +852,9 @@ importers:
       '@nucleux/dialog':
         specifier: workspace:*
         version: link:../dialog
+      '@nucleux/follow-up':
+        specifier: workspace:*
+        version: link:../follow-up
       '@nucleux/getting-started-pill':
         specifier: workspace:*
         version: link:../getting-started-pill
@@ -881,6 +909,9 @@ importers:
       '@nucleux/separator':
         specifier: workspace:*
         version: link:../separator
+      '@nucleux/sheet':
+        specifier: workspace:*
+        version: link:../sheet
       '@nucleux/sidebar':
         specifier: workspace:*
         version: link:../sidebar
@@ -1052,6 +1083,31 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/sheet:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
       react:
         specifier: ^18.3.1
         version: 18.3.1

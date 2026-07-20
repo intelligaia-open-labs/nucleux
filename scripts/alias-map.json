@@ -43,5 +43,7 @@
   "@nucleux/typing-indicator": "packages/typing-indicator/src/index.tsx",
   "@nucleux/utils": "packages/utils/src/index.ts",
   "@nucleux/hooks": "packages/hooks/src/index.ts",
-  "@nucleux/react": "packages/react/src/index.ts"
+  "@nucleux/react": "packages/react/src/index.ts",
+  "@nucleux/sheet": "packages/sheet/src/index.tsx",
+  "@nucleux/follow-up": "packages/follow-up/src/index.tsx"
 }
