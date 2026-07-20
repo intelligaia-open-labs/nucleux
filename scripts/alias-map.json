@@ -48,5 +48,6 @@
   "@nucleux/follow-up": "packages/follow-up/src/index.tsx",
   "@nucleux/page-header": "packages/page-header/src/index.tsx",
   "@nucleux/related-patterns-grid": "packages/related-patterns-grid/src/index.tsx",
-  "@nucleux/right-sidebar": "packages/right-sidebar/src/index.tsx"
+  "@nucleux/right-sidebar": "packages/right-sidebar/src/index.tsx",
+  "@nucleux/media-card": "packages/media-card/src/index.tsx"
 }

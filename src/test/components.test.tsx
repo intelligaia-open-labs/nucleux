@@ -47,6 +47,7 @@ import {
   Menu,
   MenuItem,
   MenuSeparator,
+  MediaCard,
   Message,
   ModularConsent,
   NavItem,
@@ -385,6 +386,10 @@ const cases: { name: string; ui: ReactElement }[] = [
         </SheetFooter>
       </Sheet>
     ),
+  },
+  {
+    name: "MediaCard",
+    ui: <MediaCard title="Variant 1" description="A media card." image="/x.png" imageAlt="" />,
   },
   {
     name: "PageHeader",
