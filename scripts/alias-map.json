@@ -45,5 +45,8 @@
   "@nucleux/hooks": "packages/hooks/src/index.ts",
   "@nucleux/react": "packages/react/src/index.ts",
   "@nucleux/sheet": "packages/sheet/src/index.tsx",
-  "@nucleux/follow-up": "packages/follow-up/src/index.tsx"
+  "@nucleux/follow-up": "packages/follow-up/src/index.tsx",
+  "@nucleux/page-header": "packages/page-header/src/index.tsx",
+  "@nucleux/related-patterns-grid": "packages/related-patterns-grid/src/index.tsx",
+  "@nucleux/right-sidebar": "packages/right-sidebar/src/index.tsx"
 }

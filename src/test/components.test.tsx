@@ -53,6 +53,7 @@ import {
   NavPanel,
   NavPanelHeader,
   NavSection,
+  PageHeader,
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -60,8 +61,14 @@ import {
   Radio,
   RadioGroup,
   Reasoning,
+  RelatedPatternCard,
+  RelatedPatternsGrid,
   RichCheckboxGroup,
   RichCheckboxOption,
+  RightSidebar,
+  RightSidebarAnchor,
+  RightSidebarLabel,
+  RightSidebarMeta,
   SearchInput,
   Select,
   Separator,
@@ -377,6 +384,31 @@ const cases: { name: string; ui: ReactElement }[] = [
           <span>Footer</span>
         </SheetFooter>
       </Sheet>
+    ),
+  },
+  {
+    name: "PageHeader",
+    ui: <PageHeader title="Disclosure" description="A clear AI label." />,
+  },
+  {
+    name: "RelatedPatternsGrid",
+    ui: (
+      <RelatedPatternsGrid>
+        <RelatedPatternCard href="#" title="Consent" meta="Onboarding" />
+        <RelatedPatternCard href="#" title="Caveat" meta="Onboarding" />
+      </RelatedPatternsGrid>
+    ),
+  },
+  {
+    name: "RightSidebar",
+    ui: (
+      <RightSidebar>
+        <RightSidebarLabel>On this page</RightSidebarLabel>
+        <RightSidebarAnchor href="#a" active>
+          Patterns
+        </RightSidebarAnchor>
+        <RightSidebarMeta label="Stage" value="Onboarding" />
+      </RightSidebar>
     ),
   },
 ];

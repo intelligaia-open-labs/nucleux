@@ -733,6 +733,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/page-header:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/popover:
     dependencies:
       '@nucleux/utils':
@@ -885,6 +910,9 @@ importers:
       '@nucleux/nav-panel':
         specifier: workspace:*
         version: link:../nav-panel
+      '@nucleux/page-header':
+        specifier: workspace:*
+        version: link:../page-header
       '@nucleux/popover':
         specifier: workspace:*
         version: link:../popover
@@ -897,9 +925,15 @@ importers:
       '@nucleux/reasoning':
         specifier: workspace:*
         version: link:../reasoning
+      '@nucleux/related-patterns-grid':
+        specifier: workspace:*
+        version: link:../related-patterns-grid
       '@nucleux/rich-checkbox-group':
         specifier: workspace:*
         version: link:../rich-checkbox-group
+      '@nucleux/right-sidebar':
+        specifier: workspace:*
+        version: link:../right-sidebar
       '@nucleux/search-input':
         specifier: workspace:*
         version: link:../search-input
@@ -993,6 +1027,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/related-patterns-grid:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/rich-checkbox-group:
     dependencies:
       '@nucleux/utils':
@@ -1008,6 +1067,31 @@ importers:
       '@types/react':
         specifier: ^18.3.18
         version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/right-sidebar:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1

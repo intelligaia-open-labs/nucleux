@@ -42,5 +42,8 @@ export * from "@nucleux/toast";
 export * from "@nucleux/tool-call";
 export * from "@nucleux/tooltip";
 export * from "@nucleux/typing-indicator";
+export * from "@nucleux/page-header";
+export * from "@nucleux/related-patterns-grid";
+export * from "@nucleux/right-sidebar";
 export * from "@nucleux/hooks";
 export * from "@nucleux/utils";
