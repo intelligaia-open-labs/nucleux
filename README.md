@@ -91,6 +91,8 @@ searchable components, verbatim `Props`, install/import lines, and full example
 compositions — generated from the packages themselves, so agents get the real
 API instead of guessing.
 
+Nothing to install — clients run it on demand via `npx` (needs Node ≥ 18).
+
 ```bash
 # Claude Code
 claude mcp add nucleux -- npx -y @nucleux/mcp
@@ -101,8 +103,10 @@ claude mcp add nucleux -- npx -y @nucleux/mcp
 { "mcpServers": { "nucleux": { "command": "npx", "args": ["-y", "@nucleux/mcp"] } } }
 ```
 
-Tools: `list_components`, `search_components`, `get_component`, `get_setup`,
-`list_examples`, `get_example`. See [`packages/mcp`](packages/mcp/README.md).
+Then just ask your agent — *"build a chat UI with Nucleux"* — and it pulls the
+real props, setup, and examples. Tools: `list_components`, `search_components`,
+`get_component`, `get_setup`, `list_examples`, `get_example`. Full guide:
+[`packages/mcp`](packages/mcp/README.md).
 
 ### Components
 
