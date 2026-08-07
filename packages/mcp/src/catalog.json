@@ -13,8 +13,8 @@
     "note": "Every component is also re-exported from the @nucleux/react umbrella."
   },
   "counts": {
-    "components": 48,
-    "packages": 52,
+    "components": 73,
+    "packages": 77,
     "examples": 6
   },
   "packages": [
@@ -67,6 +67,88 @@
       }
     },
     {
+      "name": "action-confirmation",
+      "package": "@nucleux/action-confirmation",
+      "kind": "component",
+      "description": "A guardrail shown before an agent performs a consequential or irreversible\naction — states the action, its impact, and requires explicit confirmation.\nSource: Figma \"Recovery / Verification\".",
+      "summary": "ActionConfirmation — a guardrail before an agent takes a consequential action — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "action-confirmation"
+      ],
+      "exports": [
+        "ActionConfirmation",
+        "ActionConfirmationVariant",
+        "ActionConfirmationProps"
+      ],
+      "components": [
+        "ActionConfirmation"
+      ],
+      "import": "import { ActionConfirmation } from \"@nucleux/action-confirmation\";",
+      "installSingle": "pnpm add @nucleux/action-confirmation @nucleux/tokens",
+      "props": [
+        {
+          "name": "ActionConfirmationProps",
+          "source": "export interface ActionConfirmationProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"title\"> {\n  /** The action in question, e.g. `\"Send 18 emails?\"`. */\n  title: React.ReactNode;\n  /** What will happen / why it matters. */\n  description?: React.ReactNode;\n  /** Risk styling. `destructive` for irreversible/high-impact actions. */\n  variant?: ActionConfirmationVariant;\n  /** Badge text marking this as an agent action. Defaults to `\"AI action\"`. */\n  badge?: React.ReactNode;\n  /** Leading icon. Defaults to a warning triangle. */\n  icon?: React.ReactNode;\n  confirmLabel?: React.ReactNode;\n  cancelLabel?: React.ReactNode;\n  onConfirm?: () => void;\n  onCancel?: () => void;\n}"
+        }
+      ],
+      "readme": "# @nucleux/action-confirmation\n\nActionConfirmation — a guardrail before an agent takes a consequential action — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/action-confirmation @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ActionConfirmation } from \"@nucleux/action-confirmation\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "action-plan",
+      "package": "@nucleux/action-plan",
+      "kind": "component",
+      "description": "A single step in an {@link ActionPlan}. Numbered automatically by its order.",
+      "summary": "ActionPlan — a proposed agent plan the user can accept, edit, or reject — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "action-plan"
+      ],
+      "exports": [
+        "ActionPlanStep",
+        "ActionPlan",
+        "ActionPlanStepProps",
+        "ActionPlanProps"
+      ],
+      "components": [
+        "ActionPlanStep",
+        "ActionPlan"
+      ],
+      "import": "import { ActionPlanStep, ActionPlan } from \"@nucleux/action-plan\";",
+      "installSingle": "pnpm add @nucleux/action-plan @nucleux/tokens",
+      "props": [
+        {
+          "name": "ActionPlanStepProps",
+          "source": "export interface ActionPlanStepProps\n  extends Omit<React.LiHTMLAttributes<HTMLLIElement>, \"title\"> {\n  /** Step title. */\n  title: React.ReactNode;\n  /** Supporting detail under the title. */\n  description?: React.ReactNode;\n}"
+        },
+        {
+          "name": "ActionPlanProps",
+          "source": "export interface ActionPlanProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Heading, e.g. `\"Proposed plan\"`. */\n  heading?: React.ReactNode;\n  /** Short description of what the agent intends to do. */\n  description?: React.ReactNode;\n  /** Called when the plan is accepted. Renders the accept button when set. */\n  onAccept?: () => void;\n  /** Called when the user asks to edit the plan. Renders the edit button when set. */\n  onEdit?: () => void;\n  /** Called when the plan is rejected. Renders the reject button when set. */\n  onReject?: () => void;\n  acceptLabel?: React.ReactNode;\n  editLabel?: React.ReactNode;\n  rejectLabel?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/action-plan\n\nActionPlan — a proposed agent plan the user can accept, edit, or reject — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/action-plan @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ActionPlan } from \"@nucleux/action-plan\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "action-tile",
       "package": "@nucleux/action-tile",
       "kind": "component",
@@ -98,6 +180,50 @@
         }
       ],
       "readme": "# @nucleux/action-tile\n\nLarge selectable action tile — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/action-tile @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ActionTile } from \"@nucleux/action-tile\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "activity-log",
+      "package": "@nucleux/activity-log",
+      "kind": "component",
+      "description": "A single entry in an {@link ActivityLog}: an action the agent took, with a timestamp.",
+      "summary": "ActivityLog — a timestamped audit trail of the actions an agent took — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "activity-log"
+      ],
+      "exports": [
+        "ActivityLogItem",
+        "ActivityLog",
+        "ActivityLogItemProps",
+        "ActivityLogProps"
+      ],
+      "components": [
+        "ActivityLogItem",
+        "ActivityLog"
+      ],
+      "import": "import { ActivityLogItem, ActivityLog } from \"@nucleux/activity-log\";",
+      "installSingle": "pnpm add @nucleux/activity-log @nucleux/tokens",
+      "props": [
+        {
+          "name": "ActivityLogItemProps",
+          "source": "export interface ActivityLogItemProps extends React.LiHTMLAttributes<HTMLLIElement> {\n  /** Icon for the action type. Defaults to a generic activity glyph. */\n  icon?: React.ReactNode;\n  /** Relative or absolute timestamp, e.g. `\"2m ago\"`. */\n  time?: React.ReactNode;\n}"
+        },
+        {
+          "name": "ActivityLogProps",
+          "source": "export interface ActivityLogProps extends React.HTMLAttributes<HTMLOListElement> {\n  /** Heading above the trail. */\n  heading?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/activity-log\n\nActivityLog — a timestamped audit trail of the actions an agent took — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/activity-log @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ActivityLog } from \"@nucleux/activity-log\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -141,6 +267,97 @@
       }
     },
     {
+      "name": "agent-steps",
+      "package": "@nucleux/agent-steps",
+      "kind": "component",
+      "description": "A single step in an {@link AgentSteps} tracker.",
+      "summary": "AgentSteps — a live tracker of an agent's multi-step plan — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "agent-steps"
+      ],
+      "exports": [
+        "AgentStep",
+        "AgentSteps",
+        "AgentStepStatus",
+        "AgentStepProps",
+        "AgentStepsProps"
+      ],
+      "components": [
+        "AgentStep",
+        "AgentSteps",
+        "AgentStepStatus"
+      ],
+      "import": "import { AgentStep, AgentSteps, AgentStepStatus } from \"@nucleux/agent-steps\";",
+      "installSingle": "pnpm add @nucleux/agent-steps @nucleux/tokens",
+      "props": [
+        {
+          "name": "AgentStepProps",
+          "source": "export interface AgentStepProps\n  extends Omit<React.LiHTMLAttributes<HTMLLIElement>, \"title\"> {\n  /** Execution status of the step. */\n  status?: AgentStepStatus;\n  /** Action-type icon (e.g. read, execute, search). Overrides the status glyph. */\n  icon?: React.ReactNode;\n  /** Step label. */\n  title: React.ReactNode;\n  /** Supporting detail under the title. */\n  description?: React.ReactNode;\n  /** Optional progress track, 0–100, shown under the step while active. */\n  progress?: number;\n}"
+        },
+        {
+          "name": "AgentStepsProps",
+          "source": "export interface AgentStepsProps extends React.HTMLAttributes<HTMLOListElement> {}"
+        }
+      ],
+      "readme": "# @nucleux/agent-steps\n\nAgentSteps — a live tracker of an agent's multi-step plan — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/agent-steps @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { AgentSteps } from \"@nucleux/agent-steps\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "ai-disclosure",
+      "package": "@nucleux/ai-disclosure",
+      "kind": "component",
+      "description": "A provenance marker that content was authored or assisted by AI — an\nanti-deception trust signal, as an inline pill, corner badge, or banner.\nSource: Figma \"Trust & Disclosure / AI disclosure\".",
+      "summary": "AiDisclosure — provenance and fallibility markers for AI-generated content — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "ai-disclosure"
+      ],
+      "exports": [
+        "AiDisclosure",
+        "AiCaveat",
+        "AiDisclosureVariant",
+        "AiDisclosureProps",
+        "AiCaveatProps"
+      ],
+      "components": [
+        "AiDisclosure",
+        "AiCaveat"
+      ],
+      "import": "import { AiDisclosure, AiCaveat } from \"@nucleux/ai-disclosure\";",
+      "installSingle": "pnpm add @nucleux/ai-disclosure @nucleux/tokens",
+      "props": [
+        {
+          "name": "AiDisclosureProps",
+          "source": "export interface AiDisclosureProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Presentation: inline `pill`, corner `badge`, or full-width `banner`. */\n  variant?: AiDisclosureVariant;\n  /** Leading icon. Defaults to a sparkle. */\n  icon?: React.ReactNode;\n  /** Label / message. Ignored if `children` is provided. Has a per-variant default. */\n  label?: React.ReactNode;\n}"
+        },
+        {
+          "name": "AiCaveatProps",
+          "source": "export interface AiCaveatProps extends React.HTMLAttributes<HTMLParagraphElement> {\n  /** Leading icon. Defaults to an info glyph. Pass `null` to omit. */\n  icon?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/ai-disclosure\n\nAiDisclosure — provenance and fallibility markers for AI-generated content — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/ai-disclosure @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { AiDisclosure } from \"@nucleux/ai-disclosure\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "alert",
       "package": "@nucleux/alert",
       "kind": "component",
@@ -173,6 +390,87 @@
         }
       ],
       "readme": "# @nucleux/alert\n\nContextual message banner (info/success/warning/error) — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/alert @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Alert } from \"@nucleux/alert\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "attachment-tile",
+      "package": "@nucleux/attachment-tile",
+      "kind": "component",
+      "description": "A removable preview of a file or image attached as context to an agent turn —\ndocument chip or image thumbnail. The multimodal-context affordance.\nSource: Figma \"Context Expansion / File Attachment\".",
+      "summary": "AttachmentTile — removable file and image context tiles for the composer — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "attachment-tile"
+      ],
+      "exports": [
+        "AttachmentTile",
+        "AttachmentTray",
+        "AttachmentTileProps",
+        "AttachmentTrayProps"
+      ],
+      "components": [
+        "AttachmentTile",
+        "AttachmentTray"
+      ],
+      "import": "import { AttachmentTile, AttachmentTray } from \"@nucleux/attachment-tile\";",
+      "installSingle": "pnpm add @nucleux/attachment-tile @nucleux/tokens",
+      "props": [
+        {
+          "name": "AttachmentTileProps",
+          "source": "export interface AttachmentTileProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"title\"> {\n  /** File or attachment name. */\n  name: React.ReactNode;\n  /** Metadata line, e.g. `\"PDF · 240 KB\"`. */\n  meta?: React.ReactNode;\n  /** Image URL — renders a thumbnail tile instead of a document chip. */\n  thumbnail?: string;\n  /** Doctype icon for the document chip. Defaults to a document glyph. */\n  icon?: React.ReactNode;\n  /** Called when the remove control is used. Hidden if omitted. */\n  onRemove?: () => void;\n}"
+        },
+        {
+          "name": "AttachmentTrayProps",
+          "source": "export interface AttachmentTrayProps extends React.HTMLAttributes<HTMLDivElement> {}"
+        }
+      ],
+      "readme": "# @nucleux/attachment-tile\n\nAttachmentTile — removable file and image context tiles for the composer — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/attachment-tile @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { AttachmentTile } from \"@nucleux/attachment-tile\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "audio-message",
+      "package": "@nucleux/audio-message",
+      "kind": "component",
+      "description": "A player for AI-generated spoken output — play/pause, a waveform, duration,\nand an optional transcript.\nSource: Figma \"Output & Processing / Audio player output\".",
+      "summary": "AudioMessage — a player for AI-generated voice output — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "audio-message"
+      ],
+      "exports": [
+        "AudioMessage",
+        "AudioMessageProps"
+      ],
+      "components": [
+        "AudioMessage"
+      ],
+      "import": "import { AudioMessage } from \"@nucleux/audio-message\";",
+      "installSingle": "pnpm add @nucleux/audio-message @nucleux/tokens",
+      "props": [
+        {
+          "name": "AudioMessageProps",
+          "source": "export interface AudioMessageProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Whether audio is currently playing (controls the play/pause glyph + animation). */\n  playing?: boolean;\n  /** Duration or elapsed label, e.g. `\"0:42\"`. */\n  duration?: React.ReactNode;\n  /** Transcript excerpt shown below the player. */\n  transcript?: React.ReactNode;\n  /** Called when the play/pause control is used. */\n  onPlayToggle?: () => void;\n}"
+        }
+      ],
+      "readme": "# @nucleux/audio-message\n\nAudioMessage — a player for AI-generated voice output — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/audio-message @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { AudioMessage } from \"@nucleux/audio-message\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -327,6 +625,45 @@
         }
       ],
       "readme": "# @nucleux/button\n\nButton — variants, sizes, and icons — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/button @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Button } from \"@nucleux/button\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "capability-overview",
+      "package": "@nucleux/capability-overview",
+      "kind": "component",
+      "description": "A first-run card that sets expectations for an agent — what it can do, and\nwhere it falls short — as Examples / Capabilities / Limits columns.\nSource: Figma \"Onboarding / Generic Assistant Overview\".",
+      "summary": "CapabilityOverview — an agent's examples, capabilities, and limits — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "capability-overview"
+      ],
+      "exports": [
+        "CapabilityOverview",
+        "CapabilitySection",
+        "CapabilityOverviewProps"
+      ],
+      "components": [
+        "CapabilityOverview",
+        "CapabilitySection"
+      ],
+      "import": "import { CapabilityOverview, CapabilitySection } from \"@nucleux/capability-overview\";",
+      "installSingle": "pnpm add @nucleux/capability-overview @nucleux/tokens",
+      "props": [
+        {
+          "name": "CapabilityOverviewProps",
+          "source": "export interface CapabilityOverviewProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** The columns to show — typically Examples / Capabilities / Limits. */\n  sections: CapabilitySection[];\n  /** Heading above the columns. */\n  heading?: React.ReactNode;\n  /** Footnote, e.g. a knowledge-cutoff note. */\n  footnote?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/capability-overview\n\nCapabilityOverview — an agent's examples, capabilities, and limits — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/capability-overview @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { CapabilityOverview } from \"@nucleux/capability-overview\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -500,6 +837,57 @@
       }
     },
     {
+      "name": "citation",
+      "package": "@nucleux/citation",
+      "kind": "component",
+      "description": "An inline citation chip embedded in an AI answer — a compact numbered or\ndomain marker that attributes a claim to a source.\nSource: Figma \"Explainability / Inline source chip\".",
+      "summary": "Citation — inline source chips and a grounded sources list for AI answers — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "citation"
+      ],
+      "exports": [
+        "Citation",
+        "SourceItem",
+        "SourceList",
+        "CitationProps",
+        "SourceItemProps",
+        "SourceListProps"
+      ],
+      "components": [
+        "Citation",
+        "SourceItem",
+        "SourceList"
+      ],
+      "import": "import { Citation, SourceItem, SourceList } from \"@nucleux/citation\";",
+      "installSingle": "pnpm add @nucleux/citation @nucleux/tokens",
+      "props": [
+        {
+          "name": "CitationProps",
+          "source": "export interface CitationProps\n  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, \"title\"> {\n  /** Source index shown in the chip, e.g. `4`. Ignored if `children` is given. */\n  index?: number;\n  /** Text label instead of a number, e.g. `\"wikipedia.com\"`. */\n  label?: React.ReactNode;\n}"
+        },
+        {
+          "name": "SourceItemProps",
+          "source": "export interface SourceItemProps\n  extends Omit<React.LiHTMLAttributes<HTMLLIElement>, \"title\"> {\n  /** Optional leading index, e.g. `1`. */\n  index?: number;\n  /** Icon shown in the leading slot. Defaults to a document icon. */\n  icon?: React.ReactNode;\n  /** Source title, e.g. a filename. */\n  title: React.ReactNode;\n  /** Metadata line, e.g. `\"Source · PDF · Section 4.1\"`. */\n  meta?: React.ReactNode;\n  /** If set, the open affordance becomes a link to this href. */\n  href?: string;\n  /** Label for the open affordance. Defaults to `\"Open\"`. */\n  actionLabel?: React.ReactNode;\n  /** Called when the open affordance is activated (button mode). */\n  onOpen?: () => void;\n}"
+        },
+        {
+          "name": "SourceListProps",
+          "source": "export interface SourceListProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Heading above the list, e.g. `\"3 sources · 1 missing policy\"`. */\n  heading?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/citation\n\nCitation — inline source chips and a grounded sources list for AI answers — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/citation @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Citation } from \"@nucleux/citation\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "code-block",
       "package": "@nucleux/code-block",
       "kind": "component",
@@ -531,6 +919,82 @@
         }
       ],
       "readme": "# @nucleux/code-block\n\nCode surface with copy button — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/code-block @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { CodeBlock } from \"@nucleux/code-block\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "confidence-indicator",
+      "package": "@nucleux/confidence-indicator",
+      "kind": "component",
+      "description": "A model-confidence meter with a review threshold — surfaces how certain the\nagent is about its own answer and gates autonomous action on it.\nSource: Figma \"Explainability / Confidence Indicators\".",
+      "summary": "ConfidenceIndicator — a model-confidence meter with a human-review threshold — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "confidence-indicator"
+      ],
+      "exports": [
+        "ConfidenceIndicator",
+        "ConfidenceLevel",
+        "ConfidenceIndicatorProps"
+      ],
+      "components": [
+        "ConfidenceIndicator",
+        "ConfidenceLevel"
+      ],
+      "import": "import { ConfidenceIndicator, ConfidenceLevel } from \"@nucleux/confidence-indicator\";",
+      "installSingle": "pnpm add @nucleux/confidence-indicator @nucleux/tokens",
+      "props": [
+        {
+          "name": "ConfidenceIndicatorProps",
+          "source": "export interface ConfidenceIndicatorProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Confidence score, 0–100. */\n  value: number;\n  /** Label above the meter. Defaults to `\"Confidence\"`. */\n  label?: React.ReactNode;\n  /** Score below which the agent should defer to a human. Defaults to 70. */\n  threshold?: number;\n  /** Explanatory note shown under the meter (e.g. a review recommendation). */\n  note?: React.ReactNode;\n  /** Force a level instead of deriving it from `value`/`threshold`. */\n  level?: ConfidenceLevel;\n}"
+        }
+      ],
+      "readme": "# @nucleux/confidence-indicator\n\nConfidenceIndicator — a model-confidence meter with a human-review threshold — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/confidence-indicator @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ConfidenceIndicator } from \"@nucleux/confidence-indicator\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "connector-card",
+      "package": "@nucleux/connector-card",
+      "kind": "component",
+      "description": "A card to enable an external tool or data connector for the agent — icon,\nname, what it unlocks, and a connect action.\nSource: Figma \"Context Expansion / Connector suggestion card\".",
+      "summary": "ConnectorCard — enable an external tool or data connector — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "connector-card"
+      ],
+      "exports": [
+        "ConnectorCard",
+        "ConnectorCardProps"
+      ],
+      "components": [
+        "ConnectorCard"
+      ],
+      "import": "import { ConnectorCard } from \"@nucleux/connector-card\";",
+      "installSingle": "pnpm add @nucleux/connector-card @nucleux/tokens",
+      "props": [
+        {
+          "name": "ConnectorCardProps",
+          "source": "export interface ConnectorCardProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"title\"> {\n  /** Connector name, e.g. `\"GitHub\"`. */\n  name: React.ReactNode;\n  /** What the connector gives the agent access to. */\n  description?: React.ReactNode;\n  /** Connector logo/icon. Defaults to a plug glyph. */\n  icon?: React.ReactNode;\n  /** Whether the connector is already connected. */\n  connected?: boolean;\n  /** Called to connect. Renders the connect button when set and not connected. */\n  onConnect?: () => void;\n  /** Called to disconnect. Renders a manage/disconnect control when connected. */\n  onDisconnect?: () => void;\n  connectLabel?: React.ReactNode;\n  disconnectLabel?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/connector-card\n\nConnectorCard — enable an external tool or data connector — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/connector-card @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ConnectorCard } from \"@nucleux/connector-card\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -576,6 +1040,44 @@
         }
       ],
       "readme": "# @nucleux/dialog\n\nModal dialog with overlay — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/dialog @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from \"@nucleux/dialog\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "error-state",
+      "package": "@nucleux/error-state",
+      "kind": "component",
+      "description": "A centered empty / failure state — icon, title, description and recovery\nactions. The AI-failure variant is the \"your prompt didn't go through, your\ndraft is saved\" recovery card.\nSource: Figma \"Recovery / Error & Empty States\".",
+      "summary": "ErrorState — empty and AI-failure recovery states — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "error-state"
+      ],
+      "exports": [
+        "ErrorState",
+        "ErrorStateVariant",
+        "ErrorStateProps"
+      ],
+      "components": [
+        "ErrorState"
+      ],
+      "import": "import { ErrorState } from \"@nucleux/error-state\";",
+      "installSingle": "pnpm add @nucleux/error-state @nucleux/tokens",
+      "props": [
+        {
+          "name": "ErrorStateProps",
+          "source": "export interface ErrorStateProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"title\"> {\n  /** `empty` for neutral empty states, `error` for a failure (tints the icon). */\n  variant?: ErrorStateVariant;\n  /** Icon shown above the title. */\n  icon?: React.ReactNode;\n  /** Headline, e.g. `\"Something went wrong\"`. */\n  title: React.ReactNode;\n  /** Supporting explanation. */\n  description?: React.ReactNode;\n  /** Action buttons, e.g. Retry / Edit prompt. */\n  actions?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/error-state\n\nErrorState — empty and AI-failure recovery states — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/error-state @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ErrorState } from \"@nucleux/error-state\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -763,6 +1265,45 @@
       }
     },
     {
+      "name": "inline-feedback",
+      "package": "@nucleux/inline-feedback",
+      "kind": "component",
+      "description": "A compact toolbar beneath an AI response: copy, rate (thumbs up/down) and\nregenerate — the feedback + re-run affordances specific to generated output.\nSource: Figma \"Expressive Input / Inline Feedback Controls\".",
+      "summary": "InlineFeedback — copy, rate, and regenerate controls for an AI response — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "inline-feedback"
+      ],
+      "exports": [
+        "InlineFeedback",
+        "FeedbackRating",
+        "InlineFeedbackProps"
+      ],
+      "components": [
+        "InlineFeedback",
+        "FeedbackRating"
+      ],
+      "import": "import { InlineFeedback, FeedbackRating } from \"@nucleux/inline-feedback\";",
+      "installSingle": "pnpm add @nucleux/inline-feedback @nucleux/tokens",
+      "props": [
+        {
+          "name": "InlineFeedbackProps",
+          "source": "export interface InlineFeedbackProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\"> {\n  /** Current rating (controlled). */\n  rating?: FeedbackRating | null;\n  /** Initial rating (uncontrolled). */\n  defaultRating?: FeedbackRating | null;\n  /** Called when the user rates the response. */\n  onRate?: (rating: FeedbackRating) => void;\n  /** Called when the copy control is used. Hidden if omitted. */\n  onCopy?: () => void;\n  /** Called when the regenerate control is used. Hidden if omitted. */\n  onRegenerate?: () => void;\n  /** Called when the more-actions control is used. Hidden if omitted. */\n  onMore?: () => void;\n}"
+        }
+      ],
+      "readme": "# @nucleux/inline-feedback\n\nInlineFeedback — copy, rate, and regenerate controls for an AI response — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/inline-feedback @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { InlineFeedback } from \"@nucleux/inline-feedback\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "input-bar",
       "package": "@nucleux/input-bar",
       "kind": "component",
@@ -794,6 +1335,45 @@
         }
       ],
       "readme": "# @nucleux/input-bar\n\nChat composer with auto-resize — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/input-bar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { InputBar } from \"@nucleux/input-bar\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "knowledge-base-picker",
+      "package": "@nucleux/knowledge-base-picker",
+      "kind": "component",
+      "description": "A selectable list of context files/knowledge sources an agent may draw on —\ncurates the retrieval context for a turn.\nSource: Figma \"Context Expansion / Knowledge Bases\".",
+      "summary": "KnowledgeBasePicker — select the context files an agent may use — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "knowledge-base-picker"
+      ],
+      "exports": [
+        "KnowledgeBasePicker",
+        "KnowledgeSource",
+        "KnowledgeBasePickerProps"
+      ],
+      "components": [
+        "KnowledgeBasePicker",
+        "KnowledgeSource"
+      ],
+      "import": "import { KnowledgeBasePicker, KnowledgeSource } from \"@nucleux/knowledge-base-picker\";",
+      "installSingle": "pnpm add @nucleux/knowledge-base-picker @nucleux/tokens",
+      "props": [
+        {
+          "name": "KnowledgeBasePickerProps",
+          "source": "export interface KnowledgeBasePickerProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\"> {\n  /** The available knowledge sources. */\n  sources: KnowledgeSource[];\n  /** Selected source ids (controlled). */\n  value?: string[];\n  /** Initial selection (uncontrolled). */\n  defaultValue?: string[];\n  /** Called when the selection changes. */\n  onValueChange?: (ids: string[]) => void;\n  /** Heading above the list. Defaults to `\"Knowledge sources\"`. */\n  heading?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/knowledge-base-picker\n\nKnowledgeBasePicker — select the context files an agent may use — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/knowledge-base-picker @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { KnowledgeBasePicker } from \"@nucleux/knowledge-base-picker\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -874,6 +1454,45 @@
       }
     },
     {
+      "name": "memory-summary",
+      "package": "@nucleux/memory-summary",
+      "kind": "component",
+      "description": "The user-facing view of an agent's long-term memory — grouped facts it holds\nabout the user, with freshness, refresh, and an add/update composer.\nSource: Figma \"Memory and Continuity / Memory summary\".",
+      "summary": "MemorySummary — what the assistant remembers about the user — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "memory-summary"
+      ],
+      "exports": [
+        "MemorySummary",
+        "MemoryGroup",
+        "MemorySummaryProps"
+      ],
+      "components": [
+        "MemorySummary",
+        "MemoryGroup"
+      ],
+      "import": "import { MemorySummary, MemoryGroup } from \"@nucleux/memory-summary\";",
+      "installSingle": "pnpm add @nucleux/memory-summary @nucleux/tokens",
+      "props": [
+        {
+          "name": "MemorySummaryProps",
+          "source": "export interface MemorySummaryProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** The grouped facts the assistant remembers. */\n  groups: MemoryGroup[];\n  /** Heading. Defaults to `\"What I remember\"`. */\n  heading?: React.ReactNode;\n  /** Freshness line, e.g. `\"Updated 1 minute ago\"`. */\n  updatedAt?: React.ReactNode;\n  /** Called when the refresh control is used. Hidden if omitted. */\n  onRefresh?: () => void;\n  /** Called with the entered text to add/update a memory. Renders a composer when set. */\n  onAdd?: (text: string) => void;\n  addPlaceholder?: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/memory-summary\n\nMemorySummary — what the assistant remembers about the user — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/memory-summary @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { MemorySummary } from \"@nucleux/memory-summary\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "menu",
       "package": "@nucleux/menu",
       "kind": "component",
@@ -948,6 +1567,45 @@
         }
       ],
       "readme": "# @nucleux/message\n\nChat message row with avatar + bubble — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/message @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Message } from \"@nucleux/message\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "model-selector",
+      "package": "@nucleux/model-selector",
+      "kind": "component",
+      "description": "A composer-anchored dropdown for choosing which model handles the generation.\nSource: Figma \"Context Expansion / Model Selection\".",
+      "summary": "ModelSelector — choose which model handles the generation — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "model-selector"
+      ],
+      "exports": [
+        "ModelSelector",
+        "ModelOption",
+        "ModelSelectorProps"
+      ],
+      "components": [
+        "ModelSelector",
+        "ModelOption"
+      ],
+      "import": "import { ModelSelector, ModelOption } from \"@nucleux/model-selector\";",
+      "installSingle": "pnpm add @nucleux/model-selector @nucleux/tokens",
+      "props": [
+        {
+          "name": "ModelSelectorProps",
+          "source": "export interface ModelSelectorProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\"> {\n  /** The available models. */\n  models: ModelOption[];\n  /** Selected value (controlled). */\n  value?: string;\n  /** Initial value (uncontrolled). */\n  defaultValue?: string;\n  /** Called when a model is chosen. */\n  onValueChange?: (value: string) => void;\n  /** Accessible label for the trigger. Defaults to `\"Model\"`. */\n  label?: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/model-selector\n\nModelSelector — choose which model handles the generation — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/model-selector @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ModelSelector } from \"@nucleux/model-selector\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -1129,6 +1787,44 @@
       }
     },
     {
+      "name": "privacy-notice",
+      "package": "@nucleux/privacy-notice",
+      "kind": "component",
+      "description": "A subtle notice that a conversation is ephemeral or private — communicates\nthe agent's data-handling/memory state to the user.\nSource: Figma \"Privacy and Control / temporary & incognito notices\".",
+      "summary": "PrivacyNotice — a notice that a chat is ephemeral or private — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "privacy-notice"
+      ],
+      "exports": [
+        "PrivacyNotice",
+        "PrivacyNoticeVariant",
+        "PrivacyNoticeProps"
+      ],
+      "components": [
+        "PrivacyNotice"
+      ],
+      "import": "import { PrivacyNotice } from \"@nucleux/privacy-notice\";",
+      "installSingle": "pnpm add @nucleux/privacy-notice @nucleux/tokens",
+      "props": [
+        {
+          "name": "PrivacyNoticeProps",
+          "source": "export interface PrivacyNoticeProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Which data-handling mode this notice describes. */\n  variant?: PrivacyNoticeVariant;\n  /** Leading icon. Defaults per variant. */\n  icon?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/privacy-notice\n\nPrivacyNotice — a notice that a chat is ephemeral or private — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/privacy-notice @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { PrivacyNotice } from \"@nucleux/privacy-notice\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "progress",
       "package": "@nucleux/progress",
       "kind": "component",
@@ -1162,6 +1858,82 @@
         }
       ],
       "readme": "# @nucleux/progress\n\nDeterminate/indeterminate progress bar — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/progress @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Progress } from \"@nucleux/progress\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "prompt-enhancer",
+      "package": "@nucleux/prompt-enhancer",
+      "kind": "component",
+      "description": "A sparkle \"enhance\" pill plus one-tap rewrite intents for the user's draft —\none-click AI improvement of a prompt before it's sent.\nSource: Figma \"Prompt Scaffolds / Prompt Enhancer\".",
+      "summary": "PromptEnhancer — one-tap AI rewrite intents for a draft prompt — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "prompt-enhancer"
+      ],
+      "exports": [
+        "PromptEnhancer",
+        "PromptEnhancerProps"
+      ],
+      "components": [
+        "PromptEnhancer"
+      ],
+      "import": "import { PromptEnhancer } from \"@nucleux/prompt-enhancer\";",
+      "installSingle": "pnpm add @nucleux/prompt-enhancer @nucleux/tokens",
+      "props": [
+        {
+          "name": "PromptEnhancerProps",
+          "source": "export interface PromptEnhancerProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\"> {\n  /** One-tap rewrite-intent chips, e.g. \"Make it professional\". */\n  suggestions?: string[];\n  /** Called when the main enhance pill is activated. */\n  onEnhance?: () => void;\n  /** Called with the chosen intent when a suggestion chip is activated. */\n  onSelect?: (suggestion: string) => void;\n  /** Label on the enhance pill. Defaults to `\"Enhance prompt\"`. */\n  label?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/prompt-enhancer\n\nPromptEnhancer — one-tap AI rewrite intents for a draft prompt — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/prompt-enhancer @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { PromptEnhancer } from \"@nucleux/prompt-enhancer\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "prompt-template",
+      "package": "@nucleux/prompt-template",
+      "kind": "component",
+      "description": "A fillable prompt scaffold — a sentence with highlighted fill-in-the-blank\nslots the user tabs through, so users don't have to author a good prompt.\nSource: Figma \"Prompt Scaffolds / Madlibs\".",
+      "summary": "PromptTemplate — a fillable prompt scaffold with named slots — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "prompt-template"
+      ],
+      "exports": [
+        "PromptTemplate",
+        "PromptSegment",
+        "PromptTemplateProps"
+      ],
+      "components": [
+        "PromptTemplate",
+        "PromptSegment"
+      ],
+      "import": "import { PromptTemplate, PromptSegment } from \"@nucleux/prompt-template\";",
+      "installSingle": "pnpm add @nucleux/prompt-template @nucleux/tokens",
+      "props": [
+        {
+          "name": "PromptTemplateProps",
+          "source": "export interface PromptTemplateProps\n  extends Omit<React.FormHTMLAttributes<HTMLFormElement>, \"onSubmit\"> {\n  /** The template as an ordered mix of literal text and named slots. */\n  segments: PromptSegment[];\n  /** Slot values (controlled), keyed by slot id. */\n  values?: Record<string, string>;\n  /** Initial slot values (uncontrolled). */\n  defaultValues?: Record<string, string>;\n  /** Called when any slot changes. */\n  onValuesChange?: (values: Record<string, string>) => void;\n  /** Called with the interpolated prompt (and raw values) on submit. */\n  onComplete?: (prompt: string, values: Record<string, string>) => void;\n  /** Submit button label. Defaults to `\"Use this prompt\"`. */\n  submitLabel?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/prompt-template\n\nPromptTemplate — a fillable prompt scaffold with named slots — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/prompt-template @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { PromptTemplate } from \"@nucleux/prompt-template\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -1313,6 +2085,85 @@
         }
       ],
       "readme": "# @nucleux/related-patterns-grid\n\nRelatedPatternsGrid — grid of related pattern cards — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/related-patterns-grid @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { RelatedPatternsGrid } from \"@nucleux/related-patterns-grid\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "response-comparison",
+      "package": "@nucleux/response-comparison",
+      "kind": "component",
+      "description": "Two candidate AI outputs shown side by side with a \"prefer this response\"\nchoice — collects A/B preference feedback on model generations.\nSource: Figma \"Output & Processing / Summary Variants\".",
+      "summary": "ResponseComparison — compare two AI responses and prefer one — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "response-comparison"
+      ],
+      "exports": [
+        "ResponseComparison",
+        "ResponseOption",
+        "ResponseComparisonProps"
+      ],
+      "components": [
+        "ResponseComparison",
+        "ResponseOption"
+      ],
+      "import": "import { ResponseComparison, ResponseOption } from \"@nucleux/response-comparison\";",
+      "installSingle": "pnpm add @nucleux/response-comparison @nucleux/tokens",
+      "props": [
+        {
+          "name": "ResponseComparisonProps",
+          "source": "export interface ResponseComparisonProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\"> {\n  /** The candidate responses to compare (typically two). */\n  options: ResponseOption[];\n  /** Preferred option id (controlled). */\n  value?: string | null;\n  /** Called when the user prefers a response. */\n  onPrefer?: (id: string) => void;\n  /** Prompt above the options. Defaults to a comparison question. */\n  question?: React.ReactNode;\n  /** Label for the prefer button. Defaults to `\"Prefer this response\"`. */\n  preferLabel?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/response-comparison\n\nResponseComparison — compare two AI responses and prefer one — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/response-comparison @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ResponseComparison } from \"@nucleux/response-comparison\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "rewrite-menu",
+      "package": "@nucleux/rewrite-menu",
+      "kind": "component",
+      "description": "A menu of model-driven rewrite and transform actions on an AI response —\nretry, expand, make concise, restyle, convert to bullets.\nSource: Figma \"Refinement / Contextual transform\".",
+      "summary": "RewriteMenu — a menu of AI rewrite and transform actions — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "rewrite-menu"
+      ],
+      "exports": [
+        "defaultRewriteActions",
+        "RewriteMenu",
+        "RewriteAction",
+        "RewriteMenuProps"
+      ],
+      "components": [
+        "RewriteMenu",
+        "RewriteAction"
+      ],
+      "import": "import { RewriteMenu, RewriteAction } from \"@nucleux/rewrite-menu\";",
+      "installSingle": "pnpm add @nucleux/rewrite-menu @nucleux/tokens",
+      "props": [
+        {
+          "name": "RewriteMenuProps",
+          "source": "export interface RewriteMenuProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\"> {\n  /** Actions to list. Defaults to {@link defaultRewriteActions}. */\n  actions?: RewriteAction[];\n  /** Called with the action id when an item is chosen. */\n  onAction?: (id: string) => void;\n  /** Optional heading above the list. */\n  label?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/rewrite-menu\n\nRewriteMenu — a menu of AI rewrite and transform actions — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/rewrite-menu @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { RewriteMenu } from \"@nucleux/rewrite-menu\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -1524,6 +2375,43 @@
       }
     },
     {
+      "name": "session-recap",
+      "package": "@nucleux/session-recap",
+      "kind": "component",
+      "description": "A tinted callout that wraps up an agent run in one natural-language line —\nwhat the agent did — with an optional link to the full log.\nSource: Figma \"Explainability / Recap Card\".",
+      "summary": "SessionRecap — a natural-language recap of an agent run — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "session-recap"
+      ],
+      "exports": [
+        "SessionRecap",
+        "SessionRecapProps"
+      ],
+      "components": [
+        "SessionRecap"
+      ],
+      "import": "import { SessionRecap } from \"@nucleux/session-recap\";",
+      "installSingle": "pnpm add @nucleux/session-recap @nucleux/tokens",
+      "props": [
+        {
+          "name": "SessionRecapProps",
+          "source": "export interface SessionRecapProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Eyebrow label. Defaults to `\"Session recap\"`. */\n  label?: React.ReactNode;\n  /** Leading icon. Defaults to a sparkle. */\n  icon?: React.ReactNode;\n  /** Trailing action, e.g. a \"View full log\" button. */\n  action?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/session-recap\n\nSessionRecap — a natural-language recap of an agent run — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/session-recap @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { SessionRecap } from \"@nucleux/session-recap\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "sheet",
       "package": "@nucleux/sheet",
       "kind": "component",
@@ -1653,6 +2541,45 @@
         }
       ],
       "readme": "# @nucleux/streaming-text\n\nStreamed model output with a caret — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/streaming-text @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { StreamingText } from \"@nucleux/streaming-text\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "structured-input",
+      "package": "@nucleux/structured-input",
+      "kind": "component",
+      "description": "An agent-generated clarifying question rendered as a structured choice —\nsingle or multi-select options, a free-text escape, and a skip.\nSource: Figma \"Expressive Input / Structured Input\".",
+      "summary": "StructuredInput — an agent's structured clarifying question — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "structured-input"
+      ],
+      "exports": [
+        "StructuredInput",
+        "StructuredOption",
+        "StructuredInputProps"
+      ],
+      "components": [
+        "StructuredInput",
+        "StructuredOption"
+      ],
+      "import": "import { StructuredInput, StructuredOption } from \"@nucleux/structured-input\";",
+      "installSingle": "pnpm add @nucleux/structured-input @nucleux/tokens",
+      "props": [
+        {
+          "name": "StructuredInputProps",
+          "source": "export interface StructuredInputProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"onSubmit\"> {\n  /** The clarifying question the agent is asking. */\n  question: React.ReactNode;\n  /** The selectable answers. */\n  options: StructuredOption[];\n  /** Allow selecting more than one option. */\n  multiple?: boolean;\n  /** Selected values (controlled). */\n  value?: string[];\n  /** Initial selection (uncontrolled). */\n  defaultValue?: string[];\n  /** Called when the selection changes. */\n  onValueChange?: (values: string[]) => void;\n  /** Show a free-text \"something else\" escape. */\n  allowOther?: boolean;\n  /** Label for the other escape. Defaults to `\"Something else…\"`. */\n  otherPlaceholder?: string;\n  /** Called when the answer is submitted. */\n  onSubmit?: (values: string[], other?: string) => void;\n  /** Called when the user skips the question. Renders the skip control when set. */\n  onSkip?: () => void;\n  submitLabel?: React.ReactNode;\n  skipLabel?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/structured-input\n\nStructuredInput — an agent's structured clarifying question — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/structured-input @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { StructuredInput } from \"@nucleux/structured-input\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -1942,6 +2869,46 @@
       "peerDependencies": {}
     },
     {
+      "name": "tone-selector",
+      "package": "@nucleux/tone-selector",
+      "kind": "component",
+      "description": "A tone/voice picker that steers the style of generated output — pick a tone\nand the assistant regenerates in it.\nSource: Figma \"Expressive Input / Voice & Tone\".",
+      "summary": "ToneSelector — pick the tone or voice of generated output — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "tone-selector"
+      ],
+      "exports": [
+        "defaultTones",
+        "ToneSelector",
+        "ToneOption",
+        "ToneSelectorProps"
+      ],
+      "components": [
+        "ToneSelector",
+        "ToneOption"
+      ],
+      "import": "import { ToneSelector, ToneOption } from \"@nucleux/tone-selector\";",
+      "installSingle": "pnpm add @nucleux/tone-selector @nucleux/tokens",
+      "props": [
+        {
+          "name": "ToneSelectorProps",
+          "source": "export interface ToneSelectorProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\"> {\n  /** Tone options. Defaults to {@link defaultTones}. */\n  options?: ToneOption[];\n  /** Selected value (controlled). */\n  value?: string;\n  /** Initial value (uncontrolled). */\n  defaultValue?: string;\n  /** Called when a tone is chosen. */\n  onValueChange?: (value: string) => void;\n  /** Group label. Defaults to `\"Tone\"`. */\n  label?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/tone-selector\n\nToneSelector — pick the tone or voice of generated output — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/tone-selector @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ToneSelector } from \"@nucleux/tone-selector\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "tool-call",
       "package": "@nucleux/tool-call",
       "kind": "component",
@@ -2077,6 +3044,45 @@
       "props": [],
       "readme": "# @nucleux/utils\n\ncn() class merger + shared types for Nucleux — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/utils @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\n\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {}
+    },
+    {
+      "name": "voice-input",
+      "package": "@nucleux/voice-input",
+      "kind": "component",
+      "description": "A composer in a live-dictation state — mic trigger, animated waveform while\nrecording, and a transcribing state — for voice input to the agent.\nSource: Figma \"Expressive Input / Voice Input\".",
+      "summary": "VoiceInput — a live dictation bar with a waveform — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "voice-input"
+      ],
+      "exports": [
+        "VoiceInput",
+        "VoiceInputState",
+        "VoiceInputProps"
+      ],
+      "components": [
+        "VoiceInput",
+        "VoiceInputState"
+      ],
+      "import": "import { VoiceInput, VoiceInputState } from \"@nucleux/voice-input\";",
+      "installSingle": "pnpm add @nucleux/voice-input @nucleux/tokens",
+      "props": [
+        {
+          "name": "VoiceInputProps",
+          "source": "export interface VoiceInputProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Current state of the dictation flow. */\n  state?: VoiceInputState;\n  /** Elapsed time label while recording, e.g. `\"0:12\"`. */\n  duration?: React.ReactNode;\n  /** Transcribed text shown once available. */\n  transcript?: React.ReactNode;\n  /** Called from the idle mic button to start recording. */\n  onStart?: () => void;\n  /** Called to cancel/discard the recording. */\n  onCancel?: () => void;\n  /** Called to stop recording and confirm. */\n  onConfirm?: () => void;\n}"
+        }
+      ],
+      "readme": "# @nucleux/voice-input\n\nVoiceInput — a live dictation bar with a waveform — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/voice-input @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { VoiceInput } from \"@nucleux/voice-input\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
     }
   ],
   "examples": [

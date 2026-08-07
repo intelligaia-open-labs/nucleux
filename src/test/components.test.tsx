@@ -11,6 +11,38 @@ import {
   AccordionItem,
   AccordionTrigger,
   ActionTile,
+  ActionConfirmation,
+  ActionPlan,
+  ActionPlanStep,
+  ActivityLog,
+  ActivityLogItem,
+  AgentStep,
+  AgentSteps,
+  AiCaveat,
+  AiDisclosure,
+  AttachmentTile,
+  AttachmentTray,
+  AudioMessage,
+  CapabilityOverview,
+  Citation,
+  ConnectorCard,
+  ErrorState,
+  InlineFeedback,
+  MemorySummary,
+  PrivacyNotice,
+  KnowledgeBasePicker,
+  ModelSelector,
+  PromptTemplate,
+  StructuredInput,
+  VoiceInput,
+  PromptEnhancer,
+  ResponseComparison,
+  RewriteMenu,
+  ToneSelector,
+  ConfidenceIndicator,
+  SessionRecap,
+  SourceItem,
+  SourceList,
   AgentComposer,
   Alert,
   Avatar,
@@ -111,6 +143,186 @@ import {
  */
 const cases: { name: string; ui: ReactElement }[] = [
   { name: "Avatar", ui: <Avatar name="Eric Idle" /> },
+  { name: "Citation", ui: <Citation index={4} aria-label="Source 4" /> },
+  {
+    name: "SourceList",
+    ui: (
+      <SourceList heading="2 sources">
+        <SourceItem index={1} title="Renewal Playbook" meta="PDF · Section 4.1" href="#" />
+        <SourceItem index={2} title="MSA Template" meta="DOCX" onOpen={() => {}} />
+      </SourceList>
+    ),
+  },
+  {
+    name: "ConfidenceIndicator",
+    ui: <ConfidenceIndicator value={68} label="Overall confidence" note="Review recommended." />,
+  },
+  {
+    name: "ActivityLog",
+    ui: (
+      <ActivityLog heading="Footprints">
+        <ActivityLogItem time="2m ago">Sent email to Sam</ActivityLogItem>
+        <ActivityLogItem time="3m ago">Read 3 CRM records</ActivityLogItem>
+      </ActivityLog>
+    ),
+  },
+  {
+    name: "SessionRecap",
+    ui: <SessionRecap>Aria sent 3 emails and created 1 issue.</SessionRecap>,
+  },
+  {
+    name: "AgentSteps",
+    ui: (
+      <AgentSteps>
+        <AgentStep status="done" title="Reading skill doc" />
+        <AgentStep status="active" title="Executing command" progress={60} />
+        <AgentStep status="pending" title="Creating file" />
+      </AgentSteps>
+    ),
+  },
+  {
+    name: "ActionPlan",
+    ui: (
+      <ActionPlan heading="Proposed plan" onAccept={() => {}} onReject={() => {}}>
+        <ActionPlanStep title="Pull renewing accounts" />
+        <ActionPlanStep title="Draft emails" />
+      </ActionPlan>
+    ),
+  },
+  {
+    name: "ActionConfirmation",
+    ui: (
+      <ActionConfirmation
+        title="Send 18 emails?"
+        description="You can't undo this."
+        onConfirm={() => {}}
+        onCancel={() => {}}
+      />
+    ),
+  },
+  {
+    name: "InlineFeedback",
+    ui: <InlineFeedback onCopy={() => {}} onRegenerate={() => {}} />,
+  },
+  { name: "RewriteMenu", ui: <RewriteMenu label="Rewrite" onAction={() => {}} /> },
+  { name: "ToneSelector", ui: <ToneSelector defaultValue="professional" onValueChange={() => {}} /> },
+  {
+    name: "ResponseComparison",
+    ui: (
+      <ResponseComparison
+        onPrefer={() => {}}
+        options={[
+          { id: "a", content: "Response A text" },
+          { id: "b", content: "Response B text" },
+        ]}
+      />
+    ),
+  },
+  {
+    name: "PromptEnhancer",
+    ui: <PromptEnhancer suggestions={["Make it professional"]} onEnhance={() => {}} onSelect={() => {}} />,
+  },
+  {
+    name: "AttachmentTile",
+    ui: (
+      <AttachmentTray>
+        <AttachmentTile name="Playbook.pdf" meta="PDF · 240 KB" onRemove={() => {}} />
+      </AttachmentTray>
+    ),
+  },
+  {
+    name: "ModelSelector",
+    ui: (
+      <ModelSelector
+        defaultValue="a"
+        onValueChange={() => {}}
+        models={[
+          { value: "a", label: "Instant", description: "Fastest" },
+          { value: "b", label: "Pro", description: "Deepest" },
+        ]}
+      />
+    ),
+  },
+  { name: "VoiceInput", ui: <VoiceInput state="recording" duration="0:12" onCancel={() => {}} onConfirm={() => {}} /> },
+  {
+    name: "StructuredInput",
+    ui: (
+      <StructuredInput
+        question="Which audience is this for?"
+        options={[
+          { value: "execs", label: "Executives" },
+          { value: "eng", label: "Engineers" },
+        ]}
+        onSubmit={() => {}}
+        onSkip={() => {}}
+      />
+    ),
+  },
+  {
+    name: "ConnectorCard",
+    ui: <ConnectorCard name="GitHub" description="Read issues and code" onConnect={() => {}} />,
+  },
+  {
+    name: "KnowledgeBasePicker",
+    ui: (
+      <KnowledgeBasePicker
+        defaultValue={["a"]}
+        onValueChange={() => {}}
+        sources={[
+          { id: "a", name: "CLAUDE.md", meta: "project guide" },
+          { id: "b", name: "project.json", meta: "config" },
+        ]}
+      />
+    ),
+  },
+  {
+    name: "PromptTemplate",
+    ui: (
+      <PromptTemplate
+        onComplete={() => {}}
+        segments={["Email ", { slot: "company", placeholder: "Company" }, " about renewals."]}
+      />
+    ),
+  },
+  { name: "AiDisclosure", ui: <AiDisclosure variant="banner" /> },
+  { name: "AiCaveat", ui: <AiCaveat /> },
+  {
+    name: "CapabilityOverview",
+    ui: (
+      <CapabilityOverview
+        heading="Meet your assistant"
+        sections={[
+          { title: "Examples", items: ["Summarize a contract"] },
+          { title: "Capabilities", items: ["Reads your files"] },
+          { title: "Limits", items: ["May be wrong"] },
+        ]}
+      />
+    ),
+  },
+  {
+    name: "MemorySummary",
+    ui: (
+      <MemorySummary
+        updatedAt="Updated 1 minute ago"
+        onRefresh={() => {}}
+        onAdd={() => {}}
+        groups={[{ title: "About you", items: ["Prefers concise answers"] }]}
+      />
+    ),
+  },
+  { name: "PrivacyNotice", ui: <PrivacyNotice variant="incognito" /> },
+  {
+    name: "ErrorState",
+    ui: (
+      <ErrorState
+        variant="error"
+        title="Something went wrong"
+        description="Your prompt didn't go through."
+        actions={<button type="button">Retry</button>}
+      />
+    ),
+  },
+  { name: "AudioMessage", ui: <AudioMessage duration="0:42" onPlayToggle={() => {}} /> },
   { name: "Badge", ui: <Badge>New</Badge> },
   { name: "Button", ui: <Button>Save</Button> },
   {
