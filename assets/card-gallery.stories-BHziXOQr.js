@@ -1,0 +1,19 @@
+import{j as e}from"./jsx-runtime-DFAAy_2V.js";import{C as r,f as a,b as i,c as n,a as l,e as m,d as j}from"./index-Bw-fzWjm.js";import{c as x}from"./createLucideIcon-Br12VlPe.js";import{B as p}from"./index-CH_MAmOK.js";import{P as u}from"./play-BsFCSAZD.js";import{P as g}from"./index-BWAgJ8CN.js";import{L as h,A as f}from"./index-CwttvJ9N.js";import{A as v}from"./index-B94DuRv6.js";import{B as y}from"./index-B2s0_U20.js";import"./index-Bc2G9s8g.js";import"./utils-DOIGBiOF.js";import"./wrench-DwLdfYdB.js";/**
+ * @license lucide-react v0.469.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const C=x("TrendingUp",[["polyline",{points:"22 7 13.5 15.5 8.5 10.5 2 17",key:"126l90"}],["polyline",{points:"16 7 22 7 22 13",key:"kwv8wd"}]]);/**
+ * @license lucide-react v0.469.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const N=x("Users",[["path",{d:"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2",key:"1yyitq"}],["circle",{cx:"9",cy:"7",r:"4",key:"nufk8"}],["path",{d:"M22 21v-2a4 4 0 0 0-3-3.87",key:"kshegd"}],["path",{d:"M16 3.13a4 4 0 0 1 0 7.75",key:"1da9ce"}]]),R={title:"Examples/Card Gallery",parameters:{layout:"padded",docs:{description:{component:`A gallery of card layouts ("card variations") — all built from the same\r
+CardContainer primitive plus Badge, Avatar, Progress, and Button.`}}}};function k(){return e.jsx(r,{children:e.jsxs(a,{className:"space-y-2",children:[e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsx("span",{className:"text-sm text-muted-foreground",children:"Meetings summarized"}),e.jsx(C,{className:"size-4 text-success"})]}),e.jsx("p",{className:"text-3xl font-semibold tracking-tight text-foreground",children:"128"}),e.jsx(p,{variant:"success",children:"+12% this week"})]})})}function b(){return e.jsxs(r,{className:"overflow-hidden",children:[e.jsx("div",{className:"relative flex aspect-video items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950",children:e.jsx("span",{className:"inline-flex size-12 items-center justify-center rounded-full bg-background/95 text-foreground shadow-md",children:e.jsx(u,{className:"size-5 translate-x-0.5 fill-current"})})}),e.jsxs(a,{className:"space-y-1",children:[e.jsx(i,{children:"CPQ Q3 scope review"}),e.jsx(n,{children:"45:00 · Summarized"})]})]})}function w(){return e.jsxs(r,{children:[e.jsxs(l,{children:[e.jsxs("div",{children:[e.jsx(i,{children:"Onboarding"}),e.jsx(n,{children:"2 of 3 steps"})]}),e.jsx(p,{children:"66%"})]}),e.jsx(m,{}),e.jsxs(a,{className:"space-y-3",children:[e.jsx(g,{value:66,"aria-label":"Onboarding progress"}),e.jsx(h,{rightIcon:e.jsx(f,{}),children:"Continue setup"})]})]})}function P(){return e.jsxs(r,{children:[e.jsxs(l,{children:[e.jsxs("div",{children:[e.jsx(i,{children:"Workspace"}),e.jsx(n,{children:"4 members"})]}),e.jsx(j,{children:"Manage"})]}),e.jsx(m,{}),e.jsxs(a,{className:"flex items-center justify-between",children:[e.jsx("div",{className:"flex -space-x-2",children:["Eric Idle","Zoe Ray","Ada Lin","Sam Poe"].map(t=>e.jsx(v,{name:t,className:"size-8 ring-2 ring-background"},t))}),e.jsx(y,{variant:"secondary",size:"sm",leftIcon:e.jsx(N,{className:"size-4"}),children:"Invite"})]})]})}const s={render:()=>e.jsxs("div",{className:"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4",children:[e.jsx(k,{}),e.jsx(b,{}),e.jsx(w,{}),e.jsx(P,{})]})};var d,c,o;s.parameters={...s.parameters,docs:{...(d=s.parameters)==null?void 0:d.docs,source:{originalSource:`{
+  render: () => <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">\r
+      <StatCard />\r
+      <MediaCard />\r
+      <ProgressCard />\r
+      <TeamCard />\r
+    </div>
+}`,...(o=(c=s.parameters)==null?void 0:c.docs)==null?void 0:o.source}}};const H=["Default"];export{s as Default,H as __namedExportsOrder,R as default};

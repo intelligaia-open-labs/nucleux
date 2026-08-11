@@ -1,0 +1,24 @@
+import{j as e}from"./jsx-runtime-DFAAy_2V.js";import{r as i}from"./index-Bc2G9s8g.js";import{c as l}from"./utils-DOIGBiOF.js";import{C as j}from"./chevron-down-Bf1hKLDg.js";import"./createLucideIcon-Br12VlPe.js";const d=i.forwardRef(({className:t,...r},s)=>e.jsx("nav",{ref:s,className:l("flex h-full w-64 shrink-0 flex-col gap-4 overflow-y-auto border-r border-border bg-muted/30 py-4",t),...r}));d.displayName="NavPanel";const u=i.forwardRef(({meta:t,className:r,children:s,...n},m)=>e.jsxs("div",{ref:m,className:l("flex items-center gap-2 px-4",r),...n,children:[e.jsx("span",{className:"flex-1 text-xs font-semibold uppercase tracking-wide text-foreground",children:s}),t&&e.jsx("span",{className:"text-[10px] text-muted-foreground",children:t})]}));u.displayName="NavPanelHeader";const o=i.forwardRef(({title:t,collapsible:r=!1,defaultOpen:s=!0,className:n,children:m,...f},h)=>{const[p,g]=i.useState(s),b=!r||p;return e.jsxs("div",{ref:h,className:l("flex flex-col gap-0.5",n),...f,children:[r?e.jsxs("button",{type:"button","aria-expanded":p,onClick:()=>g(I=>!I),className:"flex h-7 items-center gap-2 px-4 text-left text-sm font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",children:[e.jsx("span",{className:"flex-1",children:t}),e.jsx(j,{className:l("size-4 text-muted-foreground transition-transform",p&&"rotate-180")})]}):e.jsx("div",{className:"flex h-7 items-center px-4 text-sm font-semibold text-foreground",children:t}),b&&e.jsx("div",{className:"flex flex-col",children:m})]})});o.displayName="NavSection";const a=i.forwardRef(({active:t=!1,className:r,...s},n)=>e.jsx("a",{ref:n,"aria-current":t?"page":void 0,className:l("mx-2 flex h-7 cursor-pointer items-center rounded px-2 text-xs transition-colors",t?"bg-accent font-medium text-foreground":"text-muted-foreground hover:bg-accent/60 hover:text-foreground",r),...s}));a.displayName="NavItem";d.__docgenInfo={description:`An expanded vertical navigation panel (docs/library sidebar) with a header,
+collapsible {@link NavSection}s, and text {@link NavItem}s.`,methods:[],displayName:"NavPanel"};u.__docgenInfo={description:"",methods:[],displayName:"NavPanelHeader",props:{meta:{required:!1,tsType:{name:"ReactReactNode",raw:"React.ReactNode"},description:"Trailing meta text, e.g. a count."}}};o.__docgenInfo={description:"",methods:[],displayName:"NavSection",props:{title:{required:!0,tsType:{name:"ReactReactNode",raw:"React.ReactNode"},description:"Section title."},collapsible:{required:!1,tsType:{name:"boolean"},description:"Whether the section is collapsible (shows a chevron toggle).",defaultValue:{value:"false",computed:!1}},defaultOpen:{required:!1,tsType:{name:"boolean"},description:"Initial open state (collapsible sections).",defaultValue:{value:"true",computed:!1}}},composes:["Omit"]};a.__docgenInfo={description:"",methods:[],displayName:"NavItem",props:{active:{required:!1,tsType:{name:"boolean"},description:"Marks the item as the current page.",defaultValue:{value:"false",computed:!1}}}};const _={title:"Navigation/NavPanel",component:d,parameters:{layout:"fullscreen"}},c={render:()=>e.jsxs("div",{className:"flex h-screen",children:[e.jsxs(d,{children:[e.jsx(u,{meta:"84 patterns",children:"Library"}),e.jsxs(o,{title:"Onboarding",collapsible:!0,children:[e.jsx(a,{children:"Trust & Disclosure"}),e.jsx(a,{active:!0,children:"Disclosure"}),e.jsx(a,{children:"Consent"}),e.jsx(a,{children:"Caveat"})]}),e.jsxs(o,{title:"Identity",children:[e.jsx(a,{children:"Avatar"}),e.jsx(a,{children:"Name"}),e.jsx(a,{children:"Personality"})]}),e.jsxs(o,{title:"During Interaction",collapsible:!0,defaultOpen:!1,children:[e.jsx(a,{children:"Streaming"}),e.jsx(a,{children:"Interruptions"})]})]}),e.jsx("div",{className:"flex-1 bg-background"})]})};var v,x,N;c.parameters={...c.parameters,docs:{...(v=c.parameters)==null?void 0:v.docs,source:{originalSource:`{
+  render: () => <div className="flex h-screen">\r
+      <NavPanel>\r
+        <NavPanelHeader meta="84 patterns">Library</NavPanelHeader>\r
+        <NavSection title="Onboarding" collapsible>\r
+          <NavItem>Trust &amp; Disclosure</NavItem>\r
+          <NavItem active>Disclosure</NavItem>\r
+          <NavItem>Consent</NavItem>\r
+          <NavItem>Caveat</NavItem>\r
+        </NavSection>\r
+        <NavSection title="Identity">\r
+          <NavItem>Avatar</NavItem>\r
+          <NavItem>Name</NavItem>\r
+          <NavItem>Personality</NavItem>\r
+        </NavSection>\r
+        <NavSection title="During Interaction" collapsible defaultOpen={false}>\r
+          <NavItem>Streaming</NavItem>\r
+          <NavItem>Interruptions</NavItem>\r
+        </NavSection>\r
+      </NavPanel>\r
+      <div className="flex-1 bg-background" />\r
+    </div>
+}`,...(N=(x=c.parameters)==null?void 0:x.docs)==null?void 0:N.source}}};const k=["Library"];export{c as Library,k as __namedExportsOrder,_ as default};
