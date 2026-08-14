@@ -25,11 +25,13 @@ const preview: Preview = {
 // for array/object data props. None of these are meaningfully JSON-editable, so
 // globally disable their controls.
 //
-// This enhancer runs AFTER `enhanceArgTypes` (which has set `type` from docgen)
-// but BEFORE `inferControls` (which derives `control` from `type`). So we must
-// key off the *type*, not the not-yet-computed `control`: set `control: false`
-// here and `inferControls` then leaves it disabled — exactly how a per-story
-// `control: false` stays disabled. Applies library-wide, no per-component setup.
+// `inferControls` defaults ANY type it can't map to a primitive/enum control
+// (unions, aliased types, ReactNode, arrays, or props with no docgen type at
+// all — e.g. `type` on a button) to an object control, so type-sniffing can't
+// catch them all. Instead we run in the SECOND enhancer pass (`secondPass`),
+// i.e. AFTER `inferControls`, and disable whatever ended up an object control.
+// The type checks below stay as a belt-and-suspenders first line. Applies
+// library-wide, no per-component setup.
 type ArgType = {
   control?: unknown;
   type?: { name?: string; raw?: string; value?: unknown };
@@ -59,17 +61,22 @@ const shouldDisable = (argType: ArgType): boolean => {
   return NODE_TYPE_RE.test(summary);
 };
 
-export const argTypesEnhancers = [
-  (context: { argTypes?: Record<string, ArgType> }) => {
-    const argTypes = context.argTypes ?? {};
-    const next: Record<string, ArgType> = {};
-    for (const [name, argType] of Object.entries(argTypes)) {
-      next[name] = shouldDisable(argType)
-        ? { ...argType, control: false }
-        : argType;
-    }
-    return next;
-  },
-];
+const disableObjectControls = (context: {
+  argTypes?: Record<string, ArgType>;
+}) => {
+  const argTypes = context.argTypes ?? {};
+  const next: Record<string, ArgType> = {};
+  for (const [name, argType] of Object.entries(argTypes)) {
+    next[name] = shouldDisable(argType)
+      ? { ...argType, control: false }
+      : argType;
+  }
+  return next;
+};
+// Run in the second pass, after Storybook's own `inferControls`, so `control`
+// is fully computed and we can disable every object control it produced.
+disableObjectControls.secondPass = true;
+
+export const argTypesEnhancers = [disableObjectControls];
 
 export default preview;
