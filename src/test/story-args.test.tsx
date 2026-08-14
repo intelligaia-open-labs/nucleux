@@ -10,7 +10,9 @@ import { composeStories } from "@storybook/react";
 // crash the story render. So no `args` value may be (or contain) a React
 // element: node-typed props must be supplied via a story `render` instead.
 
-const modules = import.meta.glob("../../packages/*/src/*.stories.tsx", {
+// Recursive glob so example/composition stories (e.g. packages/react/src/
+// examples/*.stories.tsx) are covered too, not just top-level package stories.
+const modules = import.meta.glob("../../packages/*/src/**/*.stories.tsx", {
   eager: true,
 });
 
