@@ -8,6 +8,9 @@ const meta = {
   tags: ["autodocs"],
   parameters: { layout: "centered" },
   decorators: [(Story) => <div className="w-[28rem]"><Story /></div>],
+  // `icon`/`actions` are ReactNodes — kept out of `args` (Storybook serializes
+  // args and would strip the elements) and injected via `render`; hide controls.
+  argTypes: { icon: { control: false }, actions: { control: false } },
   args: { title: "Nothing here yet" },
 } satisfies Meta<typeof ErrorState>;
 
@@ -24,20 +27,30 @@ export const PromptFailed: Story = {
     variant: "error",
     title: "Something went wrong",
     description: "Your prompt didn't go through. Your draft is saved.",
-    actions: (
-      <>
-        <button type="button" className={btn}>Edit prompt</button>
-        <button type="button" className={primary}>Retry</button>
-      </>
-    ),
   },
+  render: (args) => (
+    <ErrorState
+      {...args}
+      actions={
+        <>
+          <button type="button" className={btn}>Edit prompt</button>
+          <button type="button" className={primary}>Retry</button>
+        </>
+      }
+    />
+  ),
 };
 
 export const Empty: Story = {
   args: {
-    icon: <Inbox />,
     title: "No results found",
     description: "Try adjusting your filters.",
-    actions: <button type="button" className={btn}>Clear filters</button>,
   },
+  render: (args) => (
+    <ErrorState
+      {...args}
+      icon={<Inbox />}
+      actions={<button type="button" className={btn}>Clear filters</button>}
+    />
+  ),
 };

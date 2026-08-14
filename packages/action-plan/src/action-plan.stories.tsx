@@ -6,6 +6,9 @@ const meta = {
   component: ActionPlan,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
+  // `children` is a ReactNode (rendered steps) — kept out of `args` (Storybook
+  // serializes args and would strip elements) and injected via `render`.
+  argTypes: { children: { control: false } },
   decorators: [(Story) => <div className="w-[30rem]"><Story /></div>],
 } satisfies Meta<typeof ActionPlan>;
 
@@ -19,12 +22,12 @@ export const Default: Story = {
     onAccept: () => {},
     onEdit: () => {},
     onReject: () => {},
-    children: (
-      <>
-        <ActionPlanStep title="Pull the 12 accounts renewing in Q3" description="From the CRM 'Renewals' view" />
-        <ActionPlanStep title="Draft a personalized email per account" description="Using the renewal playbook" />
-        <ActionPlanStep title="Queue for your review" description="Nothing sends without approval" />
-      </>
-    ),
   },
+  render: (args) => (
+    <ActionPlan {...args}>
+      <ActionPlanStep title="Pull the 12 accounts renewing in Q3" description="From the CRM 'Renewals' view" />
+      <ActionPlanStep title="Draft a personalized email per account" description="Using the renewal playbook" />
+      <ActionPlanStep title="Queue for your review" description="Nothing sends without approval" />
+    </ActionPlan>
+  ),
 };

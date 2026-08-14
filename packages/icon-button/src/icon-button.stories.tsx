@@ -7,7 +7,11 @@ const meta = {
   component: IconButton,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  args: { "aria-label": "Home", variant: "ghost", size: "md", children: <Home /> },
+  // `children` is the icon ReactNode — kept out of `args` (Storybook serializes
+  // args and would strip the element) and injected via `render`; hide control.
+  argTypes: { children: { control: false } },
+  args: { "aria-label": "Home", variant: "ghost", size: "md" },
+  render: (args) => <IconButton {...args}><Home /></IconButton>,
 } satisfies Meta<typeof IconButton>;
 
 export default meta;
@@ -15,7 +19,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Ghost: Story = {};
 export const Active: Story = { args: { variant: "active" } };
-export const Solid: Story = { args: { variant: "solid", "aria-label": "New", children: <Plus /> } };
+export const Solid: Story = {
+  args: { variant: "solid", "aria-label": "New" },
+  render: (args) => <IconButton {...args}><Plus /></IconButton>,
+};
 
 export const Variants: Story = {
   render: () => (

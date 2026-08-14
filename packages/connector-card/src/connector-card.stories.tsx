@@ -7,6 +7,10 @@ const meta = {
   component: ConnectorCard,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
+  // `icon` is a ReactNode — kept out of `args` (Storybook serializes args and
+  // would strip the element) and injected via `render`; hide its control.
+  argTypes: { icon: { control: false } },
+  render: (args) => <ConnectorCard {...args} icon={<Github />} />,
   decorators: [(Story) => <div className="w-[26rem]"><Story /></div>],
 } satisfies Meta<typeof ConnectorCard>;
 
@@ -17,7 +21,6 @@ export const Disconnected: Story = {
   args: {
     name: "GitHub",
     description: "Let the agent read issues, PRs, and code",
-    icon: <Github />,
     onConnect: () => {},
   },
 };
@@ -26,7 +29,6 @@ export const Connected: Story = {
   args: {
     name: "GitHub",
     description: "Reading issues, PRs, and code",
-    icon: <Github />,
     connected: true,
     onDisconnect: () => {},
   },

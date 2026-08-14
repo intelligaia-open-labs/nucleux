@@ -6,7 +6,13 @@ const meta = {
   title: "Primitives/Tooltip",
   component: Tooltip,
   parameters: { layout: "centered" },
-  args: { content: "Ask Nebula", children: <span /> },
+  // `children` is the ReactNode trigger — kept out of `args` (Storybook
+  // serializes args and would strip the element) and supplied via each story's
+  // `render`; hide the docgen-inferred control.
+  argTypes: { children: { control: false } },
+  // `children` (the trigger) is required; `null` is a serializable placeholder —
+  // each story's `render` supplies the real trigger node.
+  args: { content: "Ask Nebula", children: null },
 } satisfies Meta<typeof Tooltip>;
 
 export default meta;

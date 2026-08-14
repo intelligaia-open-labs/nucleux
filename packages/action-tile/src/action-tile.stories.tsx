@@ -7,11 +7,18 @@ const meta = {
   component: ActionTile,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
+  // `icon` is a ReactNode — never place it in `args` (Storybook serializes args
+  // and would strip the element to `{}`, crashing the render). Inject it via
+  // `render` and hide the docgen-inferred control.
+  argTypes: { icon: { control: false } },
   args: {
-    icon: <Mic className="size-5" />,
+    // `icon` is required; `null` is a serializable placeholder — `render` injects
+    // the real icon node so this value is never actually rendered.
+    icon: null,
     title: "Record a meeting",
     description: "Capture live from your browser.",
   },
+  render: (args) => <ActionTile {...args} icon={<Mic className="size-5" />} />,
   decorators: [
     (Story) => (
       <div className="w-64">
