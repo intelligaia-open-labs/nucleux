@@ -17,66 +17,79 @@ const preview: Preview = {
   ],
 };
 
-// react-docgen types every `React.ReactNode` prop (heading, title, children,
-// icon, actions, …) as an object, so Storybook's `inferControls` gives it an
-// "object" control — a "Set object" button. Clicking it sets the arg to `{}`,
-// which the component then renders as a child → React error #31 ("Objects are
-// not valid as a React child, found: object with keys {}"). The same is true
-// for array/object data props. None of these are meaningfully JSON-editable, so
-// globally disable their controls.
+// Storybook's `inferControls` gives an "object" control (a "Set object" button)
+// to every prop it can't map to a primitive/enum — React.ReactNode (heading,
+// title, icon, children, actions, …), arrays/objects, unions (`FeedbackRating |
+// null`), aliased types (`FollowUpAssumption`), and props with no docgen type at
+// all (a button's `type`). Clicking "Set object" sets the arg to `{}`, which the
+// component renders as a child → React error #31 ("Objects are not valid as a
+// React child, found: object with keys {}").
 //
-// `inferControls` defaults ANY type it can't map to a primitive/enum control
-// (unions, aliased types, ReactNode, arrays, or props with no docgen type at
-// all — e.g. `type` on a button) to an object control, so type-sniffing can't
-// catch them all. Instead we run in the SECOND enhancer pass (`secondPass`),
-// i.e. AFTER `inferControls`, and disable whatever ended up an object control.
-// The type checks below stay as a belt-and-suspenders first line. Applies
-// library-wide, no per-component setup.
+// `inferControls` runs in a later phase we can't reliably run after, but it does
+// respect a `control` we set here first. So rather than trying to catch every
+// object control after the fact, we allow-list the provably-safe primitive types
+// and disable the control for everything else. Runs library-wide — no per-
+// component setup needed to stay crash-safe.
 type ArgType = {
   control?: unknown;
-  type?: { name?: string; raw?: string; value?: unknown };
-  table?: { type?: { summary?: string } };
+  type?: { name?: string };
 } & Record<string, unknown>;
 
-// ReactNode / ReactElement / JSX.Element etc. — docgen reports these as
-// type.name "other" with the raw type in `raw`/`table.type.summary`.
-const NODE_TYPE_RE = /React\.?Node|React\.?Element|ReactChild|ReactPortal|JSX\.Element|ElementType/i;
-
-const isObjectControl = (control: unknown): boolean =>
-  control === "object" ||
-  (typeof control === "object" &&
-    control !== null &&
-    (control as { type?: unknown }).type === "object");
+// docgen `type.name`s that map to a safe, non-object control (boolean toggle,
+// number/range, text input, enum select/radio).
+const SAFE_TYPE_NAMES = new Set(["boolean", "number", "string", "enum"]);
+// control types that are already safe (e.g. a story set `control: "text"`).
+const SAFE_CONTROL_TYPES = new Set([
+  "boolean",
+  "number",
+  "range",
+  "text",
+  "color",
+  "date",
+  "select",
+  "radio",
+  "inline-radio",
+  "multi-select",
+  "check",
+  "inline-check",
+]);
 
 const shouldDisable = (argType: ArgType): boolean => {
-  if (isObjectControl(argType?.control)) return true;
-  const typeName = argType?.type?.name;
-  if (typeName === "object" || typeName === "array") return true;
-  const summary = String(
-    argType?.table?.type?.summary ??
-      argType?.type?.raw ??
-      argType?.type?.value ??
-      "",
-  );
-  return NODE_TYPE_RE.test(summary);
-};
-
-const disableObjectControls = (context: {
-  argTypes?: Record<string, ArgType>;
-}) => {
-  const argTypes = context.argTypes ?? {};
-  const next: Record<string, ArgType> = {};
-  for (const [name, argType] of Object.entries(argTypes)) {
-    next[name] = shouldDisable(argType)
-      ? { ...argType, control: false }
-      : argType;
+  const control = argType?.control;
+  // Already disabled (e.g. a per-story `control: false`) → leave as-is.
+  if (
+    control === false ||
+    (typeof control === "object" &&
+      control !== null &&
+      (control as { disable?: unknown }).disable)
+  ) {
+    return false;
   }
-  return next;
+  // An explicitly-set safe control (string form or `{ type }` form) → keep it.
+  const controlType =
+    typeof control === "object" && control !== null
+      ? (control as { type?: unknown }).type
+      : control;
+  if (typeof controlType === "string" && SAFE_CONTROL_TYPES.has(controlType)) {
+    return false;
+  }
+  // Otherwise keep only the provably-safe primitive types; disable the rest
+  // (object, array, union, aliased/other, or untyped — all crash vectors).
+  const typeName = argType?.type?.name;
+  return !(typeof typeName === "string" && SAFE_TYPE_NAMES.has(typeName));
 };
-// Run in the second pass, after Storybook's own `inferControls`, so `control`
-// is fully computed and we can disable every object control it produced.
-disableObjectControls.secondPass = true;
 
-export const argTypesEnhancers = [disableObjectControls];
+export const argTypesEnhancers = [
+  (context: { argTypes?: Record<string, ArgType> }) => {
+    const argTypes = context.argTypes ?? {};
+    const next: Record<string, ArgType> = {};
+    for (const [name, argType] of Object.entries(argTypes)) {
+      next[name] = shouldDisable(argType)
+        ? { ...argType, control: false }
+        : argType;
+    }
+    return next;
+  },
+];
 
 export default preview;
