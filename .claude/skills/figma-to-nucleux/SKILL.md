@@ -130,6 +130,15 @@ For every primitive, all of the following (see `CLAUDE.md`):
       `focus-visible:ring` on interactive elements.
 - [ ] Exported from `src/index.ts` (component + Props type).
 - [ ] Co-located `*.stories.tsx` covering the variants/states from the design.
+      **Never put a React element in `args`** (icons, `children`, render-slot
+      props like `media`/`actions`/`badges`, or arrays that contain nodes).
+      Storybook serializes `args` for the Controls/Docs panel and strips
+      elements to `{}`, crashing the story with *"Objects are not valid as a
+      React child"*. Supply node props from a story `render` instead, and hide
+      the control: `argTypes: { icon: { control: false } }`. A required node
+      prop keeps a serializable placeholder (`[]`/`null`) in `args` to satisfy
+      `satisfies Meta`; `render` supplies the real node. `src/test/story-args.test.tsx`
+      enforces this — a node in `args` fails the suite.
 
 ## Step 5 — Compose the screen
 
@@ -156,3 +165,5 @@ fix spacing/color drift before declaring done.
 - Re-implementing something already in `get_code_connect_map`.
 - Adding a runtime dependency for something `cn()` + a variant map can do.
 - Shipping an app-specific, data-bound row as a "library component".
+- Passing a React element (icon/`children`/render slot) through story `args`
+  instead of a `render` — it crashes the Storybook Controls/Docs panel.
