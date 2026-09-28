@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/attachment-tile",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "sideEffects": false,
   "description": "AttachmentTile — removable file and image context tiles for the composer — Nucleux agentic UI for React.",

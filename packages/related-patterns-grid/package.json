@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/related-patterns-grid",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "sideEffects": false,
   "description": "RelatedPatternsGrid — grid of related pattern cards — Nucleux agentic UI for React.",

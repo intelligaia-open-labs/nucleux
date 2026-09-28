@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/data-table",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "sideEffects": false,
   "description": "Sortable, paginated data table — Nucleux agentic UI for React.",

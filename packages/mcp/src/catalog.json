@@ -1,6 +1,6 @@
 {
   "library": "@nucleux/react",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "generatedFrom": "packages/* (do not edit — run scripts/gen-mcp-catalog.mjs)",
   "setup": {
     "installFull": "pnpm add @nucleux/react @nucleux/tokens",
@@ -13,8 +13,8 @@
     "note": "Every component is also re-exported from the @nucleux/react umbrella."
   },
   "counts": {
-    "components": 99,
-    "packages": 103,
+    "components": 116,
+    "packages": 120,
     "examples": 6
   },
   "packages": [
@@ -2079,6 +2079,687 @@
         }
       ],
       "readme": "# @nucleux/link-button\n\nLink-styled action button — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/link-button @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { LinkButton } from \"@nucleux/link-button\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-button",
+      "package": "@nucleux/md3-button",
+      "kind": "component",
+      "description": "A Material Design 3 button. Five variants (filled, tonal, elevated, outlined,\ntext) with an on-color state layer for hover/focus/press.",
+      "summary": "Material 3 button (filled, tonal, outlined, text, elevated) — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-button"
+      ],
+      "exports": [
+        "Md3Button",
+        "Md3ButtonVariant",
+        "Md3ButtonProps"
+      ],
+      "components": [
+        "Md3Button"
+      ],
+      "import": "import { Md3Button } from \"@nucleux/md3-button\";",
+      "installSingle": "pnpm add @nucleux/md3-button @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3ButtonProps",
+          "source": "export interface Md3ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  variant?: Md3ButtonVariant;\n  /** Leading icon element. */\n  icon?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-button\n\nMaterial 3 button (filled, tonal, outlined, text, elevated) — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-button @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Button } from \"@nucleux/md3-button\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-card",
+      "package": "@nucleux/md3-card",
+      "kind": "component",
+      "description": "A Material Design 3 card surface (elevated, filled, outlined).",
+      "summary": "Material 3 card (elevated, filled, outlined) — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-card"
+      ],
+      "exports": [
+        "Md3Card",
+        "Md3CardVariant",
+        "Md3CardProps"
+      ],
+      "components": [
+        "Md3Card"
+      ],
+      "import": "import { Md3Card } from \"@nucleux/md3-card\";",
+      "installSingle": "pnpm add @nucleux/md3-card @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3CardProps",
+          "source": "export interface Md3CardProps extends React.HTMLAttributes<HTMLDivElement> {\n  variant?: Md3CardVariant;\n  /** Add hover/press state layer + pointer cursor (for actionable cards). */\n  interactive?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-card\n\nMaterial 3 card (elevated, filled, outlined) — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-card @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Card } from \"@nucleux/md3-card\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-checkbox",
+      "package": "@nucleux/md3-checkbox",
+      "kind": "component",
+      "description": "A Material Design 3 checkbox with a circular state layer and error-free tokens.",
+      "summary": "Material 3 checkbox — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-checkbox"
+      ],
+      "exports": [
+        "Md3Checkbox",
+        "Md3CheckboxProps"
+      ],
+      "components": [
+        "Md3Checkbox"
+      ],
+      "import": "import { Md3Checkbox } from \"@nucleux/md3-checkbox\";",
+      "installSingle": "pnpm add @nucleux/md3-checkbox @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3CheckboxProps",
+          "source": "export interface Md3CheckboxProps\n  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, \"onChange\" | \"type\"> {\n  checked?: boolean;\n  defaultChecked?: boolean;\n  indeterminate?: boolean;\n  onCheckedChange?: (checked: boolean) => void;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-checkbox\n\nMaterial 3 checkbox — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-checkbox @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Checkbox } from \"@nucleux/md3-checkbox\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-chip",
+      "package": "@nucleux/md3-chip",
+      "kind": "component",
+      "description": "A Material Design 3 chip (assist, filter, input, suggestion). Filter chips\ntoggle a selected state; input chips render a trailing remove affordance.",
+      "summary": "Material 3 chip (assist, filter, input, suggestion) — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-chip"
+      ],
+      "exports": [
+        "Md3Chip",
+        "Md3ChipVariant",
+        "Md3ChipProps"
+      ],
+      "components": [
+        "Md3Chip"
+      ],
+      "import": "import { Md3Chip } from \"@nucleux/md3-chip\";",
+      "installSingle": "pnpm add @nucleux/md3-chip @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3ChipProps",
+          "source": "export interface Md3ChipProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, \"onSelect\"> {\n  variant?: Md3ChipVariant;\n  /** Filter chips: selected state (shows a leading check). */\n  selected?: boolean;\n  /** Leading icon (assist/input/suggestion). */\n  icon?: React.ReactNode;\n  /** Input chips: renders a trailing remove button and fires this on click. */\n  onRemove?: () => void;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-chip\n\nMaterial 3 chip (assist, filter, input, suggestion) — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-chip @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Chip } from \"@nucleux/md3-chip\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-dialog",
+      "package": "@nucleux/md3-dialog",
+      "kind": "component",
+      "description": "A Material Design 3 basic dialog with scrim, headline, body, and actions.",
+      "summary": "Material 3 dialog — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-dialog"
+      ],
+      "exports": [
+        "Md3Dialog",
+        "Md3DialogProps"
+      ],
+      "components": [
+        "Md3Dialog"
+      ],
+      "import": "import { Md3Dialog } from \"@nucleux/md3-dialog\";",
+      "installSingle": "pnpm add @nucleux/md3-dialog @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3DialogProps",
+          "source": "export interface Md3DialogProps {\n  open: boolean;\n  onOpenChange: (open: boolean) => void;\n  headline: React.ReactNode;\n  /** Optional hero icon, centered above the headline. */\n  icon?: React.ReactNode;\n  /** Supporting body content. */\n  children?: React.ReactNode;\n  /** Action buttons (typically text buttons), right-aligned. */\n  actions?: React.ReactNode;\n  /** Close on scrim click / Escape (default true). */\n  dismissible?: boolean;\n  className?: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-dialog\n\nMaterial 3 dialog — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-dialog @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Dialog } from \"@nucleux/md3-dialog\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-fab",
+      "package": "@nucleux/md3-fab",
+      "kind": "component",
+      "description": "A Material Design 3 floating action button. Sizes small/regular/large plus an\nextended variant with a label; four container colors. Elevated with a state layer.",
+      "summary": "Material 3 floating action button — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-fab"
+      ],
+      "exports": [
+        "Md3Fab",
+        "Md3FabSize",
+        "Md3FabColor",
+        "Md3FabProps"
+      ],
+      "components": [
+        "Md3Fab",
+        "Md3FabSize",
+        "Md3FabColor"
+      ],
+      "import": "import { Md3Fab, Md3FabSize, Md3FabColor } from \"@nucleux/md3-fab\";",
+      "installSingle": "pnpm add @nucleux/md3-fab @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3FabProps",
+          "source": "export interface Md3FabProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  size?: Md3FabSize;\n  color?: Md3FabColor;\n  icon: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-fab\n\nMaterial 3 floating action button — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-fab @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Fab } from \"@nucleux/md3-fab\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-icon-button",
+      "package": "@nucleux/md3-icon-button",
+      "kind": "component",
+      "description": "A Material Design 3 icon button (standard, filled, tonal, outlined).",
+      "summary": "Material 3 icon button — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-icon-button"
+      ],
+      "exports": [
+        "Md3IconButton",
+        "Md3IconButtonVariant",
+        "Md3IconButtonProps"
+      ],
+      "components": [
+        "Md3IconButton"
+      ],
+      "import": "import { Md3IconButton } from \"@nucleux/md3-icon-button\";",
+      "installSingle": "pnpm add @nucleux/md3-icon-button @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3IconButtonProps",
+          "source": "export interface Md3IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  variant?: Md3IconButtonVariant;\n  /** Toggle-selected state (affects filled/tonal background). */\n  selected?: boolean;\n  /** Required for icon-only buttons. */\n  \"aria-label\": string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-icon-button\n\nMaterial 3 icon button — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-icon-button @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3IconButton } from \"@nucleux/md3-icon-button\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-list",
+      "package": "@nucleux/md3-list",
+      "kind": "component",
+      "description": "A Material Design 3 list container. Compose with Md3ListItem.",
+      "summary": "Material 3 list — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-list"
+      ],
+      "exports": [
+        "Md3List",
+        "Md3ListItem",
+        "Md3ListItemProps"
+      ],
+      "components": [
+        "Md3List",
+        "Md3ListItem"
+      ],
+      "import": "import { Md3List, Md3ListItem } from \"@nucleux/md3-list\";",
+      "installSingle": "pnpm add @nucleux/md3-list @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3ListItemProps",
+          "source": "export interface Md3ListItemProps extends React.HTMLAttributes<HTMLDivElement> {\n  headline: React.ReactNode;\n  supportingText?: React.ReactNode;\n  leading?: React.ReactNode;\n  trailing?: React.ReactNode;\n  /** Add a hover/press state layer + role=\"button\" for actionable rows. */\n  interactive?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-list\n\nMaterial 3 list — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-list @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3List } from \"@nucleux/md3-list\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-menu",
+      "package": "@nucleux/md3-menu",
+      "kind": "component",
+      "description": "A Material Design 3 menu surface (presentational — pair with your own trigger\nand positioning). Compose with Md3MenuItem and Md3MenuDivider.",
+      "summary": "Material 3 menu surface — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-menu"
+      ],
+      "exports": [
+        "Md3Menu",
+        "Md3MenuItem",
+        "Md3MenuDivider",
+        "Md3MenuItemProps"
+      ],
+      "components": [
+        "Md3Menu",
+        "Md3MenuItem",
+        "Md3MenuDivider"
+      ],
+      "import": "import { Md3Menu, Md3MenuItem, Md3MenuDivider } from \"@nucleux/md3-menu\";",
+      "installSingle": "pnpm add @nucleux/md3-menu @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3MenuItemProps",
+          "source": "export interface Md3MenuItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  icon?: React.ReactNode;\n  /** Trailing content — a shortcut hint or submenu marker. */\n  trailing?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-menu\n\nMaterial 3 menu surface — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-menu @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Menu } from \"@nucleux/md3-menu\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-navigation-bar",
+      "package": "@nucleux/md3-navigation-bar",
+      "kind": "component",
+      "description": "A Material Design 3 bottom navigation bar. Compose with Md3NavigationBarItem.",
+      "summary": "Material 3 bottom navigation bar — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-navigation-bar"
+      ],
+      "exports": [
+        "Md3NavigationBar",
+        "Md3NavigationBarItem",
+        "Md3NavigationBarProps",
+        "Md3NavigationBarItemProps"
+      ],
+      "components": [
+        "Md3NavigationBar",
+        "Md3NavigationBarItem"
+      ],
+      "import": "import { Md3NavigationBar, Md3NavigationBarItem } from \"@nucleux/md3-navigation-bar\";",
+      "installSingle": "pnpm add @nucleux/md3-navigation-bar @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3NavigationBarProps",
+          "source": "export interface Md3NavigationBarProps\n  extends Omit<React.HTMLAttributes<HTMLElement>, \"defaultValue\"> {\n  value?: string;\n  defaultValue?: string;\n  onValueChange?: (value: string) => void;\n}"
+        },
+        {
+          "name": "Md3NavigationBarItemProps",
+          "source": "export interface Md3NavigationBarItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  value: string;\n  icon: React.ReactNode;\n  label: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-navigation-bar\n\nMaterial 3 bottom navigation bar — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-navigation-bar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3NavigationBar } from \"@nucleux/md3-navigation-bar\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-navigation-rail",
+      "package": "@nucleux/md3-navigation-rail",
+      "kind": "component",
+      "description": "A Material Design 3 navigation rail. Compose with Md3NavigationRailItem.",
+      "summary": "Material 3 navigation rail — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-navigation-rail"
+      ],
+      "exports": [
+        "Md3NavigationRail",
+        "Md3NavigationRailItem",
+        "Md3NavigationRailProps",
+        "Md3NavigationRailItemProps"
+      ],
+      "components": [
+        "Md3NavigationRail",
+        "Md3NavigationRailItem"
+      ],
+      "import": "import { Md3NavigationRail, Md3NavigationRailItem } from \"@nucleux/md3-navigation-rail\";",
+      "installSingle": "pnpm add @nucleux/md3-navigation-rail @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3NavigationRailProps",
+          "source": "export interface Md3NavigationRailProps\n  extends Omit<React.HTMLAttributes<HTMLElement>, \"defaultValue\"> {\n  value?: string;\n  defaultValue?: string;\n  onValueChange?: (value: string) => void;\n  /** Optional header content (e.g. a menu button or FAB), shown at the top. */\n  header?: React.ReactNode;\n}"
+        },
+        {
+          "name": "Md3NavigationRailItemProps",
+          "source": "export interface Md3NavigationRailItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  value: string;\n  icon: React.ReactNode;\n  label: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-navigation-rail\n\nMaterial 3 navigation rail — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-navigation-rail @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3NavigationRail } from \"@nucleux/md3-navigation-rail\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-radio",
+      "package": "@nucleux/md3-radio",
+      "kind": "component",
+      "description": "A Material Design 3 radio group. Compose with {@link Md3Radio}.",
+      "summary": "Material 3 radio group — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-radio"
+      ],
+      "exports": [
+        "Md3RadioGroup",
+        "Md3Radio",
+        "Md3RadioGroupProps",
+        "Md3RadioProps"
+      ],
+      "components": [
+        "Md3RadioGroup",
+        "Md3Radio"
+      ],
+      "import": "import { Md3RadioGroup, Md3Radio } from \"@nucleux/md3-radio\";",
+      "installSingle": "pnpm add @nucleux/md3-radio @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3RadioGroupProps",
+          "source": "export interface Md3RadioGroupProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"defaultValue\"> {\n  value?: string;\n  defaultValue?: string;\n  onValueChange?: (value: string) => void;\n  /** Accessible label for the group. */\n  label?: string;\n}"
+        },
+        {
+          "name": "Md3RadioProps",
+          "source": "export interface Md3RadioProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, \"value\"> {\n  value: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-radio\n\nMaterial 3 radio group — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-radio @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Radio } from \"@nucleux/md3-radio\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-slider",
+      "package": "@nucleux/md3-slider",
+      "kind": "component",
+      "description": "A Material Design 3 slider (single value) with pointer + keyboard control.",
+      "summary": "Material 3 slider — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-slider"
+      ],
+      "exports": [
+        "Md3Slider",
+        "Md3SliderProps"
+      ],
+      "components": [
+        "Md3Slider"
+      ],
+      "import": "import { Md3Slider } from \"@nucleux/md3-slider\";",
+      "installSingle": "pnpm add @nucleux/md3-slider @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3SliderProps",
+          "source": "export interface Md3SliderProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"defaultValue\" | \"onChange\"> {\n  value?: number;\n  defaultValue?: number;\n  min?: number;\n  max?: number;\n  step?: number;\n  disabled?: boolean;\n  onValueChange?: (value: number) => void;\n  \"aria-label\"?: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-slider\n\nMaterial 3 slider — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-slider @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Slider } from \"@nucleux/md3-slider\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-snackbar",
+      "package": "@nucleux/md3-snackbar",
+      "kind": "component",
+      "description": "A Material Design 3 snackbar. Presentational + controlled via `open`; position\nit with `className` (e.g. fixed bottom-4). Uses the inverse surface roles.",
+      "summary": "Material 3 snackbar — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-snackbar"
+      ],
+      "exports": [
+        "Md3Snackbar",
+        "Md3SnackbarProps"
+      ],
+      "components": [
+        "Md3Snackbar"
+      ],
+      "import": "import { Md3Snackbar } from \"@nucleux/md3-snackbar\";",
+      "installSingle": "pnpm add @nucleux/md3-snackbar @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3SnackbarProps",
+          "source": "export interface Md3SnackbarProps extends React.HTMLAttributes<HTMLDivElement> {\n  open: boolean;\n  message: React.ReactNode;\n  /** Optional trailing action label (rendered as a text button). */\n  action?: string;\n  onAction?: () => void;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-snackbar\n\nMaterial 3 snackbar — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-snackbar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Snackbar } from \"@nucleux/md3-snackbar\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-switch",
+      "package": "@nucleux/md3-switch",
+      "kind": "component",
+      "description": "A Material Design 3 switch with a growing handle and optional check icon.",
+      "summary": "Material 3 switch — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-switch"
+      ],
+      "exports": [
+        "Md3Switch",
+        "Md3SwitchProps"
+      ],
+      "components": [
+        "Md3Switch"
+      ],
+      "import": "import { Md3Switch } from \"@nucleux/md3-switch\";",
+      "installSingle": "pnpm add @nucleux/md3-switch @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3SwitchProps",
+          "source": "export interface Md3SwitchProps\n  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, \"onChange\"> {\n  checked?: boolean;\n  defaultChecked?: boolean;\n  onCheckedChange?: (checked: boolean) => void;\n  /** Show a check icon in the handle when on (Material 3 default behaviour). */\n  showIcon?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-switch\n\nMaterial 3 switch — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-switch @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Switch } from \"@nucleux/md3-switch\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-tabs",
+      "package": "@nucleux/md3-tabs",
+      "kind": "component",
+      "description": "Material Design 3 primary tabs. Compose Md3TabsList, Md3Tab, Md3TabPanel.",
+      "summary": "Material 3 primary tabs — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-tabs"
+      ],
+      "exports": [
+        "Md3Tabs",
+        "Md3TabsList",
+        "Md3Tab",
+        "Md3TabPanel",
+        "Md3TabsProps",
+        "Md3TabProps",
+        "Md3TabPanelProps"
+      ],
+      "components": [
+        "Md3Tabs",
+        "Md3TabsList",
+        "Md3Tab",
+        "Md3TabPanel"
+      ],
+      "import": "import { Md3Tabs, Md3TabsList, Md3Tab, Md3TabPanel } from \"@nucleux/md3-tabs\";",
+      "installSingle": "pnpm add @nucleux/md3-tabs @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3TabsProps",
+          "source": "export interface Md3TabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"defaultValue\"> {\n  value?: string;\n  defaultValue?: string;\n  onValueChange?: (value: string) => void;\n}"
+        },
+        {
+          "name": "Md3TabProps",
+          "source": "export interface Md3TabProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  value: string;\n  icon?: React.ReactNode;\n}"
+        },
+        {
+          "name": "Md3TabPanelProps",
+          "source": "export interface Md3TabPanelProps extends React.HTMLAttributes<HTMLDivElement> {\n  value: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-tabs\n\nMaterial 3 primary tabs — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-tabs @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Tabs } from \"@nucleux/md3-tabs\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-text-field",
+      "package": "@nucleux/md3-text-field",
+      "kind": "component",
+      "description": "A Material Design 3 text field (filled or outlined) with a floating label,\noptional leading/trailing icons, supporting text, and an error state.",
+      "summary": "Material 3 text field (filled, outlined) — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-text-field"
+      ],
+      "exports": [
+        "Md3TextField",
+        "Md3TextFieldVariant",
+        "Md3TextFieldProps"
+      ],
+      "components": [
+        "Md3TextField"
+      ],
+      "import": "import { Md3TextField } from \"@nucleux/md3-text-field\";",
+      "installSingle": "pnpm add @nucleux/md3-text-field @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3TextFieldProps",
+          "source": "export interface Md3TextFieldProps\n  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, \"placeholder\"> {\n  label: string;\n  variant?: Md3TextFieldVariant;\n  supportingText?: React.ReactNode;\n  error?: boolean;\n  leadingIcon?: React.ReactNode;\n  trailingIcon?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-text-field\n\nMaterial 3 text field (filled, outlined) — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-text-field @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3TextField } from \"@nucleux/md3-text-field\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"

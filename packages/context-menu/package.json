@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/context-menu",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "sideEffects": false,
   "description": "Right-click context menu — Nucleux agentic UI for React.",

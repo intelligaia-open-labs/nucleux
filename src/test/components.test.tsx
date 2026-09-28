@@ -189,6 +189,31 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  Md3Button,
+  Md3Card,
+  Md3Chip,
+  Md3Fab,
+  Md3IconButton,
+  Md3Switch,
+  Md3TextField,
+  Md3Checkbox,
+  Md3Radio,
+  Md3RadioGroup,
+  Md3Slider,
+  Md3Tabs,
+  Md3TabsList,
+  Md3Tab,
+  Md3TabPanel,
+  Md3NavigationBar,
+  Md3NavigationBarItem,
+  Md3NavigationRail,
+  Md3NavigationRailItem,
+  Md3Menu,
+  Md3MenuItem,
+  Md3Dialog,
+  Md3Snackbar,
+  Md3List,
+  Md3ListItem,
   useToast,
 } from "@nucleux/react";
 import { useForm } from "react-hook-form";
@@ -891,6 +916,102 @@ const cases: { name: string; ui: ReactElement }[] = [
     ui: <DataTable columns={dataTableColumns} data={dataTableRows} pageSize={0} />,
   },
   { name: "Form", ui: <FormDemo /> },
+  { name: "Md3Button", ui: <Md3Button variant="filled">Save</Md3Button> },
+  {
+    name: "Md3IconButton",
+    ui: (
+      <Md3IconButton aria-label="Favorite">
+        <Home />
+      </Md3IconButton>
+    ),
+  },
+  { name: "Md3Fab", ui: <Md3Fab icon={<Home />} aria-label="Add" /> },
+  { name: "Md3TextField", ui: <Md3TextField label="Email" supportingText="Required" /> },
+  { name: "Md3Card", ui: <Md3Card className="p-4">Card body</Md3Card> },
+  {
+    name: "Md3Chip",
+    ui: (
+      <div className="flex gap-2">
+        <Md3Chip variant="assist">Assist</Md3Chip>
+        <Md3Chip variant="filter" selected>
+          Filter
+        </Md3Chip>
+        <Md3Chip variant="input" onRemove={() => {}}>
+          Input
+        </Md3Chip>
+      </div>
+    ),
+  },
+  { name: "Md3Switch", ui: <Md3Switch defaultChecked aria-label="Wi-Fi" /> },
+  { name: "Md3Checkbox", ui: <Md3Checkbox defaultChecked aria-label="Accept" /> },
+  {
+    name: "Md3Radio",
+    ui: (
+      <Md3RadioGroup defaultValue="a" label="Choice">
+        <Md3Radio value="a" aria-label="A" />
+        <Md3Radio value="b" aria-label="B" />
+      </Md3RadioGroup>
+    ),
+  },
+  { name: "Md3Slider", ui: <Md3Slider defaultValue={50} aria-label="Level" /> },
+  {
+    name: "Md3Tabs",
+    ui: (
+      <Md3Tabs defaultValue="a">
+        <Md3TabsList>
+          <Md3Tab value="a">A</Md3Tab>
+          <Md3Tab value="b">B</Md3Tab>
+        </Md3TabsList>
+        <Md3TabPanel value="a">Panel A</Md3TabPanel>
+        <Md3TabPanel value="b">Panel B</Md3TabPanel>
+      </Md3Tabs>
+    ),
+  },
+  {
+    name: "Md3NavigationBar",
+    ui: (
+      <Md3NavigationBar defaultValue="home">
+        <Md3NavigationBarItem value="home" icon={<Home />} label="Home" />
+        <Md3NavigationBarItem value="search" icon={<Mic />} label="Search" />
+      </Md3NavigationBar>
+    ),
+  },
+  {
+    name: "Md3NavigationRail",
+    ui: (
+      <Md3NavigationRail defaultValue="home">
+        <Md3NavigationRailItem value="home" icon={<Home />} label="Home" />
+        <Md3NavigationRailItem value="search" icon={<Mic />} label="Search" />
+      </Md3NavigationRail>
+    ),
+  },
+  {
+    name: "Md3Menu",
+    ui: (
+      <Md3Menu>
+        <Md3MenuItem>New</Md3MenuItem>
+        <Md3MenuItem>Open</Md3MenuItem>
+      </Md3Menu>
+    ),
+  },
+  {
+    name: "Md3Dialog",
+    ui: (
+      <Md3Dialog open onOpenChange={() => {}} headline="Reset settings?">
+        This will restore defaults.
+      </Md3Dialog>
+    ),
+  },
+  { name: "Md3Snackbar", ui: <Md3Snackbar open message="Message archived" action="Undo" onAction={() => {}} /> },
+  {
+    name: "Md3List",
+    ui: (
+      <Md3List>
+        <Md3ListItem headline="Primary" supportingText="24 new" />
+        <Md3ListItem headline="Starred" supportingText="3 items" trailing="3" />
+      </Md3List>
+    ),
+  },
 ];
 
 describe("smoke: every component renders", () => {
@@ -1262,6 +1383,119 @@ describe("interaction: components behave", () => {
     first.focus();
     await userEvent.keyboard("12");
     expect(onChange).toHaveBeenLastCalledWith("12");
+  });
+
+  it("Md3Button fires onClick", async () => {
+    const onClick = vi.fn();
+    render(<Md3Button onClick={onClick}>Go</Md3Button>);
+    await userEvent.click(screen.getByRole("button", { name: "Go" }));
+    expect(onClick).toHaveBeenCalledOnce();
+  });
+
+  it("Md3Switch toggles checked state and fires onCheckedChange", async () => {
+    const onCheckedChange = vi.fn();
+    render(<Md3Switch aria-label="Wi-Fi" onCheckedChange={onCheckedChange} />);
+    const sw = screen.getByRole("switch", { name: "Wi-Fi" });
+    expect(sw).toHaveAttribute("aria-checked", "false");
+    await userEvent.click(sw);
+    expect(onCheckedChange).toHaveBeenCalledWith(true);
+    expect(sw).toHaveAttribute("aria-checked", "true");
+  });
+
+  it("Md3Chip (filter) reports pressed state and toggles on click", async () => {
+    const onClick = vi.fn();
+    render(
+      <Md3Chip variant="filter" selected onClick={onClick}>
+        Available
+      </Md3Chip>,
+    );
+    const chip = screen.getByRole("button", { name: "Available" });
+    expect(chip).toHaveAttribute("aria-pressed", "true");
+    await userEvent.click(chip);
+    expect(onClick).toHaveBeenCalledOnce();
+  });
+
+  it("Md3Chip (input) fires onRemove from its remove button", async () => {
+    const onRemove = vi.fn();
+    render(
+      <Md3Chip variant="input" onRemove={onRemove}>
+        alex@acme.com
+      </Md3Chip>,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Remove" }));
+    expect(onRemove).toHaveBeenCalledOnce();
+  });
+
+  it("Md3TextField associates its label with the input", () => {
+    render(<Md3TextField label="Email" />);
+    expect(screen.getByLabelText("Email")).toBeInstanceOf(HTMLInputElement);
+  });
+
+  it("Md3Checkbox toggles and supports indeterminate", async () => {
+    const onCheckedChange = vi.fn();
+    render(<Md3Checkbox aria-label="Accept" onCheckedChange={onCheckedChange} />);
+    const box = screen.getByRole("checkbox", { name: "Accept" });
+    expect(box).toHaveAttribute("aria-checked", "false");
+    await userEvent.click(box);
+    expect(onCheckedChange).toHaveBeenCalledWith(true);
+    expect(box).toHaveAttribute("aria-checked", "true");
+  });
+
+  it("Md3Radio selects a single value", async () => {
+    const onValueChange = vi.fn();
+    render(
+      <Md3RadioGroup defaultValue="a" label="Choice" onValueChange={onValueChange}>
+        <Md3Radio value="a" aria-label="A" />
+        <Md3Radio value="b" aria-label="B" />
+      </Md3RadioGroup>,
+    );
+    const [a, b] = screen.getAllByRole("radio");
+    expect(a).toHaveAttribute("aria-checked", "true");
+    await userEvent.click(b!);
+    expect(onValueChange).toHaveBeenCalledWith("b");
+    expect(b).toHaveAttribute("aria-checked", "true");
+    expect(a).toHaveAttribute("aria-checked", "false");
+  });
+
+  it("Md3Tabs switches the active panel", async () => {
+    render(
+      <Md3Tabs defaultValue="a">
+        <Md3TabsList>
+          <Md3Tab value="a">A</Md3Tab>
+          <Md3Tab value="b">B</Md3Tab>
+        </Md3TabsList>
+        <Md3TabPanel value="a">Panel A</Md3TabPanel>
+        <Md3TabPanel value="b">Panel B</Md3TabPanel>
+      </Md3Tabs>,
+    );
+    expect(screen.getByText("Panel A")).toBeInTheDocument();
+    expect(screen.queryByText("Panel B")).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole("tab", { name: "B" }));
+    expect(screen.getByText("Panel B")).toBeInTheDocument();
+  });
+
+  it("Md3NavigationBar marks the selected destination current", async () => {
+    const onValueChange = vi.fn();
+    render(
+      <Md3NavigationBar defaultValue="home" onValueChange={onValueChange}>
+        <Md3NavigationBarItem value="home" icon={<Home />} label="Home" />
+        <Md3NavigationBarItem value="search" icon={<Mic />} label="Search" />
+      </Md3NavigationBar>,
+    );
+    await userEvent.click(screen.getByText("Search"));
+    expect(onValueChange).toHaveBeenCalledWith("search");
+  });
+
+  it("Md3Dialog closes on Escape", async () => {
+    const onOpenChange = vi.fn();
+    render(
+      <Md3Dialog open onOpenChange={onOpenChange} headline="Reset?">
+        Body
+      </Md3Dialog>,
+    );
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    await userEvent.keyboard("{Escape}");
+    expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
   it("Menubar opens a menu on trigger click", async () => {

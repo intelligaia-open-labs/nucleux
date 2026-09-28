@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/toggle-group",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "sideEffects": false,
   "description": "Group of single/multi-select toggles — Nucleux agentic UI for React.",

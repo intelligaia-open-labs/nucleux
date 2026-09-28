@@ -100,5 +100,22 @@
   "@nucleux/carousel": "packages/carousel/src/index.tsx",
   "@nucleux/chart": "packages/chart/src/index.tsx",
   "@nucleux/form": "packages/form/src/index.tsx",
-  "@nucleux/data-table": "packages/data-table/src/index.tsx"
+  "@nucleux/data-table": "packages/data-table/src/index.tsx",
+  "@nucleux/md3-button": "packages/md3-button/src/index.tsx",
+  "@nucleux/md3-icon-button": "packages/md3-icon-button/src/index.tsx",
+  "@nucleux/md3-fab": "packages/md3-fab/src/index.tsx",
+  "@nucleux/md3-text-field": "packages/md3-text-field/src/index.tsx",
+  "@nucleux/md3-card": "packages/md3-card/src/index.tsx",
+  "@nucleux/md3-chip": "packages/md3-chip/src/index.tsx",
+  "@nucleux/md3-switch": "packages/md3-switch/src/index.tsx",
+  "@nucleux/md3-navigation-bar": "packages/md3-navigation-bar/src/index.tsx",
+  "@nucleux/md3-navigation-rail": "packages/md3-navigation-rail/src/index.tsx",
+  "@nucleux/md3-tabs": "packages/md3-tabs/src/index.tsx",
+  "@nucleux/md3-checkbox": "packages/md3-checkbox/src/index.tsx",
+  "@nucleux/md3-radio": "packages/md3-radio/src/index.tsx",
+  "@nucleux/md3-slider": "packages/md3-slider/src/index.tsx",
+  "@nucleux/md3-menu": "packages/md3-menu/src/index.tsx",
+  "@nucleux/md3-dialog": "packages/md3-dialog/src/index.tsx",
+  "@nucleux/md3-snackbar": "packages/md3-snackbar/src/index.tsx",
+  "@nucleux/md3-list": "packages/md3-list/src/index.tsx"
 }
