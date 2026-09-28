@@ -1,0 +1,59 @@
+{
+  "name": "@nucleux/chart",
+  "version": "0.2.0",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Composable chart primitives — Nucleux agentic UI for React.",
+  "keywords": [
+    "nucleux",
+    "react",
+    "ui",
+    "components",
+    "agentic",
+    "ai",
+    "tailwind",
+    "chart"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@nucleux/utils": "workspace:*",
+    "recharts": "^2.15.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "@types/react": "^18.3.18",
+    "react": "^18.3.1",
+    "lucide-react": "^0.469.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelligaia-open-labs/nucleux.git",
+    "directory": "packages/chart"
+  },
+  "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme"
+}

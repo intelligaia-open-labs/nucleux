@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/privacy-notice",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "sideEffects": false,
   "description": "PrivacyNotice — a notice that a chat is ephemeral or private — Nucleux agentic UI for React.",

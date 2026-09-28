@@ -1,0 +1,41 @@
+name: Release
+
+# Publishes every @nucleux package to npm. Trigger by pushing a version tag
+# (e.g. `v0.2.0`) or running the workflow manually. Requires an NPM_TOKEN
+# repository secret with publish rights to the @nucleux scope.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Never publish a broken build — run the full gate first.
+      - name: Validate
+        run: pnpm validate
+
+      # pnpm reads the token from this env var (set by setup-node's registry-url).
+      - name: Publish to npm
+        run: pnpm -r publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

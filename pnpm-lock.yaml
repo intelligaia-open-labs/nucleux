@@ -71,6 +71,9 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
+      react-hook-form:
+        specifier: ^7.54.2
+        version: 7.89.0(@types/react@18.3.31)(react@18.3.1)
       rimraf:
         specifier: ^6.0.1
         version: 6.1.3
@@ -318,6 +321,56 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/alert-dialog:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/aspect-ratio:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/attachment-tile:
     dependencies:
       '@nucleux/utils':
@@ -468,6 +521,34 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/calendar:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-day-picker:
+        specifier: ^8.10.1
+        version: 8.10.2(date-fns@3.6.0)(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/capability-overview:
     dependencies:
       '@nucleux/utils':
@@ -501,6 +582,65 @@ importers:
       react-dom:
         specifier: '>=18'
         version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/carousel:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      embla-carousel:
+        specifier: ^8.5.1
+        version: 8.6.0
+      embla-carousel-react:
+        specifier: ^8.5.1
+        version: 8.6.0(react@18.3.1)
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/chart:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+      recharts:
+        specifier: ^2.15.0
+        version: 2.15.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@types/react':
         specifier: ^18.3.18
@@ -646,6 +786,81 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/collapsible:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/combobox:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/command:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/confidence-indicator:
     dependencies:
       '@nucleux/utils':
@@ -673,6 +888,87 @@ importers:
 
   packages/connector-card:
     dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/context-menu:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/data-table:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      '@tanstack/react-table':
+        specifier: ^8.20.6
+        version: 8.21.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/date-picker:
+    dependencies:
+      '@nucleux/calendar':
+        specifier: workspace:*
+        version: link:../calendar
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
@@ -771,6 +1067,40 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/form:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+      react-hook-form:
+        specifier: ^7.54.2
+        version: 7.89.0(@types/react@18.3.31)(react@18.3.1)
+    devDependencies:
+      '@hookform/resolvers':
+        specifier: ^3.10.0
+        version: 3.10.0(react-hook-form@7.89.0(@types/react@18.3.31)(react@18.3.1))
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+      zod:
+        specifier: ^3.24.1
+        version: 3.25.76
+
   packages/getting-started-pill:
     dependencies:
       '@nucleux/badge':
@@ -846,6 +1176,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/hover-card:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/icon-button:
     dependencies:
       '@nucleux/utils':
@@ -896,6 +1251,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/input:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/input-bar:
     dependencies:
       '@nucleux/utils':
@@ -921,6 +1301,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/input-otp:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/knowledge-base-picker:
     dependencies:
       '@nucleux/utils':
@@ -936,6 +1341,31 @@ importers:
       '@types/react':
         specifier: ^18.3.18
         version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/label:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1065,6 +1495,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/menubar:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/message:
     dependencies:
       '@nucleux/avatar':
@@ -1177,6 +1632,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/navigation-menu:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/page-header:
     dependencies:
       '@nucleux/utils':
@@ -1192,6 +1672,31 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/pagination:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1381,6 +1886,12 @@ importers:
       '@nucleux/alert':
         specifier: workspace:*
         version: link:../alert
+      '@nucleux/alert-dialog':
+        specifier: workspace:*
+        version: link:../alert-dialog
+      '@nucleux/aspect-ratio':
+        specifier: workspace:*
+        version: link:../aspect-ratio
       '@nucleux/attachment-tile':
         specifier: workspace:*
         version: link:../attachment-tile
@@ -1399,12 +1910,21 @@ importers:
       '@nucleux/button':
         specifier: workspace:*
         version: link:../button
+      '@nucleux/calendar':
+        specifier: workspace:*
+        version: link:../calendar
       '@nucleux/capability-overview':
         specifier: workspace:*
         version: link:../capability-overview
       '@nucleux/card':
         specifier: workspace:*
         version: link:../card
+      '@nucleux/carousel':
+        specifier: workspace:*
+        version: link:../carousel
+      '@nucleux/chart':
+        specifier: workspace:*
+        version: link:../chart
       '@nucleux/checkbox':
         specifier: workspace:*
         version: link:../checkbox
@@ -1420,12 +1940,30 @@ importers:
       '@nucleux/code-block':
         specifier: workspace:*
         version: link:../code-block
+      '@nucleux/collapsible':
+        specifier: workspace:*
+        version: link:../collapsible
+      '@nucleux/combobox':
+        specifier: workspace:*
+        version: link:../combobox
+      '@nucleux/command':
+        specifier: workspace:*
+        version: link:../command
       '@nucleux/confidence-indicator':
         specifier: workspace:*
         version: link:../confidence-indicator
       '@nucleux/connector-card':
         specifier: workspace:*
         version: link:../connector-card
+      '@nucleux/context-menu':
+        specifier: workspace:*
+        version: link:../context-menu
+      '@nucleux/data-table':
+        specifier: workspace:*
+        version: link:../data-table
+      '@nucleux/date-picker':
+        specifier: workspace:*
+        version: link:../date-picker
       '@nucleux/dialog':
         specifier: workspace:*
         version: link:../dialog
@@ -1435,6 +1973,9 @@ importers:
       '@nucleux/follow-up':
         specifier: workspace:*
         version: link:../follow-up
+      '@nucleux/form':
+        specifier: workspace:*
+        version: link:../form
       '@nucleux/getting-started-pill':
         specifier: workspace:*
         version: link:../getting-started-pill
@@ -1444,18 +1985,30 @@ importers:
       '@nucleux/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@nucleux/hover-card':
+        specifier: workspace:*
+        version: link:../hover-card
       '@nucleux/icon-button':
         specifier: workspace:*
         version: link:../icon-button
       '@nucleux/inline-feedback':
         specifier: workspace:*
         version: link:../inline-feedback
+      '@nucleux/input':
+        specifier: workspace:*
+        version: link:../input
       '@nucleux/input-bar':
         specifier: workspace:*
         version: link:../input-bar
+      '@nucleux/input-otp':
+        specifier: workspace:*
+        version: link:../input-otp
       '@nucleux/knowledge-base-picker':
         specifier: workspace:*
         version: link:../knowledge-base-picker
+      '@nucleux/label':
+        specifier: workspace:*
+        version: link:../label
       '@nucleux/link-button':
         specifier: workspace:*
         version: link:../link-button
@@ -1468,6 +2021,9 @@ importers:
       '@nucleux/menu':
         specifier: workspace:*
         version: link:../menu
+      '@nucleux/menubar':
+        specifier: workspace:*
+        version: link:../menubar
       '@nucleux/message':
         specifier: workspace:*
         version: link:../message
@@ -1480,9 +2036,15 @@ importers:
       '@nucleux/nav-panel':
         specifier: workspace:*
         version: link:../nav-panel
+      '@nucleux/navigation-menu':
+        specifier: workspace:*
+        version: link:../navigation-menu
       '@nucleux/page-header':
         specifier: workspace:*
         version: link:../page-header
+      '@nucleux/pagination':
+        specifier: workspace:*
+        version: link:../pagination
       '@nucleux/popover':
         specifier: workspace:*
         version: link:../popover
@@ -1507,6 +2069,9 @@ importers:
       '@nucleux/related-patterns-grid':
         specifier: workspace:*
         version: link:../related-patterns-grid
+      '@nucleux/resizable':
+        specifier: workspace:*
+        version: link:../resizable
       '@nucleux/response-comparison':
         specifier: workspace:*
         version: link:../response-comparison
@@ -1519,6 +2084,9 @@ importers:
       '@nucleux/right-sidebar':
         specifier: workspace:*
         version: link:../right-sidebar
+      '@nucleux/scroll-area':
+        specifier: workspace:*
+        version: link:../scroll-area
       '@nucleux/search-input':
         specifier: workspace:*
         version: link:../search-input
@@ -1537,6 +2105,12 @@ importers:
       '@nucleux/sidebar':
         specifier: workspace:*
         version: link:../sidebar
+      '@nucleux/skeleton':
+        specifier: workspace:*
+        version: link:../skeleton
+      '@nucleux/slider':
+        specifier: workspace:*
+        version: link:../slider
       '@nucleux/streaming-text':
         specifier: workspace:*
         version: link:../streaming-text
@@ -1555,12 +2129,21 @@ importers:
       '@nucleux/tabs':
         specifier: workspace:*
         version: link:../tabs
+      '@nucleux/textarea':
+        specifier: workspace:*
+        version: link:../textarea
       '@nucleux/thread':
         specifier: workspace:*
         version: link:../thread
       '@nucleux/toast':
         specifier: workspace:*
         version: link:../toast
+      '@nucleux/toggle':
+        specifier: workspace:*
+        version: link:../toggle
+      '@nucleux/toggle-group':
+        specifier: workspace:*
+        version: link:../toggle-group
       '@nucleux/tone-selector':
         specifier: workspace:*
         version: link:../tone-selector
@@ -1649,6 +2232,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/resizable:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/response-comparison:
     dependencies:
       '@nucleux/utils':
@@ -1725,6 +2333,31 @@ importers:
         version: 5.9.3
 
   packages/right-sidebar:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/scroll-area:
     dependencies:
       '@nucleux/utils':
         specifier: workspace:*
@@ -1899,6 +2532,56 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/skeleton:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/slider:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/streaming-text:
     dependencies:
       '@nucleux/utils':
@@ -2049,6 +2732,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/textarea:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/thread:
     dependencies:
       '@nucleux/hooks':
@@ -2092,6 +2800,56 @@ importers:
       '@types/react':
         specifier: ^18.3.18
         version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/toggle:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/toggle-group:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2838,6 +3596,11 @@ packages:
     peerDependencies:
       hono: ^4
 
+  '@hookform/resolvers@3.10.0':
+    resolution: {integrity: sha512-79Dv+3mDF7i+2ajj7SkypSKHhl1cbln1OGavqrsF7p6mbUv11xpqpacPsGDCTRvCSjEEIez2ef1NveSVL3b0Ag==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
@@ -3246,6 +4009,17 @@ packages:
     peerDependencies:
       storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
 
+  '@tanstack/react-table@8.21.3':
+    resolution: {integrity: sha512-5nNMTSETP4ykGegmVkhjcS8tTLW6Vl4axfEGQN3v0zdHYbK4UfoqfPChclTrJ4EoK9QynqAu9oUf8VEmrpZ5Ww==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+
+  '@tanstack/table-core@8.21.3':
+    resolution: {integrity: sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg==}
+    engines: {node: '>=12'}
+
   '@testing-library/dom@10.4.1':
     resolution: {integrity: sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg==}
     engines: {node: '>=18'}
@@ -3289,6 +4063,33 @@ packages:
 
   '@types/babel__traverse@7.28.0':
     resolution: {integrity: sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==}
+
+  '@types/d3-array@3.2.2':
+    resolution: {integrity: sha512-hOLWVbm7uRza0BYXpIIW5pxfrKe0W+D5lrFiAEYR+pb6w3N2SwSMaJbXdUfSEv+dT4MfHBLtn5js0LAWaO6otw==}
+
+  '@types/d3-color@3.1.3':
+    resolution: {integrity: sha512-iO90scth9WAbmgv7ogoq57O9YpKmFBbmoEoCHDB2xMBY0+/KVrqAaCDyCE16dUspeOvIxFFRI+0sEtqDqy2b4A==}
+
+  '@types/d3-ease@3.0.2':
+    resolution: {integrity: sha512-NcV1JjO5oDzoK26oMzbILE6HW7uVXOHLQvHshBUW4UMdZGfiY6v5BeQwh9a9tCzv+CeefZQHJt5SRgK154RtiA==}
+
+  '@types/d3-interpolate@3.0.4':
+    resolution: {integrity: sha512-mgLPETlrpVV1YRJIglr4Ez47g7Yxjl1lj7YKsiMCb27VJH9W8NVM6Bb9d8kkpG/uAQS5AmbA48q2IAolKKo1MA==}
+
+  '@types/d3-path@3.1.1':
+    resolution: {integrity: sha512-VMZBYyQvbGmWyWVea0EHs/BwLgxc+MKi1zLDCONksozI4YJMcTt8ZEuIR4Sb1MMTE8MMW49v0IwI5+b7RmfWlg==}
+
+  '@types/d3-scale@4.0.9':
+    resolution: {integrity: sha512-dLmtwB8zkAeO/juAMfnV+sItKjlsw2lKdZVVy6LRr0cBmegxSABiLEpGVmSJJ8O08i4+sGR6qQtb6WtuwJdvVw==}
+
+  '@types/d3-shape@3.2.0':
+    resolution: {integrity: sha512-kVd74ta9eof3eJOvbNd1vGKS/XERRyQbT26Og63hIsvDO84cjD5gEOhsXf26w3FSoNlPVz84DOFcKv/oou+fMw==}
+
+  '@types/d3-time@3.0.4':
+    resolution: {integrity: sha512-yuzZug1nkAAaBlBBikKZTgzCeA+k1uy4ZFwWANOfKw5z5LRhV0gNA7gNkKm7HoK+HRN0wX3EkxGk0fpbWhmB7g==}
+
+  '@types/d3-timer@3.0.2':
+    resolution: {integrity: sha512-Ps3T8E8dZDam6fUyNiMkekK3XUsaUEik+idO9/YjPtfj2qruF8tFBXS7XhtE4iIXBLxhmLjP3SXpLhVf21I9Lw==}
 
   '@types/doctrine@0.0.9':
     resolution: {integrity: sha512-eOIHzCUSH7SMfonMG1LsC2f8vxBFtho6NGBznK41R84YzPuvSBzrhEps33IsQiOW9+VL6NQ9DbjQJznk/S4uRA==}
@@ -3641,9 +4442,56 @@ packages:
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
+  d3-array@3.2.4:
+    resolution: {integrity: sha512-tdQAmyA18i4J7wprpYq8ClcxZy3SC31QMeByyCFyRt7BVHdREQZ5lpzoe5mFEYZUWe+oq8HBvk9JjpibyEV4Jg==}
+    engines: {node: '>=12'}
+
+  d3-color@3.1.0:
+    resolution: {integrity: sha512-zg/chbXyeBtMQ1LbD/WSoW2DpC3I0mpmPdW+ynRTj/x2DAWYrIY7qeZIHidozwV24m4iavr15lNwIwLxRmOxhA==}
+    engines: {node: '>=12'}
+
+  d3-ease@3.0.1:
+    resolution: {integrity: sha512-wR/XK3D3XcLIZwpbvQwQ5fK+8Ykds1ip7A2Txe0yxncXSdq1L9skcG7blcedkOX+ZcgxGAmLX1FrRGbADwzi0w==}
+    engines: {node: '>=12'}
+
+  d3-format@3.1.2:
+    resolution: {integrity: sha512-AJDdYOdnyRDV5b6ArilzCPPwc1ejkHcoyFarqlPqT7zRYjhavcT3uSrqcMvsgh2CgoPbK3RCwyHaVyxYcP2Arg==}
+    engines: {node: '>=12'}
+
+  d3-interpolate@3.0.1:
+    resolution: {integrity: sha512-3bYs1rOD33uo8aqJfKP3JWPAibgw8Zm2+L9vBKEHJ2Rg+viTR7o5Mmv5mZcieN+FRYaAOWX5SJATX6k1PWz72g==}
+    engines: {node: '>=12'}
+
+  d3-path@3.1.0:
+    resolution: {integrity: sha512-p3KP5HCf/bvjBSSKuXid6Zqijx7wIfNW+J/maPs+iwR35at5JCbLUT0LzF1cnjbCHWhqzQTIN2Jpe8pRebIEFQ==}
+    engines: {node: '>=12'}
+
+  d3-scale@4.0.2:
+    resolution: {integrity: sha512-GZW464g1SH7ag3Y7hXjf8RoUuAFIqklOAq3MRl4OaWabTFJY9PN/E1YklhXLh+OQ3fM9yS2nOkCoS+WLZ6kvxQ==}
+    engines: {node: '>=12'}
+
+  d3-shape@3.2.0:
+    resolution: {integrity: sha512-SaLBuwGm3MOViRq2ABk3eLoxwZELpH6zhl3FbAoJ7Vm1gofKx6El1Ib5z23NUEhF9AsGl7y+dzLe5Cw2AArGTA==}
+    engines: {node: '>=12'}
+
+  d3-time-format@4.1.0:
+    resolution: {integrity: sha512-dJxPBlzC7NugB2PDLwo9Q8JiTR3M3e4/XANkreKSUxF8vvXKqm1Yfq4Q5dl8budlunRVlUUaDUgFt7eA8D6NLg==}
+    engines: {node: '>=12'}
+
+  d3-time@3.1.0:
+    resolution: {integrity: sha512-VqKjzBLejbSMT4IgbmVgDjpkYrNWUYJnbCGo874u7MMKIWsILRX+OpX/gTk8MqjpT1A/c6HY2dCA77ZN0lkQ2Q==}
+    engines: {node: '>=12'}
+
+  d3-timer@3.0.1:
+    resolution: {integrity: sha512-ndfJ/JxxMd3nw31uyKoY2naivF+r29V+Lc0svZxe1JvvIRmi8hUsrMvdOwgS1o6uBHmiz91geQ0ylPP0aj1VUA==}
+    engines: {node: '>=12'}
+
   data-urls@5.0.0:
     resolution: {integrity: sha512-ZYP5VBHshaDAiVZxjbRVcFJpc+4xGgT0bK3vzy1HLN8jTO975HEbuYzZJcHoQEY5K1a0z8YayJkyVETa08eNTg==}
     engines: {node: '>=18'}
+
+  date-fns@3.6.0:
+    resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
 
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
@@ -3653,6 +4501,9 @@ packages:
     peerDependenciesMeta:
       supports-color:
         optional: true
+
+  decimal.js-light@2.5.1:
+    resolution: {integrity: sha512-qIMFpTMZmny+MMIitAB6D7iVPEorVw6YQRWkvarTkT4tBeSLLiHzcwj6q0MmYSFCiVpiqPJTJEYIrpcPzVEIvg==}
 
   decimal.js@10.6.0:
     resolution: {integrity: sha512-YpgQiITW3JXGntzdUmyUR1V812Hn8T1YVXhCu+wO3OpS4eU9l4YdD3qjyiKdV6mvV29zapkMeD390UVEf2lkUg==}
@@ -3701,6 +4552,9 @@ packages:
   dom-accessibility-api@0.6.3:
     resolution: {integrity: sha512-7ZgogeTnjuHbo+ct10G9Ffp0mif17idi0IyWNVA/wcwcm7NPOD/WEHVP3n7n3MhXqxoIYm8d6MuZohYWIZ4T3w==}
 
+  dom-helpers@5.2.1:
+    resolution: {integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==}
+
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
@@ -3713,6 +4567,19 @@ packages:
 
   electron-to-chromium@1.5.392:
     resolution: {integrity: sha512-1yQq3VQCZRwsnYc67Oc+1fge6Lwtn0hzi6zmEVkB61Zx21kTbwJAW4dFLadl5Rc1tKhG/kSpYXnfiAhu0f0a1g==}
+
+  embla-carousel-react@8.6.0:
+    resolution: {integrity: sha512-0/PjqU7geVmo6F734pmPqpyHqiM99olvyecY7zdweCw+6tKEXnrE90pBiBbMMU8s5tICemzpQ3hi5EpxzGW+JA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.1 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+
+  embla-carousel-reactive-utils@8.6.0:
+    resolution: {integrity: sha512-fMVUDUEx0/uIEDM0Mz3dHznDhfX+znCCDCeIophYb1QGVM7YThSWX+wz11zlYwWFOr74b4QLGg0hrGPJeG2s4A==}
+    peerDependencies:
+      embla-carousel: 8.6.0
+
+  embla-carousel@8.6.0:
+    resolution: {integrity: sha512-SjWyZBHJPbqxHOzckOfo8lHisEaJWmwd23XppYFYVh10bU66/Pn5tkVkbkCMZVdbUE5eTCI2nD8OyIP4Z+uwkA==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -3797,6 +4664,9 @@ packages:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
 
+  eventemitter3@4.0.7:
+    resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
+
   eventsource-parser@3.1.0:
     resolution: {integrity: sha512-kJezFj9YFAMLeORyi7aCLxLbD5/qWMQnoMVlVPyHIll7lgRJCc3JVln9Vgl9nwQi0YkMnhdGTMNn7CkRRAptMg==}
     engines: {node: '>=18.0.0'}
@@ -3825,6 +4695,10 @@ packages:
 
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
+
+  fast-equals@5.4.3:
+    resolution: {integrity: sha512-8unmvA0qrfpFWBYUate9BTGtQdKHWBYt+KdAIkag7Vvxe7wz8Q2nJg7fLMC0bJqe0bjP31kca7Ckaawrs4Istg==}
+    engines: {node: '>=6.0.0'}
 
   fast-glob@3.3.3:
     resolution: {integrity: sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==}
@@ -3984,6 +4858,10 @@ packages:
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
+
+  internmap@2.0.3:
+    resolution: {integrity: sha512-5Hh7Y1wQbvY5ooGgPbDaL5iYLAPzMTUrjMulskHLH6wnv/A+1q5rgEaiuqEjB+oxGXIVZs1FF+R/KPN3ZSQYYg==}
+    engines: {node: '>=12'}
 
   ip-address@10.2.0:
     resolution: {integrity: sha512-/+S6j4E9AHvW9SWMSEY9Xfy66O5PWvVEJ08O0y5JGyEKQpojb0K0GKpz/v5HJ/G0vi3D2sjGK78119oXZeE0qA==}
@@ -4158,6 +5036,9 @@ packages:
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
+
+  lodash@4.18.1:
+    resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
 
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -4518,6 +5399,9 @@ packages:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
     engines: {node: '>= 0.6.0'}
 
+  prop-types@15.8.1:
+    resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
+
   proxy-addr@2.0.7:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
     engines: {node: '>= 0.10'}
@@ -4541,6 +5425,12 @@ packages:
     resolution: {integrity: sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==}
     engines: {node: '>= 0.10'}
 
+  react-day-picker@8.10.2:
+    resolution: {integrity: sha512-LK68OTbHB3oJNhl9cA0qVizzp3o26w61YSjAFkYi67N86iro32wx86kSNeFU/hq+gI8m1yzWhnomMLfZ041RzQ==}
+    peerDependencies:
+      date-fns: ^2.28.0 || ^3.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   react-docgen-typescript@2.4.0:
     resolution: {integrity: sha512-ZtAp5XTO5HRzQctjPU0ybY0RRCQO19X/8fxn3w7y2VVTUbGHDKULPTL4ky3vB05euSgG5NpALhEhDPvQ56wvXg==}
     peerDependencies:
@@ -4555,6 +5445,19 @@ packages:
     peerDependencies:
       react: ^18.3.1
 
+  react-hook-form@7.89.0:
+    resolution: {integrity: sha512-vKcoCfy8RKZDrhSdqsRFp0uEOdS1AhLjOL6hR7Wmfzg1akNxEhaPf5WORx8SgEQPVXakdDyDkqQp+KNxVnnPHg==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8.0 || ^17 || ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  react-is@16.13.1:
+    resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
@@ -4567,6 +5470,18 @@ packages:
   react-refresh@0.17.0:
     resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
     engines: {node: '>=0.10.0'}
+
+  react-smooth@4.0.4:
+    resolution: {integrity: sha512-gnGKTpYwqL0Iii09gHobNolvX4Kiq4PKx6eWBCYYix+8cdw+cGo3do906l1NBPKkSWx1DghC1dlWG9L2uGd61Q==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  react-transition-group@4.4.5:
+    resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
+    peerDependencies:
+      react: '>=16.6.0'
+      react-dom: '>=16.6.0'
 
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
@@ -4586,6 +5501,17 @@ packages:
   recast@0.23.12:
     resolution: {integrity: sha512-dEWRjcINDu/F4l2dYx57ugBtD7HV9KXESyxhzw/MqWLeglJrsjJKqACPyUPg+6AF8mIgm+Zi0dZ3ACoIg+QtpA==}
     engines: {node: '>= 4'}
+
+  recharts-scale@0.4.5:
+    resolution: {integrity: sha512-kivNFO+0OcUNu7jQquLXAxz1FIwZj8nrj+YkOKc5694NbjCvcT6aSZiIzNzd2Kul4o4rTto8QVR9lMNtxD4G1w==}
+
+  recharts@2.15.4:
+    resolution: {integrity: sha512-UT/q6fwS3c1dHbXv2uFgYJ9BMFHu3fwnd7AYZaEQhXuYQ4hgsxLvsUXzGdKeZrW5xopzDCvuA2N41WJ88I7zIw==}
+    engines: {node: '>=14'}
+    deprecated: 1.x and 2.x branches are no longer active. Bump to Recharts v3 to receive latest features and bugfixes. See https://github.com/recharts/recharts/wiki/3.0-migration-guide
+    peerDependencies:
+      react: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   redent@3.0.0:
     resolution: {integrity: sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==}
@@ -4926,6 +5852,9 @@ packages:
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+
+  victory-vendor@36.9.2:
+    resolution: {integrity: sha512-PnpQQMuxlwYdocC8fIJqVXvkeViHYzotI+NJrCuav0ZYFoq912ZHBk3mCeuj+5/VpodOjPe1z0Fk2ihgzlXqjQ==}
 
   vite-node@2.1.9:
     resolution: {integrity: sha512-AM9aQ/IPrW/6ENLQg3AGY4K1N2TGZdR5e4gu/MmmR2xR3Ll1+dib+nook92g4TV3PXVyeyxdWwtaCAiUL0hMxA==}
@@ -5448,6 +6377,10 @@ snapshots:
     dependencies:
       hono: 4.12.31
 
+  '@hookform/resolvers@3.10.0(react-hook-form@7.89.0(@types/react@18.3.31)(react@18.3.1))':
+    dependencies:
+      react-hook-form: 7.89.0(@types/react@18.3.31)(react@18.3.1)
+
   '@isaacs/cliui@8.0.2':
     dependencies:
       string-width: 5.1.2
@@ -5848,6 +6781,14 @@ snapshots:
     dependencies:
       storybook: 8.6.18(prettier@3.9.5)
 
+  '@tanstack/react-table@8.21.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@tanstack/table-core': 8.21.3
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
+  '@tanstack/table-core@8.21.3': {}
+
   '@testing-library/dom@10.4.1':
     dependencies:
       '@babel/code-frame': 7.29.7
@@ -5904,6 +6845,30 @@ snapshots:
   '@types/babel__traverse@7.28.0':
     dependencies:
       '@babel/types': 7.29.7
+
+  '@types/d3-array@3.2.2': {}
+
+  '@types/d3-color@3.1.3': {}
+
+  '@types/d3-ease@3.0.2': {}
+
+  '@types/d3-interpolate@3.0.4':
+    dependencies:
+      '@types/d3-color': 3.1.3
+
+  '@types/d3-path@3.1.1': {}
+
+  '@types/d3-scale@4.0.9':
+    dependencies:
+      '@types/d3-time': 3.0.4
+
+  '@types/d3-shape@3.2.0':
+    dependencies:
+      '@types/d3-path': 3.1.1
+
+  '@types/d3-time@3.0.4': {}
+
+  '@types/d3-timer@3.0.2': {}
 
   '@types/doctrine@0.0.9': {}
 
@@ -6245,14 +7210,56 @@ snapshots:
 
   csstype@3.2.3: {}
 
+  d3-array@3.2.4:
+    dependencies:
+      internmap: 2.0.3
+
+  d3-color@3.1.0: {}
+
+  d3-ease@3.0.1: {}
+
+  d3-format@3.1.2: {}
+
+  d3-interpolate@3.0.1:
+    dependencies:
+      d3-color: 3.1.0
+
+  d3-path@3.1.0: {}
+
+  d3-scale@4.0.2:
+    dependencies:
+      d3-array: 3.2.4
+      d3-format: 3.1.2
+      d3-interpolate: 3.0.1
+      d3-time: 3.1.0
+      d3-time-format: 4.1.0
+
+  d3-shape@3.2.0:
+    dependencies:
+      d3-path: 3.1.0
+
+  d3-time-format@4.1.0:
+    dependencies:
+      d3-time: 3.1.0
+
+  d3-time@3.1.0:
+    dependencies:
+      d3-array: 3.2.4
+
+  d3-timer@3.0.1: {}
+
   data-urls@5.0.0:
     dependencies:
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.2.0
 
+  date-fns@3.6.0: {}
+
   debug@4.4.3:
     dependencies:
       ms: 2.1.3
+
+  decimal.js-light@2.5.1: {}
 
   decimal.js@10.6.0: {}
 
@@ -6286,6 +7293,11 @@ snapshots:
 
   dom-accessibility-api@0.6.3: {}
 
+  dom-helpers@5.2.1:
+    dependencies:
+      '@babel/runtime': 7.29.7
+      csstype: 3.2.3
+
   dunder-proto@1.0.1:
     dependencies:
       call-bind-apply-helpers: 1.0.2
@@ -6297,6 +7309,18 @@ snapshots:
   ee-first@1.1.1: {}
 
   electron-to-chromium@1.5.392: {}
+
+  embla-carousel-react@8.6.0(react@18.3.1):
+    dependencies:
+      embla-carousel: 8.6.0
+      embla-carousel-reactive-utils: 8.6.0(embla-carousel@8.6.0)
+      react: 18.3.1
+
+  embla-carousel-reactive-utils@8.6.0(embla-carousel@8.6.0):
+    dependencies:
+      embla-carousel: 8.6.0
+
+  embla-carousel@8.6.0: {}
 
   emoji-regex@8.0.0: {}
 
@@ -6432,6 +7456,8 @@ snapshots:
 
   etag@1.8.1: {}
 
+  eventemitter3@4.0.7: {}
+
   eventsource-parser@3.1.0: {}
 
   eventsource@3.0.7:
@@ -6491,6 +7517,8 @@ snapshots:
       - supports-color
 
   fast-deep-equal@3.1.3: {}
+
+  fast-equals@5.4.3: {}
 
   fast-glob@3.3.3:
     dependencies:
@@ -6668,6 +7696,8 @@ snapshots:
   indent-string@4.0.0: {}
 
   inherits@2.0.4: {}
+
+  internmap@2.0.3: {}
 
   ip-address@10.2.0: {}
 
@@ -6859,6 +7889,8 @@ snapshots:
       p-locate: 5.0.0
 
   lodash.merge@4.6.2: {}
+
+  lodash@4.18.1: {}
 
   loose-envify@1.4.0:
     dependencies:
@@ -7106,6 +8138,12 @@ snapshots:
 
   process@0.11.10: {}
 
+  prop-types@15.8.1:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react-is: 16.13.1
+
   proxy-addr@2.0.7:
     dependencies:
       forwarded: 0.2.0
@@ -7128,6 +8166,11 @@ snapshots:
       http-errors: 2.0.1
       iconv-lite: 0.7.3
       unpipe: 1.0.0
+
+  react-day-picker@8.10.2(date-fns@3.6.0)(react@18.3.1):
+    dependencies:
+      date-fns: 3.6.0
+      react: 18.3.1
 
   react-docgen-typescript@2.4.0(typescript@5.9.3):
     dependencies:
@@ -7154,6 +8197,14 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
+  react-hook-form@7.89.0(@types/react@18.3.31)(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.31
+
+  react-is@16.13.1: {}
+
   react-is@17.0.2: {}
 
   react-is@18.3.1: {}
@@ -7161,6 +8212,23 @@ snapshots:
   react-is@19.2.7: {}
 
   react-refresh@0.17.0: {}
+
+  react-smooth@4.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      fast-equals: 5.4.3
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-transition-group: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+
+  react-transition-group@4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@babel/runtime': 7.29.7
+      dom-helpers: 5.2.1
+      loose-envify: 1.4.0
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   react@18.3.1:
     dependencies:
@@ -7183,6 +8251,23 @@ snapshots:
       source-map: 0.6.1
       tiny-invariant: 1.3.3
       tslib: 2.8.1
+
+  recharts-scale@0.4.5:
+    dependencies:
+      decimal.js-light: 2.5.1
+
+  recharts@2.15.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      clsx: 2.1.1
+      eventemitter3: 4.0.7
+      lodash: 4.18.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-is: 18.3.1
+      react-smooth: 4.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      recharts-scale: 0.4.5
+      tiny-invariant: 1.3.3
+      victory-vendor: 36.9.2
 
   redent@3.0.0:
     dependencies:
@@ -7579,6 +8664,23 @@ snapshots:
   uuid@9.0.1: {}
 
   vary@1.1.2: {}
+
+  victory-vendor@36.9.2:
+    dependencies:
+      '@types/d3-array': 3.2.2
+      '@types/d3-ease': 3.0.2
+      '@types/d3-interpolate': 3.0.4
+      '@types/d3-scale': 4.0.9
+      '@types/d3-shape': 3.2.0
+      '@types/d3-time': 3.0.4
+      '@types/d3-timer': 3.0.2
+      d3-array: 3.2.4
+      d3-ease: 3.0.1
+      d3-interpolate: 3.0.1
+      d3-scale: 4.0.2
+      d3-shape: 3.2.0
+      d3-time: 3.1.0
+      d3-timer: 3.0.1
 
   vite-node@2.1.9(@types/node@22.20.1):
     dependencies:

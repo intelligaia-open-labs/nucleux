@@ -1,6 +1,6 @@
 {
   "library": "@nucleux/react",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "generatedFrom": "packages/* (do not edit — run scripts/gen-mcp-catalog.mjs)",
   "setup": {
     "installFull": "pnpm add @nucleux/react @nucleux/tokens",
@@ -13,8 +13,8 @@
     "note": "Every component is also re-exported from the @nucleux/react umbrella."
   },
   "counts": {
-    "components": 73,
-    "packages": 77,
+    "components": 99,
+    "packages": 103,
     "examples": 6
   },
   "packages": [
@@ -396,6 +396,80 @@
       }
     },
     {
+      "name": "alert-dialog",
+      "package": "@nucleux/alert-dialog",
+      "kind": "component",
+      "description": "A modal confirmation dialog for consequential actions. Unlike Dialog, it uses\nrole=\"alertdialog\", does not close on overlay click, and focuses Cancel by\ndefault. Escape triggers cancel.",
+      "summary": "Modal confirmation dialog — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "alert-dialog"
+      ],
+      "exports": [
+        "AlertDialog",
+        "AlertDialogProps"
+      ],
+      "components": [
+        "AlertDialog"
+      ],
+      "import": "import { AlertDialog } from \"@nucleux/alert-dialog\";",
+      "installSingle": "pnpm add @nucleux/alert-dialog @nucleux/tokens",
+      "props": [
+        {
+          "name": "AlertDialogProps",
+          "source": "export interface AlertDialogProps {\n  /** Whether the alert dialog is open. */\n  open: boolean;\n  /** Called when the dialog requests to close (Escape / a button). */\n  onOpenChange: (open: boolean) => void;\n  title: React.ReactNode;\n  description?: React.ReactNode;\n  /** Confirm button label. */\n  confirmLabel?: string;\n  /** Cancel button label. */\n  cancelLabel?: string;\n  onConfirm?: () => void;\n  onCancel?: () => void;\n  /** Style the confirm action as destructive. */\n  destructive?: boolean;\n  /** Extra content between the description and the actions. */\n  children?: React.ReactNode;\n  className?: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/alert-dialog\n\nModal confirmation dialog — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/alert-dialog @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { AlertDialog } from \"@nucleux/alert-dialog\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "aspect-ratio",
+      "package": "@nucleux/aspect-ratio",
+      "kind": "component",
+      "description": "Constrains its children to a fixed width-to-height ratio.",
+      "summary": "Fixed aspect-ratio box — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "aspect-ratio"
+      ],
+      "exports": [
+        "AspectRatio",
+        "AspectRatioProps"
+      ],
+      "components": [
+        "AspectRatio"
+      ],
+      "import": "import { AspectRatio } from \"@nucleux/aspect-ratio\";",
+      "installSingle": "pnpm add @nucleux/aspect-ratio @nucleux/tokens",
+      "props": [
+        {
+          "name": "AspectRatioProps",
+          "source": "export interface AspectRatioProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Width / height ratio (e.g. 16/9). Defaults to 1 (square). */\n  ratio?: number;\n}"
+        }
+      ],
+      "readme": "# @nucleux/aspect-ratio\n\nFixed aspect-ratio box — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/aspect-ratio @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { AspectRatio } from \"@nucleux/aspect-ratio\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "attachment-tile",
       "package": "@nucleux/attachment-tile",
       "kind": "component",
@@ -631,6 +705,38 @@
       }
     },
     {
+      "name": "calendar",
+      "package": "@nucleux/calendar",
+      "kind": "component",
+      "description": "A month calendar / date grid built on react-day-picker, restyled with Nucleux\ntokens. Supports single, multiple, and range selection via the `mode` prop.",
+      "summary": "Month calendar / date grid — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "calendar"
+      ],
+      "exports": [
+        "Calendar",
+        "CalendarProps"
+      ],
+      "components": [
+        "Calendar"
+      ],
+      "import": "import { Calendar } from \"@nucleux/calendar\";",
+      "installSingle": "pnpm add @nucleux/calendar @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/calendar\n\nMonth calendar / date grid — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/calendar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Calendar } from \"@nucleux/calendar\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "capability-overview",
       "package": "@nucleux/capability-overview",
       "kind": "component",
@@ -713,6 +819,112 @@
         }
       ],
       "readme": "# @nucleux/card\n\nComposable card surface (CardContainer + parts) — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/card @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { CardContainer, CardHeader, CardTitle, CardDescription, CardAction, CardContent } from \"@nucleux/card\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "carousel",
+      "package": "@nucleux/carousel",
+      "kind": "component",
+      "description": "A swipeable/keyboard-navigable carousel built on Embla.",
+      "summary": "Swipeable content carousel — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "carousel"
+      ],
+      "exports": [
+        "Carousel",
+        "CarouselContent",
+        "CarouselItem",
+        "CarouselPrevious",
+        "CarouselNext",
+        "CarouselProps",
+        "CarouselContentProps",
+        "CarouselItemProps"
+      ],
+      "components": [
+        "Carousel",
+        "CarouselContent",
+        "CarouselItem",
+        "CarouselPrevious",
+        "CarouselNext"
+      ],
+      "import": "import { Carousel, CarouselContent, CarouselItem, CarouselPrevious } from \"@nucleux/carousel\";",
+      "installSingle": "pnpm add @nucleux/carousel @nucleux/tokens",
+      "props": [
+        {
+          "name": "CarouselProps",
+          "source": "export interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {\n  orientation?: Orientation;\n  opts?: EmblaOptionsType;\n  /** Receive the Embla API instance once ready. */\n  setApi?: (api: EmblaCarouselType | undefined) => void;\n}"
+        }
+      ],
+      "readme": "# @nucleux/carousel\n\nSwipeable content carousel — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/carousel @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Carousel } from \"@nucleux/carousel\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "chart",
+      "package": "@nucleux/chart",
+      "kind": "component",
+      "description": "Re-exported recharts Tooltip — pair with {@link ChartTooltipContent}.",
+      "summary": "Composable chart primitives — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "chart"
+      ],
+      "exports": [
+        "ChartTooltip",
+        "ChartLegend",
+        "ChartContainer",
+        "ChartTooltipContent",
+        "ChartLegendContent",
+        "ChartSeriesConfig",
+        "ChartConfig",
+        "ChartContainerProps",
+        "ChartTooltipContentProps",
+        "ChartLegendContentProps"
+      ],
+      "components": [
+        "ChartTooltip",
+        "ChartLegend",
+        "ChartContainer",
+        "ChartTooltipContent",
+        "ChartLegendContent",
+        "ChartSeriesConfig",
+        "ChartConfig"
+      ],
+      "import": "import { ChartTooltip, ChartLegend, ChartContainer, ChartTooltipContent } from \"@nucleux/chart\";",
+      "installSingle": "pnpm add @nucleux/chart @nucleux/tokens",
+      "props": [
+        {
+          "name": "ChartContainerProps",
+          "source": "export interface ChartContainerProps extends React.HTMLAttributes<HTMLDivElement> {\n  config: ChartConfig;\n  /** A single recharts chart element (BarChart, LineChart, …). */\n  children: React.ReactElement;\n}"
+        },
+        {
+          "name": "ChartTooltipContentProps",
+          "source": "export interface ChartTooltipContentProps {\n  active?: boolean;\n  payload?: TooltipPayloadItem[];\n  label?: React.ReactNode;\n  config?: ChartConfig;\n}"
+        },
+        {
+          "name": "ChartLegendContentProps",
+          "source": "export interface ChartLegendContentProps {\n  payload?: LegendPayloadItem[];\n  config?: ChartConfig;\n}"
+        }
+      ],
+      "readme": "# @nucleux/chart\n\nComposable chart primitives — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/chart @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Chart } from \"@nucleux/chart\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -925,6 +1137,148 @@
       }
     },
     {
+      "name": "collapsible",
+      "package": "@nucleux/collapsible",
+      "kind": "component",
+      "description": "A disclosure region that expands/collapses its content.",
+      "summary": "Single collapsible disclosure region — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "collapsible"
+      ],
+      "exports": [
+        "Collapsible",
+        "CollapsibleTrigger",
+        "CollapsibleContent",
+        "CollapsibleProps",
+        "CollapsibleTriggerProps",
+        "CollapsibleContentProps"
+      ],
+      "components": [
+        "Collapsible",
+        "CollapsibleTrigger",
+        "CollapsibleContent"
+      ],
+      "import": "import { Collapsible, CollapsibleTrigger, CollapsibleContent } from \"@nucleux/collapsible\";",
+      "installSingle": "pnpm add @nucleux/collapsible @nucleux/tokens",
+      "props": [
+        {
+          "name": "CollapsibleProps",
+          "source": "export interface CollapsibleProps extends React.HTMLAttributes<HTMLDivElement> {\n  open?: boolean;\n  defaultOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  disabled?: boolean;\n}"
+        },
+        {
+          "name": "CollapsibleTriggerProps",
+          "source": "export interface CollapsibleTriggerProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  /** Hide the default chevron affordance. */\n  hideChevron?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/collapsible\n\nSingle collapsible disclosure region — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/collapsible @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Collapsible } from \"@nucleux/collapsible\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "combobox",
+      "package": "@nucleux/combobox",
+      "kind": "component",
+      "description": "A single-select control combining a text filter with a dropdown list.",
+      "summary": "Searchable single-select combobox — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "combobox"
+      ],
+      "exports": [
+        "Combobox",
+        "ComboboxOption",
+        "ComboboxProps"
+      ],
+      "components": [
+        "Combobox",
+        "ComboboxOption"
+      ],
+      "import": "import { Combobox, ComboboxOption } from \"@nucleux/combobox\";",
+      "installSingle": "pnpm add @nucleux/combobox @nucleux/tokens",
+      "props": [
+        {
+          "name": "ComboboxProps",
+          "source": "export interface ComboboxProps {\n  options: ComboboxOption[];\n  value?: string;\n  defaultValue?: string;\n  onValueChange?: (value: string) => void;\n  placeholder?: string;\n  searchPlaceholder?: string;\n  emptyText?: string;\n  disabled?: boolean;\n  className?: string;\n  /** Accessible name for the trigger. */\n  \"aria-label\"?: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/combobox\n\nSearchable single-select combobox — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/combobox @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Combobox } from \"@nucleux/combobox\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "command",
+      "package": "@nucleux/command",
+      "kind": "component",
+      "description": "A composable command palette: a filterable, keyboard-navigable list of\nactions. Compose with CommandInput, CommandList, CommandGroup, CommandItem,\nand CommandEmpty.",
+      "summary": "Searchable command palette — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "command"
+      ],
+      "exports": [
+        "Command",
+        "CommandInput",
+        "CommandList",
+        "CommandGroup",
+        "CommandItem",
+        "CommandEmpty",
+        "CommandProps",
+        "CommandInputProps",
+        "CommandListProps",
+        "CommandGroupProps",
+        "CommandItemProps",
+        "CommandEmptyProps"
+      ],
+      "components": [
+        "Command",
+        "CommandInput",
+        "CommandList",
+        "CommandGroup",
+        "CommandItem",
+        "CommandEmpty"
+      ],
+      "import": "import { Command, CommandInput, CommandList, CommandGroup } from \"@nucleux/command\";",
+      "installSingle": "pnpm add @nucleux/command @nucleux/tokens",
+      "props": [
+        {
+          "name": "CommandGroupProps",
+          "source": "export interface CommandGroupProps extends React.HTMLAttributes<HTMLDivElement> {\n  heading?: React.ReactNode;\n}"
+        },
+        {
+          "name": "CommandItemProps",
+          "source": "export interface CommandItemProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\"> {\n  /** The value used for filtering + selection. Defaults to the text content. */\n  value: string;\n  disabled?: boolean;\n  onSelect?: (value: string) => void;\n}"
+        }
+      ],
+      "readme": "# @nucleux/command\n\nSearchable command palette — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/command @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Command } from \"@nucleux/command\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "confidence-indicator",
       "package": "@nucleux/confidence-indicator",
       "kind": "component",
@@ -995,6 +1349,128 @@
         }
       ],
       "readme": "# @nucleux/connector-card\n\nConnectorCard — enable an external tool or data connector — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/connector-card @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ConnectorCard } from \"@nucleux/connector-card\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "context-menu",
+      "package": "@nucleux/context-menu",
+      "kind": "component",
+      "description": "Wraps a region so right-clicking it opens a menu at the cursor.",
+      "summary": "Right-click context menu — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "context-menu"
+      ],
+      "exports": [
+        "ContextMenu",
+        "ContextMenuItem",
+        "ContextMenuSeparator",
+        "ContextMenuLabel",
+        "ContextMenuProps",
+        "ContextMenuItemProps"
+      ],
+      "components": [
+        "ContextMenu",
+        "ContextMenuItem",
+        "ContextMenuSeparator",
+        "ContextMenuLabel"
+      ],
+      "import": "import { ContextMenu, ContextMenuItem, ContextMenuSeparator, ContextMenuLabel } from \"@nucleux/context-menu\";",
+      "installSingle": "pnpm add @nucleux/context-menu @nucleux/tokens",
+      "props": [
+        {
+          "name": "ContextMenuProps",
+          "source": "export interface ContextMenuProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"content\"> {\n  /** Menu items — compose ContextMenuItem / ContextMenuSeparator / ContextMenuLabel. */\n  content: React.ReactNode;\n  /** The area that opens the menu on right-click. */\n  children: React.ReactNode;\n}"
+        },
+        {
+          "name": "ContextMenuItemProps",
+          "source": "export interface ContextMenuItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  icon?: React.ReactNode;\n  trailing?: React.ReactNode;\n  destructive?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/context-menu\n\nRight-click context menu — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/context-menu @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ContextMenu } from \"@nucleux/context-menu\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "data-table",
+      "package": "@nucleux/data-table",
+      "kind": "component",
+      "description": "A sortable, paginated table built on TanStack Table. Pass column definitions\nand data; sorting and pagination are handled internally.",
+      "summary": "Sortable, paginated data table — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "data-table"
+      ],
+      "exports": [
+        "DataTable",
+        "DataTableProps"
+      ],
+      "components": [
+        "DataTable"
+      ],
+      "import": "import { DataTable } from \"@nucleux/data-table\";",
+      "installSingle": "pnpm add @nucleux/data-table @nucleux/tokens",
+      "props": [
+        {
+          "name": "DataTableProps",
+          "source": "export interface DataTableProps<TData, TValue> {\n  columns: ColumnDef<TData, TValue>[];\n  data: TData[];\n  /** Rows per page. Set 0 to disable pagination. */\n  pageSize?: number;\n  /** Message shown when there are no rows. */\n  emptyMessage?: React.ReactNode;\n  className?: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/data-table\n\nSortable, paginated data table — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/data-table @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { DataTable } from \"@nucleux/data-table\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "date-picker",
+      "package": "@nucleux/date-picker",
+      "kind": "component",
+      "description": "A text trigger that reveals a {@link Calendar} to pick a single date.",
+      "summary": "Date picker with calendar popover — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "date-picker"
+      ],
+      "exports": [
+        "DatePicker",
+        "DatePickerProps"
+      ],
+      "components": [
+        "DatePicker"
+      ],
+      "import": "import { DatePicker } from \"@nucleux/date-picker\";",
+      "installSingle": "pnpm add @nucleux/date-picker @nucleux/tokens",
+      "props": [
+        {
+          "name": "DatePickerProps",
+          "source": "export interface DatePickerProps {\n  value?: Date;\n  defaultValue?: Date;\n  onValueChange?: (date: Date | undefined) => void;\n  placeholder?: string;\n  disabled?: boolean;\n  /** Disable individual days. */\n  isDateDisabled?: (date: Date) => boolean;\n  className?: string;\n  \"aria-label\"?: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/date-picker\n\nDate picker with calendar popover — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/date-picker @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { DatePicker } from \"@nucleux/date-picker\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -1124,6 +1600,50 @@
       }
     },
     {
+      "name": "form",
+      "package": "@nucleux/form",
+      "kind": "component",
+      "description": "The form root — a re-export of react-hook-form's FormProvider.",
+      "summary": "Accessible form primitives — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "form"
+      ],
+      "exports": [
+        "Form",
+        "FormField",
+        "useFormField",
+        "FormItem",
+        "FormLabel",
+        "FormControl",
+        "FormDescription",
+        "FormMessage"
+      ],
+      "components": [
+        "Form",
+        "FormField",
+        "FormItem",
+        "FormLabel",
+        "FormControl",
+        "FormDescription",
+        "FormMessage"
+      ],
+      "import": "import { Form, FormField, FormItem, FormLabel } from \"@nucleux/form\";",
+      "installSingle": "pnpm add @nucleux/form @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/form\n\nAccessible form primitives — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/form @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Form } from \"@nucleux/form\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "getting-started-pill",
       "package": "@nucleux/getting-started-pill",
       "kind": "component",
@@ -1225,6 +1745,43 @@
       }
     },
     {
+      "name": "hover-card",
+      "package": "@nucleux/hover-card",
+      "kind": "component",
+      "description": "Reveals a floating card when its trigger is hovered or focused.",
+      "summary": "Hover-triggered content card — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "hover-card"
+      ],
+      "exports": [
+        "HoverCard",
+        "HoverCardProps"
+      ],
+      "components": [
+        "HoverCard"
+      ],
+      "import": "import { HoverCard } from \"@nucleux/hover-card\";",
+      "installSingle": "pnpm add @nucleux/hover-card @nucleux/tokens",
+      "props": [
+        {
+          "name": "HoverCardProps",
+          "source": "export interface HoverCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"content\"> {\n  /** The element that reveals the card on hover/focus. */\n  trigger: React.ReactNode;\n  /** The floating card content. */\n  content: React.ReactNode;\n  side?: \"top\" | \"bottom\";\n  align?: \"start\" | \"center\" | \"end\";\n  /** Delay in ms before opening on hover. */\n  openDelay?: number;\n  /** Delay in ms before closing after leaving. */\n  closeDelay?: number;\n}"
+        }
+      ],
+      "readme": "# @nucleux/hover-card\n\nHover-triggered content card — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/hover-card @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { HoverCard } from \"@nucleux/hover-card\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "icon-button",
       "package": "@nucleux/icon-button",
       "kind": "component",
@@ -1304,6 +1861,43 @@
       }
     },
     {
+      "name": "input",
+      "package": "@nucleux/input",
+      "kind": "component",
+      "description": "A single-line text input, tokenized and themeable.",
+      "summary": "Text input field — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "input"
+      ],
+      "exports": [
+        "Input",
+        "InputProps"
+      ],
+      "components": [
+        "Input"
+      ],
+      "import": "import { Input } from \"@nucleux/input\";",
+      "installSingle": "pnpm add @nucleux/input @nucleux/tokens",
+      "props": [
+        {
+          "name": "InputProps",
+          "source": "export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {\n  /** Render an error ring and set `aria-invalid`. */\n  invalid?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/input\n\nText input field — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/input @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Input } from \"@nucleux/input\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "input-bar",
       "package": "@nucleux/input-bar",
       "kind": "component",
@@ -1335,6 +1929,43 @@
         }
       ],
       "readme": "# @nucleux/input-bar\n\nChat composer with auto-resize — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/input-bar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { InputBar } from \"@nucleux/input-bar\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "input-otp",
+      "package": "@nucleux/input-otp",
+      "kind": "component",
+      "description": "A segmented input for one-time codes / PINs.",
+      "summary": "Segmented one-time-code input — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "input-otp"
+      ],
+      "exports": [
+        "InputOtp",
+        "InputOtpProps"
+      ],
+      "components": [
+        "InputOtp"
+      ],
+      "import": "import { InputOtp } from \"@nucleux/input-otp\";",
+      "installSingle": "pnpm add @nucleux/input-otp @nucleux/tokens",
+      "props": [
+        {
+          "name": "InputOtpProps",
+          "source": "export interface InputOtpProps {\n  /** Number of code cells. */\n  length?: number;\n  value?: string;\n  defaultValue?: string;\n  onChange?: (value: string) => void;\n  /** Fired once every cell is filled. */\n  onComplete?: (value: string) => void;\n  disabled?: boolean;\n  /** Only accept digits (default true). */\n  numeric?: boolean;\n  className?: string;\n  \"aria-label\"?: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/input-otp\n\nSegmented one-time-code input — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/input-otp @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { InputOtp } from \"@nucleux/input-otp\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -1374,6 +2005,43 @@
         }
       ],
       "readme": "# @nucleux/knowledge-base-picker\n\nKnowledgeBasePicker — select the context files an agent may use — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/knowledge-base-picker @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { KnowledgeBasePicker } from \"@nucleux/knowledge-base-picker\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "label",
+      "package": "@nucleux/label",
+      "kind": "component",
+      "description": "An accessible caption for a form control. Pair with `htmlFor`.",
+      "summary": "Accessible form label — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "label"
+      ],
+      "exports": [
+        "Label",
+        "LabelProps"
+      ],
+      "components": [
+        "Label"
+      ],
+      "import": "import { Label } from \"@nucleux/label\";",
+      "installSingle": "pnpm add @nucleux/label @nucleux/tokens",
+      "props": [
+        {
+          "name": "LabelProps",
+          "source": "export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {\n  /** Show a destructive-colored asterisk to mark the field required. */\n  required?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/label\n\nAccessible form label — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/label @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Label } from \"@nucleux/label\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -1530,6 +2198,61 @@
         }
       ],
       "readme": "# @nucleux/menu\n\nDropdown / context menu surface — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/menu @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Menu, MenuItem, MenuSeparator, MenuLabel } from \"@nucleux/menu\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "menubar",
+      "package": "@nucleux/menubar",
+      "kind": "component",
+      "description": "A horizontal bar of top-level menus (File / Edit / View …).",
+      "summary": "Application menu bar — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "menubar"
+      ],
+      "exports": [
+        "Menubar",
+        "MenubarMenu",
+        "MenubarTrigger",
+        "MenubarContent",
+        "MenubarItem",
+        "MenubarSeparator",
+        "MenubarProps",
+        "MenubarMenuProps",
+        "MenubarTriggerProps",
+        "MenubarContentProps",
+        "MenubarItemProps"
+      ],
+      "components": [
+        "Menubar",
+        "MenubarMenu",
+        "MenubarTrigger",
+        "MenubarContent",
+        "MenubarItem",
+        "MenubarSeparator"
+      ],
+      "import": "import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent } from \"@nucleux/menubar\";",
+      "installSingle": "pnpm add @nucleux/menubar @nucleux/tokens",
+      "props": [
+        {
+          "name": "MenubarMenuProps",
+          "source": "export interface MenubarMenuProps {\n  /** Unique key for this menu. Auto-generated if omitted. */\n  value?: string;\n  children: React.ReactNode;\n}"
+        },
+        {
+          "name": "MenubarItemProps",
+          "source": "export interface MenubarItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  trailing?: React.ReactNode;\n  destructive?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/menubar\n\nApplication menu bar — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/menubar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Menubar } from \"@nucleux/menubar\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -1704,6 +2427,62 @@
       }
     },
     {
+      "name": "navigation-menu",
+      "package": "@nucleux/navigation-menu",
+      "kind": "component",
+      "description": "A site navigation bar with hover/focus-revealed dropdown panels.",
+      "summary": "Navigation menu with dropdown panels — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "navigation-menu"
+      ],
+      "exports": [
+        "NavigationMenu",
+        "NavigationMenuList",
+        "NavigationMenuItem",
+        "NavigationMenuTrigger",
+        "NavigationMenuContent",
+        "NavigationMenuLink",
+        "NavigationMenuProps",
+        "NavigationMenuListProps",
+        "NavigationMenuItemProps",
+        "NavigationMenuTriggerProps",
+        "NavigationMenuContentProps",
+        "NavigationMenuLinkProps"
+      ],
+      "components": [
+        "NavigationMenu",
+        "NavigationMenuList",
+        "NavigationMenuItem",
+        "NavigationMenuTrigger",
+        "NavigationMenuContent",
+        "NavigationMenuLink"
+      ],
+      "import": "import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger } from \"@nucleux/navigation-menu\";",
+      "installSingle": "pnpm add @nucleux/navigation-menu @nucleux/tokens",
+      "props": [
+        {
+          "name": "NavigationMenuItemProps",
+          "source": "export interface NavigationMenuItemProps extends React.LiHTMLAttributes<HTMLLIElement> {\n  value?: string;\n}"
+        },
+        {
+          "name": "NavigationMenuLinkProps",
+          "source": "export interface NavigationMenuLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {\n  active?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/navigation-menu\n\nNavigation menu with dropdown panels — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/navigation-menu @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { NavigationMenu } from \"@nucleux/navigation-menu\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "page-header",
       "package": "@nucleux/page-header",
       "kind": "component",
@@ -1735,6 +2514,43 @@
         }
       ],
       "readme": "# @nucleux/page-header\n\nPageHeader — badges row, title, and description block — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/page-header @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { PageHeader } from \"@nucleux/page-header\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "pagination",
+      "package": "@nucleux/pagination",
+      "kind": "component",
+      "description": "Page navigation with previous/next controls and truncated page numbers.",
+      "summary": "Page navigation controls — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "pagination"
+      ],
+      "exports": [
+        "Pagination",
+        "PaginationProps"
+      ],
+      "components": [
+        "Pagination"
+      ],
+      "import": "import { Pagination } from \"@nucleux/pagination\";",
+      "installSingle": "pnpm add @nucleux/pagination @nucleux/tokens",
+      "props": [
+        {
+          "name": "PaginationProps",
+          "source": "export interface PaginationProps extends Omit<React.HTMLAttributes<HTMLElement>, \"onChange\"> {\n  /** 1-based current page. */\n  page: number;\n  /** Total number of pages. */\n  count: number;\n  onPageChange: (page: number) => void;\n  /** How many page buttons to show around the current page. */\n  siblingCount?: number;\n}"
+        }
+      ],
+      "readme": "# @nucleux/pagination\n\nPage navigation controls — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/pagination @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Pagination } from \"@nucleux/pagination\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -2091,6 +2907,57 @@
       }
     },
     {
+      "name": "resizable",
+      "package": "@nucleux/resizable",
+      "kind": "component",
+      "description": "A container of {@link ResizablePanel}s separated by draggable {@link ResizableHandle}s.",
+      "summary": "Resizable split panels — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "resizable"
+      ],
+      "exports": [
+        "ResizablePanelGroup",
+        "ResizablePanel",
+        "ResizableHandle",
+        "ResizablePanelGroupProps",
+        "ResizablePanelProps",
+        "ResizableHandleProps"
+      ],
+      "components": [
+        "ResizablePanelGroup",
+        "ResizablePanel",
+        "ResizableHandle"
+      ],
+      "import": "import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from \"@nucleux/resizable\";",
+      "installSingle": "pnpm add @nucleux/resizable @nucleux/tokens",
+      "props": [
+        {
+          "name": "ResizablePanelGroupProps",
+          "source": "export interface ResizablePanelGroupProps extends React.HTMLAttributes<HTMLDivElement> {\n  direction?: Direction;\n}"
+        },
+        {
+          "name": "ResizablePanelProps",
+          "source": "export interface ResizablePanelProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Initial size as a flex-grow weight (defaults to 1). */\n  defaultSize?: number;\n}"
+        },
+        {
+          "name": "ResizableHandleProps",
+          "source": "export interface ResizableHandleProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Show the grip dots affordance. */\n  withHandle?: boolean;\n  /** Accessible name for the splitter. */\n  \"aria-label\"?: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/resizable\n\nResizable split panels — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/resizable @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Resizable } from \"@nucleux/resizable\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "response-comparison",
       "package": "@nucleux/response-comparison",
       "kind": "component",
@@ -2258,6 +3125,43 @@
         }
       ],
       "readme": "# @nucleux/right-sidebar\n\nRightSidebar — on-this-page table of contents + metadata panel — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/right-sidebar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { RightSidebar } from \"@nucleux/right-sidebar\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "scroll-area",
+      "package": "@nucleux/scroll-area",
+      "kind": "component",
+      "description": "A scroll container with a thin, tokenized scrollbar. Set a height/width via\n`className` (e.g. `h-48`) for the scroll area to take effect.",
+      "summary": "Styled scroll container — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "scroll-area"
+      ],
+      "exports": [
+        "ScrollArea",
+        "ScrollAreaProps"
+      ],
+      "components": [
+        "ScrollArea"
+      ],
+      "import": "import { ScrollArea } from \"@nucleux/scroll-area\";",
+      "installSingle": "pnpm add @nucleux/scroll-area @nucleux/tokens",
+      "props": [
+        {
+          "name": "ScrollAreaProps",
+          "source": "export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {\n  orientation?: \"vertical\" | \"horizontal\" | \"both\";\n  /** Max height (any CSS length) for the vertical scroll viewport. */\n  viewportClassName?: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/scroll-area\n\nStyled scroll container — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/scroll-area @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ScrollArea } from \"@nucleux/scroll-area\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -2504,6 +3408,80 @@
         }
       ],
       "readme": "# @nucleux/sidebar\n\nCollapsed icon navigation rail — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/sidebar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Sidebar, SidebarItem, SidebarSeparator } from \"@nucleux/sidebar\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "skeleton",
+      "package": "@nucleux/skeleton",
+      "kind": "component",
+      "description": "A pulsing placeholder for content that is still loading.",
+      "summary": "Loading placeholder shimmer — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "skeleton"
+      ],
+      "exports": [
+        "Skeleton",
+        "SkeletonProps"
+      ],
+      "components": [
+        "Skeleton"
+      ],
+      "import": "import { Skeleton } from \"@nucleux/skeleton\";",
+      "installSingle": "pnpm add @nucleux/skeleton @nucleux/tokens",
+      "props": [
+        {
+          "name": "SkeletonProps",
+          "source": "export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Pill shape for text/avatar placeholders. */\n  circle?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/skeleton\n\nLoading placeholder shimmer — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/skeleton @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Skeleton } from \"@nucleux/skeleton\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "slider",
+      "package": "@nucleux/slider",
+      "kind": "component",
+      "description": "A single-thumb slider for choosing a numeric value from a range.",
+      "summary": "Draggable range slider — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "slider"
+      ],
+      "exports": [
+        "Slider",
+        "SliderProps"
+      ],
+      "components": [
+        "Slider"
+      ],
+      "import": "import { Slider } from \"@nucleux/slider\";",
+      "installSingle": "pnpm add @nucleux/slider @nucleux/tokens",
+      "props": [
+        {
+          "name": "SliderProps",
+          "source": "export interface SliderProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"defaultValue\" | \"onChange\"> {\n  value?: number;\n  defaultValue?: number;\n  min?: number;\n  max?: number;\n  step?: number;\n  disabled?: boolean;\n  onValueChange?: (value: number) => void;\n  /** Accessible name for the thumb (falls back to aria-label on the root). */\n  \"aria-label\"?: string;\n}"
+        }
+      ],
+      "readme": "# @nucleux/slider\n\nDraggable range slider — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/slider @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Slider } from \"@nucleux/slider\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -2760,6 +3738,43 @@
       }
     },
     {
+      "name": "textarea",
+      "package": "@nucleux/textarea",
+      "kind": "component",
+      "description": "A multi-line text input, tokenized and themeable.",
+      "summary": "Multi-line text input — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "textarea"
+      ],
+      "exports": [
+        "Textarea",
+        "TextareaProps"
+      ],
+      "components": [
+        "Textarea"
+      ],
+      "import": "import { Textarea } from \"@nucleux/textarea\";",
+      "installSingle": "pnpm add @nucleux/textarea @nucleux/tokens",
+      "props": [
+        {
+          "name": "TextareaProps",
+          "source": "export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {\n  /** Render an error ring and set `aria-invalid`. */\n  invalid?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/textarea\n\nMulti-line text input — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/textarea @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Textarea } from \"@nucleux/textarea\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "thread",
       "package": "@nucleux/thread",
       "kind": "component",
@@ -2839,6 +3854,87 @@
         }
       ],
       "readme": "# @nucleux/toast\n\nToast notifications + ToastProvider/useToast — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/toast @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Toast, ToastProvider } from \"@nucleux/toast\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "toggle",
+      "package": "@nucleux/toggle",
+      "kind": "component",
+      "description": "A two-state button that stays pressed until toggled off.",
+      "summary": "Two-state pressable toggle button — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "toggle"
+      ],
+      "exports": [
+        "Toggle",
+        "ToggleProps"
+      ],
+      "components": [
+        "Toggle"
+      ],
+      "import": "import { Toggle } from \"@nucleux/toggle\";",
+      "installSingle": "pnpm add @nucleux/toggle @nucleux/tokens",
+      "props": [
+        {
+          "name": "ToggleProps",
+          "source": "export interface ToggleProps\n  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, \"onChange\"> {\n  /** Controlled pressed state. */\n  pressed?: boolean;\n  /** Uncontrolled initial pressed state. */\n  defaultPressed?: boolean;\n  /** Fired with the next pressed state on activation. */\n  onPressedChange?: (pressed: boolean) => void;\n  variant?: \"default\" | \"outline\";\n  size?: \"sm\" | \"md\" | \"lg\";\n}"
+        }
+      ],
+      "readme": "# @nucleux/toggle\n\nTwo-state pressable toggle button — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/toggle @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Toggle } from \"@nucleux/toggle\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "toggle-group",
+      "package": "@nucleux/toggle-group",
+      "kind": "component",
+      "description": "A set of {@link ToggleGroupItem}s behaving as a single- or multi-select group.",
+      "summary": "Group of single/multi-select toggles — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "toggle-group"
+      ],
+      "exports": [
+        "ToggleGroup",
+        "ToggleGroupItem",
+        "ToggleGroupProps",
+        "ToggleGroupItemProps"
+      ],
+      "components": [
+        "ToggleGroup",
+        "ToggleGroupItem"
+      ],
+      "import": "import { ToggleGroup, ToggleGroupItem } from \"@nucleux/toggle-group\";",
+      "installSingle": "pnpm add @nucleux/toggle-group @nucleux/tokens",
+      "props": [
+        {
+          "name": "ToggleGroupProps",
+          "source": "export interface ToggleGroupProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"defaultValue\"> {\n  /** \"single\" allows one active item; \"multiple\" allows many. */\n  type?: \"single\" | \"multiple\";\n  value?: Value | Value[];\n  defaultValue?: Value | Value[];\n  onValueChange?: (value: Value | Value[]) => void;\n  size?: \"sm\" | \"md\" | \"lg\";\n  variant?: \"default\" | \"outline\";\n}"
+        },
+        {
+          "name": "ToggleGroupItemProps",
+          "source": "export interface ToggleGroupItemProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  value: Value;\n}"
+        }
+      ],
+      "readme": "# @nucleux/toggle-group\n\nGroup of single/multi-select toggles — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/toggle-group @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ToggleGroup } from \"@nucleux/toggle-group\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"

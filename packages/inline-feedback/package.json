@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/inline-feedback",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "sideEffects": false,
   "description": "InlineFeedback — copy, rate, and regenerate controls for an AI response — Nucleux agentic UI for React.",

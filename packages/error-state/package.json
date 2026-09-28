@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/error-state",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "sideEffects": false,
   "description": "ErrorState — empty and AI-failure recovery states — Nucleux agentic UI for React.",
