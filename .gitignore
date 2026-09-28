@@ -27,3 +27,6 @@ Thumbs.db
 # Misc
 *.tsbuildinfo
 coverage/
+
+# transient esbuild bundle from gen-html-snippets
+packages/mcp/gen/.fixtures.bundle.mjs

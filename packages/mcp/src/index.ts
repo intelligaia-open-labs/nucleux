@@ -2,6 +2,9 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import catalog from "./catalog.json";
+import htmlSnippets from "./html-snippets.json";
+
+const snippets = htmlSnippets.snippets as Record<string, { name: string; html: string }>;
 
 type Pkg = (typeof catalog.packages)[number];
 type Example = (typeof catalog.examples)[number];
@@ -46,6 +49,68 @@ function renderComponent(p: Pkg): string {
   return lines.join("\n").trim();
 }
 
+/** Find a server-rendered HTML snippet for a package (by any of its component names). */
+function htmlFor(p: Pkg): string | undefined {
+  for (const c of p.components) {
+    const s = snippets[c.toLowerCase()];
+    if (s) return s.html;
+  }
+  return snippets[p.name.toLowerCase()]?.html;
+}
+
+function renderComponentHtml(p: Pkg): string {
+  const html = htmlFor(p);
+  const head = `# ${p.components[0] ?? p.name}  (HTML)`;
+  if (!html) {
+    return [
+      head,
+      "",
+      "No prebuilt HTML snippet for this component yet. Nucleux components are Tailwind-class based — use `get_component` with framework:\"react\" for the API, and `get_setup` with framework:\"html\" to set up styling.",
+    ].join("\n");
+  }
+  return [
+    head,
+    "",
+    p.description || p.summary,
+    "",
+    'Static HTML with Tailwind classes. Requires the Nucleux Tailwind preset + tokens CSS — run `get_setup` with framework:"html". Behavior (menus, dialogs, toggles) is not included; wire it up yourself or use the React package.',
+    "",
+    "```html",
+    html,
+    "```",
+  ].join("\n");
+}
+
+const htmlSetup = [
+  `# Nucleux setup for plain HTML (no React) — ${catalog.library}@${catalog.version}`,
+  "",
+  "Nucleux styling is Tailwind + CSS variables, so any HTML page can use the component markup.",
+  "",
+  "1) Install Tailwind + tokens:",
+  "```bash",
+  "npm i -D tailwindcss @nucleux/tokens",
+  "```",
+  "2) `tailwind.config.js`:",
+  "```js",
+  'module.exports = { presets: [require("@nucleux/tokens/preset")], content: ["./**/*.html"] };',
+  "```",
+  "3) `input.css` (pulls in the @tailwind layers + the --nx-* design tokens):",
+  "```css",
+  '@import "@nucleux/tokens/styles.css";',
+  "```",
+  "4) Build the stylesheet:",
+  "```bash",
+  "npx tailwindcss -i input.css -o output.css --minify",
+  "```",
+  '5) Link it, then paste component markup from `get_component` (framework:"html"):',
+  "```html",
+  '<link rel="stylesheet" href="output.css" />',
+  "```",
+  "",
+  'Dark theme: add `class="dark"` on `<html>`. The static HTML carries styling only — for',
+  "interactive behavior use the React packages (framework:\"react\").",
+].join("\n");
+
 const server = new McpServer({
   name: "nucleux",
   version: catalog.version,
@@ -72,11 +137,15 @@ server.tool(
 
 server.tool(
   "get_component",
-  "Get full details for one component: description, install/import, exports, and the verbatim TypeScript Props interface(s). Accepts a component name (e.g. 'Badge') or package name (e.g. '@nucleux/badge').",
+  "Get full details for one component. framework:'react' (default) returns description, install/import, exports, and the verbatim TypeScript Props interface(s). framework:'html' returns a static HTML snippet with Tailwind classes for non-React projects. Accepts a component name (e.g. 'Badge') or package name (e.g. '@nucleux/badge').",
   {
     name: z.string().describe("Component or package name, e.g. 'Badge', 'badge', or '@nucleux/badge'."),
+    framework: z
+      .enum(["react", "html"])
+      .optional()
+      .describe("Output format. 'react' (default) = TSX API + Props; 'html' = static HTML markup with Tailwind classes."),
   },
-  async ({ name }) => {
+  async ({ name, framework = "react" }) => {
     const p = resolve(name);
     if (!p) {
       const suggestions = catalog.packages
@@ -87,7 +156,7 @@ server.tool(
         `No component named "${name}".${suggestions.length ? ` Did you mean: ${suggestions.join(", ")}?` : " Use list_components to see all."}`,
       );
     }
-    return text(renderComponent(p));
+    return text(framework === "html" ? renderComponentHtml(p) : renderComponent(p));
   },
 );
 
@@ -122,9 +191,15 @@ server.tool(
 
 server.tool(
   "get_setup",
-  "Get install and theming setup for Nucleux (Tailwind preset + tokens CSS, peer deps). Read this before writing code that imports @nucleux components.",
-  {},
-  async () => {
+  "Get install and theming setup for Nucleux. framework:'react' (default) covers the React packages (Tailwind preset + tokens CSS, peer deps). framework:'html' covers using Nucleux styling in a plain HTML project. Read this before writing code that uses @nucleux components.",
+  {
+    framework: z
+      .enum(["react", "html"])
+      .optional()
+      .describe("Setup target: 'react' (default) or 'html' (plain HTML, no React)."),
+  },
+  async ({ framework = "react" }) => {
+    if (framework === "html") return text(htmlSetup);
     const s = catalog.setup;
     return text(
       [
@@ -137,6 +212,8 @@ server.tool(
         ...s.theme.map((t) => `- ${t}`),
         "",
         s.note,
+        "",
+        'For plain HTML (no React), call get_setup with framework:"html".',
       ].join("\n"),
     );
   },
