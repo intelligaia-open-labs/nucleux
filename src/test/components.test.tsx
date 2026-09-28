@@ -214,6 +214,21 @@ import {
   Md3Snackbar,
   Md3List,
   Md3ListItem,
+  Md3TopAppBar,
+  Md3NavigationDrawer,
+  Md3NavigationDrawerItem,
+  Md3BottomSheet,
+  Md3SegmentedButton,
+  Md3SegmentedButtonItem,
+  Md3Badge,
+  Md3Tooltip,
+  Md3LinearProgress,
+  Md3CircularProgress,
+  Md3Divider,
+  Md3DatePicker,
+  Md3TimePicker,
+  Md3Search,
+  Md3Banner,
   useToast,
 } from "@nucleux/react";
 import { useForm } from "react-hook-form";
@@ -1012,6 +1027,60 @@ const cases: { name: string; ui: ReactElement }[] = [
       </Md3List>
     ),
   },
+  { name: "Md3TopAppBar", ui: <Md3TopAppBar headline="Inbox" /> },
+  {
+    name: "Md3NavigationDrawer",
+    ui: (
+      <Md3NavigationDrawer defaultValue="inbox">
+        <Md3NavigationDrawerItem value="inbox" icon={<Home />}>
+          Inbox
+        </Md3NavigationDrawerItem>
+        <Md3NavigationDrawerItem value="sent" icon={<Mic />}>
+          Sent
+        </Md3NavigationDrawerItem>
+      </Md3NavigationDrawer>
+    ),
+  },
+  {
+    name: "Md3BottomSheet",
+    ui: (
+      <Md3BottomSheet open onOpenChange={() => {}} aria-label="Share options">
+        Sheet body
+      </Md3BottomSheet>
+    ),
+  },
+  {
+    name: "Md3SegmentedButton",
+    ui: (
+      <Md3SegmentedButton type="single" defaultValue="week">
+        <Md3SegmentedButtonItem value="day">Day</Md3SegmentedButtonItem>
+        <Md3SegmentedButtonItem value="week">Week</Md3SegmentedButtonItem>
+      </Md3SegmentedButton>
+    ),
+  },
+  {
+    name: "Md3Badge",
+    ui: (
+      <Md3Badge content={8}>
+        <span>Inbox</span>
+      </Md3Badge>
+    ),
+  },
+  {
+    name: "Md3Tooltip",
+    ui: (
+      <Md3Tooltip content="Info">
+        <button type="button">Trigger</button>
+      </Md3Tooltip>
+    ),
+  },
+  { name: "Md3LinearProgress", ui: <Md3LinearProgress value={60} aria-label="Upload" /> },
+  { name: "Md3CircularProgress", ui: <Md3CircularProgress value={60} aria-label="Sync" /> },
+  { name: "Md3Divider", ui: <Md3Divider /> },
+  { name: "Md3DatePicker", ui: <Md3DatePicker label="Date" /> },
+  { name: "Md3TimePicker", ui: <Md3TimePicker /> },
+  { name: "Md3Search", ui: <Md3Search aria-label="Search" /> },
+  { name: "Md3Banner", ui: <Md3Banner>Update available</Md3Banner> },
 ];
 
 describe("smoke: every component renders", () => {
@@ -1496,6 +1565,55 @@ describe("interaction: components behave", () => {
     expect(screen.getByRole("dialog")).toBeInTheDocument();
     await userEvent.keyboard("{Escape}");
     expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+
+  it("Md3SegmentedButton (single) selects one segment", async () => {
+    const onValueChange = vi.fn();
+    render(
+      <Md3SegmentedButton type="single" defaultValue="day" onValueChange={onValueChange}>
+        <Md3SegmentedButtonItem value="day">Day</Md3SegmentedButtonItem>
+        <Md3SegmentedButtonItem value="week">Week</Md3SegmentedButtonItem>
+      </Md3SegmentedButton>,
+    );
+    const day = screen.getByRole("button", { name: "Day" });
+    const week = screen.getByRole("button", { name: "Week" });
+    expect(day).toHaveAttribute("aria-pressed", "true");
+    await userEvent.click(week);
+    expect(onValueChange).toHaveBeenCalledWith("week");
+    expect(week).toHaveAttribute("aria-pressed", "true");
+    expect(day).toHaveAttribute("aria-pressed", "false");
+  });
+
+  it("Md3BottomSheet closes on Escape", async () => {
+    const onOpenChange = vi.fn();
+    render(
+      <Md3BottomSheet open onOpenChange={onOpenChange} aria-label="Share">
+        Body
+      </Md3BottomSheet>,
+    );
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    await userEvent.keyboard("{Escape}");
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+
+  it("Md3DatePicker opens a calendar dialog on click", async () => {
+    render(<Md3DatePicker label="Date" />);
+    await userEvent.click(screen.getByRole("button", { name: "Date" }));
+    expect(screen.getByRole("dialog", { name: "Choose date" })).toBeInTheDocument();
+  });
+
+  it("Md3TimePicker updates the hour", () => {
+    const onValueChange = vi.fn();
+    render(<Md3TimePicker defaultValue={{ hour: 9, minute: 0, period: "AM" }} onValueChange={onValueChange} />);
+    fireEvent.change(screen.getByLabelText("Hour"), { target: { value: "11" } });
+    expect(onValueChange).toHaveBeenLastCalledWith(expect.objectContaining({ hour: 11 }));
+  });
+
+  it("Md3TimePicker switches AM/PM", async () => {
+    const onValueChange = vi.fn();
+    render(<Md3TimePicker defaultValue={{ hour: 9, minute: 0, period: "AM" }} onValueChange={onValueChange} />);
+    await userEvent.click(screen.getByRole("button", { name: "PM" }));
+    expect(onValueChange).toHaveBeenLastCalledWith(expect.objectContaining({ period: "PM" }));
   });
 
   it("Menubar opens a menu on trigger click", async () => {

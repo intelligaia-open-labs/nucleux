@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/action-plan",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "sideEffects": false,
   "description": "ActionPlan — a proposed agent plan the user can accept, edit, or reject — Nucleux agentic UI for React.",

@@ -117,5 +117,17 @@
   "@nucleux/md3-menu": "packages/md3-menu/src/index.tsx",
   "@nucleux/md3-dialog": "packages/md3-dialog/src/index.tsx",
   "@nucleux/md3-snackbar": "packages/md3-snackbar/src/index.tsx",
-  "@nucleux/md3-list": "packages/md3-list/src/index.tsx"
+  "@nucleux/md3-list": "packages/md3-list/src/index.tsx",
+  "@nucleux/md3-top-app-bar": "packages/md3-top-app-bar/src/index.tsx",
+  "@nucleux/md3-navigation-drawer": "packages/md3-navigation-drawer/src/index.tsx",
+  "@nucleux/md3-bottom-sheet": "packages/md3-bottom-sheet/src/index.tsx",
+  "@nucleux/md3-segmented-button": "packages/md3-segmented-button/src/index.tsx",
+  "@nucleux/md3-badge": "packages/md3-badge/src/index.tsx",
+  "@nucleux/md3-tooltip": "packages/md3-tooltip/src/index.tsx",
+  "@nucleux/md3-progress": "packages/md3-progress/src/index.tsx",
+  "@nucleux/md3-divider": "packages/md3-divider/src/index.tsx",
+  "@nucleux/md3-date-picker": "packages/md3-date-picker/src/index.tsx",
+  "@nucleux/md3-time-picker": "packages/md3-time-picker/src/index.tsx",
+  "@nucleux/md3-search": "packages/md3-search/src/index.tsx",
+  "@nucleux/md3-banner": "packages/md3-banner/src/index.tsx"
 }
