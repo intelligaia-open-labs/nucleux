@@ -234,6 +234,13 @@ import {
   Md3ActionPlan,
   Md3ActionPlanStep,
   Md3AgentComposer,
+  Md3Reasoning,
+  Md3AgentStep,
+  Md3AgentSteps,
+  Md3ActivityLog,
+  Md3ActivityLogItem,
+  Md3Thread,
+  Md3ActionConfirmation,
   useToast,
 } from "@nucleux/react";
 import { useForm } from "react-hook-form";
@@ -1109,6 +1116,46 @@ const cases: { name: string; ui: ReactElement }[] = [
     name: "Md3AgentComposer",
     ui: <Md3AgentComposer value="" onValueChange={() => {}} onSubmit={() => {}} aria-label="Task" />,
   },
+  { name: "Md3Reasoning", ui: <Md3Reasoning content="thinking…" defaultOpen /> },
+  {
+    name: "Md3AgentSteps",
+    ui: (
+      <Md3AgentSteps>
+        <Md3AgentStep status="done" title="Read doc" />
+        <Md3AgentStep status="active" title="Executing" progress={60} />
+        <Md3AgentStep status="pending" title="Create file" />
+      </Md3AgentSteps>
+    ),
+  },
+  {
+    name: "Md3ActivityLog",
+    ui: (
+      <Md3ActivityLog heading="Footprints">
+        <Md3ActivityLogItem time="2m ago">Sent email to Sam</Md3ActivityLogItem>
+        <Md3ActivityLogItem time="3m ago">Read 3 CRM records</Md3ActivityLogItem>
+      </Md3ActivityLog>
+    ),
+  },
+  {
+    name: "Md3Thread",
+    ui: (
+      <Md3Thread>
+        <Md3Message role="user" content="Hello" />
+        <Md3Message role="assistant" content="Hi" />
+      </Md3Thread>
+    ),
+  },
+  {
+    name: "Md3ActionConfirmation",
+    ui: (
+      <Md3ActionConfirmation
+        title="Send 18 emails?"
+        description="You can't undo this."
+        onConfirm={() => {}}
+        onCancel={() => {}}
+      />
+    ),
+  },
 ];
 
 describe("smoke: every component renders", () => {
@@ -1668,6 +1715,28 @@ describe("interaction: components behave", () => {
     );
     await userEvent.click(screen.getByRole("button", { name: "Accept plan" }));
     expect(onAccept).toHaveBeenCalledOnce();
+  });
+
+  it("Md3Reasoning expands and collapses", async () => {
+    render(<Md3Reasoning content="thinking about it" />);
+    const trigger = screen.getByRole("button");
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByText("thinking about it")).not.toBeInTheDocument();
+    await userEvent.click(trigger);
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByText("thinking about it")).toBeInTheDocument();
+  });
+
+  it("Md3ActionConfirmation fires confirm and cancel", async () => {
+    const onConfirm = vi.fn();
+    const onCancel = vi.fn();
+    render(
+      <Md3ActionConfirmation title="Send 18 emails?" onConfirm={onConfirm} onCancel={onCancel} confirmLabel="Send" />,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Send" }));
+    expect(onConfirm).toHaveBeenCalledOnce();
+    await userEvent.click(screen.getByRole("button", { name: "Cancel" }));
+    expect(onCancel).toHaveBeenCalledOnce();
   });
 
   it("Menubar opens a menu on trigger click", async () => {

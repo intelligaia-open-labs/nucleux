@@ -233,6 +233,13 @@ import {
   Md3ActionPlan,
   Md3ActionPlanStep,
   Md3AgentComposer,
+  Md3Reasoning,
+  Md3AgentStep,
+  Md3AgentSteps,
+  Md3ActivityLog,
+  Md3ActivityLogItem,
+  Md3Thread,
+  Md3ActionConfirmation,
   useToast,
 } from "@nucleux/react";
 import { useForm } from "react-hook-form";
@@ -1107,6 +1114,46 @@ export const cases: { name: string; ui: ReactElement }[] = [
   {
     name: "Md3AgentComposer",
     ui: <Md3AgentComposer value="" onValueChange={() => {}} onSubmit={() => {}} aria-label="Task" />,
+  },
+  { name: "Md3Reasoning", ui: <Md3Reasoning content="thinking…" defaultOpen /> },
+  {
+    name: "Md3AgentSteps",
+    ui: (
+      <Md3AgentSteps>
+        <Md3AgentStep status="done" title="Read doc" />
+        <Md3AgentStep status="active" title="Executing" progress={60} />
+        <Md3AgentStep status="pending" title="Create file" />
+      </Md3AgentSteps>
+    ),
+  },
+  {
+    name: "Md3ActivityLog",
+    ui: (
+      <Md3ActivityLog heading="Footprints">
+        <Md3ActivityLogItem time="2m ago">Sent email to Sam</Md3ActivityLogItem>
+        <Md3ActivityLogItem time="3m ago">Read 3 CRM records</Md3ActivityLogItem>
+      </Md3ActivityLog>
+    ),
+  },
+  {
+    name: "Md3Thread",
+    ui: (
+      <Md3Thread>
+        <Md3Message role="user" content="Hello" />
+        <Md3Message role="assistant" content="Hi" />
+      </Md3Thread>
+    ),
+  },
+  {
+    name: "Md3ActionConfirmation",
+    ui: (
+      <Md3ActionConfirmation
+        title="Send 18 emails?"
+        description="You can't undo this."
+        onConfirm={() => {}}
+        onCancel={() => {}}
+      />
+    ),
   },
 ];
 

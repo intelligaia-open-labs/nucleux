@@ -1423,6 +1423,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-action-confirmation:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-action-plan:
     dependencies:
       '@nucleux/utils':
@@ -1448,7 +1473,57 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-activity-log:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-agent-composer:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-agent-steps:
     dependencies:
       '@nucleux/utils':
         specifier: workspace:*
@@ -1979,6 +2054,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-reasoning:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-search:
     dependencies:
       '@nucleux/utils':
@@ -2155,6 +2255,34 @@ importers:
         version: 5.9.3
 
   packages/md3-theme: {}
+
+  packages/md3-thread:
+    dependencies:
+      '@nucleux/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
 
   packages/md3-time-picker:
     dependencies:
@@ -2848,12 +2976,21 @@ importers:
       '@nucleux/link-button':
         specifier: workspace:*
         version: link:../link-button
+      '@nucleux/md3-action-confirmation':
+        specifier: workspace:*
+        version: link:../md3-action-confirmation
       '@nucleux/md3-action-plan':
         specifier: workspace:*
         version: link:../md3-action-plan
+      '@nucleux/md3-activity-log':
+        specifier: workspace:*
+        version: link:../md3-activity-log
       '@nucleux/md3-agent-composer':
         specifier: workspace:*
         version: link:../md3-agent-composer
+      '@nucleux/md3-agent-steps':
+        specifier: workspace:*
+        version: link:../md3-agent-steps
       '@nucleux/md3-badge':
         specifier: workspace:*
         version: link:../md3-badge
@@ -2914,6 +3051,9 @@ importers:
       '@nucleux/md3-radio':
         specifier: workspace:*
         version: link:../md3-radio
+      '@nucleux/md3-reasoning':
+        specifier: workspace:*
+        version: link:../md3-reasoning
       '@nucleux/md3-search':
         specifier: workspace:*
         version: link:../md3-search
@@ -2935,6 +3075,9 @@ importers:
       '@nucleux/md3-text-field':
         specifier: workspace:*
         version: link:../md3-text-field
+      '@nucleux/md3-thread':
+        specifier: workspace:*
+        version: link:../md3-thread
       '@nucleux/md3-time-picker':
         specifier: workspace:*
         version: link:../md3-time-picker
