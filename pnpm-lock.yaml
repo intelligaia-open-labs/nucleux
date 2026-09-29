@@ -2076,6 +2076,8 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-theme: {}
+
   packages/md3-time-picker:
     dependencies:
       '@nucleux/utils':

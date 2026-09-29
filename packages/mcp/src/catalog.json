@@ -14,7 +14,7 @@
   },
   "counts": {
     "components": 128,
-    "packages": 132,
+    "packages": 133,
     "examples": 6
   },
   "packages": [
@@ -3120,6 +3120,32 @@
         "react": ">=18",
         "react-dom": ">=18"
       }
+    },
+    {
+      "name": "md3-theme",
+      "package": "@nucleux/md3-theme",
+      "kind": "infrastructure",
+      "description": "Material Design 3 theme — remaps Nucleux --nx-* tokens to the MD3 tonal palette so any component renders in a Material UI 3 look — Nucleux agentic UI for React.",
+      "summary": "Material Design 3 theme — remaps Nucleux --nx-* tokens to the MD3 tonal palette so any component renders in a Material UI 3 look — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "material-design-3",
+        "md3",
+        "theme"
+      ],
+      "exports": [],
+      "components": [],
+      "import": "",
+      "installSingle": "pnpm add @nucleux/md3-theme",
+      "props": [],
+      "readme": "# @nucleux/md3-theme\n\nMaterial Design 3 theme for Nucleux — remaps the semantic `--nx-*` tokens to the MD3 tonal palette so any Nucleux component renders in a Material UI 3 look — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React.\n\n## Install\n\n```bash\npnpm add @nucleux/md3-theme @nucleux/tokens\n```\n\n## Usage\n\nImport the base tokens once, then the MD3 theme:\n\n```ts\nimport \"@nucleux/tokens/styles.css\";\nimport \"@nucleux/md3-theme/theme.css\";\n```\n\nWrap any subtree in `nx-theme-mui` to switch it (and everything inside) from the\ndefault shadcn/slate look to Material UI 3 — the same components, restyled:\n\n```tsx\n<div className=\"nx-theme-mui\">\n  <AgentComposer /* … */ />   {/* now Material 3 */}\n</div>\n```\n\nCombine with `.dark` for dark mode (`<html class=\"dark\">` or on the wrapper).\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {}
     },
     {
       "name": "md3-time-picker",

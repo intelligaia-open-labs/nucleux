@@ -11,7 +11,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkgsDir = join(root, "packages");
 
 /** Packages that are infrastructure, not components. */
-const NON_COMPONENT = new Set(["mcp", "react", "tokens", "utils", "hooks"]);
+const NON_COMPONENT = new Set(["mcp", "react", "tokens", "utils", "hooks", "md3-theme"]);
 
 /** Match the matching `}` for the `{` at `open` in `src`. */
 function matchBrace(src, open) {

@@ -1,6 +1,26 @@
+import { createElement } from "react";
 import type { Preview } from "@storybook/react";
 import { withThemeByClassName } from "@storybook/addon-themes";
 import "../packages/tokens/src/globals.css";
+import "../packages/md3-theme/src/theme.css";
+
+// Design-system toolbar: view every component under the default shadcn/slate look
+// or the Material UI 3 look (@nucleux/md3-theme remaps --nx-* under .nx-theme-mui).
+export const globalTypes = {
+  ds: {
+    description: "Design system",
+    defaultValue: "shadcn",
+    toolbar: {
+      title: "Design system",
+      icon: "paintbrush",
+      items: [
+        { value: "shadcn", title: "shadcn" },
+        { value: "mui", title: "Material UI 3" },
+      ],
+      dynamicTitle: true,
+    },
+  },
+};
 
 const preview: Preview = {
   parameters: {
@@ -14,6 +34,13 @@ const preview: Preview = {
       themes: { light: "", dark: "dark" },
       defaultTheme: "light",
     }),
+    // Apply the MD3 theme class when the "Material UI 3" toolbar option is active.
+    (Story, context) =>
+      createElement(
+        "div",
+        { className: context.globals.ds === "mui" ? "nx-theme-mui" : undefined },
+        createElement(Story),
+      ),
   ],
 };
 
