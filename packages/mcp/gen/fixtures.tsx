@@ -228,6 +228,11 @@ import {
   Md3TimePicker,
   Md3Search,
   Md3Banner,
+  Md3Message,
+  Md3ToolCall,
+  Md3ActionPlan,
+  Md3ActionPlanStep,
+  Md3AgentComposer,
   useToast,
 } from "@nucleux/react";
 import { useForm } from "react-hook-form";
@@ -1080,5 +1085,28 @@ export const cases: { name: string; ui: ReactElement }[] = [
   { name: "Md3TimePicker", ui: <Md3TimePicker /> },
   { name: "Md3Search", ui: <Md3Search aria-label="Search" /> },
   { name: "Md3Banner", ui: <Md3Banner>Update available</Md3Banner> },
+  { name: "Md3Message", ui: <Md3Message role="assistant" content="Hi there" /> },
+  {
+    name: "Md3ToolCall",
+    ui: (
+      <Md3ToolCall
+        defaultOpen
+        toolCall={{ id: "1", name: "search", status: "success", args: { q: "x" }, result: "ok" }}
+      />
+    ),
+  },
+  {
+    name: "Md3ActionPlan",
+    ui: (
+      <Md3ActionPlan onAccept={() => {}} onReject={() => {}}>
+        <Md3ActionPlanStep title="Pull accounts" />
+        <Md3ActionPlanStep title="Draft emails" />
+      </Md3ActionPlan>
+    ),
+  },
+  {
+    name: "Md3AgentComposer",
+    ui: <Md3AgentComposer value="" onValueChange={() => {}} onSubmit={() => {}} aria-label="Task" />,
+  },
 ];
 

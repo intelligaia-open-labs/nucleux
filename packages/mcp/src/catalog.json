@@ -13,8 +13,8 @@
     "note": "Every component is also re-exported from the @nucleux/react umbrella."
   },
   "counts": {
-    "components": 128,
-    "packages": 133,
+    "components": 132,
+    "packages": 137,
     "examples": 6
   },
   "packages": [
@@ -2085,6 +2085,87 @@
       }
     },
     {
+      "name": "md3-action-plan",
+      "package": "@nucleux/md3-action-plan",
+      "kind": "component",
+      "description": "A single step in an {@link Md3ActionPlan}. Numbered automatically by its order.",
+      "summary": "Material 3 agent action plan — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-action-plan"
+      ],
+      "exports": [
+        "Md3ActionPlanStep",
+        "Md3ActionPlan",
+        "Md3ActionPlanStepProps",
+        "Md3ActionPlanProps"
+      ],
+      "components": [
+        "Md3ActionPlanStep",
+        "Md3ActionPlan"
+      ],
+      "import": "import { Md3ActionPlanStep, Md3ActionPlan } from \"@nucleux/md3-action-plan\";",
+      "installSingle": "pnpm add @nucleux/md3-action-plan @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3ActionPlanStepProps",
+          "source": "export interface Md3ActionPlanStepProps\n  extends Omit<React.LiHTMLAttributes<HTMLLIElement>, \"title\"> {\n  /** Step title. */\n  title: React.ReactNode;\n  /** Supporting detail under the title. */\n  description?: React.ReactNode;\n}"
+        },
+        {
+          "name": "Md3ActionPlanProps",
+          "source": "export interface Md3ActionPlanProps extends React.HTMLAttributes<HTMLDivElement> {\n  heading?: React.ReactNode;\n  description?: React.ReactNode;\n  onAccept?: () => void;\n  onEdit?: () => void;\n  onReject?: () => void;\n  acceptLabel?: React.ReactNode;\n  editLabel?: React.ReactNode;\n  rejectLabel?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-action-plan\n\nMaterial 3 agent action plan — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-action-plan @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3ActionPlan } from \"@nucleux/md3-action-plan\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-agent-composer",
+      "package": "@nucleux/md3-agent-composer",
+      "kind": "component",
+      "description": "A Material Design 3 agent task composer — a tonal surface with an auto-growing\nprompt field, a toolbar, and a filled send/stop button with a state layer.\nEnter submits, Shift+Enter newlines. Same API as {@link AgentComposer}.",
+      "summary": "Material 3 agent task composer — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-agent-composer"
+      ],
+      "exports": [
+        "Md3AgentComposer",
+        "Md3AgentComposerProps"
+      ],
+      "components": [
+        "Md3AgentComposer"
+      ],
+      "import": "import { Md3AgentComposer } from \"@nucleux/md3-agent-composer\";",
+      "installSingle": "pnpm add @nucleux/md3-agent-composer @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3AgentComposerProps",
+          "source": "export interface Md3AgentComposerProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSubmit\"> {\n  value: string;\n  onValueChange: (value: string) => void;\n  onSubmit: (value: string) => void;\n  placeholder?: string;\n  leftActions?: React.ReactNode;\n  rightActions?: React.ReactNode;\n  loading?: boolean;\n  onStop?: () => void;\n  maxHeight?: number;\n  disabled?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-agent-composer\n\nMaterial 3 agent task composer — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-agent-composer @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3AgentComposer } from \"@nucleux/md3-agent-composer\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "md3-badge",
       "package": "@nucleux/md3-badge",
       "kind": "component",
@@ -2611,6 +2692,43 @@
         }
       ],
       "readme": "# @nucleux/md3-menu\n\nMaterial 3 menu surface — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-menu @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Menu } from \"@nucleux/md3-menu\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-message",
+      "package": "@nucleux/md3-message",
+      "kind": "component",
+      "description": "A Material Design 3 chat message row: a tonal avatar and a role-aware bubble\nwith MD3 shape and surface roles. Same API as {@link Message}.",
+      "summary": "Material 3 chat message row — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-message"
+      ],
+      "exports": [
+        "Md3Message",
+        "Md3MessageProps"
+      ],
+      "components": [
+        "Md3Message"
+      ],
+      "import": "import { Md3Message } from \"@nucleux/md3-message\";",
+      "installSingle": "pnpm add @nucleux/md3-message @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3MessageProps",
+          "source": "export interface Md3MessageProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Who authored the message. */\n  role: MessageRole;\n  /** Message text. Ignored if `children` is provided. */\n  content?: string;\n  /** True while the assistant is still streaming this message. */\n  streaming?: boolean;\n  /** Hide the avatar (e.g. for consecutive same-role messages). */\n  hideAvatar?: boolean;\n  /** Custom node rendered in place of the default avatar. */\n  avatar?: React.ReactNode;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-message\n\nMaterial 3 chat message row — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-message @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Message } from \"@nucleux/md3-message\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -3183,6 +3301,43 @@
         }
       ],
       "readme": "# @nucleux/md3-time-picker\n\nMaterial 3 time picker (input) — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-time-picker @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3TimePicker } from \"@nucleux/md3-time-picker\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-tool-call",
+      "package": "@nucleux/md3-tool-call",
+      "kind": "component",
+      "description": "A Material Design 3 tool-call card: name, live status, arguments, and result,\nwith a tonal surface and an on-color state layer. Same API as {@link ToolCall}.",
+      "summary": "Material 3 agent tool-call card — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-tool-call"
+      ],
+      "exports": [
+        "Md3ToolCall",
+        "Md3ToolCallProps"
+      ],
+      "components": [
+        "Md3ToolCall"
+      ],
+      "import": "import { Md3ToolCall } from \"@nucleux/md3-tool-call\";",
+      "installSingle": "pnpm add @nucleux/md3-tool-call @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3ToolCallProps",
+          "source": "export interface Md3ToolCallProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"children\"> {\n  /** The tool call to render. */\n  toolCall: ToolCallData;\n  /** Whether the details are expanded initially. */\n  defaultOpen?: boolean;\n}"
+        }
+      ],
+      "readme": "# @nucleux/md3-tool-call\n\nMaterial 3 agent tool-call card — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-tool-call @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3ToolCall } from \"@nucleux/md3-tool-call\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
