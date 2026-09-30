@@ -34,27 +34,24 @@ async function main() {
   const setupHtml = textOf(await client.callTool({ name: "get_setup", arguments: { framework: "html" } }));
   rec("get_setup · html", setupHtml);
 
-  // Pull the exact HTML markup for each component from the server
-  const getHtml = async (name) => {
-    const out = textOf(await client.callTool({ name: "get_component", arguments: { name, framework: "html" } }));
-    rec(`get_component ${name} · html`, out);
+  // Pull the exact HTML markup for each component from the server. template:true
+  // returns reusable markup with `{{id}}` slots (safe to instantiate many times).
+  const getHtml = async (name, template = false) => {
+    const out = textOf(await client.callTool({ name: "get_component", arguments: { name, framework: "html", template } }));
+    rec(`get_component ${name} · html${template ? " (template)" : ""}`, out);
     const html = fenced(out);
     if (!html) throw new Error(`no html snippet for ${name}`);
     return html;
   };
+  const fillId = (tpl, id) => tpl.split("{{id}}").join(id);
 
   // --- Material UI 3 login (md3-* snippets) ---
-  const mdField = await getHtml("md3-text-field");
+  const mdFieldTpl = await getHtml("md3-text-field", true); // {{id}} slot -> unique per field
   const mdBtn = await getHtml("md3-button");
   const mdCheck = await getHtml("md3-checkbox");
 
-  // Each field snippet carries its own generated id; reusing it verbatim would
-  // duplicate ids. Uniquify the clone's id so label/aria wiring stays valid.
-  const mdBaseId = (mdField.match(/\sid="([^"]+)"/) || [])[1];
-  const mdEmail = mdField;
-  const mdPassword = mdBaseId
-    ? swap(swap(mdField, "Email", "Password"), mdBaseId, `${mdBaseId}-pw`)
-    : swap(mdField, "Email", "Password");
+  const mdEmail = fillId(mdFieldTpl, "md-email");
+  const mdPassword = fillId(swap(mdFieldTpl, "Email", "Password"), "md-password");
   const mdSignIn = `<div class="[&>button]:w-full">${swap(mdBtn, "Save", "Sign in")}</div>`;
   const mdRemember = `<label class="flex items-center gap-1 text-sm text-md-on-surface">${mdCheck}Remember me</label>`;
 

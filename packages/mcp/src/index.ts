@@ -4,7 +4,30 @@ import { z } from "zod";
 import catalog from "./catalog.json";
 import htmlSnippets from "./html-snippets.json";
 
-const snippets = htmlSnippets.snippets as Record<string, { name: string; html: string }>;
+const snippets = htmlSnippets.snippets as Record<
+  string,
+  { name: string; html: string; idCount?: number; text?: string[] }
+>;
+
+// Fresh, collision-free id per request so a snippet can be reused safely.
+let idSeq = 0;
+const freshId = () => `nx-${(++idSeq).toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+
+/**
+ * Replace the `__NX_ID_n__` placeholders in a snippet. "concrete" swaps in fresh
+ * unique ids (paste-and-render); "template" swaps in readable `{{id}}` slots the
+ * caller fills per instance (safe reuse of one snippet for many elements).
+ */
+function instantiateIds(html: string, mode: "concrete" | "template"): string {
+  const placeholders = [...new Set(html.match(/__NX_ID_\d+__/g) ?? [])];
+  let out = html;
+  for (const ph of placeholders) {
+    const n = Number(ph.match(/\d+/)?.[0] ?? 0);
+    const value = mode === "template" ? `{{id${n === 0 ? "" : n}}}` : freshId();
+    out = out.split(ph).join(value);
+  }
+  return out;
+}
 
 type Pkg = (typeof catalog.packages)[number];
 type Example = (typeof catalog.examples)[number];
@@ -49,36 +72,40 @@ function renderComponent(p: Pkg): string {
   return lines.join("\n").trim();
 }
 
-/** Find a server-rendered HTML snippet for a package (by any of its component names). */
-function htmlFor(p: Pkg): string | undefined {
+/** Find a server-rendered HTML snippet entry for a package (by any component name). */
+function snippetFor(p: Pkg): { name: string; html: string; idCount?: number; text?: string[] } | undefined {
   for (const c of p.components) {
     const s = snippets[c.toLowerCase()];
-    if (s) return s.html;
+    if (s) return s;
   }
-  return snippets[p.name.toLowerCase()]?.html;
+  return snippets[p.name.toLowerCase()];
 }
 
-function renderComponentHtml(p: Pkg): string {
-  const html = htmlFor(p);
+function renderComponentHtml(p: Pkg, template: boolean): string {
+  const snip = snippetFor(p);
   const head = `# ${p.components[0] ?? p.name}  (HTML)`;
-  if (!html) {
+  if (!snip) {
     return [
       head,
       "",
       "No prebuilt HTML snippet for this component yet. Nucleux components are Tailwind-class based — use `get_component` with framework:\"react\" for the API, and `get_setup` with framework:\"html\" to set up styling.",
     ].join("\n");
   }
-  return [
-    head,
-    "",
-    p.description || p.summary,
-    "",
+  const html = instantiateIds(snip.html, template ? "template" : "concrete");
+  const notes: string[] = [
     'Static HTML with Tailwind classes. Requires the Nucleux Tailwind preset + tokens CSS — run `get_setup` with framework:"html". Behavior (menus, dialogs, toggles) is not included; wire it up yourself or use the React package.',
-    "",
-    "```html",
-    html,
-    "```",
-  ].join("\n");
+  ];
+  if (snip.idCount) {
+    notes.push(
+      template
+        ? `Reusable template: replace the ${snip.idCount > 1 ? "`{{id}}` slots" : "`{{id}}` slot"} with a unique value per instance (use once per element you render).`
+        : "Element ids are freshly generated on every response, so calling this again yields non-colliding markup you can safely place multiple times.",
+    );
+  }
+  if (snip.text?.length) {
+    notes.push(`Editable example text (swap as needed): ${snip.text.map((t) => `"${t}"`).join(", ")}.`);
+  }
+  return [head, "", p.description || p.summary, "", notes.join("\n\n"), "", "```html", html, "```"].join("\n");
 }
 
 const htmlSetup = [
@@ -144,8 +171,14 @@ server.tool(
       .enum(["react", "html"])
       .optional()
       .describe("Output format. 'react' (default) = TSX API + Props; 'html' = static HTML markup with Tailwind classes."),
+    template: z
+      .boolean()
+      .optional()
+      .describe(
+        "HTML only. false (default) returns markup with fresh unique element ids (paste-and-render). true returns a reusable template with `{{id}}` slots to fill per instance — use when composing one component into many elements (e.g. several form fields).",
+      ),
   },
-  async ({ name, framework = "react" }) => {
+  async ({ name, framework = "react", template = false }) => {
     const p = resolve(name);
     if (!p) {
       const suggestions = catalog.packages
@@ -156,7 +189,7 @@ server.tool(
         `No component named "${name}".${suggestions.length ? ` Did you mean: ${suggestions.join(", ")}?` : " Use list_components to see all."}`,
       );
     }
-    return text(framework === "html" ? renderComponentHtml(p) : renderComponent(p));
+    return text(framework === "html" ? renderComponentHtml(p, template) : renderComponent(p));
   },
 );
 

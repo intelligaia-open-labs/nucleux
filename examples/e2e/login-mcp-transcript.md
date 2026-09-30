@@ -49,7 +49,7 @@ Dark theme: add `class="dark"` on `<html>`. The static HTML carries styling only
 interactive behavior use the React packages (framework:"react").
 ```
 
-## get_component md3-text-field · html
+## get_component md3-text-field · html (template)
 
 ```
 # Md3TextField  (HTML)
@@ -59,8 +59,12 @@ optional leading/trailing icons, supporting text, and an error state.
 
 Static HTML with Tailwind classes. Requires the Nucleux Tailwind preset + tokens CSS — run `get_setup` with framework:"html". Behavior (menus, dialogs, toggles) is not included; wire it up yourself or use the React package.
 
+Reusable template: replace the `{{id}}` slot with a unique value per instance (use once per element you render).
+
+Editable example text (swap as needed): "Email", "Required".
+
 ```html
-<div class="w-full"><div class="relative"><input id=":R0:" placeholder=" " aria-describedby=":R0:-support" class="peer h-14 w-full text-base text-md-on-surface outline-none transition-colors placeholder:text-transparent disabled:cursor-not-allowed pl-4 pr-4 rounded-t-md-xs border-0 border-b-2 bg-md-surface-container-high pb-2 pt-6 border-md-on-surface-variant focus:border-md-primary"/><label for=":R0:" class="pointer-events-none absolute transition-all left-4 top-2 text-xs peer-placeholder-shown:text-base peer-placeholder-shown:text-md-on-surface-variant peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:text-xs text-md-on-surface-variant peer-focus:text-md-primary">Email</label></div><p id=":R0:-support" class="px-4 pt-1 text-xs text-md-on-surface-variant">Required</p></div>
+<div class="w-full"><div class="relative"><input id="{{id}}" placeholder=" " aria-describedby="{{id}}-support" class="peer h-14 w-full text-base text-md-on-surface outline-none transition-colors placeholder:text-transparent disabled:cursor-not-allowed pl-4 pr-4 rounded-t-md-xs border-0 border-b-2 bg-md-surface-container-high pb-2 pt-6 border-md-on-surface-variant focus:border-md-primary"/><label for="{{id}}" class="pointer-events-none absolute transition-all left-4 top-2 text-xs peer-placeholder-shown:text-base peer-placeholder-shown:text-md-on-surface-variant peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:text-xs text-md-on-surface-variant peer-focus:text-md-primary">Email</label></div><p id="{{id}}-support" class="px-4 pt-1 text-xs text-md-on-surface-variant">Required</p></div>
 ```
 ```
 
@@ -73,6 +77,8 @@ A Material Design 3 button. Five variants (filled, tonal, elevated, outlined,
 text) with an on-color state layer for hover/focus/press.
 
 Static HTML with Tailwind classes. Requires the Nucleux Tailwind preset + tokens CSS — run `get_setup` with framework:"html". Behavior (menus, dialogs, toggles) is not included; wire it up yourself or use the React package.
+
+Editable example text (swap as needed): "Save".
 
 ```html
 <button type="button" class="relative inline-flex h-10 items-center justify-center gap-2 overflow-hidden rounded-full text-sm font-medium transition-shadow px-6 [&_svg]:size-[18px] before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-[''] hover:before:opacity-[0.08] focus-visible:before:opacity-[0.12] active:before:opacity-[0.12] outline-none focus-visible:ring-2 focus-visible:ring-md-primary focus-visible:ring-offset-2 focus-visible:ring-offset-md-surface disabled:pointer-events-none disabled:opacity-[0.38] disabled:shadow-none bg-md-primary text-md-on-primary hover:shadow-md-1"><span class="relative">Save</span></button>
@@ -102,6 +108,8 @@ An accessible caption for a form control. Pair with `htmlFor`.
 
 Static HTML with Tailwind classes. Requires the Nucleux Tailwind preset + tokens CSS — run `get_setup` with framework:"html". Behavior (menus, dialogs, toggles) is not included; wire it up yourself or use the React package.
 
+Editable example text (swap as needed): "Name".
+
 ```html
 <label class="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="nm">Name</label><input id="nm"/>
 ```
@@ -115,6 +123,8 @@ Static HTML with Tailwind classes. Requires the Nucleux Tailwind preset + tokens
 Button — variants, sizes, and icons — Nucleux agentic UI for React.
 
 Static HTML with Tailwind classes. Requires the Nucleux Tailwind preset + tokens CSS — run `get_setup` with framework:"html". Behavior (menus, dialogs, toggles) is not included; wire it up yourself or use the React package.
+
+Editable example text (swap as needed): "Save".
 
 ```html
 <button type="button" class="inline-flex select-none items-center justify-center gap-1.5 whitespace-nowrap font-semibold tracking-[0.005em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 border border-border bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 h-9 rounded-lg px-4 text-sm">Save</button>

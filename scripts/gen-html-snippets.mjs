@@ -62,12 +62,37 @@ async function main() {
   // resolve; everything else stays escaped.
   const unescapeForTailwind = (html) => html.replace(/&amp;/g, "&").replace(/&#x27;/g, "'");
 
+  // React useId() emits render-specific ids like `:R0:` / `:r1:` (and derived
+  // ids such as `:R0:-support`). Replace each distinct base id with a stable
+  // placeholder `__NX_ID_n__` so the MCP server can hand out fresh, unique ids
+  // per response (or a `{{id_n}}` template) — reusing a snippet no longer
+  // collides. Returns { html, idCount }.
+  const parameterizeIds = (html) => {
+    const bases = [...new Set(html.match(/:[Rr][0-9a-z]*:/g) ?? [])];
+    let out = html;
+    bases.forEach((base, i) => {
+      out = out.split(base).join(`__NX_ID_${i}__`);
+    });
+    return { html: out, idCount: bases.length };
+  };
+
+  // Visible example text an agent will likely swap (labels, button text, etc.).
+  const editableText = (html) => {
+    const out = [];
+    for (const m of html.matchAll(/>([^<>{}]+)</g)) {
+      const t = m[1].trim();
+      if (t && /[A-Za-z]/.test(t) && t.length <= 40) out.push(t);
+    }
+    return [...new Set(out)];
+  };
+
   const snippets = {};
   const failures = [];
   for (const { name, ui } of cases) {
     try {
-      const html = unescapeForTailwind(renderToStaticMarkup(ui));
-      snippets[name.toLowerCase()] = { name, html };
+      const raw = unescapeForTailwind(renderToStaticMarkup(ui));
+      const { html, idCount } = parameterizeIds(raw);
+      snippets[name.toLowerCase()] = { name, html, idCount, text: editableText(raw) };
     } catch (err) {
       failures.push(`${name}: ${err?.message ?? err}`);
     }
