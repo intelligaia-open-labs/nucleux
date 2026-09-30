@@ -39,3 +39,4 @@ examples/e2e/.login.bundle.mjs
 examples/e2e/login-shadcn.artifact.html
 examples/e2e/login-mcp.artifact.html
 examples/e2e/login-shadcn-mcp.artifact.html
+examples/e2e/mcp-demo.artifact.html
