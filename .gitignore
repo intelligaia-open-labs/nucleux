@@ -30,3 +30,6 @@ coverage/
 
 # transient esbuild bundle from gen-html-snippets
 packages/mcp/gen/.fixtures.bundle.mjs
+
+# one-off inlined artifact publish input
+examples/e2e/agent-console.artifact.html

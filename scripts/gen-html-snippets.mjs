@@ -55,11 +55,18 @@ async function main() {
     import("react-dom/server"),
   ]);
 
+  // renderToStaticMarkup escapes & and ' inside class attributes (e.g.
+  // `[&_svg]:size-5` -> `[&amp;_svg]`, `content-['']` -> `content-[&#x27;&#x27;]`).
+  // That's valid HTML, but Tailwind's class scanner won't match the escaped form
+  // when the snippet is pasted into a project. Decode those two so the utilities
+  // resolve; everything else stays escaped.
+  const unescapeForTailwind = (html) => html.replace(/&amp;/g, "&").replace(/&#x27;/g, "'");
+
   const snippets = {};
   const failures = [];
   for (const { name, ui } of cases) {
     try {
-      const html = renderToStaticMarkup(ui);
+      const html = unescapeForTailwind(renderToStaticMarkup(ui));
       snippets[name.toLowerCase()] = { name, html };
     } catch (err) {
       failures.push(`${name}: ${err?.message ?? err}`);

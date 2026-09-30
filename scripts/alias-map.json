@@ -129,5 +129,14 @@
   "@nucleux/md3-date-picker": "packages/md3-date-picker/src/index.tsx",
   "@nucleux/md3-time-picker": "packages/md3-time-picker/src/index.tsx",
   "@nucleux/md3-search": "packages/md3-search/src/index.tsx",
-  "@nucleux/md3-banner": "packages/md3-banner/src/index.tsx"
+  "@nucleux/md3-banner": "packages/md3-banner/src/index.tsx",
+  "@nucleux/md3-message": "packages/md3-message/src/index.tsx",
+  "@nucleux/md3-tool-call": "packages/md3-tool-call/src/index.tsx",
+  "@nucleux/md3-action-plan": "packages/md3-action-plan/src/index.tsx",
+  "@nucleux/md3-agent-composer": "packages/md3-agent-composer/src/index.tsx",
+  "@nucleux/md3-reasoning": "packages/md3-reasoning/src/index.tsx",
+  "@nucleux/md3-agent-steps": "packages/md3-agent-steps/src/index.tsx",
+  "@nucleux/md3-activity-log": "packages/md3-activity-log/src/index.tsx",
+  "@nucleux/md3-thread": "packages/md3-thread/src/index.tsx",
+  "@nucleux/md3-action-confirmation": "packages/md3-action-confirmation/src/index.tsx"
 }
