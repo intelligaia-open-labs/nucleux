@@ -1,7 +1,7 @@
-// Renders the LoginPage component to a self-contained HTML artifact:
-// SSR the real component (esbuild bundle, @nucleux/* aliased to source, React
-// external) -> static HTML -> Tailwind build (preset + tokens + md3-theme) ->
-// inline the CSS into examples/e2e/login.artifact.html for publishing.
+// Renders the login page components to self-contained HTML artifacts:
+// SSR each real component (esbuild bundle, @nucleux/* aliased to source, React
+// external) -> static HTML -> one Tailwind build (preset + tokens + md3-theme)
+// -> inline the CSS per page into examples/e2e/<name>.artifact.html.
 import { build } from "esbuild";
 import { execSync } from "node:child_process";
 import { readFileSync, writeFileSync, rmSync, mkdirSync } from "node:fs";
@@ -10,16 +10,21 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = join(root, "examples", "e2e");
+const exDir = join(root, "packages", "react", "src", "examples");
 const aliasMap = JSON.parse(readFileSync(join(root, "scripts", "alias-map.json"), "utf8"));
 const alias = Object.fromEntries(Object.entries(aliasMap).map(([k, v]) => [k, resolve(root, v)]));
-const tmp = join(outDir, ".login.bundle.mjs");
 
-async function main() {
-  mkdirSync(outDir, { recursive: true });
+const PAGES = [
+  { entry: "login-page.tsx", exportName: "LoginPage", out: "login", wrap: true },
+  { entry: "login-page-shadcn.tsx", exportName: "LoginPageShadcn", out: "login-shadcn", wrap: false },
+];
 
-  // 1) Bundle + SSR the LoginPage
+const external = ["react", "react-dom", "react-dom/server", "react/jsx-runtime", "react/jsx-dev-runtime", "lucide-react", "react-hook-form"];
+
+async function ssr(entry, exportName) {
+  const tmp = join(outDir, `.${exportName}.bundle.mjs`);
   await build({
-    entryPoints: [join(root, "packages", "react", "src", "examples", "login-page.tsx")],
+    entryPoints: [join(exDir, entry)],
     outfile: tmp,
     bundle: true,
     format: "esm",
@@ -27,36 +32,53 @@ async function main() {
     target: "node18",
     jsx: "automatic",
     banner: { js: 'import { createRequire as __cr } from "module"; const require = __cr(import.meta.url);' },
-    external: ["react", "react-dom", "react-dom/server", "react/jsx-runtime", "react/jsx-dev-runtime", "lucide-react", "react-hook-form"],
+    external,
     alias,
     logLevel: "silent",
   });
-  const [{ LoginPage }, { renderToStaticMarkup }, React] = await Promise.all([
+  const [mod, { renderToStaticMarkup }, React] = await Promise.all([
     import(pathToFileURL(tmp).href),
     import("react-dom/server"),
     import("react"),
   ]);
-  const markup = renderToStaticMarkup(React.createElement(LoginPage))
+  const html = renderToStaticMarkup(React.createElement(mod[exportName]))
     .replace(/&amp;/g, "&")
     .replace(/&#x27;/g, "'");
   rmSync(tmp, { force: true });
+  return html;
+}
 
-  // 2) Scannable page + Tailwind build (reuses examples/e2e config/input)
-  writeFileSync(join(outDir, "login.html"), `<!doctype html>\n<html lang="en" class="nx-theme-mui"><head><meta charset="utf-8"/><link rel="stylesheet" href="./output.css"/></head><body>${markup}</body></html>\n`);
+async function main() {
+  mkdirSync(outDir, { recursive: true });
+
+  // 1) SSR every page and write a scannable .html
+  const rendered = [];
+  for (const p of PAGES) {
+    const markup = await ssr(p.entry, p.exportName);
+    const cls = p.wrap ? ' class="nx-theme-mui"' : "";
+    writeFileSync(
+      join(outDir, `${p.out}.html`),
+      `<!doctype html>\n<html lang="en"${cls}><head><meta charset="utf-8"/><link rel="stylesheet" href="./output.css"/></head><body>${markup}</body></html>\n`,
+    );
+    rendered.push({ ...p, markup });
+  }
+
+  // 2) One Tailwind build scanning all e2e pages
   execSync(
     "pnpm exec tailwindcss -c examples/e2e/tailwind.config.cjs -i examples/e2e/input.css -o examples/e2e/output.css --minify",
     { cwd: root, stdio: "inherit" },
   );
-
-  // 3) Inline for a self-contained artifact
   const css = readFileSync(join(outDir, "output.css"), "utf8");
-  const artifact = `<style>\n${css}\n</style>\n<div class="nx-theme-mui">${markup}</div>\n`;
-  writeFileSync(join(outDir, "login.artifact.html"), artifact);
-  console.log(`login artifact ready — ${artifact.length} bytes -> examples/e2e/login.artifact.html`);
+
+  // 3) Inline per page
+  for (const p of rendered) {
+    const inner = p.wrap ? `<div class="nx-theme-mui">${p.markup}</div>` : p.markup;
+    writeFileSync(join(outDir, `${p.out}.artifact.html`), `<style>\n${css}\n</style>\n${inner}\n`);
+    console.log(`  ${p.out}.artifact.html ready`);
+  }
 }
 
 main().catch((err) => {
-  rmSync(tmp, { force: true });
   console.error("render-login failed:", err);
   process.exit(1);
 });
