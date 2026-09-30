@@ -774,7 +774,7 @@ export const cases: { name: string; ui: ReactElement }[] = [
     ui: (
       <>
         <Label htmlFor="nm">Name</Label>
-        <input id="nm" />
+        <Input id="nm" />
       </>
     ),
   },
