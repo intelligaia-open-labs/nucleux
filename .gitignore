@@ -33,3 +33,6 @@ packages/mcp/gen/.fixtures.bundle.mjs
 
 # one-off inlined artifact publish input
 examples/e2e/agent-console.artifact.html
+examples/e2e/login.artifact.html
+packages/react/src/examples/.login.bundle.mjs
+examples/e2e/.login.bundle.mjs
