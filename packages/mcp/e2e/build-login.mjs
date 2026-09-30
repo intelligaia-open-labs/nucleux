@@ -48,8 +48,13 @@ async function main() {
   const mdBtn = await getHtml("md3-button");
   const mdCheck = await getHtml("md3-checkbox");
 
+  // Each field snippet carries its own generated id; reusing it verbatim would
+  // duplicate ids. Uniquify the clone's id so label/aria wiring stays valid.
+  const mdBaseId = (mdField.match(/\sid="([^"]+)"/) || [])[1];
   const mdEmail = mdField;
-  const mdPassword = swap(mdField, "Email", "Password");
+  const mdPassword = mdBaseId
+    ? swap(swap(mdField, "Email", "Password"), mdBaseId, `${mdBaseId}-pw`)
+    : swap(mdField, "Email", "Password");
   const mdSignIn = `<div class="[&>button]:w-full">${swap(mdBtn, "Save", "Sign in")}</div>`;
   const mdRemember = `<label class="flex items-center gap-1 text-sm text-md-on-surface">${mdCheck}Remember me</label>`;
 
@@ -72,8 +77,9 @@ async function main() {
   const scCheck = await getHtml("checkbox");
   const scSep = await getHtml("separator");
 
-  const scEmail = swap(scLabelPair, "Name", "Email");
-  const scPassword = swap(scLabelPair, "Name", "Password");
+  // The label snippet ships id/for="nm"; give each field a unique id.
+  const scEmail = swap(swap(scLabelPair, "Name", "Email"), "nm", "email");
+  const scPassword = swap(swap(scLabelPair, "Name", "Password"), "nm", "password");
   const scSignIn = `<div class="[&>button]:w-full">${swap(scBtn, "Save", "Sign in")}</div>`;
   const scRemember = `<label class="flex items-center gap-2 text-sm text-foreground">${scCheck}Remember me</label>`;
 
