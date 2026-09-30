@@ -69,14 +69,25 @@ async function main() {
 </div>`;
 
   // --- shadcn login (base primitives) ---
-  const scLabelPair = await getHtml("label"); // <label…>Name</label><input id…>
+  // Compose each field from the styled Input snippet + the <label> element (the
+  // 'label' snippet's own input is an unstyled bare control — for the field we
+  // want the real Input component's markup).
+  const scInput = await getHtml("input"); // styled <input class="flex h-9 …">
+  const scLabelEl = ((await getHtml("label")).match(/<label[\s\S]*?<\/label>/) || [""])[0];
   const scBtn = await getHtml("button");
   const scCheck = await getHtml("checkbox");
   const scSep = await getHtml("separator");
 
-  // The label snippet ships id/for="nm"; give each field a unique id.
-  const scEmail = swap(swap(scLabelPair, "Name", "Email"), "nm", "email");
-  const scPassword = swap(swap(scLabelPair, "Name", "Password"), "nm", "password");
+  const scField = (labelText, id, type) => {
+    const label = scLabelEl.split(">Name<").join(`>${labelText}<`).replace(/for="[^"]*"/, `for="${id}"`);
+    const input = scInput
+      .replace(/\saria-label="[^"]*"/, "")
+      .replace(/<input/, `<input id="${id}"`)
+      .replace(/type="text"/, `type="${type}"`);
+    return `<div class="space-y-1.5">${label}${input}</div>`;
+  };
+  const scEmail = scField("Email", "email", "email");
+  const scPassword = scField("Password", "password", "password");
   const scSignIn = `<div class="[&>button]:w-full">${swap(scBtn, "Save", "Sign in")}</div>`;
   const scRemember = `<label class="flex items-center gap-2 text-sm text-foreground">${scCheck}Remember me</label>`;
 
@@ -85,8 +96,8 @@ async function main() {
     <h1 class="mb-1 text-2xl font-semibold text-foreground">Sign in</h1>
     <p class="mb-6 text-sm text-muted-foreground">Welcome back to Nucleux</p>
     <div class="flex flex-col gap-4">
-      <div class="space-y-1.5">${scEmail}</div>
-      <div class="space-y-1.5">${scPassword}</div>
+      ${scEmail}
+      ${scPassword}
       ${scRemember}
       ${scSignIn}
     </div>

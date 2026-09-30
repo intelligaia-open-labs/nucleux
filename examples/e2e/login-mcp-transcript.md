@@ -99,6 +99,20 @@ Static HTML with Tailwind classes. Requires the Nucleux Tailwind preset + tokens
 ```
 ```
 
+## get_component input · html
+
+```
+# Input  (HTML)
+
+A single-line text input, tokenized and themeable.
+
+Static HTML with Tailwind classes. Requires the Nucleux Tailwind preset + tokens CSS — run `get_setup` with framework:"html". Behavior (menus, dialogs, toggles) is not included; wire it up yourself or use the React package.
+
+```html
+<input type="text" class="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground" aria-label="Name"/>
+```
+```
+
 ## get_component label · html
 
 ```
