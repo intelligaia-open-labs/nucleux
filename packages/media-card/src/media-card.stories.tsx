@@ -13,11 +13,14 @@ const meta = {
   component: MediaCard,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
+  // `media`/`footer` are ReactNodes — kept out of `args` (Storybook serializes
+  // args and would strip the element) and injected via `render`; hide controls.
+  argTypes: { media: { control: false }, footer: { control: false } },
   args: {
     title: "Variant 1",
     description: "A media card with an image, title, and description.",
-    media: <Poster />,
   },
+  render: (args) => <MediaCard {...args} media={<Poster />} />,
   decorators: [
     (Story) => (
       <div className="w-72">
@@ -43,4 +46,4 @@ export const Horizontal: Story = {
   args: { orientation: "horizontal" },
 };
 
-export const NoMedia: Story = { args: { media: undefined } };
+export const NoMedia: Story = { render: (args) => <MediaCard {...args} /> };

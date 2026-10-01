@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/mcp",
-  "version": "0.1.1",
+  "version": "0.4.6",
   "type": "module",
   "description": "Model Context Protocol server for the Nucleux agentic UI component library — lets AI coding agents discover, search, and correctly use @nucleux components.",
   "bin": {
@@ -12,7 +12,7 @@
     "README.md"
   ],
   "scripts": {
-    "prebuild": "node ../../scripts/gen-mcp-catalog.mjs",
+    "prebuild": "node ../../scripts/gen-mcp-catalog.mjs && node ../../scripts/gen-html-snippets.mjs",
     "build": "tsup"
   },
   "dependencies": {

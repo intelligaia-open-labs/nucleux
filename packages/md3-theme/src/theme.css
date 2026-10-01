@@ -1,0 +1,71 @@
+/**
+ * Nucleux Material Design 3 theme.
+ *
+ * Remaps the semantic Nucleux tokens (--nx-*) that every component uses onto the
+ * Material 3 tonal palette. Wrap any subtree in `class="nx-theme-mui"` and the
+ * components inside — including the agentic ones — render in a Material UI 3 look
+ * instead of the default shadcn/slate look. Combine with `.dark` for dark mode.
+ *
+ * Import once:  import "@nucleux/md3-theme/theme.css";
+ *
+ * Only the roles that differ from the base are overridden; anything left unset
+ * (success, warning, …) inherits the base theme.
+ */
+.nx-theme-mui {
+  --nx-background: 293 100% 98%; /* md surface */
+  --nx-foreground: 257 8% 12%; /* md on-surface */
+
+  --nx-muted: 268 21% 90%; /* md surface-variant */
+  --nx-muted-foreground: 265 7% 29%; /* md on-surface-variant */
+
+  --nx-primary: 255 32% 48%; /* md primary */
+  --nx-primary-foreground: 0 0% 100%; /* md on-primary */
+
+  --nx-accent: 261 61% 92%; /* md secondary-container */
+  --nx-accent-foreground: 253 26% 13%; /* md on-secondary-container */
+
+  --nx-info: 255 32% 48%; /* CTA -> md primary */
+  --nx-info-foreground: 0 0% 100%;
+
+  --nx-brand: 340 21% 41%; /* md tertiary */
+  --nx-brand-foreground: 0 0% 100%;
+  --nx-brand-muted: 338 100% 92%; /* md tertiary-container */
+
+  --nx-destructive: 3 71% 41%; /* md error */
+  --nx-destructive-foreground: 0 0% 100%;
+
+  --nx-border: 262 12% 79%; /* md outline-variant */
+  --nx-input: 262 12% 79%;
+  --nx-ring: 255 32% 48%; /* md primary */
+
+  --nx-radius: 1rem; /* rounder, Material 3 shape */
+}
+
+.dark .nx-theme-mui,
+.nx-theme-mui.dark {
+  --nx-background: 260 14% 8%; /* md dark surface */
+  --nx-foreground: 267 16% 90%;
+
+  --nx-muted: 265 7% 29%;
+  --nx-muted-foreground: 262 12% 79%;
+
+  --nx-primary: 258 100% 87%;
+  --nx-primary-foreground: 258 58% 28%;
+
+  --nx-accent: 258 13% 31%;
+  --nx-accent-foreground: 261 61% 92%;
+
+  --nx-info: 258 100% 87%;
+  --nx-info-foreground: 258 58% 28%;
+
+  --nx-brand: 344 65% 83%;
+  --nx-brand-foreground: 342 33% 22%;
+  --nx-brand-muted: 344 25% 31%;
+
+  --nx-destructive: 2 74% 83%;
+  --nx-destructive-foreground: 3 71% 22%;
+
+  --nx-border: 265 7% 29%;
+  --nx-input: 265 7% 29%;
+  --nx-ring: 258 100% 87%;
+}

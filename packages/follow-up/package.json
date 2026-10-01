@@ -1,10 +1,20 @@
 {
   "name": "@nucleux/follow-up",
-  "version": "0.1.1",
+  "version": "0.4.0",
   "type": "module",
   "sideEffects": false,
   "description": "FollowUp — AI answer with an editable assumption chip — Nucleux agentic UI for React.",
-  "keywords": ["nucleux", "react", "ui", "components", "agentic", "ai", "tailwind", "follow-up", "assumption"],
+  "keywords": [
+    "nucleux",
+    "react",
+    "ui",
+    "components",
+    "agentic",
+    "ai",
+    "tailwind",
+    "follow-up",
+    "assumption"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -15,10 +25,20 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist", "README.md"],
-  "scripts": { "build": "tsup" },
-  "peerDependencies": { "react": ">=18", "react-dom": ">=18" },
-  "dependencies": { "@nucleux/utils": "workspace:*" },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@nucleux/utils": "workspace:*"
+  },
   "devDependencies": {
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
@@ -26,7 +46,9 @@
     "react": "^18.3.1",
     "lucide-react": "^0.469.0"
   },
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
