@@ -17,6 +17,7 @@ const alias = Object.fromEntries(Object.entries(aliasMap).map(([k, v]) => [k, re
 const PAGES = [
   { entry: "login-page.tsx", exportName: "LoginPage", out: "login", wrap: true },
   { entry: "login-page-shadcn.tsx", exportName: "LoginPageShadcn", out: "login-shadcn", wrap: false },
+  { entry: "login-mui3.tsx", exportName: "LoginMui3", out: "login-mui3", wrap: true },
 ];
 
 const external = ["react", "react-dom", "react-dom/server", "react/jsx-runtime", "react/jsx-dev-runtime", "lucide-react", "react-hook-form"];
