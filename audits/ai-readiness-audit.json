@@ -1,0 +1,463 @@
+{
+  "systemsConfigPath": "/home/jaswant-singh/open-design-system-bench/systems.config.json",
+  "run": "runs/20261007-072110-medium-tier2",
+  "systems": {
+    "nucleux": {
+      "checks": [
+        {
+          "id": "surface",
+          "title": "Enablement surface",
+          "score": 60,
+          "findings": [
+            {
+              "severity": "info",
+              "message": "CLAUDE.md present at system root."
+            },
+            {
+              "severity": "warn",
+              "message": "No llms.txt at the system root.",
+              "fix": "Ship an llms.txt listing the component set: the most commonly cited gap in the mid-2026 AI-readiness survey."
+            },
+            {
+              "severity": "info",
+              "message": "Hosted surface not probed (no docsUrl configured)."
+            },
+            {
+              "severity": "info",
+              "message": "Machine-readable catalog found: pre-extracted catalog snapshot."
+            },
+            {
+              "severity": "info",
+              "message": "MCP server found in workspace package packages/mcp (@nucleux/mcp)."
+            },
+            {
+              "severity": "info",
+              "message": "Skill bundles found: .claude/skills (2 skills)."
+            },
+            {
+              "severity": "info",
+              "message": "No editor rules file (.cursorrules, .cursor/rules, .github/copilot-instructions.md)."
+            },
+            {
+              "severity": "info",
+              "message": "No Code Connect files (*.figma.ts[x]) found.",
+              "fix": "Only 10% of systems in the survey have Code Connect mappings: lowest-adoption asset, but it unlocks the Tier-3 Figma-to-code eval."
+            },
+            {
+              "severity": "info",
+              "message": "No registry hint found (registry.json, publishConfig.registry)."
+            },
+            {
+              "severity": "info",
+              "message": "Doc freshness unmeasured (not a git checkout)."
+            }
+          ]
+        },
+        {
+          "id": "catalog-quality",
+          "title": "Catalog quality",
+          "score": 16.7,
+          "findings": [
+            {
+              "severity": "info",
+              "message": "73 component dirs, 132 exports, 0 props documented, 319 inherited prop names recorded (not counted toward coverage), 88 export(s) expose only inherited props."
+            },
+            {
+              "severity": "warn",
+              "message": "44/132 exports (33.3%) have zero documented props: AccordionTrigger, AccordionContent, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, CardContainer, ….",
+              "fix": "These are more likely docgen extraction gaps (unresolved generics, forwardRef, re-exported third-party types) than genuinely prop-less components. Spot-check a few before trusting the 0."
+            },
+            {
+              "severity": "warn",
+              "message": "extraction-suspect: 33.3% of exports have no props. Treat the coverage numbers below as a lower bound.",
+              "fix": "Type/description/default coverage below is computed only over the exports that did return props; fix extraction and re-run to get a true reading."
+            },
+            {
+              "severity": "warn",
+              "message": "Only 66.7% of exports have a documented props table."
+            },
+            {
+              "severity": "warn",
+              "message": "Only 0% of props have a resolved type.",
+              "fix": "Untyped props force an agent to guess valid values instead of reading them."
+            },
+            {
+              "severity": "warn",
+              "message": "Only 0% of props have a description.",
+              "fix": "JSDoc on prop declarations flows straight into the catalog via docgen."
+            }
+          ]
+        },
+        {
+          "id": "export-hygiene",
+          "title": "Export hygiene",
+          "score": null,
+          "findings": [
+            {
+              "severity": "warn",
+              "message": "No root barrel found at .bench-barrel/index.ts."
+            },
+            {
+              "severity": "warn",
+              "message": "package.json has no \"types\"/\"typings\" field.",
+              "fix": "Declare \"types\" so TypeScript-aware agent tooling can resolve prop types without a docgen catalog."
+            },
+            {
+              "severity": "info",
+              "message": "No declared entry point (main/module/exports[\".\"]) points at built output.",
+              "fix": "A package usable outside its own monorepo (by an external agent workspace via npm install) needs a built dist entry, not source-aliased paths."
+            },
+            {
+              "severity": "warn",
+              "message": "No component directories with an index.ts found under .bench-barrel, and no custom-element declarations either. Reachability was not assessed and the score is withheld.",
+              "fix": "Point componentsSrc at the directory holding the component dirs, if this system has them. If its layout is genuinely neither shape, this check has nothing to measure for it."
+            }
+          ]
+        },
+        {
+          "id": "vocabulary",
+          "title": "Vocabulary convention-distance",
+          "score": 61.6,
+          "findings": [
+            {
+              "severity": "info",
+              "message": "10 concept(s) aligned with convention, 4 covered under a different name, 26 not represented in this catalog (n/a)."
+            },
+            {
+              "severity": "warn",
+              "message": "Prop \"color\" (semantic-emphasis): models invented this name 49 time(s) across the mined sample; this system covers it as \"variant\" instead.",
+              "fix": "often variant/tone elsewhere"
+            },
+            {
+              "severity": "warn",
+              "message": "Prop \"alignItems\" (stack-align): models invented this name 16 time(s) across the mined sample; this system covers it as \"align\" instead.",
+              "fix": "CSS vocabulary; align elsewhere"
+            },
+            {
+              "severity": "warn",
+              "message": "Component \"ModalHeader\" (modal-compound-parts): models invented this name 9 time(s) across the mined sample; this system covers it as \"DialogHeader\" instead.",
+              "fix": "Chakra compound naming; ModalTitle/DialogHeader elsewhere"
+            },
+            {
+              "severity": "warn",
+              "message": "Prop \"severity\" (alert-severity): models invented this name 9 time(s) across the mined sample; this system covers it as \"variant\" instead.",
+              "fix": "MUI Alert vocabulary; variant/tone elsewhere"
+            }
+          ]
+        },
+        {
+          "id": "tokens",
+          "title": "Token machine-readability",
+          "score": 55,
+          "findings": [
+            {
+              "severity": "info",
+              "message": "45 CSS custom properties found."
+            },
+            {
+              "severity": "warn",
+              "message": "0/45 vars (0%) reference another var: a semantic layer over primitives.",
+              "fix": "A flat token list without a semantic layer forces agents to pick raw values instead of intent-named ones."
+            },
+            {
+              "severity": "info",
+              "message": "Light/dark theming signal found (prefers-color-scheme, a data-*theme/color-scheme attribute, a .dark class selector, or a color-scheme declaration)."
+            },
+            {
+              "severity": "info",
+              "message": "No DTCG (*.tokens.json / tokens.json with \"$value\") files found."
+            }
+          ]
+        },
+        {
+          "id": "deprecation",
+          "title": "Deprecation legibility",
+          "score": 0,
+          "findings": [
+            {
+              "severity": "info",
+              "message": "No @deprecated JSDoc annotations found (either nothing is deprecated, or deprecations are undocumented: static analysis can't tell which)."
+            },
+            {
+              "severity": "warn",
+              "message": "No CHANGELOG*.md, MIGRATION*.md or UPGRADING*.md at the system root, the components package dir, or any workspace package.",
+              "fix": "A machine-readable changelog or migration guide is a Tier-1 migration eval prerequisite."
+            },
+            {
+              "severity": "info",
+              "message": "No codemods hint found."
+            }
+          ]
+        },
+        {
+          "id": "docs-greppability",
+          "title": "Docs greppability",
+          "score": 63.2,
+          "findings": [
+            {
+              "severity": "info",
+              "message": "80 markdown file(s) found in the repo."
+            },
+            {
+              "severity": "info",
+              "message": "Catalog available: scoring per-component coverage mode."
+            },
+            {
+              "severity": "info",
+              "message": "117/132 components (88.6%) are mentioned in at least one markdown file."
+            },
+            {
+              "severity": "warn",
+              "message": "15 component(s) have no markdown mention: CardDivider, SheetDescription, SheetClose, TableCaption, RelatedPatternCard, RightSidebarLabel, RightSidebarAnchor, RightSidebarMeta, RightSidebarSeparator, SourceItem, ….",
+              "fix": "A component with zero markdown reach is invisible to any docs-grepping or retrieval-based agent workflow."
+            },
+            {
+              "severity": "warn",
+              "message": "No llms.txt found. Component list is not machine-listable in the ecosystem-standard location."
+            }
+          ]
+        }
+      ],
+      "score": {
+        "surface": {
+          "score": 42.8,
+          "checks": [
+            {
+              "id": "surface",
+              "title": "Enablement surface",
+              "score": 60,
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "CLAUDE.md present at system root."
+                },
+                {
+                  "severity": "warn",
+                  "message": "No llms.txt at the system root.",
+                  "fix": "Ship an llms.txt listing the component set: the most commonly cited gap in the mid-2026 AI-readiness survey."
+                },
+                {
+                  "severity": "info",
+                  "message": "Hosted surface not probed (no docsUrl configured)."
+                },
+                {
+                  "severity": "info",
+                  "message": "Machine-readable catalog found: pre-extracted catalog snapshot."
+                },
+                {
+                  "severity": "info",
+                  "message": "MCP server found in workspace package packages/mcp (@nucleux/mcp)."
+                },
+                {
+                  "severity": "info",
+                  "message": "Skill bundles found: .claude/skills (2 skills)."
+                },
+                {
+                  "severity": "info",
+                  "message": "No editor rules file (.cursorrules, .cursor/rules, .github/copilot-instructions.md)."
+                },
+                {
+                  "severity": "info",
+                  "message": "No Code Connect files (*.figma.ts[x]) found.",
+                  "fix": "Only 10% of systems in the survey have Code Connect mappings: lowest-adoption asset, but it unlocks the Tier-3 Figma-to-code eval."
+                },
+                {
+                  "severity": "info",
+                  "message": "No registry hint found (registry.json, publishConfig.registry)."
+                },
+                {
+                  "severity": "info",
+                  "message": "Doc freshness unmeasured (not a git checkout)."
+                }
+              ]
+            },
+            {
+              "id": "catalog-quality",
+              "title": "Catalog quality",
+              "score": 16.7,
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "73 component dirs, 132 exports, 0 props documented, 319 inherited prop names recorded (not counted toward coverage), 88 export(s) expose only inherited props."
+                },
+                {
+                  "severity": "warn",
+                  "message": "44/132 exports (33.3%) have zero documented props: AccordionTrigger, AccordionContent, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, CardContainer, ….",
+                  "fix": "These are more likely docgen extraction gaps (unresolved generics, forwardRef, re-exported third-party types) than genuinely prop-less components. Spot-check a few before trusting the 0."
+                },
+                {
+                  "severity": "warn",
+                  "message": "extraction-suspect: 33.3% of exports have no props. Treat the coverage numbers below as a lower bound.",
+                  "fix": "Type/description/default coverage below is computed only over the exports that did return props; fix extraction and re-run to get a true reading."
+                },
+                {
+                  "severity": "warn",
+                  "message": "Only 66.7% of exports have a documented props table."
+                },
+                {
+                  "severity": "warn",
+                  "message": "Only 0% of props have a resolved type.",
+                  "fix": "Untyped props force an agent to guess valid values instead of reading them."
+                },
+                {
+                  "severity": "warn",
+                  "message": "Only 0% of props have a description.",
+                  "fix": "JSDoc on prop declarations flows straight into the catalog via docgen."
+                }
+              ]
+            },
+            {
+              "id": "export-hygiene",
+              "title": "Export hygiene",
+              "score": null,
+              "findings": [
+                {
+                  "severity": "warn",
+                  "message": "No root barrel found at .bench-barrel/index.ts."
+                },
+                {
+                  "severity": "warn",
+                  "message": "package.json has no \"types\"/\"typings\" field.",
+                  "fix": "Declare \"types\" so TypeScript-aware agent tooling can resolve prop types without a docgen catalog."
+                },
+                {
+                  "severity": "info",
+                  "message": "No declared entry point (main/module/exports[\".\"]) points at built output.",
+                  "fix": "A package usable outside its own monorepo (by an external agent workspace via npm install) needs a built dist entry, not source-aliased paths."
+                },
+                {
+                  "severity": "warn",
+                  "message": "No component directories with an index.ts found under .bench-barrel, and no custom-element declarations either. Reachability was not assessed and the score is withheld.",
+                  "fix": "Point componentsSrc at the directory holding the component dirs, if this system has them. If its layout is genuinely neither shape, this check has nothing to measure for it."
+                }
+              ]
+            },
+            {
+              "id": "vocabulary",
+              "title": "Vocabulary convention-distance",
+              "score": 61.6,
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "10 concept(s) aligned with convention, 4 covered under a different name, 26 not represented in this catalog (n/a)."
+                },
+                {
+                  "severity": "warn",
+                  "message": "Prop \"color\" (semantic-emphasis): models invented this name 49 time(s) across the mined sample; this system covers it as \"variant\" instead.",
+                  "fix": "often variant/tone elsewhere"
+                },
+                {
+                  "severity": "warn",
+                  "message": "Prop \"alignItems\" (stack-align): models invented this name 16 time(s) across the mined sample; this system covers it as \"align\" instead.",
+                  "fix": "CSS vocabulary; align elsewhere"
+                },
+                {
+                  "severity": "warn",
+                  "message": "Component \"ModalHeader\" (modal-compound-parts): models invented this name 9 time(s) across the mined sample; this system covers it as \"DialogHeader\" instead.",
+                  "fix": "Chakra compound naming; ModalTitle/DialogHeader elsewhere"
+                },
+                {
+                  "severity": "warn",
+                  "message": "Prop \"severity\" (alert-severity): models invented this name 9 time(s) across the mined sample; this system covers it as \"variant\" instead.",
+                  "fix": "MUI Alert vocabulary; variant/tone elsewhere"
+                }
+              ]
+            },
+            {
+              "id": "tokens",
+              "title": "Token machine-readability",
+              "score": 55,
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "45 CSS custom properties found."
+                },
+                {
+                  "severity": "warn",
+                  "message": "0/45 vars (0%) reference another var: a semantic layer over primitives.",
+                  "fix": "A flat token list without a semantic layer forces agents to pick raw values instead of intent-named ones."
+                },
+                {
+                  "severity": "info",
+                  "message": "Light/dark theming signal found (prefers-color-scheme, a data-*theme/color-scheme attribute, a .dark class selector, or a color-scheme declaration)."
+                },
+                {
+                  "severity": "info",
+                  "message": "No DTCG (*.tokens.json / tokens.json with \"$value\") files found."
+                }
+              ]
+            },
+            {
+              "id": "deprecation",
+              "title": "Deprecation legibility",
+              "score": 0,
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "No @deprecated JSDoc annotations found (either nothing is deprecated, or deprecations are undocumented: static analysis can't tell which)."
+                },
+                {
+                  "severity": "warn",
+                  "message": "No CHANGELOG*.md, MIGRATION*.md or UPGRADING*.md at the system root, the components package dir, or any workspace package.",
+                  "fix": "A machine-readable changelog or migration guide is a Tier-1 migration eval prerequisite."
+                },
+                {
+                  "severity": "info",
+                  "message": "No codemods hint found."
+                }
+              ]
+            },
+            {
+              "id": "docs-greppability",
+              "title": "Docs greppability",
+              "score": 63.2,
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "80 markdown file(s) found in the repo."
+                },
+                {
+                  "severity": "info",
+                  "message": "Catalog available: scoring per-component coverage mode."
+                },
+                {
+                  "severity": "info",
+                  "message": "117/132 components (88.6%) are mentioned in at least one markdown file."
+                },
+                {
+                  "severity": "warn",
+                  "message": "15 component(s) have no markdown mention: CardDivider, SheetDescription, SheetClose, TableCaption, RelatedPatternCard, RightSidebarLabel, RightSidebarAnchor, RightSidebarMeta, RightSidebarSeparator, SourceItem, ….",
+                  "fix": "A component with zero markdown reach is invisible to any docs-grepping or retrieval-based agent workflow."
+                },
+                {
+                  "severity": "warn",
+                  "message": "No llms.txt found. Component list is not machine-listable in the ecosystem-standard location."
+                }
+              ]
+            }
+          ]
+        },
+        "lift": {
+          "score": null,
+          "note": "Run has no aggregates for bare context (system: nucleux). Lift needs both."
+        },
+        "ceiling": {
+          "score": 30.8,
+          "note": "guided mean 61.6, guided non-fail rate 0% (0/16)."
+        },
+        "engagement": {
+          "score": 0,
+          "note": "16/16 ok cells ignored the design system entirely."
+        },
+        "vocabularyBehavioral": {
+          "score": 100,
+          "note": "No hallucinated components/invented props in this run. Nothing to attribute."
+        },
+        "composite": 43.4,
+        "basis": "partial-behavioral",
+        "tier": "Invested",
+        "tierRationale": "composite 43.4 in [40, 70)"
+      }
+    }
+  }
+}

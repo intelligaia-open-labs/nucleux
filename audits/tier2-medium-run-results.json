@@ -1,0 +1,3671 @@
+{
+  "runId": "20261007-072110-medium-tier2",
+  "manifest": {
+    "runId": "20261007-072110-medium-tier2",
+    "label": "medium-tier2",
+    "profile": "medium",
+    "startedAt": "2026-10-07T07:21:10.667Z",
+    "nodeVersion": "v22.23.3",
+    "adapters": {
+      "api-oneshot": {
+        "version": "api-oneshot (single-shot API adapter, no CLI)"
+      }
+    },
+    "systems": {
+      "nucleux": {
+        "root": "/home/jaswant-singh/nucleux-src",
+        "commit": "05c53278299d0edfc38fb7860bb71bf2e0ce2932",
+        "catalogSrcHash": "850c9c16611ca365bda92b6c3adf806c59b9f7bf1173fb511d07213d56a5eef0",
+        "tokensCssHash": "6c0dd4c57720fdd8d391533eb8ae754b228bc250e40afd875212dd6713f6d03f"
+      }
+    },
+    "cells": [
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "agents-md",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "cancel-plan-action-hierarchy",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "agents-md",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "confirm-account-deletion",
+          "rep": 1
+        },
+        "status": "agent-error"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "agents-md",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "connection-status-indicator",
+          "rep": 1
+        },
+        "status": "agent-error"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "agents-md",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "empty-state-devices",
+          "rep": 1
+        },
+        "status": "agent-error"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "agents-md",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "form-validation-errors",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "agents-md",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "onboarding-flow",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "agents-md",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "paginated-activity-log",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "agents-md",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "password-visibility",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "agents-md",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "settings-toggle-section",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "agents-md",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "success-feedback",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "skill",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "cancel-plan-action-hierarchy",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "skill",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "confirm-account-deletion",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "skill",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "connection-status-indicator",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "skill",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "empty-state-devices",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "skill",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "form-validation-errors",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "skill",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "onboarding-flow",
+          "rep": 1
+        },
+        "status": "agent-error"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "skill",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "paginated-activity-log",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "skill",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "password-visibility",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "skill",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "settings-toggle-section",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "nucleux",
+          "context": "skill",
+          "model": "yantra:glm-5.2:cloud",
+          "agent": "api-oneshot",
+          "taskId": "success-feedback",
+          "rep": 1
+        },
+        "status": "ok"
+      }
+    ],
+    "totalInputTokens": 29535,
+    "totalOutputTokens": 67715,
+    "finishedAt": "2026-10-07T07:31:18.290Z",
+    "wallClockMs": 607623,
+    "paused": false
+  },
+  "records": [
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "agents-md",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "confirm-account-deletion",
+      "rep": 1,
+      "status": "agent-error",
+      "artifacts": {
+        "dir": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/confirm-account-deletion/rep1",
+        "transcript": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/confirm-account-deletion/rep1/transcript.jsonl"
+      },
+      "agentMeta": {
+        "durationMs": 39852
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "agents-md",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "cancel-plan-action-hierarchy",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/cancel-plan-action-hierarchy/rep1",
+        "transcript": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/cancel-plan-action-hierarchy/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/cancel-plan-action-hierarchy/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/cancel-plan-action-hierarchy/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 35383,
+        "numTurns": 1,
+        "inputTokens": 1851,
+        "outputTokens": 3397
+      },
+      "result": {
+        "overall": 49.85,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(102,53): error TS1003: Identifier expected."
+              },
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(104,16): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?"
+              }
+            ]
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 49.5,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "judgment",
+                "message": "three-emphasis-levels: All three options (keep, downgrade, cancel) are rendered as identically-styled radio cards with the same border, background, and text treatment. There is no visual distinction in emphasis among them — no primary, secondary, or tertiary action styling is applied to the options themselves. Only the shared 'Confirm choice' button carries primary emphasis, so the three actions do not use distinct emphasis levels."
+              }
+            ]
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(102,53): error TS1003: Identifier expected."
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(104,16): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?"
+          },
+          {
+            "dimension": "judgment",
+            "message": "three-emphasis-levels: All three options (keep, downgrade, cancel) are rendered as identically-styled radio cards with the same border, background, and text treatment. There is no visual distinction in emphasis among them — no primary, secondary, or tertiary action styling is applied to the options themselves. Only the shared 'Confirm choice' button carries primary emphasis, so the three actions do not use distinct emphasis levels."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "agents-md",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "connection-status-indicator",
+      "rep": 1,
+      "status": "agent-error",
+      "artifacts": {
+        "dir": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/connection-status-indicator/rep1",
+        "transcript": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/connection-status-indicator/rep1/transcript.jsonl"
+      },
+      "agentMeta": {
+        "durationMs": 54876
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "agents-md",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "empty-state-devices",
+      "rep": 1,
+      "status": "agent-error",
+      "artifacts": {
+        "dir": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/empty-state-devices/rep1",
+        "transcript": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/empty-state-devices/rep1/transcript.jsonl"
+      },
+      "agentMeta": {
+        "durationMs": 75369
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "agents-md",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "form-validation-errors",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/form-validation-errors/rep1",
+        "transcript": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/form-validation-errors/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/form-validation-errors/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/form-validation-errors/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 100254,
+        "numTurns": 1,
+        "inputTokens": 1847,
+        "outputTokens": 9055
+      },
+      "result": {
+        "overall": 57.5,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "compile",
+                "message": "src/task/InviteForm.tsx(168,1): error TS1005: '}' expected."
+              },
+              {
+                "dimension": "compile",
+                "message": "src/task/InviteForm.tsx(169,74): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?"
+              }
+            ]
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 75,
+            "gate": "pass",
+            "diffs": [
+              {
+                "dimension": "judgment",
+                "message": "submit-state: The submit button (`type=\"submit\"`) has no disabled, loading, or pending-state handling. There is no state variable tracking submission/loading, no `disabled` attribute, and no spinner or aria-busy. The submit handler synchronously resets to success without modeling any async/loading state, so the control never communicates a loading or disabled state."
+              }
+            ]
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/InviteForm.tsx(168,1): error TS1005: '}' expected."
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/InviteForm.tsx(169,74): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?"
+          },
+          {
+            "dimension": "judgment",
+            "message": "submit-state: The submit button (`type=\"submit\"`) has no disabled, loading, or pending-state handling. There is no state variable tracking submission/loading, no `disabled` attribute, and no spinner or aria-busy. The submit handler synchronously resets to success without modeling any async/loading state, so the control never communicates a loading or disabled state."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "agents-md",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "onboarding-flow",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/onboarding-flow/rep1",
+        "transcript": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/onboarding-flow/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/onboarding-flow/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/onboarding-flow/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 67194,
+        "numTurns": 1,
+        "inputTokens": 1854,
+        "outputTokens": 6271
+      },
+      "result": {
+        "overall": 63.65,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(120,1): error TS1128: Declaration or statement expected."
+              }
+            ]
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 95.5,
+            "gate": "pass",
+            "diffs": []
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(120,1): error TS1128: Declaration or statement expected."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "agents-md",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "password-visibility",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/password-visibility/rep1",
+        "transcript": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/password-visibility/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/password-visibility/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/password-visibility/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 23973,
+        "numTurns": 1,
+        "inputTokens": 1835,
+        "outputTokens": 2121
+      },
+      "result": {
+        "overall": 50,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(63,1): error TS2322: Type '{ n: true; label: string; id: string; type: \"email\"; autoComplete: \"email\"; placeholder: string; value: string; onChange: (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => void; required: true; }' is not assignable to type 'IntrinsicAttributes & { id: string; label: string; } & InputHTMLAttributes<HTMLInputElement>'."
+              },
+              {
+                "dimension": "compile",
+                "message": "  Property 'n' does not exist on type 'IntrinsicAttributes & { id: string; label: string; } & InputHTMLAttributes<HTMLInputElement>'."
+              }
+            ]
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 50,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "judgment",
+                "message": "builtin-affordance: The PasswordField component hand-rolls a bare <input> element and bolts a separate <button> on via absolute positioning. There is no use of a design system input component with built-in slots for the visibility control."
+              }
+            ]
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(63,1): error TS2322: Type '{ n: true; label: string; id: string; type: \"email\"; autoComplete: \"email\"; placeholder: string; value: string; onChange: (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => void; required: true; }' is not assignable to type 'IntrinsicAttributes & { id: string; label: string; } & InputHTMLAttributes<HTMLInputElement>'."
+          },
+          {
+            "dimension": "compile",
+            "message": "  Property 'n' does not exist on type 'IntrinsicAttributes & { id: string; label: string; } & InputHTMLAttributes<HTMLInputElement>'."
+          },
+          {
+            "dimension": "judgment",
+            "message": "builtin-affordance: The PasswordField component hand-rolls a bare <input> element and bolts a separate <button> on via absolute positioning. There is no use of a design system input component with built-in slots for the visibility control."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "agents-md",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "paginated-activity-log",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/paginated-activity-log/rep1",
+        "transcript": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/paginated-activity-log/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/paginated-activity-log/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/paginated-activity-log/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 59675,
+        "numTurns": 1,
+        "inputTokens": 1849,
+        "outputTokens": 5308
+      },
+      "result": {
+        "overall": 72,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 70,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "a11yStatic",
+                "message": "<input> form control has no accessible name in src/task/index.tsx:62",
+                "fix": "Associate a <label htmlFor> / aria-label, or put the control inside FormField."
+              },
+              {
+                "dimension": "a11yStatic",
+                "message": "<select> form control has no accessible name in src/task/index.tsx:69",
+                "fix": "Associate a <label htmlFor> / aria-label, or put the control inside FormField."
+              }
+            ]
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "a11yStatic",
+            "message": "<input> form control has no accessible name in src/task/index.tsx:62",
+            "fix": "Associate a <label htmlFor> / aria-label, or put the control inside FormField."
+          },
+          {
+            "dimension": "a11yStatic",
+            "message": "<select> form control has no accessible name in src/task/index.tsx:69",
+            "fix": "Associate a <label htmlFor> / aria-label, or put the control inside FormField."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "agents-md",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "settings-toggle-section",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/settings-toggle-section/rep1",
+        "transcript": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/settings-toggle-section/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/settings-toggle-section/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/settings-toggle-section/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 37522,
+        "numTurns": 1,
+        "inputTokens": 1852,
+        "outputTokens": 3310
+      },
+      "result": {
+        "overall": 52.5,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 0,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '2rem 1rem' in src/task/task.css:4 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration background: '#f8fafc' in src/task/task.css:5 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'background'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration color: '#0f172a' in src/task/task.css:8 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'color'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration max-width: '640px' in src/task/task.css:13 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'max-width'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration background: '#ffffff' in src/task/task.css:14 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'background'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border: '1px solid #e2e8f0' in src/task/task.css:15 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'border'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border-radius: '16px' in src/task/task.css:16 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration box-shadow: '0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06)' in src/task/task.css:17 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'box-shadow'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration gap: '1rem' in src/task/task.css:25 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '1.5rem 1.5rem 1rem' in src/task/task.css:26 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border-bottom: '1px solid #f1f5f9' in src/task/task.css:27 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'border-bottom'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '1.125rem' in src/task/task.css:32 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration margin: '0.25rem 0 0' in src/task/task.css:38 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.875rem' in src/task/task.css:39 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration color: '#64748b' in src/task/task.css:40 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'color'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '0.25rem 0.625rem' in src/task/task.css:46 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border-radius: '999px' in src/task/task.css:47 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration background: '#f1f5f9' in src/task/task.css:48 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'background'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration color: '#475569' in src/task/task.css:49 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'color'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.75rem' in src/task/task.css:50 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration gap: '1rem' in src/task/task.css:64 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '1rem 1.5rem' in src/task/task.css:65 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border-bottom: '1px solid #f1f5f9' in src/task/task.css:66 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'border-bottom'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration width: '2.5rem' in src/task/task.css:78 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration height: '2.5rem' in src/task/task.css:79 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'height'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border-radius: '12px' in src/task/task.css:80 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration background: '#f8fafc' in src/task/task.css:81 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'background'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border: '1px solid #e2e8f0' in src/task/task.css:82 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'border'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration color: '#475569' in src/task/task.css:83 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'color'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration gap: '0.125rem' in src/task/task.css:89 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.9375rem' in src/task/task.css:95 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.8125rem' in src/task/task.css:100 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration color: '#64748b' in src/task/task.css:101 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'color'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration width: '44px' in src/task/task.css:108 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration height: '26px' in src/task/task.css:109 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'height'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border-radius: '999px' in src/task/task.css:111 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration background: '#cbd5e1' in src/task/task.css:115 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'background'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration background: '#2563eb' in src/task/task.css:119 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'background'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration outline: '2px solid #60a5fa' in src/task/task.css:123 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'outline'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration outline-offset: '2px' in src/task/task.css:124 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'outline-offset'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration top: '3px' in src/task/task.css:129 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'top'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration left: '3px' in src/task/task.css:130 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'left'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration width: '20px' in src/task/task.css:131 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration height: '20px' in src/task/task.css:132 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'height'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration background: '#ffffff' in src/task/task.css:134 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'background'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration box-shadow: '0 1px 2px rgba(15, 23, 42, 0.3)' in src/task/task.css:135 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'box-shadow'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration transform: 'translateX(18px)' in src/task/task.css:140 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'transform'."
+              }
+            ]
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 75,
+            "gate": "pass",
+            "diffs": [
+              {
+                "dimension": "judgment",
+                "message": "system-layout: The section is built with ad-hoc HTML elements (<section>, <ul>, <li>) and custom CSS classes (.nx-notification-preferences, etc.) rather than any nucleux system layout primitives. No imports of system layout components (e.g. Stack, Card, List, Section) are present; spacing and grouping are hand-rolled in task.css."
+              }
+            ]
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '2rem 1rem' in src/task/task.css:4 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration background: '#f8fafc' in src/task/task.css:5 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'background'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration color: '#0f172a' in src/task/task.css:8 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'color'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration max-width: '640px' in src/task/task.css:13 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'max-width'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration background: '#ffffff' in src/task/task.css:14 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'background'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border: '1px solid #e2e8f0' in src/task/task.css:15 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'border'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border-radius: '16px' in src/task/task.css:16 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration box-shadow: '0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06)' in src/task/task.css:17 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'box-shadow'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration gap: '1rem' in src/task/task.css:25 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '1.5rem 1.5rem 1rem' in src/task/task.css:26 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border-bottom: '1px solid #f1f5f9' in src/task/task.css:27 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'border-bottom'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '1.125rem' in src/task/task.css:32 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration margin: '0.25rem 0 0' in src/task/task.css:38 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.875rem' in src/task/task.css:39 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration color: '#64748b' in src/task/task.css:40 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'color'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '0.25rem 0.625rem' in src/task/task.css:46 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border-radius: '999px' in src/task/task.css:47 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration background: '#f1f5f9' in src/task/task.css:48 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'background'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration color: '#475569' in src/task/task.css:49 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'color'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.75rem' in src/task/task.css:50 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration gap: '1rem' in src/task/task.css:64 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '1rem 1.5rem' in src/task/task.css:65 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border-bottom: '1px solid #f1f5f9' in src/task/task.css:66 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'border-bottom'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration width: '2.5rem' in src/task/task.css:78 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration height: '2.5rem' in src/task/task.css:79 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'height'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border-radius: '12px' in src/task/task.css:80 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration background: '#f8fafc' in src/task/task.css:81 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'background'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border: '1px solid #e2e8f0' in src/task/task.css:82 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'border'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration color: '#475569' in src/task/task.css:83 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'color'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration gap: '0.125rem' in src/task/task.css:89 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.9375rem' in src/task/task.css:95 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.8125rem' in src/task/task.css:100 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration color: '#64748b' in src/task/task.css:101 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'color'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration width: '44px' in src/task/task.css:108 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration height: '26px' in src/task/task.css:109 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'height'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border-radius: '999px' in src/task/task.css:111 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration background: '#cbd5e1' in src/task/task.css:115 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'background'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration background: '#2563eb' in src/task/task.css:119 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'background'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration outline: '2px solid #60a5fa' in src/task/task.css:123 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'outline'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration outline-offset: '2px' in src/task/task.css:124 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'outline-offset'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration top: '3px' in src/task/task.css:129 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'top'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration left: '3px' in src/task/task.css:130 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'left'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration width: '20px' in src/task/task.css:131 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration height: '20px' in src/task/task.css:132 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'height'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration background: '#ffffff' in src/task/task.css:134 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'background'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration box-shadow: '0 1px 2px rgba(15, 23, 42, 0.3)' in src/task/task.css:135 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'box-shadow'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration transform: 'translateX(18px)' in src/task/task.css:140 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'transform'."
+          },
+          {
+            "dimension": "judgment",
+            "message": "system-layout: The section is built with ad-hoc HTML elements (<section>, <ul>, <li>) and custom CSS classes (.nx-notification-preferences, etc.) rather than any nucleux system layout primitives. No imports of system layout components (e.g. Stack, Card, List, Section) are present; spacing and grouping are hand-rolled in task.css."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "agents-md",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "success-feedback",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/success-feedback/rep1",
+        "transcript": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/success-feedback/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/success-feedback/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_agents-md_yantra:glm-5.2:cloud/success-feedback/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 24265,
+        "numTurns": 1,
+        "inputTokens": 1833,
+        "outputTokens": 2335
+      },
+      "result": {
+        "overall": 72,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 90,
+            "gate": "pass",
+            "diffs": [
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Arbitrary Tailwind value '[8rem]' in src/task/index.tsx:203 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw px/rem value."
+              }
+            ]
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 95,
+            "gate": "pass",
+            "diffs": []
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Arbitrary Tailwind value '[8rem]' in src/task/index.tsx:203 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw px/rem value."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "skill",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "cancel-plan-action-hierarchy",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_skill_yantra:glm-5.2:cloud/cancel-plan-action-hierarchy/rep1",
+        "transcript": "cells/nucleux_skill_yantra:glm-5.2:cloud/cancel-plan-action-hierarchy/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_skill_yantra:glm-5.2:cloud/cancel-plan-action-hierarchy/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_skill_yantra:glm-5.2:cloud/cancel-plan-action-hierarchy/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 28396,
+        "numTurns": 1,
+        "inputTokens": 1851,
+        "outputTokens": 2541
+      },
+      "result": {
+        "overall": 64.65,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 65.5,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "judgment",
+                "message": "three-emphasis-levels: The three choices are rendered as radio cards where keep and downgrade use identical styling (tone='default', bg-card) and only cancel differs (tone='muted', bg-muted/30). There are only two distinct visual emphasis levels among the three actions, not three. The single confirm button is primary (bg-info), but that is one action acting on the selection, not the three choices themselves having three distinct emphasis levels."
+              }
+            ]
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "judgment",
+            "message": "three-emphasis-levels: The three choices are rendered as radio cards where keep and downgrade use identical styling (tone='default', bg-card) and only cancel differs (tone='muted', bg-muted/30). There are only two distinct visual emphasis levels among the three actions, not three. The single confirm button is primary (bg-info), but that is one action acting on the selection, not the three choices themselves having three distinct emphasis levels."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "skill",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "confirm-account-deletion",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_skill_yantra:glm-5.2:cloud/confirm-account-deletion/rep1",
+        "transcript": "cells/nucleux_skill_yantra:glm-5.2:cloud/confirm-account-deletion/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_skill_yantra:glm-5.2:cloud/confirm-account-deletion/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_skill_yantra:glm-5.2:cloud/confirm-account-deletion/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 62690,
+        "numTurns": 1,
+        "inputTokens": 1850,
+        "outputTokens": 5414
+      },
+      "result": {
+        "overall": 75,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "skill",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "connection-status-indicator",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_skill_yantra:glm-5.2:cloud/connection-status-indicator/rep1",
+        "transcript": "cells/nucleux_skill_yantra:glm-5.2:cloud/connection-status-indicator/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_skill_yantra:glm-5.2:cloud/connection-status-indicator/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_skill_yantra:glm-5.2:cloud/connection-status-indicator/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 46347,
+        "numTurns": 1,
+        "inputTokens": 1852,
+        "outputTokens": 4218
+      },
+      "result": {
+        "overall": 60.075,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 80,
+            "gate": "pass",
+            "diffs": [
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Arbitrary Tailwind value '[11px]' in src/task/components/IntegrationRow.tsx:56 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw px/rem value."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Arbitrary Tailwind value '[11px]' in src/task/components/IntegrationsList.tsx:45 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw px/rem value."
+              }
+            ]
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 60.25,
+            "gate": "pass",
+            "diffs": [
+              {
+                "dimension": "judgment",
+                "message": "system-status-components: The diff creates entirely custom status/badge components with hand-colored dots (e.g., `<span className={`h-1.5 w-1.5 rounded-full ${healthConfig.dotClass}`} />`). While it does use semantic color tokens (bg-success, bg-warning, bg-destructive) via Tailwind classes, there is no use of a pre-existing system status or label component; the badges and dots are custom-built inline."
+              }
+            ]
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Arbitrary Tailwind value '[11px]' in src/task/components/IntegrationRow.tsx:56 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw px/rem value."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Arbitrary Tailwind value '[11px]' in src/task/components/IntegrationsList.tsx:45 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw px/rem value."
+          },
+          {
+            "dimension": "judgment",
+            "message": "system-status-components: The diff creates entirely custom status/badge components with hand-colored dots (e.g., `<span className={`h-1.5 w-1.5 rounded-full ${healthConfig.dotClass}`} />`). While it does use semantic color tokens (bg-success, bg-warning, bg-destructive) via Tailwind classes, there is no use of a pre-existing system status or label component; the badges and dots are custom-built inline."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "skill",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "empty-state-devices",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_skill_yantra:glm-5.2:cloud/empty-state-devices/rep1",
+        "transcript": "cells/nucleux_skill_yantra:glm-5.2:cloud/empty-state-devices/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_skill_yantra:glm-5.2:cloud/empty-state-devices/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_skill_yantra:glm-5.2:cloud/empty-state-devices/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 58448,
+        "numTurns": 1,
+        "inputTokens": 1845,
+        "outputTokens": 4653
+      },
+      "result": {
+        "overall": 75,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "skill",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "form-validation-errors",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_skill_yantra:glm-5.2:cloud/form-validation-errors/rep1",
+        "transcript": "cells/nucleux_skill_yantra:glm-5.2:cloud/form-validation-errors/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_skill_yantra:glm-5.2:cloud/form-validation-errors/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_skill_yantra:glm-5.2:cloud/form-validation-errors/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 64202,
+        "numTurns": 1,
+        "inputTokens": 1847,
+        "outputTokens": 5103
+      },
+      "result": {
+        "overall": 69.75,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 82.5,
+            "gate": "pass",
+            "diffs": [
+              {
+                "dimension": "judgment",
+                "message": "submit-state: The submit button is a plain type=\"submit\" with no disabled or loading state. There is no async submission loading state tracked, and the button is never disabled during validation or submission. The rubric requires the submit control to communicate disabled/loading/enabled states; the diff does not implement this."
+              }
+            ]
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "judgment",
+            "message": "submit-state: The submit button is a plain type=\"submit\" with no disabled or loading state. There is no async submission loading state tracked, and the button is never disabled during validation or submission. The rubric requires the submit control to communicate disabled/loading/enabled states; the diff does not implement this."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "skill",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "onboarding-flow",
+      "rep": 1,
+      "status": "agent-error",
+      "artifacts": {
+        "dir": "cells/nucleux_skill_yantra:glm-5.2:cloud/onboarding-flow/rep1",
+        "transcript": "cells/nucleux_skill_yantra:glm-5.2:cloud/onboarding-flow/rep1/transcript.jsonl"
+      },
+      "agentMeta": {
+        "durationMs": 71477
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "skill",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "paginated-activity-log",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_skill_yantra:glm-5.2:cloud/paginated-activity-log/rep1",
+        "transcript": "cells/nucleux_skill_yantra:glm-5.2:cloud/paginated-activity-log/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_skill_yantra:glm-5.2:cloud/paginated-activity-log/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_skill_yantra:glm-5.2:cloud/paginated-activity-log/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 75257,
+        "numTurns": 1,
+        "inputTokens": 1849,
+        "outputTokens": 7146
+      },
+      "result": {
+        "overall": 52.5,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 0,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration --sal-border: '#e2e8f0' in src/task/styles.css:4 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for '--sal-border'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration --sal-border-strong: '#cbd5e1' in src/task/styles.css:5 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for '--sal-border-strong'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration --sal-bg: '#ffffff' in src/task/styles.css:6 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for '--sal-bg'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration --sal-bg-alt: '#f8fafc' in src/task/styles.css:7 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for '--sal-bg-alt'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration --sal-bg-hover: '#f1f5f9' in src/task/styles.css:8 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for '--sal-bg-hover'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration --sal-text: '#0f172a' in src/task/styles.css:9 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for '--sal-text'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration --sal-text-muted: '#64748b' in src/task/styles.css:10 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for '--sal-text-muted'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration --sal-primary: '#6366f1' in src/task/styles.css:11 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for '--sal-primary'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration --sal-primary-hover: '#4f46e5' in src/task/styles.css:12 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for '--sal-primary-hover'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration --sal-radius: '8px' in src/task/styles.css:13 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for '--sal-radius'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration max-width: '960px' in src/task/styles.css:15 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'max-width'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '32px 24px 48px' in src/task/styles.css:17 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration margin-bottom: '24px' in src/task/styles.css:24 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin-bottom'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration margin: '0 0 4px' in src/task/styles.css:27 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '1.5rem' in src/task/styles.css:28 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.875rem' in src/task/styles.css:34 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration gap: '16px' in src/task/styles.css:42 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration margin-bottom: '16px' in src/task/styles.css:44 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin-bottom'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration flex: '1 1 240px' in src/task/styles.css:47 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'flex'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration min-width: '200px' in src/task/styles.css:48 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'min-width'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '8px 12px' in src/task/styles.css:49 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border: '1px solid var(--sal-border)' in src/task/styles.css:50 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.875rem' in src/task/styles.css:52 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration box-shadow: '0 0 0 3px rgba(99, 102, 241, 0.15)' in src/task/styles.css:60 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'box-shadow'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration gap: '6px' in src/task/styles.css:64 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '6px 12px' in src/task/styles.css:68 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border: '1px solid var(--sal-border)' in src/task/styles.css:69 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border-radius: '999px' in src/task/styles.css:70 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:73 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration color: '#fff' in src/task/styles.css:85 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'color'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border: '1px solid var(--sal-border)' in src/task/styles.css:90 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.875rem' in src/task/styles.css:98 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '10px 16px' in src/task/styles.css:105 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border-bottom: '1px solid var(--sal-border)' in src/task/styles.css:107 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-bottom'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.75rem' in src/task/styles.css:108 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration width: '200px' in src/task/styles.css:122 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border-bottom: '1px solid var(--sal-border)' in src/task/styles.css:125 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-bottom'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '12px 16px' in src/task/styles.css:135 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration gap: '10px' in src/task/styles.css:144 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration gap: '2px' in src/task/styles.css:149 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:156 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.75rem' in src/task/styles.css:160 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '48px 16px' in src/task/styles.css:165 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.875rem' in src/task/styles.css:167 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration width: '8px' in src/task/styles.css:173 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration height: '8px' in src/task/styles.css:174 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'height'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration background: '#3b82f6' in src/task/styles.css:179 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'background'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration background: '#8b5cf6' in src/task/styles.css:182 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'background'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration background: '#22c55e' in src/task/styles.css:185 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'background'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration background: '#f59e0b' in src/task/styles.css:188 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'background'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration gap: '16px' in src/task/styles.css:196 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration margin-top: '16px' in src/task/styles.css:198 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin-top'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '12px 4px 0' in src/task/styles.css:199 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:202 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration gap: '20px' in src/task/styles.css:212 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration gap: '8px' in src/task/styles.css:218 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:219 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '4px 8px' in src/task/styles.css:223 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border: '1px solid var(--sal-border)' in src/task/styles.css:224 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border-radius: '6px' in src/task/styles.css:225 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:228 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration gap: '4px' in src/task/styles.css:238 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration min-width: '32px' in src/task/styles.css:241 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'min-width'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration height: '32px' in src/task/styles.css:242 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'height'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '0 8px' in src/task/styles.css:243 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border: '1px solid var(--sal-border)' in src/task/styles.css:244 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration border-radius: '6px' in src/task/styles.css:245 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:248 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration color: '#fff' in src/task/styles.css:267 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'color'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '0 4px' in src/task/styles.css:270 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:272 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration padding: '20px 12px 32px' in src/task/styles.css:279 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration width: '140px' in src/task/styles.css:285 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:288 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+              }
+            ]
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 25,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "a11yStatic",
+                "message": "<input> form control has no accessible name in src/task/SecurityActivityLog.tsx:110",
+                "fix": "Associate a <label htmlFor> / aria-label, or put the control inside FormField."
+              },
+              {
+                "dimension": "a11yStatic",
+                "message": "onClick without a keyboard handler on non-interactive <th> in src/task/SecurityActivityLog.tsx:141",
+                "fix": "Add onKeyDown (Enter/Space) or use a native interactive element like <button>."
+              },
+              {
+                "dimension": "a11yStatic",
+                "message": "onClick without a keyboard handler on non-interactive <th> in src/task/SecurityActivityLog.tsx:144",
+                "fix": "Add onKeyDown (Enter/Space) or use a native interactive element like <button>."
+              },
+              {
+                "dimension": "a11yStatic",
+                "message": "onClick without a keyboard handler on non-interactive <th> in src/task/SecurityActivityLog.tsx:147",
+                "fix": "Add onKeyDown (Enter/Space) or use a native interactive element like <button>."
+              },
+              {
+                "dimension": "a11yStatic",
+                "message": "onClick without a keyboard handler on non-interactive <th> in src/task/SecurityActivityLog.tsx:150",
+                "fix": "Add onKeyDown (Enter/Space) or use a native interactive element like <button>."
+              }
+            ]
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration --sal-border: '#e2e8f0' in src/task/styles.css:4 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for '--sal-border'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration --sal-border-strong: '#cbd5e1' in src/task/styles.css:5 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for '--sal-border-strong'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration --sal-bg: '#ffffff' in src/task/styles.css:6 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for '--sal-bg'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration --sal-bg-alt: '#f8fafc' in src/task/styles.css:7 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for '--sal-bg-alt'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration --sal-bg-hover: '#f1f5f9' in src/task/styles.css:8 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for '--sal-bg-hover'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration --sal-text: '#0f172a' in src/task/styles.css:9 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for '--sal-text'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration --sal-text-muted: '#64748b' in src/task/styles.css:10 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for '--sal-text-muted'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration --sal-primary: '#6366f1' in src/task/styles.css:11 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for '--sal-primary'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration --sal-primary-hover: '#4f46e5' in src/task/styles.css:12 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for '--sal-primary-hover'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration --sal-radius: '8px' in src/task/styles.css:13 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for '--sal-radius'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration max-width: '960px' in src/task/styles.css:15 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'max-width'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '32px 24px 48px' in src/task/styles.css:17 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration margin-bottom: '24px' in src/task/styles.css:24 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin-bottom'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration margin: '0 0 4px' in src/task/styles.css:27 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '1.5rem' in src/task/styles.css:28 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.875rem' in src/task/styles.css:34 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration gap: '16px' in src/task/styles.css:42 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration margin-bottom: '16px' in src/task/styles.css:44 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin-bottom'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration flex: '1 1 240px' in src/task/styles.css:47 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'flex'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration min-width: '200px' in src/task/styles.css:48 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'min-width'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '8px 12px' in src/task/styles.css:49 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border: '1px solid var(--sal-border)' in src/task/styles.css:50 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.875rem' in src/task/styles.css:52 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration box-shadow: '0 0 0 3px rgba(99, 102, 241, 0.15)' in src/task/styles.css:60 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'box-shadow'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration gap: '6px' in src/task/styles.css:64 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '6px 12px' in src/task/styles.css:68 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border: '1px solid var(--sal-border)' in src/task/styles.css:69 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border-radius: '999px' in src/task/styles.css:70 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:73 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration color: '#fff' in src/task/styles.css:85 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'color'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border: '1px solid var(--sal-border)' in src/task/styles.css:90 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.875rem' in src/task/styles.css:98 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '10px 16px' in src/task/styles.css:105 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border-bottom: '1px solid var(--sal-border)' in src/task/styles.css:107 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-bottom'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.75rem' in src/task/styles.css:108 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration width: '200px' in src/task/styles.css:122 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border-bottom: '1px solid var(--sal-border)' in src/task/styles.css:125 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-bottom'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '12px 16px' in src/task/styles.css:135 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration gap: '10px' in src/task/styles.css:144 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration gap: '2px' in src/task/styles.css:149 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:156 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.75rem' in src/task/styles.css:160 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '48px 16px' in src/task/styles.css:165 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.875rem' in src/task/styles.css:167 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration width: '8px' in src/task/styles.css:173 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration height: '8px' in src/task/styles.css:174 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'height'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration background: '#3b82f6' in src/task/styles.css:179 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'background'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration background: '#8b5cf6' in src/task/styles.css:182 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'background'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration background: '#22c55e' in src/task/styles.css:185 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'background'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration background: '#f59e0b' in src/task/styles.css:188 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'background'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration gap: '16px' in src/task/styles.css:196 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration margin-top: '16px' in src/task/styles.css:198 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin-top'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '12px 4px 0' in src/task/styles.css:199 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:202 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration gap: '20px' in src/task/styles.css:212 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration gap: '8px' in src/task/styles.css:218 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:219 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '4px 8px' in src/task/styles.css:223 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border: '1px solid var(--sal-border)' in src/task/styles.css:224 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border-radius: '6px' in src/task/styles.css:225 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:228 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration gap: '4px' in src/task/styles.css:238 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration min-width: '32px' in src/task/styles.css:241 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'min-width'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration height: '32px' in src/task/styles.css:242 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'height'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '0 8px' in src/task/styles.css:243 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border: '1px solid var(--sal-border)' in src/task/styles.css:244 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration border-radius: '6px' in src/task/styles.css:245 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border-radius'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:248 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration color: '#fff' in src/task/styles.css:267 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'color'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '0 4px' in src/task/styles.css:270 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:272 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration padding: '20px 12px 32px' in src/task/styles.css:279 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration width: '140px' in src/task/styles.css:285 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Declaration font-size: '0.8125rem' in src/task/styles.css:288 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'font-size'."
+          },
+          {
+            "dimension": "a11yStatic",
+            "message": "<input> form control has no accessible name in src/task/SecurityActivityLog.tsx:110",
+            "fix": "Associate a <label htmlFor> / aria-label, or put the control inside FormField."
+          },
+          {
+            "dimension": "a11yStatic",
+            "message": "onClick without a keyboard handler on non-interactive <th> in src/task/SecurityActivityLog.tsx:141",
+            "fix": "Add onKeyDown (Enter/Space) or use a native interactive element like <button>."
+          },
+          {
+            "dimension": "a11yStatic",
+            "message": "onClick without a keyboard handler on non-interactive <th> in src/task/SecurityActivityLog.tsx:144",
+            "fix": "Add onKeyDown (Enter/Space) or use a native interactive element like <button>."
+          },
+          {
+            "dimension": "a11yStatic",
+            "message": "onClick without a keyboard handler on non-interactive <th> in src/task/SecurityActivityLog.tsx:147",
+            "fix": "Add onKeyDown (Enter/Space) or use a native interactive element like <button>."
+          },
+          {
+            "dimension": "a11yStatic",
+            "message": "onClick without a keyboard handler on non-interactive <th> in src/task/SecurityActivityLog.tsx:150",
+            "fix": "Add onKeyDown (Enter/Space) or use a native interactive element like <button>."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "skill",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "password-visibility",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_skill_yantra:glm-5.2:cloud/password-visibility/rep1",
+        "transcript": "cells/nucleux_skill_yantra:glm-5.2:cloud/password-visibility/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_skill_yantra:glm-5.2:cloud/password-visibility/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_skill_yantra:glm-5.2:cloud/password-visibility/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 26977,
+        "numTurns": 1,
+        "inputTokens": 1835,
+        "outputTokens": 2035
+      },
+      "result": {
+        "overall": 37.2,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 0,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style padding: '10px 44px 10px 12px' in src/task/index.tsx:43 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style fontSize: '15px' in src/task/index.tsx:44 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style lineHeight: '20px' in src/task/index.tsx:45 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'lineHeight'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style border: '1px solid currentColor' in src/task/index.tsx:48 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style borderRadius: '8px' in src/task/index.tsx:49 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'borderRadius'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style right: '6px' in src/task/index.tsx:64 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'right'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style width: '32px' in src/task/index.tsx:69 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style height: '32px' in src/task/index.tsx:70 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'height'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style borderRadius: '6px' in src/task/index.tsx:76 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'borderRadius'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style maxWidth: '360px' in src/task/index.tsx:147 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'maxWidth'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style margin: '48px auto' in src/task/index.tsx:148 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style padding: '24px' in src/task/index.tsx:149 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style fontSize: '22px' in src/task/index.tsx:154 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style margin: '0 0 16px' in src/task/index.tsx:154 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style gap: '16px' in src/task/index.tsx:156 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style gap: '6px' in src/task/index.tsx:157 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style fontSize: '14px' in src/task/index.tsx:158 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style padding: '10px 12px' in src/task/index.tsx:172 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style fontSize: '15px' in src/task/index.tsx:173 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style lineHeight: '20px' in src/task/index.tsx:174 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'lineHeight'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style border: '1px solid currentColor' in src/task/index.tsx:177 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style borderRadius: '8px' in src/task/index.tsx:178 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'borderRadius'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style gap: '6px' in src/task/index.tsx:184 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style fontSize: '14px' in src/task/index.tsx:185 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style fontSize: '13px' in src/task/index.tsx:198 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style margin: '2px 2px 0' in src/task/index.tsx:198 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style marginTop: '4px' in src/task/index.tsx:208 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginTop'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style padding: '10px 16px' in src/task/index.tsx:209 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style fontSize: '15px' in src/task/index.tsx:210 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style color: '#fff' in src/task/index.tsx:212 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'color'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style background: '#2563eb' in src/task/index.tsx:213 bypasses design tokens",
+                "fix": "Use a design system color token instead of a raw value for 'background'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style borderRadius: '8px' in src/task/index.tsx:215 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'borderRadius'."
+              }
+            ]
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 85,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "a11yStatic",
+                "message": "<input> form control has no accessible name in src/task/index.tsx:36",
+                "fix": "Associate a <label htmlFor> / aria-label, or put the control inside FormField."
+              }
+            ]
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 29,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "judgment",
+                "message": "builtin-affordance: The PasswordInput component is entirely hand-rolled: it renders a bare <input> element and a separately positioned <button> inside a <div>. There is no import or usage of any design system input component, and no built-in slots are leveraged."
+              },
+              {
+                "dimension": "judgment",
+                "message": "accessible-toggle: The button's aria-label is hardcoded to toggleLabel (defaulting to 'Show password') and never changes when the state flips. Although aria-pressed reflects the current visible/hidden state, the accessible name itself does not reflect the current state — when the password is visible the label still says 'Show password' rather than 'Hide password'."
+              }
+            ]
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style padding: '10px 44px 10px 12px' in src/task/index.tsx:43 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style fontSize: '15px' in src/task/index.tsx:44 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style lineHeight: '20px' in src/task/index.tsx:45 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'lineHeight'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style border: '1px solid currentColor' in src/task/index.tsx:48 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style borderRadius: '8px' in src/task/index.tsx:49 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'borderRadius'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style right: '6px' in src/task/index.tsx:64 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'right'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style width: '32px' in src/task/index.tsx:69 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'width'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style height: '32px' in src/task/index.tsx:70 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'height'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style borderRadius: '6px' in src/task/index.tsx:76 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'borderRadius'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style maxWidth: '360px' in src/task/index.tsx:147 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'maxWidth'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style margin: '48px auto' in src/task/index.tsx:148 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style padding: '24px' in src/task/index.tsx:149 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style fontSize: '22px' in src/task/index.tsx:154 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style margin: '0 0 16px' in src/task/index.tsx:154 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style gap: '16px' in src/task/index.tsx:156 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style gap: '6px' in src/task/index.tsx:157 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style fontSize: '14px' in src/task/index.tsx:158 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style padding: '10px 12px' in src/task/index.tsx:172 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style fontSize: '15px' in src/task/index.tsx:173 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style lineHeight: '20px' in src/task/index.tsx:174 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'lineHeight'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style border: '1px solid currentColor' in src/task/index.tsx:177 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'border'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style borderRadius: '8px' in src/task/index.tsx:178 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'borderRadius'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style gap: '6px' in src/task/index.tsx:184 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style fontSize: '14px' in src/task/index.tsx:185 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style fontSize: '13px' in src/task/index.tsx:198 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style margin: '2px 2px 0' in src/task/index.tsx:198 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'margin'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style marginTop: '4px' in src/task/index.tsx:208 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginTop'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style padding: '10px 16px' in src/task/index.tsx:209 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style fontSize: '15px' in src/task/index.tsx:210 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style color: '#fff' in src/task/index.tsx:212 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'color'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style background: '#2563eb' in src/task/index.tsx:213 bypasses design tokens",
+            "fix": "Use a design system color token instead of a raw value for 'background'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style borderRadius: '8px' in src/task/index.tsx:215 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'borderRadius'."
+          },
+          {
+            "dimension": "a11yStatic",
+            "message": "<input> form control has no accessible name in src/task/index.tsx:36",
+            "fix": "Associate a <label htmlFor> / aria-label, or put the control inside FormField."
+          },
+          {
+            "dimension": "judgment",
+            "message": "builtin-affordance: The PasswordInput component is entirely hand-rolled: it renders a bare <input> element and a separately positioned <button> inside a <div>. There is no import or usage of any design system input component, and no built-in slots are leveraged."
+          },
+          {
+            "dimension": "judgment",
+            "message": "accessible-toggle: The button's aria-label is hardcoded to toggleLabel (defaulting to 'Show password') and never changes when the state flips. Although aria-pressed reflects the current visible/hidden state, the accessible name itself does not reflect the current state — when the password is visible the label still says 'Show password' rather than 'Hide password'."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "skill",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "settings-toggle-section",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_skill_yantra:glm-5.2:cloud/settings-toggle-section/rep1",
+        "transcript": "cells/nucleux_skill_yantra:glm-5.2:cloud/settings-toggle-section/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_skill_yantra:glm-5.2:cloud/settings-toggle-section/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_skill_yantra:glm-5.2:cloud/settings-toggle-section/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 22708,
+        "numTurns": 1,
+        "inputTokens": 1852,
+        "outputTokens": 1865
+      },
+      "result": {
+        "overall": 58.25,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 85,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "a11yStatic",
+                "message": "<button> icon-only or empty control has no accessible name in src/task/Switch.tsx:17",
+                "fix": "Associate a <label htmlFor> / aria-label, or put the control inside FormField."
+              }
+            ]
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "compile",
+                "message": "src/task/NotificationPreferences.tsx(75,1): error TS2322: Type '{ n: true; checked: boolean; onChange: (next: boolean) => void; \"aria-label\": string; className: string; }' is not assignable to type 'IntrinsicAttributes & SwitchProps & RefAttributes<HTMLButtonElement>'."
+              },
+              {
+                "dimension": "compile",
+                "message": "  Property 'n' does not exist on type 'IntrinsicAttributes & SwitchProps & RefAttributes<HTMLButtonElement>'."
+              }
+            ]
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 82.5,
+            "gate": "pass",
+            "diffs": [
+              {
+                "dimension": "judgment",
+                "message": "system-layout: The section is built from raw <section>/<div>/<ul>/<li> elements with ad-hoc Tailwind utility classes (rounded-xl, border, px-5, py-4, divide-y, etc.). No design-system layout primitives (e.g., Card, List, SettingsGroup) are imported or used; spacing and grouping are hand-rolled."
+              }
+            ]
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          },
+          {
+            "dimension": "a11yStatic",
+            "message": "<button> icon-only or empty control has no accessible name in src/task/Switch.tsx:17",
+            "fix": "Associate a <label htmlFor> / aria-label, or put the control inside FormField."
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/NotificationPreferences.tsx(75,1): error TS2322: Type '{ n: true; checked: boolean; onChange: (next: boolean) => void; \"aria-label\": string; className: string; }' is not assignable to type 'IntrinsicAttributes & SwitchProps & RefAttributes<HTMLButtonElement>'."
+          },
+          {
+            "dimension": "compile",
+            "message": "  Property 'n' does not exist on type 'IntrinsicAttributes & SwitchProps & RefAttributes<HTMLButtonElement>'."
+          },
+          {
+            "dimension": "judgment",
+            "message": "system-layout: The section is built from raw <section>/<div>/<ul>/<li> elements with ad-hoc Tailwind utility classes (rounded-xl, border, px-5, py-4, divide-y, etc.). No design-system layout primitives (e.g., Card, List, SettingsGroup) are imported or used; spacing and grouping are hand-rolled."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "nucleux",
+        "context": "skill",
+        "model": "yantra:glm-5.2:cloud",
+        "agent": "api-oneshot"
+      },
+      "taskId": "success-feedback",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/nucleux_skill_yantra:glm-5.2:cloud/success-feedback/rep1",
+        "transcript": "cells/nucleux_skill_yantra:glm-5.2:cloud/success-feedback/rep1/transcript.jsonl",
+        "diffPatch": "cells/nucleux_skill_yantra:glm-5.2:cloud/success-feedback/rep1/diff.patch",
+        "judgeJson": "cells/nucleux_skill_yantra:glm-5.2:cloud/success-feedback/rep1/judge.json"
+      },
+      "agentMeta": {
+        "durationMs": 33508,
+        "numTurns": 1,
+        "inputTokens": 1833,
+        "outputTokens": 2943
+      },
+      "result": {
+        "overall": 75,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "no design-system components used"
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "judgment": {
+            "dimension": "judgment",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "no design-system components used"
+          }
+        ]
+      }
+    }
+  ],
+  "aggregates": [
+    {
+      "cellKey": "nucleux_agents-md_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "agents-md",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "cancel-plan-action-hierarchy",
+      "n": 1,
+      "meanOverall": 49.85,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 100,
+        "a11yStatic": 100,
+        "compile": 0,
+        "judgment": 49.5
+      }
+    },
+    {
+      "cellKey": "nucleux_agents-md_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "agents-md",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "form-validation-errors",
+      "n": 1,
+      "meanOverall": 57.5,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 100,
+        "a11yStatic": 100,
+        "compile": 0,
+        "judgment": 75
+      }
+    },
+    {
+      "cellKey": "nucleux_agents-md_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "agents-md",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "onboarding-flow",
+      "n": 1,
+      "meanOverall": 63.65,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 100,
+        "a11yStatic": 100,
+        "compile": 0,
+        "judgment": 95.5
+      }
+    },
+    {
+      "cellKey": "nucleux_agents-md_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "agents-md",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "password-visibility",
+      "n": 1,
+      "meanOverall": 50,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 100,
+        "a11yStatic": 100,
+        "compile": 0,
+        "judgment": 50
+      }
+    },
+    {
+      "cellKey": "nucleux_agents-md_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "agents-md",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "paginated-activity-log",
+      "n": 1,
+      "meanOverall": 72,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 100,
+        "a11yStatic": 70,
+        "compile": 100,
+        "judgment": 100
+      }
+    },
+    {
+      "cellKey": "nucleux_agents-md_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "agents-md",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "settings-toggle-section",
+      "n": 1,
+      "meanOverall": 52.5,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 0,
+        "a11yStatic": 100,
+        "compile": 100,
+        "judgment": 75
+      }
+    },
+    {
+      "cellKey": "nucleux_agents-md_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "agents-md",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "success-feedback",
+      "n": 1,
+      "meanOverall": 72,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 90,
+        "a11yStatic": 100,
+        "compile": 100,
+        "judgment": 95
+      }
+    },
+    {
+      "cellKey": "nucleux_skill_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "skill",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "cancel-plan-action-hierarchy",
+      "n": 1,
+      "meanOverall": 64.65,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 100,
+        "a11yStatic": 100,
+        "compile": 100,
+        "judgment": 65.5
+      }
+    },
+    {
+      "cellKey": "nucleux_skill_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "skill",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "confirm-account-deletion",
+      "n": 1,
+      "meanOverall": 75,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 100,
+        "a11yStatic": 100,
+        "compile": 100,
+        "judgment": 100
+      }
+    },
+    {
+      "cellKey": "nucleux_skill_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "skill",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "connection-status-indicator",
+      "n": 1,
+      "meanOverall": 60.075,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 80,
+        "a11yStatic": 100,
+        "compile": 100,
+        "judgment": 60.25
+      }
+    },
+    {
+      "cellKey": "nucleux_skill_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "skill",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "empty-state-devices",
+      "n": 1,
+      "meanOverall": 75,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 100,
+        "a11yStatic": 100,
+        "compile": 100,
+        "judgment": 100
+      }
+    },
+    {
+      "cellKey": "nucleux_skill_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "skill",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "form-validation-errors",
+      "n": 1,
+      "meanOverall": 69.75,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 100,
+        "a11yStatic": 100,
+        "compile": 100,
+        "judgment": 82.5
+      }
+    },
+    {
+      "cellKey": "nucleux_skill_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "skill",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "paginated-activity-log",
+      "n": 1,
+      "meanOverall": 52.5,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 0,
+        "a11yStatic": 25,
+        "compile": 100,
+        "judgment": 100
+      }
+    },
+    {
+      "cellKey": "nucleux_skill_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "skill",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "password-visibility",
+      "n": 1,
+      "meanOverall": 37.2,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 0,
+        "a11yStatic": 85,
+        "compile": 100,
+        "judgment": 29
+      }
+    },
+    {
+      "cellKey": "nucleux_skill_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "skill",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "settings-toggle-section",
+      "n": 1,
+      "meanOverall": 58.25,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 100,
+        "a11yStatic": 85,
+        "compile": 0,
+        "judgment": 82.5
+      }
+    },
+    {
+      "cellKey": "nucleux_skill_yantra:glm-5.2:cloud",
+      "system": "nucleux",
+      "context": "skill",
+      "model": "yantra:glm-5.2:cloud",
+      "taskId": "success-feedback",
+      "n": 1,
+      "meanOverall": 75,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 0,
+        "tokenDiscipline": 100,
+        "a11yStatic": 100,
+        "compile": 100,
+        "judgment": 100
+      }
+    }
+  ]
+}
