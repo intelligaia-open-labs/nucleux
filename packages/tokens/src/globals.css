@@ -12,77 +12,115 @@
  * can compose them with opacity modifiers, e.g. `bg-success/15`.
  */
 @layer base {
+  /**
+   * Primitive palette — theme-independent raw values (Tailwind slate /
+   * blue / violet / green / amber / red). Semantic tokens below reference
+   * these; re-theme by overriding the semantic mapping, not the raw values.
+   */
+  :root {
+    --nx-slate-50: 210 40% 98%;
+    --nx-slate-100: 210 40% 96%;
+    --nx-slate-200: 214 32% 91%;
+    --nx-slate-400: 215 20% 65%;
+    --nx-slate-500: 215 16% 47%;
+    --nx-slate-800: 217 33% 17%;
+    --nx-slate-900: 222 47% 11%;
+    --nx-slate-950: 222 47% 5%;
+
+    --nx-blue-500: 217 91% 60%;
+
+    --nx-violet-50: 250 100% 98%;
+    --nx-violet-500: 258 90% 66%;
+
+    --nx-green-600: 142 76% 36%;
+    --nx-green-600-dark: 142 64% 40%;
+
+    --nx-amber-500: 38 92% 50%;
+    --nx-amber-400: 41 96% 60%;
+    --nx-amber-950: 48 96% 9%;
+
+    --nx-red-600: 0 72% 51%;
+    --nx-red-700: 0 63% 45%;
+
+    --nx-slate-800-s: 217 33% 20%; /* borders/dividers in dark mode */
+  }
+
+  /**
+   * Semantic tokens — intent names mapping onto the primitives above.
+   * Components consume these (via the Tailwind preset as bg-*, text-*,
+   * border-*); apps re-theme by re-pointing them at different primitives.
+   */
   :root {
     --nx-background: 0 0% 100%;
-    --nx-foreground: 222 47% 5%; /* slate-950  #020617 */
+    --nx-foreground: var(--nx-slate-950); /* slate-950  #020617 */
 
-    --nx-muted: 210 40% 96%; /* slate-100 */
-    --nx-muted-foreground: 215 16% 47%; /* slate-500  #64748b */
+    --nx-muted: var(--nx-slate-100);
+    --nx-muted-foreground: var(--nx-slate-500); /* slate-500  #64748b */
 
-    --nx-primary: 222 47% 11%; /* slate-900  #0f172a */
-    --nx-primary-foreground: 210 40% 98%; /* slate-50   #f8fafc */
+    --nx-primary: var(--nx-slate-900); /* slate-900  #0f172a */
+    --nx-primary-foreground: var(--nx-slate-50); /* slate-50   #f8fafc */
 
-    --nx-accent: 210 40% 96%; /* slate-100 */
-    --nx-accent-foreground: 222 47% 11%;
+    --nx-accent: var(--nx-slate-100);
+    --nx-accent-foreground: var(--nx-slate-900);
 
     /* Blue CTA (e.g. the "Connect" button)  blue-500 #3b82f6 */
-    --nx-info: 217 91% 60%;
-    --nx-info-foreground: 210 40% 98%;
+    --nx-info: var(--nx-blue-500);
+    --nx-info-foreground: var(--nx-slate-50);
 
     /* Brand accent used for feature icons  violet-500 #8b5cf6 / violet-50 bg */
-    --nx-brand: 258 90% 66%;
+    --nx-brand: var(--nx-violet-500);
     --nx-brand-foreground: 0 0% 100%;
-    --nx-brand-muted: 250 100% 98%; /* violet-50  #f5f3ff */
+    --nx-brand-muted: var(--nx-violet-50); /* violet-50  #f5f3ff */
 
-    --nx-destructive: 0 72% 51%;
-    --nx-destructive-foreground: 210 40% 98%;
+    --nx-destructive: var(--nx-red-600);
+    --nx-destructive-foreground: var(--nx-slate-50);
 
     /* Success  green-600 #16a34a */
-    --nx-success: 142 76% 36%;
-    --nx-success-foreground: 210 40% 98%;
+    --nx-success: var(--nx-green-600);
+    --nx-success-foreground: var(--nx-slate-50);
 
     /* Warning  amber-500 #f59e0b */
-    --nx-warning: 38 92% 50%;
-    --nx-warning-foreground: 48 96% 9%;
+    --nx-warning: var(--nx-amber-500);
+    --nx-warning-foreground: var(--nx-amber-950);
 
-    --nx-border: 214 32% 91%; /* slate-200  #e2e8f0 */
-    --nx-input: 214 32% 91%;
-    --nx-ring: 222 47% 11%;
+    --nx-border: var(--nx-slate-200); /* slate-200  #e2e8f0 */
+    --nx-input: var(--nx-slate-200);
+    --nx-ring: var(--nx-slate-900);
 
     --nx-radius: 0.75rem; /* rounded-xl (12px) card corners */
   }
 
   .dark {
-    --nx-background: 222 47% 5%;
-    --nx-foreground: 210 40% 98%;
+    --nx-background: var(--nx-slate-950);
+    --nx-foreground: var(--nx-slate-50);
 
-    --nx-muted: 217 33% 17%; /* slate-800 */
-    --nx-muted-foreground: 215 20% 65%; /* slate-400 */
+    --nx-muted: var(--nx-slate-800);
+    --nx-muted-foreground: var(--nx-slate-400); /* slate-400 */
 
-    --nx-primary: 210 40% 98%;
-    --nx-primary-foreground: 222 47% 11%;
+    --nx-primary: var(--nx-slate-50);
+    --nx-primary-foreground: var(--nx-slate-900);
 
-    --nx-accent: 217 33% 17%;
-    --nx-accent-foreground: 210 40% 98%;
+    --nx-accent: var(--nx-slate-800);
+    --nx-accent-foreground: var(--nx-slate-50);
 
-    --nx-info: 217 91% 60%; /* blue-500 */
-    --nx-info-foreground: 210 40% 98%;
+    --nx-info: var(--nx-blue-500); /* blue-500 */
+    --nx-info-foreground: var(--nx-slate-50);
 
-    --nx-brand: 258 90% 66%;
+    --nx-brand: var(--nx-violet-500);
     --nx-brand-foreground: 0 0% 100%;
     --nx-brand-muted: 259 46% 16%;
 
-    --nx-destructive: 0 63% 45%;
-    --nx-destructive-foreground: 210 40% 98%;
+    --nx-destructive: var(--nx-red-700);
+    --nx-destructive-foreground: var(--nx-slate-50);
 
-    --nx-success: 142 64% 40%;
-    --nx-success-foreground: 210 40% 98%;
+    --nx-success: var(--nx-green-600-dark);
+    --nx-success-foreground: var(--nx-slate-50);
 
-    --nx-warning: 41 96% 60%;
-    --nx-warning-foreground: 48 96% 9%;
+    --nx-warning: var(--nx-amber-400);
+    --nx-warning-foreground: var(--nx-amber-950);
 
-    --nx-border: 217 33% 20%;
-    --nx-input: 217 33% 20%;
+    --nx-border: var(--nx-slate-800-s);
+    --nx-input: var(--nx-slate-800-s);
     --nx-ring: 213 27% 84%;
   }
 }
