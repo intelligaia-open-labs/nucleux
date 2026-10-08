@@ -2,7 +2,7 @@
   "name": "nucleux-workspace",
   "version": "0.0.0",
   "private": true,
-  "description": "Monorepo for @nucleux — agentic UI components for React.",
+  "description": "Monorepo for @nucleux \u2014 agentic UI components for React.",
   "type": "module",
   "scripts": {
     "dev": "storybook dev -p 6006",
@@ -11,10 +11,11 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "validate": "pnpm typecheck && pnpm test && pnpm build && pnpm build-storybook",
+    "validate": "node scripts/check-barrel.mjs && pnpm typecheck && pnpm test && pnpm build && pnpm build-storybook",
     "release": "pnpm typecheck && pnpm test && pnpm build && pnpm -r publish --access public --no-git-checks",
     "format": "prettier --write \"packages/**/src/**/*.{ts,tsx,css}\"",
-    "clean": "rimraf packages/*/dist storybook-static"
+    "clean": "rimraf packages/*/dist storybook-static",
+    "check-barrel": "node scripts/check-barrel.mjs"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.4.7",
