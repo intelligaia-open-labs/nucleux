@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/knowledge-base-picker",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "KnowledgeBasePicker — select the context files an agent may use — Nucleux agentic UI for React.",
+  "description": "KnowledgeBasePicker \u2014 select the context files an agent may use \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

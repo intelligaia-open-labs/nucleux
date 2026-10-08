@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/capability-overview",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "CapabilityOverview — an agent's examples, capabilities, and limits — Nucleux agentic UI for React.",
+  "description": "CapabilityOverview \u2014 an agent's examples, capabilities, and limits \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

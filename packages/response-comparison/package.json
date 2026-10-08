@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/response-comparison",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "ResponseComparison — compare two AI responses and prefer one — Nucleux agentic UI for React.",
+  "description": "ResponseComparison \u2014 compare two AI responses and prefer one \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

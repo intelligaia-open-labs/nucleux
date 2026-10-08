@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/voice-input",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "VoiceInput — a live dictation bar with a waveform — Nucleux agentic UI for React.",
+  "description": "VoiceInput \u2014 a live dictation bar with a waveform \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

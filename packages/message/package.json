@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/message",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -46,7 +46,7 @@
     "directory": "packages/message"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Chat message row with avatar + bubble — Nucleux agentic UI for React.",
+  "description": "Chat message row with avatar + bubble \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

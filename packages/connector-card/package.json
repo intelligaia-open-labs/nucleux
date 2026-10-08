@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/connector-card",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "ConnectorCard — enable an external tool or data connector — Nucleux agentic UI for React.",
+  "description": "ConnectorCard \u2014 enable an external tool or data connector \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

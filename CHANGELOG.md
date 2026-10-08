@@ -40,6 +40,48 @@ by a version tag and date, and entries are grouped under `### Added`, `### Chang
 ### Security
 - _Nothing yet._
 
+## [0.5.0] — 2026-10-08
+
+Merged release: the Material Design 3 component line (published as 0.4.0)
+and the AI-readiness audit remediation line, in one coherent version.
+
+### Added
+- **Material Design 3 component set** (`@nucleux/md3-*`): faithful MD3
+  variants of the agentic components, with a tonal token layer
+  (`--nx-md-*`) exposed as the `md` Tailwind color group.
+- **Complete shadcn base component set** — every primitive a consumer
+  needs is either a `@nucleux/*` package or a documented ShadCN fallback.
+- **MCP HTML serving**: `get_component` with `framework:"html"` returns
+  static Tailwind-class HTML snippets (paste-and-render ids, or `{{id}}`
+  template slots); `get_setup` with `framework:"html"` for non-React
+  projects. `@nucleux/mcp` bumped through 0.4.x internally.
+- **AI-readiness assets**: `llms.txt` (machine-listable catalog),
+  import-first consumer guidance in `CLAUDE.md`, barrel drift guard in
+  `pnpm validate`, Exports sections in sub-component READMEs.
+- **Semantic token layer**: raw palette primitives (`--nx-slate-*`,
+  `--nx-blue-*`, `--nx-violet-*`, …) under intent-named semantic tokens
+  (`--nx-background`, `--nx-success`, …) that now reference them via
+  `var()` — re-theme by re-pointing semantics, not editing raw values.
+
+### Changed
+- **JSDoc on every component Props interface** (369 props documented,
+  0 zero-prop exports) — the docgen catalog now carries prop types,
+  descriptions and defaults.
+- MCP server instructions announce the ShadCN fallback policy on
+  initialize.
+
+### Deprecated
+- MUI/Chakra-vocabulary compatibility aliases (1:1 mapping, no behavior
+  change): `Alert` `severity` (→ `variant`; `"error"` → `"destructive"`),
+  `Button` `color` (→ `variant`), `PopoverContent` `alignItems` (→
+  `align`), and `ModalHeader`/`ModalTitle`/`ModalDescription`/
+  `ModalFooter` re-export aliases of the `Dialog*` names.
+
+### Fixed
+- Catalog extraction misclassification that showed 0% prop coverage
+  despite JSDoc existing in source (bench `componentsSrc` correction).
+
+
 ## [0.1.5] — 2026-08-14
 
 ### Added
@@ -90,7 +132,8 @@ by a version tag and date, and entries are grouped under `### Added`, `### Chang
 ---
 
 <!-- Link definitions for machine-readable version comparison -->
-[Unreleased]: https://github.com/intelligaia-open-labs/nucleux/compare/v0.1.5...HEAD
+[Unreleased]: https://github.com/intelligaia-open-labs/nucleux/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/intelligaia-open-labs/nucleux/releases/tag/v0.5.0
 [0.1.5]: https://github.com/intelligaia-open-labs/nucleux/releases/tag/v0.1.5
 [0.1.4]: https://github.com/intelligaia-open-labs/nucleux/releases/tag/v0.1.4
 [0.1.3]: https://github.com/intelligaia-open-labs/nucleux/releases/tag/v0.1.3

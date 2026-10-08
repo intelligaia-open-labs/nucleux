@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/tone-selector",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "ToneSelector — pick the tone or voice of generated output — Nucleux agentic UI for React.",
+  "description": "ToneSelector \u2014 pick the tone or voice of generated output \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

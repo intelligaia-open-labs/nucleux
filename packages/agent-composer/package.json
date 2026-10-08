@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/agent-composer",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -44,7 +44,7 @@
     "directory": "packages/agent-composer"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Agent task composer with toolbar — Nucleux agentic UI for React.",
+  "description": "Agent task composer with toolbar \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

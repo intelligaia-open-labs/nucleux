@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/select",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -44,7 +44,7 @@
     "directory": "packages/select"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Accessible native-backed select with a chevron — Nucleux agentic UI for React.",
+  "description": "Accessible native-backed select with a chevron \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

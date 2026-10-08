@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/audio-message",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "AudioMessage — a player for AI-generated voice output — Nucleux agentic UI for React.",
+  "description": "AudioMessage \u2014 a player for AI-generated voice output \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

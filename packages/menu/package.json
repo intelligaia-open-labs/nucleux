@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/menu",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -44,7 +44,7 @@
     "directory": "packages/menu"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Dropdown / context menu surface — Nucleux agentic UI for React.",
+  "description": "Dropdown / context menu surface \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

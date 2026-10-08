@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/memory-summary",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "MemorySummary — what the assistant remembers about the user — Nucleux agentic UI for React.",
+  "description": "MemorySummary \u2014 what the assistant remembers about the user \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

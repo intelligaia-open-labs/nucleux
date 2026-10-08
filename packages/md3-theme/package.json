@@ -1,0 +1,41 @@
+{
+  "name": "@nucleux/md3-theme",
+  "version": "0.5.0",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "description": "Material Design 3 theme \u2014 remaps Nucleux --nx-* tokens to the MD3 tonal palette so any component renders in a Material UI 3 look \u2014 Nucleux agentic UI for React.",
+  "exports": {
+    "./theme.css": "./dist/theme.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node -e \"const fs=require('fs');fs.mkdirSync('dist',{recursive:true});fs.copyFileSync('src/theme.css','dist/theme.css')\""
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelligaia-open-labs/nucleux.git",
+    "directory": "packages/md3-theme"
+  },
+  "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
+  "keywords": [
+    "nucleux",
+    "react",
+    "ui",
+    "components",
+    "agentic",
+    "ai",
+    "tailwind",
+    "material-design-3",
+    "md3",
+    "theme"
+  ]
+}

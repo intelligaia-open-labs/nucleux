@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/agent-steps",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "AgentSteps — a live tracker of an agent's multi-step plan — Nucleux agentic UI for React.",
+  "description": "AgentSteps \u2014 a live tracker of an agent's multi-step plan \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

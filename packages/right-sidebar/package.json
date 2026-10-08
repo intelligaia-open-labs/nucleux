@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/right-sidebar",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "RightSidebar — on-this-page table of contents + metadata panel — Nucleux agentic UI for React.",
+  "description": "RightSidebar \u2014 on-this-page table of contents + metadata panel \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

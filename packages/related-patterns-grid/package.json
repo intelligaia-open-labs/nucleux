@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/related-patterns-grid",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "RelatedPatternsGrid — grid of related pattern cards — Nucleux agentic UI for React.",
+  "description": "RelatedPatternsGrid \u2014 grid of related pattern cards \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

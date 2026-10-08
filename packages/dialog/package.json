@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/dialog",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -44,7 +44,7 @@
     "directory": "packages/dialog"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Modal dialog with overlay — Nucleux agentic UI for React.",
+  "description": "Modal dialog with overlay \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

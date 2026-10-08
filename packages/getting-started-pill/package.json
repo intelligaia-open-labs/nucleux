@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/getting-started-pill",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -45,7 +45,7 @@
     "directory": "packages/getting-started-pill"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Floating onboarding progress launcher — Nucleux agentic UI for React.",
+  "description": "Floating onboarding progress launcher \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

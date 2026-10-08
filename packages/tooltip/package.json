@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/tooltip",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -44,7 +44,7 @@
     "directory": "packages/tooltip"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Hover/focus tooltip — Nucleux agentic UI for React.",
+  "description": "Hover/focus tooltip \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

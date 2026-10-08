@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/prompt-template",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "PromptTemplate — a fillable prompt scaffold with named slots — Nucleux agentic UI for React.",
+  "description": "PromptTemplate \u2014 a fillable prompt scaffold with named slots \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

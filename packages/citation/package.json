@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/citation",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Citation — inline source chips and a grounded sources list for AI answers — Nucleux agentic UI for React.",
+  "description": "Citation \u2014 inline source chips and a grounded sources list for AI answers \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

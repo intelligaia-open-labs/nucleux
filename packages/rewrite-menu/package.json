@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/rewrite-menu",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "RewriteMenu — a menu of AI rewrite and transform actions — Nucleux agentic UI for React.",
+  "description": "RewriteMenu \u2014 a menu of AI rewrite and transform actions \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

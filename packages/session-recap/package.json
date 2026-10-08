@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/session-recap",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "SessionRecap — a natural-language recap of an agent run — Nucleux agentic UI for React.",
+  "description": "SessionRecap \u2014 a natural-language recap of an agent run \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

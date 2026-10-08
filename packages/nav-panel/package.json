@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/nav-panel",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -44,7 +44,7 @@
     "directory": "packages/nav-panel"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Expanded navigation panel with collapsible sections — Nucleux agentic UI for React.",
+  "description": "Expanded navigation panel with collapsible sections \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

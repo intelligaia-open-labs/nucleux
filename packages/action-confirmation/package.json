@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/action-confirmation",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "ActionConfirmation — a guardrail before an agent takes a consequential action — Nucleux agentic UI for React.",
+  "description": "ActionConfirmation \u2014 a guardrail before an agent takes a consequential action \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/ai-disclosure",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "AiDisclosure — provenance and fallibility markers for AI-generated content — Nucleux agentic UI for React.",
+  "description": "AiDisclosure \u2014 provenance and fallibility markers for AI-generated content \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

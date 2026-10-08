@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/tokens",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -34,7 +34,7 @@
     "tsup": "^8.3.5",
     "typescript": "^5.7.2"
   },
-  "description": "Design tokens (CSS variables) + Tailwind preset for Nucleux — Nucleux agentic UI for React.",
+  "description": "Design tokens (CSS variables) + Tailwind preset for Nucleux \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

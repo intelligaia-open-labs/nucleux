@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/modular-consent",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -46,7 +46,7 @@
     "directory": "packages/modular-consent"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Agent permission/consent panel — Nucleux agentic UI for React.",
+  "description": "Agent permission/consent panel \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/prompt-enhancer",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "PromptEnhancer — one-tap AI rewrite intents for a draft prompt — Nucleux agentic UI for React.",
+  "description": "PromptEnhancer \u2014 one-tap AI rewrite intents for a draft prompt \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
