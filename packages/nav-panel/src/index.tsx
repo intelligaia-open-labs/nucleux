@@ -6,7 +6,13 @@ import { cn } from "@nucleux/utils";
  * An expanded vertical navigation panel (docs/library sidebar) with a header,
  * collapsible {@link NavSection}s, and text {@link NavItem}s.
  */
-export const NavPanel = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
+export interface NavPanelProps extends React.HTMLAttributes<HTMLElement> {
+  /** Additional classes merged onto the nav column. */
+  className?: string;
+}
+
+/** Left navigation column wrapper. */
+export const NavPanel = React.forwardRef<HTMLElement, NavPanelProps>(
   ({ className, ...props }, ref) => (
     <nav
       ref={ref}

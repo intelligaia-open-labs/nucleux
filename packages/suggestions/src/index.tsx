@@ -2,7 +2,15 @@ import * as React from "react";
 import { cn } from "@nucleux/utils";
 
 /** A single suggestion pill — a secondary-styled action button. */
-export const SuggestionChip = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
+export interface SuggestionChipProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Additional classes merged onto the chip. */
+  className?: string;
+  /** Button type. Defaults to "button". */
+  type?: "button" | "submit" | "reset";
+}
+
+/** Pill-shaped quick-prompt button. */
+export const SuggestionChip = React.forwardRef<HTMLButtonElement, SuggestionChipProps>(
   ({ type = "button", className, ...props }, ref) => (
     <button
       ref={ref}

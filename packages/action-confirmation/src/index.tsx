@@ -16,9 +16,13 @@ export interface ActionConfirmationProps
   badge?: React.ReactNode;
   /** Leading icon. Defaults to a warning triangle. */
   icon?: React.ReactNode;
+  /** Label for the confirm button. Defaults to a localized "Confirm". */
   confirmLabel?: React.ReactNode;
+  /** Label for the cancel button. Defaults to a localized "Cancel". */
   cancelLabel?: React.ReactNode;
+  /** Called when the user confirms the action. */
   onConfirm?: () => void;
+  /** Called when the user cancels the action. */
   onCancel?: () => void;
 }
 

@@ -19,7 +19,9 @@ const iconButtonSizes: Record<IconButtonSize, string> = {
 export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /** Accessible label — required since the button has no visible text. */
   "aria-label": string;
+  /** Visual style: "primary" (default), "secondary", "outline", or "ghost". */
   variant?: IconButtonVariant;
+  /** Size preset: "sm", "md" (default), or "lg". */
   size?: IconButtonSize;
 }
 

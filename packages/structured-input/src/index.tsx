@@ -31,7 +31,9 @@ export interface StructuredInputProps
   onSubmit?: (values: string[], other?: string) => void;
   /** Called when the user skips the question. Renders the skip control when set. */
   onSkip?: () => void;
+  /** Label for the submit button. */
   submitLabel?: React.ReactNode;
+  /** Label for the skip button. */
   skipLabel?: React.ReactNode;
 }
 

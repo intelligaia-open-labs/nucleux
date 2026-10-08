@@ -2,7 +2,13 @@ import * as React from "react";
 import { cn } from "@nucleux/utils";
 
 /** Scroll-wrapped table root. */
-export const Table = React.forwardRef<HTMLTableElement, React.TableHTMLAttributes<HTMLTableElement>>(
+export interface TableProps extends React.TableHTMLAttributes<HTMLTableElement> {
+  /** Additional classes for the inner <table> element. */
+  className?: string;
+}
+
+/** Table wrapped in a horizontally scrollable container. */
+export const Table = React.forwardRef<HTMLTableElement, TableProps>(
   ({ className, ...props }, ref) => (
     <div className="relative w-full overflow-x-auto">
       <table ref={ref} className={cn("w-full caption-bottom text-sm", className)} {...props} />
@@ -11,23 +17,35 @@ export const Table = React.forwardRef<HTMLTableElement, React.TableHTMLAttribute
 );
 Table.displayName = "Table";
 
-export const TableHeader = React.forwardRef<
-  HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
+export interface TableHeaderProps extends React.HTMLAttributes<HTMLTableSectionElement> {
+  /** Additional classes merged onto the <thead>. */
+  className?: string;
+}
+
+/** thead row group. */
+export const TableHeader = React.forwardRef<HTMLTableSectionElement, TableHeaderProps>(({ className, ...props }, ref) => (
   <thead ref={ref} className={cn("[&_tr]:border-b [&_tr]:border-border", className)} {...props} />
 ));
 TableHeader.displayName = "TableHeader";
 
-export const TableBody = React.forwardRef<
-  HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
+export interface TableBodyProps extends React.HTMLAttributes<HTMLTableSectionElement> {
+  /** Additional classes merged onto the <tbody>. */
+  className?: string;
+}
+
+/** tbody row group. */
+export const TableBody = React.forwardRef<HTMLTableSectionElement, TableBodyProps>(({ className, ...props }, ref) => (
   <tbody ref={ref} className={cn("[&_tr:last-child]:border-0", className)} {...props} />
 ));
 TableBody.displayName = "TableBody";
 
-export const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
+export interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
+  /** Additional classes merged onto the row. */
+  className?: string;
+}
+
+/** Table row with hover highlight. */
+export const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(
   ({ className, ...props }, ref) => (
     <tr
       ref={ref}
@@ -38,7 +56,13 @@ export const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttribut
 );
 TableRow.displayName = "TableRow";
 
-export const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<HTMLTableCellElement>>(
+export interface TableHeadProps extends React.ThHTMLAttributes<HTMLTableCellElement> {
+  /** Additional classes merged onto the header cell. */
+  className?: string;
+}
+
+/** th column header cell. */
+export const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
   ({ className, ...props }, ref) => (
     <th
       ref={ref}
@@ -53,17 +77,26 @@ export const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttr
 );
 TableHead.displayName = "TableHead";
 
-export const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(
+export interface TableCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
+  /** Additional classes merged onto the data cell. */
+  className?: string;
+}
+
+/** td data cell. */
+export const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
   ({ className, ...props }, ref) => (
     <td ref={ref} className={cn("px-4 py-2.5 align-middle text-foreground", className)} {...props} />
   ),
 );
 TableCell.displayName = "TableCell";
 
-export const TableCaption = React.forwardRef<
-  HTMLTableCaptionElement,
-  React.HTMLAttributes<HTMLTableCaptionElement>
->(({ className, ...props }, ref) => (
+export interface TableCaptionProps extends React.HTMLAttributes<HTMLTableCaptionElement> {
+  /** Additional classes merged onto the caption. */
+  className?: string;
+}
+
+/** caption for the table. */
+export const TableCaption = React.forwardRef<HTMLTableCaptionElement, TableCaptionProps>(({ className, ...props }, ref) => (
   <caption ref={ref} className={cn("mt-3 text-xs text-muted-foreground", className)} {...props} />
 ));
 TableCaption.displayName = "TableCaption";

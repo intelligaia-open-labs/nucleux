@@ -3,7 +3,13 @@ import { ChevronRight } from "lucide-react";
 import { cn } from "@nucleux/utils";
 
 /** Breadcrumb navigation landmark. Compose with the parts below. */
-export const Breadcrumb = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
+export interface BreadcrumbProps extends React.HTMLAttributes<HTMLElement> {
+  /** Additional classes merged onto the outer nav wrapper. */
+  className?: string;
+}
+
+/** Breadcrumb navigation trail (nav > ol). */
+export const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
   ({ className, children, ...props }, ref) => (
     <nav ref={ref} aria-label="Breadcrumb" className={className} {...props}>
       <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground">
@@ -14,14 +20,26 @@ export const Breadcrumb = React.forwardRef<HTMLElement, React.HTMLAttributes<HTM
 );
 Breadcrumb.displayName = "Breadcrumb";
 
-export const BreadcrumbItem = React.forwardRef<HTMLLIElement, React.LiHTMLAttributes<HTMLLIElement>>(
+export interface BreadcrumbItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
+  /** Additional classes merged onto the crumb list item. */
+  className?: string;
+}
+
+/** One crumb in the breadcrumb trail. */
+export const BreadcrumbItem = React.forwardRef<HTMLLIElement, BreadcrumbItemProps>(
   ({ className, ...props }, ref) => (
     <li ref={ref} className={cn("inline-flex items-center gap-1.5", className)} {...props} />
   ),
 );
 BreadcrumbItem.displayName = "BreadcrumbItem";
 
-export const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, React.AnchorHTMLAttributes<HTMLAnchorElement>>(
+export interface BreadcrumbLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  /** Additional classes merged onto the crumb anchor. */
+  className?: string;
+}
+
+/** Clickable crumb link. */
+export const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
   ({ className, ...props }, ref) => (
     <a
       ref={ref}
@@ -36,7 +54,13 @@ export const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, React.AnchorHT
 BreadcrumbLink.displayName = "BreadcrumbLink";
 
 /** The current page — non-interactive, marked with aria-current. */
-export const BreadcrumbPage = React.forwardRef<HTMLSpanElement, React.HTMLAttributes<HTMLSpanElement>>(
+export interface BreadcrumbPageProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /** Additional classes merged onto the current-page crumb. */
+  className?: string;
+}
+
+/** The current (last, non-clickable) crumb. */
+export const BreadcrumbPage = React.forwardRef<HTMLSpanElement, BreadcrumbPageProps>(
   ({ className, ...props }, ref) => (
     <span
       ref={ref}
@@ -50,11 +74,19 @@ export const BreadcrumbPage = React.forwardRef<HTMLSpanElement, React.HTMLAttrib
 );
 BreadcrumbPage.displayName = "BreadcrumbPage";
 
+export interface BreadcrumbSeparatorProps extends React.LiHTMLAttributes<HTMLLIElement> {
+  /** Additional classes merged onto the separator glyph container. */
+  className?: string;
+  /** Custom separator glyph; defaults to a ChevronRight icon. */
+  children?: React.ReactNode;
+}
+
+/** Glyph between crumbs; defaults to a ChevronRight icon. */
 export const BreadcrumbSeparator = ({
   className,
   children,
   ...props
-}: React.HTMLAttributes<HTMLLIElement>) => (
+}: BreadcrumbSeparatorProps) => (
   <li role="presentation" aria-hidden className={cn("[&_svg]:size-3.5", className)} {...props}>
     {children ?? <ChevronRight />}
   </li>

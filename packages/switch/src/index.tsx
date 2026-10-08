@@ -11,6 +11,7 @@ export interface SwitchProps
   defaultChecked?: boolean;
   /** Called with the next state when toggled. */
   onCheckedChange?: (checked: boolean) => void;
+  /** Size preset: "sm" or "md" (default). */
   size?: SwitchSize;
 }
 

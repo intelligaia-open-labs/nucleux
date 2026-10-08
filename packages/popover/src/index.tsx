@@ -15,8 +15,11 @@ function usePopover(component: string) {
 }
 
 export interface PopoverProps {
+  /** Whether the popover is open (controlled). */
   open?: boolean;
+  /** Initial open state (uncontrolled). */
   defaultOpen?: boolean;
+  /** Called when the popover requests to open or close. */
   onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
 }
@@ -65,7 +68,15 @@ export function Popover({ open, defaultOpen = false, onOpenChange, children }: P
   );
 }
 
-export const PopoverTrigger = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
+export interface PopoverTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Additional classes merged onto the trigger button. */
+  className?: string;
+  /** Button type. Defaults to "button". */
+  type?: "button" | "submit" | "reset";
+}
+
+/** Button that toggles the popover; place inside Popover. */
+export const PopoverTrigger = React.forwardRef<HTMLButtonElement, PopoverTriggerProps>(
   ({ onClick, type = "button", ...props }, ref) => {
     const { open, setOpen, contentId } = usePopover("PopoverTrigger");
     return (

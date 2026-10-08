@@ -20,7 +20,10 @@ import { cn } from "@nucleux/utils";
  *
  * Named `CardContainer` to mirror the canonical Figma component.
  */
-export interface CardContainerProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface CardContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the card surface. */
+  className?: string;
+}
 
 export const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
   ({ className, ...props }, ref) => (
@@ -37,7 +40,13 @@ export const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps
 CardContainer.displayName = "CardContainer";
 
 /** Card header. Lays children out in a row with space-between by default. */
-export const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the card header row. */
+  className?: string;
+}
+
+/** Card header row: title/description left, action right. */
+export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
@@ -48,7 +57,13 @@ export const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
 );
 CardHeader.displayName = "CardHeader";
 
-export const CardTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
+export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  /** Additional classes merged onto the card title. */
+  className?: string;
+}
+
+/** Card heading. */
+export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
   ({ className, ...props }, ref) => (
     <h3
       ref={ref}
@@ -59,16 +74,27 @@ export const CardTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttribut
 );
 CardTitle.displayName = "CardTitle";
 
-export const CardDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
+export interface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {
+  /** Additional classes merged onto the card description. */
+  className?: string;
+}
+
+/** Muted supporting copy under the card title. */
+export const CardDescription = React.forwardRef<HTMLParagraphElement, CardDescriptionProps>(({ className, ...props }, ref) => (
   <p ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />
 ));
 CardDescription.displayName = "CardDescription";
 
 /** Trailing action in a card header, e.g. a "View all" link. Renders a button by default. */
-export const CardAction = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
+export interface CardActionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Additional classes merged onto the header action button. */
+  className?: string;
+  /** Button type. Defaults to "button". */
+  type?: "button" | "submit" | "reset";
+}
+
+/** Compact action button in the card header. */
+export const CardAction = React.forwardRef<HTMLButtonElement, CardActionProps>(
   ({ className, type = "button", ...props }, ref) => (
     <button
       ref={ref}
@@ -83,7 +109,13 @@ export const CardAction = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAt
 );
 CardAction.displayName = "CardAction";
 
-export const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the card body. */
+  className?: string;
+}
+
+/** Card body region. */
+export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
   ({ className, ...props }, ref) => (
     <div ref={ref} className={cn("px-6 py-4", className)} {...props} />
   ),
@@ -91,7 +123,13 @@ export const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes
 CardContent.displayName = "CardContent";
 
 /** Full-bleed hairline divider between card sections. */
-export const CardDivider = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface CardDividerProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the divider. */
+  className?: string;
+}
+
+/** Full-width hairline separator inside a card. */
+export const CardDivider = React.forwardRef<HTMLDivElement, CardDividerProps>(
   ({ className, ...props }, ref) => (
     <div ref={ref} role="separator" className={cn("h-px w-full bg-border", className)} {...props} />
   ),

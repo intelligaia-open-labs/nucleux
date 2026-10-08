@@ -75,14 +75,26 @@ export function Dialog({ open, onOpenChange, children, className, dismissible = 
   );
 }
 
-export const DialogHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface DialogHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the header slot. */
+  className?: string;
+}
+
+/** Dialog header slot: DialogTitle + DialogDescription. */
+export const DialogHeader = React.forwardRef<HTMLDivElement, DialogHeaderProps>(
   ({ className, ...props }, ref) => (
     <div ref={ref} className={cn("flex flex-col gap-1", className)} {...props} />
   ),
 );
 DialogHeader.displayName = "DialogHeader";
 
-export const DialogTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
+export interface DialogTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  /** Additional classes merged onto the title. */
+  className?: string;
+}
+
+/** Dialog heading; auto-wired to aria-labelledby. */
+export const DialogTitle = React.forwardRef<HTMLHeadingElement, DialogTitleProps>(
   ({ className, ...props }, ref) => {
     const ctx = React.useContext(DialogContext);
     return (
@@ -97,10 +109,13 @@ export const DialogTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttrib
 );
 DialogTitle.displayName = "DialogTitle";
 
-export const DialogDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => {
+export interface DialogDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {
+  /** Additional classes merged onto the description. */
+  className?: string;
+}
+
+/** Muted supporting copy under the dialog title. */
+export const DialogDescription = React.forwardRef<HTMLParagraphElement, DialogDescriptionProps>(({ className, ...props }, ref) => {
   const ctx = React.useContext(DialogContext);
   return (
     <p ref={ref} id={ctx?.descriptionId} className={cn("text-sm text-muted-foreground", className)} {...props} />
@@ -108,7 +123,13 @@ export const DialogDescription = React.forwardRef<
 });
 DialogDescription.displayName = "DialogDescription";
 
-export const DialogFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface DialogFooterProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the footer slot. */
+  className?: string;
+}
+
+/** Dialog footer slot, right-aligned (actions). */
+export const DialogFooter = React.forwardRef<HTMLDivElement, DialogFooterProps>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}

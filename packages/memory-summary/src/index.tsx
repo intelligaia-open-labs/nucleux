@@ -20,6 +20,7 @@ export interface MemorySummaryProps extends React.HTMLAttributes<HTMLDivElement>
   onRefresh?: () => void;
   /** Called with the entered text to add/update a memory. Renders a composer when set. */
   onAdd?: (text: string) => void;
+  /** Placeholder text for the add-memory input. */
   addPlaceholder?: string;
 }
 

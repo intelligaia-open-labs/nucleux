@@ -5,7 +5,13 @@ import { cn } from "@nucleux/utils";
  * A right-hand contextual panel — an "on this page" table of contents plus a
  * metadata list. Compose with the parts below. Source: Figma "AIUX / Right Sidebar".
  */
-export const RightSidebar = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
+export interface RightSidebarProps extends React.HTMLAttributes<HTMLElement> {
+  /** Additional classes merged onto the sidebar column. */
+  className?: string;
+}
+
+/** Right-hand on-this-page navigation column. */
+export const RightSidebar = React.forwardRef<HTMLElement, RightSidebarProps>(
   ({ className, ...props }, ref) => (
     <nav
       ref={ref}
@@ -17,7 +23,13 @@ export const RightSidebar = React.forwardRef<HTMLElement, React.HTMLAttributes<H
 );
 RightSidebar.displayName = "RightSidebar";
 
-export const RightSidebarLabel = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
+export interface RightSidebarLabelProps extends React.HTMLAttributes<HTMLParagraphElement> {
+  /** Additional classes merged onto the section label. */
+  className?: string;
+}
+
+/** Small uppercase section label. */
+export const RightSidebarLabel = React.forwardRef<HTMLParagraphElement, RightSidebarLabelProps>(
   ({ className, ...props }, ref) => (
     <p
       ref={ref}
@@ -72,7 +84,13 @@ export const RightSidebarMeta = React.forwardRef<HTMLDivElement, RightSidebarMet
 );
 RightSidebarMeta.displayName = "RightSidebarMeta";
 
-export const RightSidebarSeparator = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface RightSidebarSeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the separator. */
+  className?: string;
+}
+
+/** Hairline between nav sections. */
+export const RightSidebarSeparator = React.forwardRef<HTMLDivElement, RightSidebarSeparatorProps>(
   ({ className, ...props }, ref) => (
     <div ref={ref} role="separator" className={cn("my-4 h-px w-full bg-border", className)} {...props} />
   ),

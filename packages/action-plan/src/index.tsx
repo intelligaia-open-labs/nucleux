@@ -41,8 +41,11 @@ export interface ActionPlanProps extends React.HTMLAttributes<HTMLDivElement> {
   onEdit?: () => void;
   /** Called when the plan is rejected. Renders the reject button when set. */
   onReject?: () => void;
+  /** Label for the accept button. Defaults to a localized "Accept". */
   acceptLabel?: React.ReactNode;
+  /** Label for the edit button. Defaults to a localized "Edit". */
   editLabel?: React.ReactNode;
+  /** Label for the reject button. Defaults to a localized "Reject". */
   rejectLabel?: React.ReactNode;
 }
 

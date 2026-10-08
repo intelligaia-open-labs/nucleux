@@ -25,6 +25,7 @@ export interface TabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "o
   defaultValue?: string;
   /** Called with the newly selected value. */
   onValueChange?: (value: string) => void;
+  /** Layout axis of the tab list: "horizontal" (default) or "vertical". */
   orientation?: Orientation;
 }
 
@@ -58,7 +59,15 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
 );
 Tabs.displayName = "Tabs";
 
-export const TabsList = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the tab strip. */
+  className?: string;
+  /** Extra keydown handler; runs before the built-in roving-focus handling. */
+  onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
+}
+
+/** Tab button strip with roving-focus keyboard navigation. */
+export const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(
   ({ className, onKeyDown, ...props }, ref) => {
     const { orientation } = useTabs("TabsList");
 
@@ -133,6 +142,7 @@ export const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>
 TabsTrigger.displayName = "TabsTrigger";
 
 export interface TabsContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Tab id this panel belongs to (matches a TabsTrigger value). */
   value: string;
 }
 

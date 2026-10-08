@@ -29,7 +29,9 @@ const buttonSizes: Record<ButtonSize, string> = {
 };
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Visual style: "primary" (default), "secondary", "outline", "ghost", "link", or "destructive". */
   variant?: ButtonVariant;
+  /** Size preset: "sm", "md" (default), or "lg". */
   size?: ButtonSize;
   /** Icon rendered before the label. */
   leftIcon?: React.ReactNode;

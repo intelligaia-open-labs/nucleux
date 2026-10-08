@@ -16,7 +16,9 @@ export interface ConnectorCardProps
   onConnect?: () => void;
   /** Called to disconnect. Renders a manage/disconnect control when connected. */
   onDisconnect?: () => void;
+  /** Label for the connect action. Defaults to a localized "Connect". */
   connectLabel?: React.ReactNode;
+  /** Label for the disconnect action. Defaults to a localized "Disconnect". */
   disconnectLabel?: React.ReactNode;
 }
 

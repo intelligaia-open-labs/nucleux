@@ -22,6 +22,7 @@ const defaultIcon: Record<AlertVariant, React.ComponentType<{ className?: string
 };
 
 export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+  /** Visual style: "info" (neutral, default), "success", "warning", or "destructive". */
   variant?: AlertVariant;
   /** Optional bold title above the body. */
   title?: React.ReactNode;

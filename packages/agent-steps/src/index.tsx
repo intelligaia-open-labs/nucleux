@@ -77,7 +77,10 @@ export const AgentStep = React.forwardRef<HTMLLIElement, AgentStepProps>(
 );
 AgentStep.displayName = "AgentStep";
 
-export interface AgentStepsProps extends React.HTMLAttributes<HTMLOListElement> {}
+export interface AgentStepsProps extends React.HTMLAttributes<HTMLOListElement> {
+  /** Additional classes merged onto the steps list. */
+  className?: string;
+}
 
 /**
  * A live tracker of an agent's multi-step plan — each {@link AgentStep} shows an

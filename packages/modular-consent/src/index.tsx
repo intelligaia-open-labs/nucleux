@@ -15,15 +15,20 @@ export interface ConsentPermission {
 }
 
 export interface ModularConsentProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+  /** Heading of the consent card. */
   title: React.ReactNode;
   description?: React.ReactNode;
   /** The permissions the user can grant. */
   permissions: ConsentPermission[];
+  /** Label for the deny button. */
   denyLabel?: string;
+  /** Called when the user denies all permissions. */
   onDeny?: () => void;
   /** Optional middle action, e.g. "Always Allow". */
   secondaryLabel?: string;
+  /** Called with the selected permission ids when the secondary action runs. */
   onSecondary?: (selectedIds: string[]) => void;
+  /** Label for the allow button. */
   allowLabel?: string;
   /** Called with the ids of the granted permissions. */
   onAllow?: (selectedIds: string[]) => void;

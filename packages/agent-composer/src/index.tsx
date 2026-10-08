@@ -6,9 +6,11 @@ export interface AgentComposerProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSubmit"> {
   /** Controlled textarea value. */
   value: string;
+  /** Controlled input value change callback. */
   onValueChange: (value: string) => void;
   /** Called with the trimmed value on submit (Enter or send). */
   onSubmit: (value: string) => void;
+  /** Placeholder text for the textarea. */
   placeholder?: string;
   /** Toolbar content on the left (e.g. attach button). */
   leftActions?: React.ReactNode;
@@ -16,6 +18,7 @@ export interface AgentComposerProps
   rightActions?: React.ReactNode;
   /** Show the agent as busy — swaps send for a stop button. */
   loading?: boolean;
+  /** Called when the user presses the stop button while loading. */
   onStop?: () => void;
   /** Max auto-grow height in px. */
   maxHeight?: number;

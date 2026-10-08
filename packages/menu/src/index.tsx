@@ -5,7 +5,13 @@ import { cn } from "@nucleux/utils";
  * A menu surface (dropdown / context menu panel). Presentational — pair with
  * your own trigger/positioning. Compose with MenuItem, MenuSeparator, MenuLabel.
  */
-export const Menu = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface MenuProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the menu panel. */
+  className?: string;
+}
+
+/** Popover-style list of MenuItems. */
+export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
@@ -52,14 +58,26 @@ export const MenuItem = React.forwardRef<HTMLButtonElement, MenuItemProps>(
 );
 MenuItem.displayName = "MenuItem";
 
-export const MenuSeparator = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface MenuSeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the separator. */
+  className?: string;
+}
+
+/** Hairline separator between menu groups. */
+export const MenuSeparator = React.forwardRef<HTMLDivElement, MenuSeparatorProps>(
   ({ className, ...props }, ref) => (
     <div ref={ref} role="separator" className={cn("-mx-1 my-1 h-px bg-border", className)} {...props} />
   ),
 );
 MenuSeparator.displayName = "MenuSeparator";
 
-export const MenuLabel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface MenuLabelProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the label. */
+  className?: string;
+}
+
+/** Non-interactive group label. */
+export const MenuLabel = React.forwardRef<HTMLDivElement, MenuLabelProps>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}

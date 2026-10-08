@@ -77,7 +77,10 @@ export const AttachmentTile = React.forwardRef<HTMLDivElement, AttachmentTilePro
 );
 AttachmentTile.displayName = "AttachmentTile";
 
-export interface AttachmentTrayProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface AttachmentTrayProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the tray. */
+  className?: string;
+}
 
 /** A wrapping row of {@link AttachmentTile}s, shown above the composer. */
 export const AttachmentTray = React.forwardRef<HTMLDivElement, AttachmentTrayProps>(

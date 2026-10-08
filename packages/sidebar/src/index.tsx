@@ -69,7 +69,13 @@ export const SidebarItem = React.forwardRef<HTMLButtonElement, SidebarItemProps>
 SidebarItem.displayName = "SidebarItem";
 
 /** Horizontal hairline separating groups of sidebar items. */
-export const SidebarSeparator = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface SidebarSeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the separator. */
+  className?: string;
+}
+
+/** Short hairline inside the sidebar. */
+export const SidebarSeparator = React.forwardRef<HTMLDivElement, SidebarSeparatorProps>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}

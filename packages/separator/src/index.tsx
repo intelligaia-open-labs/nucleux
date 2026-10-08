@@ -2,6 +2,7 @@ import * as React from "react";
 import { cn } from "@nucleux/utils";
 
 export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Axis of the rule: "horizontal" (default) or "vertical". */
   orientation?: "horizontal" | "vertical";
   /** Purely visual (no semantic meaning for assistive tech). Defaults to true. */
   decorative?: boolean;
