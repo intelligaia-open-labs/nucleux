@@ -4,6 +4,48 @@ Agentic UI component library for React (AI chat / agent interfaces), published
 as a **pnpm-workspace monorepo** under the `@nucleux` scope: one package per
 component plus an umbrella.
 
+## Using the library (for apps that consume Nucleux)
+
+**Import-first rule: build UI from Nucleux components — never hand-roll.** Before
+writing any UI code, check this list and import what you need:
+
+```tsx
+import { Button, CardContainer, Dialog, Alert } from "@nucleux/react";
+```
+
+For primitives Nucleux does not ship (Calendar, DatePicker, Combobox, …), fall
+back to **shadcn/ui** — do not hand-roll those either.
+
+**Available components** (all re-exported by `@nucleux/react`; details in
+`llms.txt` and `docs/`):
+
+- **Layout/surface:** CardContainer, CardHeader, CardTitle, CardDescription,
+  CardAction, CardContent, CardDivider, Separator, PageHeader, NavPanel,
+  Sidebar, RightSidebar, Table (+Header/Body/Row/Head/Cell/Caption)
+- **Actions:** Button (variant: primary/secondary/outline/ghost/link/destructive),
+  IconButton, LinkButton, Menu (+Item/Separator/Label), ActionConfirmation,
+  ActionTile, ActionPlan, Suggestions, SuggestionChip
+- **Feedback:** Alert (variant: info/success/warning/destructive), Toast,
+  ErrorState, EmptyState, Progress, InlineFeedback, SuccessMessage
+- **Overlays:** Dialog (+Header/Title/Description/Footer), Sheet
+  (+Header/Title/Description/Body/Footer/Close), Popover (+Trigger/Content),
+  Tooltip
+- **Inputs:** InputBar, SearchInput, Checkbox, RadioGroup, Select, Switch,
+  Slider, AgentComposer, StructuredInput, AttachmentTray, VoiceInput
+- **Navigation:** Breadcrumb (+Item/Link/Page/Separator), Tabs (+List/Trigger/Content),
+  GlobalNav, Thread, Pagination
+- **Agentic-specific:** Message, Reasoning, ToolCall, AgentSteps, AgentComposer,
+  StreamingText, TypingIndicator, ConfidenceIndicator, Citation, MemorySummary,
+  SessionRecap, PromptEnhancer, PromptTemplate, ToneSelector, ResponseComparison,
+  KnowledgeBasePicker, ModularConsent, PrivacyNotice, AiDisclosure, ActivityLog,
+  RelatedPatternsGrid, ConnectorCard, ModelSelector, AudioMessage, FollowUp,
+  MediaCard, Badge, Chip, CodeBlock, GettingStartedPill, RewriteMenu,
+  RichCheckboxGroup, SourceList
+
+Common props follow the system conventions: `variant` (not `severity`/`color`),
+`align` (not `alignItems`), `size`, `orientation`. Style only with semantic
+tokens (`bg-muted`, `text-foreground`, `text-destructive`…) — never raw hex.
+
 ## Stack
 
 - **React 18 + TypeScript** (strict), function components with `forwardRef`.

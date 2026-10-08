@@ -27,3 +27,4 @@ Thumbs.db
 # Misc
 *.tsbuildinfo
 coverage/
+packages/index.ts
