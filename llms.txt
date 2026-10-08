@@ -39,14 +39,19 @@ import { Dialog, Button, Alert } from "@nucleux/react";
 
 ## Naming conventions (important for AI agents)
 
-| Concept | Nucleux name | Common alias (don't use) |
+| Concept | Nucleux name | Common alias (deprecated, still accepted) |
 |---|---|---|
-| Alert severity | `variant` | `severity` |
-| Color/emphasis | `variant` | `color` |
-| Stack alignment | `align` | `alignItems` |
-| Modal header | `DialogHeader` | `ModalHeader` |
+| Alert severity | `variant` | `severity` (Alert) |
+| Color/emphasis | `variant` | `color` (Button) |
+| Popover alignment | `align` | `alignItems` (PopoverContent) |
+| Modal header | `DialogHeader` | `ModalHeader` (re-export alias) |
+| Modal title | `DialogTitle` | `ModalTitle` (re-export alias) |
+| Modal description | `DialogDescription` | `ModalDescription` (re-export alias) |
+| Modal footer | `DialogFooter` | `ModalFooter` (re-export alias) |
 
 When in doubt, use `variant` — it is the universal prop for visual emphasis/severity in Nucleux.
+The deprecated aliases exist so agents trained on MUI/Chakra vocabulary are caught and mapped 1:1
+(e.g. Alert `severity="error"` behaves as `variant="destructive"`), but prefer the canonical names.
 
 ## ShadCN fallback policy
 

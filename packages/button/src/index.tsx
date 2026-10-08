@@ -29,9 +29,15 @@ const buttonSizes: Record<ButtonSize, string> = {
 };
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Visual style: "primary" (default), "secondary", "outline", "ghost", "link", or "destructive". */
+  /** Visual style: "primary" (default), "cta", "secondary", "ghost", or "destructive". */
   variant?: ButtonVariant;
-  /** Size preset: "sm", "md" (default), or "lg". */
+  /**
+   * Alias of `variant` (MUI/Chakra vocabulary). Deprecated — use `variant`.
+   * @deprecated Use `variant` instead. Alias kept so MUI/Chakra-trained
+   *   agents and users are caught; it maps 1:1.
+   */
+  color?: ButtonVariant;
+  /** Size preset: "sm", "md" (default), "lg", or "icon". */
   size?: ButtonSize;
   /** Icon rendered before the label. */
   leftIcon?: React.ReactNode;
@@ -41,7 +47,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { variant = "primary", size = "md", leftIcon, rightIcon, type = "button", className, children, ...props },
+    { color, variant = color ?? "primary", size = "md", leftIcon, rightIcon, type = "button", className, children, ...props },
     ref,
   ) => (
     <button

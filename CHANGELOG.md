@@ -22,8 +22,14 @@ by a version tag and date, and entries are grouped under `### Added`, `### Chang
 - _Nothing yet in this section._
 
 ### Deprecated
-- _Nothing yet._ When a component or prop is deprecated, tag it with
-  `@deprecated` JSDoc and record the migration path here.
+- Added deprecated compatibility aliases so agents trained on MUI/Chakra
+  vocabulary resolve to the canonical Nucleux API (1:1 mapping, no behavior change):
+  - `Alert` prop `severity` (maps to `variant`; `"error"` maps to `"destructive"`)
+  - `Button` prop `color` (maps to `variant`)
+  - `PopoverContent` prop `alignItems` (maps to `align`)
+  - `ModalHeader`/`ModalTitle`/`ModalDescription`/`ModalFooter` re-export
+    aliases of `DialogHeader`/`DialogTitle`/`DialogDescription`/`DialogFooter`
+  - Prefer the canonical names in all new code.
 
 ### Removed
 - _Nothing yet._

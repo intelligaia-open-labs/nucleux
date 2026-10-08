@@ -139,3 +139,18 @@ export const DialogFooter = React.forwardRef<HTMLDivElement, DialogFooterProps>(
   ),
 );
 DialogFooter.displayName = "DialogFooter";
+
+
+/**
+ * Aliases under the Chakra/MUI "Modal*" compound naming (models trained on
+ * those vocabularies reach for these names). Deprecated — prefer the
+ * Dialog* names; these re-export the same components.
+ */
+// eslint-disable-next-line @typescript-eslint/no-deprecated
+export const ModalHeader = DialogHeader;
+// eslint-disable-next-line @typescript-eslint/no-deprecated
+export const ModalTitle = DialogTitle;
+// eslint-disable-next-line @typescript-eslint/no-deprecated
+export const ModalDescription = DialogDescription;
+// eslint-disable-next-line @typescript-eslint/no-deprecated
+export const ModalFooter = DialogFooter;
