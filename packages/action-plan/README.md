@@ -4,6 +4,12 @@ ActionPlan — a proposed agent plan the user can accept, edit, or reject — Nu
 
 Part of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).
 
+
+## Exports
+
+- **`ActionPlan`** — a proposed agent plan the user can accept, edit, or reject
+- **`ActionPlanStep`** — One step row inside the plan: index, label, and status icon. Compose inside `<ActionPlan steps>` or as children.
+
 ## Install
 
 ```bash

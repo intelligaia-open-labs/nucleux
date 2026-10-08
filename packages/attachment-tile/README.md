@@ -4,6 +4,12 @@ AttachmentTile — removable file and image context tiles for the composer — N
 
 Part of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).
 
+
+## Exports
+
+- **`AttachmentTile`** — removable file and image context tiles for the composer
+- **`AttachmentTray`** — Flex-wrap container that lays out `<AttachmentTile>` items with consistent gaps.
+
 ## Install
 
 ```bash

@@ -4,6 +4,12 @@ AiDisclosure — provenance and fallibility markers for AI-generated content —
 
 Part of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).
 
+
+## Exports
+
+- **`AiDisclosure`** — provenance and fallibility markers for AI-generated content
+- **`AiCaveat`** — The inline fallibility caveat ("AI content may be wrong") shown under AI-generated content.
+
 ## Install
 
 ```bash

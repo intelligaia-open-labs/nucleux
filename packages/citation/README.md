@@ -4,6 +4,12 @@ Citation — inline source chips and a grounded sources list for AI answers — 
 
 Part of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).
 
+
+## Exports
+
+- **`Citation`** — inline source chips and a grounded sources list for AI answers
+- **`SourceList`** — The stacked list of `<SourceItem>` citations inside a citation card.
+
 ## Install
 
 ```bash

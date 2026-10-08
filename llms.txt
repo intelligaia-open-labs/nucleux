@@ -106,7 +106,7 @@ Shift+Enter inserts a newline. Source: Figma "Agentic".
 anti-deception trust signal, as an inline pill, corner badge, or banner.
 Source: Figma "Trust & Disclosure / AI disclosure".
   Exports: `AiDisclosure, AiCaveat, AiDisclosureVariant, AiDisclosureProps, AiCaveatProps`
-- **alert** (`@nucleux/alert`) — Contextual message banner — info, success, warning, or error.
+- **alert** (`@nucleux/alert`) — Contextual message banner — info, success, warning, or error. Also accepts a deprecated `severity` prop (alias of `variant`).
   Exports: `Alert, AlertVariant, AlertProps`
 - **attachment-tile** (`@nucleux/attachment-tile`) — A removable preview of a file or image attached as context to an agent turn —
 document chip or image thumbnail. The multimodal-context affordance.
@@ -122,14 +122,14 @@ Source: Figma "Output & Processing / Audio player output".
   Exports: `Badge, BadgeVariant, BadgeProps`
 - **breadcrumb** (`@nucleux/breadcrumb`) — Breadcrumb navigation landmark. Compose with the parts below.
   Exports: `Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator`
-- **button** (`@nucleux/button`) — Button — variants, sizes, and icons — Nucleux agentic UI for React.
+- **button** (`@nucleux/button`) — Button — variants, sizes, and icons — Nucleux agentic UI for React. Also accepts a deprecated `color` prop (alias of `variant`).
   Exports: `Button, ButtonVariant, ButtonSize, ButtonProps`
 - **capability-overview** (`@nucleux/capability-overview`) — A first-run card that sets expectations for an agent — what it can do, and
 where it falls short — as Examples / Capabilities / Limits columns.
 Source: Figma "Onboarding / Generic Assistant Overview".
   Exports: `CapabilityOverview, CapabilitySection, CapabilityOverviewProps`
 - **card** (`@nucleux/card`) — Card header. Lays children out in a row with space-between by default.
-  Exports: `CardContainer, CardHeader, CardTitle, CardDescription, CardAction, CardContent, …`
+  Exports: `CardContainer, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardDivider, …`
 - **checkbox** (`@nucleux/checkbox`) — Accessible checkbox (role=checkbox). Controlled via `checked` or uncontrolled.
   Exports: `Checkbox, CheckboxProps`
 - **checklist** (`@nucleux/checklist`) — A single step in a {@link Checklist}.
@@ -153,7 +153,7 @@ Source: Figma "Explainability / Confidence Indicators".
 name, what it unlocks, and a connect action.
 Source: Figma "Context Expansion / Connector suggestion card".
   Exports: `ConnectorCard, ConnectorCardProps`
-- **dialog** (`@nucleux/dialog`) — A modal dialog. Controlled via `open` / `onOpenChange`. Renders an overlay and
+- **dialog** (`@nucleux/dialog`) — A modal dialog. Controlled via `open` / `onOpenChange`. Renders an overlay and Also re-exports deprecated `ModalHeader`/`ModalTitle`/`ModalDescription`/`ModalFooter` aliases.
 a centered panel; closes on overlay click or Escape (unless `dismissible` is
 false). Compose with DialogHeader, DialogTitle, DialogDescription, DialogFooter.
   Exports: `Dialog, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogProps`
@@ -217,7 +217,7 @@ collapsible {@link NavSection}s, and text {@link NavItem}s.
 - **page-header** (`@nucleux/page-header`) — A page header block — an optional badge row, a large title, a description,
 and optional trailing actions. Source: Figma "AIUX / Page Header Block".
   Exports: `PageHeader, PageHeaderProps`
-- **popover** (`@nucleux/popover`) — A click-triggered popover. Compose PopoverTrigger + PopoverContent. Closes on
+- **popover** (`@nucleux/popover`) — A click-triggered popover. Compose PopoverTrigger + PopoverContent. Closes on PopoverContent also accepts a deprecated `alignItems` prop (alias of `align`).
 outside click or Escape. Content is positioned relative to the trigger.
   Exports: `Popover, PopoverTrigger, PopoverContent, PopoverProps, PopoverContentProps`
 - **privacy-notice** (`@nucleux/privacy-notice`) — A subtle notice that a conversation is ephemeral or private — communicates
@@ -285,7 +285,7 @@ Source: Figma "Expressive Input / Structured Input".
 - **switch** (`@nucleux/switch`) — Accessible on/off toggle. Controlled via `checked`, or uncontrolled via `defaultChecked`.
   Exports: `Switch, SwitchSize, SwitchProps`
 - **table** (`@nucleux/table`) — Scroll-wrapped table root.
-  Exports: `Table, TableHeader, TableBody, TableRow, TableHead, TableCell, …`
+  Exports: `Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption, …`
 - **tabs** (`@nucleux/tabs`) — Accessible tabs root. Compose with TabsList, TabsTrigger, and TabsContent.
   Exports: `Tabs, TabsList, TabsTrigger, TabsContent, TabsProps, TabsTriggerProps, …`
 - **thread** (`@nucleux/thread`) — Scrollable transcript container that keeps itself pinned to the newest
