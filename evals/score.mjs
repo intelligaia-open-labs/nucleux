@@ -46,8 +46,17 @@ const build = spawnSync("npm", ["run", "build"], { cwd: appDir, encoding: "utf8"
 
 const mcp = {};
 if (transcript && existsSync(transcript)) {
+  // A tool call can be logged more than once (streamed partials); count unique ids.
+  const seen = new Set();
   for (const line of readFileSync(transcript, "utf8").split("\n")) {
-    for (const m of line.matchAll(/"name":"mcp__nucleux__([a-z_]+)"/g)) mcp[m[1]] = (mcp[m[1]] ?? 0) + 1;
+    let entry;
+    try { entry = JSON.parse(line); } catch { continue; }
+    for (const block of entry?.message?.content ?? []) {
+      if (block?.type !== "tool_use" || seen.has(block.id) || !block.name?.startsWith("mcp__nucleux__")) continue;
+      seen.add(block.id);
+      const name = block.name.slice("mcp__nucleux__".length);
+      mcp[name] = (mcp[name] ?? 0) + 1;
+    }
   }
 }
 
