@@ -1,0 +1,54 @@
+{
+  "id": "list-page",
+  "name": "Collection list page with search, filter and pagination",
+  "status": "curated",
+  "since": "0.5.0",
+  "summary": "Page header with the primary create action, a search + filter toolbar, and a sortable paginated DataTable.",
+  "description": "The standard page for browsing a collection of records (projects, tasks, users, orders, bookings). Filtering runs before the table, so DataTable's built-in sorting and pagination always apply to the filtered rows.",
+  "useCases": ["project list", "task list", "user management table", "orders table", "admin records page", "data-heavy list", "search and filter toolbar"],
+  "whenToUse": ["Users scan, search, filter or sort many records of the same shape.", "Rows have 3-7 comparable columns."],
+  "whenNotToUse": ["Fewer than ~5 items, or items that are visual (use cards in a grid, e.g. MediaCard).", "Server-side pagination over very large datasets: DataTable paginates client-side; pass one page of data and render Pagination yourself."],
+  "keywords": ["table", "list", "data table", "grid", "filter", "search", "pagination", "sort", "records", "crud", "users", "admin", "toolbar"],
+  "components": {
+    "required": ["PageHeader", "SearchInput", "DataTable"],
+    "optional": ["Select", "Button", "Badge", "Pagination", "Menu", "MenuItem", "ErrorState", "Skeleton"]
+  },
+  "composition": [
+    { "element": "div", "role": "Page container (mx-auto max-w-6xl, responsive padding, flex-col gap-6)", "children": [
+      { "component": "PageHeader", "role": "title + description; actions slot holds the primary Button (variant cta)" },
+      { "element": "div", "role": "Toolbar (role=search): stacks on mobile, row from sm", "children": [
+        { "component": "SearchInput", "role": "Free-text search" },
+        { "component": "Select", "role": "Status/category filter; native <option> children" }
+      ] },
+      { "element": "div", "role": "overflow-x-auto wrapper", "children": [
+        { "component": "DataTable", "role": "Sortable, paginated rows; Badge in cells for status" }
+      ] }
+    ] }
+  ],
+  "layout": [
+    "One primary action, in PageHeader actions. Row actions go in a trailing column (Menu or ghost Buttons).",
+    "Keep filter state in the page (or URL search params) and pass filtered rows to DataTable.",
+    "DataTable paginates internally (pageSize, default 10). Use the separate Pagination component only for server-side paging."
+  ],
+  "responsive": [
+    "Toolbar: flex-col below sm, flex-row from sm; SearchInput grows (sm:flex-1), filters get fixed widths.",
+    "Wrap DataTable in overflow-x-auto so wide tables scroll inside the page instead of the page scrolling sideways.",
+    "Keep columns to what fits; drop secondary columns from the columns array on small screens rather than squeezing them."
+  ],
+  "tokens": ["text-foreground", "text-muted-foreground", "border-border", "Badge variants success/destructive/secondary for status"],
+  "accessibility": [
+    "SearchInput and Select need aria-label when no visible <Label> is rendered.",
+    "Wrap the toolbar in role=search.",
+    "Communicate status with Badge text, not color alone.",
+    "Set emptyMessage to explain an empty filter result."
+  ],
+  "states": "Loading: render ListSkeleton from page-states in place of the table. Error: ErrorState variant=error with Retry. No records at all (not just no matches): ErrorState variant=empty with the create action.",
+  "antiPatterns": [
+    "Rebuilding sorting/pagination by hand around Table when DataTable already does it.",
+    "Filtering inside cell renderers instead of before passing data.",
+    "Importing ColumnDef from @tanstack/react-table without installing it: type columns as DataTableProps<Row, unknown>[\"columns\"] or add the dependency."
+  ],
+  "related": ["app-shell", "page-states", "dashboard-overview"],
+  "dependencies": { "npm": [ { "name": "lucide-react", "reason": "Icons in the example." } ] },
+  "example": "example.tsx"
+}

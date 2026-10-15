@@ -1,0 +1,188 @@
+{
+  "id": "settings-page",
+  "name": "Settings and profile page",
+  "status": "curated",
+  "since": "0.5.0",
+  "summary": "Tabbed settings with card sections: a profile form that saves explicitly and toggle rows that apply instantly.",
+  "description": "Account, profile, notification and workspace preferences. Tabs group sections; each section is a card. Text fields are a form with a Save button and a success Alert; switches take effect immediately.",
+  "useCases": [
+    "settings page",
+    "profile page",
+    "account preferences",
+    "notification settings",
+    "workspace settings"
+  ],
+  "whenToUse": [
+    "Users change preferences or profile fields."
+  ],
+  "whenNotToUse": [
+    "Multi-step setup or onboarding (sequence the steps instead of tabs).",
+    "A single toggle (put it where it takes effect)."
+  ],
+  "keywords": [
+    "settings",
+    "preferences",
+    "profile",
+    "account",
+    "notifications",
+    "form",
+    "toggle",
+    "switch",
+    "tabs"
+  ],
+  "components": {
+    "required": [
+      "PageHeader",
+      "Tabs",
+      "TabsList",
+      "TabsTrigger",
+      "TabsContent",
+      "CardContainer",
+      "CardContent"
+    ],
+    "optional": [
+      "CardHeader",
+      "CardTitle",
+      "CardDescription",
+      "CardDivider",
+      "Input",
+      "Label",
+      "Select",
+      "Switch",
+      "Button",
+      "Alert",
+      "Textarea",
+      "RadioGroup",
+      "Radio",
+      "Breadcrumb"
+    ]
+  },
+  "composition": [
+    {
+      "element": "div",
+      "role": "Narrow page container (max-w-3xl)",
+      "children": [
+        {
+          "component": "PageHeader"
+        },
+        {
+          "component": "Tabs",
+          "children": [
+            {
+              "component": "TabsList",
+              "children": [
+                {
+                  "component": "TabsTrigger"
+                }
+              ]
+            },
+            {
+              "component": "TabsContent",
+              "role": "Profile tab",
+              "children": [
+                {
+                  "component": "CardContainer",
+                  "role": "Wraps a <form>",
+                  "children": [
+                    {
+                      "component": "CardHeader",
+                      "children": [
+                        {
+                          "component": "CardTitle"
+                        },
+                        {
+                          "component": "CardDescription"
+                        }
+                      ]
+                    },
+                    {
+                      "component": "CardDivider"
+                    },
+                    {
+                      "component": "CardContent",
+                      "children": [
+                        {
+                          "component": "Alert",
+                          "role": "success after save"
+                        },
+                        {
+                          "component": "Label"
+                        },
+                        {
+                          "component": "Input"
+                        },
+                        {
+                          "component": "Select"
+                        },
+                        {
+                          "component": "Button",
+                          "role": "type=submit"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "TabsContent",
+              "role": "Notifications tab",
+              "children": [
+                {
+                  "component": "CardContainer",
+                  "children": [
+                    {
+                      "component": "CardContent",
+                      "role": "divide-y list of SettingRow",
+                      "children": [
+                        {
+                          "component": "Switch"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "layout": [
+    "Settings read best narrow: max-w-3xl.",
+    "SettingRow: text on the left, control on the right; one setting per row.",
+    "Forms save explicitly (submit Button bottom-right); switches apply immediately and need no Save."
+  ],
+  "responsive": [
+    "SettingRow stacks (flex-col) below sm and becomes a row from sm.",
+    "With more than 4 tabs, consider orientation=\"vertical\" Tabs on lg or separate routes."
+  ],
+  "tokens": [
+    "text-foreground",
+    "text-muted-foreground",
+    "divide-border",
+    "Alert variant success/destructive"
+  ],
+  "accessibility": [
+    "CardTitle renders an <h3>. Directly under the page's <h1> (PageHeader) pass aria-level={2} so the heading order does not skip a level.",
+    "Every Input/Select has a <Label htmlFor>. Mark required fields with Label required.",
+    "Switch is a button: connect it to its visible text with aria-labelledby/aria-describedby (or give it aria-label).",
+    "Show validation with Input invalid plus a text hint linked through aria-describedby.",
+    "Confirm saves with Alert variant=success; announce errors with Alert variant=destructive."
+  ],
+  "states": "Disable Save while the form is invalid or submitting; keep user input after a failed save and show a destructive Alert.",
+  "antiPatterns": [
+    "A Save button for switches that already applied.",
+    "Placeholder text used as the only label.",
+    "Using the deprecated Alert severity prop: use variant."
+  ],
+  "related": [
+    "app-shell",
+    "page-states"
+  ],
+  "dependencies": {
+    "npm": []
+  },
+  "example": "example.tsx"
+}

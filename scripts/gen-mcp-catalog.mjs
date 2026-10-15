@@ -1,11 +1,12 @@
 // Generates packages/mcp/src/catalog.json — a machine-readable index of every
-// @nucleux package (description, exports, Props source, import + install) plus
+// @nucleux package (description, exports, structured Props, import + install) plus
 // the example compositions. Consumed by the @nucleux/mcp server so AI coding
 // agents can discover and correctly use the library. Run on `pnpm build` (the
 // mcp package's build script) and committed so typecheck works without it.
 import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
+import { extractProps } from "./lib/extract-props.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkgsDir = join(root, "packages");
@@ -13,15 +14,6 @@ const pkgsDir = join(root, "packages");
 /** Packages that are infrastructure, not components. */
 const NON_COMPONENT = new Set(["mcp", "react", "tokens", "utils", "hooks", "md3-theme"]);
 
-/** Match the matching `}` for the `{` at `open` in `src`. */
-function matchBrace(src, open) {
-  let depth = 0;
-  for (let i = open; i < src.length; i++) {
-    if (src[i] === "{") depth++;
-    else if (src[i] === "}" && --depth === 0) return i;
-  }
-  return src.length;
-}
 
 /** Strip `/** ... *\/` decoration into a one-line-ish description. */
 function cleanJsdoc(block) {
@@ -45,23 +37,6 @@ function extractExports(src) {
     }
   }
   return [...names];
-}
-
-/** Full source of every `export interface *Props { ... }` (with leading JSDoc). */
-function extractProps(src) {
-  const out = [];
-  for (const m of src.matchAll(/export\s+interface\s+([A-Za-z0-9_]+Props)\b/g)) {
-    const nameIdx = m.index;
-    const open = src.indexOf("{", nameIdx);
-    if (open === -1) continue;
-    const close = matchBrace(src, open);
-    // Pull a leading JSDoc block if one sits directly above the interface.
-    const before = src.slice(0, nameIdx);
-    const jsdoc = before.match(/\/\*\*[\s\S]*?\*\/\s*$/);
-    const body = src.slice(nameIdx, close + 1);
-    out.push({ name: m[1], source: ((jsdoc ? jsdoc[0].trimEnd() + "\n" : "") + body).trim() });
-  }
-  return out;
 }
 
 /** JSDoc block sitting directly above the primary exported component. */
@@ -95,8 +70,11 @@ for (const name of readdirSync(pkgsDir)) {
 
   const src = readEntry(dir);
   const exportsList = extractExports(src);
+  // Type-only exports (`export type/interface`) can't be value-imported, so
+  // they never count as components.
+  const typeOnly = new Set([...src.matchAll(/export\s+(?:interface|type)\s+([A-Za-z0-9_]+)/g)].map((m) => m[1]));
   const components = exportsList.filter(
-    (n) => /^[A-Z]/.test(n) && !/(Props|Variant|Data|Context|Ref)$/.test(n),
+    (n) => /^[A-Z]/.test(n) && !typeOnly.has(n) && !/(Props|Variant|Data|Context|Ref)$/.test(n),
   );
   const readme = existsSync(join(dir, "README.md")) ? readFileSync(join(dir, "README.md"), "utf8") : "";
 
