@@ -56,7 +56,8 @@ page that no pattern covers.
 
 **D. Plan.** Write a short plan: shared layout, then each route →
 pattern(s) → components → app-specific pieces you will write → states. Mark
-anything Nucleux does not cover.
+anything Nucleux does not cover. Check the plan with `validate_design` (pattern
+ids plus the components and props you intend to use) and fix every error.
 
 **E. Implement.** Build the shared shell once and wrap every route in it.
 Start each page from its pattern's example, replace the sample data with the
@@ -65,8 +66,7 @@ data) in the app, composed from Nucleux parts.
 
 **F. Validate.** Run the project's type check, lint, tests and production build;
 fix every error. Re-check each page against its pattern's responsive and
-accessibility rules. If the MCP server offers `validate_design`, run it on your
-plan or composition.
+accessibility rules.
 
 **G. Report.** Summarise the pages built, the patterns and components used per
 page, design decisions, the checks you ran and their results, anything you built

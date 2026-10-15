@@ -10,6 +10,7 @@ import {
   SHADCN_DOCS,
 } from "./shadcn.js";
 import htmlSnippets from "./html-snippets.json";
+import { validateDesign, type PlannedComponent } from "./validate.js";
 import {
   patterns,
   patternsUsing,
@@ -270,11 +271,11 @@ export function createServer(): McpServer {
         const suggestions = catalog.packages
           .map((x) => x.components[0] ?? x.name)
           .filter((n) => {
-          // Match both ways so plurals and suffixes ("Buttons", "TabsList") still find the component.
-          const q = name.trim().toLowerCase();
-          const c = n.toLowerCase();
-          return c.includes(q) || (c.length > 2 && q.replace(/s$/, "") === c);
-        })
+            // Match both ways so plurals and suffixes ("Buttons", "TabsList") still find the component.
+            const q = name.trim().toLowerCase();
+            const c = n.toLowerCase();
+            return c.includes(q) || (c.length > 2 && q.replace(/s$/, "") === c);
+          })
           .slice(0, 8);
         // A near-miss on a Nucleux name (e.g. "Badges") is a typo, not a gap —
         // answer it as one. Only a genuine absence falls through to ShadCN.
@@ -366,8 +367,15 @@ export function createServer(): McpServer {
     async ({ framework = "react", packageManager = "pnpm", configModule = "esm" }) => {
       if (framework === "html") return text(htmlSetup);
       const s = catalog.setup;
-      const add = { npm: "npm install", pnpm: "pnpm add", yarn: "yarn add", bun: "bun add" }[packageManager];
-      const addDev = { npm: "npm install -D", pnpm: "pnpm add -D", yarn: "yarn add -D", bun: "bun add -d" }[packageManager];
+      const add = { npm: "npm install", pnpm: "pnpm add", yarn: "yarn add", bun: "bun add" }[
+        packageManager
+      ];
+      const addDev = {
+        npm: "npm install -D",
+        pnpm: "pnpm add -D",
+        yarn: "yarn add -D",
+        bun: "bun add -d",
+      }[packageManager];
       const cjs = configModule === "cjs";
       return text(
         [
@@ -391,7 +399,9 @@ export function createServer(): McpServer {
           "",
           `## 3. postcss.config.${cjs ? "cjs" : "js"}`,
           "```js",
-          cjs ? "module.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } };" : s.postcssConfig,
+          cjs
+            ? "module.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } };"
+            : s.postcssConfig,
           "```",
           "",
           "## 4. CSS entry (e.g. src/index.css)",
@@ -509,6 +519,46 @@ export function createServer(): McpServer {
         };
       }
       return text(renderPattern(p, includeExample));
+    },
+  );
+
+  const plannedComponent: z.ZodType<PlannedComponent> = z.lazy(() =>
+    z.object({
+      component: z.string().min(1).describe("Nucleux export name, e.g. 'Button'."),
+      props: z
+        .record(z.unknown())
+        .optional()
+        .describe("Props the plan passes; string values are checked against variant values."),
+      children: z.array(plannedComponent).optional(),
+    }),
+  );
+
+  server.tool(
+    "validate_design",
+    "Check a planned page before or after writing it: pattern ids and a component tree with the props you intend to pass. Reports unknown patterns/components, props a component does not have, invalid variant values, missing required props, deprecated props, and pattern components the plan leaves out. Returns JSON: { valid, errors, warnings, checked, issues: [{ severity, code, path, message, fix? }] }.",
+    {
+      patterns: z
+        .array(z.string())
+        .optional()
+        .describe("Pattern ids the page follows, e.g. ['app-shell', 'list-page']."),
+      components: z
+        .array(plannedComponent)
+        .optional()
+        .describe("Component tree, e.g. [{ component: 'Button', props: { variant: 'cta' } }]."),
+    },
+    async ({ patterns: ids, components }) => {
+      if (!ids?.length && !components?.length) {
+        return {
+          isError: true,
+          content: [
+            {
+              type: "text" as const,
+              text: "Nothing to validate: pass patterns and/or components.",
+            },
+          ],
+        };
+      }
+      return text(JSON.stringify(validateDesign({ patterns: ids, components }), null, 2));
     },
   );
 

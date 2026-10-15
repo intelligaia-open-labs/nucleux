@@ -75,6 +75,7 @@ describe("MCP server", () => {
     }
     expect(names).toContain("search_patterns");
     expect(names).toContain("get_pattern");
+    expect(names).toContain("validate_design");
   });
 
   it.each([
@@ -163,6 +164,56 @@ describe("MCP server", () => {
     const { text } = await call("get_setup", { configModule: "cjs" });
     expect(text).toContain('require("@nucleux/tokens/preset").default');
     expect(text).toContain("pnpm add @nucleux/react");
+  });
+
+  describe("validate_design", () => {
+    const validate = async (args: Record<string, unknown>) => {
+      const r = await call("validate_design", args);
+      return { ...r, json: r.isError ? undefined : JSON.parse(r.text) };
+    };
+
+    it("passes a plan that follows the contracts", async () => {
+      const { json } = await validate({
+        patterns: ["list-page"],
+        components: [
+          { component: "PageHeader", props: { title: "Projects" } },
+          { component: "SearchInput", props: { "aria-label": "Search", placeholder: "Search" } },
+          { component: "DataTable", props: { columns: [], data: [], pageSize: 20 } },
+          { component: "Button", props: { variant: "cta", size: "md" } },
+        ],
+      });
+      expect(json.valid).toBe(true);
+      expect(json.errors).toBe(0);
+    });
+
+    it("reports invented components, bad variants, missing required and deprecated props", async () => {
+      const { json } = await validate({
+        patterns: ["kanban-board"],
+        components: [
+          { component: "EmptyState", props: {} },
+          { component: "Button", props: { variant: "outline", color: "primary" } },
+          { component: "Sheet", props: { side: "left" } },
+        ],
+      });
+      const codes = json.issues.map((i: { code: string }) => i.code);
+      expect(json.valid).toBe(false);
+      expect(codes).toEqual(
+        expect.arrayContaining(["unknown_pattern", "unknown_component", "invalid_value", "deprecated_prop", "missing_required_prop"]),
+      );
+      const bad = json.issues.find((i: { code: string }) => i.code === "invalid_value");
+      expect(bad.fix).toContain('"cta"');
+      const missing = json.issues.filter((i: { code: string }) => i.code === "missing_required_prop").map((i: { message: string }) => i.message);
+      expect(missing.join(" ")).toMatch(/"open".*"onOpenChange"/s);
+    });
+
+    it("flags pattern components the plan leaves out", async () => {
+      const { json } = await validate({ patterns: ["list-page"], components: [{ component: "PageHeader", props: { title: "x" } }] });
+      expect(json.issues.filter((i: { code: string }) => i.code === "pattern_component_missing")).toHaveLength(2);
+    });
+
+    it("errors on an empty request", async () => {
+      expect((await validate({})).isError).toBe(true);
+    });
   });
 
   it("server instructions point agents at patterns first", () => {
