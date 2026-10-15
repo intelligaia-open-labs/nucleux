@@ -150,6 +150,21 @@ describe("MCP server", () => {
     expect(body).toContain("Task: a CRM");
   });
 
+  it("get_setup covers Tailwind v3, the @nucleux content glob and the tokens CSS", async () => {
+    const { text } = await call("get_setup", { packageManager: "npm" });
+    expect(text).toContain("npm install @nucleux/react @nucleux/tokens");
+    expect(text).toContain("npm install -D tailwindcss@3 postcss autoprefixer");
+    expect(text).toContain('"./node_modules/@nucleux/*/dist/**/*.{js,cjs}"');
+    expect(text).toContain('import nucleux from "@nucleux/tokens/preset";');
+    expect(text).toContain('import "@nucleux/tokens/styles.css";');
+  });
+
+  it("get_setup gives a working CommonJS config (the preset is the default export)", async () => {
+    const { text } = await call("get_setup", { configModule: "cjs" });
+    expect(text).toContain('require("@nucleux/tokens/preset").default');
+    expect(text).toContain("pnpm add @nucleux/react");
+  });
+
   it("server instructions point agents at patterns first", () => {
     expect(client.getInstructions()).toMatch(/search_patterns first/);
   });

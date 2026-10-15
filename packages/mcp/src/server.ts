@@ -346,27 +346,68 @@ export function createServer(): McpServer {
 
   server.tool(
     "get_setup",
-    "Get install and theming setup for Nucleux. framework:'react' (default) covers the React packages (Tailwind preset + tokens CSS, peer deps). framework:'html' covers using Nucleux styling in a plain HTML project. Read this before writing code that uses @nucleux components.",
+    "Get install and theming setup for Nucleux. framework:'react' (default) covers the React packages: requirements, install commands, Tailwind v3 preset + content globs, PostCSS and the tokens CSS. framework:'html' covers using Nucleux styling in a plain HTML project. Pass the project's packageManager and whether its Tailwind config is ESM or CommonJS to get exact commands and files. Read this before writing code that uses @nucleux components.",
     {
       framework: z
         .enum(["react", "html"])
         .optional()
         .describe("Setup target: 'react' (default) or 'html' (plain HTML, no React)."),
+      packageManager: z
+        .enum(["npm", "pnpm", "yarn", "bun"])
+        .optional()
+        .describe("The project's package manager, from its lockfile (default pnpm)."),
+      configModule: z
+        .enum(["esm", "cjs"])
+        .optional()
+        .describe(
+          "Module format for tailwind.config/postcss.config: 'esm' (default; package.json has \"type\": \"module\", or .mjs/.ts configs) or 'cjs'.",
+        ),
     },
-    async ({ framework = "react" }) => {
+    async ({ framework = "react", packageManager = "pnpm", configModule = "esm" }) => {
       if (framework === "html") return text(htmlSetup);
       const s = catalog.setup;
+      const add = { npm: "npm install", pnpm: "pnpm add", yarn: "yarn add", bun: "bun add" }[packageManager];
+      const addDev = { npm: "npm install -D", pnpm: "pnpm add -D", yarn: "yarn add -D", bun: "bun add -d" }[packageManager];
+      const cjs = configModule === "cjs";
       return text(
         [
           `# Nucleux setup (${catalog.library}@${catalog.version})`,
           "",
-          `**Full kit:** \`${s.installFull}\``,
-          `**Single component:** \`${s.installSingle}\``,
+          "## Requirements",
+          ...s.requirements.map((r) => `- ${r}`),
           "",
-          "## Theme",
+          "## 1. Install",
+          "```bash",
+          `${add} @nucleux/react @nucleux/tokens`,
+          `${addDev} ${s.tailwindDev}   # skip if Tailwind v3 + PostCSS are already set up`,
+          "```",
+          `Single components instead of the umbrella: \`${add} @nucleux/<component> @nucleux/tokens\`.`,
+          "",
+          `## 2. tailwind.config.${cjs ? "cjs" : "js"}`,
+          "Merge into an existing config rather than replacing it: add the preset and the @nucleux content glob.",
+          "```js",
+          cjs ? s.tailwindConfigCjs : s.tailwindConfigEsm,
+          "```",
+          "",
+          `## 3. postcss.config.${cjs ? "cjs" : "js"}`,
+          "```js",
+          cjs ? "module.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } };" : s.postcssConfig,
+          "```",
+          "",
+          "## 4. CSS entry (e.g. src/index.css)",
+          "```css",
+          s.css,
+          "```",
+          "",
+          "## 5. App entry (e.g. src/main.tsx)",
+          "```ts",
+          'import "@nucleux/tokens/styles.css";',
+          'import "./index.css";',
+          "```",
+          "",
+          "## Notes",
           ...s.theme.map((t) => `- ${t}`),
-          "",
-          s.note,
+          `- ${s.note}`,
           "",
           "## Components Nucleux does not ship",
           "",

@@ -1,6 +1,7 @@
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import catalog from "./catalog.json";
 import { patterns } from "./patterns.js";
+import { runInit } from "./init.js";
 import { createServer } from "./server.js";
 
 async function main() {
@@ -10,6 +11,10 @@ async function main() {
   console.error(
     `nucleux-mcp ready — ${catalog.counts.components} components, ${patterns.length} patterns, ${catalog.counts.examples} examples.`,
   );
+}
+
+if (process.argv[2] === "init") {
+  process.exit(runInit(process.argv.slice(3)));
 }
 
 main().catch((err) => {

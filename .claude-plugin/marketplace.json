@@ -1,0 +1,12 @@
+{
+  "name": "nucleux-marketplace",
+  "owner": { "name": "intelligaia-open-labs", "url": "https://github.com/intelligaia-open-labs" },
+  "description": "Claude Code plugins for the Nucleux design system.",
+  "plugins": [
+    {
+      "name": "nucleux",
+      "source": "./plugins/nucleux",
+      "description": "Nucleux MCP server + nucleux-design skill: build React UI from curated patterns and exact component contracts."
+    }
+  ]
+}

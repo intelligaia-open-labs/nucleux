@@ -5,12 +5,21 @@
   "setup": {
     "installFull": "pnpm add @nucleux/react @nucleux/tokens",
     "installSingle": "pnpm add @nucleux/<component> @nucleux/tokens",
-    "theme": [
-      "Import the theme once at your app root: import \"@nucleux/tokens/styles.css\";",
-      "Add the Tailwind preset: presets: [require('@nucleux/tokens/preset')] in tailwind.config.",
-      "react and react-dom are peer dependencies (>=18)."
+    "requirements": [
+      "React and react-dom >= 18 (peer dependencies).",
+      "Tailwind CSS v3 (3.4.x) with PostCSS. The preset is a Tailwind v3 JS config; Tailwind v4 is untested."
     ],
-    "note": "Every component is also re-exported from the @nucleux/react umbrella."
+    "tailwindDev": "tailwindcss@3 postcss autoprefixer",
+    "tailwindConfigEsm": "import nucleux from \"@nucleux/tokens/preset\";\n\n/** @type {import('tailwindcss').Config} */\nexport default {\n  presets: [nucleux],\n  content: [\n    \"./index.html\",\n    \"./src/**/*.{js,ts,jsx,tsx}\",\n    // Required: Nucleux components ship Tailwind classes that your build must generate.\n    \"./node_modules/@nucleux/*/dist/**/*.{js,cjs}\",\n  ],\n};",
+    "tailwindConfigCjs": "/** @type {import('tailwindcss').Config} */\nmodule.exports = {\n  presets: [require(\"@nucleux/tokens/preset\").default],\n  content: [\"./src/**/*.{js,ts,jsx,tsx}\", \"./node_modules/@nucleux/*/dist/**/*.{js,cjs}\"],\n};",
+    "postcssConfig": "export default { plugins: { tailwindcss: {}, autoprefixer: {} } };",
+    "css": "@tailwind base;\n@tailwind components;\n@tailwind utilities;",
+    "theme": [
+      "Import the theme once at your app root, before your own CSS: import \"@nucleux/tokens/styles.css\"; (CSS variables for light and .dark, plus the base reset).",
+      "Your Tailwind build generates the component classes: the content globs must include ./node_modules/@nucleux/*/dist/**/*.{js,cjs}, or components render unstyled.",
+      "Dark mode: add class=\"dark\" to <html> (the preset sets darkMode: \"class\")."
+    ],
+    "note": "Every component is also re-exported from the @nucleux/react umbrella. Icons in the examples come from lucide-react (optional; any icon set works)."
   },
   "counts": {
     "components": 137,
