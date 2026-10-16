@@ -10,6 +10,6 @@
       "@nucleux/*": ["packages/*/src/index.tsx"]
     }
   },
-  "include": ["packages/*/src", "src/test", "vitest.config.ts", ".storybook"],
+  "include": ["packages/*/src", "packages/mcp/test", "src/test", "knowledge", "vitest.config.ts", ".storybook"],
   "exclude": ["node_modules", "**/dist"]
 }

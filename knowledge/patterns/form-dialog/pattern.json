@@ -1,0 +1,41 @@
+{
+  "id": "form-dialog",
+  "name": "Create/edit form in a dialog",
+  "status": "curated",
+  "since": "0.5.0",
+  "summary": "Dialog with a labelled form, validation on submit, Cancel + one primary action, and a success toast. One component handles create and edit.",
+  "description": "For creating or editing a record without leaving the page it belongs to (new task from a board, edit member from a team list). Up to ~6 fields; longer flows belong on their own page or in multi-step-form.",
+  "useCases": ["create item dialog", "edit item modal", "new task form", "invite user dialog", "add record", "quick edit"],
+  "whenToUse": ["A short form (≤ 6 fields) started from a list, board or detail page."],
+  "whenNotToUse": ["Long or multi-section forms: use a page or multi-step-form.", "Confirmations with no input: use AlertDialog."],
+  "keywords": ["form", "dialog", "modal", "create", "edit", "new", "add", "invite", "validation", "toast"],
+  "components": {
+    "required": ["Dialog", "DialogHeader", "DialogTitle", "DialogFooter", "Label", "Input", "Button"],
+    "optional": ["DialogDescription", "Textarea", "Select", "DatePicker", "Checkbox", "Switch", "ToastProvider", "useToast"]
+  },
+  "composition": [
+    { "component": "Dialog", "role": "controlled open/onOpenChange; className max-w-lg", "children": [
+      { "element": "form", "role": "noValidate onSubmit; wraps header, fields and footer so Enter submits", "children": [
+        { "component": "DialogHeader", "children": [ { "component": "DialogTitle", "role": "\"New task\" / \"Edit task\"" }, { "component": "DialogDescription" } ] },
+        { "element": "div", "role": "Fields, space-y-4; paired short fields in sm:grid-cols-2", "children": [
+          { "component": "Label" }, { "component": "Input" }, { "component": "Textarea" }, { "component": "Select" }, { "component": "DatePicker" }
+        ] },
+        { "component": "DialogFooter", "children": [ { "component": "Button", "role": "Cancel, secondary" }, { "component": "Button", "role": "type=submit variant=cta" } ] }
+      ] }
+    ] },
+    { "element": "ToastProvider", "role": "Once at the app root; call useToast().toast({ variant: \"success\", title }) after saving" }
+  ],
+  "layout": ["The <form> wraps DialogHeader, fields and DialogFooter so the submit button is inside it.", "Footer: Cancel then the primary action, right-aligned.", "Reset the draft after a successful save; keep it after a failure."],
+  "responsive": ["Paired fields (priority + due date) are one column on phones, two from sm.", "Dialog keeps p-4 inset from the viewport edge; avoid fixed widths larger than max-w-lg."],
+  "tokens": ["text-destructive field errors", "Button cta for submit", "Toast variant success"],
+  "accessibility": [
+    "Dialog wires DialogTitle/DialogDescription to aria-labelledby/aria-describedby: always render both.",
+    "Each field has a Label htmlFor; DatePicker takes aria-label.",
+    "Invalid fields: Input invalid + message via aria-describedby."
+  ],
+  "states": "Saving: disable the submit button. Failure: destructive Alert inside the dialog, keep input. Success: close and show a toast.",
+  "antiPatterns": ["Submit button outside the <form> (Enter does nothing).", "Closing the dialog on failure.", "Calling useToast outside ToastProvider (it throws)."],
+  "related": ["list-page", "detail-page", "task-board"],
+  "dependencies": { "npm": [ { "name": "lucide-react", "reason": "Icons in the example." } ] },
+  "example": "example.tsx"
+}

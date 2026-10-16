@@ -1,0 +1,176 @@
+{
+  "id": "app-shell",
+  "name": "Application shell",
+  "status": "curated",
+  "since": "0.5.0",
+  "summary": "Persistent left navigation, top bar with search and account, and a mobile navigation sheet around the page content.",
+  "description": "The frame every page of a multi-page web app renders inside. On large screens a NavPanel column holds the primary navigation; below the lg breakpoint it is replaced by a menu button in the GlobalNav that opens the same links in a left Sheet. Build it once and wrap every route in it.",
+  "useCases": [
+    "SaaS application layout",
+    "admin panel frame",
+    "project management app navigation",
+    "responsive sidebar navigation"
+  ],
+  "whenToUse": [
+    "The app has three or more top-level sections the user switches between.",
+    "Pages share global search, notifications or an account menu."
+  ],
+  "whenNotToUse": [
+    "Single-page tools or landing pages with no section navigation.",
+    "Chat-first agent UIs: use the agent-chat example (get_example) instead.",
+    "The project already has a working shell: reuse it and only swap inner components."
+  ],
+  "keywords": [
+    "layout",
+    "shell",
+    "sidebar",
+    "navigation",
+    "nav",
+    "top bar",
+    "header",
+    "responsive navigation",
+    "mobile menu",
+    "drawer",
+    "frame"
+  ],
+  "components": {
+    "required": [
+      "GlobalNav",
+      "NavPanel",
+      "NavSection",
+      "NavItem",
+      "Sheet",
+      "SheetHeader",
+      "SheetTitle",
+      "SheetBody",
+      "IconButton"
+    ],
+    "optional": [
+      "SearchInput",
+      "Avatar",
+      "Sidebar",
+      "SidebarItem",
+      "Menu",
+      "MenuItem"
+    ]
+  },
+  "composition": [
+    {
+      "element": "div",
+      "role": "Full-height flex row (h-screen bg-background)",
+      "children": [
+        {
+          "component": "NavPanel",
+          "role": "Desktop navigation column, hidden below lg",
+          "children": [
+            {
+              "component": "NavSection",
+              "role": "Group of links",
+              "children": [
+                {
+                  "component": "NavItem",
+                  "role": "One link per section; active marks the current route"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "element": "div",
+          "role": "Content column (flex-1 min-w-0)",
+          "children": [
+            {
+              "component": "GlobalNav",
+              "role": "Top bar",
+              "children": [
+                {
+                  "component": "IconButton",
+                  "role": "left slot: opens the navigation Sheet, visible below lg"
+                },
+                {
+                  "component": "SearchInput",
+                  "role": "center slot: global search, hidden below sm"
+                },
+                {
+                  "component": "Avatar",
+                  "role": "right slot: current user"
+                }
+              ]
+            },
+            {
+              "element": "main",
+              "role": "Scrollable page content; each route renders here"
+            }
+          ]
+        },
+        {
+          "component": "Sheet",
+          "role": "Mobile navigation drawer (side=left)",
+          "children": [
+            {
+              "component": "SheetHeader",
+              "children": [
+                {
+                  "component": "SheetTitle"
+                }
+              ]
+            },
+            {
+              "component": "SheetBody",
+              "role": "Same NavSection/NavItem list as the desktop column"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "layout": [
+    "Root is a full-height flex row; only <main> scrolls (min-h-0 flex-1 overflow-y-auto).",
+    "NavPanel is a fixed 16rem (w-64) column; the content column must be min-w-0 so tables can scroll inside it.",
+    "Render one nav list component and reuse it in both NavPanel and Sheet so links never diverge.",
+    "Pages inside <main> own their padding and max width (see list-page, dashboard-overview)."
+  ],
+  "responsive": [
+    "lg and up: NavPanel visible (hidden lg:flex); menu IconButton hidden (lg:hidden).",
+    "Below lg: NavPanel hidden; IconButton opens the Sheet; close the Sheet after navigating.",
+    "Below sm: hide the center SearchInput (containerClassName=\"hidden sm:flex\") or move search into the page.",
+    "GlobalNav default horizontal padding is px-6; pass className=\"px-4 sm:px-6\" on narrow screens."
+  ],
+  "tokens": [
+    "bg-background",
+    "text-foreground",
+    "border-border",
+    "bg-muted/30 (NavPanel)",
+    "bg-accent (active NavItem)"
+  ],
+  "accessibility": [
+    "Give the navigation an accessible name (aria-label=\"Primary\") in both places it renders.",
+    "IconButton requires aria-label (\"Open navigation\", \"Notifications\").",
+    "NavItem sets aria-current=\"page\" when active; drive active from the router, not local state.",
+    "Sheet is role=dialog aria-modal with its title wired to aria-labelledby; always render SheetTitle."
+  ],
+  "routing": "NavItem renders an <a>. Keep href for real URLs and call preventDefault + your router's navigate in onClick (React Router, TanStack Router); in Next.js wrap with next/link's legacyBehavior or call router.push.",
+  "antiPatterns": [
+    "Hand-rolling a sidebar <aside> with custom link styles instead of NavPanel/NavItem.",
+    "Rendering the shell inside each page instead of once around the routes.",
+    "Two separately maintained link lists for desktop and mobile.",
+    "Hiding navigation on mobile with no way to reach it."
+  ],
+  "related": [
+    "dashboard-overview",
+    "list-page",
+    "settings-page",
+    "page-states",
+    "detail-page",
+    "task-board"
+  ],
+  "dependencies": {
+    "npm": [
+      {
+        "name": "lucide-react",
+        "reason": "Icons in the example. Any icon set works."
+      }
+    ]
+  },
+  "example": "example.tsx"
+}

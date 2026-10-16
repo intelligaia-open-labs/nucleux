@@ -1,0 +1,48 @@
+{
+  "id": "detail-page",
+  "name": "Record detail page",
+  "status": "curated",
+  "since": "0.5.0",
+  "summary": "Breadcrumb back to the list, header with status badge and actions, tabbed sections of facts in cards, and a confirmation dialog before delete.",
+  "description": "The page for one record (a project, user, order, booking). It answers \"what is this and what can I do with it\": identity and status in the header, the record's actions next to the title, details grouped into tabs, and destructive actions guarded by AlertDialog.",
+  "useCases": ["project detail page", "user profile page", "order detail", "booking detail", "record view", "item page"],
+  "whenToUse": ["Users open one record from a list to see everything about it and act on it."],
+  "whenNotToUse": ["Quick edits of a few fields: use form-dialog from the list page.", "Records with one field group: skip Tabs and show the cards directly."],
+  "keywords": ["detail", "details", "record", "view", "profile", "item", "overview", "delete confirmation", "tabs", "breadcrumb"],
+  "components": {
+    "required": ["Breadcrumb", "BreadcrumbItem", "BreadcrumbLink", "BreadcrumbPage", "BreadcrumbSeparator", "PageHeader", "Button", "CardContainer", "CardContent", "AlertDialog"],
+    "optional": ["Badge", "Tabs", "TabsList", "TabsTrigger", "TabsContent", "CardHeader", "CardTitle", "Progress", "Avatar", "Table"]
+  },
+  "composition": [
+    { "element": "div", "role": "Page container (max-w-5xl, responsive padding)", "children": [
+      { "component": "Breadcrumb", "children": [ { "component": "BreadcrumbItem", "children": [ { "component": "BreadcrumbLink", "role": "the collection" } ] }, { "component": "BreadcrumbSeparator" }, { "component": "BreadcrumbItem", "children": [ { "component": "BreadcrumbPage", "role": "this record" } ] } ] },
+      { "component": "PageHeader", "role": "title = record name; badges = status; actions = Edit (secondary) + Delete (destructive)" },
+      { "component": "Tabs", "children": [
+        { "component": "TabsList", "children": [ { "component": "TabsTrigger" } ] },
+        { "component": "TabsContent", "role": "Overview: grid lg:grid-cols-3", "children": [
+          { "component": "CardContainer", "role": "Facts as a <dl>, 2 columns from sm", "children": [ { "component": "CardHeader", "children": [ { "component": "CardTitle" } ] }, { "component": "CardContent" } ] },
+          { "component": "CardContainer", "role": "Key metric", "children": [ { "component": "CardContent", "children": [ { "component": "Progress" } ] } ] }
+        ] },
+        { "component": "TabsContent", "role": "Related records (members, tasks…)", "children": [ { "component": "CardContainer", "children": [ { "component": "CardContent", "children": [ { "component": "Avatar" }, { "component": "Badge" } ] } ] } ] }
+      ] },
+      { "component": "AlertDialog", "role": "destructive confirmation; names the record and the consequence" }
+    ] }
+  ],
+  "layout": [
+    "Facts are a description list (dl/dt/dd), not a table and not loose paragraphs.",
+    "Record actions live in PageHeader actions: secondary for edit, destructive for delete; at most one cta.",
+    "Tabs only when there are two or more sections; the first tab is the overview."
+  ],
+  "responsive": ["PageHeader wraps actions under the title on narrow screens.", "Overview grid stacks below lg; facts go from 1 to 2 columns at sm."],
+  "tokens": ["text-muted-foreground labels (dt)", "Badge variants for status", "Button destructive for delete"],
+  "accessibility": [
+    "Breadcrumb's current item is BreadcrumbPage (aria-current) and not a link.",
+    "CardTitle renders h3; under the PageHeader h1 pass aria-level={2}.",
+    "AlertDialog title names the record (\"Delete \\\"Website redesign\\\"?\") and the description states what is lost; the confirm label repeats the verb."
+  ],
+  "states": "Loading: page-states skeleton in the content area, keeping breadcrumb and title placeholders. Not found: ErrorState variant=empty with a link back to the list.",
+  "antiPatterns": ["Delete without confirmation.", "window.confirm for confirmations.", "A generic \"Are you sure?\" that does not name the record."],
+  "related": ["list-page", "form-dialog", "page-states", "app-shell"],
+  "dependencies": { "npm": [ { "name": "lucide-react", "reason": "Icons in the example." } ] },
+  "example": "example.tsx"
+}

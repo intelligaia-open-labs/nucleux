@@ -1671,6 +1671,31 @@ describe("interaction: components behave", () => {
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
+  it("DatePicker opens downward by default and upward when there is no room below", async () => {
+    const rect = (top: number, height: number, left = 20, width = 280) =>
+      ({ top, bottom: top + height, left, right: left + width, height, width, x: left, y: top, toJSON: () => ({}) }) as DOMRect;
+    const spy = vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (this: HTMLElement) {
+      // trigger root at the given top; the calendar popup is 330px tall
+      return this.getAttribute("role") === "dialog" ? rect(0, 330) : rect(Number(this.dataset.top ?? 0), 36);
+    });
+    const { unmount } = render(
+      <div>
+        <DatePicker aria-label="Due" />
+      </div>,
+    );
+    const root = () => screen.getByRole("button", { name: "Due" }).parentElement!;
+    root().dataset.top = "100";
+    await userEvent.click(screen.getByRole("button", { name: "Due" }));
+    expect(screen.getByRole("dialog", { name: "Choose date" })).toHaveClass("top-full");
+
+    await userEvent.click(screen.getByRole("button", { name: "Due" }));
+    root().dataset.top = String(window.innerHeight - 50);
+    await userEvent.click(screen.getByRole("button", { name: "Due" }));
+    expect(screen.getByRole("dialog", { name: "Choose date" })).toHaveClass("bottom-full");
+    unmount();
+    spy.mockRestore();
+  });
+
   it("Md3DatePicker opens a calendar dialog on click", async () => {
     render(<Md3DatePicker label="Date" />);
     await userEvent.click(screen.getByRole("button", { name: "Date" }));
