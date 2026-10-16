@@ -34,61 +34,95 @@ pnpm build                                   # all packages + MCP server
 node evals/run.mjs --template ../pm-template --out ../eval-runs --requests project-management --budget 15
 ```
 
-Each run costs real API spend (about $3–4 per arm for the project-management
-request with Claude Opus 5.5).
+Each run costs real API spend: $1.80–3.80 per run with Claude Opus 5.5 (about
+$40 for all eight requests in both arms), 5–15 minutes each.
 
-## Results: project management app, 2026-10-15
+## Results: eight requests, 2026-10-15/16
 
-One request (`project-management`), one run per arm, Claude Code 2.1.300 with
-`claude-opus-5-5`, fresh Vite 6 + React 19 + TypeScript app, Nucleux 0.5.0 from
-local tarballs (Tailwind not set up; each agent had to do it). Raw data:
-[`results/2026-10-15-project-management/`](results/2026-10-15-project-management/).
+All eight requests, one run per arm (16 runs), Claude Code 2.1.300 with
+`claude-opus-5-5`, fresh Vite 6 + React 19 + TypeScript apps, Nucleux 0.5.0
+from local tarballs (Tailwind not set up; each agent had to do it). The
+`project-management` pair ran first with 5 curated patterns; the other seven
+ran with 11 patterns and `validate_design`. Every app was rescored afterwards
+with the same scorer and catalog. Raw data: [`results/2026-10-16-eight-requests/scores.json`](results/2026-10-16-eight-requests/scores.json)
+(per run: metrics, MCP calls, the agent's own summary).
 
-| | nucleux | baseline |
+| Totals over 8 apps | nucleux | baseline |
 | --- | --- | --- |
-| `npm run build` | passes | passes |
-| `npm run lint` | clean | 0 errors, 4 warnings |
-| Distinct `@nucleux` exports imported | 71 | 79 |
-| Imports not in the catalog (invented) | 0 | 0 |
-| Raw `<button>` / `<input>` / `<select>` / `<table>` / `<dialog>` | 3 / 0 / 0 / 0 / 0 | 1 / 0 / 0 / 0 / 0 |
-| Hex colors in source (`index.css`/`*.tsx`) | 0 | 8 (custom chart palette) |
-| Material Design 3 (`Md3*`) components mixed into the default theme | 0 | 5 |
-| Loading skeletons (`<Skeleton>`) | 6 | 0 |
-| Primary CTA variant (`variant="cta"`) used for the page action | 8 | 0 |
-| `aria-label`s | 41 | 29 |
-| Horizontal overflow at 390px (6 routes) | none | none |
-| Turns / wall time / cost | 92 / 9.4 min / $3.21 | 118 / 15.3 min / $3.76 |
-| MCP calls | `search_patterns` 1, `get_pattern` 5, `get_component` 26, `get_setup` 1, other 2 | — |
+| `npm run build` passes | 8 / 8 | 8 / 8 |
+| Imports of names not exported by Nucleux | 0 | 0 |
+| Distinct Nucleux exports per app (mean) | 50.1 | 55.5 |
+| Hand-rolled controls Nucleux ships (`<button>`, `<input>`, `<table>`…) | 4, in 2 apps | 11, in 5 apps |
+| Tailwind palette colors instead of tokens | 0 | 16, in 1 app |
+| Hex colors (excluding the Vite template's unused `App.css`) | 0 | 9, in 1 app |
+| Material Design 3 components mixed into the default theme | 0 apps | 1 app |
+| Apps with loading skeletons | 8 | 1 |
+| Apps with empty/error states (`ErrorState`) | 8 | 6 |
+| Horizontal overflow on the home screen at 390px | 0 apps | 0 apps |
+| Responsive class prefixes (`sm:`…`xl:`) | 358 | 378 |
+| Wall time / cost / turns | 59.0 min / $19.57 / 639 | 70.0 min / $20.37 / 679 |
+| Faster / cheaper on a request | 5 of 8 / 4 of 8 | 3 of 8 / 4 of 8 |
+| MCP calls | 270 (39 `get_pattern`; `validate_design` in all 7 runs that had it) | — |
 
-What the numbers do and don't show:
+Per request:
 
-- **Both agents built a complete, working, responsive app.** With Opus 5.5,
-  the baseline read the installed `.d.ts` files and invented no API. It also
-  found the Tailwind `content` requirement by itself. On this request, "builds"
-  and "uses real components" are not where the tooling made a difference.
-- **The differences are design-system consistency and efficiency.** With the
-  tooling, the agent used the curated patterns' structure (app shell with
-  NavPanel + Sheet, list pages, KPI cards, settings tabs, page states), one
-  `cta` primary action per page, token-only colors including charts, and
-  skeleton loading states. The baseline mixed the separate Material Design 3
-  component line into the default theme (an MD3 bottom navigation bar),
-  defined its own hex chart palette, and has no loading skeletons. The tooling
-  arm finished in 38% less wall time with 22% fewer turns and 15% lower cost.
-- **This is one run per arm on one request.** Agent runs vary; treat this as
-  a working end-to-end demonstration and a smoke test of the harness, not
-  evidence of a general quality improvement. The remaining seven requests and
-  repeated runs are needed before claiming one.
+| Request | Arm | Imports | Hand-rolled | Off-token colors | Skeleton / ErrorState | Min | Cost |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| project-management | nucleux | 71 | 3 | 0 | 6 / 2 | 9.4 | $3.21 |
+| | baseline | 79 | 1 | 9 hex, 2 MD3 components | 0 / 4 | 15.3 | $3.76 |
+| saas-dashboard | nucleux | 52 | 0 | 0 | 4 / 2 | 5.1 | $1.99 |
+| | baseline | 56 | 2 | 0 | 0 / 0 | 5.6 | $1.82 |
+| ecommerce-storefront | nucleux | 43 | 0 | 0 | 13 / 8 | 9.3 | $3.04 |
+| | baseline | 52 | 0 | 0 | 0 / 6 | 8.5 | $3.05 |
+| booking-app | nucleux | 47 | 0 | 0 | 9 / 6 | 6.0 | $2.31 |
+| | baseline | 37 | 0 | 16 palette | 0 / 2 | 5.4 | $1.85 |
+| admin-panel | nucleux | 53 | 0 | 0 | 10 / 6 | 7.0 | $2.32 |
+| | baseline | 53 | 2 | 0 | 0 / 3 | 9.1 | $2.70 |
+| team-management | nucleux | 47 | 0 | 0 | 13 / 8 | 6.5 | $2.45 |
+| | baseline | 58 | 0 | 0 | 0 / 6 | 9.2 | $2.30 |
+| settings-profile | nucleux | 49 | 1 | 0 | 4 / 5 | 9.8 | $2.44 |
+| | baseline | 50 | 2 | 0 | 0 / 0 | 7.3 | $2.09 |
+| data-heavy | nucleux | 39 | 0 | 0 | 13 / 4 | 5.9 | $1.81 |
+| | baseline | 59 | 4 | 0 | 16 / 5 | 9.6 | $2.80 |
 
-Screenshots (desktop dashboard, phone):
+### What this shows
+
+- **Correctness is not where the tooling helps with this model.** Both arms
+  built all eight apps, every build passed, and neither invented a Nucleux
+  API. Claude Opus 5.5 reads the installed `.d.ts` files well enough on its
+  own, and the baseline even discovered the Tailwind `content` requirement
+  itself.
+- **The tooling consistently changes design-system adherence.** With it,
+  every app handled loading (8/8 vs 1/8 with skeletons) and empty/error states
+  (8/8 vs 6/8), stayed on tokens (no palette or hex colors, no MD3 components
+  mixed in; the baseline did one or the other in 2 apps), and hand-rolled
+  fewer controls Nucleux already ships (4 vs 11). These follow directly from
+  the pattern and workflow rules, and they held in every run.
+- **The baseline used slightly more of the library and built richer pages
+  in places.** It averaged more distinct components (55.5 vs 50.1) and, for
+  example, gave the logistics console a column picker and colored KPI icons
+  (screenshots below). The tooling arm's apps all share the `app-shell`
+  layout: consistent, but less varied from product to product.
+- **Speed and cost are a wash.** 16% less total wall time and 4% lower total
+  cost with the tooling, but it was faster on only 5 of 8 requests and
+  cheaper on 4 of 8. With one run per cell, that is within run-to-run noise.
+- **Limits.** One run per request and arm, one model, mechanical metrics
+  (counts, builds, overflow) plus spot-checked screenshots, no human design
+  rating. Repeated runs and a blind design review would be needed to claim a
+  general quality improvement; what is supported is the adherence effect above.
+
+Booking app (left: nucleux, right: baseline). The baseline's pastel card
+headers are raw Tailwind palette gradients:
 
 | nucleux | baseline |
 | --- | --- |
-| ![nucleux dashboard](results/2026-10-15-project-management/nucleux-home-1280.png) | ![baseline dashboard](results/2026-10-15-project-management/baseline-home-1280.png) |
-| ![nucleux tasks, 390px](results/2026-10-15-project-management/nucleux-tasks-390.png) | ![baseline dashboard, 390px](results/2026-10-15-project-management/baseline-home-390.png) |
+| ![](results/2026-10-16-eight-requests/booking-app--nucleux-1280.png) | ![](results/2026-10-16-eight-requests/booking-app--baseline-1280.png) |
+| ![](results/2026-10-16-eight-requests/data-heavy--nucleux-1280.png) | ![](results/2026-10-16-eight-requests/data-heavy--baseline-1280.png) |
 
-Gaps the tooling arm reported (inputs for new patterns/components): no
-task-card/kanban board, no menu-button (popover-triggered menu) component, and
-no router integration guidance beyond `NavItem` + `preventDefault`.
+The first pair's write-up and screenshots are in
+[`results/2026-10-15-project-management/`](results/2026-10-15-project-management/).
+Gaps that run's agent reported (task board, menu button, router guidance)
+became the `task-board` pattern and the `app-shell` routing notes.
 
 ## Codex
 

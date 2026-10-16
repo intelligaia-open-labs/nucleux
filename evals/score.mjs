@@ -8,6 +8,8 @@
 //   offTokenColors   hex colors and Tailwind palette colors (bg-blue-500…) instead of
 //                    semantic tokens
 //   responsive       sm:/md:/lg:/xl: class prefixes
+//   mixedSystems     Md3* components imported into an app on the default theme
+//   states           <Skeleton>, <ErrorState>, DataTable emptyMessage uses
 //   mcp              nucleux MCP tool calls by name, from the session transcript
 import { execFileSync, spawnSync } from "node:child_process";
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
@@ -83,6 +85,8 @@ const result = {
     palette: count(/\b(?:bg|text|border|ring|fill|stroke|from|to|via)-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d{2,3}\b/g),
   },
   responsive: count(/\b(?:sm|md|lg|xl):[a-z-[]/g),
+  mixedSystems: [...imported].filter((n) => /^Md3/.test(n)).length,
+  states: { skeleton: count(/<Skeleton[\s>/]/g), errorState: count(/<ErrorState[\s>/]/g), emptyMessage: count(/emptyMessage=/g) },
   mcp,
 };
 console.log(JSON.stringify(result, null, 2));
