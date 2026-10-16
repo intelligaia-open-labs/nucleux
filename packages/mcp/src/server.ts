@@ -54,6 +54,10 @@ for (const p of catalog.packages) {
   byName.set(p.package.toLowerCase(), p);
   for (const c of p.components) byName.set(c.toLowerCase(), p);
 }
+// Then every other export (cn, hooks, sub-parts, types), without overriding the names above.
+for (const p of catalog.packages) {
+  for (const e of p.exports) if (!byName.has(e.toLowerCase())) byName.set(e.toLowerCase(), p);
+}
 
 /** Resolve a component/package name (fuzzy) to its catalog entry. */
 function resolve(query: string): Pkg | undefined {

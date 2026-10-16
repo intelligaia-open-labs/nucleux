@@ -51,10 +51,39 @@ function leadDescription(src) {
   return "";
 }
 
+/** Resolve a relative module specifier to a .ts/.tsx file next to `fromFile`. */
+function resolveLocal(fromFile, spec) {
+  for (const ext of ["", ".tsx", ".ts", "/index.tsx", "/index.ts"]) {
+    const p = join(dirname(fromFile), spec + ext);
+    if (existsSync(p) && statSync(p).isFile()) return p;
+  }
+  return undefined;
+}
+
+/**
+ * The package entry's source, with local re-exports inlined: `export * from "./x"`
+ * is replaced by x's source, so barrels such as @nucleux/utils (`cn`, shared
+ * types) expose what they re-export. Named local re-exports are rewritten to a
+ * plain `export { … }` list after inlining the file.
+ */
+function readSource(file, seen = new Set()) {
+  if (seen.has(file)) return "";
+  seen.add(file);
+  return readFileSync(file, "utf8").replace(
+    /export\s+(\*|\{[^}]*\})\s+from\s+["'](\.{1,2}\/[^"']+)["'];?/g,
+    (stmt, what, spec) => {
+      const target = resolveLocal(file, spec);
+      if (!target) return stmt;
+      const inlined = readSource(target, seen).replace(/^import\s[^;]*;?$/gm, "");
+      return what === "*" ? inlined : `${inlined}\nexport ${what};`;
+    },
+  );
+}
+
 function readEntry(dir) {
   for (const f of ["src/index.tsx", "src/index.ts"]) {
     const p = join(dir, f);
-    if (existsSync(p)) return readFileSync(p, "utf8");
+    if (existsSync(p)) return readSource(p);
   }
   return "";
 }
@@ -87,7 +116,11 @@ for (const name of readdirSync(pkgsDir)) {
     keywords: pkg.keywords ?? [],
     exports: exportsList,
     components,
-    import: components.length ? `import { ${components.slice(0, 4).join(", ")} } from "${pkg.name}";` : "",
+    // Utilities/hooks have no PascalCase components; show their value exports instead.
+    import: (() => {
+      const shown = components.length ? components : exportsList.filter((n) => !typeOnly.has(n));
+      return shown.length ? `import { ${shown.slice(0, 4).join(", ")} } from "${pkg.name}";` : "";
+    })(),
     installSingle: `pnpm add ${pkg.name}${NON_COMPONENT.has(name) ? "" : " @nucleux/tokens"}`,
     props: extractProps(src),
     readme: readme.trim(),

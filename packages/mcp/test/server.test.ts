@@ -57,6 +57,14 @@ describe("catalog metadata", () => {
     expect(sheet.members.filter((m) => m.required).map((m) => m.name)).toEqual(["open", "onOpenChange", "children"]);
   });
 
+  it("follows local re-exports, so barrel packages list what they export", () => {
+    const utils = catalog.packages.find((p) => p.name === "utils")!;
+    expect(utils.exports).toEqual(expect.arrayContaining(["cn", "MessageRole"]));
+    expect(utils.import).toBe('import { cn } from "@nucleux/utils";');
+    const hooks = catalog.packages.find((p) => p.name === "hooks")!;
+    expect(hooks.exports).toEqual(expect.arrayContaining(["useAutoScroll", "useCopyToClipboard"]));
+  });
+
   it("every pattern component resolves to a catalog export", () => {
     for (const p of knowledge.patterns) {
       for (const c of [...p.components.required, ...p.components.optional]) {
@@ -143,6 +151,11 @@ describe("MCP server", () => {
     expect(text).toContain('`variant?`: `"primary" | "cta" | "secondary" | "ghost" | "destructive"`');
     expect(text).toMatch(/`color\?`.*\*\*deprecated\*\*/);
     expect(text).toMatch(/Used in patterns:.*list-page/);
+  });
+
+  it("get_component resolves utility exports like cn", async () => {
+    const { text } = await call("get_component", { name: "cn" });
+    expect(text).toContain('import { cn } from "@nucleux/utils"');
   });
 
   it("get_component still answers a near-miss with suggestions", async () => {

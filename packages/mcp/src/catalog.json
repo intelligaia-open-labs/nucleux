@@ -3567,9 +3567,14 @@
         "tailwind",
         "hooks"
       ],
-      "exports": [],
+      "exports": [
+        "useAutoScroll",
+        "useCopyToClipboard",
+        "UseAutoScrollOptions",
+        "UseCopyToClipboardOptions"
+      ],
       "components": [],
-      "import": "",
+      "import": "import { useAutoScroll, useCopyToClipboard } from \"@nucleux/hooks\";",
       "installSingle": "pnpm add @nucleux/hooks",
       "props": [],
       "readme": "# @nucleux/hooks\n\nReact hooks for Nucleux (useAutoScroll, useCopyToClipboard) — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/hooks @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\n\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
@@ -11172,9 +11177,15 @@
         "tailwind",
         "utils"
       ],
-      "exports": [],
+      "exports": [
+        "cn",
+        "MessageRole",
+        "ToolCallStatus",
+        "ToolCallData",
+        "ChatMessage"
+      ],
       "components": [],
-      "import": "",
+      "import": "import { cn } from \"@nucleux/utils\";",
       "installSingle": "pnpm add @nucleux/utils",
       "props": [],
       "readme": "# @nucleux/utils\n\ncn() class merger + shared types for Nucleux — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/utils @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\n\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
