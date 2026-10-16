@@ -4,6 +4,171 @@
   "workflow": "# Building UI with Nucleux\n\nNucleux (`@nucleux/react`) is a React + Tailwind design system. The `nucleux` MCP\nserver holds its curated page patterns and exact component contracts. Work\ndesign-first: find the pattern, read the contracts, then write code.\n\n## Rules\n\n1. Inspect the project before changing files. Keep its framework, router,\n   state management, business logic and file layout.\n2. Look for a Nucleux pattern (`search_patterns`) before laying out any page.\n   Prefer a whole pattern over assembling unrelated components.\n3. Read the contract (`get_component`) before using a component. Use only the\n   imports, props and variant values it lists. Never guess a Nucleux export,\n   prop or variant. If it is not in the catalog, it does not exist.\n4. Do not rebuild something Nucleux already ships (navigation, tables, cards,\n   dialogs, sheets, form controls, empty/error states). If you must, say why\n   in your summary.\n5. Style with the semantic token classes (`bg-background`, `text-foreground`,\n   `text-muted-foreground`, `border-border`, `bg-primary`, `text-destructive`…).\n   No hex colors, no arbitrary color values. Use the same variant for the same\n   meaning everywhere (one `cta` primary action per page, `destructive` only\n   for destructive actions).\n6. Every page must work from 360px wide: follow each pattern's responsive rules.\n7. Accessibility is part of done: labels for every control, `aria-label` on\n   icon-only buttons, visible focus, status not conveyed by color alone.\n8. Every data view handles loading, empty and error (the `page-states` pattern).\n9. When Nucleux has no pattern or component for a need, build it from Nucleux\n   primitives (or the ShadCN equivalent the tools name), keep it on Nucleux\n   tokens, and report the gap. Never present an invented component as Nucleux.\n10. Nucleux is not mandatory. If the project already uses another component\n    system and the user did not ask to switch, extend that system and say so.\n\n## Workflow\n\n**A. Inspect the project.** Find the framework (Vite, Next.js, Remix…), package\nmanager (lockfile), TypeScript, Tailwind version and config, router, existing\ncomponent system, and any installed `@nucleux/*` packages. If Nucleux is not set\nup, call `get_setup` and follow it exactly.\n\n**B. Analyse the request.** List the pages, the main user journeys, the key\ninteractions on each page, and what matters most on each screen. Ask only about\nambiguities that change the architecture; pick sensible defaults otherwise.\n\n**C. Discover.** For each page call `search_patterns` with what the page is for,\nthen `get_pattern` for the best match (`app-shell` for the frame, plus one\npattern per page). Call `get_component` for every component you will use that\nyou have not read in this session. Use `search_components` for needs inside a\npage that no pattern covers.\n\n**D. Plan.** Write a short plan: shared layout, then each route →\npattern(s) → components → app-specific pieces you will write → states. Mark\nanything Nucleux does not cover. Check the plan with `validate_design` (pattern\nids plus the components and props you intend to use) and fix every error.\n\n**E. Implement.** Build the shared shell once and wrap every route in it.\nStart each page from its pattern's example, replace the sample data with the\napp's data model, and keep app-specific components (a TaskCard bound to your\ndata) in the app, composed from Nucleux parts.\n\n**F. Validate.** Run the project's type check, lint, tests and production build;\nfix every error. Re-check each page against its pattern's responsive and\naccessibility rules.\n\n**G. Report.** Summarise the pages built, the patterns and components used per\npage, design decisions, the checks you ran and their results, anything you built\ncustom and why, and the gaps or open issues.",
   "patterns": [
     {
+      "id": "analytics-charts",
+      "name": "Analytics with charts",
+      "status": "curated",
+      "since": "0.5.0",
+      "summary": "Range filter in the header and a responsive grid of chart cards built with ChartContainer (Recharts), token colors, tooltip, legend and a screen-reader summary.",
+      "description": "Trend and breakdown charts for an analytics page or a dashboard section. ChartContainer maps each series in a ChartConfig to a --color-<key> CSS variable, so series colors come from Nucleux tokens and switch with the theme.",
+      "useCases": [
+        "analytics page",
+        "charts",
+        "trends over time",
+        "reporting dashboard",
+        "metrics charts",
+        "usage analytics"
+      ],
+      "whenToUse": [
+        "Showing change over time or comparisons across categories."
+      ],
+      "whenNotToUse": [
+        "A few headline numbers: use MetricCard tiles from dashboard-overview.",
+        "Exact values users need to read or export: use a table (list-page)."
+      ],
+      "keywords": [
+        "chart",
+        "charts",
+        "graph",
+        "analytics",
+        "trend",
+        "line chart",
+        "bar chart",
+        "reporting",
+        "visualization",
+        "recharts",
+        "metrics"
+      ],
+      "components": {
+        "required": [
+          "ChartContainer",
+          "CardContainer",
+          "CardContent",
+          "CardHeader",
+          "CardTitle"
+        ],
+        "optional": [
+          "ChartTooltip",
+          "ChartTooltipContent",
+          "ChartLegend",
+          "ChartLegendContent",
+          "CardDescription",
+          "PageHeader",
+          "Select"
+        ]
+      },
+      "composition": [
+        {
+          "element": "div",
+          "role": "Page container (max-w-6xl)",
+          "children": [
+            {
+              "component": "PageHeader",
+              "role": "actions slot holds the range Select"
+            },
+            {
+              "element": "div",
+              "role": "grid lg:grid-cols-2",
+              "children": [
+                {
+                  "component": "CardContainer",
+                  "role": "One chart per card",
+                  "children": [
+                    {
+                      "component": "CardHeader",
+                      "children": [
+                        {
+                          "component": "CardTitle",
+                          "role": "what it measures"
+                        },
+                        {
+                          "component": "CardDescription",
+                          "role": "unit and range"
+                        }
+                      ]
+                    },
+                    {
+                      "component": "CardContent",
+                      "children": [
+                        {
+                          "element": "p",
+                          "role": "sr-only text summary of the chart"
+                        },
+                        {
+                          "component": "ChartContainer",
+                          "role": "config + one Recharts chart (LineChart, BarChart…), aria-hidden",
+                          "children": [
+                            {
+                              "component": "ChartTooltip",
+                              "children": [
+                                {
+                                  "component": "ChartTooltipContent"
+                                }
+                              ]
+                            },
+                            {
+                              "component": "ChartLegend",
+                              "children": [
+                                {
+                                  "component": "ChartLegendContent"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "layout": [
+        "One chart per card with a title that says what it measures.",
+        "Give ChartContainer an aspect ratio (aspect-[16/9] w-full) so it sizes responsively.",
+        "Series fill/stroke use var(--color-<key>) from the ChartConfig."
+      ],
+      "responsive": [
+        "Cards stack below lg, two columns from lg.",
+        "Fewer x-axis ticks on narrow cards: keep labels short (\"Oct 5\")."
+      ],
+      "tokens": [
+        "Series colors: hsl(var(--nx-info)), hsl(var(--nx-success)), hsl(var(--nx-brand)), hsl(var(--nx-warning)), hsl(var(--nx-destructive))",
+        "No hex chart palettes"
+      ],
+      "accessibility": [
+        "Charts are visual only: add an sr-only text summary and mark ChartContainer aria-hidden, or offer a table view.",
+        "Don't rely on color alone: use the legend and distinct chart types or dash patterns when series are many."
+      ],
+      "states": "Loading: Skeleton at the chart's aspect ratio inside the card. No data: ErrorState variant=empty inside the card.",
+      "antiPatterns": [
+        "Hex or Tailwind palette colors for series.",
+        "Charts without titles or units.",
+        "Importing Recharts' Tooltip/Legend instead of ChartTooltip/ChartLegend with the Nucleux content components."
+      ],
+      "related": [
+        "dashboard-overview",
+        "page-states"
+      ],
+      "dependencies": {
+        "npm": [
+          {
+            "name": "recharts",
+            "reason": "Chart primitives (LineChart, BarChart, XAxis…) rendered inside ChartContainer. Install the version @nucleux/chart depends on (^2.15)."
+          }
+        ]
+      },
+      "example": "example.tsx",
+      "packages": [
+        "@nucleux/card",
+        "@nucleux/chart",
+        "@nucleux/page-header",
+        "@nucleux/select"
+      ],
+      "exampleSource": "import { useState } from \"react\";\nimport { Bar, BarChart, CartesianGrid, Line, LineChart, XAxis, YAxis } from \"recharts\";\nimport {\n  CardContainer,\n  CardContent,\n  CardDescription,\n  CardHeader,\n  CardTitle,\n  ChartContainer,\n  ChartLegend,\n  ChartLegendContent,\n  ChartTooltip,\n  ChartTooltipContent,\n  PageHeader,\n  Select,\n  type ChartConfig,\n} from \"@nucleux/react\";\n\nconst WEEKS = [\"Aug 24\", \"Aug 31\", \"Sep 7\", \"Sep 14\", \"Sep 21\", \"Sep 28\", \"Oct 5\", \"Oct 12\"];\nconst throughput = WEEKS.map((week, i) => ({ week, created: [9, 7, 11, 8, 12, 10, 9, 8][i], completed: [6, 8, 9, 10, 9, 13, 12, 10][i] }));\nconst workload = [\n  { member: \"Dana\", open: 4 },\n  { member: \"Luis\", open: 3 },\n  { member: \"Mei\", open: 5 },\n  { member: \"Priya\", open: 2 },\n];\n\n// Series colors are Nucleux tokens; ChartContainer exposes each as var(--color-<key>).\nconst throughputConfig: ChartConfig = {\n  created: { label: \"Created\", color: \"hsl(var(--nx-info))\" },\n  completed: { label: \"Completed\", color: \"hsl(var(--nx-success))\" },\n};\nconst workloadConfig: ChartConfig = {\n  open: { label: \"Open tasks\", color: \"hsl(var(--nx-brand))\" },\n};\n\n/** One chart per card: title says what it measures, description gives the unit/range. */\nfunction ChartCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {\n  return (\n    <CardContainer>\n      <CardHeader className=\"flex-col items-start gap-1\">\n        <CardTitle aria-level={2}>{title}</CardTitle>\n        <CardDescription>{description}</CardDescription>\n      </CardHeader>\n      <CardContent>{children}</CardContent>\n    </CardContainer>\n  );\n}\n\n/**\n * Analytics page: a range filter, then a responsive grid of chart cards.\n * Charts use ChartContainer (Recharts underneath) with token colors, a shared\n * tooltip and legend, and a text summary for screen readers.\n */\nexport default function AnalyticsChartsExample() {\n  const [range, setRange] = useState(\"8\");\n  const rows = throughput.slice(-Number(range));\n  const done = rows.reduce((s, r) => s + r.completed, 0);\n\n  return (\n    <div className=\"mx-auto flex max-w-6xl flex-col gap-6 p-4 sm:p-6 lg:p-8\">\n      <PageHeader\n        title=\"Analytics\"\n        description=\"Throughput and workload across all projects.\"\n        actions={\n          <Select aria-label=\"Time range\" value={range} onChange={(e) => setRange(e.target.value)} containerClassName=\"w-40\">\n            <option value=\"4\">Last 4 weeks</option>\n            <option value=\"8\">Last 8 weeks</option>\n          </Select>\n        }\n      />\n\n      <div className=\"grid gap-4 lg:grid-cols-2\">\n        <ChartCard title=\"Weekly throughput\" description={`Tasks created vs completed, last ${range} weeks`}>\n          <p className=\"sr-only\">\n            {done} tasks completed in the last {range} weeks; most in week of{\" \"}\n            {rows.reduce((a, b) => (b.completed > a.completed ? b : a)).week}.\n          </p>\n          <ChartContainer config={throughputConfig} className=\"aspect-[16/9] w-full\" aria-hidden>\n            <LineChart data={rows} margin={{ left: 0, right: 8 }}>\n              <CartesianGrid vertical={false} />\n              <XAxis dataKey=\"week\" tickLine={false} axisLine={false} />\n              <YAxis allowDecimals={false} tickLine={false} axisLine={false} width={28} />\n              <ChartTooltip content={<ChartTooltipContent config={throughputConfig} />} />\n              <ChartLegend content={<ChartLegendContent config={throughputConfig} />} />\n              <Line dataKey=\"created\" stroke=\"var(--color-created)\" strokeWidth={2} dot={false} />\n              <Line dataKey=\"completed\" stroke=\"var(--color-completed)\" strokeWidth={2} dot={false} />\n            </LineChart>\n          </ChartContainer>\n        </ChartCard>\n\n        <ChartCard title=\"Team workload\" description=\"Open tasks per member\">\n          <p className=\"sr-only\">\n            {workload.map((w) => `${w.member}: ${w.open}`).join(\", \")} open tasks.\n          </p>\n          <ChartContainer config={workloadConfig} className=\"aspect-[16/9] w-full\" aria-hidden>\n            <BarChart data={workload}>\n              <CartesianGrid vertical={false} />\n              <XAxis dataKey=\"member\" tickLine={false} axisLine={false} />\n              <YAxis allowDecimals={false} tickLine={false} axisLine={false} width={28} />\n              <ChartTooltip content={<ChartTooltipContent config={workloadConfig} />} />\n              <Bar dataKey=\"open\" fill=\"var(--color-open)\" radius={4} />\n            </BarChart>\n          </ChartContainer>\n        </ChartCard>\n      </div>\n    </div>\n  );\n}"
+    },
+    {
       "id": "app-shell",
       "name": "Application shell",
       "status": "curated",
@@ -165,7 +330,9 @@
         "dashboard-overview",
         "list-page",
         "settings-page",
-        "page-states"
+        "page-states",
+        "detail-page",
+        "task-board"
       ],
       "dependencies": {
         "npm": [
@@ -187,6 +354,176 @@
         "@nucleux/sidebar"
       ],
       "exampleSource": "import { useState, type MouseEvent, type ReactNode } from \"react\";\nimport { Bell, FolderKanban, LayoutDashboard, Menu as MenuIcon, Settings, Users } from \"lucide-react\";\nimport {\n  Avatar,\n  GlobalNav,\n  IconButton,\n  NavItem,\n  NavPanel,\n  NavSection,\n  SearchInput,\n  Sheet,\n  SheetBody,\n  SheetHeader,\n  SheetTitle,\n} from \"@nucleux/react\";\n\nexport interface ShellLink {\n  id: string;\n  label: string;\n  href: string;\n  icon: ReactNode;\n}\n\nexport const SHELL_LINKS: ShellLink[] = [\n  { id: \"dashboard\", label: \"Dashboard\", href: \"/\", icon: <LayoutDashboard className=\"size-4\" /> },\n  { id: \"projects\", label: \"Projects\", href: \"/projects\", icon: <FolderKanban className=\"size-4\" /> },\n  { id: \"team\", label: \"Team\", href: \"/team\", icon: <Users className=\"size-4\" /> },\n  { id: \"settings\", label: \"Settings\", href: \"/settings\", icon: <Settings className=\"size-4\" /> },\n];\n\nexport interface AppShellProps {\n  /** id of the active link. */\n  current: string;\n  /** Called with the link's href; wire it to your router (e.g. `navigate(href)`). */\n  onNavigate: (href: string) => void;\n  links?: ShellLink[];\n  children: ReactNode;\n}\n\n/** One nav list, rendered both in the desktop column and in the mobile sheet. */\nfunction ShellNav({\n  links,\n  current,\n  onSelect,\n}: {\n  links: ShellLink[];\n  current: string;\n  onSelect: (href: string) => void;\n}) {\n  return (\n    <NavSection title=\"Workspace\">\n      {links.map((link) => (\n        <NavItem\n          key={link.id}\n          href={link.href}\n          active={link.id === current}\n          className=\"h-9 gap-2 text-sm\"\n          onClick={(e: MouseEvent<HTMLAnchorElement>) => {\n            e.preventDefault();\n            onSelect(link.href);\n          }}\n        >\n          {link.icon}\n          {link.label}\n        </NavItem>\n      ))}\n    </NavSection>\n  );\n}\n\n/**\n * Application shell: persistent left navigation on large screens, a top bar\n * with search and account, and a slide-in navigation sheet on small screens.\n * Page content renders inside `<main>`.\n */\nexport function AppShell({ current, onNavigate, links = SHELL_LINKS, children }: AppShellProps) {\n  const [mobileOpen, setMobileOpen] = useState(false);\n  const go = (href: string) => {\n    setMobileOpen(false);\n    onNavigate(href);\n  };\n\n  return (\n    <div className=\"flex h-screen bg-background text-foreground\">\n      <NavPanel aria-label=\"Primary\" className=\"hidden lg:flex\">\n        <div className=\"px-4 text-sm font-semibold text-foreground\">Acme Projects</div>\n        <ShellNav links={links} current={current} onSelect={go} />\n      </NavPanel>\n\n      <div className=\"flex min-w-0 flex-1 flex-col\">\n        <GlobalNav\n          className=\"px-4 sm:px-6\"\n          left={\n            <>\n              <IconButton aria-label=\"Open navigation\" className=\"lg:hidden\" onClick={() => setMobileOpen(true)}>\n                <MenuIcon className=\"size-5\" />\n              </IconButton>\n              <span className=\"truncate text-sm font-semibold lg:hidden\">Acme Projects</span>\n            </>\n          }\n          center={\n            <SearchInput\n              aria-label=\"Search projects and tasks\"\n              placeholder=\"Search projects and tasks\"\n              containerClassName=\"hidden w-full max-w-md sm:flex\"\n            />\n          }\n          right={\n            <>\n              <IconButton aria-label=\"Notifications\">\n                <Bell className=\"size-5\" />\n              </IconButton>\n              <Avatar role=\"user\" name=\"Dana Kim\" initials=\"DK\" />\n            </>\n          }\n        />\n        <main className=\"min-h-0 flex-1 overflow-y-auto\">{children}</main>\n      </div>\n\n      <Sheet open={mobileOpen} onOpenChange={setMobileOpen} side=\"left\">\n        <SheetHeader>\n          <SheetTitle>Acme Projects</SheetTitle>\n        </SheetHeader>\n        <SheetBody className=\"px-0\">\n          <nav aria-label=\"Primary\">\n            <ShellNav links={links} current={current} onSelect={go} />\n          </nav>\n        </SheetBody>\n      </Sheet>\n    </div>\n  );\n}\n\nexport default function AppShellExample() {\n  const [current, setCurrent] = useState(\"dashboard\");\n  return (\n    <AppShell\n      current={current}\n      onNavigate={(href) => setCurrent(SHELL_LINKS.find((l) => l.href === href)?.id ?? \"dashboard\")}\n    >\n      <div className=\"mx-auto max-w-6xl p-4 sm:p-6 lg:p-8\">\n        <p className=\"text-sm text-muted-foreground\">Page content renders here.</p>\n      </div>\n    </AppShell>\n  );\n}"
+    },
+    {
+      "id": "auth-sign-in",
+      "name": "Sign-in screen",
+      "status": "curated",
+      "since": "0.5.0",
+      "summary": "Centered card with email and password, inline field errors, a form-level error Alert, remember-me, and links to reset password and sign up.",
+      "description": "The authentication entry point. One focused card on a muted background; validation runs on submit and marks each invalid field; a failed sign-in shows a destructive Alert above the fields and keeps what the user typed. Sign-up and password reset reuse the same card layout with different fields.",
+      "useCases": [
+        "login page",
+        "sign in screen",
+        "authentication screen",
+        "sign up page",
+        "forgot password page",
+        "auth flow"
+      ],
+      "whenToUse": [
+        "Email/password or magic-link sign-in, sign-up, or password reset screens."
+      ],
+      "whenNotToUse": [
+        "Material Design 3 apps: the MD3 sign-in is the login example (get_example login) built from md3-* components.",
+        "Single sign-on only: a card with one provider Button is enough."
+      ],
+      "keywords": [
+        "login",
+        "sign in",
+        "signin",
+        "auth",
+        "authentication",
+        "password",
+        "sign up",
+        "register",
+        "forgot password",
+        "account access"
+      ],
+      "components": {
+        "required": [
+          "CardContainer",
+          "CardHeader",
+          "CardTitle",
+          "CardContent",
+          "Label",
+          "Input",
+          "Button"
+        ],
+        "optional": [
+          "CardDescription",
+          "Alert",
+          "Checkbox",
+          "LinkButton",
+          "Separator"
+        ]
+      },
+      "composition": [
+        {
+          "element": "main",
+          "role": "Full-height centering wrapper (bg-muted/40)",
+          "children": [
+            {
+              "component": "CardContainer",
+              "role": "w-full max-w-sm",
+              "children": [
+                {
+                  "component": "CardHeader",
+                  "children": [
+                    {
+                      "component": "CardTitle",
+                      "role": "Page heading: role=heading aria-level=1"
+                    },
+                    {
+                      "component": "CardDescription"
+                    }
+                  ]
+                },
+                {
+                  "component": "CardContent",
+                  "children": [
+                    {
+                      "element": "form",
+                      "role": "noValidate; validates on submit",
+                      "children": [
+                        {
+                          "component": "Alert",
+                          "role": "variant=destructive, only after a failed sign-in"
+                        },
+                        {
+                          "component": "Label"
+                        },
+                        {
+                          "component": "Input",
+                          "role": "email, autoComplete=email"
+                        },
+                        {
+                          "component": "Label"
+                        },
+                        {
+                          "component": "LinkButton",
+                          "role": "Forgot password? (href)"
+                        },
+                        {
+                          "component": "Input",
+                          "role": "password, autoComplete=current-password"
+                        },
+                        {
+                          "component": "Checkbox",
+                          "role": "Keep me signed in"
+                        },
+                        {
+                          "component": "Button",
+                          "role": "type=submit variant=cta, full width, disabled while pending"
+                        }
+                      ]
+                    },
+                    {
+                      "component": "LinkButton",
+                      "role": "Create an account (href)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "layout": [
+        "One card, max-w-sm, centered vertically and horizontally; nothing else competes on the page.",
+        "Field order matches the autofill order: email, then password.",
+        "The submit Button spans the card width; secondary paths are LinkButtons with href, not buttons."
+      ],
+      "responsive": [
+        "The card is full width with px-4 page padding on phones and max-w-sm from there; no layout change is needed."
+      ],
+      "tokens": [
+        "bg-muted/40 page",
+        "text-destructive field errors",
+        "Alert variant destructive",
+        "Button variant cta"
+      ],
+      "accessibility": [
+        "The card title is the page's h1 (CardTitle renders h3: pass role=heading aria-level={1} or wrap your own h1).",
+        "Every Input has a Label htmlFor; required fields use Label required.",
+        "Errors: Input invalid + a text message linked with aria-describedby; the form-level Alert has role=alert.",
+        "Use type=email/password and autoComplete so password managers work.",
+        "Don't disable the submit button for invalid input; validate on submit and explain."
+      ],
+      "states": "Pending: disable submit and change its label (\"Signing in…\"). Failure: destructive Alert, keep the inputs. Success: navigate away; no success message on this page.",
+      "antiPatterns": [
+        "Placeholder text as the only label.",
+        "Clearing the password field's neighbours on a failed attempt.",
+        "Raw <a> or <button> styled by hand for secondary links: use LinkButton."
+      ],
+      "related": [
+        "multi-step-form",
+        "form-dialog"
+      ],
+      "dependencies": {
+        "npm": []
+      },
+      "example": "example.tsx",
+      "packages": [
+        "@nucleux/alert",
+        "@nucleux/button",
+        "@nucleux/card",
+        "@nucleux/checkbox",
+        "@nucleux/input",
+        "@nucleux/label",
+        "@nucleux/link-button",
+        "@nucleux/separator"
+      ],
+      "exampleSource": "import { useState, type FormEvent } from \"react\";\nimport {\n  Alert,\n  Button,\n  CardContainer,\n  CardContent,\n  CardDescription,\n  CardHeader,\n  CardTitle,\n  Checkbox,\n  Input,\n  Label,\n  LinkButton,\n} from \"@nucleux/react\";\n\n/**\n * Sign-in screen: one centered card, labelled fields, inline field errors,\n * a form-level error Alert for failed sign-in, and the secondary paths\n * (forgot password, sign up) as links. Submission stays disabled while pending.\n */\nexport default function SignInExample({\n  onSignIn = async () => {\n    throw new Error(\"Email or password is incorrect.\");\n  },\n}: {\n  onSignIn?: (email: string, password: string, remember: boolean) => Promise<void>;\n}) {\n  const [email, setEmail] = useState(\"\");\n  const [password, setPassword] = useState(\"\");\n  const [remember, setRemember] = useState(true);\n  const [touched, setTouched] = useState(false);\n  const [pending, setPending] = useState(false);\n  const [error, setError] = useState<string | null>(null);\n\n  const emailInvalid = touched && !/^\\S+@\\S+\\.\\S+$/.test(email);\n  const passwordInvalid = touched && password.length === 0;\n\n  const submit = async (e: FormEvent) => {\n    e.preventDefault();\n    setTouched(true);\n    if (!/^\\S+@\\S+\\.\\S+$/.test(email) || !password) return;\n    setPending(true);\n    setError(null);\n    try {\n      await onSignIn(email, password, remember);\n    } catch (err) {\n      setError(err instanceof Error ? err.message : \"Sign-in failed. Try again.\");\n    } finally {\n      setPending(false);\n    }\n  };\n\n  return (\n    <main className=\"flex min-h-screen items-center justify-center bg-muted/40 px-4 py-12\">\n      <CardContainer className=\"w-full max-w-sm\">\n        <CardHeader className=\"flex-col items-start gap-1\">\n          <CardTitle role=\"heading\" aria-level={1} className=\"text-xl\">\n            Sign in to Acme\n          </CardTitle>\n          <CardDescription>Welcome back. Enter your work email to continue.</CardDescription>\n        </CardHeader>\n        <CardContent>\n          <form noValidate onSubmit={submit} className=\"space-y-4\">\n            {error && (\n              <Alert variant=\"destructive\" title=\"Couldn't sign you in\" role=\"alert\">\n                {error}\n              </Alert>\n            )}\n            <div className=\"space-y-1.5\">\n              <Label htmlFor=\"email\" required>Email</Label>\n              <Input\n                id=\"email\"\n                type=\"email\"\n                autoComplete=\"email\"\n                value={email}\n                invalid={emailInvalid}\n                aria-describedby={emailInvalid ? \"email-error\" : undefined}\n                onChange={(e) => setEmail(e.target.value)}\n              />\n              {emailInvalid && (\n                <p id=\"email-error\" className=\"text-xs text-destructive\">Enter a valid email address.</p>\n              )}\n            </div>\n            <div className=\"space-y-1.5\">\n              <div className=\"flex items-center justify-between\">\n                <Label htmlFor=\"password\" required>Password</Label>\n                <LinkButton href=\"/forgot-password\" className=\"text-xs\">Forgot password?</LinkButton>\n              </div>\n              <Input\n                id=\"password\"\n                type=\"password\"\n                autoComplete=\"current-password\"\n                value={password}\n                invalid={passwordInvalid}\n                aria-describedby={passwordInvalid ? \"password-error\" : undefined}\n                onChange={(e) => setPassword(e.target.value)}\n              />\n              {passwordInvalid && (\n                <p id=\"password-error\" className=\"text-xs text-destructive\">Enter your password.</p>\n              )}\n            </div>\n            <label className=\"flex items-center gap-2 text-sm text-foreground\">\n              <Checkbox checked={remember} onCheckedChange={setRemember} aria-label=\"Keep me signed in\" />\n              Keep me signed in\n            </label>\n            <Button type=\"submit\" variant=\"cta\" className=\"w-full\" disabled={pending}>\n              {pending ? \"Signing in…\" : \"Sign in\"}\n            </Button>\n          </form>\n          <p className=\"mt-6 text-center text-sm text-muted-foreground\">\n            New to Acme? <LinkButton href=\"/sign-up\">Create an account</LinkButton>\n          </p>\n        </CardContent>\n      </CardContainer>\n    </main>\n  );\n}"
     },
     {
       "id": "dashboard-overview",
@@ -342,7 +679,8 @@
       "related": [
         "app-shell",
         "list-page",
-        "page-states"
+        "page-states",
+        "analytics-charts"
       ],
       "dependencies": {
         "npm": [
@@ -362,6 +700,406 @@
         "@nucleux/table"
       ],
       "exampleSource": "import type { ReactNode } from \"react\";\nimport { CheckCircle2, Clock, FolderKanban, TrendingUp } from \"lucide-react\";\nimport {\n  Badge,\n  CardContainer,\n  CardContent,\n  CardDescription,\n  CardHeader,\n  CardTitle,\n  PageHeader,\n  Progress,\n  Table,\n  TableBody,\n  TableCell,\n  TableHead,\n  TableHeader,\n  TableRow,\n} from \"@nucleux/react\";\n\nexport interface Metric {\n  label: string;\n  value: string;\n  change: string;\n  icon: ReactNode;\n}\n\n/** A single KPI tile. Keep the value short; put context in `change`. */\nexport function MetricCard({ label, value, change, icon }: Metric) {\n  return (\n    <CardContainer>\n      <CardContent className=\"flex items-start justify-between gap-4\">\n        <div className=\"min-w-0\">\n          <p className=\"text-sm text-muted-foreground\">{label}</p>\n          <p className=\"mt-1 text-2xl font-semibold tabular-nums text-foreground\">{value}</p>\n          <p className=\"mt-1 text-xs text-muted-foreground\">{change}</p>\n        </div>\n        <span aria-hidden className=\"text-muted-foreground [&_svg]:size-5\">\n          {icon}\n        </span>\n      </CardContent>\n    </CardContainer>\n  );\n}\n\nconst METRICS: Metric[] = [\n  { label: \"Active projects\", value: \"12\", change: \"+2 this month\", icon: <FolderKanban /> },\n  { label: \"Tasks completed\", value: \"248\", change: \"+18% vs last month\", icon: <CheckCircle2 /> },\n  { label: \"Overdue tasks\", value: \"7\", change: \"3 due today\", icon: <Clock /> },\n  { label: \"On-time delivery\", value: \"92%\", change: \"Up from 88%\", icon: <TrendingUp /> },\n];\n\nconst PROGRESS = [\n  { name: \"Website redesign\", done: 72 },\n  { name: \"Mobile onboarding\", done: 38 },\n  { name: \"Billing migration\", done: 55 },\n];\n\nconst ACTIVITY = [\n  { who: \"Dana Kim\", what: \"completed “Homepage hero”\", when: \"10 min ago\", tag: \"Done\" },\n  { who: \"Luis Ortega\", what: \"flagged “Push permissions” as blocked\", when: \"1 h ago\", tag: \"Blocked\" },\n  { who: \"Priya Shah\", what: \"opened “Invoice export”\", when: \"3 h ago\", tag: \"New\" },\n];\n\n/**\n * Overview dashboard: a responsive KPI row, a progress panel and a recent\n * activity table. Each region is a card so it can be rearranged or removed.\n */\nexport default function DashboardOverviewExample() {\n  return (\n    <div className=\"mx-auto flex max-w-6xl flex-col gap-6 p-4 sm:p-6 lg:p-8\">\n      <PageHeader title=\"Dashboard\" description=\"Where your projects stand this week.\" />\n\n      <section aria-label=\"Key metrics\" className=\"grid gap-4 sm:grid-cols-2 xl:grid-cols-4\">\n        {METRICS.map((m) => (\n          <MetricCard key={m.label} {...m} />\n        ))}\n      </section>\n\n      <div className=\"grid gap-4 lg:grid-cols-3\">\n        <CardContainer className=\"lg:col-span-1\">\n          <CardHeader>\n            <CardTitle aria-level={2}>Project progress</CardTitle>\n            <CardDescription>Share of tasks completed</CardDescription>\n          </CardHeader>\n          <CardContent className=\"space-y-4\">\n            {PROGRESS.map((p) => (\n              <div key={p.name} className=\"space-y-1.5\">\n                <div className=\"flex justify-between text-sm\">\n                  <span className=\"text-foreground\">{p.name}</span>\n                  <span className=\"tabular-nums text-muted-foreground\">{p.done}%</span>\n                </div>\n                <Progress value={p.done} size=\"sm\" aria-label={`${p.name} progress`} />\n              </div>\n            ))}\n          </CardContent>\n        </CardContainer>\n\n        <CardContainer className=\"lg:col-span-2\">\n          <CardHeader>\n            <CardTitle aria-level={2}>Recent activity</CardTitle>\n          </CardHeader>\n          <CardContent className=\"overflow-x-auto\">\n            <Table>\n              <TableHeader>\n                <TableRow>\n                  <TableHead>Member</TableHead>\n                  <TableHead>Activity</TableHead>\n                  <TableHead className=\"hidden sm:table-cell\">When</TableHead>\n                </TableRow>\n              </TableHeader>\n              <TableBody>\n                {ACTIVITY.map((a) => (\n                  <TableRow key={a.what}>\n                    <TableCell className=\"font-medium\">{a.who}</TableCell>\n                    <TableCell>\n                      <span className=\"mr-2\">{a.what}</span>\n                      <Badge variant={a.tag === \"Blocked\" ? \"destructive\" : \"secondary\"}>{a.tag}</Badge>\n                    </TableCell>\n                    <TableCell className=\"hidden text-muted-foreground sm:table-cell\">{a.when}</TableCell>\n                  </TableRow>\n                ))}\n              </TableBody>\n            </Table>\n          </CardContent>\n        </CardContainer>\n      </div>\n    </div>\n  );\n}"
+    },
+    {
+      "id": "detail-page",
+      "name": "Record detail page",
+      "status": "curated",
+      "since": "0.5.0",
+      "summary": "Breadcrumb back to the list, header with status badge and actions, tabbed sections of facts in cards, and a confirmation dialog before delete.",
+      "description": "The page for one record (a project, user, order, booking). It answers \"what is this and what can I do with it\": identity and status in the header, the record's actions next to the title, details grouped into tabs, and destructive actions guarded by AlertDialog.",
+      "useCases": [
+        "project detail page",
+        "user profile page",
+        "order detail",
+        "booking detail",
+        "record view",
+        "item page"
+      ],
+      "whenToUse": [
+        "Users open one record from a list to see everything about it and act on it."
+      ],
+      "whenNotToUse": [
+        "Quick edits of a few fields: use form-dialog from the list page.",
+        "Records with one field group: skip Tabs and show the cards directly."
+      ],
+      "keywords": [
+        "detail",
+        "details",
+        "record",
+        "view",
+        "profile",
+        "item",
+        "overview",
+        "delete confirmation",
+        "tabs",
+        "breadcrumb"
+      ],
+      "components": {
+        "required": [
+          "Breadcrumb",
+          "BreadcrumbItem",
+          "BreadcrumbLink",
+          "BreadcrumbPage",
+          "BreadcrumbSeparator",
+          "PageHeader",
+          "Button",
+          "CardContainer",
+          "CardContent",
+          "AlertDialog"
+        ],
+        "optional": [
+          "Badge",
+          "Tabs",
+          "TabsList",
+          "TabsTrigger",
+          "TabsContent",
+          "CardHeader",
+          "CardTitle",
+          "Progress",
+          "Avatar",
+          "Table"
+        ]
+      },
+      "composition": [
+        {
+          "element": "div",
+          "role": "Page container (max-w-5xl, responsive padding)",
+          "children": [
+            {
+              "component": "Breadcrumb",
+              "children": [
+                {
+                  "component": "BreadcrumbItem",
+                  "children": [
+                    {
+                      "component": "BreadcrumbLink",
+                      "role": "the collection"
+                    }
+                  ]
+                },
+                {
+                  "component": "BreadcrumbSeparator"
+                },
+                {
+                  "component": "BreadcrumbItem",
+                  "children": [
+                    {
+                      "component": "BreadcrumbPage",
+                      "role": "this record"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "PageHeader",
+              "role": "title = record name; badges = status; actions = Edit (secondary) + Delete (destructive)"
+            },
+            {
+              "component": "Tabs",
+              "children": [
+                {
+                  "component": "TabsList",
+                  "children": [
+                    {
+                      "component": "TabsTrigger"
+                    }
+                  ]
+                },
+                {
+                  "component": "TabsContent",
+                  "role": "Overview: grid lg:grid-cols-3",
+                  "children": [
+                    {
+                      "component": "CardContainer",
+                      "role": "Facts as a <dl>, 2 columns from sm",
+                      "children": [
+                        {
+                          "component": "CardHeader",
+                          "children": [
+                            {
+                              "component": "CardTitle"
+                            }
+                          ]
+                        },
+                        {
+                          "component": "CardContent"
+                        }
+                      ]
+                    },
+                    {
+                      "component": "CardContainer",
+                      "role": "Key metric",
+                      "children": [
+                        {
+                          "component": "CardContent",
+                          "children": [
+                            {
+                              "component": "Progress"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "component": "TabsContent",
+                  "role": "Related records (members, tasks…)",
+                  "children": [
+                    {
+                      "component": "CardContainer",
+                      "children": [
+                        {
+                          "component": "CardContent",
+                          "children": [
+                            {
+                              "component": "Avatar"
+                            },
+                            {
+                              "component": "Badge"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "AlertDialog",
+              "role": "destructive confirmation; names the record and the consequence"
+            }
+          ]
+        }
+      ],
+      "layout": [
+        "Facts are a description list (dl/dt/dd), not a table and not loose paragraphs.",
+        "Record actions live in PageHeader actions: secondary for edit, destructive for delete; at most one cta.",
+        "Tabs only when there are two or more sections; the first tab is the overview."
+      ],
+      "responsive": [
+        "PageHeader wraps actions under the title on narrow screens.",
+        "Overview grid stacks below lg; facts go from 1 to 2 columns at sm."
+      ],
+      "tokens": [
+        "text-muted-foreground labels (dt)",
+        "Badge variants for status",
+        "Button destructive for delete"
+      ],
+      "accessibility": [
+        "Breadcrumb's current item is BreadcrumbPage (aria-current) and not a link.",
+        "CardTitle renders h3; under the PageHeader h1 pass aria-level={2}.",
+        "AlertDialog title names the record (\"Delete \\\"Website redesign\\\"?\") and the description states what is lost; the confirm label repeats the verb."
+      ],
+      "states": "Loading: page-states skeleton in the content area, keeping breadcrumb and title placeholders. Not found: ErrorState variant=empty with a link back to the list.",
+      "antiPatterns": [
+        "Delete without confirmation.",
+        "window.confirm for confirmations.",
+        "A generic \"Are you sure?\" that does not name the record."
+      ],
+      "related": [
+        "list-page",
+        "form-dialog",
+        "page-states",
+        "app-shell"
+      ],
+      "dependencies": {
+        "npm": [
+          {
+            "name": "lucide-react",
+            "reason": "Icons in the example."
+          }
+        ]
+      },
+      "example": "example.tsx",
+      "packages": [
+        "@nucleux/alert-dialog",
+        "@nucleux/avatar",
+        "@nucleux/badge",
+        "@nucleux/breadcrumb",
+        "@nucleux/button",
+        "@nucleux/card",
+        "@nucleux/page-header",
+        "@nucleux/progress",
+        "@nucleux/table",
+        "@nucleux/tabs"
+      ],
+      "exampleSource": "import { useState } from \"react\";\nimport { Pencil, Trash2 } from \"lucide-react\";\nimport {\n  AlertDialog,\n  Avatar,\n  Badge,\n  Breadcrumb,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbPage,\n  BreadcrumbSeparator,\n  Button,\n  CardContainer,\n  CardContent,\n  CardHeader,\n  CardTitle,\n  PageHeader,\n  Progress,\n  Tabs,\n  TabsContent,\n  TabsList,\n  TabsTrigger,\n} from \"@nucleux/react\";\n\nconst project = {\n  name: \"Website redesign\",\n  description: \"Refresh the marketing site with the new brand and a faster CMS.\",\n  status: \"Active\",\n  owner: { name: \"Dana Kim\", initials: \"DK\" },\n  due: \"Nov 2, 2026\",\n  progress: 72,\n  members: [\n    { name: \"Dana Kim\", initials: \"DK\", role: \"Owner\" },\n    { name: \"Mei Tanaka\", initials: \"MT\", role: \"Designer\" },\n    { name: \"Luis Ortega\", initials: \"LO\", role: \"Engineer\" },\n  ],\n};\n\n/** Label/value pairs as a description list: two columns from sm. */\nfunction Facts({ items }: { items: Array<[string, React.ReactNode]> }) {\n  return (\n    <dl className=\"grid gap-4 sm:grid-cols-2\">\n      {items.map(([label, value]) => (\n        <div key={label} className=\"min-w-0\">\n          <dt className=\"text-xs font-medium uppercase tracking-wide text-muted-foreground\">{label}</dt>\n          <dd className=\"mt-1 text-sm text-foreground\">{value}</dd>\n        </div>\n      ))}\n    </dl>\n  );\n}\n\n/**\n * Detail page for one record: breadcrumb back to the collection, a header with\n * status badges and the record's actions, tabs for its sections, and a\n * confirmation dialog before anything destructive.\n */\nexport default function DetailPageExample({ onDelete = () => undefined }: { onDelete?: () => void }) {\n  const [confirmOpen, setConfirmOpen] = useState(false);\n\n  return (\n    <div className=\"mx-auto flex max-w-5xl flex-col gap-6 p-4 sm:p-6 lg:p-8\">\n      <Breadcrumb>\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"/projects\">Projects</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbPage>{project.name}</BreadcrumbPage>\n        </BreadcrumbItem>\n      </Breadcrumb>\n\n      <PageHeader\n        title={project.name}\n        description={project.description}\n        badges={<Badge variant=\"success\">{project.status}</Badge>}\n        actions={\n          <>\n            <Button variant=\"secondary\" leftIcon={<Pencil className=\"size-4\" />}>\n              Edit\n            </Button>\n            <Button variant=\"destructive\" leftIcon={<Trash2 className=\"size-4\" />} onClick={() => setConfirmOpen(true)}>\n              Delete\n            </Button>\n          </>\n        }\n      />\n\n      <Tabs defaultValue=\"overview\">\n        <TabsList>\n          <TabsTrigger value=\"overview\">Overview</TabsTrigger>\n          <TabsTrigger value=\"members\">Members</TabsTrigger>\n        </TabsList>\n\n        <TabsContent value=\"overview\" className=\"grid gap-4 pt-4 lg:grid-cols-3\">\n          <CardContainer className=\"lg:col-span-2\">\n            <CardHeader>\n              <CardTitle aria-level={2}>Details</CardTitle>\n            </CardHeader>\n            <CardContent>\n              <Facts\n                items={[\n                  [\"Owner\", project.owner.name],\n                  [\"Due\", project.due],\n                  [\"Status\", project.status],\n                  [\"Members\", project.members.length],\n                ]}\n              />\n            </CardContent>\n          </CardContainer>\n          <CardContainer>\n            <CardHeader>\n              <CardTitle aria-level={2}>Progress</CardTitle>\n            </CardHeader>\n            <CardContent className=\"space-y-2\">\n              <p className=\"text-2xl font-semibold tabular-nums text-foreground\">{project.progress}%</p>\n              <Progress value={project.progress} aria-label=\"Project progress\" />\n            </CardContent>\n          </CardContainer>\n        </TabsContent>\n\n        <TabsContent value=\"members\" className=\"pt-4\">\n          <CardContainer>\n            <CardContent>\n              <ul className=\"divide-y divide-border\">\n                {project.members.map((m) => (\n                  <li key={m.name} className=\"flex items-center gap-3 py-3\">\n                    <Avatar role=\"user\" name={m.name} initials={m.initials} />\n                    <span className=\"flex-1 text-sm font-medium text-foreground\">{m.name}</span>\n                    <Badge variant=\"outline\">{m.role}</Badge>\n                  </li>\n                ))}\n              </ul>\n            </CardContent>\n          </CardContainer>\n        </TabsContent>\n      </Tabs>\n\n      <AlertDialog\n        open={confirmOpen}\n        onOpenChange={setConfirmOpen}\n        destructive\n        title={`Delete \"${project.name}\"?`}\n        description=\"Its tasks and history are deleted too. This can't be undone.\"\n        confirmLabel=\"Delete project\"\n        onConfirm={() => {\n          setConfirmOpen(false);\n          onDelete();\n        }}\n      />\n    </div>\n  );\n}"
+    },
+    {
+      "id": "form-dialog",
+      "name": "Create/edit form in a dialog",
+      "status": "curated",
+      "since": "0.5.0",
+      "summary": "Dialog with a labelled form, validation on submit, Cancel + one primary action, and a success toast. One component handles create and edit.",
+      "description": "For creating or editing a record without leaving the page it belongs to (new task from a board, edit member from a team list). Up to ~6 fields; longer flows belong on their own page or in multi-step-form.",
+      "useCases": [
+        "create item dialog",
+        "edit item modal",
+        "new task form",
+        "invite user dialog",
+        "add record",
+        "quick edit"
+      ],
+      "whenToUse": [
+        "A short form (≤ 6 fields) started from a list, board or detail page."
+      ],
+      "whenNotToUse": [
+        "Long or multi-section forms: use a page or multi-step-form.",
+        "Confirmations with no input: use AlertDialog."
+      ],
+      "keywords": [
+        "form",
+        "dialog",
+        "modal",
+        "create",
+        "edit",
+        "new",
+        "add",
+        "invite",
+        "validation",
+        "toast"
+      ],
+      "components": {
+        "required": [
+          "Dialog",
+          "DialogHeader",
+          "DialogTitle",
+          "DialogFooter",
+          "Label",
+          "Input",
+          "Button"
+        ],
+        "optional": [
+          "DialogDescription",
+          "Textarea",
+          "Select",
+          "DatePicker",
+          "Checkbox",
+          "Switch",
+          "ToastProvider",
+          "useToast"
+        ]
+      },
+      "composition": [
+        {
+          "component": "Dialog",
+          "role": "controlled open/onOpenChange; className max-w-lg",
+          "children": [
+            {
+              "element": "form",
+              "role": "noValidate onSubmit; wraps header, fields and footer so Enter submits",
+              "children": [
+                {
+                  "component": "DialogHeader",
+                  "children": [
+                    {
+                      "component": "DialogTitle",
+                      "role": "\"New task\" / \"Edit task\""
+                    },
+                    {
+                      "component": "DialogDescription"
+                    }
+                  ]
+                },
+                {
+                  "element": "div",
+                  "role": "Fields, space-y-4; paired short fields in sm:grid-cols-2",
+                  "children": [
+                    {
+                      "component": "Label"
+                    },
+                    {
+                      "component": "Input"
+                    },
+                    {
+                      "component": "Textarea"
+                    },
+                    {
+                      "component": "Select"
+                    },
+                    {
+                      "component": "DatePicker"
+                    }
+                  ]
+                },
+                {
+                  "component": "DialogFooter",
+                  "children": [
+                    {
+                      "component": "Button",
+                      "role": "Cancel, secondary"
+                    },
+                    {
+                      "component": "Button",
+                      "role": "type=submit variant=cta"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "element": "ToastProvider",
+          "role": "Once at the app root; call useToast().toast({ variant: \"success\", title }) after saving"
+        }
+      ],
+      "layout": [
+        "The <form> wraps DialogHeader, fields and DialogFooter so the submit button is inside it.",
+        "Footer: Cancel then the primary action, right-aligned.",
+        "Reset the draft after a successful save; keep it after a failure."
+      ],
+      "responsive": [
+        "Paired fields (priority + due date) are one column on phones, two from sm.",
+        "Dialog keeps p-4 inset from the viewport edge; avoid fixed widths larger than max-w-lg."
+      ],
+      "tokens": [
+        "text-destructive field errors",
+        "Button cta for submit",
+        "Toast variant success"
+      ],
+      "accessibility": [
+        "Dialog wires DialogTitle/DialogDescription to aria-labelledby/aria-describedby: always render both.",
+        "Each field has a Label htmlFor; DatePicker takes aria-label.",
+        "Invalid fields: Input invalid + message via aria-describedby."
+      ],
+      "states": "Saving: disable the submit button. Failure: destructive Alert inside the dialog, keep input. Success: close and show a toast.",
+      "antiPatterns": [
+        "Submit button outside the <form> (Enter does nothing).",
+        "Closing the dialog on failure.",
+        "Calling useToast outside ToastProvider (it throws)."
+      ],
+      "related": [
+        "list-page",
+        "detail-page",
+        "task-board"
+      ],
+      "dependencies": {
+        "npm": [
+          {
+            "name": "lucide-react",
+            "reason": "Icons in the example."
+          }
+        ]
+      },
+      "example": "example.tsx",
+      "packages": [
+        "@nucleux/button",
+        "@nucleux/checkbox",
+        "@nucleux/date-picker",
+        "@nucleux/dialog",
+        "@nucleux/input",
+        "@nucleux/label",
+        "@nucleux/select",
+        "@nucleux/switch",
+        "@nucleux/textarea",
+        "@nucleux/toast"
+      ],
+      "exampleSource": "import { useState, type FormEvent } from \"react\";\nimport { Plus } from \"lucide-react\";\nimport {\n  Button,\n  DatePicker,\n  Dialog,\n  DialogDescription,\n  DialogFooter,\n  DialogHeader,\n  DialogTitle,\n  Input,\n  Label,\n  Select,\n  Textarea,\n  ToastProvider,\n  useToast,\n} from \"@nucleux/react\";\n\nexport interface TaskDraft {\n  title: string;\n  description: string;\n  priority: \"low\" | \"medium\" | \"high\";\n  due?: Date;\n}\n\nconst EMPTY: TaskDraft = { title: \"\", description: \"\", priority: \"medium\" };\n\n/**\n * Create/edit form in a Dialog: labelled fields, validation on submit with\n * inline messages, a footer with Cancel + one primary action, and a toast to\n * confirm the save. Pass `initial` to reuse the same dialog for editing.\n */\nexport function TaskFormDialog({\n  open,\n  onOpenChange,\n  initial,\n  onSave,\n}: {\n  open: boolean;\n  onOpenChange: (open: boolean) => void;\n  initial?: TaskDraft;\n  onSave: (task: TaskDraft) => void;\n}) {\n  const [draft, setDraft] = useState<TaskDraft>(initial ?? EMPTY);\n  const [submitted, setSubmitted] = useState(false);\n  const titleError = submitted && !draft.title.trim() ? \"Give the task a title.\" : undefined;\n  const set = <K extends keyof TaskDraft>(key: K, value: TaskDraft[K]) => setDraft((d) => ({ ...d, [key]: value }));\n\n  const submit = (e: FormEvent) => {\n    e.preventDefault();\n    setSubmitted(true);\n    if (!draft.title.trim()) return;\n    onSave(draft);\n    setDraft(EMPTY);\n    setSubmitted(false);\n    onOpenChange(false);\n  };\n\n  return (\n    <Dialog open={open} onOpenChange={onOpenChange} className=\"max-w-lg\">\n      <form noValidate onSubmit={submit}>\n        <DialogHeader>\n          <DialogTitle>{initial ? \"Edit task\" : \"New task\"}</DialogTitle>\n          <DialogDescription>Tasks are visible to everyone on the project.</DialogDescription>\n        </DialogHeader>\n        <div className=\"space-y-4 py-4\">\n          <div className=\"space-y-1.5\">\n            <Label htmlFor=\"task-title\" required>Title</Label>\n            <Input\n              id=\"task-title\"\n              value={draft.title}\n              invalid={!!titleError}\n              aria-describedby={titleError ? \"task-title-error\" : undefined}\n              onChange={(e) => set(\"title\", e.target.value)}\n            />\n            {titleError && <p id=\"task-title-error\" className=\"text-xs text-destructive\">{titleError}</p>}\n          </div>\n          <div className=\"space-y-1.5\">\n            <Label htmlFor=\"task-description\">Description</Label>\n            <Textarea\n              id=\"task-description\"\n              rows={3}\n              value={draft.description}\n              onChange={(e) => set(\"description\", e.target.value)}\n            />\n          </div>\n          <div className=\"grid gap-4 sm:grid-cols-2\">\n            <div className=\"space-y-1.5\">\n              <Label htmlFor=\"task-priority\">Priority</Label>\n              <Select\n                id=\"task-priority\"\n                value={draft.priority}\n                onChange={(e) => set(\"priority\", e.target.value as TaskDraft[\"priority\"])}\n              >\n                <option value=\"low\">Low</option>\n                <option value=\"medium\">Medium</option>\n                <option value=\"high\">High</option>\n              </Select>\n            </div>\n            <div className=\"space-y-1.5\">\n              <Label>Due date</Label>\n              <DatePicker aria-label=\"Due date\" className=\"w-full\" value={draft.due} onValueChange={(d) => set(\"due\", d)} />\n            </div>\n          </div>\n        </div>\n        <DialogFooter>\n          <Button variant=\"secondary\" onClick={() => onOpenChange(false)}>\n            Cancel\n          </Button>\n          <Button type=\"submit\" variant=\"cta\">\n            {initial ? \"Save changes\" : \"Create task\"}\n          </Button>\n        </DialogFooter>\n      </form>\n    </Dialog>\n  );\n}\n\nfunction Page() {\n  const [open, setOpen] = useState(false);\n  const { toast } = useToast();\n  return (\n    <div className=\"p-6\">\n      <Button variant=\"cta\" leftIcon={<Plus className=\"size-4\" />} onClick={() => setOpen(true)}>\n        New task\n      </Button>\n      <TaskFormDialog\n        open={open}\n        onOpenChange={setOpen}\n        onSave={(t) => toast({ variant: \"success\", title: \"Task created\", description: t.title })}\n      />\n    </div>\n  );\n}\n\n/** ToastProvider belongs once at the app root; it is here so the example runs alone. */\nexport default function FormDialogExample() {\n  return (\n    <ToastProvider>\n      <Page />\n    </ToastProvider>\n  );\n}"
     },
     {
       "id": "list-page",
@@ -486,7 +1224,10 @@
       "related": [
         "app-shell",
         "page-states",
-        "dashboard-overview"
+        "dashboard-overview",
+        "detail-page",
+        "form-dialog",
+        "task-board"
       ],
       "dependencies": {
         "npm": [
@@ -510,6 +1251,182 @@
         "@nucleux/skeleton"
       ],
       "exampleSource": "import { useMemo, useState } from \"react\";\nimport { Plus } from \"lucide-react\";\nimport { Badge, Button, DataTable, PageHeader, SearchInput, Select, type DataTableProps } from \"@nucleux/react\";\n\nexport type ProjectStatus = \"active\" | \"at-risk\" | \"done\";\n\nexport interface Project {\n  id: string;\n  name: string;\n  owner: string;\n  status: ProjectStatus;\n  due: string;\n}\n\nconst STATUS_BADGE: Record<ProjectStatus, { label: string; variant: \"success\" | \"destructive\" | \"secondary\" }> = {\n  active: { label: \"Active\", variant: \"success\" },\n  \"at-risk\": { label: \"At risk\", variant: \"destructive\" },\n  done: { label: \"Done\", variant: \"secondary\" },\n};\n\n// Typed from DataTableProps so the page needs no direct @tanstack/react-table import.\nconst columns: DataTableProps<Project, unknown>[\"columns\"] = [\n  { accessorKey: \"name\", header: \"Project\" },\n  { accessorKey: \"owner\", header: \"Owner\" },\n  {\n    accessorKey: \"status\",\n    header: \"Status\",\n    cell: ({ row }) => {\n      const s = STATUS_BADGE[row.original.status];\n      return <Badge variant={s.variant}>{s.label}</Badge>;\n    },\n  },\n  { accessorKey: \"due\", header: \"Due\" },\n];\n\nexport const SAMPLE_PROJECTS: Project[] = [\n  { id: \"p1\", name: \"Website redesign\", owner: \"Dana Kim\", status: \"active\", due: \"2026-11-02\" },\n  { id: \"p2\", name: \"Mobile onboarding\", owner: \"Luis Ortega\", status: \"at-risk\", due: \"2026-10-28\" },\n  { id: \"p3\", name: \"Billing migration\", owner: \"Priya Shah\", status: \"active\", due: \"2026-12-15\" },\n  { id: \"p4\", name: \"Q3 analytics report\", owner: \"Sam Lee\", status: \"done\", due: \"2026-09-30\" },\n];\n\n/**\n * Collection page: header with the primary action, a search + filter toolbar,\n * and a sortable, paginated table. Filtering happens before the table so the\n * table's own pagination always reflects the filtered rows.\n */\nexport function ProjectListPage({ projects, onCreate }: { projects: Project[]; onCreate: () => void }) {\n  const [query, setQuery] = useState(\"\");\n  const [status, setStatus] = useState<\"all\" | ProjectStatus>(\"all\");\n\n  const rows = useMemo(() => {\n    const q = query.trim().toLowerCase();\n    return projects.filter(\n      (p) =>\n        (status === \"all\" || p.status === status) &&\n        (!q || p.name.toLowerCase().includes(q) || p.owner.toLowerCase().includes(q)),\n    );\n  }, [projects, query, status]);\n\n  return (\n    <div className=\"mx-auto flex max-w-6xl flex-col gap-6 p-4 sm:p-6 lg:p-8\">\n      <PageHeader\n        title=\"Projects\"\n        description=\"Track every project, its owner, and its delivery status.\"\n        actions={\n          <Button variant=\"cta\" leftIcon={<Plus className=\"size-4\" />} onClick={onCreate}>\n            New project\n          </Button>\n        }\n      />\n\n      <div role=\"search\" className=\"flex flex-col gap-3 sm:flex-row sm:items-center\">\n        <SearchInput\n          aria-label=\"Search projects\"\n          placeholder=\"Search by project or owner\"\n          value={query}\n          onChange={(e) => setQuery(e.target.value)}\n          containerClassName=\"sm:max-w-sm sm:flex-1\"\n        />\n        <Select\n          aria-label=\"Filter by status\"\n          value={status}\n          onChange={(e) => setStatus(e.target.value as \"all\" | ProjectStatus)}\n          containerClassName=\"sm:w-44\"\n        >\n          <option value=\"all\">All statuses</option>\n          <option value=\"active\">Active</option>\n          <option value=\"at-risk\">At risk</option>\n          <option value=\"done\">Done</option>\n        </Select>\n      </div>\n\n      <div className=\"overflow-x-auto\">\n        <DataTable columns={columns} data={rows} pageSize={10} emptyMessage=\"No projects match these filters.\" />\n      </div>\n    </div>\n  );\n}\n\nexport default function ListPageExample() {\n  return <ProjectListPage projects={SAMPLE_PROJECTS} onCreate={() => undefined} />;\n}"
+    },
+    {
+      "id": "multi-step-form",
+      "name": "Multi-step form",
+      "status": "curated",
+      "since": "0.5.0",
+      "summary": "One card with a step counter and Progress, one field group per step, per-step validation, Back/Next, and a review step before submit.",
+      "description": "Onboarding, setup wizards, checkout and other flows that are too long for one screen. Each step validates before advancing; the last step lists every answer for review.",
+      "useCases": [
+        "onboarding wizard",
+        "setup wizard",
+        "checkout flow",
+        "multi-step form",
+        "stepper",
+        "registration flow"
+      ],
+      "whenToUse": [
+        "More than ~6 fields that split into ordered groups.",
+        "Later questions depend on earlier answers."
+      ],
+      "whenNotToUse": [
+        "Settings users revisit in any order: use settings-page tabs.",
+        "Short forms: one card or form-dialog."
+      ],
+      "keywords": [
+        "wizard",
+        "stepper",
+        "steps",
+        "multi-step",
+        "onboarding",
+        "checkout",
+        "flow",
+        "progress",
+        "form"
+      ],
+      "components": {
+        "required": [
+          "CardContainer",
+          "CardHeader",
+          "CardTitle",
+          "CardContent",
+          "Progress",
+          "Button"
+        ],
+        "optional": [
+          "CardDivider",
+          "Alert",
+          "Input",
+          "Label",
+          "Select",
+          "RadioGroup",
+          "Radio",
+          "Checkbox",
+          "Textarea"
+        ]
+      },
+      "composition": [
+        {
+          "element": "main",
+          "role": "Narrow container (max-w-xl)",
+          "children": [
+            {
+              "component": "CardContainer",
+              "children": [
+                {
+                  "element": "form",
+                  "role": "noValidate; submit = Next / final submit",
+                  "children": [
+                    {
+                      "component": "CardHeader",
+                      "role": "Step N of M (aria-live), Progress, step title",
+                      "children": [
+                        {
+                          "component": "Progress"
+                        },
+                        {
+                          "component": "CardTitle"
+                        }
+                      ]
+                    },
+                    {
+                      "component": "CardDivider"
+                    },
+                    {
+                      "component": "CardContent",
+                      "role": "Current step's fields; review step is a <dl>",
+                      "children": [
+                        {
+                          "component": "Alert",
+                          "role": "destructive, after a failed Next"
+                        },
+                        {
+                          "component": "Label"
+                        },
+                        {
+                          "component": "Input"
+                        },
+                        {
+                          "component": "Select"
+                        },
+                        {
+                          "component": "RadioGroup",
+                          "children": [
+                            {
+                              "component": "Radio"
+                            }
+                          ]
+                        },
+                        {
+                          "component": "Button",
+                          "role": "Back, ghost, disabled on step 1"
+                        },
+                        {
+                          "component": "Button",
+                          "role": "Next / final action, type=submit variant=cta"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "layout": [
+        "Keep Back/Next in the same place on every step.",
+        "Name the step in the header, and name the final action for what it does (\"Create workspace\").",
+        "Keep answers in one state object so Back never loses input."
+      ],
+      "responsive": [
+        "Single column at every width; the card is full width on phones."
+      ],
+      "tokens": [
+        "Progress size sm",
+        "Button cta for Next",
+        "text-muted-foreground step counter"
+      ],
+      "accessibility": [
+        "The step counter is aria-live=polite so screen readers hear the step change.",
+        "Move focus to the step title or first field when the step changes in your app.",
+        "Progress has an aria-label."
+      ],
+      "states": "Final submit pending: disable both buttons. Failure: Alert on the review step with the answers intact.",
+      "antiPatterns": [
+        "Validating every step only at the end.",
+        "Discarding later answers when going Back.",
+        "Using AgentSteps for form steps: it is for showing an AI agent's progress."
+      ],
+      "related": [
+        "auth-sign-in",
+        "settings-page",
+        "form-dialog"
+      ],
+      "dependencies": {
+        "npm": [
+          {
+            "name": "lucide-react",
+            "reason": "Icons in the example."
+          }
+        ]
+      },
+      "example": "example.tsx",
+      "packages": [
+        "@nucleux/alert",
+        "@nucleux/button",
+        "@nucleux/card",
+        "@nucleux/checkbox",
+        "@nucleux/input",
+        "@nucleux/label",
+        "@nucleux/progress",
+        "@nucleux/radio-group",
+        "@nucleux/select",
+        "@nucleux/textarea"
+      ],
+      "exampleSource": "import { useState, type FormEvent } from \"react\";\nimport { ArrowLeft, ArrowRight } from \"lucide-react\";\nimport {\n  Alert,\n  Button,\n  CardContainer,\n  CardContent,\n  CardDivider,\n  CardHeader,\n  CardTitle,\n  Input,\n  Label,\n  Progress,\n  Radio,\n  RadioGroup,\n  Select,\n} from \"@nucleux/react\";\n\nconst STEPS = [\"Workspace\", \"Team size\", \"Review\"] as const;\n\ninterface Answers {\n  workspace: string;\n  url: string;\n  size: string;\n  role: string;\n}\n\n/**\n * Multi-step form (onboarding, checkout, setup wizard): one card, a step\n * counter + Progress, one group of fields per step, Back/Next in a fixed\n * footer, validation per step before advancing, and a review step that lists\n * every answer before the final submit.\n */\nexport default function MultiStepFormExample({ onFinish = () => undefined }: { onFinish?: (a: Answers) => void }) {\n  const [step, setStep] = useState(0);\n  const [answers, setAnswers] = useState<Answers>({ workspace: \"\", url: \"\", size: \"2-10\", role: \"manager\" });\n  const [tried, setTried] = useState(false);\n  const set = (key: keyof Answers, value: string) => setAnswers((a) => ({ ...a, [key]: value }));\n\n  const stepValid = step !== 0 || (answers.workspace.trim() !== \"\" && /^[a-z0-9-]+$/.test(answers.url));\n  const last = step === STEPS.length - 1;\n\n  const next = (e: FormEvent) => {\n    e.preventDefault();\n    setTried(true);\n    if (!stepValid) return;\n    setTried(false);\n    if (last) onFinish(answers);\n    else setStep((s) => s + 1);\n  };\n\n  return (\n    <main className=\"mx-auto max-w-xl p-4 sm:p-8\">\n      <CardContainer>\n        <form noValidate onSubmit={next}>\n          <CardHeader className=\"flex-col items-stretch gap-3\">\n            <p className=\"text-sm text-muted-foreground\" aria-live=\"polite\">\n              Step {step + 1} of {STEPS.length}: {STEPS[step]}\n            </p>\n            <Progress value={((step + 1) / STEPS.length) * 100} size=\"sm\" aria-label=\"Setup progress\" />\n            <CardTitle role=\"heading\" aria-level={1} className=\"text-xl\">\n              {[\"Name your workspace\", \"Tell us about your team\", \"Review and create\"][step]}\n            </CardTitle>\n          </CardHeader>\n          <CardDivider />\n          <CardContent className=\"space-y-4\">\n            {tried && !stepValid && (\n              <Alert variant=\"destructive\" title=\"Check the highlighted fields\" role=\"alert\">\n                Fix them to continue.\n              </Alert>\n            )}\n\n            {step === 0 && (\n              <>\n                <div className=\"space-y-1.5\">\n                  <Label htmlFor=\"ws-name\" required>Workspace name</Label>\n                  <Input\n                    id=\"ws-name\"\n                    value={answers.workspace}\n                    invalid={tried && !answers.workspace.trim()}\n                    onChange={(e) => set(\"workspace\", e.target.value)}\n                  />\n                </div>\n                <div className=\"space-y-1.5\">\n                  <Label htmlFor=\"ws-url\" required>Workspace URL</Label>\n                  <Input\n                    id=\"ws-url\"\n                    value={answers.url}\n                    invalid={tried && !/^[a-z0-9-]+$/.test(answers.url)}\n                    aria-describedby=\"ws-url-hint\"\n                    onChange={(e) => set(\"url\", e.target.value.toLowerCase())}\n                  />\n                  <p id=\"ws-url-hint\" className=\"text-xs text-muted-foreground\">\n                    Lowercase letters, numbers and dashes: acme.app/{answers.url || \"your-team\"}\n                  </p>\n                </div>\n              </>\n            )}\n\n            {step === 1 && (\n              <>\n                <div className=\"space-y-1.5\">\n                  <Label htmlFor=\"team-size\">Team size</Label>\n                  <Select id=\"team-size\" value={answers.size} onChange={(e) => set(\"size\", e.target.value)}>\n                    <option value=\"1\">Just me</option>\n                    <option value=\"2-10\">2–10</option>\n                    <option value=\"11-50\">11–50</option>\n                    <option value=\"51+\">51 or more</option>\n                  </Select>\n                </div>\n                <div className=\"space-y-2\">\n                  <p className=\"text-sm font-medium text-foreground\">Your role</p>\n                  <RadioGroup label=\"Your role\" value={answers.role} onValueChange={(v) => set(\"role\", v)}>\n                    {[[\"manager\", \"Project manager\"], [\"engineer\", \"Engineer\"], [\"designer\", \"Designer\"]].map(([v, l]) => (\n                      <label key={v} className=\"flex items-center gap-2 text-sm text-foreground\">\n                        <Radio value={v} /> {l}\n                      </label>\n                    ))}\n                  </RadioGroup>\n                </div>\n              </>\n            )}\n\n            {step === 2 && (\n              <dl className=\"divide-y divide-border text-sm\">\n                {[\n                  [\"Workspace\", answers.workspace],\n                  [\"URL\", `acme.app/${answers.url}`],\n                  [\"Team size\", answers.size],\n                  [\"Role\", answers.role],\n                ].map(([k, v]) => (\n                  <div key={k} className=\"flex justify-between gap-4 py-2\">\n                    <dt className=\"text-muted-foreground\">{k}</dt>\n                    <dd className=\"font-medium text-foreground\">{v}</dd>\n                  </div>\n                ))}\n              </dl>\n            )}\n\n            <div className=\"flex items-center justify-between gap-3 pt-2\">\n              <Button\n                variant=\"ghost\"\n                leftIcon={<ArrowLeft className=\"size-4\" />}\n                disabled={step === 0}\n                onClick={() => setStep((s) => s - 1)}\n              >\n                Back\n              </Button>\n              <Button type=\"submit\" variant=\"cta\" rightIcon={last ? undefined : <ArrowRight className=\"size-4\" />}>\n                {last ? \"Create workspace\" : \"Next\"}\n              </Button>\n            </div>\n          </CardContent>\n        </form>\n      </CardContainer>\n    </main>\n  );\n}"
     },
     {
       "id": "page-states",
@@ -601,7 +1518,8 @@
       "related": [
         "list-page",
         "dashboard-overview",
-        "settings-page"
+        "settings-page",
+        "detail-page"
       ],
       "dependencies": {
         "npm": [
@@ -802,7 +1720,8 @@
       ],
       "related": [
         "app-shell",
-        "page-states"
+        "page-states",
+        "multi-step-form"
       ],
       "dependencies": {
         "npm": []
@@ -823,6 +1742,185 @@
         "@nucleux/textarea"
       ],
       "exampleSource": "import { useState, type FormEvent, type ReactNode } from \"react\";\nimport {\n  Alert,\n  Button,\n  CardContainer,\n  CardContent,\n  CardDescription,\n  CardDivider,\n  CardHeader,\n  CardTitle,\n  Input,\n  Label,\n  PageHeader,\n  Select,\n  Switch,\n  Tabs,\n  TabsContent,\n  TabsList,\n  TabsTrigger,\n} from \"@nucleux/react\";\n\n/** Label + help text on the left, the control on the right; stacks on mobile. */\nexport function SettingRow({ id, title, description, children }: {\n  id: string;\n  title: string;\n  description: string;\n  children: ReactNode;\n}) {\n  return (\n    <div className=\"flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between\">\n      <div className=\"min-w-0\">\n        <p id={`${id}-label`} className=\"text-sm font-medium text-foreground\">{title}</p>\n        <p id={`${id}-desc`} className=\"text-sm text-muted-foreground\">{description}</p>\n      </div>\n      {children}\n    </div>\n  );\n}\n\n/**\n * Settings: tabs group related sections; each section is a card of rows;\n * form sections save explicitly with a confirmation, toggles apply instantly.\n */\nexport default function SettingsPageExample() {\n  const [name, setName] = useState(\"Dana Kim\");\n  const [saved, setSaved] = useState(false);\n  const [digest, setDigest] = useState(true);\n\n  const save = (e: FormEvent) => {\n    e.preventDefault();\n    setSaved(true);\n  };\n\n  return (\n    <div className=\"mx-auto flex max-w-3xl flex-col gap-6 p-4 sm:p-6 lg:p-8\">\n      <PageHeader title=\"Settings\" description=\"Manage your profile and notifications.\" />\n\n      <Tabs defaultValue=\"profile\">\n        <TabsList>\n          <TabsTrigger value=\"profile\">Profile</TabsTrigger>\n          <TabsTrigger value=\"notifications\">Notifications</TabsTrigger>\n        </TabsList>\n\n        <TabsContent value=\"profile\" className=\"pt-4\">\n          <CardContainer>\n            <form onSubmit={save}>\n              <CardHeader>\n                <CardTitle aria-level={2}>Profile</CardTitle>\n                <CardDescription>Shown to your teammates.</CardDescription>\n              </CardHeader>\n              <CardDivider />\n              <CardContent className=\"space-y-4\">\n                {saved && (\n                  <Alert variant=\"success\" title=\"Profile saved\">\n                    Your changes are live.\n                  </Alert>\n                )}\n                <div className=\"space-y-1.5\">\n                  <Label htmlFor=\"display-name\" required>Display name</Label>\n                  <Input\n                    id=\"display-name\"\n                    value={name}\n                    invalid={!name.trim()}\n                    aria-describedby=\"display-name-hint\"\n                    onChange={(e) => {\n                      setName(e.target.value);\n                      setSaved(false);\n                    }}\n                  />\n                  <p id=\"display-name-hint\" className=\"text-xs text-muted-foreground\">\n                    {name.trim() ? \"Use your full name.\" : \"Display name is required.\"}\n                  </p>\n                </div>\n                <div className=\"space-y-1.5\">\n                  <Label htmlFor=\"timezone\">Time zone</Label>\n                  <Select id=\"timezone\" defaultValue=\"utc\">\n                    <option value=\"utc\">UTC</option>\n                    <option value=\"est\">Eastern Time</option>\n                    <option value=\"ist\">India Standard Time</option>\n                  </Select>\n                </div>\n                <div className=\"flex justify-end\">\n                  <Button type=\"submit\" disabled={!name.trim()}>Save changes</Button>\n                </div>\n              </CardContent>\n            </form>\n          </CardContainer>\n        </TabsContent>\n\n        <TabsContent value=\"notifications\" className=\"pt-4\">\n          <CardContainer>\n            <CardContent className=\"divide-y divide-border py-0\">\n              <SettingRow id=\"digest\" title=\"Weekly digest\" description=\"A summary of project progress every Monday.\">\n                <Switch\n                  checked={digest}\n                  onCheckedChange={setDigest}\n                  aria-labelledby=\"digest-label\"\n                  aria-describedby=\"digest-desc\"\n                />\n              </SettingRow>\n              <SettingRow id=\"mentions\" title=\"Mentions\" description=\"Email me when someone mentions me.\">\n                <Switch defaultChecked aria-labelledby=\"mentions-label\" aria-describedby=\"mentions-desc\" />\n              </SettingRow>\n            </CardContent>\n          </CardContainer>\n        </TabsContent>\n      </Tabs>\n    </div>\n  );\n}"
+    },
+    {
+      "id": "task-board",
+      "name": "Task board (kanban)",
+      "status": "curated",
+      "since": "0.5.0",
+      "summary": "Status columns of task cards with priority, due date and assignee; a per-card actions menu (Popover + Menu) moves and deletes tasks without drag and drop.",
+      "description": "Kanban-style board for tasks, tickets or pipeline stages. Each card shows the essentials as text; moving a task is a menu action so the board works by keyboard. Includes the menu-button composition (PopoverTrigger + Menu) for row and card actions anywhere in an app.",
+      "useCases": [
+        "kanban board",
+        "task board",
+        "task management",
+        "pipeline stages",
+        "ticket board",
+        "card actions menu",
+        "row actions menu"
+      ],
+      "whenToUse": [
+        "Items move through a few ordered statuses and users scan by status."
+      ],
+      "whenNotToUse": [
+        "Many items needing sorting/filtering by several fields: use list-page (offer both as a Board/List toggle).",
+        "More than ~6 statuses."
+      ],
+      "keywords": [
+        "kanban",
+        "board",
+        "tasks",
+        "columns",
+        "cards",
+        "status",
+        "workflow",
+        "menu",
+        "actions",
+        "dropdown",
+        "more menu",
+        "overflow menu"
+      ],
+      "components": {
+        "required": [
+          "CardContainer",
+          "CardContent",
+          "Badge",
+          "Popover",
+          "PopoverTrigger",
+          "PopoverContent",
+          "Menu",
+          "MenuItem"
+        ],
+        "optional": [
+          "Avatar",
+          "MenuLabel",
+          "MenuSeparator",
+          "IconButton",
+          "Tooltip"
+        ]
+      },
+      "composition": [
+        {
+          "element": "div",
+          "role": "Board: grid, 1 column on phones, md:grid-cols-2, 2xl:grid-cols-4",
+          "children": [
+            {
+              "element": "section",
+              "role": "Column (aria-labelledby its h2), bg-muted/50",
+              "children": [
+                {
+                  "component": "IconButton",
+                  "role": "Add task to this column"
+                },
+                {
+                  "component": "CardContainer",
+                  "role": "TaskCard",
+                  "children": [
+                    {
+                      "component": "CardContent",
+                      "children": [
+                        {
+                          "component": "PopoverTrigger",
+                          "role": "Actions menu button (aria-label names the task)"
+                        },
+                        {
+                          "component": "Popover",
+                          "children": [
+                            {
+                              "component": "PopoverContent",
+                              "role": "align=end",
+                              "children": [
+                                {
+                                  "component": "Menu",
+                                  "children": [
+                                    {
+                                      "component": "MenuLabel"
+                                    },
+                                    {
+                                      "component": "MenuItem",
+                                      "role": "Move to <status>"
+                                    },
+                                    {
+                                      "component": "MenuSeparator"
+                                    },
+                                    {
+                                      "component": "MenuItem",
+                                      "role": "destructive: Delete"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "component": "Badge",
+                          "role": "priority"
+                        },
+                        {
+                          "component": "Avatar",
+                          "role": "assignee"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "layout": [
+        "Columns stack on phones, pair from md and go four-up only from 2xl: next to a w-64 NavPanel, xl leaves ~230px per column, too narrow for card metadata.",
+        "Popover is not portaled: never put a menu trigger inside an overflow-x/overflow-y container (a horizontally scrolling board, a scroll area) or the menu is clipped.",
+        "A card shows title, project, priority Badge, due date, assignee; details open in detail-page or form-dialog.",
+        "Menu button: Nucleux has no MenuButton component. PopoverTrigger renders the <button>: give it IconButton-like classes and an aria-label, and control Popover open so picking an item closes it.",
+        "Show an empty column as a dashed placeholder, not nothing."
+      ],
+      "responsive": [
+        "1 column below md, 2 from md, 4 from 2xl (grid items-start so short columns don't stretch).",
+        "Avoid a horizontally scrolling board: it clips the card menus (see Layout)."
+      ],
+      "tokens": [
+        "bg-muted/50 columns",
+        "Badge variants for priority",
+        "text-destructive for overdue (with the word \"Overdue\")"
+      ],
+      "accessibility": [
+        "Each column is a section labelled by its heading; card titles are h3.",
+        "Moving and deleting are menu items, so no drag and drop is required (add drag as an enhancement only).",
+        "Menu has role=menu/menuitem; the trigger's aria-label says whose actions it opens."
+      ],
+      "states": "Loading: three Skeleton cards per column. Empty board: ErrorState variant=empty with a create action.",
+      "antiPatterns": [
+        "Drag and drop as the only way to change status.",
+        "Nesting an IconButton inside PopoverTrigger (button inside button).",
+        "Status shown only by card color."
+      ],
+      "related": [
+        "list-page",
+        "form-dialog",
+        "detail-page"
+      ],
+      "dependencies": {
+        "npm": [
+          {
+            "name": "lucide-react",
+            "reason": "Icons in the example."
+          }
+        ]
+      },
+      "example": "example.tsx",
+      "packages": [
+        "@nucleux/avatar",
+        "@nucleux/badge",
+        "@nucleux/card",
+        "@nucleux/icon-button",
+        "@nucleux/menu",
+        "@nucleux/popover",
+        "@nucleux/tooltip"
+      ],
+      "exampleSource": "import { useState } from \"react\";\nimport { Calendar, MoreHorizontal, Plus } from \"lucide-react\";\nimport {\n  Avatar,\n  Badge,\n  CardContainer,\n  CardContent,\n  IconButton,\n  Menu,\n  MenuItem,\n  MenuLabel,\n  MenuSeparator,\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from \"@nucleux/react\";\n\nexport type Status = \"todo\" | \"doing\" | \"review\" | \"done\";\n\nexport interface Task {\n  id: string;\n  title: string;\n  project: string;\n  priority: \"low\" | \"medium\" | \"high\";\n  due: string;\n  overdue?: boolean;\n  assignee: { name: string; initials: string };\n  status: Status;\n}\n\nconst COLUMNS: Array<{ id: Status; title: string }> = [\n  { id: \"todo\", title: \"To do\" },\n  { id: \"doing\", title: \"In progress\" },\n  { id: \"review\", title: \"In review\" },\n  { id: \"done\", title: \"Done\" },\n];\n\nconst PRIORITY_BADGE = { low: \"outline\", medium: \"secondary\", high: \"default\" } as const;\n\nconst INITIAL: Task[] = [\n  { id: \"t1\", title: \"Homepage hero section\", project: \"Website redesign\", priority: \"high\", due: \"Oct 18\", assignee: { name: \"Mei Tanaka\", initials: \"MT\" }, status: \"doing\" },\n  { id: \"t2\", title: \"Push notification permissions\", project: \"Mobile onboarding\", priority: \"high\", due: \"Oct 14\", overdue: true, assignee: { name: \"Luis Ortega\", initials: \"LO\" }, status: \"todo\" },\n  { id: \"t3\", title: \"Invoice export\", project: \"Billing migration\", priority: \"medium\", due: \"Oct 25\", assignee: { name: \"Priya Shah\", initials: \"PS\" }, status: \"review\" },\n  { id: \"t4\", title: \"Retention cohort queries\", project: \"Q3 analytics\", priority: \"low\", due: \"Sep 10\", assignee: { name: \"Sam Lee\", initials: \"SL\" }, status: \"done\" },\n];\n\n/**\n * Row/card actions as a menu button. Nucleux has no dedicated menu-button\n * component: PopoverTrigger is the button (style it like a ghost IconButton\n * and give it an aria-label), PopoverContent holds a Menu. Control `open` so\n * choosing an item closes the menu.\n */\nexport function ActionsMenu({ label, onMove, onDelete }: {\n  label: string;\n  onMove: (to: Status) => void;\n  onDelete: () => void;\n}) {\n  const [open, setOpen] = useState(false);\n  const pick = (fn: () => void) => () => {\n    setOpen(false);\n    fn();\n  };\n  return (\n    <Popover open={open} onOpenChange={setOpen}>\n      <PopoverTrigger\n        aria-label={label}\n        className=\"inline-flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n      >\n        <MoreHorizontal className=\"size-4\" />\n      </PopoverTrigger>\n      <PopoverContent align=\"end\" className=\"w-48 p-1\">\n        <Menu className=\"border-0 p-0 shadow-none\">\n          <MenuLabel>Move to</MenuLabel>\n          {COLUMNS.map((c) => (\n            <MenuItem key={c.id} onClick={pick(() => onMove(c.id))}>\n              {c.title}\n            </MenuItem>\n          ))}\n          <MenuSeparator />\n          <MenuItem destructive onClick={pick(onDelete)}>\n            Delete\n          </MenuItem>\n        </Menu>\n      </PopoverContent>\n    </Popover>\n  );\n}\n\n/** One task. Everything a card shows is also reachable as text (no color-only status). */\nexport function TaskCard({ task, onMove, onDelete }: { task: Task; onMove: (to: Status) => void; onDelete: () => void }) {\n  return (\n    <CardContainer>\n      <CardContent className=\"space-y-3 p-4\">\n        <div className=\"flex items-start justify-between gap-2\">\n          <div className=\"min-w-0\">\n            <h3 className=\"text-sm font-medium text-foreground\">{task.title}</h3>\n            <p className=\"mt-0.5 truncate text-xs text-muted-foreground\">{task.project}</p>\n          </div>\n          <ActionsMenu label={`Actions for ${task.title}`} onMove={onMove} onDelete={onDelete} />\n        </div>\n        <div className=\"flex items-center gap-2\">\n          <Badge variant={PRIORITY_BADGE[task.priority]}>{task.priority[0].toUpperCase() + task.priority.slice(1)}</Badge>\n          <span className={`inline-flex items-center gap-1 whitespace-nowrap text-xs ${task.overdue ? \"text-destructive\" : \"text-muted-foreground\"}`}>\n            <Calendar aria-hidden className=\"size-3.5\" />\n            {task.overdue ? `Overdue · ${task.due}` : task.due}\n          </span>\n          <span className=\"ml-auto\">\n            <Avatar role=\"user\" name={task.assignee.name} initials={task.assignee.initials} />\n          </span>\n        </div>\n      </CardContent>\n    </CardContainer>\n  );\n}\n\n/**\n * Kanban board: status columns of task cards in a grid that stacks on phones,\n * pairs from md and shows all four columns from 2xl. No overflow container:\n * Popover is not portaled, so a scroll container would clip the card menus.\n * Moving a task is a menu action, so the board works by keyboard without drag\n * and drop.\n */\nexport default function TaskBoardExample() {\n  const [tasks, setTasks] = useState(INITIAL);\n  const move = (id: string, to: Status) => setTasks((ts) => ts.map((t) => (t.id === id ? { ...t, status: to } : t)));\n  const remove = (id: string) => setTasks((ts) => ts.filter((t) => t.id !== id));\n\n  return (\n    <div className=\"p-4 sm:p-6 lg:p-8\">\n      <h1 className=\"sr-only\">Task board</h1>\n      <div className=\"grid items-start gap-4 md:grid-cols-2 2xl:grid-cols-4\">\n        {COLUMNS.map((col) => {\n          const items = tasks.filter((t) => t.status === col.id);\n          return (\n            <section\n              key={col.id}\n              aria-labelledby={`col-${col.id}`}\n              className=\"flex min-w-0 flex-col gap-3 rounded-xl bg-muted/50 p-3\"\n            >\n              <div className=\"flex items-center justify-between px-1\">\n                <h2 id={`col-${col.id}`} className=\"text-sm font-semibold text-foreground\">\n                  {col.title} <span className=\"font-normal text-muted-foreground\">{items.length}</span>\n                </h2>\n                <IconButton size=\"sm\" aria-label={`Add task to ${col.title}`}>\n                  <Plus className=\"size-4\" />\n                </IconButton>\n              </div>\n              {items.length === 0 ? (\n                <p className=\"rounded-lg border border-dashed border-border p-4 text-center text-xs text-muted-foreground\">\n                  No tasks\n                </p>\n              ) : (\n                items.map((t) => (\n                  <TaskCard key={t.id} task={t} onMove={(to) => move(t.id, to)} onDelete={() => remove(t.id)} />\n                ))\n              )}\n            </section>\n          );\n        })}\n      </div>\n    </div>\n  );\n}"
     }
   ]
 }

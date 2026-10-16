@@ -113,6 +113,12 @@ Prompt: `build_with_nucleux` (optional `request`) returns the full workflow.
 | `dashboard-overview` | KPI cards, progress panel, recent activity |
 | `settings-page` | Tabbed settings: profile form + toggle rows |
 | `page-states` | Loading, empty and error states for async data |
+| `detail-page` | One record: breadcrumb, header with status + actions, tabbed facts, delete confirmation |
+| `form-dialog` | Create/edit form in a dialog with validation and a success toast |
+| `multi-step-form` | Wizard/onboarding/checkout: steps with Progress, per-step validation, review |
+| `auth-sign-in` | Sign-in (and sign-up/reset) card with field and form-level errors |
+| `analytics-charts` | Chart cards with ChartContainer (Recharts), token colors, accessible summaries |
+| `task-board` | Kanban columns of task cards with a keyboard-friendly actions menu |
 
 Each pattern's example is typechecked against the library and render- and
 axe-tested in CI, so a pattern cannot reference a component or prop that does
@@ -156,9 +162,13 @@ All of this runs in `pnpm --filter @nucleux/mcp build`. To add a pattern, see
 
 ## Known limitations
 
-- Five curated patterns so far. Not yet covered: authentication screens,
-  multi-step forms, detail pages, analytics charts, e-commerce flows. Agents
-  compose these from components and report them as gaps.
+- Eleven curated patterns. Not yet covered: e-commerce (product grid, cart),
+  calendars/scheduling, chat-first agent layouts as patterns (see
+  `get_example agent-chat`). Agents compose these from components and report
+  them as gaps.
+- `Popover` (and so the menu-button composition) is not portaled: a menu
+  inside an `overflow-*` container is clipped. The `task-board` pattern
+  documents the layout that avoids it.
 - Props are read syntactically: inherited DOM props are named by their
   `extends` type, not expanded; types imported from other packages are shown
   by name.

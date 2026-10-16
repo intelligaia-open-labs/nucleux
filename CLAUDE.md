@@ -47,7 +47,9 @@ Common props follow the system conventions: `variant` (not `severity`/`color`),
 tokens (`bg-muted`, `text-foreground`, `text-destructive`…) — never raw hex.
 
 **Pages and apps:** start from a curated pattern in `knowledge/patterns/`
-(app-shell, list-page, dashboard-overview, settings-page, page-states), or ask the
+(app-shell, list-page, detail-page, dashboard-overview, analytics-charts,
+settings-page, form-dialog, multi-step-form, auth-sign-in, task-board,
+page-states), or ask the
 `nucleux` MCP server (`search_patterns` → `get_pattern` → `get_component`). This
 list is checked by `src/test/docs.test.ts`; never add a name the catalog lacks.
 

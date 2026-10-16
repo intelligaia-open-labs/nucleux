@@ -152,7 +152,8 @@
   "related": [
     "app-shell",
     "list-page",
-    "page-states"
+    "page-states",
+    "analytics-charts"
   ],
   "dependencies": {
     "npm": [

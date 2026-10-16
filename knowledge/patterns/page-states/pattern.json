@@ -5,27 +5,76 @@
   "since": "0.5.0",
   "summary": "One AsyncContent wrapper that renders a skeleton, a recoverable error, an empty state with an action, or the content.",
   "description": "Every page or card that loads data needs all four states. Skeleton mirrors the content's shape while loading; ErrorState covers both failures (variant=error, with Retry) and empty collections (variant=empty, with the create action).",
-  "useCases": ["loading state", "empty state", "error state", "no results", "first-run empty page", "retry after failure"],
-  "whenToUse": ["Any view backed by async data."],
-  "whenNotToUse": ["Inline field validation (use Input invalid + Alert in forms).", "Transient success/failure notices after an action (use Toast)."],
-  "keywords": ["loading", "skeleton", "empty", "error", "no data", "no results", "retry", "placeholder", "state", "spinner"],
+  "useCases": [
+    "loading state",
+    "empty state",
+    "error state",
+    "no results",
+    "first-run empty page",
+    "retry after failure"
+  ],
+  "whenToUse": [
+    "Any view backed by async data."
+  ],
+  "whenNotToUse": [
+    "Inline field validation (use Input invalid + Alert in forms).",
+    "Transient success/failure notices after an action (use Toast)."
+  ],
+  "keywords": [
+    "loading",
+    "skeleton",
+    "empty",
+    "error",
+    "no data",
+    "no results",
+    "retry",
+    "placeholder",
+    "state",
+    "spinner"
+  ],
   "components": {
-    "required": ["ErrorState", "Skeleton", "Button"],
-    "optional": ["Alert", "Toast"]
+    "required": [
+      "ErrorState",
+      "Skeleton",
+      "Button"
+    ],
+    "optional": [
+      "Alert",
+      "Toast"
+    ]
   },
   "composition": [
-    { "element": "AsyncContent", "role": "App-level helper (in the example) switching on a LoadState union", "children": [
-      { "component": "Skeleton", "role": "loading: role=status, mirrors content layout" },
-      { "component": "ErrorState", "role": "error: variant=error, role=alert, Retry Button in actions" },
-      { "component": "ErrorState", "role": "empty: variant=empty, primary create Button in actions" }
-    ] }
+    {
+      "element": "AsyncContent",
+      "role": "App-level helper (in the example) switching on a LoadState union",
+      "children": [
+        {
+          "component": "Skeleton",
+          "role": "loading: role=status, mirrors content layout"
+        },
+        {
+          "component": "ErrorState",
+          "role": "error: variant=error, role=alert, Retry Button in actions"
+        },
+        {
+          "component": "ErrorState",
+          "role": "empty: variant=empty, primary create Button in actions"
+        }
+      ]
+    }
   ],
   "layout": [
     "Render states in the same box the content will occupy, so the page does not jump.",
     "Distinguish \"no records yet\" (empty state + create action) from \"no matches\" (DataTable emptyMessage + clear filters)."
   ],
-  "responsive": ["ErrorState is centered and width-agnostic; Skeleton rows should use the same responsive grid as the content."],
-  "tokens": ["bg-muted (Skeleton)", "text-destructive (ErrorState error icon tint)", "text-muted-foreground"],
+  "responsive": [
+    "ErrorState is centered and width-agnostic; Skeleton rows should use the same responsive grid as the content."
+  ],
+  "tokens": [
+    "bg-muted (Skeleton)",
+    "text-destructive (ErrorState error icon tint)",
+    "text-muted-foreground"
+  ],
   "accessibility": [
     "Loading container: role=status aria-live=polite with a visually hidden \"Loading…\".",
     "Error container: role=alert so the failure is announced.",
@@ -36,7 +85,19 @@
     "Blank screens when a list is empty.",
     "Error text with no recovery action."
   ],
-  "related": ["list-page", "dashboard-overview", "settings-page"],
-  "dependencies": { "npm": [ { "name": "lucide-react", "reason": "Icons in the example." } ] },
+  "related": [
+    "list-page",
+    "dashboard-overview",
+    "settings-page",
+    "detail-page"
+  ],
+  "dependencies": {
+    "npm": [
+      {
+        "name": "lucide-react",
+        "reason": "Icons in the example."
+      }
+    ]
+  },
   "example": "example.tsx"
 }

@@ -1,0 +1,41 @@
+{
+  "id": "multi-step-form",
+  "name": "Multi-step form",
+  "status": "curated",
+  "since": "0.5.0",
+  "summary": "One card with a step counter and Progress, one field group per step, per-step validation, Back/Next, and a review step before submit.",
+  "description": "Onboarding, setup wizards, checkout and other flows that are too long for one screen. Each step validates before advancing; the last step lists every answer for review.",
+  "useCases": ["onboarding wizard", "setup wizard", "checkout flow", "multi-step form", "stepper", "registration flow"],
+  "whenToUse": ["More than ~6 fields that split into ordered groups.", "Later questions depend on earlier answers."],
+  "whenNotToUse": ["Settings users revisit in any order: use settings-page tabs.", "Short forms: one card or form-dialog."],
+  "keywords": ["wizard", "stepper", "steps", "multi-step", "onboarding", "checkout", "flow", "progress", "form"],
+  "components": {
+    "required": ["CardContainer", "CardHeader", "CardTitle", "CardContent", "Progress", "Button"],
+    "optional": ["CardDivider", "Alert", "Input", "Label", "Select", "RadioGroup", "Radio", "Checkbox", "Textarea"]
+  },
+  "composition": [
+    { "element": "main", "role": "Narrow container (max-w-xl)", "children": [
+      { "component": "CardContainer", "children": [
+        { "element": "form", "role": "noValidate; submit = Next / final submit", "children": [
+          { "component": "CardHeader", "role": "Step N of M (aria-live), Progress, step title", "children": [ { "component": "Progress" }, { "component": "CardTitle" } ] },
+          { "component": "CardDivider" },
+          { "component": "CardContent", "role": "Current step's fields; review step is a <dl>", "children": [
+            { "component": "Alert", "role": "destructive, after a failed Next" },
+            { "component": "Label" }, { "component": "Input" }, { "component": "Select" }, { "component": "RadioGroup", "children": [ { "component": "Radio" } ] },
+            { "component": "Button", "role": "Back, ghost, disabled on step 1" },
+            { "component": "Button", "role": "Next / final action, type=submit variant=cta" }
+          ] }
+        ] }
+      ] }
+    ] }
+  ],
+  "layout": ["Keep Back/Next in the same place on every step.", "Name the step in the header, and name the final action for what it does (\"Create workspace\").", "Keep answers in one state object so Back never loses input."],
+  "responsive": ["Single column at every width; the card is full width on phones."],
+  "tokens": ["Progress size sm", "Button cta for Next", "text-muted-foreground step counter"],
+  "accessibility": ["The step counter is aria-live=polite so screen readers hear the step change.", "Move focus to the step title or first field when the step changes in your app.", "Progress has an aria-label."],
+  "states": "Final submit pending: disable both buttons. Failure: Alert on the review step with the answers intact.",
+  "antiPatterns": ["Validating every step only at the end.", "Discarding later answers when going Back.", "Using AgentSteps for form steps: it is for showing an AI agent's progress."],
+  "related": ["auth-sign-in", "settings-page", "form-dialog"],
+  "dependencies": { "npm": [ { "name": "lucide-react", "reason": "Icons in the example." } ] },
+  "example": "example.tsx"
+}

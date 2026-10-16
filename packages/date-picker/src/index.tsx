@@ -11,6 +11,7 @@ export interface DatePickerProps {
   disabled?: boolean;
   /** Disable individual days. */
   isDateDisabled?: (date: Date) => boolean;
+  /** Classes for the root; sets the width (default `w-60`; pass `w-full` in forms). */
   className?: string;
   "aria-label"?: string;
 }
@@ -60,7 +61,7 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
     };
 
     return (
-      <div ref={rootRef} className={cn("relative inline-block", className)}>
+      <div ref={rootRef} className={cn("relative inline-block w-60", className)}>
         <button
           ref={ref}
           type="button"
@@ -70,7 +71,7 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
           className={cn(
-            "flex h-9 w-60 items-center gap-2 rounded-md border border-input bg-background px-3 text-left text-sm shadow-sm",
+            "flex h-9 w-full items-center gap-2 rounded-md border border-input bg-background px-3 text-left text-sm shadow-sm",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background",
             "disabled:cursor-not-allowed disabled:opacity-50",
             !selected && "text-muted-foreground",

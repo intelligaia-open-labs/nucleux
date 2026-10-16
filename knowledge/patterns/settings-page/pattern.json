@@ -179,7 +179,8 @@
   ],
   "related": [
     "app-shell",
-    "page-states"
+    "page-states",
+    "multi-step-form"
   ],
   "dependencies": {
     "npm": []

@@ -3022,7 +3022,7 @@
       "props": [
         {
           "name": "DatePickerProps",
-          "source": "export interface DatePickerProps {\n  value?: Date;\n  defaultValue?: Date;\n  onValueChange?: (date: Date | undefined) => void;\n  placeholder?: string;\n  disabled?: boolean;\n  /** Disable individual days. */\n  isDateDisabled?: (date: Date) => boolean;\n  className?: string;\n  \"aria-label\"?: string;\n}",
+          "source": "export interface DatePickerProps {\n  value?: Date;\n  defaultValue?: Date;\n  onValueChange?: (date: Date | undefined) => void;\n  placeholder?: string;\n  disabled?: boolean;\n  /** Disable individual days. */\n  isDateDisabled?: (date: Date) => boolean;\n  /** Classes for the root; sets the width (default `w-60`; pass `w-full` in forms). */\n  className?: string;\n  \"aria-label\"?: string;\n}",
           "members": [
             {
               "name": "value",
@@ -3060,7 +3060,8 @@
             {
               "name": "className",
               "type": "string",
-              "required": false
+              "required": false,
+              "description": "Classes for the root; sets the width (default `w-60`; pass `w-full` in forms)."
             },
             {
               "name": "aria-label",

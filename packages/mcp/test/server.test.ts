@@ -85,6 +85,12 @@ describe("MCP server", () => {
     ["responsive sidebar navigation with a mobile menu", "app-shell"],
     ["profile and notification settings", "settings-page"],
     ["loading skeleton and empty state", "page-states"],
+    ["login page with forgot password", "auth-sign-in"],
+    ["project detail view with delete confirmation", "detail-page"],
+    ["create task modal form", "form-dialog"],
+    ["onboarding wizard with steps", "multi-step-form"],
+    ["weekly trend line chart", "analytics-charts"],
+    ["kanban board of tasks", "task-board"],
   ])("search_patterns(%j) ranks %s first", async (query, expected) => {
     const { text, isError } = await call("search_patterns", { query });
     expect(isError).toBe(false);
@@ -92,7 +98,7 @@ describe("MCP server", () => {
   });
 
   it("search_patterns says so when nothing matches instead of inventing one", async () => {
-    const { text } = await call("search_patterns", { query: "checkout cart" });
+    const { text } = await call("search_patterns", { query: "video editor timeline" });
     expect(text).toMatch(/No curated Nucleux pattern matches/);
     expect(text).toMatch(/do not present it as a Nucleux pattern/);
   });
