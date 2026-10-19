@@ -3,8 +3,8 @@
   "name": "Application shell",
   "status": "curated",
   "since": "0.5.0",
-  "summary": "Persistent left navigation, top bar with search and account, and a mobile navigation sheet around the page content.",
-  "description": "The frame every page of a multi-page web app renders inside. On large screens a NavPanel column holds the primary navigation; below the lg breakpoint it is replaced by a menu button in the GlobalNav that opens the same links in a left Sheet. Build it once and wrap every route in it.",
+  "summary": "Collapsible sidebar navigation, a top bar with search and account, and a phone navigation sheet around the page content.",
+  "description": "The frame every page of a multi-page web app renders inside, built on the shadcn-style Sidebar. On desktop the Sidebar sits beside the page and collapses to icons (with tooltips) via SidebarTrigger or ⌘B / Ctrl+B; below md the same Sidebar opens as a sheet. Build it once and wrap every route in it.",
   "useCases": [
     "SaaS application layout",
     "admin panel frame",
@@ -35,89 +35,120 @@
   ],
   "components": {
     "required": [
-      "GlobalNav",
-      "NavPanel",
-      "NavSection",
-      "NavItem",
-      "Sheet",
-      "SheetHeader",
-      "SheetTitle",
-      "SheetBody",
+      "SidebarProvider",
+      "Sidebar",
+      "SidebarContent",
+      "SidebarGroup",
+      "SidebarGroupContent",
+      "SidebarMenu",
+      "SidebarMenuItem",
+      "SidebarMenuButton",
+      "SidebarInset",
+      "SidebarTrigger",
+      "useSidebar",
       "Button"
     ],
     "optional": [
+      "SidebarHeader",
+      "SidebarFooter",
+      "SidebarGroupLabel",
+      "SidebarRail",
+      "SidebarMenuBadge",
+      "SidebarMenuSub",
+      "SidebarMenuSubItem",
+      "SidebarMenuSubButton",
       "Input",
       "Avatar",
-      "Sidebar",
-      "SidebarItem",
       "DropdownMenu",
       "DropdownMenuItem"
     ]
   },
   "composition": [
     {
-      "element": "div",
-      "role": "Full-height flex row (h-screen bg-background)",
+      "component": "SidebarProvider",
+      "role": "Wraps the whole app layout; owns open state and the ⌘B shortcut",
       "children": [
         {
-          "component": "NavPanel",
-          "role": "Desktop navigation column, hidden below lg",
+          "component": "Sidebar",
+          "role": "collapsible=\"icon\"; a sheet below md",
           "children": [
             {
-              "component": "NavSection",
-              "role": "Group of links",
+              "component": "SidebarHeader",
+              "role": "App name (sr-only when collapsed to icons)"
+            },
+            {
+              "component": "SidebarContent",
               "children": [
                 {
-                  "component": "NavItem",
-                  "role": "One link per section; active marks the current route"
+                  "element": "nav",
+                  "role": "aria-label=\"Primary\"",
+                  "children": [
+                    {
+                      "component": "SidebarGroup",
+                      "children": [
+                        {
+                          "component": "SidebarGroupLabel"
+                        },
+                        {
+                          "component": "SidebarGroupContent",
+                          "children": [
+                            {
+                              "component": "SidebarMenu",
+                              "children": [
+                                {
+                                  "component": "SidebarMenuItem",
+                                  "children": [
+                                    {
+                                      "component": "SidebarMenuButton",
+                                      "role": "asChild around an <a href>; isActive for the current route; tooltip = label (shown when collapsed)"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
+            },
+            {
+              "component": "SidebarRail",
+              "role": "Edge hit area that toggles the sidebar"
             }
           ]
         },
         {
-          "element": "div",
-          "role": "Content column (flex-1 min-w-0)",
+          "component": "SidebarInset",
+          "role": "The page column (a <main>)",
           "children": [
             {
-              "component": "GlobalNav",
-              "role": "Top bar",
+              "element": "header",
+              "role": "Sticky top bar (h-14 border-b)",
               "children": [
                 {
-                  "component": "Button",
-                  "role": "left slot: opens the navigation Sheet, visible below lg"
+                  "component": "SidebarTrigger",
+                  "role": "Toggles the sidebar (sheet on phones)"
                 },
                 {
                   "component": "Input",
-                  "role": "center slot: global search, hidden below sm"
+                  "role": "type=\"search\" global search, hidden below sm"
+                },
+                {
+                  "component": "Button",
+                  "role": "variant=\"ghost\" size=\"icon\" Notifications"
                 },
                 {
                   "component": "Avatar",
-                  "role": "right slot: current user"
+                  "role": "Current user"
                 }
               ]
             },
             {
-              "element": "main",
-              "role": "Scrollable page content; each route renders here"
-            }
-          ]
-        },
-        {
-          "component": "Sheet",
-          "role": "Mobile navigation drawer (side=left)",
-          "children": [
-            {
-              "component": "SheetHeader",
-              "children": [
-                {
-                  "component": "SheetTitle"
-                }
-              ]
-            },
-            {
-              "component": "SheetBody",
-              "role": "Same NavSection/NavItem list as the desktop column"
+              "element": "div",
+              "role": "Page content; each route renders here"
             }
           ]
         }
@@ -125,36 +156,35 @@
     }
   ],
   "layout": [
-    "Root is a full-height flex row; only <main> scrolls (min-h-0 flex-1 overflow-y-auto).",
-    "NavPanel is a fixed 16rem (w-64) column; the content column must be min-w-0 so tables can scroll inside it.",
-    "Render one nav list component and reuse it in both NavPanel and Sheet so links never diverge.",
-    "Pages inside <main> own their padding and max width (see list-page, dashboard-overview)."
+    "SidebarProvider wraps the whole layout once, around the routes; Sidebar and SidebarInset are its direct children.",
+    "SidebarInset is the page column: put the top bar and the routed page inside it. Pages own their padding and max width (see list-page, dashboard-overview).",
+    "Use collapsible=\"icon\" for apps people work in all day (icons + tooltips when collapsed); \"offcanvas\" for content sites.",
+    "Close the phone sheet after navigating: useSidebar().setOpenMobile(false) when isMobile."
   ],
   "responsive": [
-    "lg and up: NavPanel visible (hidden lg:flex); menu Button (variant=\"ghost\" size=\"icon\") hidden (lg:hidden).",
-    "Below lg: NavPanel hidden; icon Button (size=\"icon\") opens the Sheet; close the Sheet after navigating.",
-    "Below sm: hide the center search Input (type=\"search\", className=\"hidden sm:block\") or move search into the page.",
-    "GlobalNav default horizontal padding is px-6; pass className=\"px-4 sm:px-6\" on narrow screens."
+    "md and up: Sidebar beside the page; SidebarTrigger collapses it (to icons with collapsible=\"icon\").",
+    "Below md: Sidebar renders as a sheet that SidebarTrigger opens; close it after navigating.",
+    "Below sm: hide the header search Input (className=\"hidden sm:block\") or move search into the page."
   ],
   "tokens": [
     "bg-background",
     "text-foreground",
     "border-border",
-    "bg-muted/30 (NavPanel)",
-    "bg-accent (active NavItem)"
+    "bg-muted/40 (sidebar surface)",
+    "bg-accent (active SidebarMenuButton)"
   ],
   "accessibility": [
-    "Give the navigation an accessible name (aria-label=\"Primary\") in both places it renders.",
-    "Icon-only Buttons (size=\"icon\") require aria-label (\"Open navigation\", \"Notifications\").",
-    "NavItem sets aria-current=\"page\" when active; drive active from the router, not local state.",
-    "Sheet is role=dialog aria-modal with its title wired to aria-labelledby; always render SheetTitle."
+    "Wrap the menu in <nav aria-label=\"Primary\">.",
+    "SidebarMenuButton isActive sets aria-current=\"page\"; drive it from the router, not local state.",
+    "SidebarTrigger has an accessible name (\"Toggle Sidebar\"); other icon-only Buttons need aria-label (\"Notifications\").",
+    "When collapsed to icons, every SidebarMenuButton needs tooltip so the label is still visible on hover and focus."
   ],
-  "routing": "NavItem renders an <a>. Keep href for real URLs and call preventDefault + your router's navigate in onClick (React Router, TanStack Router); in Next.js wrap with next/link's legacyBehavior or call router.push.",
+  "routing": "SidebarMenuButton asChild renders your link. With React Router or TanStack Router pass their <Link>; with a plain <a>, keep href for real URLs and call preventDefault + navigate in onClick. In Next.js pass next/link's <Link>.",
   "antiPatterns": [
-    "Hand-rolling a sidebar <aside> with custom link styles instead of NavPanel/NavItem.",
+    "Hand-rolling an <aside> with custom link styles instead of Sidebar/SidebarMenuButton.",
     "Rendering the shell inside each page instead of once around the routes.",
-    "Two separately maintained link lists for desktop and mobile.",
-    "Hiding navigation on mobile with no way to reach it."
+    "A second, separately maintained link list for phones (the Sidebar already becomes a sheet).",
+    "Icon-only collapsed items without tooltip."
   ],
   "related": [
     "dashboard-overview",

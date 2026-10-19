@@ -22,9 +22,9 @@
     "note": "Every component is also re-exported from the @nucleux/react umbrella. Icons in the examples come from lucide-react (optional; any icon set works)."
   },
   "counts": {
-    "components": 99,
-    "packages": 104,
-    "examples": 4
+    "components": 111,
+    "packages": 116,
+    "examples": 6
   },
   "packages": [
     {
@@ -747,6 +747,135 @@
       }
     },
     {
+      "name": "bubble",
+      "package": "@nucleux/bubble",
+      "kind": "component",
+      "description": "Stacks consecutive bubbles from the same sender with a small gap.",
+      "summary": "Chat message bubble with reactions — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "bubble"
+      ],
+      "exports": [
+        "BubbleGroup",
+        "bubbleVariants",
+        "Bubble",
+        "BubbleContent",
+        "BubbleReactions",
+        "BubbleVariant",
+        "BubbleAlign",
+        "BubbleReactionsSide",
+        "BubbleGroupProps",
+        "BubbleProps",
+        "BubbleContentProps",
+        "BubbleReactionsProps"
+      ],
+      "components": [
+        "BubbleGroup",
+        "Bubble",
+        "BubbleContent",
+        "BubbleReactions"
+      ],
+      "import": "import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from \"@nucleux/bubble\";",
+      "installSingle": "pnpm add @nucleux/bubble @nucleux/tokens",
+      "props": [
+        {
+          "name": "BubbleProps",
+          "source": "export interface BubbleProps extends React.HTMLAttributes<HTMLDivElement> {\n  /**\n   * Fill of the BubbleContent: \"default\" (primary), \"secondary\", \"muted\",\n   * \"tinted\" (light primary), \"outline\", \"ghost\" (no chrome, full width) or\n   * \"destructive\" (an error message).\n   */\n  variant?: BubbleVariant;\n  /** \"start\" (default, incoming) or \"end\" (outgoing: pushed to the trailing side). */\n  align?: BubbleAlign;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "variant",
+              "type": "BubbleVariant",
+              "required": false,
+              "description": "Fill of the BubbleContent: \"default\" (primary), \"secondary\", \"muted\", \"tinted\" (light primary), \"outline\", \"ghost\" (no chrome, full width) or \"destructive\" (an error message).",
+              "values": [
+                "default",
+                "secondary",
+                "muted",
+                "tinted",
+                "outline",
+                "ghost",
+                "destructive"
+              ],
+              "default": "\"default\""
+            },
+            {
+              "name": "align",
+              "type": "BubbleAlign",
+              "required": false,
+              "description": "\"start\" (default, incoming) or \"end\" (outgoing: pushed to the trailing side).",
+              "values": [
+                "start",
+                "end"
+              ],
+              "default": "\"start\""
+            }
+          ]
+        },
+        {
+          "name": "BubbleContentProps",
+          "source": "export interface BubbleContentProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Render the single child (e.g. a `<button>` or `<a>`) as the bubble surface, making it interactive. */\n  asChild?: boolean;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "asChild",
+              "type": "boolean",
+              "required": false,
+              "description": "Render the single child (e.g. a `<button>` or `<a>`) as the bubble surface, making it interactive.",
+              "default": "false"
+            }
+          ]
+        },
+        {
+          "name": "BubbleReactionsProps",
+          "source": "export interface BubbleReactionsProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Corner to pin to horizontally: \"start\" or \"end\" (default). */\n  align?: BubbleAlign;\n  /** Edge to overlap: \"top\" or \"bottom\" (default). */\n  side?: BubbleReactionsSide;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "align",
+              "type": "BubbleAlign",
+              "required": false,
+              "description": "Corner to pin to horizontally: \"start\" or \"end\" (default).",
+              "values": [
+                "start",
+                "end"
+              ],
+              "default": "\"end\""
+            },
+            {
+              "name": "side",
+              "type": "BubbleReactionsSide",
+              "required": false,
+              "description": "Edge to overlap: \"top\" or \"bottom\" (default).",
+              "values": [
+                "top",
+                "bottom"
+              ],
+              "default": "\"bottom\""
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/bubble\n\nChat message bubble with reactions — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Bubble`** — the message (`variant`: `default` | `secondary` | `muted` | `tinted` | `outline` | `ghost` | `destructive`; `align`: `start` | `end`)\n- **`BubbleContent`** — the rounded surface (`asChild` for a clickable `<button>`/`<a>`)\n- **`BubbleReactions`** — reaction pill pinned to an edge (`side`: `top` | `bottom`; `align`: `start` | `end`)\n- **`BubbleGroup`** — stacks consecutive bubbles\n- **`bubbleVariants({ variant, className })`** — the class string\n\n## Install\n\n```bash\npnpm add @nucleux/bubble @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Bubble, BubbleContent, BubbleGroup, BubbleReactions } from \"@nucleux/bubble\";\n\n<BubbleGroup>\n  <Bubble align=\"end\">\n    <BubbleContent>Can you summarise the report?</BubbleContent>\n  </Bubble>\n  <Bubble variant=\"muted\">\n    <BubbleContent>Revenue grew 12% quarter over quarter.</BubbleContent>\n  </Bubble>\n</BubbleGroup>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "button",
       "package": "@nucleux/button",
       "kind": "component",
@@ -849,6 +978,83 @@
         }
       ],
       "readme": "# @nucleux/button\n\nButton — variants, sizes, and icons — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/button @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Button } from \"@nucleux/button\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "button-group",
+      "package": "@nucleux/button-group",
+      "kind": "component",
+      "description": "Joins related buttons (and inputs, selects or ButtonGroupText labels)\ninto one segmented control: inner corners are squared off and the\ntouching borders merged, and the focused child is raised so its ring\nisn't clipped. Renders `role=\"group\"`; give it an `aria-label`. Nest\nButtonGroups to get spaced clusters of joined groups.",
+      "summary": "Group of joined buttons with shared borders — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "button-group"
+      ],
+      "exports": [
+        "buttonGroupVariants",
+        "ButtonGroup",
+        "ButtonGroupText",
+        "ButtonGroupSeparator",
+        "ButtonGroupOrientation",
+        "ButtonGroupProps",
+        "ButtonGroupTextProps",
+        "ButtonGroupSeparatorProps"
+      ],
+      "components": [
+        "ButtonGroup",
+        "ButtonGroupText",
+        "ButtonGroupSeparator"
+      ],
+      "import": "import { ButtonGroup, ButtonGroupText, ButtonGroupSeparator } from \"@nucleux/button-group\";",
+      "installSingle": "pnpm add @nucleux/button-group @nucleux/tokens",
+      "props": [
+        {
+          "name": "ButtonGroupProps",
+          "source": "export interface ButtonGroupProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Lay the children out in a row (\"horizontal\", default) or a column (\"vertical\"). */\n  orientation?: ButtonGroupOrientation;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "orientation",
+              "type": "ButtonGroupOrientation",
+              "required": false,
+              "description": "Lay the children out in a row (\"horizontal\", default) or a column (\"vertical\").",
+              "values": [
+                "horizontal",
+                "vertical"
+              ],
+              "default": "\"horizontal\""
+            }
+          ]
+        },
+        {
+          "name": "ButtonGroupTextProps",
+          "source": "export interface ButtonGroupTextProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Render the single child (e.g. a `<Label>` or `<span>`) with the text block's styles. */\n  asChild?: boolean;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "asChild",
+              "type": "boolean",
+              "required": false,
+              "description": "Render the single child (e.g. a `<Label>` or `<span>`) with the text block's styles.",
+              "default": "false"
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/button-group\n\nGroup of joined buttons with shared borders — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`ButtonGroup`** — `role=\"group\"` container (`orientation`: `horizontal` | `vertical`); nest groups for spaced clusters\n- **`ButtonGroupText`** — static text/icon segment (`asChild` to render a `<label>`)\n- **`ButtonGroupSeparator`** — divider between segments\n- **`buttonGroupVariants({ orientation, className })`** — the class string\n\n## Install\n\n```bash\npnpm add @nucleux/button-group @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ButtonGroup, ButtonGroupSeparator, ButtonGroupText } from \"@nucleux/button-group\";\n\n<ButtonGroup aria-label=\"Formatting\">\n  <Button variant=\"secondary\">Bold</Button>\n  <Button variant=\"secondary\">Italic</Button>\n  <Button variant=\"secondary\">Underline</Button>\n</ButtonGroup>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -2253,6 +2459,72 @@
       }
     },
     {
+      "name": "direction",
+      "package": "@nucleux/direction",
+      "kind": "component",
+      "description": "Sets the reading direction (\"ltr\" or \"rtl\") for the components below it,\nread with `useDirection()`. It renders no DOM of its own, so also set\n`dir` on your `<html>` (or a wrapping element) for the browser's layout\nand text flow to follow. Accepts `direction` as an alias of `dir`.",
+      "summary": "Text direction (LTR/RTL) provider and hook — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "direction"
+      ],
+      "exports": [
+        "DirectionProvider",
+        "useDirection",
+        "Direction",
+        "DirectionProviderProps"
+      ],
+      "components": [
+        "DirectionProvider"
+      ],
+      "import": "import { DirectionProvider } from \"@nucleux/direction\";",
+      "installSingle": "pnpm add @nucleux/direction @nucleux/tokens",
+      "props": [
+        {
+          "name": "DirectionProviderProps",
+          "source": "export interface DirectionProviderProps {\n  /** Reading direction for everything below this provider. */\n  dir?: Direction;\n  /** Alias of `dir` (shadcn vocabulary); wins when both are given. */\n  direction?: Direction;\n  children?: React.ReactNode;\n}",
+          "members": [
+            {
+              "name": "dir",
+              "type": "Direction",
+              "required": false,
+              "description": "Reading direction for everything below this provider.",
+              "values": [
+                "ltr",
+                "rtl"
+              ]
+            },
+            {
+              "name": "direction",
+              "type": "Direction",
+              "required": false,
+              "description": "Alias of `dir` (shadcn vocabulary); wins when both are given.",
+              "values": [
+                "ltr",
+                "rtl"
+              ]
+            },
+            {
+              "name": "children",
+              "type": "React.ReactNode",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/direction\n\nText direction (LTR/RTL) provider and hook — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`DirectionProvider`** — sets `dir` (`\"ltr\"` | `\"rtl\"`; `direction` is an alias) for components below it\n- **`useDirection(localDir?)`** — returns `localDir`, else the provider's value, else `\"ltr\"`\n- **`Direction`** — the `\"ltr\" | \"rtl\"` type\n\n## Install\n\n```bash\npnpm add @nucleux/direction @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { DirectionProvider, useDirection } from \"@nucleux/direction\";\n\n<html dir=\"rtl\">\n  <DirectionProvider dir=\"rtl\">\n    <App />\n  </DirectionProvider>\n</html>\n\nfunction Arrow() {\n  const dir = useDirection();\n  return dir === \"rtl\" ? <ArrowLeft /> : <ArrowRight />;\n}\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "disclosure",
       "package": "@nucleux/disclosure",
       "kind": "component",
@@ -2314,6 +2586,258 @@
         }
       ],
       "readme": "# @nucleux/disclosure\n\nDisclosure — marks where AI is involved: an AI action, AI at work, or AI-generated content — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Disclosure`** — provenance and fallibility markers for AI-generated content\n\n## Install\n\n```bash\npnpm add @nucleux/disclosure @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Disclosure } from \"@nucleux/disclosure\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "drawer",
+      "package": "@nucleux/drawer",
+      "kind": "component",
+      "description": "A panel that slides in from an edge of the screen, typically the bottom on\nmobile. `Drawer` holds the open state (controlled with `open` /\n`onOpenChange`, or uncontrolled with `defaultOpen`) and the `direction`, and\nshares them with DrawerTrigger, DrawerContent and DrawerClose. Escape, an\noverlay click or dragging the panel towards its edge closes it.",
+      "summary": "Draggable edge drawer with focus trap and scroll lock — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "drawer"
+      ],
+      "exports": [
+        "Drawer",
+        "DrawerTrigger",
+        "DrawerPortal",
+        "DrawerOverlay",
+        "DrawerContent",
+        "DrawerHeader",
+        "DrawerFooter",
+        "DrawerTitle",
+        "DrawerDescription",
+        "DrawerClose",
+        "DrawerDirection",
+        "DrawerProps",
+        "DrawerTriggerProps",
+        "DrawerPortalProps",
+        "DrawerOverlayProps",
+        "DrawerContentProps",
+        "DrawerHeaderProps",
+        "DrawerFooterProps",
+        "DrawerTitleProps",
+        "DrawerDescriptionProps",
+        "DrawerCloseProps"
+      ],
+      "components": [
+        "Drawer",
+        "DrawerTrigger",
+        "DrawerPortal",
+        "DrawerOverlay",
+        "DrawerContent",
+        "DrawerHeader",
+        "DrawerFooter",
+        "DrawerTitle",
+        "DrawerDescription",
+        "DrawerClose"
+      ],
+      "import": "import { Drawer, DrawerTrigger, DrawerPortal, DrawerOverlay } from \"@nucleux/drawer\";",
+      "installSingle": "pnpm add @nucleux/drawer @nucleux/tokens",
+      "props": [
+        {
+          "name": "DrawerProps",
+          "source": "export interface DrawerProps {\n  /** Controlled open state. */\n  open?: boolean;\n  /** Initial open state when uncontrolled. */\n  defaultOpen?: boolean;\n  /** Called whenever the drawer asks to open or close. */\n  onOpenChange?: (open: boolean) => void;\n  /** Screen edge the drawer is attached to. Defaults to \"bottom\". */\n  direction?: DrawerDirection;\n  /** When false, Escape, overlay clicks and dragging do not close the drawer. Defaults to true. */\n  dismissible?: boolean;\n  /** Trigger, content and close parts. */\n  children?: React.ReactNode;\n}",
+          "members": [
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": false,
+              "description": "Controlled open state."
+            },
+            {
+              "name": "defaultOpen",
+              "type": "boolean",
+              "required": false,
+              "description": "Initial open state when uncontrolled.",
+              "default": "false"
+            },
+            {
+              "name": "onOpenChange",
+              "type": "(open: boolean) => void",
+              "required": false,
+              "description": "Called whenever the drawer asks to open or close."
+            },
+            {
+              "name": "direction",
+              "type": "DrawerDirection",
+              "required": false,
+              "description": "Screen edge the drawer is attached to. Defaults to \"bottom\".",
+              "values": [
+                "bottom",
+                "top",
+                "left",
+                "right"
+              ],
+              "default": "\"bottom\""
+            },
+            {
+              "name": "dismissible",
+              "type": "boolean",
+              "required": false,
+              "description": "When false, Escape, overlay clicks and dragging do not close the drawer. Defaults to true.",
+              "default": "true"
+            },
+            {
+              "name": "children",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Trigger, content and close parts."
+            }
+          ]
+        },
+        {
+          "name": "DrawerTriggerProps",
+          "source": "export interface DrawerTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  /** Render the single child element (e.g. a Nucleux `Button`) as the trigger. */\n  asChild?: boolean;\n}",
+          "extends": [
+            "React.ButtonHTMLAttributes<HTMLButtonElement>"
+          ],
+          "members": [
+            {
+              "name": "asChild",
+              "type": "boolean",
+              "required": false,
+              "description": "Render the single child element (e.g. a Nucleux `Button`) as the trigger.",
+              "default": "false"
+            }
+          ]
+        },
+        {
+          "name": "DrawerPortalProps",
+          "source": "export interface DrawerPortalProps {\n  /** Content to render outside the current DOM tree. */\n  children?: React.ReactNode;\n  /** Element to portal into. Defaults to `document.body`. */\n  container?: HTMLElement | null;\n}",
+          "members": [
+            {
+              "name": "children",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Content to render outside the current DOM tree."
+            },
+            {
+              "name": "container",
+              "type": "HTMLElement | null",
+              "required": false,
+              "description": "Element to portal into. Defaults to `document.body`."
+            }
+          ]
+        },
+        {
+          "name": "DrawerOverlayProps",
+          "source": "export interface DrawerOverlayProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Additional classes merged onto the overlay. */\n  className?: string;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": "Additional classes merged onto the overlay."
+            }
+          ]
+        },
+        {
+          "name": "DrawerContentProps",
+          "source": "export interface DrawerContentProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Additional classes merged onto the panel. */\n  className?: string;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": "Additional classes merged onto the panel."
+            }
+          ]
+        },
+        {
+          "name": "DrawerHeaderProps",
+          "source": "export interface DrawerHeaderProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Additional classes merged onto the header. */\n  className?: string;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": "Additional classes merged onto the header."
+            }
+          ]
+        },
+        {
+          "name": "DrawerFooterProps",
+          "source": "export interface DrawerFooterProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Additional classes merged onto the footer. */\n  className?: string;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": "Additional classes merged onto the footer."
+            }
+          ]
+        },
+        {
+          "name": "DrawerTitleProps",
+          "source": "export interface DrawerTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {\n  /** Additional classes merged onto the title. */\n  className?: string;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLHeadingElement>"
+          ],
+          "members": [
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": "Additional classes merged onto the title."
+            }
+          ]
+        },
+        {
+          "name": "DrawerDescriptionProps",
+          "source": "export interface DrawerDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {\n  /** Additional classes merged onto the description. */\n  className?: string;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLParagraphElement>"
+          ],
+          "members": [
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": "Additional classes merged onto the description."
+            }
+          ]
+        },
+        {
+          "name": "DrawerCloseProps",
+          "source": "export interface DrawerCloseProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  /** Render the single child element (e.g. a Nucleux `Button`) as the close control. */\n  asChild?: boolean;\n}",
+          "extends": [
+            "React.ButtonHTMLAttributes<HTMLButtonElement>"
+          ],
+          "members": [
+            {
+              "name": "asChild",
+              "type": "boolean",
+              "required": false,
+              "description": "Render the single child element (e.g. a Nucleux `Button`) as the close control.",
+              "default": "false"
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/drawer\n\nDraggable edge drawer with focus trap and scroll lock — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Drawer`** — root; `open` / `defaultOpen` / `onOpenChange`, `direction` (`\"bottom\"` default, `\"top\"`, `\"left\"`, `\"right\"`), `dismissible`\n- **`DrawerTrigger`**, **`DrawerClose`** — buttons that open / close it (`asChild` supported)\n- **`DrawerContent`** — the `role=\"dialog\"` panel (portalled, with overlay, focus trap, scroll lock, Escape and drag-to-dismiss)\n- **`DrawerHeader`**, **`DrawerTitle`**, **`DrawerDescription`**, **`DrawerFooter`**\n- **`DrawerPortal`**, **`DrawerOverlay`** — the building blocks DrawerContent uses\n\n## Install\n\n```bash\npnpm add @nucleux/drawer @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from \"@nucleux/drawer\";\n\n<Drawer>\n  <DrawerTrigger asChild><Button variant=\"secondary\">Open drawer</Button></DrawerTrigger>\n  <DrawerContent>\n    <DrawerHeader>\n      <DrawerTitle>Agent budget</DrawerTitle>\n      <DrawerDescription>Set how many tool calls the agent may make per run.</DrawerDescription>\n    </DrawerHeader>\n    <DrawerFooter>\n      <Button>Save</Button>\n      <DrawerClose asChild><Button variant=\"secondary\">Cancel</Button></DrawerClose>\n    </DrawerFooter>\n  </DrawerContent>\n</Drawer>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -2560,6 +3084,140 @@
       }
     },
     {
+      "name": "field",
+      "package": "@nucleux/field",
+      "kind": "component",
+      "description": "A `<fieldset>` that groups related fields (for example a checkbox or radio\ngroup) under one legend. Stacks its children vertically and tightens the gap\nwhen it directly wraps a checkbox or radio group.",
+      "summary": "Form field layout — label, control, description and error — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "field"
+      ],
+      "exports": [
+        "FieldSet",
+        "FieldLegend",
+        "FieldGroup",
+        "fieldVariants",
+        "Field",
+        "FieldContent",
+        "FieldLabel",
+        "FieldTitle",
+        "FieldDescription",
+        "FieldSeparator",
+        "FieldError",
+        "FieldSetProps",
+        "FieldLegendVariant",
+        "FieldLegendProps",
+        "FieldGroupProps",
+        "FieldOrientation",
+        "FieldProps",
+        "FieldContentProps",
+        "FieldLabelProps",
+        "FieldTitleProps",
+        "FieldDescriptionProps",
+        "FieldSeparatorProps",
+        "FieldErrorProps"
+      ],
+      "components": [
+        "FieldSet",
+        "FieldLegend",
+        "FieldGroup",
+        "Field",
+        "FieldContent",
+        "FieldLabel",
+        "FieldTitle",
+        "FieldDescription",
+        "FieldSeparator",
+        "FieldError"
+      ],
+      "import": "import { FieldSet, FieldLegend, FieldGroup, Field } from \"@nucleux/field\";",
+      "installSingle": "pnpm add @nucleux/field @nucleux/tokens",
+      "props": [
+        {
+          "name": "FieldLegendProps",
+          "source": "export interface FieldLegendProps extends React.HTMLAttributes<HTMLLegendElement> {\n  /** \"legend\" (default) renders a section heading; \"label\" renders at label size. */\n  variant?: FieldLegendVariant;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLLegendElement>"
+          ],
+          "members": [
+            {
+              "name": "variant",
+              "type": "FieldLegendVariant",
+              "required": false,
+              "description": "\"legend\" (default) renders a section heading; \"label\" renders at label size.",
+              "values": [
+                "legend",
+                "label"
+              ],
+              "default": "\"legend\""
+            }
+          ]
+        },
+        {
+          "name": "FieldProps",
+          "source": "export interface FieldProps extends React.HTMLAttributes<HTMLDivElement> {\n  /**\n   * Layout of label and control: \"vertical\" (default, stacked), \"horizontal\"\n   * (side by side), or \"responsive\" (stacked, side by side from `md` up).\n   */\n  orientation?: FieldOrientation;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "orientation",
+              "type": "FieldOrientation",
+              "required": false,
+              "description": "Layout of label and control: \"vertical\" (default, stacked), \"horizontal\" (side by side), or \"responsive\" (stacked, side by side from `md` up).",
+              "values": [
+                "vertical",
+                "horizontal",
+                "responsive"
+              ],
+              "default": "\"vertical\""
+            }
+          ]
+        },
+        {
+          "name": "FieldSeparatorProps",
+          "source": "export interface FieldSeparatorProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Optional text shown centred on the rule, such as \"Or continue with\". */\n  children?: React.ReactNode;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "children",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Optional text shown centred on the rule, such as \"Or continue with\"."
+            }
+          ]
+        },
+        {
+          "name": "FieldErrorProps",
+          "source": "export interface FieldErrorProps extends React.HTMLAttributes<HTMLDivElement> {\n  /**\n   * Validation errors, e.g. from react-hook-form or a schema. Messages are\n   * deduplicated: one message renders as plain text, several as a list.\n   * Ignored when `children` is given.\n   */\n  errors?: Array<{ message?: string } | undefined>;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "errors",
+              "type": "Array<{ message?: string } | undefined>",
+              "required": false,
+              "description": "Validation errors, e.g. from react-hook-form or a schema. Messages are deduplicated: one message renders as plain text, several as a list. Ignored when `children` is given."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/field\n\nForm field layout — label, control, description and error — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Field`** — one field, `role=\"group\"` (`orientation`: `vertical` | `horizontal` | `responsive`; `data-invalid`, `data-disabled`)\n- **`FieldLabel`** (Nucleux `Label`), **`FieldTitle`**, **`FieldDescription`**, **`FieldContent`**\n- **`FieldError`** — `role=\"alert\"`; renders `children` or deduplicated `errors` (one message plain, several as a list)\n- **`FieldSet`**, **`FieldLegend`** (`variant=\"legend\" | \"label\"`), **`FieldGroup`**, **`FieldSeparator`**\n- **`fieldVariants`** — class helper for custom fields\n\n## Install\n\n```bash\npnpm add @nucleux/field @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Field, FieldLabel, FieldDescription, FieldError, FieldGroup } from \"@nucleux/field\";\nimport { Input } from \"@nucleux/input\";\n\n<FieldGroup>\n  <Field data-invalid=\"true\">\n    <FieldLabel htmlFor=\"email\">Email</FieldLabel>\n    <Input id=\"email\" type=\"email\" aria-invalid=\"true\" aria-describedby=\"email-error\" />\n    <FieldError id=\"email-error\" errors={[{ message: \"Enter a valid email address.\" }]} />\n  </Field>\n  <Field>\n    <FieldLabel htmlFor=\"name\">Full name</FieldLabel>\n    <Input id=\"name\" aria-describedby=\"name-help\" />\n    <FieldDescription id=\"name-help\">As it appears on your invoices.</FieldDescription>\n  </Field>\n</FieldGroup>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "form",
       "package": "@nucleux/form",
       "kind": "component",
@@ -2598,66 +3256,6 @@
       "installSingle": "pnpm add @nucleux/form @nucleux/tokens",
       "props": [],
       "readme": "# @nucleux/form\n\nAccessible form primitives — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/form @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Form } from \"@nucleux/form\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
-      "peerDependencies": {
-        "react": ">=18",
-        "react-dom": ">=18"
-      }
-    },
-    {
-      "name": "global-nav",
-      "package": "@nucleux/global-nav",
-      "kind": "component",
-      "description": "Top application navigation bar. A fixed-height (64px) bar with three zones:\n`left`, `center`, and `right`. Pass slots, or `children` for full control.",
-      "summary": "Top application navigation bar — Nucleux agentic UI for React.",
-      "keywords": [
-        "nucleux",
-        "react",
-        "ui",
-        "components",
-        "agentic",
-        "ai",
-        "tailwind",
-        "global-nav"
-      ],
-      "exports": [
-        "GlobalNav",
-        "GlobalNavProps"
-      ],
-      "components": [
-        "GlobalNav"
-      ],
-      "import": "import { GlobalNav } from \"@nucleux/global-nav\";",
-      "installSingle": "pnpm add @nucleux/global-nav @nucleux/tokens",
-      "props": [
-        {
-          "name": "GlobalNavProps",
-          "source": "export interface GlobalNavProps extends React.HTMLAttributes<HTMLElement> {\n  /** Leading content — brand mark, page heading, breadcrumbs. */\n  left?: React.ReactNode;\n  /** Centered content — typically a search field. */\n  center?: React.ReactNode;\n  /** Trailing content — notifications, account avatar, actions. */\n  right?: React.ReactNode;\n}",
-          "extends": [
-            "React.HTMLAttributes<HTMLElement>"
-          ],
-          "members": [
-            {
-              "name": "left",
-              "type": "React.ReactNode",
-              "required": false,
-              "description": "Leading content — brand mark, page heading, breadcrumbs."
-            },
-            {
-              "name": "center",
-              "type": "React.ReactNode",
-              "required": false,
-              "description": "Centered content — typically a search field."
-            },
-            {
-              "name": "right",
-              "type": "React.ReactNode",
-              "required": false,
-              "description": "Trailing content — notifications, account avatar, actions."
-            }
-          ]
-        }
-      ],
-      "readme": "# @nucleux/global-nav\n\nTop application navigation bar — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/global-nav @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { GlobalNav } from \"@nucleux/global-nav\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -2834,6 +3432,102 @@
       }
     },
     {
+      "name": "input-group",
+      "package": "@nucleux/input-group",
+      "kind": "component",
+      "description": "A bordered wrapper that joins a text control with addons (icons, text,\nbuttons, kbd hints) so they read as one input. The group draws the border,\nshows the focus ring when its control is focused, and turns destructive when\nthe control has `aria-invalid`. Set `data-disabled=\"true\"` to dim the addons.",
+      "summary": "Input with attached icons, text and buttons — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "input-group"
+      ],
+      "exports": [
+        "InputGroup",
+        "inputGroupAddonVariants",
+        "InputGroupAddon",
+        "inputGroupButtonVariants",
+        "InputGroupButton",
+        "InputGroupText",
+        "InputGroupInput",
+        "InputGroupTextarea",
+        "InputGroupProps",
+        "InputGroupAddonAlign",
+        "InputGroupAddonProps",
+        "InputGroupButtonSize",
+        "InputGroupButtonProps",
+        "InputGroupTextProps",
+        "InputGroupInputProps",
+        "InputGroupTextareaProps"
+      ],
+      "components": [
+        "InputGroup",
+        "InputGroupAddon",
+        "InputGroupButton",
+        "InputGroupText",
+        "InputGroupInput",
+        "InputGroupTextarea"
+      ],
+      "import": "import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText } from \"@nucleux/input-group\";",
+      "installSingle": "pnpm add @nucleux/input-group @nucleux/tokens",
+      "props": [
+        {
+          "name": "InputGroupAddonProps",
+          "source": "export interface InputGroupAddonProps extends React.HTMLAttributes<HTMLDivElement> {\n  /**\n   * Where the addon sits: \"inline-start\" (default, before the control),\n   * \"inline-end\" (after it), \"block-start\" (a row above) or \"block-end\" (a row below).\n   */\n  align?: InputGroupAddonAlign;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "align",
+              "type": "InputGroupAddonAlign",
+              "required": false,
+              "description": "Where the addon sits: \"inline-start\" (default, before the control), \"inline-end\" (after it), \"block-start\" (a row above) or \"block-end\" (a row below).",
+              "values": [
+                "inline-start",
+                "inline-end",
+                "block-start",
+                "block-end"
+              ],
+              "default": "\"inline-start\""
+            }
+          ]
+        },
+        {
+          "name": "InputGroupButtonProps",
+          "source": "export interface InputGroupButtonProps extends Omit<ButtonProps, \"size\"> {\n  /** Compact sizes for use inside an addon: \"xs\" (default), \"sm\", \"icon-xs\", \"icon-sm\". Icon sizes need an `aria-label`. */\n  size?: InputGroupButtonSize;\n}",
+          "extends": [
+            "Omit<ButtonProps, \"size\">"
+          ],
+          "members": [
+            {
+              "name": "size",
+              "type": "InputGroupButtonSize",
+              "required": false,
+              "description": "Compact sizes for use inside an addon: \"xs\" (default), \"sm\", \"icon-xs\", \"icon-sm\". Icon sizes need an `aria-label`.",
+              "values": [
+                "xs",
+                "sm",
+                "icon-xs",
+                "icon-sm"
+              ],
+              "default": "\"xs\""
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/input-group\n\nInput with attached icons, text and buttons — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`InputGroup`** — bordered root; shows the focus ring and the invalid state of its control\n- **`InputGroupAddon`** — `align`: `inline-start` | `inline-end` | `block-start` | `block-end`; clicking it focuses the control\n- **`InputGroupButton`** — compact Nucleux `Button` (`size`: `xs` | `sm` | `icon-xs` | `icon-sm`; ghost by default)\n- **`InputGroupText`** — muted inline text\n- **`InputGroupInput`**, **`InputGroupTextarea`** — the control (Nucleux `Input` / `Textarea` without their own border)\n- **`inputGroupAddonVariants`**, **`inputGroupButtonVariants`** — class helpers\n\n## Install\n\n```bash\npnpm add @nucleux/input-group @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@nucleux/input-group\";\n\n<InputGroup>\n  <InputGroupInput placeholder=\"Search…\" aria-label=\"Search\" />\n  <InputGroupAddon><Search /></InputGroupAddon>\n  <InputGroupAddon align=\"inline-end\">\n    <InputGroupButton size=\"icon-xs\" aria-label=\"Clear\"><X /></InputGroupButton>\n  </InputGroupAddon>\n</InputGroup>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "input-otp",
       "package": "@nucleux/input-otp",
       "kind": "component",
@@ -2919,6 +3613,166 @@
         }
       ],
       "readme": "# @nucleux/input-otp\n\nSegmented one-time-code input — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/input-otp @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { InputOtp } from \"@nucleux/input-otp\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "item",
+      "package": "@nucleux/item",
+      "kind": "component",
+      "description": "A vertical list of Items, exposed to assistive tech as a list\n(`role=\"list\"`). Items rendered inside get `role=\"listitem\"`; an Item\nusing `asChild` (e.g. a link) keeps its child's role and is wrapped in a\nlayout-neutral (`display: contents`) listitem.\nPut an ItemSeparator between Items for dividing rules.",
+      "summary": "Flexible list row with media, content and actions — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "item"
+      ],
+      "exports": [
+        "ItemGroup",
+        "ItemSeparator",
+        "itemVariants",
+        "Item",
+        "itemMediaVariants",
+        "ItemMedia",
+        "ItemContent",
+        "ItemTitle",
+        "ItemDescription",
+        "ItemActions",
+        "ItemHeader",
+        "ItemFooter",
+        "ItemVariant",
+        "ItemSize",
+        "ItemMediaVariant",
+        "ItemGroupProps",
+        "ItemSeparatorProps",
+        "ItemProps",
+        "ItemMediaProps",
+        "ItemContentProps",
+        "ItemTitleProps",
+        "ItemDescriptionProps",
+        "ItemActionsProps",
+        "ItemHeaderProps",
+        "ItemFooterProps"
+      ],
+      "components": [
+        "ItemGroup",
+        "ItemSeparator",
+        "Item",
+        "ItemMedia",
+        "ItemContent",
+        "ItemTitle",
+        "ItemDescription",
+        "ItemActions",
+        "ItemHeader",
+        "ItemFooter"
+      ],
+      "import": "import { ItemGroup, ItemSeparator, Item, ItemMedia } from \"@nucleux/item\";",
+      "installSingle": "pnpm add @nucleux/item @nucleux/tokens",
+      "props": [
+        {
+          "name": "ItemProps",
+          "source": "export interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** \"default\" (transparent), \"outline\" (bordered) or \"muted\" (soft fill). */\n  variant?: ItemVariant;\n  /** \"default\" (roomy) or \"sm\" (compact). */\n  size?: ItemSize;\n  /** Render the single child (e.g. an `<a>` or router Link) as the row, making it clickable with a hover tint. */\n  asChild?: boolean;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "variant",
+              "type": "ItemVariant",
+              "required": false,
+              "description": "\"default\" (transparent), \"outline\" (bordered) or \"muted\" (soft fill).",
+              "values": [
+                "default",
+                "outline",
+                "muted"
+              ],
+              "default": "\"default\""
+            },
+            {
+              "name": "size",
+              "type": "ItemSize",
+              "required": false,
+              "description": "\"default\" (roomy) or \"sm\" (compact).",
+              "values": [
+                "default",
+                "sm"
+              ],
+              "default": "\"default\""
+            },
+            {
+              "name": "asChild",
+              "type": "boolean",
+              "required": false,
+              "description": "Render the single child (e.g. an `<a>` or router Link) as the row, making it clickable with a hover tint.",
+              "default": "false"
+            }
+          ]
+        },
+        {
+          "name": "ItemMediaProps",
+          "source": "export interface ItemMediaProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** \"default\" (as-is, e.g. an Avatar), \"icon\" (icon in a bordered muted tile) or \"image\" (40px cover thumbnail). */\n  variant?: ItemMediaVariant;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "variant",
+              "type": "ItemMediaVariant",
+              "required": false,
+              "description": "\"default\" (as-is, e.g. an Avatar), \"icon\" (icon in a bordered muted tile) or \"image\" (40px cover thumbnail).",
+              "values": [
+                "default",
+                "icon",
+                "image"
+              ],
+              "default": "\"default\""
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/item\n\nFlexible list row with media, content and actions — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Item`** — the row (`variant`: `default` | `outline` | `muted`; `size`: `default` | `sm`; `asChild` for links)\n- **`ItemMedia`** (`variant`: `default` | `icon` | `image`), **`ItemContent`**, **`ItemTitle`**, **`ItemDescription`**, **`ItemActions`**\n- **`ItemHeader`**, **`ItemFooter`** — full-width rows above / below\n- **`ItemGroup`** — `role=\"list\"` wrapper; **`ItemSeparator`** — rule between items\n- **`itemVariants`**, **`itemMediaVariants`** — the class strings\n\n## Install\n\n```bash\npnpm add @nucleux/item @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@nucleux/item\";\n\n<Item variant=\"outline\">\n  <ItemMedia variant=\"icon\"><ShieldAlert /></ItemMedia>\n  <ItemContent>\n    <ItemTitle>Security alert</ItemTitle>\n    <ItemDescription>New sign-in from Chrome on macOS.</ItemDescription>\n  </ItemContent>\n  <ItemActions><Button variant=\"secondary\" size=\"sm\">Review</Button></ItemActions>\n</Item>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "kbd",
+      "package": "@nucleux/kbd",
+      "kind": "component",
+      "description": "A single keyboard key, e.g. `<Kbd>⌘</Kbd>` or `<Kbd>Enter</Kbd>`. Renders a\nsemantic `<kbd>` in a small muted keycap; icons inside are sized to 12px.\nInside a tooltip it switches to a translucent keycap that reads on the\ninverted tooltip surface. Combine several keys with KbdGroup.",
+      "summary": "Keyboard key and shortcut display — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "kbd"
+      ],
+      "exports": [
+        "Kbd",
+        "KbdGroup",
+        "KbdProps",
+        "KbdGroupProps"
+      ],
+      "components": [
+        "Kbd",
+        "KbdGroup"
+      ],
+      "import": "import { Kbd, KbdGroup } from \"@nucleux/kbd\";",
+      "installSingle": "pnpm add @nucleux/kbd @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/kbd\n\nKeyboard key and shortcut display — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Kbd`** — a single key (`<kbd>`), e.g. `Esc`, `⌘`\n- **`KbdGroup`** — a key combination wrapping several `Kbd`s\n\n## Install\n\n```bash\npnpm add @nucleux/kbd @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Kbd, KbdGroup } from \"@nucleux/kbd\";\n\n<KbdGroup>\n  <Kbd>Ctrl</Kbd>\n  <span>+</span>\n  <Kbd>K</Kbd>\n</KbdGroup>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -3043,6 +3897,75 @@
         }
       ],
       "readme": "# @nucleux/label\n\nAccessible form label — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/label @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Label } from \"@nucleux/label\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "marker",
+      "package": "@nucleux/marker",
+      "kind": "component",
+      "description": "A small muted inline note that marks a point in a feed, thread or\ntimeline: \"Conversation started\", \"Yesterday\", \"Agent switched to Opus\".\n`variant=\"separator\"` centres the text between two horizontal rules,\n`variant=\"border\"` underlines the row. Compose MarkerIcon and\nMarkerContent inside; use `asChild` to render a link or list item.",
+      "summary": "Inline note or divider marker for timelines and threads — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "marker"
+      ],
+      "exports": [
+        "markerVariants",
+        "Marker",
+        "MarkerIcon",
+        "MarkerContent",
+        "MarkerVariant",
+        "MarkerProps",
+        "MarkerIconProps",
+        "MarkerContentProps"
+      ],
+      "components": [
+        "Marker",
+        "MarkerIcon",
+        "MarkerContent"
+      ],
+      "import": "import { Marker, MarkerIcon, MarkerContent } from \"@nucleux/marker\";",
+      "installSingle": "pnpm add @nucleux/marker @nucleux/tokens",
+      "props": [
+        {
+          "name": "MarkerProps",
+          "source": "export interface MarkerProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** \"default\" (plain line), \"separator\" (centred text between rules) or \"border\" (bottom rule). */\n  variant?: MarkerVariant;\n  /** Render the single child (e.g. an `<a>` or `<li>`) with the marker's styles. */\n  asChild?: boolean;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "variant",
+              "type": "MarkerVariant",
+              "required": false,
+              "description": "\"default\" (plain line), \"separator\" (centred text between rules) or \"border\" (bottom rule).",
+              "values": [
+                "default",
+                "separator",
+                "border"
+              ],
+              "default": "\"default\""
+            },
+            {
+              "name": "asChild",
+              "type": "boolean",
+              "required": false,
+              "description": "Render the single child (e.g. an `<a>` or `<li>`) with the marker's styles.",
+              "default": "false"
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/marker\n\nInline note or divider marker for timelines and threads — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Marker`** — the row (`variant`: `default` | `separator` | `border`; `asChild`)\n- **`MarkerIcon`** — decorative leading icon\n- **`MarkerContent`** — the text\n- **`markerVariants({ variant, className })`** — the class string\n\n## Install\n\n```bash\npnpm add @nucleux/marker @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Marker, MarkerContent, MarkerIcon } from \"@nucleux/marker\";\n\n<Marker variant=\"separator\">\n  <MarkerContent>Yesterday</MarkerContent>\n</Marker>\n<Marker>\n  <MarkerIcon><Sparkles /></MarkerIcon>\n  <MarkerContent>Switched model to Opus</MarkerContent>\n</Marker>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -5821,123 +6744,6 @@
       }
     },
     {
-      "name": "nav-panel",
-      "package": "@nucleux/nav-panel",
-      "kind": "component",
-      "description": "Left navigation column wrapper.",
-      "summary": "Expanded navigation panel with collapsible sections — Nucleux agentic UI for React.",
-      "keywords": [
-        "nucleux",
-        "react",
-        "ui",
-        "components",
-        "agentic",
-        "ai",
-        "tailwind",
-        "nav-panel"
-      ],
-      "exports": [
-        "NavPanel",
-        "NavPanelHeader",
-        "NavSection",
-        "NavItem",
-        "NavPanelProps",
-        "NavPanelHeaderProps",
-        "NavSectionProps",
-        "NavItemProps"
-      ],
-      "components": [
-        "NavPanel",
-        "NavPanelHeader",
-        "NavSection",
-        "NavItem"
-      ],
-      "import": "import { NavPanel, NavPanelHeader, NavSection, NavItem } from \"@nucleux/nav-panel\";",
-      "installSingle": "pnpm add @nucleux/nav-panel @nucleux/tokens",
-      "props": [
-        {
-          "name": "NavPanelProps",
-          "source": "/**\n * An expanded vertical navigation panel (docs/library sidebar) with a header,\n * collapsible {@link NavSection}s, and text {@link NavItem}s.\n */\nexport interface NavPanelProps extends React.HTMLAttributes<HTMLElement> {\n  /** Additional classes merged onto the nav column. */\n  className?: string;\n}",
-          "extends": [
-            "React.HTMLAttributes<HTMLElement>"
-          ],
-          "members": [
-            {
-              "name": "className",
-              "type": "string",
-              "required": false,
-              "description": "Additional classes merged onto the nav column."
-            }
-          ]
-        },
-        {
-          "name": "NavPanelHeaderProps",
-          "source": "export interface NavPanelHeaderProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Trailing meta text, e.g. a count. */\n  meta?: React.ReactNode;\n}",
-          "extends": [
-            "React.HTMLAttributes<HTMLDivElement>"
-          ],
-          "members": [
-            {
-              "name": "meta",
-              "type": "React.ReactNode",
-              "required": false,
-              "description": "Trailing meta text, e.g. a count."
-            }
-          ]
-        },
-        {
-          "name": "NavSectionProps",
-          "source": "export interface NavSectionProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"title\"> {\n  /** Section title. */\n  title: React.ReactNode;\n  /** Whether the section is collapsible (shows a chevron toggle). */\n  collapsible?: boolean;\n  /** Initial open state (collapsible sections). */\n  defaultOpen?: boolean;\n}",
-          "extends": [
-            "Omit<React.HTMLAttributes<HTMLDivElement>, \"title\">"
-          ],
-          "members": [
-            {
-              "name": "title",
-              "type": "React.ReactNode",
-              "required": true,
-              "description": "Section title."
-            },
-            {
-              "name": "collapsible",
-              "type": "boolean",
-              "required": false,
-              "description": "Whether the section is collapsible (shows a chevron toggle).",
-              "default": "false"
-            },
-            {
-              "name": "defaultOpen",
-              "type": "boolean",
-              "required": false,
-              "description": "Initial open state (collapsible sections).",
-              "default": "true"
-            }
-          ]
-        },
-        {
-          "name": "NavItemProps",
-          "source": "export interface NavItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {\n  /** Marks the item as the current page. */\n  active?: boolean;\n}",
-          "extends": [
-            "React.AnchorHTMLAttributes<HTMLAnchorElement>"
-          ],
-          "members": [
-            {
-              "name": "active",
-              "type": "boolean",
-              "required": false,
-              "description": "Marks the item as the current page.",
-              "default": "false"
-            }
-          ]
-        }
-      ],
-      "readme": "# @nucleux/nav-panel\n\nExpanded navigation panel with collapsible sections — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/nav-panel @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { NavPanel, NavPanelHeader, NavSection, NavItem } from \"@nucleux/nav-panel\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
-      "peerDependencies": {
-        "react": ">=18",
-        "react-dom": ">=18"
-      }
-    },
-    {
       "name": "navigation-menu",
       "package": "@nucleux/navigation-menu",
       "kind": "component",
@@ -6436,6 +7242,377 @@
       }
     },
     {
+      "name": "questionnaire",
+      "package": "@nucleux/questionnaire",
+      "kind": "component",
+      "description": "A multi-step form that shows one question at a time. It owns the ordered\nitems, the active item, answer state, validation, progress and navigation;\nanswers live in native radios, checkboxes and text inputs, so read them\nwith `FormData` in `onSubmit` (called only once every enabled item\nvalidates). Required items need an answer; optional items need an answer or\nan explicit Skip. Supports `item`/`onItemChange` control, `defaultItem`,\n`items` for SSR ordering, and `shortcuts=\"letters\" | \"numbers\"`.",
+      "summary": "Multi-step questionnaire with single, multiple, freeform and skippable answers — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "questionnaire"
+      ],
+      "exports": [
+        "Questionnaire",
+        "QuestionnaireProgress",
+        "QuestionnaireItem",
+        "QuestionnaireTitle",
+        "QuestionnaireDescription",
+        "QuestionnaireChoices",
+        "QuestionnaireChoice",
+        "QuestionnaireChoiceDescription",
+        "QuestionnaireInput",
+        "QuestionnaireError",
+        "QuestionnaireActions",
+        "QuestionnairePrevious",
+        "QuestionnaireSkip",
+        "QuestionnaireNext",
+        "QuestionnaireSubmit",
+        "QuestionnaireItemStatus",
+        "QuestionnaireShortcuts",
+        "QuestionnaireChoiceDefinition",
+        "QuestionnaireItemDefinition",
+        "QuestionnaireRenderProps",
+        "QuestionnaireRender",
+        "QuestionnaireProgressState",
+        "QuestionnaireActionState",
+        "QuestionnaireInputState",
+        "QuestionnaireErrorState",
+        "QuestionnaireChoicesState",
+        "QuestionnaireActionVariant",
+        "QuestionnaireActionSize",
+        "QuestionnaireProps",
+        "QuestionnaireProgressProps",
+        "QuestionnaireItemProps",
+        "QuestionnaireTitleProps",
+        "QuestionnaireDescriptionProps",
+        "QuestionnaireChoicesProps",
+        "QuestionnaireChoiceProps",
+        "QuestionnaireChoiceDescriptionProps",
+        "QuestionnaireInputProps",
+        "QuestionnaireErrorProps",
+        "QuestionnaireActionsProps",
+        "QuestionnaireActionProps"
+      ],
+      "components": [
+        "Questionnaire",
+        "QuestionnaireProgress",
+        "QuestionnaireItem",
+        "QuestionnaireTitle",
+        "QuestionnaireDescription",
+        "QuestionnaireChoices",
+        "QuestionnaireChoice",
+        "QuestionnaireChoiceDescription",
+        "QuestionnaireInput",
+        "QuestionnaireError",
+        "QuestionnaireActions",
+        "QuestionnairePrevious",
+        "QuestionnaireSkip",
+        "QuestionnaireNext",
+        "QuestionnaireSubmit"
+      ],
+      "import": "import { Questionnaire, QuestionnaireProgress, QuestionnaireItem, QuestionnaireTitle } from \"@nucleux/questionnaire\";",
+      "installSingle": "pnpm add @nucleux/questionnaire @nucleux/tokens",
+      "props": [
+        {
+          "name": "QuestionnaireProps",
+          "source": "export interface QuestionnaireProps extends React.FormHTMLAttributes<HTMLFormElement> {\n  /** Controlled active item name. */\n  item?: string;\n  /** Initially active item name. Defaults to the first enabled item. */\n  defaultItem?: string;\n  /** Optional item data, so order, progress, actions and shortcuts are known before items mount (SSR). */\n  items?: readonly QuestionnaireItemDefinition[];\n  /** Called when navigation requests a different item. */\n  onItemChange?: (item: string) => void;\n  /** Assign A–Z or 1–9 answer shortcuts per item, in definition or DOM order. */\n  shortcuts?: QuestionnaireShortcuts;\n  /** Disable the browser's constraint UI. Questionnaire validation still runs. Defaults to true. */\n  noValidate?: boolean;\n}",
+          "extends": [
+            "React.FormHTMLAttributes<HTMLFormElement>"
+          ],
+          "members": [
+            {
+              "name": "item",
+              "type": "string",
+              "required": false,
+              "description": "Controlled active item name."
+            },
+            {
+              "name": "defaultItem",
+              "type": "string",
+              "required": false,
+              "description": "Initially active item name. Defaults to the first enabled item."
+            },
+            {
+              "name": "items",
+              "type": "readonly QuestionnaireItemDefinition[]",
+              "required": false,
+              "description": "Optional item data, so order, progress, actions and shortcuts are known before items mount (SSR)."
+            },
+            {
+              "name": "onItemChange",
+              "type": "(item: string) => void",
+              "required": false,
+              "description": "Called when navigation requests a different item."
+            },
+            {
+              "name": "shortcuts",
+              "type": "QuestionnaireShortcuts",
+              "required": false,
+              "description": "Assign A–Z or 1–9 answer shortcuts per item, in definition or DOM order.",
+              "values": [
+                "letters",
+                "numbers"
+              ]
+            },
+            {
+              "name": "noValidate",
+              "type": "boolean",
+              "required": false,
+              "description": "Disable the browser's constraint UI. Questionnaire validation still runs. Defaults to true.",
+              "default": "true"
+            }
+          ]
+        },
+        {
+          "name": "QuestionnaireProgressProps",
+          "source": "export interface QuestionnaireProgressProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Custom render target; receives `{ current, total, first, last }`. */\n  render?: QuestionnaireRender<QuestionnaireProgressState>;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "render",
+              "type": "QuestionnaireRender<QuestionnaireProgressState>",
+              "required": false,
+              "description": "Custom render target; receives `{ current, total, first, last }`."
+            }
+          ]
+        },
+        {
+          "name": "QuestionnaireItemProps",
+          "source": "export interface QuestionnaireItemProps extends Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, \"name\"> {\n  /** Unique item identifier; also the form field name of its answers. */\n  name: string;\n  /** Requires an answer and hides Skip. */\n  required?: boolean;\n  /** Renders fixed choices as checkboxes. */\n  multiple?: boolean;\n  /** Removes the item from progress, navigation, validation and submission. */\n  disabled?: boolean;\n  /** Marks the item invalid from an external validator. */\n  invalid?: boolean;\n  /** Observes \"unanswered\" / \"answered\" / \"skipped\" changes. */\n  onStatusChange?: (status: QuestionnaireItemStatus) => void;\n}",
+          "extends": [
+            "Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, \"name\">"
+          ],
+          "members": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": "Unique item identifier; also the form field name of its answers."
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "required": false,
+              "description": "Requires an answer and hides Skip.",
+              "default": "false"
+            },
+            {
+              "name": "multiple",
+              "type": "boolean",
+              "required": false,
+              "description": "Renders fixed choices as checkboxes.",
+              "default": "false"
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": "Removes the item from progress, navigation, validation and submission.",
+              "default": "false"
+            },
+            {
+              "name": "invalid",
+              "type": "boolean",
+              "required": false,
+              "description": "Marks the item invalid from an external validator.",
+              "default": "false"
+            },
+            {
+              "name": "onStatusChange",
+              "type": "(status: QuestionnaireItemStatus) => void",
+              "required": false,
+              "description": "Observes \"unanswered\" / \"answered\" / \"skipped\" changes."
+            }
+          ]
+        },
+        {
+          "name": "QuestionnaireTitleProps",
+          "source": "export interface QuestionnaireTitleProps extends React.HTMLAttributes<HTMLLegendElement> {\n  /** Custom render target. If it is not a legend, give it an `id` and pass it to the item's `aria-labelledby`. */\n  render?: QuestionnaireRender<Record<string, never>>;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLLegendElement>"
+          ],
+          "members": [
+            {
+              "name": "render",
+              "type": "QuestionnaireRender<Record<string, never>>",
+              "required": false,
+              "description": "Custom render target. If it is not a legend, give it an `id` and pass it to the item's `aria-labelledby`."
+            }
+          ]
+        },
+        {
+          "name": "QuestionnaireDescriptionProps",
+          "source": "export interface QuestionnaireDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {\n  /** Custom render target. */\n  render?: QuestionnaireRender<Record<string, never>>;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLParagraphElement>"
+          ],
+          "members": [
+            {
+              "name": "render",
+              "type": "QuestionnaireRender<Record<string, never>>",
+              "required": false,
+              "description": "Custom render target."
+            }
+          ]
+        },
+        {
+          "name": "QuestionnaireChoicesProps",
+          "source": "export interface QuestionnaireChoicesProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Custom render target; receives `{ shortcuts }`. */\n  render?: QuestionnaireRender<QuestionnaireChoicesState>;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "render",
+              "type": "QuestionnaireRender<QuestionnaireChoicesState>",
+              "required": false,
+              "description": "Custom render target; receives `{ shortcuts }`."
+            }
+          ]
+        },
+        {
+          "name": "QuestionnaireChoiceProps",
+          "source": "export interface QuestionnaireChoiceProps\n  extends Omit<React.LabelHTMLAttributes<HTMLLabelElement>, \"onChange\" | \"defaultChecked\"> {\n  /** The submitted answer value. */\n  value: string;\n  /** Controlled checked state. */\n  checked?: boolean;\n  /** Initial checked state (e.g. when resuming a draft). */\n  defaultChecked?: boolean;\n  /** Disables this answer. */\n  disabled?: boolean;\n  /** Native change handler of the underlying radio / checkbox. */\n  onChange?: React.ChangeEventHandler<HTMLInputElement>;\n}",
+          "extends": [
+            "Omit<React.LabelHTMLAttributes<HTMLLabelElement>, \"onChange\" | \"defaultChecked\">"
+          ],
+          "members": [
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": "The submitted answer value."
+            },
+            {
+              "name": "checked",
+              "type": "boolean",
+              "required": false,
+              "description": "Controlled checked state."
+            },
+            {
+              "name": "defaultChecked",
+              "type": "boolean",
+              "required": false,
+              "description": "Initial checked state (e.g. when resuming a draft)."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": "Disables this answer.",
+              "default": "false"
+            },
+            {
+              "name": "onChange",
+              "type": "React.ChangeEventHandler<HTMLInputElement>",
+              "required": false,
+              "description": "Native change handler of the underlying radio / checkbox."
+            }
+          ]
+        },
+        {
+          "name": "QuestionnaireChoiceDescriptionProps",
+          "source": "export interface QuestionnaireChoiceDescriptionProps extends React.HTMLAttributes<HTMLSpanElement> {\n  /** Additional classes merged onto the description. */\n  className?: string;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLSpanElement>"
+          ],
+          "members": [
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": "Additional classes merged onto the description."
+            }
+          ]
+        },
+        {
+          "name": "QuestionnaireInputProps",
+          "source": "export interface QuestionnaireInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, \"name\"> {\n  /** Custom render target; receives `{ disabled, filled, invalid }`. */\n  render?: QuestionnaireRender<QuestionnaireInputState>;\n}",
+          "extends": [
+            "Omit<React.InputHTMLAttributes<HTMLInputElement>, \"name\">"
+          ],
+          "members": [
+            {
+              "name": "render",
+              "type": "QuestionnaireRender<QuestionnaireInputState>",
+              "required": false,
+              "description": "Custom render target; receives `{ disabled, filled, invalid }`."
+            }
+          ]
+        },
+        {
+          "name": "QuestionnaireErrorProps",
+          "source": "export interface QuestionnaireErrorProps extends React.HTMLAttributes<HTMLParagraphElement> {\n  /** Custom render target; receives `{ invalid }`. */\n  render?: QuestionnaireRender<QuestionnaireErrorState>;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLParagraphElement>"
+          ],
+          "members": [
+            {
+              "name": "render",
+              "type": "QuestionnaireRender<QuestionnaireErrorState>",
+              "required": false,
+              "description": "Custom render target; receives `{ invalid }`."
+            }
+          ]
+        },
+        {
+          "name": "QuestionnaireActionsProps",
+          "source": "export interface QuestionnaireActionsProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Additional classes merged onto the actions row. */\n  className?: string;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": "Additional classes merged onto the actions row."
+            }
+          ]
+        },
+        {
+          "name": "QuestionnaireActionProps",
+          "source": "export interface QuestionnaireActionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  /** Button variant. Accepts Nucleux variants plus shadcn's \"default\" and \"outline\". */\n  variant?: QuestionnaireActionVariant;\n  /** Button size. Accepts Nucleux sizes plus shadcn's \"default\" and \"xs\". */\n  size?: QuestionnaireActionSize;\n  /** Custom render target; receives `{ visible, disabled, shortcut, status }`. */\n  render?: QuestionnaireRender<QuestionnaireActionState>;\n}",
+          "extends": [
+            "React.ButtonHTMLAttributes<HTMLButtonElement>"
+          ],
+          "members": [
+            {
+              "name": "variant",
+              "type": "QuestionnaireActionVariant",
+              "required": false,
+              "description": "Button variant. Accepts Nucleux variants plus shadcn's \"default\" and \"outline\"."
+            },
+            {
+              "name": "size",
+              "type": "QuestionnaireActionSize",
+              "required": false,
+              "description": "Button size. Accepts Nucleux sizes plus shadcn's \"default\" and \"xs\"."
+            },
+            {
+              "name": "render",
+              "type": "QuestionnaireRender<QuestionnaireActionState>",
+              "required": false,
+              "description": "Custom render target; receives `{ visible, disabled, shortcut, status }`."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/questionnaire\n\nMulti-step questionnaire with single, multiple, freeform and skippable answers — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Questionnaire`** — the `<form>` root; `item` / `defaultItem` / `onItemChange`, `items`, `shortcuts` (`\"letters\"` | `\"numbers\"`), `onSubmit` (runs once every enabled item validates)\n- **`QuestionnaireProgress`** — \"Question 1 of 3\" progressbar (`render` for a custom format)\n- **`QuestionnaireItem`** — one step (`<fieldset>`); `name`, `required`, `multiple`, `disabled`, `invalid`, `onStatusChange`\n- **`QuestionnaireTitle`** (legend), **`QuestionnaireDescription`**, **`QuestionnaireError`**\n- **`QuestionnaireChoices`**, **`QuestionnaireChoice`** (`value`, `defaultChecked`, `disabled`), **`QuestionnaireChoiceDescription`**, **`QuestionnaireInput`** (freeform answer)\n- **`QuestionnaireActions`** — layout row for **`QuestionnairePrevious`**, **`QuestionnaireSkip`**, **`QuestionnaireNext`**, **`QuestionnaireSubmit`**\n\n## Install\n\n```bash\npnpm add @nucleux/questionnaire @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Questionnaire, QuestionnaireProgress, QuestionnaireItem, QuestionnaireTitle, QuestionnaireChoices, QuestionnaireChoice, QuestionnaireInput, QuestionnaireError, QuestionnaireActions, QuestionnairePrevious, QuestionnaireSkip, QuestionnaireNext, QuestionnaireSubmit } from \"@nucleux/questionnaire\";\n\n<Questionnaire\n  shortcuts=\"letters\"\n  onSubmit={(event) => {\n    event.preventDefault();\n    const answers = new FormData(event.currentTarget); // answers.get(\"direction\"), answers.getAll(\"signals\")\n  }}\n>\n  <QuestionnaireProgress />\n  <QuestionnaireItem name=\"direction\" required>\n    <QuestionnaireTitle>What should we prototype next?</QuestionnaireTitle>\n    <QuestionnaireChoices>\n      <QuestionnaireChoice value=\"delegation\">Sub-agent delegation</QuestionnaireChoice>\n      <QuestionnaireChoice value=\"questions\">Question prompts</QuestionnaireChoice>\n      <QuestionnaireInput aria-label=\"Another direction\" placeholder=\"Type another direction…\" />\n    </QuestionnaireChoices>\n    <QuestionnaireError />\n  </QuestionnaireItem>\n  <QuestionnaireItem name=\"signals\" multiple>\n    <QuestionnaireTitle>What should every update include?</QuestionnaireTitle>\n    <QuestionnaireChoices>\n      <QuestionnaireChoice value=\"progress\">Progress</QuestionnaireChoice>\n      <QuestionnaireChoice value=\"risks\">Risks</QuestionnaireChoice>\n    </QuestionnaireChoices>\n    <QuestionnaireError />\n  </QuestionnaireItem>\n  <QuestionnaireActions>\n    <QuestionnairePrevious />\n    <QuestionnaireSkip />\n    <QuestionnaireNext />\n    <QuestionnaireSubmit>Save answers</QuestionnaireSubmit>\n  </QuestionnaireActions>\n</Questionnaire>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "radio-group",
       "package": "@nucleux/radio-group",
       "kind": "component",
@@ -6695,6 +7872,224 @@
         }
       ],
       "readme": "# @nucleux/scroll-area\n\nStyled scroll container — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/scroll-area @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { ScrollArea } from \"@nucleux/scroll-area\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "select",
+      "package": "@nucleux/select",
+      "kind": "component",
+      "description": "A custom select: a trigger button showing the chosen option and a listbox of\nSelectItems. Compose SelectTrigger (with SelectValue) and SelectContent.\nKeyboard: Arrow keys, Home/End and typing a letter move between options;\nEnter or Space chooses; Escape closes and returns focus to the trigger.\nFor a plain native `<select>`, use NativeSelect.",
+      "summary": "Select — a custom listbox select with a trigger, groups and keyboard navigation — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "select"
+      ],
+      "exports": [
+        "Select",
+        "SelectTrigger",
+        "SelectValue",
+        "SelectContent",
+        "SelectItem",
+        "SelectGroup",
+        "SelectLabel",
+        "SelectSeparator",
+        "SelectScrollUpButton",
+        "SelectScrollDownButton",
+        "SelectProps",
+        "SelectTriggerProps",
+        "SelectValueProps",
+        "SelectContentProps",
+        "SelectItemProps"
+      ],
+      "components": [
+        "Select",
+        "SelectTrigger",
+        "SelectValue",
+        "SelectContent",
+        "SelectItem",
+        "SelectGroup",
+        "SelectLabel",
+        "SelectSeparator",
+        "SelectScrollUpButton",
+        "SelectScrollDownButton"
+      ],
+      "import": "import { Select, SelectTrigger, SelectValue, SelectContent } from \"@nucleux/select\";",
+      "installSingle": "pnpm add @nucleux/select @nucleux/tokens",
+      "props": [
+        {
+          "name": "SelectProps",
+          "source": "export interface SelectProps {\n  /** Selected value (controlled). */\n  value?: string;\n  /** Initially selected value (uncontrolled). */\n  defaultValue?: string;\n  /** Called with the newly selected value. */\n  onValueChange?: (value: string) => void;\n  /** Whether the list is open (controlled). */\n  open?: boolean;\n  /** Initial open state (uncontrolled). */\n  defaultOpen?: boolean;\n  /** Called when the list opens or closes. */\n  onOpenChange?: (open: boolean) => void;\n  /** Disable the whole select. */\n  disabled?: boolean;\n  /** Mark as required in forms. */\n  required?: boolean;\n  /** Form field name; when set, the value is submitted with the form. */\n  name?: string;\n  children: React.ReactNode;\n}",
+          "members": [
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": "Selected value (controlled)."
+            },
+            {
+              "name": "defaultValue",
+              "type": "string",
+              "required": false,
+              "description": "Initially selected value (uncontrolled)."
+            },
+            {
+              "name": "onValueChange",
+              "type": "(value: string) => void",
+              "required": false,
+              "description": "Called with the newly selected value."
+            },
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": false,
+              "description": "Whether the list is open (controlled)."
+            },
+            {
+              "name": "defaultOpen",
+              "type": "boolean",
+              "required": false,
+              "description": "Initial open state (uncontrolled).",
+              "default": "false"
+            },
+            {
+              "name": "onOpenChange",
+              "type": "(open: boolean) => void",
+              "required": false,
+              "description": "Called when the list opens or closes."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": "Disable the whole select.",
+              "default": "false"
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "required": false,
+              "description": "Mark as required in forms.",
+              "default": "false"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "Form field name; when set, the value is submitted with the form."
+            },
+            {
+              "name": "children",
+              "type": "React.ReactNode",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "SelectTriggerProps",
+          "source": "export interface SelectTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  /** \"default\" (h-9) or \"sm\" (h-8). */\n  size?: \"default\" | \"sm\";\n}",
+          "extends": [
+            "React.ButtonHTMLAttributes<HTMLButtonElement>"
+          ],
+          "members": [
+            {
+              "name": "size",
+              "type": "\"default\" | \"sm\"",
+              "required": false,
+              "description": "\"default\" (h-9) or \"sm\" (h-8).",
+              "values": [
+                "default",
+                "sm"
+              ],
+              "default": "\"default\""
+            }
+          ]
+        },
+        {
+          "name": "SelectValueProps",
+          "source": "export interface SelectValueProps extends React.HTMLAttributes<HTMLSpanElement> {\n  /** Shown while nothing is selected. */\n  placeholder?: React.ReactNode;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLSpanElement>"
+          ],
+          "members": [
+            {
+              "name": "placeholder",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Shown while nothing is selected."
+            }
+          ]
+        },
+        {
+          "name": "SelectContentProps",
+          "source": "export interface SelectContentProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** \"popper\" (default) places the list below the trigger, flipping above when there is no room. */\n  position?: \"popper\" | \"item-aligned\";\n  /** Horizontal alignment relative to the trigger. */\n  align?: \"start\" | \"center\" | \"end\";\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "position",
+              "type": "\"popper\" | \"item-aligned\"",
+              "required": false,
+              "description": "\"popper\" (default) places the list below the trigger, flipping above when there is no room.",
+              "values": [
+                "popper",
+                "item-aligned"
+              ],
+              "default": "\"popper\""
+            },
+            {
+              "name": "align",
+              "type": "\"start\" | \"center\" | \"end\"",
+              "required": false,
+              "description": "Horizontal alignment relative to the trigger.",
+              "values": [
+                "start",
+                "center",
+                "end"
+              ],
+              "default": "\"start\""
+            }
+          ]
+        },
+        {
+          "name": "SelectItemProps",
+          "source": "export interface SelectItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\"> {\n  /** The value this option sets. */\n  value: string;\n  /** Not selectable. */\n  disabled?: boolean;\n  /** Plain-text label used in the trigger when the children are rich. */\n  textValue?: string;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\">"
+          ],
+          "members": [
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": "The value this option sets."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": "Not selectable.",
+              "default": "false"
+            },
+            {
+              "name": "textValue",
+              "type": "string",
+              "required": false,
+              "description": "Plain-text label used in the trigger when the children are rich."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/select\n\nSelect — a custom listbox select with a trigger, groups and keyboard navigation — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Select`** — root; `value`/`defaultValue`/`onValueChange`, `open`/`onOpenChange`, `disabled`, `required`, `name` (submits with forms)\n- **`SelectTrigger`** (`size`: default/sm), **`SelectValue`** (`placeholder`)\n- **`SelectContent`** — the listbox (`position`, `align`); flips above the trigger when there is no room below\n- **`SelectItem`** (`value`, `disabled`, `textValue`), **`SelectGroup`**, **`SelectLabel`**, **`SelectSeparator`**\n- **`SelectScrollUpButton`**, **`SelectScrollDownButton`** — kept for shadcn API parity\n\nFor a plain native `<select>`, use `@nucleux/native-select`.\n\n## Install\n\n```bash\npnpm add @nucleux/select @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from \"@nucleux/select\";\n\n<Select value={status} onValueChange={setStatus}>\n  <SelectTrigger aria-label=\"Status\"><SelectValue placeholder=\"Status\" /></SelectTrigger>\n  <SelectContent>\n    <SelectItem value=\"open\">Open</SelectItem>\n    <SelectItem value=\"done\">Done</SelectItem>\n  </SelectContent>\n</Select>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -6969,8 +8364,8 @@
       "name": "sidebar",
       "package": "@nucleux/sidebar",
       "kind": "component",
-      "description": "A single icon entry in a collapsed {@link Sidebar}.",
-      "summary": "Collapsed icon navigation rail — Nucleux agentic UI for React.",
+      "description": "Wraps the whole layout: holds the open state, the phone/desktop switch and\nthe ⌘B / Ctrl+B shortcut, and remembers the desktop state in a cookie\n(`sidebar_state`). Put a Sidebar and a SidebarInset inside.",
+      "summary": "Sidebar — collapsible application sidebar (offcanvas, icon or fixed) with groups, menus and a phone sheet — Nucleux agentic UI for React.",
       "keywords": [
         "nucleux",
         "react",
@@ -6982,81 +8377,293 @@
         "sidebar"
       ],
       "exports": [
+        "useIsMobile",
+        "useSidebar",
+        "SidebarProvider",
         "Sidebar",
-        "SidebarItem",
+        "SidebarTrigger",
+        "SidebarRail",
+        "SidebarInset",
+        "SidebarInput",
+        "SidebarHeader",
+        "SidebarFooter",
+        "SidebarContent",
+        "SidebarGroup",
+        "SidebarGroupContent",
         "SidebarSeparator",
+        "SidebarGroupLabel",
+        "SidebarGroupAction",
+        "SidebarMenu",
+        "SidebarMenuItem",
+        "sidebarMenuButtonVariants",
+        "SidebarMenuButton",
+        "SidebarMenuAction",
+        "SidebarMenuBadge",
+        "SidebarMenuSkeleton",
+        "SidebarMenuSub",
+        "SidebarMenuSubItem",
+        "SidebarMenuSubButton",
+        "SidebarContextValue",
+        "SidebarProviderProps",
         "SidebarProps",
-        "SidebarItemProps",
-        "SidebarSeparatorProps"
+        "SidebarGroupLabelProps",
+        "SidebarActionProps",
+        "SidebarMenuButtonVariant",
+        "SidebarMenuButtonSize",
+        "SidebarMenuButtonProps",
+        "SidebarMenuActionProps",
+        "SidebarMenuSkeletonProps",
+        "SidebarMenuSubButtonProps"
       ],
       "components": [
+        "SidebarProvider",
         "Sidebar",
-        "SidebarItem",
-        "SidebarSeparator"
+        "SidebarTrigger",
+        "SidebarRail",
+        "SidebarInset",
+        "SidebarInput",
+        "SidebarHeader",
+        "SidebarFooter",
+        "SidebarContent",
+        "SidebarGroup",
+        "SidebarGroupContent",
+        "SidebarSeparator",
+        "SidebarGroupLabel",
+        "SidebarGroupAction",
+        "SidebarMenu",
+        "SidebarMenuItem",
+        "SidebarMenuButton",
+        "SidebarMenuAction",
+        "SidebarMenuBadge",
+        "SidebarMenuSkeleton",
+        "SidebarMenuSub",
+        "SidebarMenuSubItem",
+        "SidebarMenuSubButton"
       ],
-      "import": "import { Sidebar, SidebarItem, SidebarSeparator } from \"@nucleux/sidebar\";",
+      "import": "import { SidebarProvider, Sidebar, SidebarTrigger, SidebarRail } from \"@nucleux/sidebar\";",
       "installSingle": "pnpm add @nucleux/sidebar @nucleux/tokens",
       "props": [
         {
-          "name": "SidebarProps",
-          "source": "/**\n * Collapsed application sidebar — a narrow vertical icon rail. Compose a brand\n * mark, {@link SidebarItem}s, {@link SidebarSeparator}s, and a pinned `footer`:\n *\n * ```tsx\n * <Sidebar footer={<SidebarItem icon={<Settings />} label=\"Settings\" />}>\n *   <BrandMark />\n *   <SidebarItem icon={<Home />} label=\"Home\" active />\n *   <SidebarItem icon={<Sparkles />} label=\"Assistant\" />\n * </Sidebar>\n * ```\n */\nexport interface SidebarProps extends React.HTMLAttributes<HTMLElement> {\n  /** Content pinned to the bottom of the rail (e.g. settings). */\n  footer?: React.ReactNode;\n}",
-          "extends": [
-            "React.HTMLAttributes<HTMLElement>"
-          ],
-          "members": [
-            {
-              "name": "footer",
-              "type": "React.ReactNode",
-              "required": false,
-              "description": "Content pinned to the bottom of the rail (e.g. settings)."
-            }
-          ]
-        },
-        {
-          "name": "SidebarItemProps",
-          "source": "export interface SidebarItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  /** The icon to render. */\n  icon: React.ReactNode;\n  /** Accessible label + tooltip (rail is icon-only). */\n  label: string;\n  /** Marks the item as the current page. */\n  active?: boolean;\n}",
-          "extends": [
-            "React.ButtonHTMLAttributes<HTMLButtonElement>"
-          ],
-          "members": [
-            {
-              "name": "icon",
-              "type": "React.ReactNode",
-              "required": true,
-              "description": "The icon to render."
-            },
-            {
-              "name": "label",
-              "type": "string",
-              "required": true,
-              "description": "Accessible label + tooltip (rail is icon-only)."
-            },
-            {
-              "name": "active",
-              "type": "boolean",
-              "required": false,
-              "description": "Marks the item as the current page.",
-              "default": "false"
-            }
-          ]
-        },
-        {
-          "name": "SidebarSeparatorProps",
-          "source": "/** Horizontal hairline separating groups of sidebar items. */\nexport interface SidebarSeparatorProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Additional classes merged onto the separator. */\n  className?: string;\n}",
+          "name": "SidebarProviderProps",
+          "source": "export interface SidebarProviderProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Initial desktop state (uncontrolled). Default true. */\n  defaultOpen?: boolean;\n  /** Desktop open state (controlled). */\n  open?: boolean;\n  /** Called when the desktop state changes. */\n  onOpenChange?: (open: boolean) => void;\n}",
           "extends": [
             "React.HTMLAttributes<HTMLDivElement>"
           ],
           "members": [
             {
-              "name": "className",
-              "type": "string",
+              "name": "defaultOpen",
+              "type": "boolean",
               "required": false,
-              "description": "Additional classes merged onto the separator."
+              "description": "Initial desktop state (uncontrolled). Default true.",
+              "default": "true"
+            },
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": false,
+              "description": "Desktop open state (controlled)."
+            },
+            {
+              "name": "onOpenChange",
+              "type": "(open: boolean) => void",
+              "required": false,
+              "description": "Called when the desktop state changes."
+            }
+          ]
+        },
+        {
+          "name": "SidebarProps",
+          "source": "export interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Which edge. */\n  side?: \"left\" | \"right\";\n  /** \"sidebar\" (flush), \"floating\" (rounded card) or \"inset\" (page sits in a rounded card beside it). */\n  variant?: \"sidebar\" | \"floating\" | \"inset\";\n  /** How it collapses on desktop: slide out (\"offcanvas\"), shrink to icons (\"icon\"), or never (\"none\"). */\n  collapsible?: \"offcanvas\" | \"icon\" | \"none\";\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "side",
+              "type": "\"left\" | \"right\"",
+              "required": false,
+              "description": "Which edge.",
+              "values": [
+                "left",
+                "right"
+              ],
+              "default": "\"left\""
+            },
+            {
+              "name": "variant",
+              "type": "\"sidebar\" | \"floating\" | \"inset\"",
+              "required": false,
+              "description": "\"sidebar\" (flush), \"floating\" (rounded card) or \"inset\" (page sits in a rounded card beside it).",
+              "values": [
+                "sidebar",
+                "floating",
+                "inset"
+              ],
+              "default": "\"sidebar\""
+            },
+            {
+              "name": "collapsible",
+              "type": "\"offcanvas\" | \"icon\" | \"none\"",
+              "required": false,
+              "description": "How it collapses on desktop: slide out (\"offcanvas\"), shrink to icons (\"icon\"), or never (\"none\").",
+              "values": [
+                "offcanvas",
+                "icon",
+                "none"
+              ],
+              "default": "\"offcanvas\""
+            }
+          ]
+        },
+        {
+          "name": "SidebarGroupLabelProps",
+          "source": "export interface SidebarGroupLabelProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Render the child element (e.g. a CollapsibleTrigger) instead of a div. */\n  asChild?: boolean;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "asChild",
+              "type": "boolean",
+              "required": false,
+              "description": "Render the child element (e.g. a CollapsibleTrigger) instead of a div.",
+              "default": "false"
+            }
+          ]
+        },
+        {
+          "name": "SidebarActionProps",
+          "source": "export interface SidebarActionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  /** Render the child element instead of a button. */\n  asChild?: boolean;\n}",
+          "extends": [
+            "React.ButtonHTMLAttributes<HTMLButtonElement>"
+          ],
+          "members": [
+            {
+              "name": "asChild",
+              "type": "boolean",
+              "required": false,
+              "description": "Render the child element instead of a button.",
+              "default": "false"
+            }
+          ]
+        },
+        {
+          "name": "SidebarMenuButtonProps",
+          "source": "export interface SidebarMenuButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  /** Render the child (an `<a>` or router Link) with button styles. */\n  asChild?: boolean;\n  /** Highlights the current page. Also sets aria-current=\"page\". */\n  isActive?: boolean;\n  variant?: SidebarMenuButtonVariant;\n  size?: SidebarMenuButtonSize;\n  /** Label shown beside the button when the sidebar is collapsed to icons. */\n  tooltip?: React.ReactNode;\n}",
+          "extends": [
+            "React.ButtonHTMLAttributes<HTMLButtonElement>"
+          ],
+          "members": [
+            {
+              "name": "asChild",
+              "type": "boolean",
+              "required": false,
+              "description": "Render the child (an `<a>` or router Link) with button styles.",
+              "default": "false"
+            },
+            {
+              "name": "isActive",
+              "type": "boolean",
+              "required": false,
+              "description": "Highlights the current page. Also sets aria-current=\"page\".",
+              "default": "false"
+            },
+            {
+              "name": "variant",
+              "type": "SidebarMenuButtonVariant",
+              "required": false,
+              "values": [
+                "default",
+                "outline"
+              ],
+              "default": "\"default\""
+            },
+            {
+              "name": "size",
+              "type": "SidebarMenuButtonSize",
+              "required": false,
+              "values": [
+                "default",
+                "sm",
+                "lg"
+              ],
+              "default": "\"default\""
+            },
+            {
+              "name": "tooltip",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Label shown beside the button when the sidebar is collapsed to icons."
+            }
+          ]
+        },
+        {
+          "name": "SidebarMenuActionProps",
+          "source": "export interface SidebarMenuActionProps extends SidebarActionProps {\n  /** Only show while the item is hovered or focused (desktop). */\n  showOnHover?: boolean;\n}",
+          "extends": [
+            "SidebarActionProps"
+          ],
+          "members": [
+            {
+              "name": "showOnHover",
+              "type": "boolean",
+              "required": false,
+              "description": "Only show while the item is hovered or focused (desktop).",
+              "default": "false"
+            }
+          ]
+        },
+        {
+          "name": "SidebarMenuSkeletonProps",
+          "source": "export interface SidebarMenuSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Show an icon placeholder. */\n  showIcon?: boolean;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "showIcon",
+              "type": "boolean",
+              "required": false,
+              "description": "Show an icon placeholder.",
+              "default": "false"
+            }
+          ]
+        },
+        {
+          "name": "SidebarMenuSubButtonProps",
+          "source": "export interface SidebarMenuSubButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {\n  /** Render the child (e.g. a router Link) instead of an `<a>`. */\n  asChild?: boolean;\n  size?: \"sm\" | \"md\";\n  /** Highlights the current page. Also sets aria-current=\"page\". */\n  isActive?: boolean;\n}",
+          "extends": [
+            "React.AnchorHTMLAttributes<HTMLAnchorElement>"
+          ],
+          "members": [
+            {
+              "name": "asChild",
+              "type": "boolean",
+              "required": false,
+              "description": "Render the child (e.g. a router Link) instead of an `<a>`.",
+              "default": "false"
+            },
+            {
+              "name": "size",
+              "type": "\"sm\" | \"md\"",
+              "required": false,
+              "values": [
+                "sm",
+                "md"
+              ],
+              "default": "\"md\""
+            },
+            {
+              "name": "isActive",
+              "type": "boolean",
+              "required": false,
+              "description": "Highlights the current page. Also sets aria-current=\"page\".",
+              "default": "false"
             }
           ]
         }
       ],
-      "readme": "# @nucleux/sidebar\n\nCollapsed icon navigation rail — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/sidebar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Sidebar, SidebarItem, SidebarSeparator } from \"@nucleux/sidebar\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "readme": "# @nucleux/sidebar\n\nSidebar — collapsible application sidebar (offcanvas, icon or fixed) with groups, menus and a phone sheet — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`SidebarProvider`** — wraps the layout; `defaultOpen`/`open`/`onOpenChange`; ⌘B / Ctrl+B toggles; remembers state in the `sidebar_state` cookie\n- **`Sidebar`** — `side` (left/right), `variant` (sidebar/floating/inset), `collapsible` (offcanvas/icon/none); a Sheet below `md`\n- **`SidebarTrigger`**, **`SidebarRail`**, **`SidebarInset`** (the page), **`SidebarInput`**\n- **`SidebarHeader`**, **`SidebarContent`**, **`SidebarFooter`**, **`SidebarSeparator`**\n- **`SidebarGroup`**, **`SidebarGroupLabel`**, **`SidebarGroupAction`**, **`SidebarGroupContent`**\n- **`SidebarMenu`**, **`SidebarMenuItem`**, **`SidebarMenuButton`** (`isActive`, `tooltip`, `asChild`, `variant`, `size`), **`SidebarMenuAction`**, **`SidebarMenuBadge`**, **`SidebarMenuSkeleton`**\n- **`SidebarMenuSub`**, **`SidebarMenuSubItem`**, **`SidebarMenuSubButton`**\n- **`useSidebar()`**, **`useIsMobile()`**, **`sidebarMenuButtonVariants()`**\n\n## Install\n\n```bash\npnpm add @nucleux/sidebar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport {\n  SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarMenu,\n  SidebarMenuItem, SidebarMenuButton, SidebarInset, SidebarTrigger,\n} from \"@nucleux/sidebar\";\n\n<SidebarProvider>\n  <Sidebar collapsible=\"icon\">\n    <SidebarContent>\n      <SidebarGroup>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton asChild isActive tooltip=\"Home\">\n              <a href=\"/\"><Home /><span>Home</span></a>\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n      </SidebarGroup>\n    </SidebarContent>\n  </Sidebar>\n  <SidebarInset>\n    <header><SidebarTrigger /></header>\n    {/* page */}\n  </SidebarInset>\n</SidebarProvider>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -7194,6 +8801,72 @@
         }
       ],
       "readme": "# @nucleux/slider\n\nDraggable range slider — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/slider @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Slider } from \"@nucleux/slider\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "sonner",
+      "package": "@nucleux/sonner",
+      "kind": "component",
+      "description": "Toast notifications from the `sonner` library, styled with Nucleux tokens.\nRender `<Toaster />` once at the app root, then call `toast(\"Saved\")`,\n`toast.success(…)`, `toast.error(…)`, `toast.promise(…)` from anywhere.\nColors follow the `--nx-*` variables, so light and dark mode come from the\ntheme; pass `theme` only to change sonner's own rich colors.",
+      "summary": "Sonner — toast notifications (the sonner library) styled with Nucleux tokens — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "sonner",
+        "toast"
+      ],
+      "exports": [
+        "Toaster",
+        "ToasterProps",
+        "toast"
+      ],
+      "components": [
+        "Toaster"
+      ],
+      "import": "import { Toaster } from \"@nucleux/sonner\";",
+      "installSingle": "pnpm add @nucleux/sonner @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/sonner\n\nSonner — toast notifications (the sonner library) styled with Nucleux tokens — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Toaster`** — render once at the app root; accepts every [sonner `Toaster` prop](https://sonner.emilkowal.ski/toaster) (`position`, `richColors`, `closeButton`, `duration`…)\n- **`toast`** — `toast(\"…\")`, `toast.success`, `toast.error`, `toast.warning`, `toast.info`, `toast.loading`, `toast.promise`, `toast.dismiss`\n\nFor a provider-based toast with Nucleux variants, see `@nucleux/toast`.\n\n## Install\n\n```bash\npnpm add @nucleux/sonner @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Toaster, toast } from \"@nucleux/sonner\";\n\n// once, at the app root\n<Toaster position=\"bottom-right\" />\n\n// anywhere\ntoast.success(\"Summary shared with the team\");\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "spinner",
+      "package": "@nucleux/spinner",
+      "kind": "component",
+      "description": "An animated loading indicator: a spinning lucide Loader2 icon, 16px by\ndefault (resize with `className=\"size-6\"`, recolour with a text colour).\nIt carries `role=\"status\"` and `aria-label=\"Loading\"` so assistive tech\nannounces it; override `aria-label` to describe what is loading. Drop it\ninside a Button, Badge or Empty to show work in progress.",
+      "summary": "Animated loading indicator — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "spinner"
+      ],
+      "exports": [
+        "Spinner",
+        "SpinnerProps"
+      ],
+      "components": [
+        "Spinner"
+      ],
+      "import": "import { Spinner } from \"@nucleux/spinner\";",
+      "installSingle": "pnpm add @nucleux/spinner @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/spinner\n\nAnimated loading indicator — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Spinner`** — spinning icon with `role=\"status\"` and `aria-label=\"Loading\"` (override the label to say what is loading)\n\n## Install\n\n```bash\npnpm add @nucleux/spinner @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Spinner } from \"@nucleux/spinner\";\n\n<Spinner />\n<Button disabled leftIcon={<Spinner aria-label=\"Saving\" />}>Saving…</Button>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -8278,6 +9951,81 @@
       }
     },
     {
+      "name": "trace",
+      "package": "@nucleux/trace",
+      "kind": "component",
+      "description": "A vertical list of agent steps (tool calls, searches, reasoning) as compact\none-line entries. Direct children that are links or buttons wrapping a\n{@link TraceLine} get a fitted, focus-ringed hit area.",
+      "summary": "Compact, collapsible list of agent steps — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "trace"
+      ],
+      "exports": [
+        "Trace",
+        "TraceLine",
+        "TraceIcon",
+        "TraceTitle",
+        "TraceDescription",
+        "TraceCollapsible",
+        "TraceCollapsibleTrigger",
+        "TraceCollapsibleContent",
+        "TraceProps",
+        "TraceLineStatus",
+        "TraceLineProps",
+        "TraceIconProps",
+        "TraceTitleProps",
+        "TraceDescriptionProps",
+        "TraceCollapsibleProps",
+        "TraceCollapsibleTriggerProps",
+        "TraceCollapsibleContentProps"
+      ],
+      "components": [
+        "Trace",
+        "TraceLine",
+        "TraceIcon",
+        "TraceTitle",
+        "TraceDescription",
+        "TraceCollapsible",
+        "TraceCollapsibleTrigger",
+        "TraceCollapsibleContent"
+      ],
+      "import": "import { Trace, TraceLine, TraceIcon, TraceTitle } from \"@nucleux/trace\";",
+      "installSingle": "pnpm add @nucleux/trace @nucleux/tokens",
+      "props": [
+        {
+          "name": "TraceLineProps",
+          "source": "export interface TraceLineProps extends React.HTMLAttributes<HTMLSpanElement> {\n  /** Step state: \"running\" pulses the title, \"error\" tints it destructive, \"pending\" dims it. Omit when done. */\n  status?: TraceLineStatus;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLSpanElement>"
+          ],
+          "members": [
+            {
+              "name": "status",
+              "type": "TraceLineStatus",
+              "required": false,
+              "description": "Step state: \"running\" pulses the title, \"error\" tints it destructive, \"pending\" dims it. Omit when done.",
+              "values": [
+                "running",
+                "error",
+                "pending"
+              ]
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/trace\n\nCompact, collapsible list of agent steps — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Trace`** — root list of steps\n- **`TraceLine`** — one step (`status`: `running` | `error` | `pending`); wrap in a link or button to make it interactive\n- **`TraceIcon`**, **`TraceTitle`**, **`TraceDescription`** — parts of a line\n- **`TraceCollapsible`**, **`TraceCollapsibleTrigger`**, **`TraceCollapsibleContent`** — an expandable step (Nucleux `Collapsible`)\n\n## Install\n\n```bash\npnpm add @nucleux/trace @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Trace, TraceLine, TraceIcon, TraceTitle, TraceDescription, TraceCollapsible, TraceCollapsibleTrigger, TraceCollapsibleContent } from \"@nucleux/trace\";\n\n<Trace>\n  <TraceCollapsible>\n    <TraceCollapsibleTrigger>\n      <TraceLine>\n        <TraceIcon><Search /></TraceIcon>\n        <TraceTitle>Searched the web</TraceTitle>\n        <TraceDescription>8 results</TraceDescription>\n      </TraceLine>\n    </TraceCollapsibleTrigger>\n    <TraceCollapsibleContent>Queried “EU AI Act timeline”.</TraceCollapsibleContent>\n  </TraceCollapsible>\n  <TraceLine status=\"running\"><TraceTitle>Drafting the summary</TraceTitle></TraceLine>\n</Trace>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "utils",
       "package": "@nucleux/utils",
       "kind": "infrastructure",
@@ -8400,7 +10148,7 @@
     {
       "name": "agent-chat",
       "title": "Examples/Agent Chat",
-      "source": "import { useState } from \"react\";\nimport type { Meta, StoryObj } from \"@storybook/react\";\nimport { Bell, Calendar, Home, ListChecks, Settings, Sparkles } from \"lucide-react\";\nimport {\n  Avatar,\n  Button,\n  Caveat,\n  GlobalNav,\n  Input,\n  Message,\n  MessageScroller,\n  OpenInput,\n  Sidebar,\n  SidebarItem,\n  SuggestedPrompts,\n} from \"../index\";\n\n/**\n * A full agent chat screen assembled from Nucleux primitives — app shell, a\n * message list with a streaming reply, suggested prompts, the open input, and\n * the fallibility caveat.\n */\nconst meta = {\n  title: \"Examples/Agent Chat\",\n  parameters: { layout: \"fullscreen\" },\n} satisfies Meta;\n\nexport default meta;\ntype Story = StoryObj<typeof meta>;\n\nexport const Default: Story = {\n  render: () => {\n    const [value, setValue] = useState(\"\");\n    return (\n      <div className=\"flex h-screen flex-col bg-background\">\n        <GlobalNav\n          left={<span className=\"text-base font-medium text-foreground\">Nebula</span>}\n          center={<Input type=\"search\" aria-label=\"Search\" placeholder=\"Search\" className=\"w-72\" />}\n          right={\n            <>\n              <Button variant=\"ghost\" size=\"icon-lg\" aria-label=\"Notifications\">\n                <Bell />\n              </Button>\n              <Avatar name=\"Eric\" className=\"size-8\" />\n            </>\n          }\n        />\n\n        <div className=\"flex min-h-0 flex-1\">\n          <Sidebar footer={<SidebarItem icon={<Settings />} label=\"Settings\" />}>\n            <SidebarItem icon={<Home />} label=\"Home\" />\n            <SidebarItem icon={<Sparkles />} label=\"Assistant\" active />\n            <SidebarItem icon={<Calendar />} label=\"Calendar\" />\n            <SidebarItem icon={<ListChecks />} label=\"Tasks\" />\n          </Sidebar>\n\n          <main className=\"flex min-w-0 flex-1 flex-col\">\n            <MessageScroller className=\"mx-auto w-full max-w-3xl\">\n              <Message role=\"user\" content=\"Summarize the CPQ Q3 scope review and list the action items.\" />\n              <Message\n                role=\"assistant\"\n                content=\"Here's the summary: the team aligned on a phased CPQ rollout, with pricing rules landing first. Three action items were captured.\"\n              />\n              <Message role=\"assistant\" streaming content=\"Drafting the action item list\" />\n            </MessageScroller>\n\n            <div className=\"mx-auto w-full max-w-3xl space-y-3 p-4\">\n              <SuggestedPrompts\n                items={[\"List action items\", \"Draft a follow-up email\", \"Show decisions\"]}\n                onSelect={setValue}\n              />\n              <OpenInput value={value} onValueChange={setValue} onSubmit={() => setValue(\"\")} />\n              <Caveat />\n            </div>\n          </main>\n        </div>\n      </div>\n    );\n  },\n};"
+      "source": "import { useState } from \"react\";\nimport type { Meta, StoryObj } from \"@storybook/react\";\nimport { Bell, Calendar, FileText, Home, ListChecks, Settings, Sparkles } from \"lucide-react\";\nimport {\n  Avatar,\n  Button,\n  Caveat,\n  Input,\n  Message,\n  MessageScroller,\n  OpenInput,\n  Sidebar,\n  SidebarContent,\n  SidebarGroup,\n  SidebarGroupContent,\n  SidebarHeader,\n  SidebarInset,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarProvider,\n  SidebarTrigger,\n  SuggestedPrompts,\n  Trace,\n  TraceCollapsible,\n  TraceCollapsibleContent,\n  TraceCollapsibleTrigger,\n  TraceDescription,\n  TraceIcon,\n  TraceLine,\n  TraceTitle,\n} from \"../index\";\n\n/**\n * A full agent chat screen assembled from Nucleux primitives — sidebar app\n * shell, a message list with the agent's trace and a streaming reply, suggested\n * prompts, the open input, and the fallibility caveat.\n */\nconst meta = {\n  title: \"Examples/Agent Chat\",\n  parameters: { layout: \"fullscreen\" },\n} satisfies Meta;\n\nexport default meta;\ntype Story = StoryObj<typeof meta>;\n\nexport const Default: Story = {\n  render: () => {\n    const [value, setValue] = useState(\"\");\n    const nav = [\n      { label: \"Home\", icon: Home },\n      { label: \"Assistant\", icon: Sparkles, active: true },\n      { label: \"Calendar\", icon: Calendar },\n      { label: \"Tasks\", icon: ListChecks },\n      { label: \"Settings\", icon: Settings },\n    ];\n    return (\n      <SidebarProvider>\n        <Sidebar collapsible=\"icon\">\n          <SidebarHeader>\n            <span className=\"px-2 text-base font-medium text-foreground group-data-[collapsible=icon]:sr-only\">Nebula</span>\n          </SidebarHeader>\n          <SidebarContent>\n            <SidebarGroup>\n              <SidebarGroupContent>\n                <SidebarMenu>\n                  {nav.map(({ label, icon: Icon, active }) => (\n                    <SidebarMenuItem key={label}>\n                      <SidebarMenuButton isActive={active} tooltip={label}>\n                        <Icon />\n                        <span>{label}</span>\n                      </SidebarMenuButton>\n                    </SidebarMenuItem>\n                  ))}\n                </SidebarMenu>\n              </SidebarGroupContent>\n            </SidebarGroup>\n          </SidebarContent>\n        </Sidebar>\n\n        <SidebarInset className=\"h-svh\">\n          <header className=\"flex h-14 shrink-0 items-center gap-2 border-b border-border px-4\">\n            <SidebarTrigger />\n            <Input type=\"search\" aria-label=\"Search\" placeholder=\"Search\" className=\"hidden w-72 sm:block\" />\n            <div className=\"ml-auto flex items-center gap-2\">\n              <Button variant=\"ghost\" size=\"icon\" aria-label=\"Notifications\">\n                <Bell />\n              </Button>\n              <Avatar name=\"Eric\" className=\"size-8\" />\n            </div>\n          </header>\n\n          <MessageScroller className=\"mx-auto w-full max-w-3xl\">\n            <Message role=\"user\" content=\"Summarize the CPQ Q3 scope review and list the action items.\" />\n            <Trace className=\"px-4\">\n              <TraceCollapsible defaultOpen>\n                <TraceCollapsibleTrigger>\n                  <TraceLine>\n                    <TraceIcon>\n                      <FileText />\n                    </TraceIcon>\n                    <TraceTitle>Read the meeting transcript</TraceTitle>\n                    <TraceDescription>214 turns · 45 min</TraceDescription>\n                  </TraceLine>\n                </TraceCollapsibleTrigger>\n                <TraceCollapsibleContent>zuora-cpq-q3 · decisions and owners extracted</TraceCollapsibleContent>\n              </TraceCollapsible>\n            </Trace>\n            <Message\n              role=\"assistant\"\n              content=\"Here's the summary: the team aligned on a phased CPQ rollout, with pricing rules landing first. Three action items were captured.\"\n            />\n            <Message role=\"assistant\" streaming content=\"Drafting the action item list\" />\n          </MessageScroller>\n\n          <div className=\"mx-auto w-full max-w-3xl space-y-3 p-4\">\n            <SuggestedPrompts\n              items={[\"List action items\", \"Draft a follow-up email\", \"Show decisions\"]}\n              onSelect={setValue}\n            />\n            <OpenInput value={value} onValueChange={setValue} onSubmit={() => setValue(\"\")} />\n            <Caveat />\n          </div>\n        </SidebarInset>\n      </SidebarProvider>\n    );\n  },\n};"
     },
     {
       "name": "card-gallery",
@@ -8408,9 +10156,19 @@
       "source": "import type { Meta, StoryObj } from \"@storybook/react\";\nimport { ArrowUpRight, Play, TrendingUp, Users } from \"lucide-react\";\nimport {\n  Avatar,\n  Badge,\n  Button,\n  CardAction,\n  CardContainer,\n  CardContent,\n  CardDescription,\n  CardDivider,\n  CardHeader,\n  CardTitle,\n  Progress,\n} from \"../index\";\n\n/**\n * A gallery of card layouts (\"card variations\") — all built from the same\n * CardContainer primitive plus Badge, Avatar, Progress, and Button.\n */\nconst meta = {\n  title: \"Examples/Card Gallery\",\n  parameters: { layout: \"padded\" },\n} satisfies Meta;\n\nexport default meta;\ntype Story = StoryObj<typeof meta>;\n\nfunction StatCard() {\n  return (\n    <CardContainer>\n      <CardContent className=\"space-y-2\">\n        <div className=\"flex items-center justify-between\">\n          <span className=\"text-sm text-muted-foreground\">Meetings summarized</span>\n          <TrendingUp className=\"size-4 text-success\" />\n        </div>\n        <p className=\"text-3xl font-semibold tracking-tight text-foreground\">128</p>\n        <Badge variant=\"success\">+12% this week</Badge>\n      </CardContent>\n    </CardContainer>\n  );\n}\n\nfunction MediaCard() {\n  return (\n    <CardContainer className=\"overflow-hidden\">\n      <div className=\"relative flex aspect-video items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950\">\n        <span className=\"inline-flex size-12 items-center justify-center rounded-full bg-background/95 text-foreground shadow-md\">\n          <Play className=\"size-5 translate-x-0.5 fill-current\" />\n        </span>\n      </div>\n      <CardContent className=\"space-y-1\">\n        <CardTitle>CPQ Q3 scope review</CardTitle>\n        <CardDescription>45:00 · Summarized</CardDescription>\n      </CardContent>\n    </CardContainer>\n  );\n}\n\nfunction ProgressCard() {\n  return (\n    <CardContainer>\n      <CardHeader>\n        <div>\n          <CardTitle>Onboarding</CardTitle>\n          <CardDescription>2 of 3 steps</CardDescription>\n        </div>\n        <Badge>66%</Badge>\n      </CardHeader>\n      <CardDivider />\n      <CardContent className=\"space-y-3\">\n        <Progress value={66} aria-label=\"Onboarding progress\" />\n        <Button variant=\"link\" rightIcon={<ArrowUpRight className=\"size-4\" />}>\n          Continue setup\n        </Button>\n      </CardContent>\n    </CardContainer>\n  );\n}\n\nfunction TeamCard() {\n  return (\n    <CardContainer>\n      <CardHeader>\n        <div>\n          <CardTitle>Workspace</CardTitle>\n          <CardDescription>4 members</CardDescription>\n        </div>\n        <CardAction>Manage</CardAction>\n      </CardHeader>\n      <CardDivider />\n      <CardContent className=\"flex items-center justify-between\">\n        <div className=\"flex -space-x-2\">\n          {[\"Eric Idle\", \"Zoe Ray\", \"Ada Lin\", \"Sam Poe\"].map((n) => (\n            <Avatar key={n} name={n} className=\"size-8 ring-2 ring-background\" />\n          ))}\n        </div>\n        <Button variant=\"secondary\" size=\"sm\" leftIcon={<Users className=\"size-4\" />}>\n          Invite\n        </Button>\n      </CardContent>\n    </CardContainer>\n  );\n}\n\nexport const Default: Story = {\n  render: () => (\n    <div className=\"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4\">\n      <StatCard />\n      <MediaCard />\n      <ProgressCard />\n      <TeamCard />\n    </div>\n  ),\n};"
     },
     {
+      "name": "day-0-dashboard",
+      "title": "Examples/Day-0 Dashboard (App Shell)",
+      "source": "import type { Meta, StoryObj } from \"@storybook/react\";\nimport { Bell, Calendar, Home, ListChecks, Plus, Settings, Sparkles } from \"lucide-react\";\nimport {\n  Avatar,\n  Button,\n  Input,\n  Sidebar,\n  SidebarContent,\n  SidebarFooter,\n  SidebarGroup,\n  SidebarGroupContent,\n  SidebarHeader,\n  SidebarInset,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarProvider,\n  SidebarSeparator,\n  SidebarTrigger,\n} from \"../index\";\nimport { MeetingDashboardBody } from \"./meeting-dashboard\";\n\n/**\n * Full \"day-0-dashboard\" app shell — a Sidebar collapsed to icons plus a top\n * bar, wrapping the meeting dashboard body. Implementation of the source Figma\n * design (AI-UX-Pattern › day-0-dashboard).\n */\nconst meta = {\n  title: \"Examples/Day-0 Dashboard (App Shell)\",\n  parameters: { layout: \"fullscreen\" },\n} satisfies Meta;\n\nexport default meta;\ntype Story = StoryObj<typeof meta>;\n\nconst NAV = [\n  { label: \"Home\", icon: Home, active: true },\n  { label: \"Assistant\", icon: Sparkles },\n  { label: \"Calendar\", icon: Calendar },\n  { label: \"Tasks\", icon: ListChecks },\n];\n\nfunction BrandMark() {\n  return (\n    <div className=\"flex size-8 shrink-0 items-center justify-center rounded-[10px] bg-brand text-sm font-semibold text-brand-foreground\">\n      P\n    </div>\n  );\n}\n\nexport const Default: Story = {\n  render: () => (\n    <SidebarProvider defaultOpen={false}>\n      <Sidebar collapsible=\"icon\">\n        <SidebarHeader>\n          <BrandMark />\n          <SidebarMenu>\n            <SidebarMenuItem>\n              <SidebarMenuButton variant=\"outline\" tooltip=\"New recording\">\n                <Plus />\n                <span>New recording</span>\n              </SidebarMenuButton>\n            </SidebarMenuItem>\n          </SidebarMenu>\n        </SidebarHeader>\n        <SidebarSeparator />\n        <SidebarContent>\n          <SidebarGroup>\n            <SidebarGroupContent>\n              <SidebarMenu>\n                {NAV.map(({ label, icon: Icon, active }) => (\n                  <SidebarMenuItem key={label}>\n                    <SidebarMenuButton isActive={active} tooltip={label}>\n                      <Icon />\n                      <span>{label}</span>\n                    </SidebarMenuButton>\n                  </SidebarMenuItem>\n                ))}\n              </SidebarMenu>\n            </SidebarGroupContent>\n          </SidebarGroup>\n        </SidebarContent>\n        <SidebarFooter>\n          <SidebarMenu>\n            <SidebarMenuItem>\n              <SidebarMenuButton tooltip=\"Settings\">\n                <Settings />\n                <span>Settings</span>\n              </SidebarMenuButton>\n            </SidebarMenuItem>\n          </SidebarMenu>\n        </SidebarFooter>\n      </Sidebar>\n\n      <SidebarInset className=\"h-svh overflow-y-auto\">\n        <header className=\"sticky top-0 z-10 flex h-14 shrink-0 items-center gap-2 border-b border-border bg-background px-4\">\n          <SidebarTrigger />\n          <span className=\"text-base text-foreground\">Heading</span>\n          <Input type=\"search\" aria-label=\"Search\" placeholder=\"Search\" className=\"mx-auto hidden w-72 sm:block\" />\n          <div className=\"ml-auto flex items-center gap-2\">\n            <div className=\"relative\">\n              <Button variant=\"ghost\" size=\"icon-lg\" aria-label=\"Notifications\">\n                <Bell />\n              </Button>\n              <span className=\"absolute right-2 top-1.5 size-2 rounded-full bg-destructive ring-2 ring-background\" />\n            </div>\n            <Avatar name=\"Eric\" className=\"size-8\" />\n          </div>\n        </header>\n        <MeetingDashboardBody />\n      </SidebarInset>\n    </SidebarProvider>\n  ),\n};"
+    },
+    {
       "name": "login",
       "title": "Examples/Login",
       "source": "import type { Meta, StoryObj } from \"@storybook/react\";\nimport { LoginPage } from \"./login-page\";\nimport { LoginPageShadcn } from \"./login-page-shadcn\";\nimport { LoginMui3 } from \"./login-mui3\";\n\nconst meta = {\n  title: \"Examples/Login\",\n  parameters: { layout: \"fullscreen\" },\n} satisfies Meta;\n\nexport default meta;\ntype Story = StoryObj<typeof meta>;\n\n/** Material Design 3 sign-in page composed from Nucleux md3-* components. */\nexport const MaterialUI3: Story = {\n  render: () => <LoginPage />,\n};\n\n/** Full Material Design 3 sign-in — two-panel brand + form layout. */\nexport const MaterialUI3Full: Story = {\n  render: () => <LoginMui3 />,\n};\n\n/** shadcn/slate sign-in page composed from Nucleux primitives. */\nexport const Shadcn: Story = {\n  render: () => <LoginPageShadcn />,\n};"
+    },
+    {
+      "name": "meeting-dashboard",
+      "title": "Examples/Meeting Dashboard",
+      "source": "import type { Meta, StoryObj } from \"@storybook/react\";\nimport { MeetingDashboardBody } from \"./meeting-dashboard\";\n\n/**\n * The \"Meeting dashboard\" centered content (no app chrome), assembled entirely\n * from Nucleux primitives — a faithful implementation of the source Figma\n * design (AI-UX-Pattern › Body).\n */\nconst meta = {\n  title: \"Examples/Meeting Dashboard\",\n  parameters: { layout: \"fullscreen\" },\n} satisfies Meta;\n\nexport default meta;\ntype Story = StoryObj<typeof meta>;\n\nexport const Default: Story = {\n  render: () => (\n    <div className=\"min-h-screen bg-background\">\n      <MeetingDashboardBody />\n    </div>\n  ),\n};"
     },
     {
       "name": "settings",

@@ -20,21 +20,45 @@ import DashboardOverviewExample from "../../knowledge/patterns/dashboard-overvie
 const bodyRows = () => screen.getAllByRole("row").slice(1);
 
 describe("app-shell", () => {
-  it("navigates from the desktop nav and from the mobile sheet", async () => {
+  it("marks the current link and navigates from the sidebar", async () => {
     const user = userEvent.setup();
     render(<AppShellExample />);
-    const desktop = screen.getAllByRole("navigation", { name: "Primary" })[0];
-    expect(within(desktop).getByRole("link", { name: "Dashboard" })).toHaveAttribute("aria-current", "page");
+    const nav = screen.getByRole("navigation", { name: "Primary" });
+    expect(within(nav).getByRole("link", { name: "Dashboard" })).toHaveAttribute("aria-current", "page");
 
-    await user.click(within(desktop).getByRole("link", { name: "Projects" }));
-    expect(within(desktop).getByRole("link", { name: "Projects" })).toHaveAttribute("aria-current", "page");
-    expect(within(desktop).getByRole("link", { name: "Dashboard" })).not.toHaveAttribute("aria-current");
+    await user.click(within(nav).getByRole("link", { name: "Projects" }));
+    expect(within(nav).getByRole("link", { name: "Projects" })).toHaveAttribute("aria-current", "page");
+    expect(within(nav).getByRole("link", { name: "Dashboard" })).not.toHaveAttribute("aria-current");
+  });
 
-    await user.click(screen.getByRole("button", { name: "Open navigation" }));
-    const sheet = await screen.findByRole("dialog");
-    await user.click(within(sheet).getByRole("link", { name: "Team" }));
-    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
-    expect(within(desktop).getByRole("link", { name: "Team" })).toHaveAttribute("aria-current", "page");
+  it("collapses on desktop and toggles with Ctrl+B", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<AppShellExample />);
+    const sidebar = () => container.querySelector('[data-slot="sidebar"]')!;
+    expect(sidebar()).toHaveAttribute("data-state", "expanded");
+    await user.click(screen.getByRole("button", { name: "Toggle navigation" }));
+    expect(sidebar()).toHaveAttribute("data-state", "collapsed");
+    expect(sidebar()).toHaveAttribute("data-collapsible", "icon");
+    await user.keyboard("{Control>}b{/Control}");
+    expect(sidebar()).toHaveAttribute("data-state", "expanded");
+  });
+
+  it("opens as a sheet on phones and closes after navigating", async () => {
+    const original = window.matchMedia;
+    window.matchMedia = ((query: string) => ({ ...original(query), matches: query.includes("max-width: 767px") })) as typeof window.matchMedia;
+    try {
+      const user = userEvent.setup();
+      render(<AppShellExample />);
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      await user.click(screen.getByRole("button", { name: "Toggle navigation" }));
+      const sheet = await screen.findByRole("dialog");
+      await user.click(within(sheet).getByRole("link", { name: "Team" }));
+      await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+      await user.click(screen.getByRole("button", { name: "Toggle navigation" }));
+      expect(within(await screen.findByRole("dialog")).getByRole("link", { name: "Team" })).toHaveAttribute("aria-current", "page");
+    } finally {
+      window.matchMedia = original;
+    }
   });
 });
 

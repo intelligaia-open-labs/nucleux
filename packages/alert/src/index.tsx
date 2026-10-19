@@ -5,7 +5,7 @@ import { cn } from "@nucleux/utils";
 export type AlertVariant = "default" | "info" | "success" | "warning" | "destructive";
 
 const alertVariants: Record<AlertVariant, string> = {
-  default: "border-border bg-card text-foreground [&_[data-alert-icon]]:text-muted-foreground",
+  default: "border-border bg-background text-foreground [&_[data-alert-icon]]:text-muted-foreground",
   info: "border-info/30 bg-info/5 text-foreground [&_[data-alert-icon]]:text-info",
   success: "border-success/30 bg-success/5 text-foreground [&_[data-alert-icon]]:text-success",
   warning: "border-warning/40 bg-warning/10 text-foreground [&_[data-alert-icon]]:text-warning",

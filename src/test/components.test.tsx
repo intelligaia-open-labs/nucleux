@@ -1,886 +1,186 @@
-import { createRef, type ReactElement } from "react";
+import { createRef, type FormEvent } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import { Home, Mic } from "lucide-react";
-
 import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  Questionnaire,
+  QuestionnaireActions,
+  QuestionnaireChoice,
+  QuestionnaireChoices,
+  QuestionnaireError,
+  QuestionnaireInput,
+  QuestionnaireItem,
+  QuestionnaireNext,
+  QuestionnairePrevious,
+  QuestionnaireProgress,
+  QuestionnaireSkip,
+  QuestionnaireSubmit,
+  QuestionnaireTitle,
   Accordion,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-  NativeSelectOptGroup,
-  NativeSelectOption,
-  GlobalNav,
-  NavItem,
-  NavPanel,
-  NavPanelHeader,
-  NavSection,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  Caveat,
-  Disclosure,
-  Attachment,
-  AttachmentGroup,
-  Connector,
-  KnowledgeBase,
-  ModelSelection,
-  Templates,
-  StructuredInput,
-  VoiceInput,
-  Personality,
-  Alert,
-  Avatar,
-  Badge,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-  Button,
-  CardAction,
-  CardContainer,
-  CardContent,
-  CardDescription,
-  CardDivider,
-  CardHeader,
-  CardTitle,
-  Checkbox,
-  CodeBlock,
-  Dialog,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  OpenInput,
-  Message,
-  Consent,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Progress,
-  Radio,
-  RadioGroup,
-  NativeSelect,
-  Separator,
-  Sheet,
-  SheetBody,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  Sidebar,
-  SidebarItem,
-  SidebarSeparator,
-  SuggestedPrompt,
-  SuggestedPrompts,
-  Switch,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  MessageScroller,
-  Toast,
-  ToastProvider,
-  Tooltip,
   AlertDialog,
-  AspectRatio,
+  Bubble,
+  BubbleContent,
+  Button,
+  ButtonGroup,
+  ButtonGroupText,
+  CardContainer,
+  Checkbox,
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-  HoverCard,
-  Input,
-  Label,
-  Pagination,
-  ScrollArea,
-  Skeleton,
-  Slider,
-  Textarea,
-  Toggle,
-  ToggleGroup,
-  ToggleGroupItem,
   Combobox,
   Command,
-  CommandEmpty,
-  CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
+  Consent,
   ContextMenu,
   ContextMenuItem,
+  DatePicker,
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DirectionProvider,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  Field,
+  FieldError,
+  FieldLabel,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+  InputGroupText,
+  InputGroupTextarea,
   InputOtp,
+  Item,
+  ItemContent,
+  ItemGroup,
+  ItemTitle,
+  Kbd,
+  KbdGroup,
+  Marker,
+  Md3ActionConfirmation,
+  Md3AgentComposer,
+  Md3BottomSheet,
+  Md3Button,
+  Md3Checkbox,
+  Md3Chip,
+  Md3DatePicker,
+  Md3Dialog,
+  Md3NavigationBar,
+  Md3NavigationBarItem,
+  Md3Radio,
+  Md3RadioGroup,
+  Md3SegmentedButton,
+  Md3SegmentedButtonItem,
+  Md3Switch,
+  Md3Tab,
+  Md3TabPanel,
+  Md3Tabs,
+  Md3TabsList,
+  Md3TextField,
+  Md3TimePicker,
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-  Calendar,
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  ChartContainer,
-  DataTable,
-  DatePicker,
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Md3Button,
-  Md3Card,
-  Md3Chip,
-  Md3Fab,
-  Md3IconButton,
-  Md3Switch,
-  Md3TextField,
-  Md3Checkbox,
-  Md3Radio,
-  Md3RadioGroup,
-  Md3Slider,
-  Md3Tabs,
-  Md3TabsList,
-  Md3Tab,
-  Md3TabPanel,
-  Md3NavigationBar,
-  Md3NavigationBarItem,
-  Md3NavigationRail,
-  Md3NavigationRailItem,
-  Md3Menu,
-  Md3MenuItem,
-  Md3Dialog,
-  Md3Snackbar,
-  Md3List,
-  Md3ListItem,
-  Md3TopAppBar,
-  Md3NavigationDrawer,
-  Md3NavigationDrawerItem,
-  Md3BottomSheet,
-  Md3SegmentedButton,
-  Md3SegmentedButtonItem,
-  Md3Badge,
-  Md3Tooltip,
-  Md3LinearProgress,
-  Md3CircularProgress,
-  Md3Divider,
-  Md3DatePicker,
-  Md3TimePicker,
-  Md3Search,
-  Md3Banner,
-  Md3Message,
-  Md3AgentComposer,
-  Md3ActionConfirmation,
+  NativeSelect,
+  NativeSelectOptGroup,
+  NativeSelectOption,
+  OpenInput,
+  Pagination,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Radio,
+  RadioGroup,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Sheet,
+  SheetHeader,
+  SheetTitle,
+  Sidebar,
+  SidebarContent,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+  Slider,
+  Spinner,
+  Switch,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  ToastProvider,
+  Toaster,
+  Toggle,
+  ToggleGroup,
+  ToggleGroupItem,
+  Trace,
+  TraceCollapsible,
+  TraceCollapsibleContent,
+  TraceCollapsibleTrigger,
+  TraceLine,
+  TraceTitle,
+  toast,
+  useDirection,
   useToast,
 } from "@nucleux/react";
-import { useForm } from "react-hook-form";
+import { cases } from "./cases";
 
-/**
- * Every exported component with a valid, minimal render. Drives the smoke +
- * accessibility checks below. Adding a component here is the single step needed
- * to bring it under end-to-end validation.
- */
-function FormDemo() {
-  const form = useForm<{ username: string }>({ defaultValues: { username: "" } });
+function QuestionnaireDemo({ onSubmit }: { onSubmit?: (e: FormEvent<HTMLFormElement>) => void }) {
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(() => {})}>
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <input {...field} />
-              </FormControl>
-              <FormDescription>Your public name.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </form>
-    </Form>
+    <Questionnaire shortcuts="letters" onSubmit={onSubmit}>
+      <QuestionnaireProgress />
+      <QuestionnaireItem name="direction" required>
+        <QuestionnaireTitle>What should we prototype next?</QuestionnaireTitle>
+        <QuestionnaireChoices>
+          <QuestionnaireChoice value="delegation">Sub-agent delegation</QuestionnaireChoice>
+          <QuestionnaireChoice value="questions">Question prompts</QuestionnaireChoice>
+          <QuestionnaireInput aria-label="Another direction" />
+        </QuestionnaireChoices>
+        <QuestionnaireError />
+      </QuestionnaireItem>
+      <QuestionnaireItem name="signals" multiple>
+        <QuestionnaireTitle>What should updates include?</QuestionnaireTitle>
+        <QuestionnaireChoices>
+          <QuestionnaireChoice value="progress">Progress</QuestionnaireChoice>
+          <QuestionnaireChoice value="risks">Risks</QuestionnaireChoice>
+        </QuestionnaireChoices>
+        <QuestionnaireError />
+      </QuestionnaireItem>
+      <QuestionnaireActions>
+        <QuestionnairePrevious />
+        <QuestionnaireSkip />
+        <QuestionnaireNext />
+        <QuestionnaireSubmit>Save answers</QuestionnaireSubmit>
+      </QuestionnaireActions>
+    </Questionnaire>
   );
 }
-
-const dataTableColumns = [
-  { accessorKey: "id", header: "Invoice" },
-  { accessorKey: "amount", header: "Amount" },
-];
-const dataTableRows = [
-  { id: "INV-001", amount: 250 },
-  { id: "INV-002", amount: 150 },
-];
-
-const cases: { name: string; ui: ReactElement }[] = [
-  { name: "Avatar", ui: <Avatar name="Eric Idle" /> },
-  { name: "Personality", ui: <Personality defaultValue="professional" onValueChange={() => {}} /> },
-  {
-    name: "Attachment",
-    ui: (
-      <AttachmentGroup>
-        <Attachment name="Playbook.pdf" meta="PDF · 240 KB" onRemove={() => {}} />
-      </AttachmentGroup>
-    ),
-  },
-  {
-    name: "ModelSelection",
-    ui: (
-      <ModelSelection
-        defaultValue="a"
-        onValueChange={() => {}}
-        models={[
-          { value: "a", label: "Instant", description: "Fastest" },
-          { value: "b", label: "Pro", description: "Deepest" },
-        ]}
-      />
-    ),
-  },
-  { name: "VoiceInput", ui: <VoiceInput state="recording" duration="0:12" onCancel={() => {}} onConfirm={() => {}} /> },
-  {
-    name: "StructuredInput",
-    ui: (
-      <StructuredInput
-        question="Which audience is this for?"
-        options={[
-          { value: "execs", label: "Executives" },
-          { value: "eng", label: "Engineers" },
-        ]}
-        onSubmit={() => {}}
-        onSkip={() => {}}
-      />
-    ),
-  },
-  {
-    name: "Connector",
-    ui: <Connector name="GitHub" description="Read issues and code" onConnect={() => {}} />,
-  },
-  {
-    name: "KnowledgeBase",
-    ui: (
-      <KnowledgeBase
-        defaultValue={["a"]}
-        onValueChange={() => {}}
-        sources={[
-          { id: "a", name: "CLAUDE.md", meta: "project guide" },
-          { id: "b", name: "project.json", meta: "config" },
-        ]}
-      />
-    ),
-  },
-  {
-    name: "Templates",
-    ui: (
-      <Templates
-        onComplete={() => {}}
-        segments={["Email ", { slot: "company", placeholder: "Company" }, " about renewals."]}
-      />
-    ),
-  },
-  { name: "Disclosure", ui: <Disclosure variant="banner" /> },
-  {
-    name: "DropdownMenu",
-    ui: (
-      <DropdownMenu defaultOpen>
-        <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>Task</DropdownMenuLabel>
-          <DropdownMenuItem>Edit</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
-  },
-  {
-    name: "Empty",
-    ui: (
-      <Empty>
-        <EmptyHeader>
-          <EmptyMedia variant="icon">
-            <Home />
-          </EmptyMedia>
-          <EmptyTitle>No projects yet</EmptyTitle>
-          <EmptyDescription>Create a project to start tracking tasks.</EmptyDescription>
-        </EmptyHeader>
-        <EmptyContent>
-          <Button>New project</Button>
-        </EmptyContent>
-      </Empty>
-    ),
-  },
-  { name: "Button (link, asChild)", ui: <Button variant="link" asChild><a href="/docs">Docs</a></Button> },
-  { name: "Caveat", ui: <Caveat /> },
-  { name: "Badge", ui: <Badge>New</Badge> },
-  { name: "Button", ui: <Button>Save</Button> },
-  {
-    name: "CardContainer",
-    ui: (
-      <CardContainer>
-        <CardHeader>
-          <div>
-            <CardTitle>Recent meeting</CardTitle>
-            <CardDescription>1 in your library</CardDescription>
-          </div>
-          <CardAction>View all</CardAction>
-        </CardHeader>
-        <CardDivider />
-        <CardContent>Body</CardContent>
-      </CardContainer>
-    ),
-  },
-  { name: "Alert", ui: <Alert variant="info" title="Heads up">Body text</Alert> },
-  { name: "Switch", ui: <Switch defaultChecked aria-label="Toggle" /> },
-  { name: "Separator", ui: <Separator /> },
-  {
-    name: "Tooltip",
-    ui: (
-      <Tooltip content="Ask Nebula">
-        <Button>Trigger</Button>
-      </Tooltip>
-    ),
-  },
-  {
-    name: "GlobalNav",
-    ui: <GlobalNav left={<span>Heading</span>} right={<Avatar name="Eric" />} />,
-  },
-  {
-    name: "Sidebar",
-    ui: (
-      <Sidebar footer={<SidebarItem icon={<Home />} label="Settings" />}>
-        <SidebarItem icon={<Home />} label="Home" active />
-        <SidebarSeparator />
-        <SidebarItem icon={<Home />} label="More" />
-      </Sidebar>
-    ),
-  },
-  { name: "CodeBlock", ui: <CodeBlock code="const x = 1;" language="ts" /> },
-  {
-    name: "OpenInput",
-    ui: (
-      <OpenInput aria-label="Message" value="" onValueChange={() => {}} onSubmit={() => {}} />
-    ),
-  },
-  { name: "Message", ui: <Message role="assistant" content="Hi there" /> },
-  {
-    name: "MessageScroller",
-    ui: (
-      <MessageScroller>
-        <Message role="user" content="Hello" />
-        <Message role="assistant" content="Hi" />
-      </MessageScroller>
-    ),
-  },
-  { name: "Checkbox", ui: <Checkbox defaultChecked aria-label="Accept" /> },
-  {
-    name: "Tabs",
-    ui: (
-      <Tabs defaultValue="a">
-        <TabsList>
-          <TabsTrigger value="a">A</TabsTrigger>
-          <TabsTrigger value="b">B</TabsTrigger>
-        </TabsList>
-        <TabsContent value="a">Panel A</TabsContent>
-        <TabsContent value="b">Panel B</TabsContent>
-      </Tabs>
-    ),
-  },
-  { name: "SuggestedPrompts", ui: <SuggestedPrompts items={["Highlights", "Action items"]} /> },
-  { name: "SuggestedPrompt", ui: <SuggestedPrompt>Show highlights</SuggestedPrompt> },
-  {
-    name: "RadioGroup",
-    ui: (
-      <RadioGroup defaultValue="a" label="Choice">
-        <Radio value="a" aria-label="A" />
-        <Radio value="b" aria-label="B" />
-      </RadioGroup>
-    ),
-  },
-  {
-    name: "NativeSelect",
-    ui: (
-      <NativeSelect aria-label="Speed" defaultValue="a">
-        <option value="a">Instant</option>
-        <option value="b">Balanced</option>
-      </NativeSelect>
-    ),
-  },
-  {
-    name: "Table",
-    ui: (
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Status</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell>Sync</TableCell>
-            <TableCell>Done</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    ),
-  },
-  {
-    name: "Dialog",
-    ui: (
-      <Dialog open onOpenChange={() => {}}>
-        <DialogHeader>
-          <DialogTitle>Save this as memory?</DialogTitle>
-          <DialogDescription>This can personalize future actions.</DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <span>Footer</span>
-        </DialogFooter>
-      </Dialog>
-    ),
-  },
-  {
-    name: "Consent",
-    ui: (
-      <Consent
-        title="Allow workspace access?"
-        description="Choose what the assistant can access."
-        permissions={[
-          { id: "read", label: "Read files", description: "Attached files only", defaultChecked: true },
-          { id: "act", label: "Run actions", description: "Ask before connecting tools" },
-        ]}
-      />
-    ),
-  },
-  {
-    name: "NavPanel",
-    ui: (
-      <NavPanel>
-        <NavPanelHeader meta="84 patterns">Library</NavPanelHeader>
-        <NavSection title="Onboarding" collapsible>
-          <NavItem active>Disclosure</NavItem>
-          <NavItem>Consent</NavItem>
-        </NavSection>
-      </NavPanel>
-    ),
-  },
-  { name: "Progress", ui: <Progress value={60} aria-label="Upload progress" /> },
-  {
-    name: "Breadcrumb",
-    ui: (
-      <Breadcrumb>
-        <BreadcrumbItem>
-          <BreadcrumbLink href="#">Home</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>Details</BreadcrumbPage>
-        </BreadcrumbItem>
-      </Breadcrumb>
-    ),
-  },
-  {
-    name: "Accordion",
-    ui: (
-      <Accordion type="single" defaultValue="a">
-        <AccordionItem value="a">
-          <AccordionTrigger>Question</AccordionTrigger>
-          <AccordionContent>Answer</AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    ),
-  },
-  {
-    name: "Popover",
-    ui: (
-      <Popover defaultOpen>
-        <PopoverTrigger>Open</PopoverTrigger>
-        <PopoverContent>Popover body</PopoverContent>
-      </Popover>
-    ),
-  },
-  { name: "Toast", ui: <Toast title="Saved" description="Done" variant="success" onClose={() => {}} /> },
-  {
-    name: "Sheet",
-    ui: (
-      <Sheet open onOpenChange={() => {}} side="right">
-        <SheetHeader>
-          <SheetTitle>Sources</SheetTitle>
-        </SheetHeader>
-        <SheetBody>Body</SheetBody>
-        <SheetFooter>
-          <span>Footer</span>
-        </SheetFooter>
-      </Sheet>
-    ),
-  },
-  {
-    name: "Label",
-    ui: (
-      <>
-        <Label htmlFor="nm">Name</Label>
-        <Input id="nm" />
-      </>
-    ),
-  },
-  { name: "Input", ui: <Input aria-label="Name" /> },
-  { name: "Textarea", ui: <Textarea aria-label="Message" /> },
-  { name: "Skeleton", ui: <Skeleton className="h-4 w-20" /> },
-  { name: "Toggle", ui: <Toggle aria-label="Bold">B</Toggle> },
-  {
-    name: "ToggleGroup",
-    ui: (
-      <ToggleGroup type="single" aria-label="Alignment" defaultValue="left">
-        <ToggleGroupItem value="left" aria-label="Left">
-          L
-        </ToggleGroupItem>
-        <ToggleGroupItem value="center" aria-label="Center">
-          C
-        </ToggleGroupItem>
-      </ToggleGroup>
-    ),
-  },
-  { name: "Slider", ui: <Slider aria-label="Volume" defaultValue={40} /> },
-  { name: "AspectRatio", ui: <AspectRatio ratio={16 / 9} className="w-40 bg-muted" /> },
-  {
-    name: "Collapsible",
-    ui: (
-      <Collapsible defaultOpen>
-        <CollapsibleTrigger>More</CollapsibleTrigger>
-        <CollapsibleContent>Details</CollapsibleContent>
-      </Collapsible>
-    ),
-  },
-  {
-    name: "HoverCard",
-    ui: (
-      <HoverCard
-        trigger={<button type="button">@n</button>}
-        content={<span>Agentic UI components.</span>}
-      />
-    ),
-  },
-  {
-    name: "ScrollArea",
-    ui: (
-      <ScrollArea className="h-24 w-40">
-        <div className="text-sm">Scrollable content</div>
-      </ScrollArea>
-    ),
-  },
-  { name: "Pagination", ui: <Pagination page={1} count={5} onPageChange={() => {}} /> },
-  {
-    name: "AlertDialog",
-    ui: (
-      <AlertDialog
-        open
-        onOpenChange={() => {}}
-        destructive
-        title="Delete this?"
-        description="This cannot be undone."
-        confirmLabel="Delete"
-      />
-    ),
-  },
-  {
-    name: "Command",
-    ui: (
-      <Command className="w-72">
-        <CommandInput aria-label="Command search" />
-        <CommandList>
-          <CommandEmpty />
-          <CommandGroup heading="SuggestedPrompts">
-            <CommandItem value="New chat">New chat</CommandItem>
-            <CommandItem value="Open settings">Open settings</CommandItem>
-          </CommandGroup>
-        </CommandList>
-      </Command>
-    ),
-  },
-  {
-    name: "Combobox",
-    ui: (
-      <Combobox
-        aria-label="Framework"
-        options={[
-          { value: "next", label: "Next.js" },
-          { value: "vite", label: "Vite" },
-        ]}
-      />
-    ),
-  },
-  {
-    name: "ContextMenu",
-    ui: (
-      <ContextMenu content={<ContextMenuItem>Reload</ContextMenuItem>}>
-        <div>Right-click area</div>
-      </ContextMenu>
-    ),
-  },
-  { name: "InputOtp", ui: <InputOtp length={4} aria-label="Verification code" /> },
-  {
-    name: "Menubar",
-    ui: (
-      <Menubar>
-        <MenubarMenu value="file">
-          <MenubarTrigger>File</MenubarTrigger>
-          <MenubarContent>
-            <MenubarItem>New</MenubarItem>
-          </MenubarContent>
-        </MenubarMenu>
-      </Menubar>
-    ),
-  },
-  {
-    name: "NavigationMenu",
-    ui: (
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem value="products">
-            <NavigationMenuTrigger>Products</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <NavigationMenuLink href="#">Composer</NavigationMenuLink>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="#">Docs</NavigationMenuLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-    ),
-  },
-  {
-    name: "Resizable",
-    ui: (
-      <ResizablePanelGroup className="h-40 w-80">
-        <ResizablePanel>Left</ResizablePanel>
-        <ResizableHandle withHandle />
-        <ResizablePanel>Right</ResizablePanel>
-      </ResizablePanelGroup>
-    ),
-  },
-  { name: "Calendar", ui: <Calendar mode="single" /> },
-  { name: "DatePicker", ui: <DatePicker aria-label="Deadline" /> },
-  {
-    name: "Carousel",
-    ui: (
-      <Carousel className="w-64">
-        <CarouselContent>
-          <CarouselItem>Slide 1</CarouselItem>
-          <CarouselItem>Slide 2</CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-    ),
-  },
-  {
-    name: "Chart",
-    ui: (
-      <ChartContainer config={{ desktop: { label: "Desktop", color: "hsl(var(--nx-info))" } }} className="w-64">
-        <div>chart</div>
-      </ChartContainer>
-    ),
-  },
-  {
-    name: "DataTable",
-    ui: <DataTable columns={dataTableColumns} data={dataTableRows} pageSize={0} />,
-  },
-  { name: "Form", ui: <FormDemo /> },
-  { name: "Md3Button", ui: <Md3Button variant="filled">Save</Md3Button> },
-  {
-    name: "Md3IconButton",
-    ui: (
-      <Md3IconButton aria-label="Favorite">
-        <Home />
-      </Md3IconButton>
-    ),
-  },
-  { name: "Md3Fab", ui: <Md3Fab icon={<Home />} aria-label="Add" /> },
-  { name: "Md3TextField", ui: <Md3TextField label="Email" supportingText="Required" /> },
-  { name: "Md3Card", ui: <Md3Card className="p-4">Card body</Md3Card> },
-  {
-    name: "Md3Chip",
-    ui: (
-      <div className="flex gap-2">
-        <Md3Chip variant="assist">Assist</Md3Chip>
-        <Md3Chip variant="filter" selected>
-          Filter
-        </Md3Chip>
-        <Md3Chip variant="input" onRemove={() => {}}>
-          Input
-        </Md3Chip>
-      </div>
-    ),
-  },
-  { name: "Md3Switch", ui: <Md3Switch defaultChecked aria-label="Wi-Fi" /> },
-  { name: "Md3Checkbox", ui: <Md3Checkbox defaultChecked aria-label="Accept" /> },
-  {
-    name: "Md3Radio",
-    ui: (
-      <Md3RadioGroup defaultValue="a" label="Choice">
-        <Md3Radio value="a" aria-label="A" />
-        <Md3Radio value="b" aria-label="B" />
-      </Md3RadioGroup>
-    ),
-  },
-  { name: "Md3Slider", ui: <Md3Slider defaultValue={50} aria-label="Level" /> },
-  {
-    name: "Md3Tabs",
-    ui: (
-      <Md3Tabs defaultValue="a">
-        <Md3TabsList>
-          <Md3Tab value="a">A</Md3Tab>
-          <Md3Tab value="b">B</Md3Tab>
-        </Md3TabsList>
-        <Md3TabPanel value="a">Panel A</Md3TabPanel>
-        <Md3TabPanel value="b">Panel B</Md3TabPanel>
-      </Md3Tabs>
-    ),
-  },
-  {
-    name: "Md3NavigationBar",
-    ui: (
-      <Md3NavigationBar defaultValue="home">
-        <Md3NavigationBarItem value="home" icon={<Home />} label="Home" />
-        <Md3NavigationBarItem value="search" icon={<Mic />} label="Search" />
-      </Md3NavigationBar>
-    ),
-  },
-  {
-    name: "Md3NavigationRail",
-    ui: (
-      <Md3NavigationRail defaultValue="home">
-        <Md3NavigationRailItem value="home" icon={<Home />} label="Home" />
-        <Md3NavigationRailItem value="search" icon={<Mic />} label="Search" />
-      </Md3NavigationRail>
-    ),
-  },
-  {
-    name: "Md3Menu",
-    ui: (
-      <Md3Menu>
-        <Md3MenuItem>New</Md3MenuItem>
-        <Md3MenuItem>Open</Md3MenuItem>
-      </Md3Menu>
-    ),
-  },
-  {
-    name: "Md3Dialog",
-    ui: (
-      <Md3Dialog open onOpenChange={() => {}} headline="Reset settings?">
-        This will restore defaults.
-      </Md3Dialog>
-    ),
-  },
-  { name: "Md3Snackbar", ui: <Md3Snackbar open message="Message archived" action="Undo" onAction={() => {}} /> },
-  {
-    name: "Md3List",
-    ui: (
-      <Md3List>
-        <Md3ListItem headline="Primary" supportingText="24 new" />
-        <Md3ListItem headline="Starred" supportingText="3 items" trailing="3" />
-      </Md3List>
-    ),
-  },
-  { name: "Md3TopAppBar", ui: <Md3TopAppBar headline="Inbox" /> },
-  {
-    name: "Md3NavigationDrawer",
-    ui: (
-      <Md3NavigationDrawer defaultValue="inbox">
-        <Md3NavigationDrawerItem value="inbox" icon={<Home />}>
-          Inbox
-        </Md3NavigationDrawerItem>
-        <Md3NavigationDrawerItem value="sent" icon={<Mic />}>
-          Sent
-        </Md3NavigationDrawerItem>
-      </Md3NavigationDrawer>
-    ),
-  },
-  {
-    name: "Md3BottomSheet",
-    ui: (
-      <Md3BottomSheet open onOpenChange={() => {}} aria-label="Share options">
-        Sheet body
-      </Md3BottomSheet>
-    ),
-  },
-  {
-    name: "Md3SegmentedButton",
-    ui: (
-      <Md3SegmentedButton type="single" defaultValue="week">
-        <Md3SegmentedButtonItem value="day">Day</Md3SegmentedButtonItem>
-        <Md3SegmentedButtonItem value="week">Week</Md3SegmentedButtonItem>
-      </Md3SegmentedButton>
-    ),
-  },
-  {
-    name: "Md3Badge",
-    ui: (
-      <Md3Badge content={8}>
-        <span>Inbox</span>
-      </Md3Badge>
-    ),
-  },
-  {
-    name: "Md3Tooltip",
-    ui: (
-      <Md3Tooltip content="Info">
-        <button type="button">Trigger</button>
-      </Md3Tooltip>
-    ),
-  },
-  { name: "Md3LinearProgress", ui: <Md3LinearProgress value={60} aria-label="Upload" /> },
-  { name: "Md3CircularProgress", ui: <Md3CircularProgress value={60} aria-label="Sync" /> },
-  { name: "Md3Divider", ui: <Md3Divider /> },
-  { name: "Md3DatePicker", ui: <Md3DatePicker label="Date" /> },
-  { name: "Md3TimePicker", ui: <Md3TimePicker /> },
-  { name: "Md3Search", ui: <Md3Search aria-label="Search" /> },
-  { name: "Md3Banner", ui: <Md3Banner>Update available</Md3Banner> },
-  { name: "Md3Message", ui: <Md3Message role="assistant" content="Hi there" /> },
-  {
-    name: "Md3AgentComposer",
-    ui: <Md3AgentComposer value="" onValueChange={() => {}} onSubmit={() => {}} aria-label="Task" />,
-  },
-  {
-    name: "Md3ActionConfirmation",
-    ui: (
-      <Md3ActionConfirmation
-        title="Send 18 emails?"
-        description="You can't undo this."
-        onConfirm={() => {}}
-        onCancel={() => {}}
-      />
-    ),
-  },
-];
 
 describe("smoke: every component renders", () => {
   it.each(cases)("$name mounts and produces DOM", ({ ui }) => {
@@ -1523,6 +823,358 @@ describe("interaction: components behave", () => {
     await userEvent.selectOptions(screen.getByRole("combobox", { name: "Status" }), "done");
     expect(onChange).toHaveBeenCalled();
     expect(screen.getByRole("group", { name: "Closed" })).toBeInTheDocument();
+  });
+
+  it("Select opens, moves by keyboard and typeahead, selects, and submits with forms", async () => {
+    const onValueChange = vi.fn();
+    const { container } = render(
+      <form>
+        <Select name="model" onValueChange={onValueChange}>
+          <SelectTrigger aria-label="Model">
+            <SelectValue placeholder="Choose a model" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="opus">Opus</SelectItem>
+            <SelectItem value="sonnet" disabled>
+              Sonnet
+            </SelectItem>
+            <SelectItem value="haiku">Haiku</SelectItem>
+          </SelectContent>
+        </Select>
+      </form>,
+    );
+    const trigger = screen.getByRole("combobox", { name: "Model" });
+    expect(trigger).toHaveTextContent("Choose a model");
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument(); // hidden while closed
+
+    await userEvent.click(trigger);
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByRole("option", { name: "Opus" })).toHaveFocus();
+    await userEvent.keyboard("{ArrowDown}");
+    expect(screen.getByRole("option", { name: "Haiku" })).toHaveFocus(); // skips disabled
+    await userEvent.keyboard("{Enter}");
+    expect(onValueChange).toHaveBeenLastCalledWith("haiku");
+    expect(trigger).toHaveTextContent("Haiku");
+    expect(trigger).toHaveFocus();
+    expect(container.querySelector('input[name="model"]')).toHaveValue("haiku");
+
+    await userEvent.keyboard("{ArrowDown}");
+    expect(screen.getByRole("option", { name: "Haiku" })).toHaveFocus(); // opens on the selected option
+    expect(screen.getByRole("option", { name: "Haiku" })).toHaveAttribute("aria-selected", "true");
+    await userEvent.keyboard("o");
+    expect(screen.getByRole("option", { name: "Opus" })).toHaveFocus();
+    await userEvent.keyboard("{Escape}");
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(trigger).toHaveFocus();
+    expect(onValueChange).toHaveBeenCalledTimes(1);
+  });
+
+  it("Sidebar collapses to icons, shows tooltips only when collapsed, and marks the active item", async () => {
+    const { container } = render(
+      <SidebarProvider>
+        <Sidebar collapsible="icon">
+          <SidebarContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive tooltip="Home">
+                  <a href="#home">
+                    <Home />
+                    <span>Home</span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarContent>
+        </Sidebar>
+        <SidebarInset>
+          <SidebarTrigger />
+        </SidebarInset>
+      </SidebarProvider>,
+    );
+    const sidebar = container.querySelector('[data-slot="sidebar"]')!;
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("aria-current", "page");
+    expect(sidebar).toHaveAttribute("data-state", "expanded");
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Toggle Sidebar" }));
+    expect(sidebar).toHaveAttribute("data-state", "collapsed");
+    expect(sidebar).toHaveAttribute("data-collapsible", "icon");
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument(); // only on hover/focus
+    await userEvent.hover(screen.getByRole("link", { name: "Home" }));
+    expect(screen.getByRole("tooltip")).toHaveTextContent("Home");
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("aria-describedby", screen.getByRole("tooltip").id);
+    await userEvent.unhover(screen.getByRole("link", { name: "Home" }));
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+    expect(document.cookie).toContain("sidebar_state=false");
+  });
+
+  it("Sonner shows toasts from the imperative toast()", async () => {
+    render(<Toaster />);
+    act(() => {
+      toast.success("Summary shared");
+    });
+    expect(await screen.findByText("Summary shared")).toBeInTheDocument();
+  });
+
+  it("Kbd renders semantic kbd elements with slots", () => {
+    render(<KbdGroup data-testid="g"><Kbd>Ctrl</Kbd><Kbd>K</Kbd></KbdGroup>);
+    expect(screen.getByTestId("g").tagName).toBe("KBD");
+    expect(screen.getByTestId("g")).toHaveAttribute("data-slot", "kbd-group");
+    expect(screen.getByText("Ctrl")).toHaveAttribute("data-slot", "kbd");
+  });
+
+  it("Spinner is a labelled status that accepts a custom label", () => {
+    const { rerender } = render(<Spinner />);
+    expect(screen.getByRole("status", { name: "Loading" })).toHaveClass("animate-spin");
+    rerender(<Spinner aria-label="Saving" className="size-6" />);
+    expect(screen.getByRole("status", { name: "Saving" })).toHaveClass("size-6");
+  });
+
+  it("useDirection resolves local, then provider, then ltr; direction aliases dir", () => {
+    function Probe({ local }: { local?: "ltr" | "rtl" }) {
+      return <span data-testid={`p-${local ?? "none"}`}>{useDirection(local)}</span>;
+    }
+    render(
+      <>
+        <span data-testid="out"><Probe /></span>
+        <DirectionProvider dir="rtl"><Probe /><Probe local="ltr" /></DirectionProvider>
+        <DirectionProvider dir="ltr" direction="rtl"><span data-testid="alias"><Probe /></span></DirectionProvider>
+      </>,
+    );
+    expect(screen.getByTestId("out")).toHaveTextContent("ltr");
+    expect(screen.getAllByTestId("p-none")[1]).toHaveTextContent("rtl");
+    expect(screen.getByTestId("p-ltr")).toHaveTextContent("ltr");
+    expect(screen.getByTestId("alias")).toHaveTextContent("rtl");
+  });
+
+  it("ButtonGroup exposes a labelled group with orientation and keyboard-operable buttons", async () => {
+    const onBold = vi.fn();
+    render(<ButtonGroup aria-label="Formatting" orientation="vertical"><Button onClick={onBold}>Bold</Button><Button>Italic</Button></ButtonGroup>);
+    const group = screen.getByRole("group", { name: "Formatting" });
+    expect(group).toHaveAttribute("data-orientation", "vertical");
+    expect(group).toHaveClass("flex-col");
+    await userEvent.tab();
+    expect(screen.getByRole("button", { name: "Bold" })).toHaveFocus();
+    await userEvent.keyboard("{Enter}");
+    expect(onBold).toHaveBeenCalledTimes(1);
+    await userEvent.tab();
+    expect(screen.getByRole("button", { name: "Italic" })).toHaveFocus();
+  });
+
+  it("ButtonGroupText asChild renders a real label", () => {
+    render(<ButtonGroup aria-label="URL"><ButtonGroupText asChild><label htmlFor="u">https://</label></ButtonGroupText><input id="u" /></ButtonGroup>);
+    expect(screen.getByLabelText("https://")).toBeInTheDocument();
+    expect(screen.getByText("https://").tagName).toBe("LABEL");
+    expect(screen.getByText("https://")).toHaveClass("bg-muted");
+  });
+
+  it("ItemGroup is a list; Items are listitems; asChild renders a link", async () => {
+    const onClick = vi.fn();
+    render(<ItemGroup><Item variant="muted" size="sm"><ItemContent><ItemTitle>One</ItemTitle></ItemContent></Item><Item asChild><a href="#two" onClick={onClick}>Two</a></Item></ItemGroup>);
+    expect(screen.getByRole("list")).toBeInTheDocument();
+    const items = screen.getAllByRole("listitem");
+    expect(items).toHaveLength(2);
+    expect(items[0]).toHaveAttribute("data-variant", "muted");
+    expect(items[0]).toHaveAttribute("data-size", "sm");
+    const link = screen.getByRole("link", { name: "Two" });
+    expect(link).toHaveAttribute("data-slot", "item");
+    await userEvent.click(link);
+    expect(onClick).toHaveBeenCalled();
+  });
+
+  it("Marker asChild renders the child with variant data and classes", () => {
+    render(<Marker asChild variant="border"><a href="#h">History</a></Marker>);
+    const link = screen.getByRole("link", { name: "History" });
+    expect(link).toHaveAttribute("data-slot", "marker");
+    expect(link).toHaveAttribute("data-variant", "border");
+    expect(link).toHaveClass("border-b");
+  });
+
+  it("Bubble content asChild is a focusable, keyboard-activatable button", async () => {
+    const onClick = vi.fn();
+    render(<Bubble align="end" variant="tinted"><BubbleContent asChild><button type="button" onClick={onClick}>Retry</button></BubbleContent></Bubble>);
+    const btn = screen.getByRole("button", { name: "Retry" });
+    expect(btn).toHaveAttribute("data-slot", "bubble-content");
+    expect(btn.parentElement).toHaveAttribute("data-align", "end");
+    expect(btn.parentElement).toHaveAttribute("data-variant", "tinted");
+    await userEvent.tab();
+    expect(btn).toHaveFocus();
+    await userEvent.keyboard("{Enter}");
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("FieldError deduplicates errors and renders a list for several messages", () => {
+    const { rerender } = render(<FieldError errors={[{ message: "Required" }, { message: "Required" }]} />);
+    expect(screen.getByRole("alert")).toHaveTextContent("Required");
+    expect(screen.queryByRole("list")).not.toBeInTheDocument();
+    rerender(<FieldError errors={[{ message: "Too short" }, { message: "Needs a number" }, { message: "Too short" }]} />);
+    expect(screen.getAllByRole("listitem").map((li) => li.textContent)).toEqual(["Too short", "Needs a number"]);
+    rerender(<FieldError errors={[]} />);
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+  });
+
+  it("Field sets role=group and data-orientation", () => {
+    render(<Field orientation="horizontal" aria-label="Notifications"><FieldLabel htmlFor="x">X</FieldLabel><input id="x" /></Field>);
+    expect(screen.getByRole("group", { name: "Notifications" })).toHaveAttribute("data-orientation", "horizontal");
+  });
+
+  it("InputGroupAddon click focuses the input; button click does not", async () => {
+    const user = userEvent.setup();
+    const onClick = vi.fn();
+    render(
+      <InputGroup>
+        <InputGroupInput aria-label="Search" />
+        <InputGroupAddon><InputGroupText>Find</InputGroupText></InputGroupAddon>
+        <InputGroupAddon align="inline-end"><InputGroupButton onClick={onClick}>Go</InputGroupButton></InputGroupAddon>
+      </InputGroup>,
+    );
+    await user.click(screen.getByText("Find"));
+    expect(screen.getByRole("textbox", { name: "Search" })).toHaveFocus();
+    await user.click(screen.getByRole("button", { name: "Go" }));
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole("button", { name: "Go" })).toHaveFocus();
+  });
+
+  it("InputGroupTextarea is focused from a block-end addon", async () => {
+    const user = userEvent.setup();
+    render(<InputGroup><InputGroupTextarea aria-label="Message" /><InputGroupAddon align="block-end">Hint</InputGroupAddon></InputGroup>);
+    await user.click(screen.getByText("Hint"));
+    expect(screen.getByRole("textbox", { name: "Message" })).toHaveFocus();
+  });
+
+  it("TraceCollapsible toggles with click and keyboard", async () => {
+    const user = userEvent.setup();
+    const onOpenChange = vi.fn();
+    render(
+      <Trace>
+        <TraceCollapsible onOpenChange={onOpenChange}>
+          <TraceCollapsibleTrigger><TraceLine><TraceTitle>Searched the web</TraceTitle></TraceLine></TraceCollapsibleTrigger>
+          <TraceCollapsibleContent>8 results from europa.eu</TraceCollapsibleContent>
+        </TraceCollapsible>
+      </Trace>,
+    );
+    const trigger = screen.getByRole("button", { name: "Searched the web" });
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByText("8 results from europa.eu")).not.toBeInTheDocument();
+    await user.click(trigger);
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByRole("region")).toHaveTextContent("8 results from europa.eu");
+    expect(onOpenChange).toHaveBeenLastCalledWith(true);
+    trigger.focus();
+    await user.keyboard("{Enter}");
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(onOpenChange).toHaveBeenLastCalledWith(false);
+  });
+
+  it("Drawer opens from the trigger, traps focus, closes on Escape and restores focus", async () => {
+    const user = userEvent.setup();
+    const onOpenChange = vi.fn();
+    render(
+      <Drawer onOpenChange={onOpenChange}>
+        <DrawerTrigger asChild>
+          <Button variant="secondary">Open drawer</Button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>Move goal</DrawerTitle>
+            <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+          </DrawerHeader>
+          <input aria-label="Goal" />
+          <DrawerFooter>
+            <DrawerClose asChild>
+              <Button variant="secondary">Cancel</Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>,
+    );
+    const trigger = screen.getByRole("button", { name: "Open drawer" });
+    await user.click(trigger);
+    const dialog = screen.getByRole("dialog", { name: "Move goal" });
+    expect(dialog).toHaveAttribute("aria-modal", "true");
+    expect(dialog).toHaveAccessibleDescription("Set your daily activity goal.");
+    expect(dialog).toHaveFocus();
+    expect(document.body.style.overflow).toBe("hidden");
+    expect(await axe(document.body, { rules: { region: { enabled: false }, "color-contrast": { enabled: false } } })).toHaveNoViolations();
+    await user.tab();
+    expect(screen.getByRole("textbox", { name: "Goal" })).toHaveFocus();
+    await user.tab();
+    expect(screen.getByRole("button", { name: "Cancel" })).toHaveFocus();
+    await user.tab();
+    expect(screen.getByRole("textbox", { name: "Goal" })).toHaveFocus();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(onOpenChange).toHaveBeenLastCalledWith(false);
+    expect(trigger).toHaveFocus();
+    expect(document.body.style.overflow).toBe("");
+  });
+
+  it("Drawer closes from DrawerClose and from an overlay click", async () => {
+    const user = userEvent.setup();
+    render(
+      <Drawer>
+        <DrawerTrigger>Open drawer</DrawerTrigger>
+        <DrawerContent>
+          <DrawerTitle>Filters</DrawerTitle>
+          <DrawerClose>Cancel</DrawerClose>
+        </DrawerContent>
+      </Drawer>,
+    );
+    await user.click(screen.getByRole("button", { name: "Open drawer" }));
+    await user.click(screen.getByRole("button", { name: "Cancel" }));
+    expect(screen.queryByRole("dialog")).toBeNull();
+    await user.click(screen.getByRole("button", { name: "Open drawer" }));
+    await user.click(document.querySelector('[data-slot="drawer-overlay"]')!);
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
+  it("Questionnaire validates required items, navigates and submits answers", async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn((e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const fd = new FormData(e.currentTarget);
+      return { direction: fd.get("direction"), signals: fd.getAll("signals") };
+    });
+    render(<QuestionnaireDemo onSubmit={onSubmit} />);
+    expect(screen.getByRole("progressbar", { name: "Questionnaire progress" })).toHaveTextContent("Question 1 of 2");
+    expect(screen.queryByRole("button", { name: "Save answers" })).toBeNull();
+    await user.click(screen.getByRole("button", { name: "Next" }));
+    expect(screen.getByRole("alert")).toHaveTextContent("Choose an answer to continue.");
+    expect(screen.getByRole("radio", { name: "Sub-agent delegation" })).toHaveFocus();
+    await user.click(screen.getByRole("radio", { name: "Question prompts" }));
+    expect(screen.queryByRole("alert")).toBeNull();
+    await user.click(screen.getByRole("button", { name: "Next" }));
+    expect(screen.getByRole("group", { name: "What should updates include?" })).toHaveFocus();
+    expect(screen.getByRole("progressbar")).toHaveTextContent("Question 2 of 2");
+    await user.click(screen.getByRole("button", { name: "Save answers" }));
+    expect(onSubmit).not.toHaveBeenCalled();
+    expect(screen.getByRole("alert")).toHaveTextContent("Choose an answer or skip this question.");
+    await user.click(screen.getByRole("checkbox", { name: "Progress" }));
+    await user.click(screen.getByRole("checkbox", { name: "Risks" }));
+    await user.click(screen.getByRole("button", { name: "Save answers" }));
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onSubmit.mock.results[0]!.value).toEqual({ direction: "questions", signals: ["progress", "risks"] });
+  });
+
+  it("Questionnaire supports freeform answers, letter shortcuts, Skip and Ctrl+Enter", async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn((e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const fd = new FormData(e.currentTarget);
+      return { direction: fd.getAll("direction"), signals: fd.getAll("signals") };
+    });
+    render(<QuestionnaireDemo onSubmit={onSubmit} />);
+    await user.click(screen.getByRole("radio", { name: "Question prompts" }));
+    await user.type(screen.getByRole("textbox", { name: "Another direction" }), "Something else");
+    expect(screen.getByRole("radio", { name: "Question prompts" })).not.toBeChecked();
+    await user.keyboard("{Enter}");
+    expect(screen.getByRole("progressbar")).toHaveTextContent("Question 2 of 2");
+    await user.keyboard("a");
+    expect(screen.getByRole("checkbox", { name: "Progress" })).toBeChecked();
+    await user.click(screen.getByRole("button", { name: "Skip" }));
+    expect(screen.getByRole("checkbox", { name: "Progress" })).not.toBeChecked();
+    await user.keyboard("{Control>}{Enter}{/Control}");
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onSubmit.mock.results[0]!.value).toEqual({ direction: ["Something else"], signals: [] });
   });
 
   it("Menubar opens a menu on trigger click", async () => {

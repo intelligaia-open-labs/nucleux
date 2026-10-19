@@ -27,24 +27,27 @@ and restyle it onto Nucleux tokens — do not hand-roll it.
 
 - **Layout/surface:** CardContainer, CardHeader, CardTitle, CardDescription,
   CardAction, CardContent, CardDivider, Separator, AspectRatio, ScrollArea,
-  ResizablePanelGroup, Sidebar, Table (+Header/Body/Row/Head/Cell/Caption),
-  DataTable
+  ResizablePanelGroup, Table (+Header/Body/Row/Head/Cell/Caption), DataTable,
+  Item (+Group/Media/Content/Title/Description/Actions/Header/Footer/Separator)
 - **Actions:** Button (variant: primary/cta/secondary/ghost/destructive/link;
-  size: sm/md/lg/icon/icon-sm/icon-lg; `asChild`), Toggle, ToggleGroup,
+  size: sm/md/lg/icon/icon-sm/icon-lg; `asChild`), ButtonGroup, Toggle, ToggleGroup,
   DropdownMenu (+Trigger/Content/Item/Label/Group/Separator/Shortcut),
   ContextMenu, Menubar, Command
 - **Feedback:** Alert (variant: info/success/warning/destructive), Toast,
-  Empty (+Header/Media/Title/Description/Content), Skeleton, Progress
+  Toaster + toast() (sonner), Empty (+Header/Media/Title/Description/Content),
+  Skeleton, Progress, Spinner
 - **Overlays:** Dialog (+Header/Title/Description/Footer), AlertDialog, Sheet
-  (+Header/Title/Description/Body/Footer/Close), Popover (+Trigger/Content),
+  (+Header/Title/Description/Body/Footer/Close), Drawer, Popover (+Trigger/Content),
   HoverCard, Tooltip
-- **Inputs:** Input, Textarea, Label, Checkbox, RadioGroup, NativeSelect, Switch,
-  Slider, Combobox, Calendar, DatePicker, InputOtp, Form
+- **Inputs:** Input, InputGroup, Textarea, Label, Field (+Label/Description/Error/Group/Set),
+  Checkbox, RadioGroup, Select (+Trigger/Value/Content/Item/Group/Label),
+  NativeSelect, Switch, Slider, Combobox, Calendar, DatePicker, InputOtp, Form, Kbd
 - **Navigation:** Breadcrumb (+Item/Link/Page/Separator), Tabs (+List/Trigger/Content),
-  NavigationMenu, Pagination, Carousel; GlobalNav and NavPanel until the shadcn
-  Sidebar lands
+  NavigationMenu, Pagination, Carousel, Sidebar (+Provider/Trigger/Inset/Content/
+  Group/Menu/MenuItem/MenuButton…), DirectionProvider
 - **Content:** Avatar, Badge, CodeBlock, ChartContainer, Collapsible, Accordion,
-  Message, MessageScroller, Attachment (+AttachmentGroup)
+  Message, MessageScroller, Bubble, Marker, Trace, Questionnaire, Attachment
+  (+AttachmentGroup)
 - **Agentic:** Disclosure, Caveat, Consent, Personality, Templates,
   SuggestedPrompts, OpenInput, ModelSelection, KnowledgeBase, Connector,
   VoiceInput, StructuredInput
