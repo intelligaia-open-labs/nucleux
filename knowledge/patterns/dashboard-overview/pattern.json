@@ -35,7 +35,6 @@
   ],
   "components": {
     "required": [
-      "PageHeader",
       "CardContainer",
       "CardContent"
     ],
@@ -60,8 +59,8 @@
       "role": "Page container (mx-auto max-w-6xl, responsive padding)",
       "children": [
         {
-          "component": "PageHeader",
-          "role": "Page title and one-line context"
+          "element": "header",
+          "role": "Page header: <h1> title + muted description, flex-col sm:flex-row"
         },
         {
           "element": "section",
@@ -139,12 +138,12 @@
     "Badge destructive/secondary for status"
   ],
   "accessibility": [
-    "CardTitle renders an <h3>. Directly under the page's <h1> (PageHeader) pass aria-level={2} so the heading order does not skip a level.",
+    "CardTitle renders an <h3>. Directly under the page's <h1> pass aria-level={2} so the heading order does not skip a level.",
     "Label the KPI section (aria-label=\"Key metrics\").",
     "Decorative metric icons get aria-hidden.",
     "Every Progress needs an aria-label naming what it measures."
   ],
-  "states": "While data loads render Skeleton blocks in each card at the same size; on failure show ErrorState inside the affected card only, so the rest of the dashboard stays usable.",
+  "states": "While data loads render Skeleton blocks in each card at the same size; on failure show Empty inside the affected card only, so the rest of the dashboard stays usable.",
   "antiPatterns": [
     "Raw hex colors for trend arrows: use text-success / text-destructive tokens.",
     "Hand-built progress bars with divs instead of Progress."

@@ -46,8 +46,8 @@ const preview: Preview = {
 
 // Storybook's `inferControls` gives an "object" control (a "Set object" button)
 // to every prop it can't map to a primitive/enum — React.ReactNode (heading,
-// title, icon, children, actions, …), arrays/objects, unions (`FeedbackRating |
-// null`), aliased types (`FollowUpAssumption`), and props with no docgen type at
+// title, icon, children, actions, …), arrays/objects, unions (`DisclosureVariant |
+// null`), aliased types (`ConsentPermission`), and props with no docgen type at
 // all (a button's `type`). Clicking "Set object" sets the arg to `{}`, which the
 // component renders as a child → React error #31 ("Objects are not valid as a
 // React child, found: object with keys {}").

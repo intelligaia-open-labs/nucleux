@@ -11,14 +11,14 @@
   "keywords": ["form", "dialog", "modal", "create", "edit", "new", "add", "invite", "validation", "toast"],
   "components": {
     "required": ["Dialog", "DialogHeader", "DialogTitle", "DialogFooter", "Label", "Input", "Button"],
-    "optional": ["DialogDescription", "Textarea", "Select", "DatePicker", "Checkbox", "Switch", "ToastProvider", "useToast"]
+    "optional": ["DialogDescription", "Textarea", "NativeSelect", "DatePicker", "Checkbox", "Switch", "ToastProvider", "useToast"]
   },
   "composition": [
     { "component": "Dialog", "role": "controlled open/onOpenChange; className max-w-lg", "children": [
       { "element": "form", "role": "noValidate onSubmit; wraps header, fields and footer so Enter submits", "children": [
         { "component": "DialogHeader", "children": [ { "component": "DialogTitle", "role": "\"New task\" / \"Edit task\"" }, { "component": "DialogDescription" } ] },
         { "element": "div", "role": "Fields, space-y-4; paired short fields in sm:grid-cols-2", "children": [
-          { "component": "Label" }, { "component": "Input" }, { "component": "Textarea" }, { "component": "Select" }, { "component": "DatePicker" }
+          { "component": "Label" }, { "component": "Input" }, { "component": "Textarea" }, { "component": "NativeSelect" }, { "component": "DatePicker" }
         ] },
         { "component": "DialogFooter", "children": [ { "component": "Button", "role": "Cancel, secondary" }, { "component": "Button", "role": "type=submit variant=cta" } ] }
       ] }

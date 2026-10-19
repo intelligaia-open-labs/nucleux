@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { AlertTriangle, FolderOpen, RefreshCw } from "lucide-react";
-import { Button, ErrorState, Skeleton } from "@nucleux/react";
+import { Button, Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, Skeleton } from "@nucleux/react";
 
 export type LoadState<T> =
   | { status: "loading" }
@@ -46,29 +46,34 @@ export function AsyncContent<T>({
   if (state.status === "loading") return <ListSkeleton />;
   if (state.status === "error") {
     return (
-      <ErrorState
-        role="alert"
-        variant="error"
-        icon={<AlertTriangle />}
-        title="Couldn't load this page"
-        description={state.message}
-        actions={
+      <Empty role="alert" className="border border-border">
+        <EmptyHeader>
+          <EmptyMedia variant="icon" className="bg-destructive/10 text-destructive">
+            <AlertTriangle />
+          </EmptyMedia>
+          <EmptyTitle>Couldn&apos;t load this page</EmptyTitle>
+          <EmptyDescription>{state.message}</EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
           <Button variant="secondary" leftIcon={<RefreshCw className="size-4" />} onClick={onRetry}>
             Retry
           </Button>
-        }
-      />
+        </EmptyContent>
+      </Empty>
     );
   }
   if (isEmpty(state.data)) {
     return (
-      <ErrorState
-        variant="empty"
-        icon={<FolderOpen />}
-        title={empty.title}
-        description={empty.description}
-        actions={empty.action}
-      />
+      <Empty className="border border-border">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <FolderOpen />
+          </EmptyMedia>
+          <EmptyTitle>{empty.title}</EmptyTitle>
+          <EmptyDescription>{empty.description}</EmptyDescription>
+        </EmptyHeader>
+        {empty.action && <EmptyContent>{empty.action}</EmptyContent>}
+      </Empty>
     );
   }
   return <>{children(state.data)}</>;

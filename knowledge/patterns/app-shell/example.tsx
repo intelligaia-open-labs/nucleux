@@ -2,12 +2,12 @@ import { useState, type MouseEvent, type ReactNode } from "react";
 import { Bell, FolderKanban, LayoutDashboard, Menu as MenuIcon, Settings, Users } from "lucide-react";
 import {
   Avatar,
+  Button,
   GlobalNav,
-  IconButton,
+  Input,
   NavItem,
   NavPanel,
   NavSection,
-  SearchInput,
   Sheet,
   SheetBody,
   SheetHeader,
@@ -92,24 +92,25 @@ export function AppShell({ current, onNavigate, links = SHELL_LINKS, children }:
           className="px-4 sm:px-6"
           left={
             <>
-              <IconButton aria-label="Open navigation" className="lg:hidden" onClick={() => setMobileOpen(true)}>
+              <Button variant="ghost" size="icon" aria-label="Open navigation" className="lg:hidden" onClick={() => setMobileOpen(true)}>
                 <MenuIcon className="size-5" />
-              </IconButton>
+              </Button>
               <span className="truncate text-sm font-semibold lg:hidden">Acme Projects</span>
             </>
           }
           center={
-            <SearchInput
+            <Input
+              type="search"
               aria-label="Search projects and tasks"
               placeholder="Search projects and tasks"
-              containerClassName="hidden w-full max-w-md sm:flex"
+              className="hidden w-full max-w-md sm:block"
             />
           }
           right={
             <>
-              <IconButton aria-label="Notifications">
+              <Button variant="ghost" size="icon" aria-label="Notifications">
                 <Bell className="size-5" />
-              </IconButton>
+              </Button>
               <Avatar role="user" name="Dana Kim" initials="DK" />
             </>
           }

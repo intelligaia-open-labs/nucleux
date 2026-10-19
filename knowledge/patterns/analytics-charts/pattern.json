@@ -11,11 +11,11 @@
   "keywords": ["chart", "charts", "graph", "analytics", "trend", "line chart", "bar chart", "reporting", "visualization", "recharts", "metrics"],
   "components": {
     "required": ["ChartContainer", "CardContainer", "CardContent", "CardHeader", "CardTitle"],
-    "optional": ["ChartTooltip", "ChartTooltipContent", "ChartLegend", "ChartLegendContent", "CardDescription", "PageHeader", "Select"]
+    "optional": ["ChartTooltip", "ChartTooltipContent", "ChartLegend", "ChartLegendContent", "CardDescription", "NativeSelect"]
   },
   "composition": [
     { "element": "div", "role": "Page container (max-w-6xl)", "children": [
-      { "component": "PageHeader", "role": "actions slot holds the range Select" },
+      { "element": "header", "role": "Page header: <h1> title + muted description, flex-col sm:flex-row; actions slot holds the range NativeSelect" },
       { "element": "div", "role": "grid lg:grid-cols-2", "children": [
         { "component": "CardContainer", "role": "One chart per card", "children": [
           { "component": "CardHeader", "children": [ { "component": "CardTitle", "role": "what it measures" }, { "component": "CardDescription", "role": "unit and range" } ] },
@@ -31,7 +31,7 @@
   "responsive": ["Cards stack below lg, two columns from lg.", "Fewer x-axis ticks on narrow cards: keep labels short (\"Oct 5\")."],
   "tokens": ["Series colors: hsl(var(--nx-info)), hsl(var(--nx-success)), hsl(var(--nx-brand)), hsl(var(--nx-warning)), hsl(var(--nx-destructive))", "No hex chart palettes"],
   "accessibility": ["Charts are visual only: add an sr-only text summary and mark ChartContainer aria-hidden, or offer a table view.", "Don't rely on color alone: use the legend and distinct chart types or dash patterns when series are many."],
-  "states": "Loading: Skeleton at the chart's aspect ratio inside the card. No data: ErrorState variant=empty inside the card.",
+  "states": "Loading: Skeleton at the chart's aspect ratio inside the card. No data: Empty inside the card.",
   "antiPatterns": ["Hex or Tailwind palette colors for series.", "Charts without titles or units.", "Importing Recharts' Tooltip/Legend instead of ChartTooltip/ChartLegend with the Nucleux content components."],
   "related": ["dashboard-overview", "page-states"],
   "dependencies": { "npm": [ { "name": "recharts", "reason": "Chart primitives (LineChart, BarChart, XAxis…) rendered inside ChartContainer. Install the version @nucleux/chart depends on (^2.15)." } ] },

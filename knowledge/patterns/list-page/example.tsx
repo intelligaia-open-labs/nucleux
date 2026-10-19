@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
-import { Badge, Button, DataTable, PageHeader, SearchInput, Select, type DataTableProps } from "@nucleux/react";
+import { Badge, Button, DataTable, Input, NativeSelect, type DataTableProps } from "@nucleux/react";
 
 export type ProjectStatus = "active" | "at-risk" | "done";
 
@@ -60,25 +60,28 @@ export function ProjectListPage({ projects, onCreate }: { projects: Project[]; o
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6 p-4 sm:p-6 lg:p-8">
-      <PageHeader
-        title="Projects"
-        description="Track every project, its owner, and its delivery status."
-        actions={
+<header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0 space-y-1">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Projects</h1>
+          <p className="text-sm text-muted-foreground">Track every project, its owner, and its delivery status.</p>
+        </div>
+        <div className="flex shrink-0 flex-wrap items-center gap-2">
           <Button variant="cta" leftIcon={<Plus className="size-4" />} onClick={onCreate}>
             New project
           </Button>
-        }
-      />
+        </div>
+      </header>
 
       <div role="search" className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <SearchInput
+        <Input
+          type="search"
           aria-label="Search projects"
           placeholder="Search by project or owner"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          containerClassName="sm:max-w-sm sm:flex-1"
+          className="sm:max-w-sm sm:flex-1"
         />
-        <Select
+        <NativeSelect
           aria-label="Filter by status"
           value={status}
           onChange={(e) => setStatus(e.target.value as "all" | ProjectStatus)}
@@ -88,7 +91,7 @@ export function ProjectListPage({ projects, onCreate }: { projects: Project[]; o
           <option value="active">Active</option>
           <option value="at-risk">At risk</option>
           <option value="done">Done</option>
-        </Select>
+        </NativeSelect>
       </div>
 
       <div className="overflow-x-auto">

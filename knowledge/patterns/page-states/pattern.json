@@ -4,7 +4,7 @@
   "status": "curated",
   "since": "0.5.0",
   "summary": "One AsyncContent wrapper that renders a skeleton, a recoverable error, an empty state with an action, or the content.",
-  "description": "Every page or card that loads data needs all four states. Skeleton mirrors the content's shape while loading; ErrorState covers both failures (variant=error, with Retry) and empty collections (variant=empty, with the create action).",
+  "description": "Every page or card that loads data needs all four states. Skeleton mirrors the content's shape while loading; Empty covers both failures (role=alert, destructive media tint, with Retry) and empty collections (with the create action).",
   "useCases": [
     "loading state",
     "empty state",
@@ -34,7 +34,12 @@
   ],
   "components": {
     "required": [
-      "ErrorState",
+      "Empty",
+      "EmptyHeader",
+      "EmptyMedia",
+      "EmptyTitle",
+      "EmptyDescription",
+      "EmptyContent",
       "Skeleton",
       "Button"
     ],
@@ -53,12 +58,12 @@
           "role": "loading: role=status, mirrors content layout"
         },
         {
-          "component": "ErrorState",
-          "role": "error: variant=error, role=alert, Retry Button in actions"
+          "component": "Empty",
+          "role": "error: role=alert, EmptyMedia with bg-destructive/10 text-destructive, Retry Button in EmptyContent"
         },
         {
-          "component": "ErrorState",
-          "role": "empty: variant=empty, primary create Button in actions"
+          "component": "Empty",
+          "role": "empty: EmptyMedia variant=icon, primary create Button in EmptyContent"
         }
       ]
     }
@@ -68,11 +73,11 @@
     "Distinguish \"no records yet\" (empty state + create action) from \"no matches\" (DataTable emptyMessage + clear filters)."
   ],
   "responsive": [
-    "ErrorState is centered and width-agnostic; Skeleton rows should use the same responsive grid as the content."
+    "Empty is centered and width-agnostic; Skeleton rows should use the same responsive grid as the content."
   ],
   "tokens": [
     "bg-muted (Skeleton)",
-    "text-destructive (ErrorState error icon tint)",
+    "text-destructive (Empty error media tint)",
     "text-muted-foreground"
   ],
   "accessibility": [

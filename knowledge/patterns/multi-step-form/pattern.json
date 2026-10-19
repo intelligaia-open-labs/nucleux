@@ -11,7 +11,7 @@
   "keywords": ["wizard", "stepper", "steps", "multi-step", "onboarding", "checkout", "flow", "progress", "form"],
   "components": {
     "required": ["CardContainer", "CardHeader", "CardTitle", "CardContent", "Progress", "Button"],
-    "optional": ["CardDivider", "Alert", "Input", "Label", "Select", "RadioGroup", "Radio", "Checkbox", "Textarea"]
+    "optional": ["CardDivider", "Alert", "Input", "Label", "NativeSelect", "RadioGroup", "Radio", "Checkbox", "Textarea"]
   },
   "composition": [
     { "element": "main", "role": "Narrow container (max-w-xl)", "children": [
@@ -21,7 +21,7 @@
           { "component": "CardDivider" },
           { "component": "CardContent", "role": "Current step's fields; review step is a <dl>", "children": [
             { "component": "Alert", "role": "destructive, after a failed Next" },
-            { "component": "Label" }, { "component": "Input" }, { "component": "Select" }, { "component": "RadioGroup", "children": [ { "component": "Radio" } ] },
+            { "component": "Label" }, { "component": "Input" }, { "component": "NativeSelect" }, { "component": "RadioGroup", "children": [ { "component": "Radio" } ] },
             { "component": "Button", "role": "Back, ghost, disabled on step 1" },
             { "component": "Button", "role": "Next / final action, type=submit variant=cta" }
           ] }

@@ -128,7 +128,7 @@ function renderComponent(p: Pkg): string {
   return lines.join("\n").trim();
 }
 
-const INSTRUCTIONS = `Nucleux (@nucleux/react) is intelligaia's agentic-UI component library for React — chat, reasoning, tool-call, consent and agent-state surfaces (Thread, Message, AgentComposer, ToolCall, Reasoning, ModularConsent, AgentSteps, Citation…) plus the common app basics (navigation, tables, cards, forms, overlays, empty/error states), published as ${catalog.counts.components} component packages behind one umbrella.
+const INSTRUCTIONS = `Nucleux (@nucleux/react) is intelligaia's React component library for AI products, in two families: shadcn-style components and their Material 3 counterparts (Md3*). It covers the basics (buttons, inputs, menus, dialogs, tables, navigation, empty states…) and agentic components (Disclosure, Consent, Caveat, OpenInput, SuggestedPrompts, ModelSelection, KnowledgeBase, Connectors, VoiceInput, StructuredInput, Message, MessageScroller…), published as ${catalog.counts.components} component packages behind one umbrella.
 
 Design-first workflow: for any page or app, call search_patterns first, then get_pattern for the curated composition (structure, responsive and accessibility rules, typechecked example). Then get_component for the exact contract of each component you use, and get_setup for install and Tailwind configuration. Use search_components for needs no pattern covers, and get_example (e.g. "agent-chat") for the larger reference screens. The build_with_nucleux prompt holds the full step-by-step workflow.
 

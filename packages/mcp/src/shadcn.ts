@@ -1,17 +1,15 @@
 /**
  * ShadCN fallback.
  *
- * Nucleux is an *agentic* UI library: it owns the chat, reasoning, tool-call and
- * consent surfaces, plus enough basics to build a screen. It deliberately does
- * not try to be a general component library, so an agent asking for a date
- * picker or a command palette will find nothing — and, left to itself, will
- * invent one.
+ * Nucleux's basic components follow the shadcn/ui component list, each with a
+ * Material 3 counterpart, and its agentic components follow the patterns
+ * marked available on nucleux.in. Until every shadcn component has landed, a
+ * lookup can still miss — and an agent left to itself will invent the
+ * component.
  *
- * The house answer is to take the ShadCN component as the base and restyle it
- * onto Nucleux tokens. That is already the public position: nucleux.in's
- * "Basic Components" nav entry links straight to ui.shadcn.com. This module
- * makes the same answer reachable from the MCP tools, at the moment a lookup
- * misses.
+ * The house answer for a miss is to take the ShadCN component as the base and
+ * restyle it onto Nucleux tokens. This module makes that answer reachable from
+ * the MCP tools at the moment a lookup misses.
  *
  * Entries here are the gaps only. Anything Nucleux already ships resolves in
  * the catalog first and never reaches this file.
@@ -41,12 +39,12 @@ export const SHADCN_FALLBACK: ShadcnEntry[] = [
   // Switch and the chat composers, but no plain field primitives and no form
   // plumbing at all.
   { id: "form", title: "Form", keywords: ["form", "validation", "react-hook-form", "zod", "field", "fieldset", "errors"] },
-  { id: "input", title: "Input", keywords: ["input", "text field", "textbox", "email", "password"], near: "SearchInput (search only) / InputBar (chat composer)" },
-  { id: "textarea", title: "Textarea", keywords: ["textarea", "multiline", "long text"], near: "InputBar (auto-resizing chat composer)" },
+  { id: "input", title: "Input", keywords: ["input", "text field", "textbox", "email", "password"], near: "Input type=\"search\" (search) / OpenInput (chat composer)" },
+  { id: "textarea", title: "Textarea", keywords: ["textarea", "multiline", "long text"], near: "OpenInput (auto-resizing chat composer)" },
   { id: "label", title: "Label", keywords: ["label", "caption", "field label"] },
   { id: "input-otp", title: "Input OTP", keywords: ["otp", "one time password", "verification code", "pin", "2fa"] },
   { id: "slider", title: "Slider", keywords: ["slider", "range", "seek", "volume"] },
-  { id: "toggle", title: "Toggle", keywords: ["toggle", "pressed", "toolbar button"], near: "Switch (on/off), IconButton variant=\"active\"" },
+  { id: "toggle", title: "Toggle", keywords: ["toggle", "pressed", "toolbar button"], near: "Switch (on/off), ToggleGroup" },
   { id: "toggle-group", title: "Toggle Group", keywords: ["toggle group", "segmented control", "button group"] },
 
   // Dates.
@@ -63,20 +61,20 @@ export const SHADCN_FALLBACK: ShadcnEntry[] = [
   { id: "pagination", title: "Pagination", keywords: ["pagination", "pager", "page numbers", "next previous"] },
 
   // Layout / surfaces.
-  { id: "skeleton", title: "Skeleton", keywords: ["skeleton", "loading placeholder", "shimmer"], near: "Progress (indeterminate), TypingIndicator" },
+  { id: "skeleton", title: "Skeleton", keywords: ["skeleton", "loading placeholder", "shimmer"], near: "Progress (indeterminate)" },
   { id: "scroll-area", title: "Scroll Area", keywords: ["scroll area", "scrollbar", "overflow", "custom scrollbar"] },
   { id: "resizable", title: "Resizable", keywords: ["resizable", "split pane", "panel group", "drag handle", "splitter"] },
   { id: "aspect-ratio", title: "Aspect Ratio", keywords: ["aspect ratio", "16:9", "video box"] },
   { id: "carousel", title: "Carousel", keywords: ["carousel", "slider gallery", "embla", "slideshow"] },
-  { id: "collapsible", title: "Collapsible", keywords: ["collapsible", "disclosure", "show more", "expand"], near: "Accordion (multi-panel), Reasoning (chain-of-thought)" },
+  { id: "collapsible", title: "Collapsible", keywords: ["collapsible", "disclosure", "show more", "expand"], near: "Accordion (multi-panel)" },
   { id: "drawer", title: "Drawer", keywords: ["drawer", "bottom sheet", "vaul", "mobile panel"], near: "Sheet (side slide-over)" },
 
   // Overlays / navigation.
   { id: "hover-card", title: "Hover Card", keywords: ["hover card", "preview card", "profile hover"], near: "Tooltip (text only), Popover (click)" },
-  { id: "context-menu", title: "Context Menu", keywords: ["context menu", "right click", "secondary click"], near: "Menu" },
-  { id: "menubar", title: "Menubar", keywords: ["menubar", "application menu", "file edit view"], near: "GlobalNav, Menu" },
+  { id: "context-menu", title: "Context Menu", keywords: ["context menu", "right click", "secondary click"], near: "DropdownMenu" },
+  { id: "menubar", title: "Menubar", keywords: ["menubar", "application menu", "file edit view"], near: "GlobalNav, DropdownMenu" },
   { id: "navigation-menu", title: "Navigation Menu", keywords: ["navigation menu", "mega menu", "nav dropdown"], near: "GlobalNav, NavPanel" },
-  { id: "alert-dialog", title: "Alert Dialog", keywords: ["alert dialog", "confirm", "confirmation", "destructive confirm", "are you sure"], near: "ActionConfirmation (agent guardrail), Dialog" },
+  { id: "alert-dialog", title: "Alert Dialog", keywords: ["alert dialog", "confirm", "confirmation", "destructive confirm", "are you sure"], near: "Consent (agent permission), Dialog" },
   { id: "sonner", title: "Sonner", keywords: ["sonner", "toaster", "notification stack"], near: "Toast + ToastProvider/useToast" },
 
   // Typography.
@@ -153,7 +151,7 @@ export function renderFallback(matches: ShadcnEntry[]): string {
  * Short version, appended alongside real Nucleux results.
  *
  * The catalog search scores a hit for *any* matching term, so "data table
- * sorting" returns RightSidebar ("table of contents") and never looks empty —
+ * sorting" returns an unrelated component that mentions "table" and never looks empty —
  * which means the miss path above almost never fires for the queries that most
  * need it. When the best Nucleux hit did not match every term, the results are
  * probably incidental, so name the ShadCN equivalent too and let the caller

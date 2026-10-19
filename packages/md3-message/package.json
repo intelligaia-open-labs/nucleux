@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Material 3 chat message row \u2014 Nucleux agentic UI for React.",
+  "description": "Material 3 chat message row — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "@nucleux/utils": "workspace:*",
-    "@nucleux/streaming-text": "workspace:*",
     "lucide-react": "^0.469.0"
   },
   "devDependencies": {

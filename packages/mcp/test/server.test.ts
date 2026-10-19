@@ -50,7 +50,7 @@ describe("catalog metadata", () => {
     type Member = { name: string; required: boolean; values?: string[]; default?: string };
     const button = catalog.packages.find((p) => p.name === "button")!.props[0] as { members: Member[] };
     const variant = button.members.find((m) => m.name === "variant")!;
-    expect(variant.values).toEqual(["primary", "cta", "secondary", "ghost", "destructive"]);
+    expect(variant.values).toEqual(["primary", "cta", "secondary", "ghost", "destructive", "link"]);
     const size = button.members.find((m) => m.name === "size")!;
     expect(size.default).toBe('"md"');
     const sheet = catalog.packages.find((p) => p.name === "sheet")!.props.find((p) => p.name === "SheetProps")!;
@@ -60,7 +60,7 @@ describe("catalog metadata", () => {
   it("follows local re-exports, so barrel packages list what they export", () => {
     const utils = catalog.packages.find((p) => p.name === "utils")!;
     expect(utils.exports).toEqual(expect.arrayContaining(["cn", "MessageRole"]));
-    expect(utils.import).toBe('import { cn } from "@nucleux/utils";');
+    expect(utils.import).toBe('import { cn, Slot } from "@nucleux/utils";');
     const hooks = catalog.packages.find((p) => p.name === "hooks")!;
     expect(hooks.exports).toEqual(expect.arrayContaining(["useAutoScroll", "useCopyToClipboard"]));
   });
@@ -148,14 +148,14 @@ describe("MCP server", () => {
   it("get_component returns the structured contract and pattern back-links", async () => {
     const { text } = await call("get_component", { name: "Button" });
     expect(text).toContain('import { Button } from "@nucleux/button"');
-    expect(text).toContain('`variant?`: `"primary" | "cta" | "secondary" | "ghost" | "destructive"`');
+    expect(text).toContain('`variant?`: `"primary" | "cta" | "secondary" | "ghost" | "destructive" | "link"`');
     expect(text).toMatch(/`color\?`.*\*\*deprecated\*\*/);
     expect(text).toMatch(/Used in patterns:.*list-page/);
   });
 
   it("get_component resolves utility exports like cn", async () => {
     const { text } = await call("get_component", { name: "cn" });
-    expect(text).toContain('import { cn } from "@nucleux/utils"');
+    expect(text).toContain('import { cn, Slot } from "@nucleux/utils"');
   });
 
   it("get_component still answers a near-miss with suggestions", async () => {
@@ -195,8 +195,8 @@ describe("MCP server", () => {
       const { json } = await validate({
         patterns: ["list-page"],
         components: [
-          { component: "PageHeader", props: { title: "Projects" } },
-          { component: "SearchInput", props: { "aria-label": "Search", placeholder: "Search" } },
+          { component: "Input", props: { type: "search", "aria-label": "Search", placeholder: "Search" } },
+          { component: "NativeSelect", props: { "aria-label": "Status" } },
           { component: "DataTable", props: { columns: [], data: [], pageSize: 20 } },
           { component: "Button", props: { variant: "cta", size: "md" } },
         ],
@@ -226,7 +226,7 @@ describe("MCP server", () => {
     });
 
     it("flags pattern components the plan leaves out", async () => {
-      const { json } = await validate({ patterns: ["list-page"], components: [{ component: "PageHeader", props: { title: "x" } }] });
+      const { json } = await validate({ patterns: ["list-page"], components: [{ component: "Button", props: { variant: "cta" } }] });
       expect(json.issues.filter((i: { code: string }) => i.code === "pattern_component_missing")).toHaveLength(2);
     });
 

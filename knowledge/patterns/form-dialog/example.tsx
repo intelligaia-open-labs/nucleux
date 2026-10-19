@@ -10,7 +10,7 @@ import {
   DialogTitle,
   Input,
   Label,
-  Select,
+  NativeSelect,
   Textarea,
   ToastProvider,
   useToast,
@@ -87,7 +87,7 @@ export function TaskFormDialog({
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
               <Label htmlFor="task-priority">Priority</Label>
-              <Select
+              <NativeSelect
                 id="task-priority"
                 value={draft.priority}
                 onChange={(e) => set("priority", e.target.value as TaskDraft["priority"])}
@@ -95,7 +95,7 @@ export function TaskFormDialog({
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
-              </Select>
+              </NativeSelect>
             </div>
             <div className="space-y-1.5">
               <Label>Due date</Label>

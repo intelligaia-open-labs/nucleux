@@ -22,7 +22,7 @@ const stateLayer =
 
 /**
  * A Material Design 3 guardrail shown before an agent performs a consequential
- * action — tonal surface, state-layer actions. Same API as {@link ActionConfirmation}.
+ * action — tonal surface, state-layer actions.
  */
 export const Md3ActionConfirmation = React.forwardRef<HTMLDivElement, Md3ActionConfirmationProps>(
   (

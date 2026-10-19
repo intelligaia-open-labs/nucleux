@@ -10,6 +10,55 @@ by a version tag and date, and entries are grouped under `### Added`, `### Chang
 
 ## [Unreleased]
 
+### 0.6.0: package set matches nucleux.in (breaking)
+
+The package set now follows nucleux.in: shadcn/ui's component list, Material 3's
+component list (`md3-*`), and the agentic patterns marked *Available*. This
+section covers phase 1 (renames and removals); new components follow.
+
+#### Renamed (old name → new name)
+| Package | Exports |
+|---|---|
+| `menu` → `dropdown-menu` | `Menu`/`MenuItem`/`MenuLabel`/`MenuSeparator` → `DropdownMenu` + `DropdownMenuTrigger`/`Content`/`Item`/`Label`/`Group`/`Separator`/`Shortcut` (shadcn API: owns its trigger, open state and keyboard navigation) |
+| `error-state` → `empty` | `ErrorState` → `Empty` + `EmptyHeader`/`EmptyMedia`/`EmptyTitle`/`EmptyDescription`/`EmptyContent` (shadcn API; for failures add `role="alert"`) |
+| `select` → `native-select` | `Select` → `NativeSelect` (+ `NativeSelectOption`, `NativeSelectOptGroup`) |
+| `thread` → `message-scroller` | `Thread` → `MessageScroller` |
+| `attachment-tile` → `attachment` | `AttachmentTile` → `Attachment`, `AttachmentTray` → `AttachmentGroup` |
+| `ai-disclosure` → `disclosure` + `caveat` | `AiDisclosure` → `Disclosure`; `AiCaveat` → `Caveat` (own package) |
+| `modular-consent` → `consent` | `ModularConsent` → `Consent` |
+| `tone-selector` → `personality` | `ToneSelector` → `Personality` |
+| `prompt-template` → `templates` | `PromptTemplate` → `Templates` |
+| `suggestions` → `suggested-prompts` | `Suggestions` → `SuggestedPrompts`, `SuggestionChip` → `SuggestedPrompt` |
+| `model-selector` → `model-selection` | `ModelSelector` → `ModelSelection` |
+| `knowledge-base-picker` → `knowledge-base` | `KnowledgeBasePicker` → `KnowledgeBase` |
+| `connector-card` → `connectors` | `ConnectorCard` → `Connector` |
+| `input-bar` → `open-input` | `InputBar` → `OpenInput` |
+
+#### Removed (not on nucleux.in; old versions stay on npm, deprecated)
+action-confirmation, action-plan, action-tile, activity-log, agent-composer,
+agent-steps, audio-message, capability-overview, checklist, chip, citation,
+confidence-indicator, follow-up, getting-started-pill, icon-button,
+inline-feedback, link-button, media-card, memory-summary, page-header,
+privacy-notice, prompt-enhancer, reasoning, related-patterns-grid,
+response-comparison, rewrite-menu, rich-checkbox-group, right-sidebar,
+search-input, session-recap, streaming-text, tool-call, typing-indicator,
+md3-action-plan, md3-activity-log, md3-agent-steps, md3-reasoning, md3-thread,
+md3-tool-call. Replacements: `IconButton` → `Button size="icon" | "icon-sm" |
+"icon-lg"`; `LinkButton` → `Button variant="link" asChild` around an `<a>`;
+`SearchInput` → `Input type="search"`; `PageHeader` → a `<header>` with an
+`<h1>`. `global-nav` and `nav-panel` go when the shadcn `sidebar` lands.
+
+#### Added
+- `Button`: `variant="link"`, sizes `icon-sm`/`icon-lg`, and `asChild`.
+- `Slot` in `@nucleux/utils` (powers `asChild`).
+- `scripts/gen-llms.mjs`: the catalog section of `llms.txt` is generated from
+  the MCP catalog and checked by the test suite.
+
+#### Fixed
+- `DatePicker`, `OpenInput`, `Md3AgentComposer` and `useAutoScroll` no longer warn
+  about `useLayoutEffect` when server-rendered.
+
+
 ### Added
 - `llms.txt` at the repo root — machine-listable component catalog for AI agents
   (install instructions, token conventions, naming conventions, full 77-package

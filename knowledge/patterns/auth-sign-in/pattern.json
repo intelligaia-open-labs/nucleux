@@ -11,7 +11,7 @@
   "keywords": ["login", "sign in", "signin", "auth", "authentication", "password", "sign up", "register", "forgot password", "account access"],
   "components": {
     "required": ["CardContainer", "CardHeader", "CardTitle", "CardContent", "Label", "Input", "Button"],
-    "optional": ["CardDescription", "Alert", "Checkbox", "LinkButton", "Separator"]
+    "optional": ["CardDescription", "Alert", "Checkbox", "Button", "Separator"]
   },
   "composition": [
     { "element": "main", "role": "Full-height centering wrapper (bg-muted/40)", "children": [
@@ -21,11 +21,11 @@
           { "element": "form", "role": "noValidate; validates on submit", "children": [
             { "component": "Alert", "role": "variant=destructive, only after a failed sign-in" },
             { "component": "Label" }, { "component": "Input", "role": "email, autoComplete=email" },
-            { "component": "Label" }, { "component": "LinkButton", "role": "Forgot password? (href)" }, { "component": "Input", "role": "password, autoComplete=current-password" },
+            { "component": "Label" }, { "component": "Button", "role": "variant=link asChild around <a href>: Forgot password?" }, { "component": "Input", "role": "password, autoComplete=current-password" },
             { "component": "Checkbox", "role": "Keep me signed in" },
             { "component": "Button", "role": "type=submit variant=cta, full width, disabled while pending" }
           ] },
-          { "component": "LinkButton", "role": "Create an account (href)" }
+          { "component": "Button", "role": "variant=link asChild around <a href>: Create an account" }
         ] }
       ] }
     ] }
@@ -33,7 +33,7 @@
   "layout": [
     "One card, max-w-sm, centered vertically and horizontally; nothing else competes on the page.",
     "Field order matches the autofill order: email, then password.",
-    "The submit Button spans the card width; secondary paths are LinkButtons with href, not buttons."
+    "The submit Button spans the card width; secondary paths are links: Button variant=\"link\" asChild around an <a href>, not buttons."
   ],
   "responsive": ["The card is full width with px-4 page padding on phones and max-w-sm from there; no layout change is needed."],
   "tokens": ["bg-muted/40 page", "text-destructive field errors", "Alert variant destructive", "Button variant cta"],
@@ -45,7 +45,7 @@
     "Don't disable the submit button for invalid input; validate on submit and explain."
   ],
   "states": "Pending: disable submit and change its label (\"Signing in…\"). Failure: destructive Alert, keep the inputs. Success: navigate away; no success message on this page.",
-  "antiPatterns": ["Placeholder text as the only label.", "Clearing the password field's neighbours on a failed attempt.", "Raw <a> or <button> styled by hand for secondary links: use LinkButton."],
+  "antiPatterns": ["Placeholder text as the only label.", "Clearing the password field's neighbours on a failed attempt.", "Raw <a> or <button> styled by hand for secondary links: use link Button (variant=\"link\" asChild)."],
   "related": ["multi-step-form", "form-dialog"],
   "dependencies": { "npm": [] },
   "example": "example.tsx"

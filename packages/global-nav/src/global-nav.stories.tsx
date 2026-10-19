@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Bell } from "lucide-react";
 import { GlobalNav } from "./index";
-import { SearchInput } from "@nucleux/search-input";
-import { IconButton } from "@nucleux/icon-button";
+import { Input } from "@nucleux/input";
+import { Button } from "@nucleux/button";
 import { Avatar } from "@nucleux/avatar";
 
 const meta = {
@@ -25,13 +25,13 @@ export const Default: Story = {
   render: () => (
     <GlobalNav
       left={<span className="text-base text-foreground">Heading</span>}
-      center={<SearchInput containerClassName="w-72" />}
+      center={<Input type="search" aria-label="Search" placeholder="Search" className="w-72" />}
       right={
         <>
         <div className="relative">
-          <IconButton aria-label="Notifications" size="lg">
+          <Button variant="ghost" size="icon-lg" aria-label="Notifications">
             <Bell />
-          </IconButton>
+          </Button>
           <span className="absolute right-2 top-1.5 size-2 rounded-full bg-destructive ring-2 ring-background" />
         </div>
           <Avatar name="Eric" className="size-8" />

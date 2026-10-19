@@ -102,16 +102,18 @@ for (const name of readdirSync(pkgsDir)) {
   // Type-only exports (`export type/interface`) can't be value-imported, so
   // they never count as components.
   const typeOnly = new Set([...src.matchAll(/export\s+(?:interface|type)\s+([A-Za-z0-9_]+)/g)].map((m) => m[1]));
-  const components = exportsList.filter(
-    (n) => /^[A-Z]/.test(n) && !typeOnly.has(n) && !/(Props|Variant|Data|Context|Ref)$/.test(n),
-  );
+  // Infrastructure packages (utils, hooks, tokens, the umbrella) have no
+  // components of their own, even when they export a PascalCase helper (Slot).
+  const components = NON_COMPONENT.has(name)
+    ? []
+    : exportsList.filter((n) => /^[A-Z]/.test(n) && !typeOnly.has(n) && !/(Props|Variant|Data|Context|Ref)$/.test(n));
   const readme = existsSync(join(dir, "README.md")) ? readFileSync(join(dir, "README.md"), "utf8") : "";
 
   packages.push({
     name,
     package: pkg.name,
     kind: NON_COMPONENT.has(name) ? "infrastructure" : "component",
-    description: (leadDescription(src) || pkg.description || "").trim(),
+    description: ((NON_COMPONENT.has(name) ? "" : leadDescription(src)) || pkg.description || "").trim(),
     summary: pkg.description ?? "",
     keywords: pkg.keywords ?? [],
     exports: exportsList,

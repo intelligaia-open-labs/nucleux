@@ -3,6 +3,9 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { Calendar } from "@nucleux/calendar";
 import { cn } from "@nucleux/utils";
 
+// useLayoutEffect warns when rendered on the server; fall back to useEffect there.
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+
 export interface DatePickerProps {
   value?: Date;
   defaultValue?: Date;
@@ -46,7 +49,7 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
     // past the right edge of the viewport.
     const [placement, setPlacement] = React.useState({ up: false, end: false });
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       const root = rootRef.current;
       const popup = popupRef.current;
       if (!open || !root || !popup) return;

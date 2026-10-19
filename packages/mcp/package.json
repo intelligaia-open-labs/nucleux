@@ -14,7 +14,7 @@
     "README.md"
   ],
   "scripts": {
-    "prebuild": "node ../../scripts/gen-mcp-catalog.mjs && node ../../scripts/gen-mcp-knowledge.mjs && node ../../scripts/gen-agent-files.mjs && node ../../scripts/gen-html-snippets.mjs",
+    "prebuild": "node ../../scripts/gen-mcp-catalog.mjs && node ../../scripts/gen-llms.mjs && node ../../scripts/gen-mcp-knowledge.mjs && node ../../scripts/gen-agent-files.mjs && node ../../scripts/gen-html-snippets.mjs",
     "build": "tsup"
   },
   "dependencies": {

@@ -15,7 +15,7 @@ describe("agent-facing docs", () => {
     // Component names are PascalCase words outside "(+Sub/Parts)" shorthands.
     const names = [...section.replace(/\(\+[^)]*\)/g, "").matchAll(/\b([A-Z][a-z0-9]+(?:[A-Z][a-z0-9]+)*)\b/g)]
       .map((m) => m[1])
-      .filter((n) => !["Layout", "Actions", "Feedback", "Overlays", "Inputs", "Navigation", "Agentic", "Available"].includes(n));
+      .filter((n) => !["Layout", "Actions", "Feedback", "Overlays", "Inputs", "Navigation", "Content", "Agentic", "Material", "Available"].includes(n));
     expect(names.length).toBeGreaterThan(40);
     expect(names.filter((n) => !exportsSet.has(n))).toEqual([]);
   });
@@ -26,12 +26,16 @@ describe("agent-facing docs", () => {
       members: Array<{ name: string; values?: string[] }>;
     };
     const values = button.members.find((m) => m.name === "variant")!.values!;
-    expect(md).toContain(`Button (variant: ${values.join("/")})`);
+    expect(md).toMatch(new RegExp(`Button \\(variant: ${values.join("/")}[;)]`));
   });
 
   it("generated skill and AGENTS.md match knowledge/workflow.md", () => {
     expect(() =>
       execFileSync("node", [resolve(root, "scripts/gen-agent-files.mjs"), "--check"], { stdio: "pipe" }),
     ).not.toThrow();
+  });
+
+  it("llms.txt lists exactly the packages in the catalog", () => {
+    expect(() => execFileSync("node", [resolve(root, "scripts/gen-llms.mjs"), "--check"], { stdio: "pipe" })).not.toThrow();
   });
 });
