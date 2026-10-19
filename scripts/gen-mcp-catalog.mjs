@@ -1,11 +1,12 @@
 // Generates packages/mcp/src/catalog.json — a machine-readable index of every
-// @nucleux package (description, exports, Props source, import + install) plus
+// @nucleux package (description, exports, structured Props, import + install) plus
 // the example compositions. Consumed by the @nucleux/mcp server so AI coding
 // agents can discover and correctly use the library. Run on `pnpm build` (the
 // mcp package's build script) and committed so typecheck works without it.
 import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
+import { extractProps } from "./lib/extract-props.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkgsDir = join(root, "packages");
@@ -13,15 +14,6 @@ const pkgsDir = join(root, "packages");
 /** Packages that are infrastructure, not components. */
 const NON_COMPONENT = new Set(["mcp", "react", "tokens", "utils", "hooks", "md3-theme"]);
 
-/** Match the matching `}` for the `{` at `open` in `src`. */
-function matchBrace(src, open) {
-  let depth = 0;
-  for (let i = open; i < src.length; i++) {
-    if (src[i] === "{") depth++;
-    else if (src[i] === "}" && --depth === 0) return i;
-  }
-  return src.length;
-}
 
 /** Strip `/** ... *\/` decoration into a one-line-ish description. */
 function cleanJsdoc(block) {
@@ -47,23 +39,6 @@ function extractExports(src) {
   return [...names];
 }
 
-/** Full source of every `export interface *Props { ... }` (with leading JSDoc). */
-function extractProps(src) {
-  const out = [];
-  for (const m of src.matchAll(/export\s+interface\s+([A-Za-z0-9_]+Props)\b/g)) {
-    const nameIdx = m.index;
-    const open = src.indexOf("{", nameIdx);
-    if (open === -1) continue;
-    const close = matchBrace(src, open);
-    // Pull a leading JSDoc block if one sits directly above the interface.
-    const before = src.slice(0, nameIdx);
-    const jsdoc = before.match(/\/\*\*[\s\S]*?\*\/\s*$/);
-    const body = src.slice(nameIdx, close + 1);
-    out.push({ name: m[1], source: ((jsdoc ? jsdoc[0].trimEnd() + "\n" : "") + body).trim() });
-  }
-  return out;
-}
-
 /** JSDoc block sitting directly above the primary exported component. */
 function leadDescription(src) {
   const re = /\/\*\*[\s\S]*?\*\//g;
@@ -76,10 +51,39 @@ function leadDescription(src) {
   return "";
 }
 
+/** Resolve a relative module specifier to a .ts/.tsx file next to `fromFile`. */
+function resolveLocal(fromFile, spec) {
+  for (const ext of ["", ".tsx", ".ts", "/index.tsx", "/index.ts"]) {
+    const p = join(dirname(fromFile), spec + ext);
+    if (existsSync(p) && statSync(p).isFile()) return p;
+  }
+  return undefined;
+}
+
+/**
+ * The package entry's source, with local re-exports inlined: `export * from "./x"`
+ * is replaced by x's source, so barrels such as @nucleux/utils (`cn`, shared
+ * types) expose what they re-export. Named local re-exports are rewritten to a
+ * plain `export { … }` list after inlining the file.
+ */
+function readSource(file, seen = new Set()) {
+  if (seen.has(file)) return "";
+  seen.add(file);
+  return readFileSync(file, "utf8").replace(
+    /export\s+(\*|\{[^}]*\})\s+from\s+["'](\.{1,2}\/[^"']+)["'];?/g,
+    (stmt, what, spec) => {
+      const target = resolveLocal(file, spec);
+      if (!target) return stmt;
+      const inlined = readSource(target, seen).replace(/^import\s[^;]*;?$/gm, "");
+      return what === "*" ? inlined : `${inlined}\nexport ${what};`;
+    },
+  );
+}
+
 function readEntry(dir) {
   for (const f of ["src/index.tsx", "src/index.ts"]) {
     const p = join(dir, f);
-    if (existsSync(p)) return readFileSync(p, "utf8");
+    if (existsSync(p)) return readSource(p);
   }
   return "";
 }
@@ -95,8 +99,11 @@ for (const name of readdirSync(pkgsDir)) {
 
   const src = readEntry(dir);
   const exportsList = extractExports(src);
+  // Type-only exports (`export type/interface`) can't be value-imported, so
+  // they never count as components.
+  const typeOnly = new Set([...src.matchAll(/export\s+(?:interface|type)\s+([A-Za-z0-9_]+)/g)].map((m) => m[1]));
   const components = exportsList.filter(
-    (n) => /^[A-Z]/.test(n) && !/(Props|Variant|Data|Context|Ref)$/.test(n),
+    (n) => /^[A-Z]/.test(n) && !typeOnly.has(n) && !/(Props|Variant|Data|Context|Ref)$/.test(n),
   );
   const readme = existsSync(join(dir, "README.md")) ? readFileSync(join(dir, "README.md"), "utf8") : "";
 
@@ -109,7 +116,11 @@ for (const name of readdirSync(pkgsDir)) {
     keywords: pkg.keywords ?? [],
     exports: exportsList,
     components,
-    import: components.length ? `import { ${components.slice(0, 4).join(", ")} } from "${pkg.name}";` : "",
+    // Utilities/hooks have no PascalCase components; show their value exports instead.
+    import: (() => {
+      const shown = components.length ? components : exportsList.filter((n) => !typeOnly.has(n));
+      return shown.length ? `import { ${shown.slice(0, 4).join(", ")} } from "${pkg.name}";` : "";
+    })(),
     installSingle: `pnpm add ${pkg.name}${NON_COMPONENT.has(name) ? "" : " @nucleux/tokens"}`,
     props: extractProps(src),
     readme: readme.trim(),
@@ -145,12 +156,40 @@ const catalog = {
   setup: {
     installFull: "pnpm add @nucleux/react @nucleux/tokens",
     installSingle: "pnpm add @nucleux/<component> @nucleux/tokens",
-    theme: [
-      'Import the theme once at your app root: import "@nucleux/tokens/styles.css";',
-      "Add the Tailwind preset: presets: [require('@nucleux/tokens/preset')] in tailwind.config.",
-      "react and react-dom are peer dependencies (>=18).",
+    requirements: [
+      "React and react-dom >= 18 (peer dependencies).",
+      "Tailwind CSS v3 (3.4.x) with PostCSS. The preset is a Tailwind v3 JS config; Tailwind v4 is untested.",
     ],
-    note: "Every component is also re-exported from the @nucleux/react umbrella.",
+    tailwindDev: "tailwindcss@3 postcss autoprefixer",
+    tailwindConfigEsm: [
+      'import nucleux from "@nucleux/tokens/preset";',
+      "",
+      "/** @type {import('tailwindcss').Config} */",
+      "export default {",
+      "  presets: [nucleux],",
+      "  content: [",
+      '    "./index.html",',
+      '    "./src/**/*.{js,ts,jsx,tsx}",',
+      "    // Required: Nucleux components ship Tailwind classes that your build must generate.",
+      '    "./node_modules/@nucleux/*/dist/**/*.{js,cjs}",',
+      "  ],",
+      "};",
+    ].join("\n"),
+    tailwindConfigCjs: [
+      "/** @type {import('tailwindcss').Config} */",
+      "module.exports = {",
+      '  presets: [require("@nucleux/tokens/preset").default],',
+      '  content: ["./src/**/*.{js,ts,jsx,tsx}", "./node_modules/@nucleux/*/dist/**/*.{js,cjs}"],',
+      "};",
+    ].join("\n"),
+    postcssConfig: "export default { plugins: { tailwindcss: {}, autoprefixer: {} } };",
+    css: "@tailwind base;\n@tailwind components;\n@tailwind utilities;",
+    theme: [
+      'Import the theme once at your app root, before your own CSS: import "@nucleux/tokens/styles.css"; (CSS variables for light and .dark, plus the base reset).',
+      "Your Tailwind build generates the component classes: the content globs must include ./node_modules/@nucleux/*/dist/**/*.{js,cjs}, or components render unstyled.",
+      'Dark mode: add class="dark" to <html> (the preset sets darkMode: "class").',
+    ],
+    note: "Every component is also re-exported from the @nucleux/react umbrella. Icons in the examples come from lucide-react (optional; any icon set works).",
   },
   counts: {
     components: packages.filter((p) => p.kind === "component").length,

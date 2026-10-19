@@ -1,0 +1,14 @@
+{
+  "note": "Representative application requests for comparing coding agents with and without Nucleux retrieval (MCP + skill). Every arm gets the same prompt; only the tooling differs. The common suffix is appended to every request.",
+  "suffix": "Work in this project (a fresh Vite + React + TypeScript app). Use in-memory sample data, no backend. Nucleux (@nucleux/react, @nucleux/tokens) is already installed: do not reinstall them or change their versions. When you are done, make sure `npm run build` passes, then summarize what you built.",
+  "requests": [
+    { "id": "project-management", "prompt": "Build a modern project management application with a dashboard, project list, task management, analytics, team management, settings, and responsive mobile layouts. Use Nucleux components and design patterns throughout the application." },
+    { "id": "saas-dashboard", "prompt": "Build a SaaS analytics dashboard: KPI overview, revenue and usage trends, a customers table with search and filters, and an account settings page. Use Nucleux components and design patterns throughout, and make it work on mobile." },
+    { "id": "ecommerce-storefront", "prompt": "Build an e-commerce storefront: product grid with category filters and search, product detail page, cart, and a checkout form with validation. Use Nucleux components and design patterns throughout, responsive down to phone width." },
+    { "id": "booking-app", "prompt": "Build a booking application for a co-working space: browse rooms, pick a date and time slot, confirm a booking, and see upcoming bookings with the option to cancel. Use Nucleux components and design patterns throughout, responsive." },
+    { "id": "admin-panel", "prompt": "Build an admin panel to manage users and roles: users table with search, filters and pagination, a user detail page, invite-user dialog, and an audit log. Use Nucleux components and design patterns throughout." },
+    { "id": "team-management", "prompt": "Build a team management interface: team directory with member cards, member profiles, a page to create and edit teams, and pending invitations. Use Nucleux components and design patterns throughout, responsive." },
+    { "id": "settings-profile", "prompt": "Build the settings and profile area of an app: profile editing with validation, notification preferences, security (password, sessions), and billing plan. Use Nucleux components and design patterns throughout." },
+    { "id": "data-heavy", "prompt": "Build a responsive operations console for a logistics company: shipments table with many columns, sorting, filtering and pagination, a shipment detail view, and loading, empty and error states. Use Nucleux components and design patterns throughout." }
+  ]
+}

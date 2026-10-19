@@ -25,22 +25,40 @@ CSS and the Tailwind preset (see Setup).
 
 ## Setup
 
-1. Import the token stylesheet once, near your app root:
+Nucleux styles are Tailwind CSS v3 classes plus CSS variables, so your app needs
+Tailwind v3 (`npm i -D tailwindcss@3 postcss autoprefixer`).
 
-   ```ts
-   import "@nucleux/tokens/styles.css";
-   ```
+1. Add the preset to `tailwind.config.js` and include the Nucleux packages in
+   `content`. The token stylesheet holds only the variables; your build
+   generates the component classes, so without this glob components render unstyled:
 
-2. Add the preset to your `tailwind.config.ts` and include the packages in
-   `content` so their utility classes are generated:
-
-   ```ts
+   ```js
    import nucleux from "@nucleux/tokens/preset";
 
    export default {
      presets: [nucleux],
-     content: ["./src/**/*.{ts,tsx}", "./node_modules/@nucleux/**/dist/**/*.js"],
+     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", "./node_modules/@nucleux/*/dist/**/*.{js,cjs}"],
    };
+   ```
+
+   CommonJS config: `presets: [require("@nucleux/tokens/preset").default]`.
+
+2. `postcss.config.js`: `export default { plugins: { tailwindcss: {}, autoprefixer: {} } };`
+
+3. Your CSS entry has the Tailwind layers, and the token stylesheet is imported
+   before it, once, near your app root:
+
+   ```css
+   /* src/index.css */
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+   ```
+
+   ```ts
+   // src/main.tsx
+   import "@nucleux/tokens/styles.css";
+   import "./index.css";
    ```
 
 ## Usage
@@ -84,29 +102,35 @@ export function Chat() {
 - **`@nucleux/mcp`** — MCP server so AI coding agents can discover and correctly
   use the library (see below).
 
-## MCP server (for AI coding agents)
+## AI coding agents (Claude Code, Codex, Cursor)
 
-`@nucleux/mcp` exposes the whole library over the Model Context Protocol —
-searchable components, verbatim `Props`, install/import lines, and full example
-compositions — generated from the packages themselves, so agents get the real
-API instead of guessing.
-
-Nothing to install — clients run it on demand via `npx` (needs Node ≥ 18).
+Nucleux ships a design-system intelligence layer for coding agents: the
+`@nucleux/mcp` server (curated page patterns, exact component contracts
+generated from the sources, verified setup) and the `nucleux-design` skill
+(a design-first workflow). Ask *"build a project management app with Nucleux"*
+and the agent picks patterns, reads the real props and builds with them,
+instead of guessing.
 
 ```bash
-# Claude Code
-claude mcp add nucleux -- npx -y @nucleux/mcp
+# Claude Code: MCP server + skill as one plugin
+claude plugin marketplace add intelligaia-open-labs/nucleux
+claude plugin install nucleux@nucleux-marketplace
+
+# Codex
+codex mcp add nucleux -- npx -y @nucleux/mcp
+npx -y @nucleux/mcp init --codex --agents-md
 ```
 
 ```jsonc
-// Claude Desktop / Cursor / Windsurf mcp config
+// Cursor / Claude Desktop / Windsurf
 { "mcpServers": { "nucleux": { "command": "npx", "args": ["-y", "@nucleux/mcp"] } } }
 ```
 
-Then just ask your agent — *"build a chat UI with Nucleux"* — and it pulls the
-real props, setup, and examples. Tools: `list_components`, `search_components`,
-`get_component`, `get_setup`, `list_examples`, `get_example`. Full guide:
-[`packages/mcp`](packages/mcp/README.md).
+Tools: `search_patterns`, `get_pattern`, `search_components`, `get_component`,
+`validate_design`, `get_setup`, `list_components`, `list_examples`, `get_example`. Full guide,
+example prompts and troubleshooting: [`packages/mcp`](packages/mcp/README.md).
+Patterns and the workflow live in [`knowledge/`](knowledge/README.md);
+benchmark in [`evals/`](evals/README.md).
 
 ### Components
 

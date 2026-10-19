@@ -22,11 +22,11 @@ back to **shadcn/ui** — do not hand-roll those either.
 - **Layout/surface:** CardContainer, CardHeader, CardTitle, CardDescription,
   CardAction, CardContent, CardDivider, Separator, PageHeader, NavPanel,
   Sidebar, RightSidebar, Table (+Header/Body/Row/Head/Cell/Caption)
-- **Actions:** Button (variant: primary/secondary/outline/ghost/link/destructive),
+- **Actions:** Button (variant: primary/cta/secondary/ghost/destructive),
   IconButton, LinkButton, Menu (+Item/Separator/Label), ActionConfirmation,
   ActionTile, ActionPlan, Suggestions, SuggestionChip
 - **Feedback:** Alert (variant: info/success/warning/destructive), Toast,
-  ErrorState, EmptyState, Progress, InlineFeedback, SuccessMessage
+  ErrorState (variant: empty/error), Skeleton, Progress, InlineFeedback
 - **Overlays:** Dialog (+Header/Title/Description/Footer), Sheet
   (+Header/Title/Description/Body/Footer/Close), Popover (+Trigger/Content),
   Tooltip
@@ -45,6 +45,26 @@ back to **shadcn/ui** — do not hand-roll those either.
 Common props follow the system conventions: `variant` (not `severity`/`color`),
 `align` (not `alignItems`), `size`, `orientation`. Style only with semantic
 tokens (`bg-muted`, `text-foreground`, `text-destructive`…) — never raw hex.
+
+**Pages and apps:** start from a curated pattern in `knowledge/patterns/`
+(app-shell, list-page, detail-page, dashboard-overview, analytics-charts,
+settings-page, form-dialog, multi-step-form, auth-sign-in, task-board,
+page-states), or ask the
+`nucleux` MCP server (`search_patterns` → `get_pattern` → `get_component`). This
+list is checked by `src/test/docs.test.ts`; never add a name the catalog lacks.
+
+## AI integration (knowledge layer)
+
+- `knowledge/workflow.md` — the one source for agent guidance. Generated from it:
+  `packages/mcp/skills/nucleux-design/SKILL.md`, `packages/mcp/templates/AGENTS.md`,
+  `plugins/nucleux/skills/…` (`node scripts/gen-agent-files.mjs`).
+- `knowledge/patterns/<id>/` — `pattern.json` (spec) + `example.tsx` (typechecked,
+  render + axe tested). `scripts/gen-mcp-knowledge.mjs` validates every component
+  reference against the catalog and writes `packages/mcp/src/knowledge.json`.
+- `scripts/gen-mcp-catalog.mjs` parses Props with the TypeScript parser
+  (`scripts/lib/extract-props.mjs`) into structured contracts.
+- After changing a component's props, a pattern or the workflow, run
+  `pnpm --filter @nucleux/mcp build` (regenerates all of the above) and `pnpm test`.
 
 ## Stack
 

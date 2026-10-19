@@ -1,0 +1,52 @@
+{
+  "id": "auth-sign-in",
+  "name": "Sign-in screen",
+  "status": "curated",
+  "since": "0.5.0",
+  "summary": "Centered card with email and password, inline field errors, a form-level error Alert, remember-me, and links to reset password and sign up.",
+  "description": "The authentication entry point. One focused card on a muted background; validation runs on submit and marks each invalid field; a failed sign-in shows a destructive Alert above the fields and keeps what the user typed. Sign-up and password reset reuse the same card layout with different fields.",
+  "useCases": ["login page", "sign in screen", "authentication screen", "sign up page", "forgot password page", "auth flow"],
+  "whenToUse": ["Email/password or magic-link sign-in, sign-up, or password reset screens."],
+  "whenNotToUse": ["Material Design 3 apps: the MD3 sign-in is the login example (get_example login) built from md3-* components.", "Single sign-on only: a card with one provider Button is enough."],
+  "keywords": ["login", "sign in", "signin", "auth", "authentication", "password", "sign up", "register", "forgot password", "account access"],
+  "components": {
+    "required": ["CardContainer", "CardHeader", "CardTitle", "CardContent", "Label", "Input", "Button"],
+    "optional": ["CardDescription", "Alert", "Checkbox", "LinkButton", "Separator"]
+  },
+  "composition": [
+    { "element": "main", "role": "Full-height centering wrapper (bg-muted/40)", "children": [
+      { "component": "CardContainer", "role": "w-full max-w-sm", "children": [
+        { "component": "CardHeader", "children": [ { "component": "CardTitle", "role": "Page heading: role=heading aria-level=1" }, { "component": "CardDescription" } ] },
+        { "component": "CardContent", "children": [
+          { "element": "form", "role": "noValidate; validates on submit", "children": [
+            { "component": "Alert", "role": "variant=destructive, only after a failed sign-in" },
+            { "component": "Label" }, { "component": "Input", "role": "email, autoComplete=email" },
+            { "component": "Label" }, { "component": "LinkButton", "role": "Forgot password? (href)" }, { "component": "Input", "role": "password, autoComplete=current-password" },
+            { "component": "Checkbox", "role": "Keep me signed in" },
+            { "component": "Button", "role": "type=submit variant=cta, full width, disabled while pending" }
+          ] },
+          { "component": "LinkButton", "role": "Create an account (href)" }
+        ] }
+      ] }
+    ] }
+  ],
+  "layout": [
+    "One card, max-w-sm, centered vertically and horizontally; nothing else competes on the page.",
+    "Field order matches the autofill order: email, then password.",
+    "The submit Button spans the card width; secondary paths are LinkButtons with href, not buttons."
+  ],
+  "responsive": ["The card is full width with px-4 page padding on phones and max-w-sm from there; no layout change is needed."],
+  "tokens": ["bg-muted/40 page", "text-destructive field errors", "Alert variant destructive", "Button variant cta"],
+  "accessibility": [
+    "The card title is the page's h1 (CardTitle renders h3: pass role=heading aria-level={1} or wrap your own h1).",
+    "Every Input has a Label htmlFor; required fields use Label required.",
+    "Errors: Input invalid + a text message linked with aria-describedby; the form-level Alert has role=alert.",
+    "Use type=email/password and autoComplete so password managers work.",
+    "Don't disable the submit button for invalid input; validate on submit and explain."
+  ],
+  "states": "Pending: disable submit and change its label (\"Signing in…\"). Failure: destructive Alert, keep the inputs. Success: navigate away; no success message on this page.",
+  "antiPatterns": ["Placeholder text as the only label.", "Clearing the password field's neighbours on a failed attempt.", "Raw <a> or <button> styled by hand for secondary links: use LinkButton."],
+  "related": ["multi-step-form", "form-dialog"],
+  "dependencies": { "npm": [] },
+  "example": "example.tsx"
+}
