@@ -2,6 +2,9 @@ import * as React from "react";
 import { ArrowUp, Square } from "lucide-react";
 import { cn } from "@nucleux/utils";
 
+// useLayoutEffect warns when rendered on the server; fall back to useEffect there.
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+
 export interface Md3AgentComposerProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSubmit"> {
   value: string;
@@ -22,7 +25,7 @@ const sendBtn =
 /**
  * A Material Design 3 agent task composer — a tonal surface with an auto-growing
  * prompt field, a toolbar, and a filled send/stop button with a state layer.
- * Enter submits, Shift+Enter newlines. Same API as {@link AgentComposer}.
+ * Enter submits, Shift+Enter newlines.
  */
 export const Md3AgentComposer = React.forwardRef<HTMLTextAreaElement, Md3AgentComposerProps>(
   (
@@ -45,7 +48,7 @@ export const Md3AgentComposer = React.forwardRef<HTMLTextAreaElement, Md3AgentCo
     const innerRef = React.useRef<HTMLTextAreaElement>(null);
     React.useImperativeHandle(forwardedRef, () => innerRef.current as HTMLTextAreaElement);
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       const el = innerRef.current;
       if (!el) return;
       el.style.height = "auto";

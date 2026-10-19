@@ -13,7 +13,7 @@ import {
   Progress,
   Radio,
   RadioGroup,
-  Select,
+  NativeSelect,
 } from "@nucleux/react";
 
 const STEPS = ["Workspace", "Team size", "Review"] as const;
@@ -101,12 +101,12 @@ export default function MultiStepFormExample({ onFinish = () => undefined }: { o
               <>
                 <div className="space-y-1.5">
                   <Label htmlFor="team-size">Team size</Label>
-                  <Select id="team-size" value={answers.size} onChange={(e) => set("size", e.target.value)}>
+                  <NativeSelect id="team-size" value={answers.size} onChange={(e) => set("size", e.target.value)}>
                     <option value="1">Just me</option>
                     <option value="2-10">2–10</option>
                     <option value="11-50">11–50</option>
                     <option value="51+">51 or more</option>
-                  </Select>
+                  </NativeSelect>
                 </div>
                 <div className="space-y-2">
                   <p className="text-sm font-medium text-foreground">Your role</p>

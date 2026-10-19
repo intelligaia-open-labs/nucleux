@@ -22,7 +22,9 @@
   },
   "devDependencies": {
     "tsup": "^8.3.5",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "@types/react": "^18.3.18",
+    "react": "^18.3.1"
   },
   "publishConfig": {
     "access": "public"
@@ -38,7 +40,7 @@
     "clsx": "^2.1.1",
     "tailwind-merge": "^2.6.0"
   },
-  "description": "cn() class merger + shared types for Nucleux \u2014 Nucleux agentic UI for React.",
+  "description": "cn() class merger + shared types for Nucleux — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -48,5 +50,8 @@
     "ai",
     "tailwind",
     "utils"
-  ]
+  ],
+  "peerDependencies": {
+    "react": ">=18"
+  }
 }

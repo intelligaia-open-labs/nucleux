@@ -32,7 +32,6 @@
   ],
   "components": {
     "required": [
-      "PageHeader",
       "Tabs",
       "TabsList",
       "TabsTrigger",
@@ -47,7 +46,7 @@
       "CardDivider",
       "Input",
       "Label",
-      "Select",
+      "NativeSelect",
       "Switch",
       "Button",
       "Alert",
@@ -62,9 +61,7 @@
       "element": "div",
       "role": "Narrow page container (max-w-3xl)",
       "children": [
-        {
-          "component": "PageHeader"
-        },
+        { "element": "header", "role": "Page header: <h1> title + muted description, flex-col sm:flex-row" },
         {
           "component": "Tabs",
           "children": [
@@ -112,7 +109,7 @@
                           "component": "Input"
                         },
                         {
-                          "component": "Select"
+                          "component": "NativeSelect"
                         },
                         {
                           "component": "Button",
@@ -165,8 +162,8 @@
     "Alert variant success/destructive"
   ],
   "accessibility": [
-    "CardTitle renders an <h3>. Directly under the page's <h1> (PageHeader) pass aria-level={2} so the heading order does not skip a level.",
-    "Every Input/Select has a <Label htmlFor>. Mark required fields with Label required.",
+    "CardTitle renders an <h3>. Directly under the page's <h1> pass aria-level={2} so the heading order does not skip a level.",
+    "Every Input/NativeSelect has a <Label htmlFor>. Mark required fields with Label required.",
     "Switch is a button: connect it to its visible text with aria-labelledby/aria-describedby (or give it aria-label).",
     "Show validation with Input invalid plus a text hint linked through aria-describedby.",
     "Confirm saves with Alert variant=success; announce errors with Alert variant=destructive."

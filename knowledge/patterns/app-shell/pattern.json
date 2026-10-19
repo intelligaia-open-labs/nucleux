@@ -43,15 +43,15 @@
       "SheetHeader",
       "SheetTitle",
       "SheetBody",
-      "IconButton"
+      "Button"
     ],
     "optional": [
-      "SearchInput",
+      "Input",
       "Avatar",
       "Sidebar",
       "SidebarItem",
-      "Menu",
-      "MenuItem"
+      "DropdownMenu",
+      "DropdownMenuItem"
     ]
   },
   "composition": [
@@ -84,11 +84,11 @@
               "role": "Top bar",
               "children": [
                 {
-                  "component": "IconButton",
+                  "component": "Button",
                   "role": "left slot: opens the navigation Sheet, visible below lg"
                 },
                 {
-                  "component": "SearchInput",
+                  "component": "Input",
                   "role": "center slot: global search, hidden below sm"
                 },
                 {
@@ -131,9 +131,9 @@
     "Pages inside <main> own their padding and max width (see list-page, dashboard-overview)."
   ],
   "responsive": [
-    "lg and up: NavPanel visible (hidden lg:flex); menu IconButton hidden (lg:hidden).",
-    "Below lg: NavPanel hidden; IconButton opens the Sheet; close the Sheet after navigating.",
-    "Below sm: hide the center SearchInput (containerClassName=\"hidden sm:flex\") or move search into the page.",
+    "lg and up: NavPanel visible (hidden lg:flex); menu Button (variant=\"ghost\" size=\"icon\") hidden (lg:hidden).",
+    "Below lg: NavPanel hidden; icon Button (size=\"icon\") opens the Sheet; close the Sheet after navigating.",
+    "Below sm: hide the center search Input (type=\"search\", className=\"hidden sm:block\") or move search into the page.",
     "GlobalNav default horizontal padding is px-6; pass className=\"px-4 sm:px-6\" on narrow screens."
   ],
   "tokens": [
@@ -145,7 +145,7 @@
   ],
   "accessibility": [
     "Give the navigation an accessible name (aria-label=\"Primary\") in both places it renders.",
-    "IconButton requires aria-label (\"Open navigation\", \"Notifications\").",
+    "Icon-only Buttons (size=\"icon\") require aria-label (\"Open navigation\", \"Notifications\").",
     "NavItem sets aria-current=\"page\" when active; drive active from the router, not local state.",
     "Sheet is role=dialog aria-modal with its title wired to aria-labelledby; always render SheetTitle."
   ],

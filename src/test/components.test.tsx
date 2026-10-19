@@ -7,43 +7,39 @@ import { Home, Mic } from "lucide-react";
 
 import {
   Accordion,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+  NativeSelectOptGroup,
+  NativeSelectOption,
+  GlobalNav,
+  NavItem,
+  NavPanel,
+  NavPanelHeader,
+  NavSection,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  ActionTile,
-  ActionConfirmation,
-  ActionPlan,
-  ActionPlanStep,
-  ActivityLog,
-  ActivityLogItem,
-  AgentStep,
-  AgentSteps,
-  AiCaveat,
-  AiDisclosure,
-  AttachmentTile,
-  AttachmentTray,
-  AudioMessage,
-  CapabilityOverview,
-  Citation,
-  ConnectorCard,
-  ErrorState,
-  InlineFeedback,
-  MemorySummary,
-  PrivacyNotice,
-  KnowledgeBasePicker,
-  ModelSelector,
-  PromptTemplate,
+  Caveat,
+  Disclosure,
+  Attachment,
+  AttachmentGroup,
+  Connector,
+  KnowledgeBase,
+  ModelSelection,
+  Templates,
   StructuredInput,
   VoiceInput,
-  PromptEnhancer,
-  ResponseComparison,
-  RewriteMenu,
-  ToneSelector,
-  ConfidenceIndicator,
-  SessionRecap,
-  SourceItem,
-  SourceList,
-  AgentComposer,
+  Personality,
   Alert,
   Avatar,
   Badge,
@@ -61,49 +57,22 @@ import {
   CardHeader,
   CardTitle,
   Checkbox,
-  Checklist,
-  ChecklistItem,
-  Chip,
   CodeBlock,
   Dialog,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  FollowUp,
-  GettingStartedPill,
-  GlobalNav,
-  IconButton,
-  InputBar,
-  LinkButton,
-  Menu,
-  MenuItem,
-  MenuSeparator,
-  MediaCard,
+  OpenInput,
   Message,
-  ModularConsent,
-  NavItem,
-  NavPanel,
-  NavPanelHeader,
-  NavSection,
-  PageHeader,
+  Consent,
   Popover,
   PopoverContent,
   PopoverTrigger,
   Progress,
   Radio,
   RadioGroup,
-  Reasoning,
-  RelatedPatternCard,
-  RelatedPatternsGrid,
-  RichCheckboxGroup,
-  RichCheckboxOption,
-  RightSidebar,
-  RightSidebarAnchor,
-  RightSidebarLabel,
-  RightSidebarMeta,
-  SearchInput,
-  Select,
+  NativeSelect,
   Separator,
   Sheet,
   SheetBody,
@@ -113,9 +82,8 @@ import {
   Sidebar,
   SidebarItem,
   SidebarSeparator,
-  StreamingText,
-  SuggestionChip,
-  Suggestions,
+  SuggestedPrompt,
+  SuggestedPrompts,
   Switch,
   Table,
   TableBody,
@@ -127,12 +95,10 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-  Thread,
+  MessageScroller,
   Toast,
   ToastProvider,
-  ToolCall,
   Tooltip,
-  TypingIndicator,
   AlertDialog,
   AspectRatio,
   Collapsible,
@@ -230,16 +196,7 @@ import {
   Md3Search,
   Md3Banner,
   Md3Message,
-  Md3ToolCall,
-  Md3ActionPlan,
-  Md3ActionPlanStep,
   Md3AgentComposer,
-  Md3Reasoning,
-  Md3AgentStep,
-  Md3AgentSteps,
-  Md3ActivityLog,
-  Md3ActivityLogItem,
-  Md3Thread,
   Md3ActionConfirmation,
   useToast,
 } from "@nucleux/react";
@@ -285,97 +242,19 @@ const dataTableRows = [
 
 const cases: { name: string; ui: ReactElement }[] = [
   { name: "Avatar", ui: <Avatar name="Eric Idle" /> },
-  { name: "Citation", ui: <Citation index={4} aria-label="Source 4" /> },
+  { name: "Personality", ui: <Personality defaultValue="professional" onValueChange={() => {}} /> },
   {
-    name: "SourceList",
+    name: "Attachment",
     ui: (
-      <SourceList heading="2 sources">
-        <SourceItem index={1} title="Renewal Playbook" meta="PDF · Section 4.1" href="#" />
-        <SourceItem index={2} title="MSA Template" meta="DOCX" onOpen={() => {}} />
-      </SourceList>
+      <AttachmentGroup>
+        <Attachment name="Playbook.pdf" meta="PDF · 240 KB" onRemove={() => {}} />
+      </AttachmentGroup>
     ),
   },
   {
-    name: "ConfidenceIndicator",
-    ui: <ConfidenceIndicator value={68} label="Overall confidence" note="Review recommended." />,
-  },
-  {
-    name: "ActivityLog",
+    name: "ModelSelection",
     ui: (
-      <ActivityLog heading="Footprints">
-        <ActivityLogItem time="2m ago">Sent email to Sam</ActivityLogItem>
-        <ActivityLogItem time="3m ago">Read 3 CRM records</ActivityLogItem>
-      </ActivityLog>
-    ),
-  },
-  {
-    name: "SessionRecap",
-    ui: <SessionRecap>Aria sent 3 emails and created 1 issue.</SessionRecap>,
-  },
-  {
-    name: "AgentSteps",
-    ui: (
-      <AgentSteps>
-        <AgentStep status="done" title="Reading skill doc" />
-        <AgentStep status="active" title="Executing command" progress={60} />
-        <AgentStep status="pending" title="Creating file" />
-      </AgentSteps>
-    ),
-  },
-  {
-    name: "ActionPlan",
-    ui: (
-      <ActionPlan heading="Proposed plan" onAccept={() => {}} onReject={() => {}}>
-        <ActionPlanStep title="Pull renewing accounts" />
-        <ActionPlanStep title="Draft emails" />
-      </ActionPlan>
-    ),
-  },
-  {
-    name: "ActionConfirmation",
-    ui: (
-      <ActionConfirmation
-        title="Send 18 emails?"
-        description="You can't undo this."
-        onConfirm={() => {}}
-        onCancel={() => {}}
-      />
-    ),
-  },
-  {
-    name: "InlineFeedback",
-    ui: <InlineFeedback onCopy={() => {}} onRegenerate={() => {}} />,
-  },
-  { name: "RewriteMenu", ui: <RewriteMenu label="Rewrite" onAction={() => {}} /> },
-  { name: "ToneSelector", ui: <ToneSelector defaultValue="professional" onValueChange={() => {}} /> },
-  {
-    name: "ResponseComparison",
-    ui: (
-      <ResponseComparison
-        onPrefer={() => {}}
-        options={[
-          { id: "a", content: "Response A text" },
-          { id: "b", content: "Response B text" },
-        ]}
-      />
-    ),
-  },
-  {
-    name: "PromptEnhancer",
-    ui: <PromptEnhancer suggestions={["Make it professional"]} onEnhance={() => {}} onSelect={() => {}} />,
-  },
-  {
-    name: "AttachmentTile",
-    ui: (
-      <AttachmentTray>
-        <AttachmentTile name="Playbook.pdf" meta="PDF · 240 KB" onRemove={() => {}} />
-      </AttachmentTray>
-    ),
-  },
-  {
-    name: "ModelSelector",
-    ui: (
-      <ModelSelector
+      <ModelSelection
         defaultValue="a"
         onValueChange={() => {}}
         models={[
@@ -401,13 +280,13 @@ const cases: { name: string; ui: ReactElement }[] = [
     ),
   },
   {
-    name: "ConnectorCard",
-    ui: <ConnectorCard name="GitHub" description="Read issues and code" onConnect={() => {}} />,
+    name: "Connector",
+    ui: <Connector name="GitHub" description="Read issues and code" onConnect={() => {}} />,
   },
   {
-    name: "KnowledgeBasePicker",
+    name: "KnowledgeBase",
     ui: (
-      <KnowledgeBasePicker
+      <KnowledgeBase
         defaultValue={["a"]}
         onValueChange={() => {}}
         sources={[
@@ -418,63 +297,50 @@ const cases: { name: string; ui: ReactElement }[] = [
     ),
   },
   {
-    name: "PromptTemplate",
+    name: "Templates",
     ui: (
-      <PromptTemplate
+      <Templates
         onComplete={() => {}}
         segments={["Email ", { slot: "company", placeholder: "Company" }, " about renewals."]}
       />
     ),
   },
-  { name: "AiDisclosure", ui: <AiDisclosure variant="banner" /> },
-  { name: "AiCaveat", ui: <AiCaveat /> },
+  { name: "Disclosure", ui: <Disclosure variant="banner" /> },
   {
-    name: "CapabilityOverview",
+    name: "DropdownMenu",
     ui: (
-      <CapabilityOverview
-        heading="Meet your assistant"
-        sections={[
-          { title: "Examples", items: ["Summarize a contract"] },
-          { title: "Capabilities", items: ["Reads your files"] },
-          { title: "Limits", items: ["May be wrong"] },
-        ]}
-      />
+      <DropdownMenu defaultOpen>
+        <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>Task</DropdownMenuLabel>
+          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     ),
   },
   {
-    name: "MemorySummary",
+    name: "Empty",
     ui: (
-      <MemorySummary
-        updatedAt="Updated 1 minute ago"
-        onRefresh={() => {}}
-        onAdd={() => {}}
-        groups={[{ title: "About you", items: ["Prefers concise answers"] }]}
-      />
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <Home />
+          </EmptyMedia>
+          <EmptyTitle>No projects yet</EmptyTitle>
+          <EmptyDescription>Create a project to start tracking tasks.</EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          <Button>New project</Button>
+        </EmptyContent>
+      </Empty>
     ),
   },
-  { name: "PrivacyNotice", ui: <PrivacyNotice variant="incognito" /> },
-  {
-    name: "ErrorState",
-    ui: (
-      <ErrorState
-        variant="error"
-        title="Something went wrong"
-        description="Your prompt didn't go through."
-        actions={<button type="button">Retry</button>}
-      />
-    ),
-  },
-  { name: "AudioMessage", ui: <AudioMessage duration="0:42" onPlayToggle={() => {}} /> },
+  { name: "Button (link, asChild)", ui: <Button variant="link" asChild><a href="/docs">Docs</a></Button> },
+  { name: "Caveat", ui: <Caveat /> },
   { name: "Badge", ui: <Badge>New</Badge> },
   { name: "Button", ui: <Button>Save</Button> },
-  {
-    name: "IconButton",
-    ui: (
-      <IconButton aria-label="Home">
-        <Home />
-      </IconButton>
-    ),
-  },
   {
     name: "CardContainer",
     ui: (
@@ -491,26 +357,6 @@ const cases: { name: string; ui: ReactElement }[] = [
       </CardContainer>
     ),
   },
-  {
-    name: "Checklist",
-    ui: (
-      <Checklist>
-        <ChecklistItem done title="Step one" description="Done already" />
-        <ChecklistItem
-          title="Step two"
-          description="Pending"
-          action={<Button size="sm">Go</Button>}
-        />
-      </Checklist>
-    ),
-  },
-  {
-    name: "ActionTile",
-    ui: <ActionTile icon={<Mic />} title="Record" description="Capture live." />,
-  },
-  { name: "GettingStartedPill", ui: <GettingStartedPill current={2} total={4} /> },
-  { name: "Chip", ui: <Chip dot>Design</Chip> },
-  { name: "Chip (removable)", ui: <Chip onRemove={() => {}}>React</Chip> },
   { name: "Alert", ui: <Alert variant="info" title="Heads up">Body text</Alert> },
   { name: "Switch", ui: <Switch defaultChecked aria-label="Toggle" /> },
   { name: "Separator", ui: <Separator /> },
@@ -522,7 +368,6 @@ const cases: { name: string; ui: ReactElement }[] = [
       </Tooltip>
     ),
   },
-  { name: "SearchInput", ui: <SearchInput aria-label="Search" /> },
   {
     name: "GlobalNav",
     ui: <GlobalNav left={<span>Heading</span>} right={<Avatar name="Eric" />} />,
@@ -537,36 +382,23 @@ const cases: { name: string; ui: ReactElement }[] = [
       </Sidebar>
     ),
   },
-  { name: "StreamingText", ui: <StreamingText text="Hello" streaming /> },
-  { name: "TypingIndicator", ui: <TypingIndicator /> },
-  {
-    name: "ToolCall",
-    ui: (
-      <ToolCall
-        defaultOpen
-        toolCall={{ id: "1", name: "search", status: "success", args: { q: "x" }, result: "ok" }}
-      />
-    ),
-  },
-  { name: "Reasoning", ui: <Reasoning content="thinking…" defaultOpen /> },
   { name: "CodeBlock", ui: <CodeBlock code="const x = 1;" language="ts" /> },
   {
-    name: "InputBar",
+    name: "OpenInput",
     ui: (
-      <InputBar aria-label="Message" value="" onValueChange={() => {}} onSubmit={() => {}} />
+      <OpenInput aria-label="Message" value="" onValueChange={() => {}} onSubmit={() => {}} />
     ),
   },
   { name: "Message", ui: <Message role="assistant" content="Hi there" /> },
   {
-    name: "Thread",
+    name: "MessageScroller",
     ui: (
-      <Thread>
+      <MessageScroller>
         <Message role="user" content="Hello" />
         <Message role="assistant" content="Hi" />
-      </Thread>
+      </MessageScroller>
     ),
   },
-  { name: "LinkButton", ui: <LinkButton href="#">Learn more</LinkButton> },
   { name: "Checkbox", ui: <Checkbox defaultChecked aria-label="Accept" /> },
   {
     name: "Tabs",
@@ -581,27 +413,8 @@ const cases: { name: string; ui: ReactElement }[] = [
       </Tabs>
     ),
   },
-  {
-    name: "Menu",
-    ui: (
-      <Menu>
-        <MenuItem>Try again</MenuItem>
-        <MenuSeparator />
-        <MenuItem>Delete</MenuItem>
-      </Menu>
-    ),
-  },
-  { name: "Suggestions", ui: <Suggestions items={["Highlights", "Action items"]} /> },
-  { name: "SuggestionChip", ui: <SuggestionChip>Show highlights</SuggestionChip> },
-  {
-    name: "RichCheckboxGroup",
-    ui: (
-      <RichCheckboxGroup label="Include">
-        <RichCheckboxOption label="Summary" description="AI summary" defaultChecked />
-        <RichCheckboxOption label="Transcript" description="Full text" />
-      </RichCheckboxGroup>
-    ),
-  },
+  { name: "SuggestedPrompts", ui: <SuggestedPrompts items={["Highlights", "Action items"]} /> },
+  { name: "SuggestedPrompt", ui: <SuggestedPrompt>Show highlights</SuggestedPrompt> },
   {
     name: "RadioGroup",
     ui: (
@@ -612,12 +425,12 @@ const cases: { name: string; ui: ReactElement }[] = [
     ),
   },
   {
-    name: "Select",
+    name: "NativeSelect",
     ui: (
-      <Select aria-label="Speed" defaultValue="a">
+      <NativeSelect aria-label="Speed" defaultValue="a">
         <option value="a">Instant</option>
         <option value="b">Balanced</option>
-      </Select>
+      </NativeSelect>
     ),
   },
   {
@@ -654,9 +467,9 @@ const cases: { name: string; ui: ReactElement }[] = [
     ),
   },
   {
-    name: "ModularConsent",
+    name: "Consent",
     ui: (
-      <ModularConsent
+      <Consent
         title="Allow workspace access?"
         description="Choose what the assistant can access."
         permissions={[
@@ -665,10 +478,6 @@ const cases: { name: string; ui: ReactElement }[] = [
         ]}
       />
     ),
-  },
-  {
-    name: "AgentComposer",
-    ui: <AgentComposer value="" onValueChange={() => {}} onSubmit={() => {}} aria-label="Task" />,
   },
   {
     name: "NavPanel",
@@ -719,15 +528,6 @@ const cases: { name: string; ui: ReactElement }[] = [
   },
   { name: "Toast", ui: <Toast title="Saved" description="Done" variant="success" onClose={() => {}} /> },
   {
-    name: "FollowUp",
-    ui: (
-      <FollowUp
-        answer="Three deals are at risk this quarter."
-        assumption={{ label: "Assumed:", value: "Q3", hint: "tap to change" }}
-      />
-    ),
-  },
-  {
     name: "Sheet",
     ui: (
       <Sheet open onOpenChange={() => {}} side="right">
@@ -739,35 +539,6 @@ const cases: { name: string; ui: ReactElement }[] = [
           <span>Footer</span>
         </SheetFooter>
       </Sheet>
-    ),
-  },
-  {
-    name: "MediaCard",
-    ui: <MediaCard title="Variant 1" description="A media card." image="/x.png" imageAlt="" />,
-  },
-  {
-    name: "PageHeader",
-    ui: <PageHeader title="Disclosure" description="A clear AI label." />,
-  },
-  {
-    name: "RelatedPatternsGrid",
-    ui: (
-      <RelatedPatternsGrid>
-        <RelatedPatternCard href="#" title="Consent" meta="Onboarding" />
-        <RelatedPatternCard href="#" title="Caveat" meta="Onboarding" />
-      </RelatedPatternsGrid>
-    ),
-  },
-  {
-    name: "RightSidebar",
-    ui: (
-      <RightSidebar>
-        <RightSidebarLabel>On this page</RightSidebarLabel>
-        <RightSidebarAnchor href="#a" active>
-          Patterns
-        </RightSidebarAnchor>
-        <RightSidebarMeta label="Stage" value="Onboarding" />
-      </RightSidebar>
     ),
   },
   {
@@ -845,7 +616,7 @@ const cases: { name: string; ui: ReactElement }[] = [
         <CommandInput aria-label="Command search" />
         <CommandList>
           <CommandEmpty />
-          <CommandGroup heading="Suggestions">
+          <CommandGroup heading="SuggestedPrompts">
             <CommandItem value="New chat">New chat</CommandItem>
             <CommandItem value="Open settings">Open settings</CommandItem>
           </CommandGroup>
@@ -1095,55 +866,8 @@ const cases: { name: string; ui: ReactElement }[] = [
   { name: "Md3Banner", ui: <Md3Banner>Update available</Md3Banner> },
   { name: "Md3Message", ui: <Md3Message role="assistant" content="Hi there" /> },
   {
-    name: "Md3ToolCall",
-    ui: (
-      <Md3ToolCall
-        defaultOpen
-        toolCall={{ id: "1", name: "search", status: "success", args: { q: "x" }, result: "ok" }}
-      />
-    ),
-  },
-  {
-    name: "Md3ActionPlan",
-    ui: (
-      <Md3ActionPlan onAccept={() => {}} onReject={() => {}}>
-        <Md3ActionPlanStep title="Pull accounts" />
-        <Md3ActionPlanStep title="Draft emails" />
-      </Md3ActionPlan>
-    ),
-  },
-  {
     name: "Md3AgentComposer",
     ui: <Md3AgentComposer value="" onValueChange={() => {}} onSubmit={() => {}} aria-label="Task" />,
-  },
-  { name: "Md3Reasoning", ui: <Md3Reasoning content="thinking…" defaultOpen /> },
-  {
-    name: "Md3AgentSteps",
-    ui: (
-      <Md3AgentSteps>
-        <Md3AgentStep status="done" title="Read doc" />
-        <Md3AgentStep status="active" title="Executing" progress={60} />
-        <Md3AgentStep status="pending" title="Create file" />
-      </Md3AgentSteps>
-    ),
-  },
-  {
-    name: "Md3ActivityLog",
-    ui: (
-      <Md3ActivityLog heading="Footprints">
-        <Md3ActivityLogItem time="2m ago">Sent email to Sam</Md3ActivityLogItem>
-        <Md3ActivityLogItem time="3m ago">Read 3 CRM records</Md3ActivityLogItem>
-      </Md3ActivityLog>
-    ),
-  },
-  {
-    name: "Md3Thread",
-    ui: (
-      <Md3Thread>
-        <Md3Message role="user" content="Hello" />
-        <Md3Message role="assistant" content="Hi" />
-      </Md3Thread>
-    ),
   },
   {
     name: "Md3ActionConfirmation",
@@ -1197,19 +921,10 @@ describe("interaction: components behave", () => {
     expect(onClick).toHaveBeenCalledOnce();
   });
 
-  it("GettingStartedPill exposes expanded state and toggles via click", async () => {
-    const onClick = vi.fn();
-    render(<GettingStartedPill current={2} total={4} open={false} onClick={onClick} />);
-    const btn = screen.getByRole("button");
-    expect(btn).toHaveAttribute("aria-expanded", "false");
-    await userEvent.click(btn);
-    expect(onClick).toHaveBeenCalledOnce();
-  });
-
-  it("InputBar submits trimmed value on Enter", async () => {
+  it("OpenInput submits trimmed value on Enter", async () => {
     const onSubmit = vi.fn();
     function Harness() {
-      return <InputBar aria-label="Message" value="  hi  " onValueChange={() => {}} onSubmit={onSubmit} />;
+      return <OpenInput aria-label="Message" value="  hi  " onValueChange={() => {}} onSubmit={onSubmit} />;
     }
     render(<Harness />);
     const textarea = screen.getByRole("textbox", { name: "Message" });
@@ -1300,10 +1015,10 @@ describe("interaction: components behave", () => {
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
-  it("ModularConsent returns granted permission ids on allow", async () => {
+  it("Consent returns granted permission ids on allow", async () => {
     const onAllow = vi.fn();
     render(
-      <ModularConsent
+      <Consent
         title="Allow access?"
         permissions={[
           { id: "read", label: "Read", defaultChecked: true },
@@ -1314,14 +1029,6 @@ describe("interaction: components behave", () => {
     );
     await userEvent.click(screen.getByRole("button", { name: "Allow selected" }));
     expect(onAllow).toHaveBeenCalledWith(["read"]);
-  });
-
-  it("AgentComposer submits on Enter", async () => {
-    const onSubmit = vi.fn();
-    render(<AgentComposer value="do it" onValueChange={() => {}} onSubmit={onSubmit} />);
-    screen.getByRole("textbox").focus();
-    await userEvent.keyboard("{Enter}");
-    expect(onSubmit).toHaveBeenCalledWith("do it");
   });
 
   it("Accordion expands and collapses a panel", async () => {
@@ -1371,15 +1078,6 @@ describe("interaction: components behave", () => {
     expect(screen.getByText("Hello")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Dismiss" }));
     expect(screen.queryByText("Hello")).not.toBeInTheDocument();
-  });
-
-  it("ToolCall toggles its details panel", async () => {
-    render(
-      <ToolCall toolCall={{ id: "1", name: "search", status: "running", args: { q: "x" } }} />,
-    );
-    const toggle = screen.getByRole("button", { expanded: false });
-    await userEvent.click(toggle);
-    expect(toggle).toHaveAttribute("aria-expanded", "true");
   });
 
   it("Toggle flips aria-pressed and fires onPressedChange", async () => {
@@ -1724,34 +1422,6 @@ describe("interaction: components behave", () => {
     expect(onSubmit).toHaveBeenCalledWith("do it");
   });
 
-  it("Md3ToolCall toggles its details panel", async () => {
-    render(<Md3ToolCall toolCall={{ id: "1", name: "search", status: "running", args: { q: "x" } }} />);
-    const toggle = screen.getByRole("button", { expanded: false });
-    await userEvent.click(toggle);
-    expect(toggle).toHaveAttribute("aria-expanded", "true");
-  });
-
-  it("Md3ActionPlan fires onAccept", async () => {
-    const onAccept = vi.fn();
-    render(
-      <Md3ActionPlan onAccept={onAccept}>
-        <Md3ActionPlanStep title="Step one" />
-      </Md3ActionPlan>,
-    );
-    await userEvent.click(screen.getByRole("button", { name: "Accept plan" }));
-    expect(onAccept).toHaveBeenCalledOnce();
-  });
-
-  it("Md3Reasoning expands and collapses", async () => {
-    render(<Md3Reasoning content="thinking about it" />);
-    const trigger = screen.getByRole("button");
-    expect(trigger).toHaveAttribute("aria-expanded", "false");
-    expect(screen.queryByText("thinking about it")).not.toBeInTheDocument();
-    await userEvent.click(trigger);
-    expect(trigger).toHaveAttribute("aria-expanded", "true");
-    expect(screen.getByText("thinking about it")).toBeInTheDocument();
-  });
-
   it("Md3ActionConfirmation fires confirm and cancel", async () => {
     const onConfirm = vi.fn();
     const onCancel = vi.fn();
@@ -1762,6 +1432,97 @@ describe("interaction: components behave", () => {
     expect(onConfirm).toHaveBeenCalledOnce();
     await userEvent.click(screen.getByRole("button", { name: "Cancel" }));
     expect(onCancel).toHaveBeenCalledOnce();
+  });
+
+  it("DropdownMenu opens, moves with arrow keys, runs onSelect, closes and restores focus", async () => {
+    const onEdit = vi.fn();
+    const onDelete = vi.fn();
+    render(
+      <DropdownMenu>
+        <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem onSelect={onEdit}>Edit</DropdownMenuItem>
+          <DropdownMenuItem disabled>Archive</DropdownMenuItem>
+          <DropdownMenuItem variant="destructive" onSelect={onDelete}>
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>,
+    );
+    const trigger = screen.getByRole("button", { name: "Actions" });
+    expect(trigger).toHaveAttribute("aria-haspopup", "menu");
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+
+    await userEvent.click(trigger);
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByRole("menuitem", { name: "Edit" })).toHaveFocus();
+    await userEvent.keyboard("{ArrowDown}");
+    expect(screen.getByRole("menuitem", { name: "Delete" })).toHaveFocus(); // skips the disabled item
+    await userEvent.keyboard("{ArrowDown}");
+    expect(screen.getByRole("menuitem", { name: "Edit" })).toHaveFocus(); // wraps
+    await userEvent.keyboard("{End}{Enter}");
+    expect(onDelete).toHaveBeenCalledOnce();
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+
+    await userEvent.click(trigger);
+    await userEvent.keyboard("{Escape}");
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+    expect(onEdit).not.toHaveBeenCalled();
+  });
+
+  it("DropdownMenuItem stays open when onSelect prevents default; outside click closes", async () => {
+    render(
+      <div>
+        <p>outside</p>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" aria-label="More">
+              <Home />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>Keep open</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>,
+    );
+    const trigger = screen.getByRole("button", { name: "More" });
+    expect(trigger.tagName).toBe("BUTTON");
+    expect(trigger).toHaveAttribute("aria-haspopup", "menu");
+    await userEvent.click(trigger);
+    await userEvent.click(screen.getByRole("menuitem", { name: "Keep open" }));
+    expect(screen.getByRole("menu")).toBeInTheDocument();
+    await userEvent.click(screen.getByText("outside"));
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+  });
+
+  it("Button asChild renders the child element with button styles", () => {
+    render(
+      <Button variant="link" asChild className="text-xs">
+        <a href="/docs">Docs</a>
+      </Button>,
+    );
+    const link = screen.getByRole("link", { name: "Docs" });
+    expect(link).toHaveAttribute("href", "/docs");
+    expect(link).toHaveClass("underline", "text-xs");
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
+  });
+
+  it("NativeSelect renders options and option groups", async () => {
+    const onChange = vi.fn();
+    render(
+      <NativeSelect aria-label="Status" defaultValue="open" onChange={onChange}>
+        <NativeSelectOption value="open">Open</NativeSelectOption>
+        <NativeSelectOptGroup label="Closed">
+          <NativeSelectOption value="done">Done</NativeSelectOption>
+        </NativeSelectOptGroup>
+      </NativeSelect>,
+    );
+    await userEvent.selectOptions(screen.getByRole("combobox", { name: "Status" }), "done");
+    expect(onChange).toHaveBeenCalled();
+    expect(screen.getByRole("group", { name: "Closed" })).toBeInTheDocument();
   });
 
   it("Menubar opens a menu on trigger click", async () => {

@@ -10,8 +10,7 @@ import {
   CardTitle,
   Input,
   Label,
-  PageHeader,
-  Select,
+  NativeSelect,
   Switch,
   Tabs,
   TabsContent,
@@ -53,7 +52,12 @@ export default function SettingsPageExample() {
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-6 p-4 sm:p-6 lg:p-8">
-      <PageHeader title="Settings" description="Manage your profile and notifications." />
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0 space-y-1">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Settings</h1>
+          <p className="text-sm text-muted-foreground">Manage your profile and notifications.</p>
+        </div>
+      </header>
 
       <Tabs defaultValue="profile">
         <TabsList>
@@ -93,11 +97,11 @@ export default function SettingsPageExample() {
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="timezone">Time zone</Label>
-                  <Select id="timezone" defaultValue="utc">
+                  <NativeSelect id="timezone" defaultValue="utc">
                     <option value="utc">UTC</option>
                     <option value="est">Eastern Time</option>
                     <option value="ist">India Standard Time</option>
-                  </Select>
+                  </NativeSelect>
                 </div>
                 <div className="flex justify-end">
                   <Button type="submit" disabled={!name.trim()}>Save changes</Button>

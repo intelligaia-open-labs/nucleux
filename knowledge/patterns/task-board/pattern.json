@@ -3,23 +3,25 @@
   "name": "Task board (kanban)",
   "status": "curated",
   "since": "0.5.0",
-  "summary": "Status columns of task cards with priority, due date and assignee; a per-card actions menu (Popover + Menu) moves and deletes tasks without drag and drop.",
-  "description": "Kanban-style board for tasks, tickets or pipeline stages. Each card shows the essentials as text; moving a task is a menu action so the board works by keyboard. Includes the menu-button composition (PopoverTrigger + Menu) for row and card actions anywhere in an app.",
+  "summary": "Status columns of task cards with priority, due date and assignee; a per-card actions menu (DropdownMenu) moves and deletes tasks without drag and drop.",
+  "description": "Kanban-style board for tasks, tickets or pipeline stages. Each card shows the essentials as text; moving a task is a menu action so the board works by keyboard. Includes the menu-button composition (DropdownMenu with an icon Button trigger) for row and card actions anywhere in an app.",
   "useCases": ["kanban board", "task board", "task management", "pipeline stages", "ticket board", "card actions menu", "row actions menu"],
   "whenToUse": ["Items move through a few ordered statuses and users scan by status."],
   "whenNotToUse": ["Many items needing sorting/filtering by several fields: use list-page (offer both as a Board/List toggle).", "More than ~6 statuses."],
   "keywords": ["kanban", "board", "tasks", "columns", "cards", "status", "workflow", "menu", "actions", "dropdown", "more menu", "overflow menu"],
   "components": {
-    "required": ["CardContainer", "CardContent", "Badge", "Popover", "PopoverTrigger", "PopoverContent", "Menu", "MenuItem"],
-    "optional": ["Avatar", "MenuLabel", "MenuSeparator", "IconButton", "Tooltip"]
+    "required": ["CardContainer", "CardContent", "Badge", "DropdownMenu", "DropdownMenuTrigger", "DropdownMenuContent", "DropdownMenuItem"],
+    "optional": ["Avatar", "DropdownMenuLabel", "DropdownMenuSeparator", "Button", "Tooltip"]
   },
   "composition": [
     { "element": "div", "role": "Board: grid, 1 column on phones, md:grid-cols-2, 2xl:grid-cols-4", "children": [
       { "element": "section", "role": "Column (aria-labelledby its h2), bg-muted/50", "children": [
-        { "component": "IconButton", "role": "Add task to this column" },
+        { "component": "Button", "role": "Add task to this column" },
         { "component": "CardContainer", "role": "TaskCard", "children": [ { "component": "CardContent", "children": [
-          { "component": "PopoverTrigger", "role": "Actions menu button (aria-label names the task)" },
-          { "component": "Popover", "children": [ { "component": "PopoverContent", "role": "align=end", "children": [ { "component": "Menu", "children": [ { "component": "MenuLabel" }, { "component": "MenuItem", "role": "Move to <status>" }, { "component": "MenuSeparator" }, { "component": "MenuItem", "role": "destructive: Delete" } ] } ] } ] },
+          { "component": "DropdownMenu", "children": [
+            { "component": "DropdownMenuTrigger", "role": "asChild around a ghost Button size=icon-sm; aria-label names the task" },
+            { "component": "DropdownMenuContent", "role": "align=end", "children": [ { "component": "DropdownMenuLabel" }, { "component": "DropdownMenuItem", "role": "Move to <status> (onSelect)" }, { "component": "DropdownMenuSeparator" }, { "component": "DropdownMenuItem", "role": "variant=destructive: Delete" } ] }
+          ] },
           { "component": "Badge", "role": "priority" },
           { "component": "Avatar", "role": "assignee" }
         ] } ] }
@@ -28,9 +30,9 @@
   ],
   "layout": [
     "Columns stack on phones, pair from md and go four-up only from 2xl: next to a w-64 NavPanel, xl leaves ~230px per column, too narrow for card metadata.",
-    "Popover is not portaled: never put a menu trigger inside an overflow-x/overflow-y container (a horizontally scrolling board, a scroll area) or the menu is clipped.",
+    "DropdownMenu is not portaled: never put a menu trigger inside an overflow-x/overflow-y container (a horizontally scrolling board, a scroll area) or the menu is clipped.",
     "A card shows title, project, priority Badge, due date, assignee; details open in detail-page or form-dialog.",
-    "Menu button: Nucleux has no MenuButton component. PopoverTrigger renders the <button>: give it IconButton-like classes and an aria-label, and control Popover open so picking an item closes it.",
+    "Menu button: DropdownMenuTrigger asChild wrapping a Button (variant=\"ghost\" size=\"icon-sm\") with an aria-label. DropdownMenuItem onSelect runs the action; the menu closes and focus returns to the trigger.",
     "Show an empty column as a dashed placeholder, not nothing."
   ],
   "responsive": ["1 column below md, 2 from md, 4 from 2xl (grid items-start so short columns don't stretch).", "Avoid a horizontally scrolling board: it clips the card menus (see Layout)."],
@@ -38,10 +40,10 @@
   "accessibility": [
     "Each column is a section labelled by its heading; card titles are h3.",
     "Moving and deleting are menu items, so no drag and drop is required (add drag as an enhancement only).",
-    "Menu has role=menu/menuitem; the trigger's aria-label says whose actions it opens."
+    "DropdownMenu has role=menu/menuitem with arrow-key, Home/End and Escape handling; the trigger's aria-label says whose actions it opens."
   ],
-  "states": "Loading: three Skeleton cards per column. Empty board: ErrorState variant=empty with a create action.",
-  "antiPatterns": ["Drag and drop as the only way to change status.", "Nesting an IconButton inside PopoverTrigger (button inside button).", "Status shown only by card color."],
+  "states": "Loading: three Skeleton cards per column. Empty board: Empty with a create action.",
+  "antiPatterns": ["Drag and drop as the only way to change status.", "Nesting a Button inside DropdownMenuTrigger without asChild (button inside button).", "Status shown only by card color."],
   "related": ["list-page", "form-dialog", "detail-page"],
   "dependencies": { "npm": [ { "name": "lucide-react", "reason": "Icons in the example." } ] },
   "example": "example.tsx"

@@ -4,15 +4,14 @@ import {
   Avatar,
   Badge,
   CardContainer,
+  Button,
   CardContent,
-  IconButton,
-  Menu,
-  MenuItem,
-  MenuLabel,
-  MenuSeparator,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@nucleux/react";
 
 export type Status = "todo" | "doing" | "review" | "done";
@@ -45,44 +44,35 @@ const INITIAL: Task[] = [
 ];
 
 /**
- * Row/card actions as a menu button. Nucleux has no dedicated menu-button
- * component: PopoverTrigger is the button (style it like a ghost IconButton
- * and give it an aria-label), PopoverContent holds a Menu. Control `open` so
- * choosing an item closes the menu.
+ * Row/card actions as a menu button: a DropdownMenu whose trigger is an
+ * icon-only ghost Button with an aria-label. Choosing an item closes the menu
+ * and returns focus to the trigger.
  */
 export function ActionsMenu({ label, onMove, onDelete }: {
   label: string;
   onMove: (to: Status) => void;
   onDelete: () => void;
 }) {
-  const [open, setOpen] = useState(false);
-  const pick = (fn: () => void) => () => {
-    setOpen(false);
-    fn();
-  };
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
-        aria-label={label}
-        className="inline-flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-      >
-        <MoreHorizontal className="size-4" />
-      </PopoverTrigger>
-      <PopoverContent align="end" className="w-48 p-1">
-        <Menu className="border-0 p-0 shadow-none">
-          <MenuLabel>Move to</MenuLabel>
-          {COLUMNS.map((c) => (
-            <MenuItem key={c.id} onClick={pick(() => onMove(c.id))}>
-              {c.title}
-            </MenuItem>
-          ))}
-          <MenuSeparator />
-          <MenuItem destructive onClick={pick(onDelete)}>
-            Delete
-          </MenuItem>
-        </Menu>
-      </PopoverContent>
-    </Popover>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon-sm" aria-label={label} className="shrink-0 text-muted-foreground">
+          <MoreHorizontal className="size-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-48">
+        <DropdownMenuLabel>Move to</DropdownMenuLabel>
+        {COLUMNS.map((c) => (
+          <DropdownMenuItem key={c.id} onSelect={() => onMove(c.id)}>
+            {c.title}
+          </DropdownMenuItem>
+        ))}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem variant="destructive" onSelect={onDelete}>
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -116,7 +106,7 @@ export function TaskCard({ task, onMove, onDelete }: { task: Task; onMove: (to: 
 /**
  * Kanban board: status columns of task cards in a grid that stacks on phones,
  * pairs from md and shows all four columns from 2xl. No overflow container:
- * Popover is not portaled, so a scroll container would clip the card menus.
+ * DropdownMenu is not portaled, so a scroll container would clip the card menus.
  * Moving a task is a menu action, so the board works by keyboard without drag
  * and drop.
  */
@@ -141,9 +131,9 @@ export default function TaskBoardExample() {
                 <h2 id={`col-${col.id}`} className="text-sm font-semibold text-foreground">
                   {col.title} <span className="font-normal text-muted-foreground">{items.length}</span>
                 </h2>
-                <IconButton size="sm" aria-label={`Add task to ${col.title}`}>
+                <Button variant="ghost" size="icon-sm" aria-label={`Add task to ${col.title}`}>
                   <Plus className="size-4" />
-                </IconButton>
+                </Button>
               </div>
               {items.length === 0 ? (
                 <p className="rounded-lg border border-dashed border-border p-4 text-center text-xs text-muted-foreground">

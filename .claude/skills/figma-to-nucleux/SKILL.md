@@ -102,8 +102,12 @@ Walk the layer tree and bucket every distinct piece:
 
 - **Primitive** → ships in `src/components/`. A reusable, content-agnostic unit
   used (or plausibly reused) more than once: `Card`, `Badge`, `Button`, `Avatar`,
-  `ActionTile`, `Checklist`. Repeated instances in the tree (e.g. two `Badge`s,
-  three `Button`s) are the strongest signal.
+  `Empty`, `DropdownMenu`. Repeated instances in the tree (e.g. two `Badge`s,
+  three `Button`s) are the strongest signal. Since 0.6.0 the package set is
+  fixed: shadcn/ui's component list, Material 3's component list (`md3-*`), and
+  the agentic patterns marked *Available* on nucleux.in (each as `<id>` and
+  `md3-<id>`). A primitive outside those lists is built inside the component
+  that needs it, not published as its own package.
 - **Composition** → an example story only, in `src/examples/`. The whole screen
   or a section (`MeetingDashboard`) assembled from primitives. Never ship a
   screen as a component.

@@ -7,7 +7,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  PageHeader,
   Progress,
   Table,
   TableBody,
@@ -68,7 +67,12 @@ const ACTIVITY = [
 export default function DashboardOverviewExample() {
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6 p-4 sm:p-6 lg:p-8">
-      <PageHeader title="Dashboard" description="Where your projects stand this week." />
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0 space-y-1">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Dashboard</h1>
+          <p className="text-sm text-muted-foreground">Where your projects stand this week.</p>
+        </div>
+      </header>
 
       <section aria-label="Key metrics" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {METRICS.map((m) => (

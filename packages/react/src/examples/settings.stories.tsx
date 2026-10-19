@@ -12,10 +12,10 @@ import {
   CardDivider,
   CardHeader,
   CardTitle,
-  ModularConsent,
+  Consent,
+  NativeSelect,
   Radio,
   RadioGroup,
-  Select,
   Separator,
   Switch,
   Tabs,
@@ -26,7 +26,7 @@ import {
 
 /**
  * A settings screen composed from Nucleux primitives — breadcrumb + page
- * header, tabs, toggles, a select, a radio group, an alert, and the modular
+ * header, tabs, toggles, a native select, a radio group, an alert, and the
  * consent block.
  */
 const meta = {
@@ -97,7 +97,7 @@ export const Default: Story = {
                   </SettingRow>
                   <SettingRow title="Summary speed" description="Trade latency for depth.">
                     <div className="w-40">
-                      <Select
+                      <NativeSelect
                         aria-label="Summary speed"
                         value={speed}
                         onChange={(e) => setSpeed(e.target.value)}
@@ -105,7 +105,7 @@ export const Default: Story = {
                         <option value="instant">Instant</option>
                         <option value="balanced">Balanced</option>
                         <option value="thorough">Thorough</option>
-                      </Select>
+                      </NativeSelect>
                     </div>
                   </SettingRow>
                   <div className="py-3">
@@ -130,7 +130,7 @@ export const Default: Story = {
               <Alert variant="info" title="AI-generated content">
                 Summaries are generated automatically and may contain mistakes.
               </Alert>
-              <ModularConsent
+              <Consent
                 className="max-w-none"
                 title="Workspace access"
                 description="Choose what the assistant can read or change."

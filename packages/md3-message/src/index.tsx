@@ -2,7 +2,7 @@ import * as React from "react";
 import { Bot, Cog, User, Wrench } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import type { MessageRole } from "@nucleux/utils";
-import { StreamingText } from "@nucleux/streaming-text";
+import { StreamingText } from "./streaming-text";
 
 export interface Md3MessageProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Who authored the message. */

@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@nucleux/utils";
 import type { MessageRole } from "@nucleux/utils";
 import { Avatar } from "@nucleux/avatar";
-import { StreamingText } from "@nucleux/streaming-text";
+import { StreamingText } from "./streaming-text";
 
 export interface MessageProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Who authored the message. */

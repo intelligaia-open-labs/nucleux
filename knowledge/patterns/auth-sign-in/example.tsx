@@ -10,7 +10,6 @@ import {
   Checkbox,
   Input,
   Label,
-  LinkButton,
 } from "@nucleux/react";
 
 /**
@@ -84,7 +83,9 @@ export default function SignInExample({
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password" required>Password</Label>
-                <LinkButton href="/forgot-password" className="text-xs">Forgot password?</LinkButton>
+                <Button variant="link" asChild className="text-xs">
+                  <a href="/forgot-password">Forgot password?</a>
+                </Button>
               </div>
               <Input
                 id="password"
@@ -108,7 +109,10 @@ export default function SignInExample({
             </Button>
           </form>
           <p className="mt-6 text-center text-sm text-muted-foreground">
-            New to Acme? <LinkButton href="/sign-up">Create an account</LinkButton>
+            New to Acme?{" "}
+            <Button variant="link" asChild>
+              <a href="/sign-up">Create an account</a>
+            </Button>
           </p>
         </CardContent>
       </CardContainer>

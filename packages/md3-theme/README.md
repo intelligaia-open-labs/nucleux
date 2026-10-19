@@ -24,7 +24,7 @@ default shadcn/slate look to Material UI 3 — the same components, restyled:
 
 ```tsx
 <div className="nx-theme-mui">
-  <AgentComposer /* … */ />   {/* now Material 3 */}
+  <OpenInput /* … */ />   {/* now Material 3 */}
 </div>
 ```
 

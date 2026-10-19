@@ -73,18 +73,18 @@ import { Button } from "@nucleux/button";
 
 ```tsx
 import { useState } from "react";
-import { Thread, Message, AgentComposer } from "@nucleux/react";
+import { MessageScroller, Message, OpenInput } from "@nucleux/react";
 import "@nucleux/tokens/styles.css";
 
 export function Chat() {
   const [input, setInput] = useState("");
   return (
     <div className="flex h-[32rem] flex-col">
-      <Thread>
+      <MessageScroller>
         <Message role="assistant" content="Hey! What can I build for you?" />
-      </Thread>
+      </MessageScroller>
       <div className="p-4">
-        <AgentComposer value={input} onValueChange={setInput} onSubmit={() => setInput("")} />
+        <OpenInput value={input} onValueChange={setInput} onSubmit={() => setInput("")} />
       </div>
     </div>
   );
@@ -134,14 +134,18 @@ benchmark in [`evals/`](evals/README.md).
 
 ### Components
 
-Primitives (Button, IconButton, LinkButton, Badge, Chip, Checkbox,
-Radio/RadioGroup, Switch, Select, Separator, Avatar, CardContainer, Alert,
-Tooltip, SearchInput, Progress, Accordion) · Navigation (GlobalNav, Sidebar,
-NavPanel, Tabs, Menu, Breadcrumb) · Overlays (Dialog, Popover, Toast) · Data
-(Table) · Forms (RichCheckboxGroup, ModularConsent) · Agent/Chat (Message,
-Thread, InputBar, AgentComposer, StreamingText, TypingIndicator, ToolCall,
-Reasoning, CodeBlock, Suggestions) · Patterns (ActionTile, Checklist,
-GettingStartedPill).
+Two families, one package each: shadcn-style (`@nucleux/<name>`) and Material 3
+(`@nucleux/md3-<name>`). The set matches nucleux.in: shadcn/ui's component
+list, Material 3's component list, and the agentic patterns marked *Available*.
+
+Basics (Button, Input, Textarea, NativeSelect, Checkbox, RadioGroup, Switch,
+Slider, Badge, Avatar, CardContainer, Alert, Tooltip, Progress, Skeleton,
+Accordion, Tabs, Breadcrumb, DropdownMenu, Dialog, AlertDialog, Sheet, Popover,
+Toast, Empty, Table, DataTable, Calendar, DatePicker, Combobox, Command, …) ·
+Agentic (Disclosure, Caveat, Consent, Personality, Templates,
+SuggestedPrompts, OpenInput, ModelSelection, KnowledgeBase, Connector,
+VoiceInput, StructuredInput, Message, MessageScroller) · Material 3 (Md3Button,
+Md3Card, Md3Chip, Md3TextField, Md3Dialog, Md3NavigationRail, Md3TopAppBar, …).
 
 ## Theming
 
