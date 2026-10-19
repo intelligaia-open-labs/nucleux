@@ -42,7 +42,7 @@ export const RichCheckboxOption = React.forwardRef<HTMLButtonElement, RichCheckb
         disabled={disabled}
         onClick={toggle}
         className={cn(
-          "flex w-full items-start gap-2 rounded-[10px] border bg-card px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+          "flex w-full items-start gap-2 rounded-[10px] border bg-background px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
           value ? "border-primary/40 bg-primary/[0.03]" : "border-border hover:bg-accent/50",
           className,
         )}

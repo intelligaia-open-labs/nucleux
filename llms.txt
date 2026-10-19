@@ -79,11 +79,11 @@ than hand-rolling one. The MCP server (`@nucleux/mcp`) names the shadcn equivale
 - `pnpm build` — tsup build all packages (ESM + CJS + .d.ts)
 - `pnpm validate` — full gate (typecheck → test → build → build-storybook)
 
-## Component catalog (104 packages)
+## Component catalog (116 packages)
 
 Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do not edit by hand.
 
-### shadcn family (67)
+### shadcn family (79)
 
 - **accordion** (`@nucleux/accordion`) — Collapsible accordion panels.
   Exports: `Accordion, AccordionItem, AccordionTrigger, AccordionContent, AccordionProps, AccordionItemProps, AccordionTriggerProps, AccordionContentProps`
@@ -101,8 +101,12 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `Badge, BadgeVariant, BadgeProps`
 - **breadcrumb** (`@nucleux/breadcrumb`) — Breadcrumb navigation.
   Exports: `Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbProps, BreadcrumbItemProps, BreadcrumbLinkProps, …`
+- **bubble** (`@nucleux/bubble`) — Chat message bubble with reactions.
+  Exports: `BubbleGroup, bubbleVariants, Bubble, BubbleContent, BubbleReactions, BubbleVariant, BubbleAlign, BubbleReactionsSide, …`
 - **button** (`@nucleux/button`) — Button — variants, sizes, and icons.
   Exports: `Button, ButtonVariant, ButtonSize, ButtonProps`
+- **button-group** (`@nucleux/button-group`) — Group of joined buttons with shared borders.
+  Exports: `buttonGroupVariants, ButtonGroup, ButtonGroupText, ButtonGroupSeparator, ButtonGroupOrientation, ButtonGroupProps, ButtonGroupTextProps, ButtonGroupSeparatorProps`
 - **calendar** (`@nucleux/calendar`) — Month calendar / date grid.
   Exports: `Calendar, CalendarProps`
 - **card** (`@nucleux/card`) — Composable card surface (CardContainer + parts).
@@ -135,26 +139,38 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `DatePicker, DatePickerProps`
 - **dialog** (`@nucleux/dialog`) — Modal dialog with overlay.
   Exports: `Dialog, DialogHeader, DialogTitle, DialogDescription, DialogFooter, ModalHeader, ModalTitle, ModalDescription, …`
+- **direction** (`@nucleux/direction`) — Text direction (LTR/RTL) provider and hook.
+  Exports: `DirectionProvider, useDirection, Direction, DirectionProviderProps`
 - **disclosure** (`@nucleux/disclosure`) — Disclosure — marks where AI is involved: an AI action, AI at work, or AI-generated content.
   Exports: `Disclosure, DisclosureVariant, DisclosureProps`
+- **drawer** (`@nucleux/drawer`) — Draggable edge drawer with focus trap and scroll lock.
+  Exports: `Drawer, DrawerTrigger, DrawerPortal, DrawerOverlay, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, …`
 - **dropdown-menu** (`@nucleux/dropdown-menu`) — Dropdown menu of actions opened from a trigger.
   Exports: `DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuGroup, DropdownMenuSeparator, DropdownMenuShortcut, …`
 - **empty** (`@nucleux/empty`) — Empty state — media, title, description and actions.
   Exports: `Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent, EmptyMediaProps`
+- **field** (`@nucleux/field`) — Form field layout — label, control, description and error.
+  Exports: `FieldSet, FieldLegend, FieldGroup, fieldVariants, Field, FieldContent, FieldLabel, FieldTitle, …`
 - **form** (`@nucleux/form`) — Accessible form primitives.
   Exports: `Form, FormField, useFormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage`
-- **global-nav** (`@nucleux/global-nav`) — Top application navigation bar.
-  Exports: `GlobalNav, GlobalNavProps`
 - **hover-card** (`@nucleux/hover-card`) — Hover-triggered content card.
   Exports: `HoverCard, HoverCardProps`
 - **input** (`@nucleux/input`) — Text input field.
   Exports: `Input, InputProps`
+- **input-group** (`@nucleux/input-group`) — Input with attached icons, text and buttons.
+  Exports: `InputGroup, inputGroupAddonVariants, InputGroupAddon, inputGroupButtonVariants, InputGroupButton, InputGroupText, InputGroupInput, InputGroupTextarea, …`
 - **input-otp** (`@nucleux/input-otp`) — Segmented one-time-code input.
   Exports: `InputOtp, InputOtpProps`
+- **item** (`@nucleux/item`) — Flexible list row with media, content and actions.
+  Exports: `ItemGroup, ItemSeparator, itemVariants, Item, itemMediaVariants, ItemMedia, ItemContent, ItemTitle, …`
+- **kbd** (`@nucleux/kbd`) — Keyboard key and shortcut display.
+  Exports: `Kbd, KbdGroup, KbdProps, KbdGroupProps`
 - **knowledge-base** (`@nucleux/knowledge-base`) — Knowledge Base — choose the sources the agent may draw on.
   Exports: `KnowledgeBase, KnowledgeSource, KnowledgeBaseProps`
 - **label** (`@nucleux/label`) — Accessible form label.
   Exports: `Label, LabelProps`
+- **marker** (`@nucleux/marker`) — Inline note or divider marker for timelines and threads.
+  Exports: `markerVariants, Marker, MarkerIcon, MarkerContent, MarkerVariant, MarkerProps, MarkerIconProps, MarkerContentProps`
 - **menubar** (`@nucleux/menubar`) — Application menu bar.
   Exports: `Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem, MenubarSeparator, MenubarProps, MenubarMenuProps, …`
 - **message** (`@nucleux/message`) — Chat message row with avatar + bubble.
@@ -165,8 +181,6 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `ModelSelection, ModelOption, ModelSelectionProps`
 - **native-select** (`@nucleux/native-select`) — Styled native <select>.
   Exports: `NativeSelect, NativeSelectOption, NativeSelectOptGroup, NativeSelectProps`
-- **nav-panel** (`@nucleux/nav-panel`) — Expanded navigation panel with collapsible sections.
-  Exports: `NavPanel, NavPanelHeader, NavSection, NavItem, NavPanelProps, NavPanelHeaderProps, NavSectionProps, NavItemProps`
 - **navigation-menu** (`@nucleux/navigation-menu`) — Navigation menu with dropdown panels.
   Exports: `NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink, NavigationMenuProps, NavigationMenuListProps, …`
 - **open-input** (`@nucleux/open-input`) — Open Input — free-form natural-language input.
@@ -179,22 +193,30 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `Popover, PopoverTrigger, PopoverContent, PopoverProps, PopoverTriggerProps, PopoverContentProps`
 - **progress** (`@nucleux/progress`) — Determinate/indeterminate progress bar.
   Exports: `Progress, ProgressSize, ProgressProps`
+- **questionnaire** (`@nucleux/questionnaire`) — Multi-step questionnaire with single, multiple, freeform and skippable answers.
+  Exports: `Questionnaire, QuestionnaireProgress, QuestionnaireItem, QuestionnaireTitle, QuestionnaireDescription, QuestionnaireChoices, QuestionnaireChoice, QuestionnaireChoiceDescription, …`
 - **radio-group** (`@nucleux/radio-group`) — Single-select radio group.
   Exports: `RadioGroup, Radio, RadioGroupProps, RadioProps`
 - **resizable** (`@nucleux/resizable`) — Resizable split panels.
   Exports: `ResizablePanelGroup, ResizablePanel, ResizableHandle, ResizablePanelGroupProps, ResizablePanelProps, ResizableHandleProps`
 - **scroll-area** (`@nucleux/scroll-area`) — Styled scroll container.
   Exports: `ScrollArea, ScrollAreaProps`
+- **select** (`@nucleux/select`) — Select — a custom listbox select with a trigger, groups and keyboard navigation.
+  Exports: `Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectLabel, SelectSeparator, …`
 - **separator** (`@nucleux/separator`) — Horizontal or vertical divider.
   Exports: `Separator, SeparatorProps`
 - **sheet** (`@nucleux/sheet`) — Sheet — a slide-over drawer panel.
   Exports: `Sheet, SheetHeader, SheetTitle, SheetDescription, SheetBody, SheetFooter, SheetClose, SheetSide, …`
-- **sidebar** (`@nucleux/sidebar`) — Collapsed icon navigation rail.
-  Exports: `Sidebar, SidebarItem, SidebarSeparator, SidebarProps, SidebarItemProps, SidebarSeparatorProps`
+- **sidebar** (`@nucleux/sidebar`) — Sidebar — collapsible application sidebar (offcanvas, icon or fixed) with groups, menus and a phone sheet.
+  Exports: `useIsMobile, useSidebar, SidebarProvider, Sidebar, SidebarTrigger, SidebarRail, SidebarInset, SidebarInput, …`
 - **skeleton** (`@nucleux/skeleton`) — Loading placeholder shimmer.
   Exports: `Skeleton, SkeletonProps`
 - **slider** (`@nucleux/slider`) — Draggable range slider.
   Exports: `Slider, SliderProps`
+- **sonner** (`@nucleux/sonner`) — Sonner — toast notifications (the sonner library) styled with Nucleux tokens.
+  Exports: `Toaster, ToasterProps, toast`
+- **spinner** (`@nucleux/spinner`) — Animated loading indicator.
+  Exports: `Spinner, SpinnerProps`
 - **structured-input** (`@nucleux/structured-input`) — StructuredInput — an agent's structured clarifying question.
   Exports: `StructuredInput, StructuredOption, StructuredInputProps`
 - **suggested-prompts** (`@nucleux/suggested-prompts`) — Suggested Prompts — preset asks that jump-start a conversation.
@@ -217,6 +239,8 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `ToggleGroup, ToggleGroupItem, ToggleGroupProps, ToggleGroupItemProps`
 - **tooltip** (`@nucleux/tooltip`) — Hover/focus tooltip.
   Exports: `Tooltip, TooltipSide, TooltipProps`
+- **trace** (`@nucleux/trace`) — Compact, collapsible list of agent steps.
+  Exports: `Trace, TraceLine, TraceIcon, TraceTitle, TraceDescription, TraceCollapsible, TraceCollapsibleTrigger, TraceCollapsibleContent, …`
 - **voice-input** (`@nucleux/voice-input`) — VoiceInput — a live dictation bar with a waveform.
   Exports: `VoiceInput, VoiceInputState, VoiceInputProps`
 

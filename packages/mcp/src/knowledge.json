@@ -171,8 +171,8 @@
       "name": "Application shell",
       "status": "curated",
       "since": "0.5.0",
-      "summary": "Persistent left navigation, top bar with search and account, and a mobile navigation sheet around the page content.",
-      "description": "The frame every page of a multi-page web app renders inside. On large screens a NavPanel column holds the primary navigation; below the lg breakpoint it is replaced by a menu button in the GlobalNav that opens the same links in a left Sheet. Build it once and wrap every route in it.",
+      "summary": "Collapsible sidebar navigation, a top bar with search and account, and a phone navigation sheet around the page content.",
+      "description": "The frame every page of a multi-page web app renders inside, built on the shadcn-style Sidebar. On desktop the Sidebar sits beside the page and collapses to icons (with tooltips) via SidebarTrigger or ⌘B / Ctrl+B; below md the same Sidebar opens as a sheet. Build it once and wrap every route in it.",
       "useCases": [
         "SaaS application layout",
         "admin panel frame",
@@ -203,89 +203,120 @@
       ],
       "components": {
         "required": [
-          "GlobalNav",
-          "NavPanel",
-          "NavSection",
-          "NavItem",
-          "Sheet",
-          "SheetHeader",
-          "SheetTitle",
-          "SheetBody",
+          "SidebarProvider",
+          "Sidebar",
+          "SidebarContent",
+          "SidebarGroup",
+          "SidebarGroupContent",
+          "SidebarMenu",
+          "SidebarMenuItem",
+          "SidebarMenuButton",
+          "SidebarInset",
+          "SidebarTrigger",
+          "useSidebar",
           "Button"
         ],
         "optional": [
+          "SidebarHeader",
+          "SidebarFooter",
+          "SidebarGroupLabel",
+          "SidebarRail",
+          "SidebarMenuBadge",
+          "SidebarMenuSub",
+          "SidebarMenuSubItem",
+          "SidebarMenuSubButton",
           "Input",
           "Avatar",
-          "Sidebar",
-          "SidebarItem",
           "DropdownMenu",
           "DropdownMenuItem"
         ]
       },
       "composition": [
         {
-          "element": "div",
-          "role": "Full-height flex row (h-screen bg-background)",
+          "component": "SidebarProvider",
+          "role": "Wraps the whole app layout; owns open state and the ⌘B shortcut",
           "children": [
             {
-              "component": "NavPanel",
-              "role": "Desktop navigation column, hidden below lg",
+              "component": "Sidebar",
+              "role": "collapsible=\"icon\"; a sheet below md",
               "children": [
                 {
-                  "component": "NavSection",
-                  "role": "Group of links",
+                  "component": "SidebarHeader",
+                  "role": "App name (sr-only when collapsed to icons)"
+                },
+                {
+                  "component": "SidebarContent",
                   "children": [
                     {
-                      "component": "NavItem",
-                      "role": "One link per section; active marks the current route"
+                      "element": "nav",
+                      "role": "aria-label=\"Primary\"",
+                      "children": [
+                        {
+                          "component": "SidebarGroup",
+                          "children": [
+                            {
+                              "component": "SidebarGroupLabel"
+                            },
+                            {
+                              "component": "SidebarGroupContent",
+                              "children": [
+                                {
+                                  "component": "SidebarMenu",
+                                  "children": [
+                                    {
+                                      "component": "SidebarMenuItem",
+                                      "children": [
+                                        {
+                                          "component": "SidebarMenuButton",
+                                          "role": "asChild around an <a href>; isActive for the current route; tooltip = label (shown when collapsed)"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
+                },
+                {
+                  "component": "SidebarRail",
+                  "role": "Edge hit area that toggles the sidebar"
                 }
               ]
             },
             {
-              "element": "div",
-              "role": "Content column (flex-1 min-w-0)",
+              "component": "SidebarInset",
+              "role": "The page column (a <main>)",
               "children": [
                 {
-                  "component": "GlobalNav",
-                  "role": "Top bar",
+                  "element": "header",
+                  "role": "Sticky top bar (h-14 border-b)",
                   "children": [
                     {
-                      "component": "Button",
-                      "role": "left slot: opens the navigation Sheet, visible below lg"
+                      "component": "SidebarTrigger",
+                      "role": "Toggles the sidebar (sheet on phones)"
                     },
                     {
                       "component": "Input",
-                      "role": "center slot: global search, hidden below sm"
+                      "role": "type=\"search\" global search, hidden below sm"
+                    },
+                    {
+                      "component": "Button",
+                      "role": "variant=\"ghost\" size=\"icon\" Notifications"
                     },
                     {
                       "component": "Avatar",
-                      "role": "right slot: current user"
+                      "role": "Current user"
                     }
                   ]
                 },
                 {
-                  "element": "main",
-                  "role": "Scrollable page content; each route renders here"
-                }
-              ]
-            },
-            {
-              "component": "Sheet",
-              "role": "Mobile navigation drawer (side=left)",
-              "children": [
-                {
-                  "component": "SheetHeader",
-                  "children": [
-                    {
-                      "component": "SheetTitle"
-                    }
-                  ]
-                },
-                {
-                  "component": "SheetBody",
-                  "role": "Same NavSection/NavItem list as the desktop column"
+                  "element": "div",
+                  "role": "Page content; each route renders here"
                 }
               ]
             }
@@ -293,36 +324,35 @@
         }
       ],
       "layout": [
-        "Root is a full-height flex row; only <main> scrolls (min-h-0 flex-1 overflow-y-auto).",
-        "NavPanel is a fixed 16rem (w-64) column; the content column must be min-w-0 so tables can scroll inside it.",
-        "Render one nav list component and reuse it in both NavPanel and Sheet so links never diverge.",
-        "Pages inside <main> own their padding and max width (see list-page, dashboard-overview)."
+        "SidebarProvider wraps the whole layout once, around the routes; Sidebar and SidebarInset are its direct children.",
+        "SidebarInset is the page column: put the top bar and the routed page inside it. Pages own their padding and max width (see list-page, dashboard-overview).",
+        "Use collapsible=\"icon\" for apps people work in all day (icons + tooltips when collapsed); \"offcanvas\" for content sites.",
+        "Close the phone sheet after navigating: useSidebar().setOpenMobile(false) when isMobile."
       ],
       "responsive": [
-        "lg and up: NavPanel visible (hidden lg:flex); menu Button (variant=\"ghost\" size=\"icon\") hidden (lg:hidden).",
-        "Below lg: NavPanel hidden; icon Button (size=\"icon\") opens the Sheet; close the Sheet after navigating.",
-        "Below sm: hide the center search Input (type=\"search\", className=\"hidden sm:block\") or move search into the page.",
-        "GlobalNav default horizontal padding is px-6; pass className=\"px-4 sm:px-6\" on narrow screens."
+        "md and up: Sidebar beside the page; SidebarTrigger collapses it (to icons with collapsible=\"icon\").",
+        "Below md: Sidebar renders as a sheet that SidebarTrigger opens; close it after navigating.",
+        "Below sm: hide the header search Input (className=\"hidden sm:block\") or move search into the page."
       ],
       "tokens": [
         "bg-background",
         "text-foreground",
         "border-border",
-        "bg-muted/30 (NavPanel)",
-        "bg-accent (active NavItem)"
+        "bg-muted/40 (sidebar surface)",
+        "bg-accent (active SidebarMenuButton)"
       ],
       "accessibility": [
-        "Give the navigation an accessible name (aria-label=\"Primary\") in both places it renders.",
-        "Icon-only Buttons (size=\"icon\") require aria-label (\"Open navigation\", \"Notifications\").",
-        "NavItem sets aria-current=\"page\" when active; drive active from the router, not local state.",
-        "Sheet is role=dialog aria-modal with its title wired to aria-labelledby; always render SheetTitle."
+        "Wrap the menu in <nav aria-label=\"Primary\">.",
+        "SidebarMenuButton isActive sets aria-current=\"page\"; drive it from the router, not local state.",
+        "SidebarTrigger has an accessible name (\"Toggle Sidebar\"); other icon-only Buttons need aria-label (\"Notifications\").",
+        "When collapsed to icons, every SidebarMenuButton needs tooltip so the label is still visible on hover and focus."
       ],
-      "routing": "NavItem renders an <a>. Keep href for real URLs and call preventDefault + your router's navigate in onClick (React Router, TanStack Router); in Next.js wrap with next/link's legacyBehavior or call router.push.",
+      "routing": "SidebarMenuButton asChild renders your link. With React Router or TanStack Router pass their <Link>; with a plain <a>, keep href for real URLs and call preventDefault + navigate in onClick. In Next.js pass next/link's <Link>.",
       "antiPatterns": [
-        "Hand-rolling a sidebar <aside> with custom link styles instead of NavPanel/NavItem.",
+        "Hand-rolling an <aside> with custom link styles instead of Sidebar/SidebarMenuButton.",
         "Rendering the shell inside each page instead of once around the routes.",
-        "Two separately maintained link lists for desktop and mobile.",
-        "Hiding navigation on mobile with no way to reach it."
+        "A second, separately maintained link list for phones (the Sidebar already becomes a sheet).",
+        "Icon-only collapsed items without tooltip."
       ],
       "related": [
         "dashboard-overview",
@@ -345,13 +375,10 @@
         "@nucleux/avatar",
         "@nucleux/button",
         "@nucleux/dropdown-menu",
-        "@nucleux/global-nav",
         "@nucleux/input",
-        "@nucleux/nav-panel",
-        "@nucleux/sheet",
         "@nucleux/sidebar"
       ],
-      "exampleSource": "import { useState, type MouseEvent, type ReactNode } from \"react\";\nimport { Bell, FolderKanban, LayoutDashboard, Menu as MenuIcon, Settings, Users } from \"lucide-react\";\nimport {\n  Avatar,\n  Button,\n  GlobalNav,\n  Input,\n  NavItem,\n  NavPanel,\n  NavSection,\n  Sheet,\n  SheetBody,\n  SheetHeader,\n  SheetTitle,\n} from \"@nucleux/react\";\n\nexport interface ShellLink {\n  id: string;\n  label: string;\n  href: string;\n  icon: ReactNode;\n}\n\nexport const SHELL_LINKS: ShellLink[] = [\n  { id: \"dashboard\", label: \"Dashboard\", href: \"/\", icon: <LayoutDashboard className=\"size-4\" /> },\n  { id: \"projects\", label: \"Projects\", href: \"/projects\", icon: <FolderKanban className=\"size-4\" /> },\n  { id: \"team\", label: \"Team\", href: \"/team\", icon: <Users className=\"size-4\" /> },\n  { id: \"settings\", label: \"Settings\", href: \"/settings\", icon: <Settings className=\"size-4\" /> },\n];\n\nexport interface AppShellProps {\n  /** id of the active link. */\n  current: string;\n  /** Called with the link's href; wire it to your router (e.g. `navigate(href)`). */\n  onNavigate: (href: string) => void;\n  links?: ShellLink[];\n  children: ReactNode;\n}\n\n/** One nav list, rendered both in the desktop column and in the mobile sheet. */\nfunction ShellNav({\n  links,\n  current,\n  onSelect,\n}: {\n  links: ShellLink[];\n  current: string;\n  onSelect: (href: string) => void;\n}) {\n  return (\n    <NavSection title=\"Workspace\">\n      {links.map((link) => (\n        <NavItem\n          key={link.id}\n          href={link.href}\n          active={link.id === current}\n          className=\"h-9 gap-2 text-sm\"\n          onClick={(e: MouseEvent<HTMLAnchorElement>) => {\n            e.preventDefault();\n            onSelect(link.href);\n          }}\n        >\n          {link.icon}\n          {link.label}\n        </NavItem>\n      ))}\n    </NavSection>\n  );\n}\n\n/**\n * Application shell: persistent left navigation on large screens, a top bar\n * with search and account, and a slide-in navigation sheet on small screens.\n * Page content renders inside `<main>`.\n */\nexport function AppShell({ current, onNavigate, links = SHELL_LINKS, children }: AppShellProps) {\n  const [mobileOpen, setMobileOpen] = useState(false);\n  const go = (href: string) => {\n    setMobileOpen(false);\n    onNavigate(href);\n  };\n\n  return (\n    <div className=\"flex h-screen bg-background text-foreground\">\n      <NavPanel aria-label=\"Primary\" className=\"hidden lg:flex\">\n        <div className=\"px-4 text-sm font-semibold text-foreground\">Acme Projects</div>\n        <ShellNav links={links} current={current} onSelect={go} />\n      </NavPanel>\n\n      <div className=\"flex min-w-0 flex-1 flex-col\">\n        <GlobalNav\n          className=\"px-4 sm:px-6\"\n          left={\n            <>\n              <Button variant=\"ghost\" size=\"icon\" aria-label=\"Open navigation\" className=\"lg:hidden\" onClick={() => setMobileOpen(true)}>\n                <MenuIcon className=\"size-5\" />\n              </Button>\n              <span className=\"truncate text-sm font-semibold lg:hidden\">Acme Projects</span>\n            </>\n          }\n          center={\n            <Input\n              type=\"search\"\n              aria-label=\"Search projects and tasks\"\n              placeholder=\"Search projects and tasks\"\n              className=\"hidden w-full max-w-md sm:block\"\n            />\n          }\n          right={\n            <>\n              <Button variant=\"ghost\" size=\"icon\" aria-label=\"Notifications\">\n                <Bell className=\"size-5\" />\n              </Button>\n              <Avatar role=\"user\" name=\"Dana Kim\" initials=\"DK\" />\n            </>\n          }\n        />\n        <main className=\"min-h-0 flex-1 overflow-y-auto\">{children}</main>\n      </div>\n\n      <Sheet open={mobileOpen} onOpenChange={setMobileOpen} side=\"left\">\n        <SheetHeader>\n          <SheetTitle>Acme Projects</SheetTitle>\n        </SheetHeader>\n        <SheetBody className=\"px-0\">\n          <nav aria-label=\"Primary\">\n            <ShellNav links={links} current={current} onSelect={go} />\n          </nav>\n        </SheetBody>\n      </Sheet>\n    </div>\n  );\n}\n\nexport default function AppShellExample() {\n  const [current, setCurrent] = useState(\"dashboard\");\n  return (\n    <AppShell\n      current={current}\n      onNavigate={(href) => setCurrent(SHELL_LINKS.find((l) => l.href === href)?.id ?? \"dashboard\")}\n    >\n      <div className=\"mx-auto max-w-6xl p-4 sm:p-6 lg:p-8\">\n        <p className=\"text-sm text-muted-foreground\">Page content renders here.</p>\n      </div>\n    </AppShell>\n  );\n}"
+      "exampleSource": "import { useState, type MouseEvent, type ReactNode } from \"react\";\nimport { Bell, FolderKanban, LayoutDashboard, Settings, Users } from \"lucide-react\";\nimport {\n  Avatar,\n  Button,\n  Input,\n  Sidebar,\n  SidebarContent,\n  SidebarGroup,\n  SidebarGroupContent,\n  SidebarGroupLabel,\n  SidebarHeader,\n  SidebarInset,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarProvider,\n  SidebarRail,\n  SidebarTrigger,\n  useSidebar,\n} from \"@nucleux/react\";\n\nexport interface ShellLink {\n  id: string;\n  label: string;\n  href: string;\n  icon: ReactNode;\n}\n\nexport const SHELL_LINKS: ShellLink[] = [\n  { id: \"dashboard\", label: \"Dashboard\", href: \"/\", icon: <LayoutDashboard /> },\n  { id: \"projects\", label: \"Projects\", href: \"/projects\", icon: <FolderKanban /> },\n  { id: \"team\", label: \"Team\", href: \"/team\", icon: <Users /> },\n  { id: \"settings\", label: \"Settings\", href: \"/settings\", icon: <Settings /> },\n];\n\nexport interface AppShellProps {\n  /** id of the active link. */\n  current: string;\n  /** Called with the link's href; wire it to your router (e.g. `navigate(href)`). */\n  onNavigate: (href: string) => void;\n  links?: ShellLink[];\n  children: ReactNode;\n}\n\n/** The nav list. On phones the sidebar is a sheet, so close it after navigating. */\nfunction ShellNav({ links, current, onNavigate }: { links: ShellLink[]; current: string; onNavigate: (href: string) => void }) {\n  const { isMobile, setOpenMobile } = useSidebar();\n  return (\n    <SidebarGroup>\n      <SidebarGroupLabel>Workspace</SidebarGroupLabel>\n      <SidebarGroupContent>\n        <SidebarMenu>\n          {links.map((link) => (\n            <SidebarMenuItem key={link.id}>\n              <SidebarMenuButton asChild isActive={link.id === current} tooltip={link.label}>\n                <a\n                  href={link.href}\n                  onClick={(e: MouseEvent<HTMLAnchorElement>) => {\n                    e.preventDefault();\n                    if (isMobile) setOpenMobile(false);\n                    onNavigate(link.href);\n                  }}\n                >\n                  {link.icon}\n                  <span>{link.label}</span>\n                </a>\n              </SidebarMenuButton>\n            </SidebarMenuItem>\n          ))}\n        </SidebarMenu>\n      </SidebarGroupContent>\n    </SidebarGroup>\n  );\n}\n\n/**\n * Application shell: a Sidebar that collapses to icons on desktop (⌘B / Ctrl+B\n * or the trigger) and becomes a sheet below md, plus a top bar with search\n * and account inside SidebarInset. Page content renders below the bar.\n */\nexport function AppShell({ current, onNavigate, links = SHELL_LINKS, children }: AppShellProps) {\n  return (\n    <SidebarProvider>\n      <Sidebar collapsible=\"icon\">\n        <SidebarHeader>\n          <div className=\"truncate px-2 py-1 text-sm font-semibold text-foreground group-data-[collapsible=icon]:sr-only\">\n            Acme Projects\n          </div>\n        </SidebarHeader>\n        <SidebarContent>\n          <nav aria-label=\"Primary\">\n            <ShellNav links={links} current={current} onNavigate={onNavigate} />\n          </nav>\n        </SidebarContent>\n        <SidebarRail />\n      </Sidebar>\n\n      <SidebarInset className=\"min-h-svh\">\n        <header className=\"sticky top-0 z-10 flex h-14 shrink-0 items-center gap-2 border-b border-border bg-background px-4 sm:px-6\">\n          <SidebarTrigger aria-label=\"Toggle navigation\" />\n          <Input\n            type=\"search\"\n            aria-label=\"Search projects and tasks\"\n            placeholder=\"Search projects and tasks\"\n            className=\"hidden max-w-md sm:block\"\n          />\n          <div className=\"ml-auto flex items-center gap-2\">\n            <Button variant=\"ghost\" size=\"icon\" aria-label=\"Notifications\">\n              <Bell className=\"size-5\" />\n            </Button>\n            <Avatar role=\"user\" name=\"Dana Kim\" initials=\"DK\" />\n          </div>\n        </header>\n        <div className=\"min-h-0 flex-1\">{children}</div>\n      </SidebarInset>\n    </SidebarProvider>\n  );\n}\n\nexport default function AppShellExample() {\n  const [current, setCurrent] = useState(\"dashboard\");\n  return (\n    <AppShell\n      current={current}\n      onNavigate={(href) => setCurrent(SHELL_LINKS.find((l) => l.href === href)?.id ?? \"dashboard\")}\n    >\n      <div className=\"mx-auto max-w-6xl p-4 sm:p-6 lg:p-8\">\n        <p className=\"text-sm text-muted-foreground\">Page content renders here.</p>\n      </div>\n    </AppShell>\n  );\n}"
     },
     {
       "id": "auth-sign-in",
@@ -1860,7 +1887,7 @@
         }
       ],
       "layout": [
-        "Columns stack on phones, pair from md and go four-up only from 2xl: next to a w-64 NavPanel, xl leaves ~230px per column, too narrow for card metadata.",
+        "Columns stack on phones, pair from md and go four-up only from 2xl: next to an expanded 16rem Sidebar, xl leaves ~230px per column, too narrow for card metadata.",
         "DropdownMenu is not portaled: never put a menu trigger inside an overflow-x/overflow-y container (a horizontally scrolling board, a scroll area) or the menu is clipped.",
         "A card shows title, project, priority Badge, due date, assignee; details open in detail-page or form-dialog.",
         "Menu button: DropdownMenuTrigger asChild wrapping a Button (variant=\"ghost\" size=\"icon-sm\") with an aria-label. DropdownMenuItem onSelect runs the action; the menu closes and focus returns to the trigger.",

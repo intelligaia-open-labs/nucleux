@@ -302,8 +302,64 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/bubble:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/button:
     dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/button-group:
+    dependencies:
+      '@nucleux/button':
+        specifier: workspace:*
+        version: link:../button
+      '@nucleux/separator':
+        specifier: workspace:*
+        version: link:../separator
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
@@ -751,6 +807,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/direction:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/disclosure:
     dependencies:
       '@nucleux/utils':
@@ -766,6 +847,31 @@ importers:
       '@types/react':
         specifier: ^18.3.18
         version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/drawer:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -823,6 +929,37 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/field:
+    dependencies:
+      '@nucleux/label':
+        specifier: workspace:*
+        version: link:../label
+      '@nucleux/separator':
+        specifier: workspace:*
+        version: link:../separator
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/form:
     dependencies:
       '@nucleux/utils':
@@ -856,31 +993,6 @@ importers:
       zod:
         specifier: ^3.24.1
         version: 3.25.76
-
-  packages/global-nav:
-    dependencies:
-      '@nucleux/utils':
-        specifier: workspace:*
-        version: link:../utils
-      react-dom:
-        specifier: '>=18'
-        version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@types/react':
-        specifier: ^18.3.18
-        version: 18.3.31
-      lucide-react:
-        specifier: ^0.469.0
-        version: 0.469.0(react@18.3.1)
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      tsup:
-        specifier: ^8.3.5
-        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
-      typescript:
-        specifier: ^5.7.2
-        version: 5.9.3
 
   packages/hooks:
     dependencies:
@@ -954,7 +1066,94 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/input-group:
+    dependencies:
+      '@nucleux/button':
+        specifier: workspace:*
+        version: link:../button
+      '@nucleux/input':
+        specifier: workspace:*
+        version: link:../input
+      '@nucleux/textarea':
+        specifier: workspace:*
+        version: link:../textarea
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/input-otp:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/item:
+    dependencies:
+      '@nucleux/separator':
+        specifier: workspace:*
+        version: link:../separator
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/kbd:
     dependencies:
       '@nucleux/utils':
         specifier: workspace:*
@@ -1005,6 +1204,31 @@ importers:
         version: 5.9.3
 
   packages/label:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/marker:
     dependencies:
       '@nucleux/utils':
         specifier: workspace:*
@@ -1984,31 +2208,6 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
-  packages/nav-panel:
-    dependencies:
-      '@nucleux/utils':
-        specifier: workspace:*
-        version: link:../utils
-      lucide-react:
-        specifier: ^0.469.0
-        version: 0.469.0(react@18.3.1)
-      react-dom:
-        specifier: '>=18'
-        version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@types/react':
-        specifier: ^18.3.18
-        version: 18.3.31
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      tsup:
-        specifier: ^8.3.5
-        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
-      typescript:
-        specifier: ^5.7.2
-        version: 5.9.3
-
   packages/navigation-menu:
     dependencies:
       '@nucleux/utils':
@@ -2159,6 +2358,34 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/questionnaire:
+    dependencies:
+      '@nucleux/button':
+        specifier: workspace:*
+        version: link:../button
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/radio-group:
     dependencies:
       '@nucleux/utils':
@@ -2210,9 +2437,15 @@ importers:
       '@nucleux/breadcrumb':
         specifier: workspace:*
         version: link:../breadcrumb
+      '@nucleux/bubble':
+        specifier: workspace:*
+        version: link:../bubble
       '@nucleux/button':
         specifier: workspace:*
         version: link:../button
+      '@nucleux/button-group':
+        specifier: workspace:*
+        version: link:../button-group
       '@nucleux/calendar':
         specifier: workspace:*
         version: link:../calendar
@@ -2261,21 +2494,27 @@ importers:
       '@nucleux/dialog':
         specifier: workspace:*
         version: link:../dialog
+      '@nucleux/direction':
+        specifier: workspace:*
+        version: link:../direction
       '@nucleux/disclosure':
         specifier: workspace:*
         version: link:../disclosure
+      '@nucleux/drawer':
+        specifier: workspace:*
+        version: link:../drawer
       '@nucleux/dropdown-menu':
         specifier: workspace:*
         version: link:../dropdown-menu
       '@nucleux/empty':
         specifier: workspace:*
         version: link:../empty
+      '@nucleux/field':
+        specifier: workspace:*
+        version: link:../field
       '@nucleux/form':
         specifier: workspace:*
         version: link:../form
-      '@nucleux/global-nav':
-        specifier: workspace:*
-        version: link:../global-nav
       '@nucleux/hooks':
         specifier: workspace:*
         version: link:../hooks
@@ -2285,15 +2524,27 @@ importers:
       '@nucleux/input':
         specifier: workspace:*
         version: link:../input
+      '@nucleux/input-group':
+        specifier: workspace:*
+        version: link:../input-group
       '@nucleux/input-otp':
         specifier: workspace:*
         version: link:../input-otp
+      '@nucleux/item':
+        specifier: workspace:*
+        version: link:../item
+      '@nucleux/kbd':
+        specifier: workspace:*
+        version: link:../kbd
       '@nucleux/knowledge-base':
         specifier: workspace:*
         version: link:../knowledge-base
       '@nucleux/label':
         specifier: workspace:*
         version: link:../label
+      '@nucleux/marker':
+        specifier: workspace:*
+        version: link:../marker
       '@nucleux/md3-action-confirmation':
         specifier: workspace:*
         version: link:../md3-action-confirmation
@@ -2405,9 +2656,6 @@ importers:
       '@nucleux/native-select':
         specifier: workspace:*
         version: link:../native-select
-      '@nucleux/nav-panel':
-        specifier: workspace:*
-        version: link:../nav-panel
       '@nucleux/navigation-menu':
         specifier: workspace:*
         version: link:../navigation-menu
@@ -2426,6 +2674,9 @@ importers:
       '@nucleux/progress':
         specifier: workspace:*
         version: link:../progress
+      '@nucleux/questionnaire':
+        specifier: workspace:*
+        version: link:../questionnaire
       '@nucleux/radio-group':
         specifier: workspace:*
         version: link:../radio-group
@@ -2435,6 +2686,9 @@ importers:
       '@nucleux/scroll-area':
         specifier: workspace:*
         version: link:../scroll-area
+      '@nucleux/select':
+        specifier: workspace:*
+        version: link:../select
       '@nucleux/separator':
         specifier: workspace:*
         version: link:../separator
@@ -2450,6 +2704,12 @@ importers:
       '@nucleux/slider':
         specifier: workspace:*
         version: link:../slider
+      '@nucleux/sonner':
+        specifier: workspace:*
+        version: link:../sonner
+      '@nucleux/spinner':
+        specifier: workspace:*
+        version: link:../spinner
       '@nucleux/structured-input':
         specifier: workspace:*
         version: link:../structured-input
@@ -2483,6 +2743,9 @@ importers:
       '@nucleux/tooltip':
         specifier: workspace:*
         version: link:../tooltip
+      '@nucleux/trace':
+        specifier: workspace:*
+        version: link:../trace
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
@@ -2559,6 +2822,31 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/select:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/separator:
     dependencies:
       '@nucleux/utils':
@@ -2611,9 +2899,27 @@ importers:
 
   packages/sidebar:
     dependencies:
+      '@nucleux/button':
+        specifier: workspace:*
+        version: link:../button
+      '@nucleux/input':
+        specifier: workspace:*
+        version: link:../input
+      '@nucleux/separator':
+        specifier: workspace:*
+        version: link:../separator
+      '@nucleux/sheet':
+        specifier: workspace:*
+        version: link:../sheet
+      '@nucleux/skeleton':
+        specifier: workspace:*
+        version: link:../skeleton
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
       react-dom:
         specifier: '>=18'
         version: 18.3.1(react@18.3.1)
@@ -2621,9 +2927,6 @@ importers:
       '@types/react':
         specifier: ^18.3.18
         version: 18.3.31
-      lucide-react:
-        specifier: ^0.469.0
-        version: 0.469.0(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2674,6 +2977,56 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/sonner:
+    dependencies:
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+      sonner:
+        specifier: ^2.0.8
+        version: 2.0.8(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/spinner:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2961,6 +3314,34 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/trace:
+    dependencies:
+      '@nucleux/collapsible':
+        specifier: workspace:*
+        version: link:../collapsible
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -5795,6 +6176,16 @@ packages:
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
+
+  sonner@2.0.8:
+    resolution: {integrity: sha512-UM/ByIoFra8yzV75n1o0Puu0bw5U/9UNnDacrJNspekBewIfsQ3D6ez1nvlWpt7aTsO6rujQtifBpycwIivqlg==}
+    peerDependencies:
+      '@types/react': ^18.0.0 || ^19.0.0
+      react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+      react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -8709,6 +9100,13 @@ snapshots:
   signal-exit@4.1.0: {}
 
   slash@3.0.0: {}
+
+  sonner@2.0.8(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    optionalDependencies:
+      '@types/react': 18.3.31
 
   source-map-js@1.2.1: {}
 

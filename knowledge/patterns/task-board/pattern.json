@@ -29,7 +29,7 @@
     ] }
   ],
   "layout": [
-    "Columns stack on phones, pair from md and go four-up only from 2xl: next to a w-64 NavPanel, xl leaves ~230px per column, too narrow for card metadata.",
+    "Columns stack on phones, pair from md and go four-up only from 2xl: next to an expanded 16rem Sidebar, xl leaves ~230px per column, too narrow for card metadata.",
     "DropdownMenu is not portaled: never put a menu trigger inside an overflow-x/overflow-y container (a horizontally scrolling board, a scroll area) or the menu is clipped.",
     "A card shows title, project, priority Badge, due date, assignee; details open in detail-page or form-dialog.",
     "Menu button: DropdownMenuTrigger asChild wrapping a Button (variant=\"ghost\" size=\"icon-sm\") with an aria-label. DropdownMenuItem onSelect runs the action; the menu closes and focus returns to the trigger.",

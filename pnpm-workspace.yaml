@@ -5,3 +5,8 @@ packages:
 # default for security). esbuild ships a native binary via its postinstall.
 allowBuilds:
   esbuild: true
+
+# Don't auto-install before `pnpm run <script>` (pnpm 10+ reads this here, not
+# from .npmrc). An implicit install rewrites pnpm-lock.yaml with the local pnpm's
+# formatting; CI installs explicitly with --frozen-lockfile.
+verifyDepsBeforeRun: false

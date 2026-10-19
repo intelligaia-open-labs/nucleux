@@ -48,13 +48,32 @@ md3-tool-call. Replacements: `IconButton` → `Button size="icon" | "icon-sm" |
 `SearchInput` → `Input type="search"`; `PageHeader` → a `<header>` with an
 `<h1>`. `global-nav` and `nav-panel` go when the shadcn `sidebar` lands.
 
-#### Added
+#### Added (phase 2: the remaining shadcn/ui basics)
+- New packages, ported from shadcn/ui without Radix, keeping shadcn's exports,
+  props and `data-slot` attributes: `bubble`, `button-group`, `direction`,
+  `drawer` (native: focus trap, scroll lock, drag to dismiss), `field`,
+  `input-group`, `item`, `kbd`, `marker`, `questionnaire`, `select` (custom
+  listbox: keyboard, typeahead, form submission), `sonner` (the `sonner`
+  library, themed with Nucleux tokens), `spinner`, `trace`.
+- `sidebar` is rebuilt as shadcn's Sidebar (`SidebarProvider`, `Sidebar` with
+  offcanvas/icon/none collapse and sidebar/floating/inset variants, a sheet on
+  phones, ⌘B / Ctrl+B, `SidebarMenu*`, `useSidebar`). The old icon-rail API
+  (`SidebarItem`, the `footer` prop) is gone.
+
+#### Removed (phase 2)
+- `global-nav` and `nav-panel`; use `sidebar` and a header inside `SidebarInset`.
+
+#### Added (phase 1)
 - `Button`: `variant="link"`, sizes `icon-sm`/`icon-lg`, and `asChild`.
 - `Slot` in `@nucleux/utils` (powers `asChild`).
 - `scripts/gen-llms.mjs`: the catalog section of `llms.txt` is generated from
   the MCP catalog and checked by the test suite.
 
 #### Fixed
+- `Alert`'s default variant and Consent's permission options used a `bg-card`
+  color that doesn't exist in the preset, so they had no background.
+- `pnpm-workspace.yaml` sets `verifyDepsBeforeRun: false`. pnpm 10+ ignores the
+  `.npmrc` setting, so every `pnpm run` reinstalled and rewrote the lockfile.
 - `DatePicker`, `OpenInput`, `Md3AgentComposer` and `useAutoScroll` no longer warn
   about `useLayoutEffect` when server-rendered.
 

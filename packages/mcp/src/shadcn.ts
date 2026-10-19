@@ -72,8 +72,8 @@ export const SHADCN_FALLBACK: ShadcnEntry[] = [
   // Overlays / navigation.
   { id: "hover-card", title: "Hover Card", keywords: ["hover card", "preview card", "profile hover"], near: "Tooltip (text only), Popover (click)" },
   { id: "context-menu", title: "Context Menu", keywords: ["context menu", "right click", "secondary click"], near: "DropdownMenu" },
-  { id: "menubar", title: "Menubar", keywords: ["menubar", "application menu", "file edit view"], near: "GlobalNav, DropdownMenu" },
-  { id: "navigation-menu", title: "Navigation Menu", keywords: ["navigation menu", "mega menu", "nav dropdown"], near: "GlobalNav, NavPanel" },
+  { id: "menubar", title: "Menubar", keywords: ["menubar", "application menu", "file edit view"], near: "DropdownMenu" },
+  { id: "navigation-menu", title: "Navigation Menu", keywords: ["navigation menu", "mega menu", "nav dropdown"], near: "Sidebar" },
   { id: "alert-dialog", title: "Alert Dialog", keywords: ["alert dialog", "confirm", "confirmation", "destructive confirm", "are you sure"], near: "Consent (agent permission), Dialog" },
   { id: "sonner", title: "Sonner", keywords: ["sonner", "toaster", "notification stack"], near: "Toast + ToastProvider/useToast" },
 

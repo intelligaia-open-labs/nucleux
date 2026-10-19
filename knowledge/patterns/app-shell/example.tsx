@@ -1,17 +1,23 @@
 import { useState, type MouseEvent, type ReactNode } from "react";
-import { Bell, FolderKanban, LayoutDashboard, Menu as MenuIcon, Settings, Users } from "lucide-react";
+import { Bell, FolderKanban, LayoutDashboard, Settings, Users } from "lucide-react";
 import {
   Avatar,
   Button,
-  GlobalNav,
   Input,
-  NavItem,
-  NavPanel,
-  NavSection,
-  Sheet,
-  SheetBody,
-  SheetHeader,
-  SheetTitle,
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+  useSidebar,
 } from "@nucleux/react";
 
 export interface ShellLink {
@@ -22,10 +28,10 @@ export interface ShellLink {
 }
 
 export const SHELL_LINKS: ShellLink[] = [
-  { id: "dashboard", label: "Dashboard", href: "/", icon: <LayoutDashboard className="size-4" /> },
-  { id: "projects", label: "Projects", href: "/projects", icon: <FolderKanban className="size-4" /> },
-  { id: "team", label: "Team", href: "/team", icon: <Users className="size-4" /> },
-  { id: "settings", label: "Settings", href: "/settings", icon: <Settings className="size-4" /> },
+  { id: "dashboard", label: "Dashboard", href: "/", icon: <LayoutDashboard /> },
+  { id: "projects", label: "Projects", href: "/projects", icon: <FolderKanban /> },
+  { id: "team", label: "Team", href: "/team", icon: <Users /> },
+  { id: "settings", label: "Settings", href: "/settings", icon: <Settings /> },
 ];
 
 export interface AppShellProps {
@@ -37,98 +43,78 @@ export interface AppShellProps {
   children: ReactNode;
 }
 
-/** One nav list, rendered both in the desktop column and in the mobile sheet. */
-function ShellNav({
-  links,
-  current,
-  onSelect,
-}: {
-  links: ShellLink[];
-  current: string;
-  onSelect: (href: string) => void;
-}) {
+/** The nav list. On phones the sidebar is a sheet, so close it after navigating. */
+function ShellNav({ links, current, onNavigate }: { links: ShellLink[]; current: string; onNavigate: (href: string) => void }) {
+  const { isMobile, setOpenMobile } = useSidebar();
   return (
-    <NavSection title="Workspace">
-      {links.map((link) => (
-        <NavItem
-          key={link.id}
-          href={link.href}
-          active={link.id === current}
-          className="h-9 gap-2 text-sm"
-          onClick={(e: MouseEvent<HTMLAnchorElement>) => {
-            e.preventDefault();
-            onSelect(link.href);
-          }}
-        >
-          {link.icon}
-          {link.label}
-        </NavItem>
-      ))}
-    </NavSection>
+    <SidebarGroup>
+      <SidebarGroupLabel>Workspace</SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {links.map((link) => (
+            <SidebarMenuItem key={link.id}>
+              <SidebarMenuButton asChild isActive={link.id === current} tooltip={link.label}>
+                <a
+                  href={link.href}
+                  onClick={(e: MouseEvent<HTMLAnchorElement>) => {
+                    e.preventDefault();
+                    if (isMobile) setOpenMobile(false);
+                    onNavigate(link.href);
+                  }}
+                >
+                  {link.icon}
+                  <span>{link.label}</span>
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
   );
 }
 
 /**
- * Application shell: persistent left navigation on large screens, a top bar
- * with search and account, and a slide-in navigation sheet on small screens.
- * Page content renders inside `<main>`.
+ * Application shell: a Sidebar that collapses to icons on desktop (⌘B / Ctrl+B
+ * or the trigger) and becomes a sheet below md, plus a top bar with search
+ * and account inside SidebarInset. Page content renders below the bar.
  */
 export function AppShell({ current, onNavigate, links = SHELL_LINKS, children }: AppShellProps) {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const go = (href: string) => {
-    setMobileOpen(false);
-    onNavigate(href);
-  };
-
   return (
-    <div className="flex h-screen bg-background text-foreground">
-      <NavPanel aria-label="Primary" className="hidden lg:flex">
-        <div className="px-4 text-sm font-semibold text-foreground">Acme Projects</div>
-        <ShellNav links={links} current={current} onSelect={go} />
-      </NavPanel>
-
-      <div className="flex min-w-0 flex-1 flex-col">
-        <GlobalNav
-          className="px-4 sm:px-6"
-          left={
-            <>
-              <Button variant="ghost" size="icon" aria-label="Open navigation" className="lg:hidden" onClick={() => setMobileOpen(true)}>
-                <MenuIcon className="size-5" />
-              </Button>
-              <span className="truncate text-sm font-semibold lg:hidden">Acme Projects</span>
-            </>
-          }
-          center={
-            <Input
-              type="search"
-              aria-label="Search projects and tasks"
-              placeholder="Search projects and tasks"
-              className="hidden w-full max-w-md sm:block"
-            />
-          }
-          right={
-            <>
-              <Button variant="ghost" size="icon" aria-label="Notifications">
-                <Bell className="size-5" />
-              </Button>
-              <Avatar role="user" name="Dana Kim" initials="DK" />
-            </>
-          }
-        />
-        <main className="min-h-0 flex-1 overflow-y-auto">{children}</main>
-      </div>
-
-      <Sheet open={mobileOpen} onOpenChange={setMobileOpen} side="left">
-        <SheetHeader>
-          <SheetTitle>Acme Projects</SheetTitle>
-        </SheetHeader>
-        <SheetBody className="px-0">
+    <SidebarProvider>
+      <Sidebar collapsible="icon">
+        <SidebarHeader>
+          <div className="truncate px-2 py-1 text-sm font-semibold text-foreground group-data-[collapsible=icon]:sr-only">
+            Acme Projects
+          </div>
+        </SidebarHeader>
+        <SidebarContent>
           <nav aria-label="Primary">
-            <ShellNav links={links} current={current} onSelect={go} />
+            <ShellNav links={links} current={current} onNavigate={onNavigate} />
           </nav>
-        </SheetBody>
-      </Sheet>
-    </div>
+        </SidebarContent>
+        <SidebarRail />
+      </Sidebar>
+
+      <SidebarInset className="min-h-svh">
+        <header className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-2 border-b border-border bg-background px-4 sm:px-6">
+          <SidebarTrigger aria-label="Toggle navigation" />
+          <Input
+            type="search"
+            aria-label="Search projects and tasks"
+            placeholder="Search projects and tasks"
+            className="hidden max-w-md sm:block"
+          />
+          <div className="ml-auto flex items-center gap-2">
+            <Button variant="ghost" size="icon" aria-label="Notifications">
+              <Bell className="size-5" />
+            </Button>
+            <Avatar role="user" name="Dana Kim" initials="DK" />
+          </div>
+        </header>
+        <div className="min-h-0 flex-1">{children}</div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
 
