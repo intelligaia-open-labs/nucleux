@@ -24,7 +24,7 @@ export const Md3LinearProgress = React.forwardRef<HTMLDivElement, Md3LinearProgr
         {...props}
       >
         <div
-          className={cn("h-full rounded-full bg-md-primary transition-[width]", indeterminate && "animate-pulse")}
+          className={cn("h-full rounded-full bg-md-primary transition-[width]", indeterminate && "animate-pulse motion-reduce:animate-none")}
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -59,7 +59,7 @@ export const Md3CircularProgress = React.forwardRef<HTMLDivElement, Md3CircularP
         aria-valuenow={indeterminate ? undefined : pct}
         aria-valuemin={indeterminate ? undefined : 0}
         aria-valuemax={indeterminate ? undefined : 100}
-        className={cn("inline-flex", indeterminate && "animate-spin", className)}
+        className={cn("inline-flex", indeterminate && "animate-spin motion-reduce:animate-none", className)}
         style={{ width: size, height: size }}
         {...props}
       >

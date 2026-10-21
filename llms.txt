@@ -79,7 +79,7 @@ than hand-rolling one. The MCP server (`@nucleux/mcp`) names the shadcn equivale
 - `pnpm build` — tsup build all packages (ESM + CJS + .d.ts)
 - `pnpm validate` — full gate (typecheck → test → build → build-storybook)
 
-## Component catalog (140 packages)
+## Component catalog (169 packages)
 
 Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do not edit by hand.
 
@@ -278,12 +278,20 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **voice-input** (`@nucleux/voice-input`) — VoiceInput — a live dictation bar with a waveform.
   Exports: `VoiceInput, VoiceInputState, VoiceInputVariant, VoiceInputProps`
 
-### Material 3 family (39)
+### Material 3 family (68)
 
 - **md3-action-confirmation** (`@nucleux/md3-action-confirmation`) — Material 3 agent action confirmation.
   Exports: `Md3ActionConfirmation, Md3ActionConfirmationVariant, Md3ActionConfirmationProps`
+- **md3-agent-avatar** (`@nucleux/md3-agent-avatar`) — Material 3 Agent Avatar — one non-photographic mark for the agent, with its working state on the mark.
+  Exports: `Md3AgentAvatar, Md3AgentAvatarProps, Md3AgentAvatarSize, Md3AgentAvatarShape, Md3AgentAvatarStatus`
 - **md3-agent-composer** (`@nucleux/md3-agent-composer`) — Material 3 agent task composer.
   Exports: `Md3AgentComposer, Md3AgentComposerProps`
+- **md3-ai-icons** (`@nucleux/md3-ai-icons`) — Material 3 AI Icons — one reserved mark per AI meaning, always with words.
+  Exports: `Md3AiSparkleIcon, Md3AiGeneratedIcon, Md3AiWorkingIcon, Md3AiWandIcon, Md3AiRegenerateIcon, Md3AiToolIcon, Md3AiIconProvider, Md3AiIcon, …`
+- **md3-attachments** (`@nucleux/md3-attachments`) — Material 3 Attachments — hand the agent the files this request depends on.
+  Exports: `Md3Attachments, Md3AttachmentsItem, Md3AttachmentsTray, Md3AttachmentsTrigger, Md3AttachmentsDropZone, Md3AttachmentsNote, Md3AttachmentsProps, Md3AttachmentsItemProps, …`
+- **md3-autocomplete** (`@nucleux/md3-autocomplete`) — Material 3 Autocomplete — ghost text that anticipates and completes user actions.
+  Exports: `Md3Autocomplete, Md3AutocompleteProps, Md3AutocompleteVariant, Md3AutocompleteAcceptKey, Md3AutocompleteState, Md3AutocompleteRequest`
 - **md3-badge** (`@nucleux/md3-badge`) — Material 3 badge.
   Exports: `Md3Badge, Md3BadgeProps`
 - **md3-banner** (`@nucleux/md3-banner`) — Material 3 banner.
@@ -298,40 +306,80 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `Md3Card, Md3CardVariant, Md3CardProps`
 - **md3-carousel** (`@nucleux/md3-carousel`) — Material 3 carousel.
   Exports: `Md3Carousel, Md3CarouselItem, Md3CarouselLayout, Md3CarouselAlignment, Md3CarouselProps, Md3CarouselItemProps`
+- **md3-caveat** (`@nucleux/md3-caveat`) — Material 3 Caveat — a calm, specific note on what to check about an AI result.
+  Exports: `Md3Caveat, Md3CaveatTooltip, Md3CaveatProps, Md3CaveatTooltipProps, Md3CaveatVariant`
 - **md3-checkbox** (`@nucleux/md3-checkbox`) — Material 3 checkbox.
   Exports: `Md3Checkbox, Md3CheckboxProps`
 - **md3-chip** (`@nucleux/md3-chip`) — Material 3 chip (assist, filter, input, suggestion).
   Exports: `Md3Chip, Md3ChipVariant, Md3ChipProps`
+- **md3-color** (`@nucleux/md3-color`) — Material 3 AI Color — the reserved AI accent and working treatment in M3 colour roles.
+  Exports: `md3AiColorClasses, Md3AiColor, Md3AiColorHighlight, Md3AiColorDot, Md3AiColorWorkingRing, Md3AiColorProps, Md3AiColorHighlightProps, Md3AiColorDotProps, …`
+- **md3-connectors** (`@nucleux/md3-connectors`) — Material 3 Connectors — grant the agent standing access to a service it needs.
+  Exports: `Md3Connector, Md3ConnectorList, Md3ConnectorScopePicker, Md3ConnectorLivePill, Md3ConnectorProps, Md3ConnectorListProps, Md3ConnectorScopePickerProps, Md3ConnectorLivePillProps, …`
+- **md3-consent** (`@nucleux/md3-consent`) — Material 3 Consent — asks before the agent accesses something sensitive, with two real choices.
+  Exports: `Md3Consent, Md3ConsentDialog, Md3ConsentToggle, Md3ConsentProps, Md3ConsentRequestProps, Md3ConsentDialogProps, Md3ConsentToggleProps`
 - **md3-date-picker** (`@nucleux/md3-date-picker`) — Material 3 date picker.
   Exports: `Md3DatePicker, Md3DatePickerProps`
 - **md3-dialog** (`@nucleux/md3-dialog`) — Material 3 dialog.
   Exports: `Md3Dialog, Md3DialogProps`
+- **md3-disclaimer** (`@nucleux/md3-disclaimer`) — Material 3 Disclaimer — a short, honest statement of what the agent can and can't do.
+  Exports: `Md3Disclaimer, Md3DisclaimerProps, Md3DisclaimerVariant`
+- **md3-disclosure** (`@nucleux/md3-disclosure`) — Material 3 Disclosure — a clear label that says where AI is involved, at the point it matters.
+  Exports: `Md3Disclosure, Md3DisclosureProps, Md3DisclosureVariant`
 - **md3-divider** (`@nucleux/md3-divider`) — Material 3 divider.
   Exports: `Md3Divider, Md3DividerProps`
+- **md3-example-gallery** (`@nucleux/md3-example-gallery`) — Material 3 Example Gallery — real, product-specific tasks that place an editable request in the composer.
+  Exports: `Md3ExampleGalleryItem, Md3ExampleGallery, Md3ExampleGalleryProps, Md3ExampleGalleryItemProps, Md3ExampleGalleryVariant, Md3ExampleGallerySelectBehavior`
 - **md3-fab** (`@nucleux/md3-fab`) — Material 3 floating action button.
   Exports: `Md3Fab, Md3FabSize, Md3FabColor, Md3FabProps`
 - **md3-fab-menu** (`@nucleux/md3-fab-menu`) — Material 3 floating action button menu.
   Exports: `Md3FabMenu, Md3FabMenuItem, Md3FabMenuColor, Md3FabMenuFabSize, Md3FabMenuAlign, Md3FabMenuProps, Md3FabMenuItemProps`
+- **md3-gesture** (`@nucleux/md3-gesture`) — Material 3 Gesture Input — swipes, circles and pinches as named, confirmable signals.
+  Exports: `Md3GestureInput, Md3GestureInputProps, recognizeSimpleGesture`
+- **md3-handwriting** (`@nucleux/md3-handwriting`) — Material 3 Handwriting Input — write the request by hand, settle uncertain words, add it yourself.
+  Exports: `Md3HandwritingInput, Md3HandwritingInputProps`
 - **md3-icon-button** (`@nucleux/md3-icon-button`) — Material 3 icon button.
   Exports: `Md3IconButton, Md3IconButtonVariant, Md3IconButtonProps`
+- **md3-iconography** (`@nucleux/md3-iconography`) — Material 3 Iconography — controls that run AI, drawn with the reserved AI mark for their intent.
+  Exports: `Md3Iconography, Md3IconographyProps, Md3IconographyIntent`
+- **md3-initial-cta** (`@nucleux/md3-initial-cta`) — Material 3 Initial CTA — the large, inviting composer that anchors an empty workspace.
+  Exports: `Md3InitialCta, Md3InitialCtaProps, Md3InitialCtaVariant, Md3InitialCtaHeadingLevel`
+- **md3-knowledge-base** (`@nucleux/md3-knowledge-base`) — Material 3 Knowledge Base — persistent, named sources the agent grounds in, with readiness and provenance.
+  Exports: `Md3KnowledgeBase, Md3KnowledgeBaseSources, Md3KnowledgeBaseCoverage, Md3KnowledgeBaseProps, Md3KnowledgeBaseSourcesProps, Md3KnowledgeBaseCoverageProps, Md3KnowledgeBaseVariant, Md3KnowledgeBaseCoverageLevel, …`
 - **md3-list** (`@nucleux/md3-list`) — Material 3 list.
   Exports: `Md3List, Md3ListItem, Md3ListItemProps`
 - **md3-loading-indicator** (`@nucleux/md3-loading-indicator`) — Material 3 loading indicator.
   Exports: `Md3LoadingIndicator, Md3LoadingIndicatorVariant, Md3LoadingIndicatorProps`
+- **md3-mcp-connection** (`@nucleux/md3-mcp-connection`) — Material 3 MCP Connection — connect a server, discover what it can do, and decide before the agent uses it.
+  Exports: `Md3McpConnection, Md3McpConnectionTool, Md3McpConnectionTools, Md3McpConnectionPermission, Md3McpConnectionActionPreview, Md3McpConnectionProps, Md3McpConnectionToolProps, Md3McpConnectionToolsProps, …`
 - **md3-menu** (`@nucleux/md3-menu`) — Material 3 menu surface.
   Exports: `Md3Menu, Md3MenuItem, Md3MenuDivider, Md3MenuItemProps`
 - **md3-message** (`@nucleux/md3-message`) — Material 3 chat message row.
   Exports: `Md3Message, Md3MessageProps`
+- **md3-model-selection** (`@nucleux/md3-model-selection`) — Material 3 Model Selection — choose which model answers, and know what changes when you do.
+  Exports: `Md3ModelSelection, Md3ModelSelectionProps, Md3ModelSelectionVariant`
+- **md3-name** (`@nucleux/md3-name`) — Material 3 Agent Name — a short, consistent name and role for the agent on every surface.
+  Exports: `Md3AgentName, Md3AgentNameProps, Md3AgentNameVariant`
 - **md3-navigation-bar** (`@nucleux/md3-navigation-bar`) — Material 3 bottom navigation bar.
   Exports: `Md3NavigationBar, Md3NavigationBarItem, Md3NavigationBarProps, Md3NavigationBarItemProps`
 - **md3-navigation-drawer** (`@nucleux/md3-navigation-drawer`) — Material 3 navigation drawer.
   Exports: `Md3NavigationDrawer, Md3NavigationDrawerItem, Md3NavigationDrawerSection, Md3NavigationDrawerProps, Md3NavigationDrawerItemProps`
 - **md3-navigation-rail** (`@nucleux/md3-navigation-rail`) — Material 3 navigation rail.
   Exports: `Md3NavigationRail, Md3NavigationRailItem, Md3NavigationRailProps, Md3NavigationRailItemProps`
+- **md3-nudges** (`@nucleux/md3-nudges`) — Material 3 Nudges — a quiet, dismissible tip about a capability that would help right now.
+  Exports: `Md3NudgeAction, Md3Nudge, Md3NudgeProps, Md3NudgeActionProps, Md3NudgeVariant, Md3NudgeSide, Md3NudgePersist`
+- **md3-open-input** (`@nucleux/md3-open-input`) — Material 3 Open Input — the persistent free-form composer for any natural-language ask.
+  Exports: `Md3OpenInput, Md3OpenInputProps, Md3OpenInputVariant, Md3OpenInputSendKey`
+- **md3-personality** (`@nucleux/md3-personality`) — Material 3 Personality — choose how the agent writes while the trust language stays fixed.
+  Exports: `Md3Personality, Md3PersonalityVoiceCard, Md3PersonalitySampleDialog, Md3PersonalityProps, Md3PersonalityVoiceCardProps, Md3PersonalitySampleDialogProps`
+- **md3-proactive** (`@nucleux/md3-proactive`) — Material 3 Proactive Suggestions — the agent notices something and offers one reviewable next step.
+  Exports: `Md3ProactiveSuggestion, Md3ProactiveSuggestionProps, Md3ProactiveSuggestionVariant, Md3ProactiveSuggestionPersist`
 - **md3-progress** (`@nucleux/md3-progress`) — Material 3 progress indicators (linear, circular).
   Exports: `Md3LinearProgress, Md3CircularProgress, Md3LinearProgressProps, Md3CircularProgressProps`
 - **md3-radio** (`@nucleux/md3-radio`) — Material 3 radio group.
   Exports: `Md3RadioGroup, Md3Radio, Md3RadioGroupProps, Md3RadioProps`
+- **md3-randomize** (`@nucleux/md3-randomize`) — Material 3 Randomize — a surprise-me control that places a random, editable starter in the composer.
+  Exports: `Md3Randomize, Md3RandomizeProps, Md3RandomizeVariant, Md3RandomizeUseMode`
 - **md3-search** (`@nucleux/md3-search`) — Material 3 search bar.
   Exports: `Md3Search, Md3SearchProps`
 - **md3-segmented-button** (`@nucleux/md3-segmented-button`) — Material 3 segmented button.
@@ -344,10 +392,16 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `Md3Snackbar, Md3SnackbarProps`
 - **md3-split-button** (`@nucleux/md3-split-button`) — Material 3 split button.
   Exports: `Md3SplitButton, Md3SplitButtonVariant, Md3SplitButtonSize, Md3SplitButtonMenuAlign, Md3SplitButtonProps`
+- **md3-structured-input** (`@nucleux/md3-structured-input`) — Material 3 Structured Input — a compact form for exact values, suggestions marked and every value yours.
+  Exports: `Md3StructuredInput, Md3StructuredInputSlots, Md3StructuredInputTags, Md3StructuredInputWizard, Md3StructuredInputProps, Md3StructuredInputSlotsProps, Md3StructuredInputTagsProps, Md3StructuredInputWizardProps, …`
+- **md3-suggested-prompts** (`@nucleux/md3-suggested-prompts`) — Material 3 Suggested Prompts — a few ready-made requests that place editable text in the composer.
+  Exports: `Md3SuggestedPrompt, Md3SuggestedPrompts, Md3SuggestedPromptsProps, Md3SuggestedPromptProps, Md3SuggestedPromptsVariant, Md3SuggestedPromptsAfterSelect`
 - **md3-switch** (`@nucleux/md3-switch`) — Material 3 switch.
   Exports: `Md3Switch, Md3SwitchProps`
 - **md3-tabs** (`@nucleux/md3-tabs`) — Material 3 primary tabs.
   Exports: `Md3Tabs, Md3TabsList, Md3Tab, Md3TabPanel, Md3TabsProps, Md3TabProps, Md3TabPanelProps`
+- **md3-templates** (`@nucleux/md3-templates`) — Material 3 Templates — fill-in-the-blank prompts, prefilled lists and a categorised template browser.
+  Exports: `Md3Templates, Md3TemplatesList, Md3TemplatesBrowser, Md3TemplatesProps, Md3TemplatesListProps, Md3TemplatesBrowserProps`
 - **md3-text-field** (`@nucleux/md3-text-field`) — Material 3 text field (filled, outlined).
   Exports: `Md3TextField, Md3TextFieldVariant, Md3TextFieldProps`
 - **md3-time-picker** (`@nucleux/md3-time-picker`) — Material 3 time picker (input).
@@ -358,6 +412,10 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `Md3Tooltip, Md3TooltipProps`
 - **md3-top-app-bar** (`@nucleux/md3-top-app-bar`) — Material 3 top app bar.
   Exports: `Md3TopAppBar, Md3TopAppBarVariant, Md3TopAppBarProps`
+- **md3-visual-input** (`@nucleux/md3-visual-input`) — Material 3 Visual Input — show the agent an image, a photo or a screenshot as context on the composer.
+  Exports: `Md3VisualInput, Md3VisualInputProps, fileMatchesAccept`
+- **md3-voice-input** (`@nucleux/md3-voice-input`) — Material 3 Voice Input — speak the request into the composer, review the words, send them yourself.
+  Exports: `Md3VoiceInput, Md3VoiceInputProps`
 
 ### Infrastructure (5)
 

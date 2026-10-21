@@ -22,8 +22,8 @@
     "note": "Every component is also re-exported from the @nucleux/react umbrella. Icons in the examples come from lucide-react (optional; any icon set works)."
   },
   "counts": {
-    "components": 135,
-    "packages": 140,
+    "components": 164,
+    "packages": 169,
     "examples": 6
   },
   "packages": [
@@ -6609,6 +6609,45 @@
       }
     },
     {
+      "name": "md3-agent-avatar",
+      "package": "@nucleux/md3-agent-avatar",
+      "kind": "component",
+      "description": "The agent's visual identity in Material 3 — the twin of `AgentAvatar`,\nwith the same API. One stable, non-photographic mark: the reserved AI\nsparkle in `md-primary` on the agent's `md-primary-container` ground (or\nan approved image, or a letter), named \"<name>, AI agent\". `working` puts\nan indeterminate Md3CircularProgress ring on the mark itself, which stops\nthe moment work stops and holds still under reduced motion; `status` adds\na dot whose words are announced in a polite live region. Use\n`shape=\"rounded\"` where people in the same list are circles.",
+      "summary": "Material 3 Agent Avatar — one non-photographic mark for the agent, with its working state on the mark — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-agent-avatar",
+        "agent-avatar",
+        "avatar"
+      ],
+      "exports": [
+        "Md3AgentAvatar",
+        "Md3AgentAvatarProps",
+        "Md3AgentAvatarSize",
+        "Md3AgentAvatarShape",
+        "Md3AgentAvatarStatus"
+      ],
+      "components": [
+        "Md3AgentAvatar"
+      ],
+      "import": "import { Md3AgentAvatar } from \"@nucleux/md3-agent-avatar\";",
+      "installSingle": "pnpm add @nucleux/md3-agent-avatar @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-agent-avatar\n\nMaterial 3 Agent Avatar — one non-photographic mark for the agent, with its working state on the mark — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThe Material 3 twin of [`@nucleux/agent-avatar`](https://www.npmjs.com/package/@nucleux/agent-avatar): it shares that package's API — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, state layers and motion (with reduced-motion handling).\n\n## Exports\n\n- **`Md3AgentAvatar`** — the agent's mark on md-primary-container, named \"<name>, AI agent\": `name`, `src`, `glyph`, `size` sm/md/lg, `shape` circle/rounded, `working` (an Md3CircularProgress ring on the mark), `status` online/offline/working, `statusLabel`, `descriptor`, `decorative`\n- Types: `Md3AgentAvatarProps`, `Md3AgentAvatarSize`, `Md3AgentAvatarShape`, `Md3AgentAvatarStatus`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-agent-avatar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3AgentAvatar } from \"@nucleux/md3-agent-avatar\";\n\n<Md3AgentAvatar name=\"Aria\" working statusLabel=\"Generating…\" />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "md3-agent-composer",
       "package": "@nucleux/md3-agent-composer",
       "kind": "component",
@@ -6698,6 +6737,160 @@
         }
       ],
       "readme": "# @nucleux/md3-agent-composer\n\nMaterial 3 agent task composer — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-agent-composer @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3AgentComposer } from \"@nucleux/md3-agent-composer\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-ai-icons",
+      "package": "@nucleux/md3-ai-icons",
+      "kind": "component",
+      "description": "The four-point AI sparkle (Material's star_shine role) — the reserved mark\nfor \"this runs AI\". It draws `AiSparkleIcon`, so the agent mark, the\ndisclosure chip and every AI control show it byte-for-byte alike in both\nfamilies. Decorative unless given an `aria-label`.",
+      "summary": "Material 3 AI Icons — one reserved mark per AI meaning, always with words — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-ai-icons",
+        "ai-icons",
+        "icons"
+      ],
+      "exports": [
+        "Md3AiSparkleIcon",
+        "Md3AiGeneratedIcon",
+        "Md3AiWorkingIcon",
+        "Md3AiWandIcon",
+        "Md3AiRegenerateIcon",
+        "Md3AiToolIcon",
+        "Md3AiIconProvider",
+        "Md3AiIcon",
+        "Md3AiIcons",
+        "Md3AiGlyphProps",
+        "Md3AiWorkingIconProps",
+        "Md3AiIconProviderProps",
+        "Md3AiIconProps",
+        "Md3AiIconsProps",
+        "Md3AiIconsVariant",
+        "Md3AiIconsSize",
+        "Md3AiIconsTone"
+      ],
+      "components": [
+        "Md3AiSparkleIcon",
+        "Md3AiGeneratedIcon",
+        "Md3AiWorkingIcon",
+        "Md3AiWandIcon",
+        "Md3AiRegenerateIcon",
+        "Md3AiToolIcon",
+        "Md3AiIconProvider",
+        "Md3AiIcon",
+        "Md3AiIcons"
+      ],
+      "import": "import { Md3AiSparkleIcon, Md3AiGeneratedIcon, Md3AiWorkingIcon, Md3AiWandIcon } from \"@nucleux/md3-ai-icons\";",
+      "installSingle": "pnpm add @nucleux/md3-ai-icons @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-ai-icons\n\nMaterial 3 AI Icons — one reserved mark per AI meaning, always with words — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThe Material 3 twin of [`@nucleux/ai-icons`](https://www.npmjs.com/package/@nucleux/ai-icons): it shares that package's API — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, state layers and motion (with reduced-motion handling).\n\n## Exports\n\n- **`Md3AiIcon`** — one AI meaning (`role` ai-action / generated-content / agent-working / tool-use) with its reserved mark and `label`; generated content sits in an outlined assist chip\n- **`Md3AiIcons`** — the AI presence mark: `variant` sparkle / thinking-orb / branded-mark, `size`, `tone`, `label`, `glyph`\n- **`Md3AiIconProvider`** — sets the approved glyph per role once (shares its context with `AiIconProvider`)\n- Glyphs: `Md3AiSparkleIcon`, `Md3AiGeneratedIcon`, `Md3AiWorkingIcon`, `Md3AiWandIcon`, `Md3AiRegenerateIcon`, `Md3AiToolIcon` (the same drawings as `@nucleux/ai-icons`)\n- Shared vocabulary (re-exported from `@nucleux/ai-icons`): `useAiGlyph`, `aiGlyphs`, `defaultAiIconGlyphs`, types `AiIconRole`, `AiGlyphName`, `AiIconGlyphs`\n- Types: `Md3AiIconProps`, `Md3AiIconsProps`, `Md3AiIconsVariant`, `Md3AiIconsSize`, `Md3AiIconsTone`, `Md3AiGlyphProps`, `Md3AiWorkingIconProps`, `Md3AiIconProviderProps`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-ai-icons @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3AiIcon } from \"@nucleux/md3-ai-icons\";\n\n<Md3AiIcon role=\"agent-working\" label=\"Rewriting release note…\" />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-attachments",
+      "package": "@nucleux/md3-attachments",
+      "kind": "component",
+      "description": "Material 3 Attachments: adds files, photos and documents to what the agent\ncan read for this message. Same API and behaviour as `Attachments` from\n`@nucleux/attachments`: the root holds the attached items, checks type, size\nand count limits before anything uploads (and names the limit in an\nerror-container alert), owns the hidden file picker, and announces progress\npolitely (\"2 files attached, 1 still being read\"). Compose it with\nMd3AttachmentsTray, Md3AttachmentsTrigger, Md3AttachmentsDropZone and\nMd3AttachmentsNote. Networking stays with the app: upload in `onFilesAdded`,\nthen pass each item's `status` and `progress` back in `items`.",
+      "summary": "Material 3 Attachments — hand the agent the files this request depends on — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "attachments",
+        "md3-attachments",
+        "files",
+        "upload"
+      ],
+      "exports": [
+        "Md3Attachments",
+        "Md3AttachmentsItem",
+        "Md3AttachmentsTray",
+        "Md3AttachmentsTrigger",
+        "Md3AttachmentsDropZone",
+        "Md3AttachmentsNote",
+        "Md3AttachmentsProps",
+        "Md3AttachmentsItemProps",
+        "Md3AttachmentsTrayProps",
+        "Md3AttachmentsTriggerProps",
+        "Md3AttachmentsDropZoneProps",
+        "Md3AttachmentsNoteProps",
+        "Md3AttachmentsVariant",
+        "Md3AttachmentsStatus"
+      ],
+      "components": [
+        "Md3Attachments",
+        "Md3AttachmentsItem",
+        "Md3AttachmentsTray",
+        "Md3AttachmentsTrigger",
+        "Md3AttachmentsDropZone",
+        "Md3AttachmentsNote"
+      ],
+      "import": "import { Md3Attachments, Md3AttachmentsItem, Md3AttachmentsTray, Md3AttachmentsTrigger } from \"@nucleux/md3-attachments\";",
+      "installSingle": "pnpm add @nucleux/md3-attachments @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-attachments\n\nMaterial 3 Attachments — hand the agent the files this request depends on — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThis is the Material 3 twin of [`@nucleux/attachments`](https://www.npmjs.com/package/@nucleux/attachments) and **shares its API**: the same props, callbacks, states, limits and accessible names. Switch families by changing only the import (`Attachments` → `Md3Attachments`); only the look differs.\n\n## Exports\n\n- **`Md3Attachments`** — root: holds `items`, checks `accept` / `maxSize` / `maxFiles` before upload (refusals in an error-container alert naming the limit), owns the file picker, announces progress politely\n- **`Md3AttachmentsTray`** — the list of attached files, as chips (`file-chip`) or outlined preview cards (`preview-card`)\n- **`Md3AttachmentsItem`** — one file: state word first, hairline progress while uploading/reading, Retry on a failure, remove named for the file\n- **`Md3AttachmentsTrigger`** — the add control (icon button \"Attach file\", or a labelled button)\n- **`Md3AttachmentsDropZone`** — drag-and-drop target that lights up in primary-container\n- **`Md3AttachmentsNote`** — what removal does (forward-only)\n- `formatFileSize`, and types: `Md3AttachmentsProps`, `Md3AttachmentsItemProps`, `Md3AttachmentsTrayProps`, `Md3AttachmentsTriggerProps`, `Md3AttachmentsDropZoneProps`, `Md3AttachmentsNoteProps`, `Md3AttachmentsVariant`, `Md3AttachmentsStatus`, `AttachmentsFile`, `AttachmentsRejection`, `AttachmentsRejectionReason`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-attachments @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Attachments, Md3AttachmentsTray, Md3AttachmentsTrigger, Md3AttachmentsNote } from \"@nucleux/md3-attachments\";\n\n<Md3Attachments items={items} accept=\".pdf,.csv,image/*\" maxSize={20 * 1024 * 1024} onFilesAdded={upload} onRemove={remove} onRetry={retry}>\n  <Md3AttachmentsTray />\n  <Md3AttachmentsTrigger />\n  <Md3AttachmentsNote />\n</Md3Attachments>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-autocomplete",
+      "package": "@nucleux/md3-autocomplete",
+      "kind": "component",
+      "description": "The Material 3 twin of `Autocomplete`: a filled Material text area that\nshows the likely rest of what the person is typing after the caret, in\non-surface-variant, fading in over 150 ms (no fade under reduced motion),\nwith a small outlined key at its end. Tab (or the host's chosen key, never\nEnter) accepts it as ordinary, editable text; ⌘/Ctrl + → takes one word;\nEscape dismisses it until the field is cleared; typing the same words keeps\nit, and diverging drops it. The suggestion lives in an `aria-hidden` overlay,\noutside the field's value, and is announced once through a polite live\nregion. Same props, callbacks and keyboard model as the shadcn twin.",
+      "summary": "Material 3 Autocomplete — ghost text that anticipates and completes user actions — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "autocomplete",
+        "md3-autocomplete",
+        "ghost-text",
+        "completion"
+      ],
+      "exports": [
+        "Md3Autocomplete",
+        "Md3AutocompleteProps",
+        "Md3AutocompleteVariant",
+        "Md3AutocompleteAcceptKey",
+        "Md3AutocompleteState",
+        "Md3AutocompleteRequest"
+      ],
+      "components": [
+        "Md3Autocomplete"
+      ],
+      "import": "import { Md3Autocomplete } from \"@nucleux/md3-autocomplete\";",
+      "installSingle": "pnpm add @nucleux/md3-autocomplete @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-autocomplete\n\nMaterial 3 Autocomplete — ghost text that anticipates and completes user actions — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThe Material 3 twin of [`@nucleux/autocomplete`](https://github.com/intelligaia-open-labs/nucleux/tree/main/packages/autocomplete): **same props, callbacks and keyboard model** — switch families by changing only the import. Only the look differs: a filled Material text area (surface-container-high, large shape, primary focus indicator), the suggestion in on-surface-variant fading in over 150 ms (no fade under reduced motion), a small outlined key cap at its end, and assist-chip key hints.\n\n## Exports\n\n- **`Md3Autocomplete`** — a text field that shows the likely rest of the text as ghost text after the caret.\n  - `variant`: `\"ghost-suffix\"`, `\"sentence-completion\"` (with *Tab to accept / Esc to dismiss* hints), `\"block-completion\"` (multi-line, monospace)\n  - `getSuggestion(text, { signal })` (sync or async, aborted when the text changes) or a fixed `suggestion`\n  - `value` / `defaultValue` / `onValueChange`, `minChars` (8), `debounceMs` (150), `acceptKey` (`\"tab\"` | `\"right\"` | `\"both\"`, never Enter)\n  - `onAccept(inserted)`, `onDismiss()`, `onError(error)`, `onStateChange(state)`; `label`, `fieldClassName`, `hideHints`, `invalid`\n- Types (re-exported from `@nucleux/autocomplete`): `Md3AutocompleteProps`, `Md3AutocompleteVariant`, `Md3AutocompleteAcceptKey`, `Md3AutocompleteState`, `Md3AutocompleteRequest`\n\n## Behaviour\n\n- **Tab** (or the host's key) accepts the whole suggestion as ordinary, editable text and leaves the caret after it. **⌘/Ctrl + →** takes one word. A click on the ghost text accepts it. Accepting never submits.\n- **Esc** dismisses it, and it stays away until the field is cleared.\n- Keep typing the same words and it follows along without a new request; diverge and it is gone.\n- The ghost text lives in an `aria-hidden` overlay, outside the field's value, and is announced once through a polite live region: \"Suggestion: …. Tab to accept.\"\n\n## Install\n\n```bash\npnpm add @nucleux/md3-autocomplete @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Autocomplete } from \"@nucleux/md3-autocomplete\";\n\n<Md3Autocomplete\n  label=\"Prompt\"\n  getSuggestion={async (text, { signal }) => {\n    const res = await fetch(\"/api/complete\", { method: \"POST\", body: text, signal });\n    return (await res.json()).completion;\n  }}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -7305,6 +7498,45 @@
       }
     },
     {
+      "name": "md3-caveat",
+      "package": "@nucleux/md3-caveat",
+      "kind": "component",
+      "description": "A short, calm note on what to check about an AI result — the Material 3\ntwin of `Caveat`, with the same API. Caution, not alarm: an outline info\nmark in body-small on-surface-variant, never the error role. `below-input`\nis a caption under the composer; `output-footer` gets a surface-container\nground so it separates from the output it qualifies, and can carry the\nnext steps that remove the reason for it. Rendered as a `note`.",
+      "summary": "Material 3 Caveat — a calm, specific note on what to check about an AI result — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-caveat",
+        "caveat"
+      ],
+      "exports": [
+        "Md3Caveat",
+        "Md3CaveatTooltip",
+        "Md3CaveatProps",
+        "Md3CaveatTooltipProps",
+        "Md3CaveatVariant"
+      ],
+      "components": [
+        "Md3Caveat",
+        "Md3CaveatTooltip"
+      ],
+      "import": "import { Md3Caveat, Md3CaveatTooltip } from \"@nucleux/md3-caveat\";",
+      "installSingle": "pnpm add @nucleux/md3-caveat @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-caveat\n\nMaterial 3 Caveat — a calm, specific note on what to check about an AI result — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThe Material 3 twin of [`@nucleux/caveat`](https://www.npmjs.com/package/@nucleux/caveat): it shares that package's API — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, state layers and motion (with reduced-motion handling).\n\n## Exports\n\n- **`Md3Caveat`** — a `note`: `variant` below-input / output-footer, `icon`, `actions`\n- **`Md3CaveatTooltip`** — the info-tooltip caveat riding an AI control, linked with `aria-describedby`; `content`, `side`, `showIcon`\n- Types: `Md3CaveatProps`, `Md3CaveatTooltipProps`, `Md3CaveatVariant`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-caveat @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Caveat } from \"@nucleux/md3-caveat\";\n\n<Md3Caveat variant=\"output-footer\">2 of 8 interviews could not be opened, so this summary reflects 6.</Md3Caveat>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "md3-checkbox",
       "package": "@nucleux/md3-checkbox",
       "kind": "component",
@@ -7437,6 +7669,143 @@
         }
       ],
       "readme": "# @nucleux/md3-chip\n\nMaterial 3 chip (assist, filter, input, suggestion) — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-chip @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Chip } from \"@nucleux/md3-chip\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-color",
+      "package": "@nucleux/md3-color",
+      "kind": "component",
+      "description": "A surface painted with the reserved AI role, so machine output and live AI\nactivity are recognisable at a glance — the Material 3 twin of `AiColor`\nwith the same API. `accent-border` puts a primary edge on streaming copy,\n`soft-glow` becomes the M3 presence outline around a region the agent is\nworking in, and `background-tint` sets content on the agent's\nprimary-container ground. `working` adds the moving treatment; the\n`label` words always travel with the colour, in a polite live region.",
+      "summary": "Material 3 AI Color — the reserved AI accent and working treatment in M3 colour roles — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-color",
+        "color",
+        "ai-color"
+      ],
+      "exports": [
+        "md3AiColorClasses",
+        "Md3AiColor",
+        "Md3AiColorHighlight",
+        "Md3AiColorDot",
+        "Md3AiColorWorkingRing",
+        "Md3AiColorProps",
+        "Md3AiColorHighlightProps",
+        "Md3AiColorDotProps",
+        "Md3AiColorWorkingRingProps",
+        "Md3AiColorToken",
+        "Md3AiColorVariant"
+      ],
+      "components": [
+        "Md3AiColor",
+        "Md3AiColorHighlight",
+        "Md3AiColorDot",
+        "Md3AiColorWorkingRing"
+      ],
+      "import": "import { Md3AiColor, Md3AiColorHighlight, Md3AiColorDot, Md3AiColorWorkingRing } from \"@nucleux/md3-color\";",
+      "installSingle": "pnpm add @nucleux/md3-color @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-color\n\nMaterial 3 AI Color — the reserved AI accent and working treatment in M3 colour roles — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThe Material 3 twin of [`@nucleux/color`](https://www.npmjs.com/package/@nucleux/color): it shares that package's API — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, state layers and motion (with reduced-motion handling).\n\n## Exports\n\n- **`Md3AiColor`** — a surface painted with the reserved AI role: `variant` accent-border (primary edge) / soft-glow (the M3 presence outline) / background-tint (the agent's primary-container ground); `working`; `label` (announced politely); `asChild`\n- **`Md3AiColorHighlight`** — an inline `<mark>` on primary-container\n- **`Md3AiColorDot`** — a decorative md-primary dot (`pulse`)\n- **`Md3AiColorWorkingRing`** — the pulsing md-primary working ring overlay\n- **`md3AiColorClasses`** — the AI accent as Tailwind classes on M3 roles (same keys as `aiColorClasses`)\n- Types: `Md3AiColorProps`, `Md3AiColorHighlightProps`, `Md3AiColorDotProps`, `Md3AiColorWorkingRingProps`, `Md3AiColorToken`, `Md3AiColorVariant`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-color @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3AiColor } from \"@nucleux/md3-color\";\n\n<Md3AiColor variant=\"accent-border\" working label=\"Streaming\">Analysing your Q2 numbers</Md3AiColor>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-connectors",
+      "package": "@nucleux/md3-connectors",
+      "kind": "component",
+      "description": "Material 3 connector card: enables an external tool or data connector for\nthe agent. Same API and behaviour as `Connector` from `@nucleux/connectors`\n— icon, name, what it unlocks, a filled Connect button, the scope list in\nplain verbs before the handoff (each line marked with a chevron at reduced\nemphasis, because it is only being asked for), the sign-in account once\nconnected, and a status word announced politely (Connecting…, Connected,\nSign-in expired with Reconnect, Couldn't connect). Built on an outlined\nMd3Card that arrives with a short fade-and-rise (none under reduced motion);\nstate colour sits in a dot beside the word, and the outline takes the\ntertiary or error role for expired and failed sign-ins.",
+      "summary": "Material 3 Connectors — grant the agent standing access to a service it needs — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "connectors",
+        "connector",
+        "integrations"
+      ],
+      "exports": [
+        "Md3Connector",
+        "Md3ConnectorList",
+        "Md3ConnectorScopePicker",
+        "Md3ConnectorLivePill",
+        "Md3ConnectorProps",
+        "Md3ConnectorListProps",
+        "Md3ConnectorScopePickerProps",
+        "Md3ConnectorLivePillProps",
+        "Md3ConnectorStatus",
+        "Md3ConnectorScope"
+      ],
+      "components": [
+        "Md3Connector",
+        "Md3ConnectorList",
+        "Md3ConnectorScopePicker",
+        "Md3ConnectorLivePill"
+      ],
+      "import": "import { Md3Connector, Md3ConnectorList, Md3ConnectorScopePicker, Md3ConnectorLivePill } from \"@nucleux/md3-connectors\";",
+      "installSingle": "pnpm add @nucleux/md3-connectors @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-connectors\n\nMaterial 3 Connectors — grant the agent standing access to a service it needs — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThis is the Material 3 twin of [`@nucleux/connectors`](https://github.com/intelligaia-open-labs/nucleux/tree/main/packages/connectors) and shares its API exactly: the props types are re-exported from it, so switching families means changing only the import.\n\n## Exports\n\n- **`Md3Connector`** — an outlined card for one service: icon, name, what it unlocks, a filled Connect button, the scope list in plain verbs before the handoff, the signed-in account, and a status word (with a dot beside it) announced politely; `status` disconnected/connecting/connected/expired/error, `onConnect`/`onDisconnect`/`onReconnect`\n- **`Md3ConnectorList`** — a labelled list of connector cards\n- **`Md3ConnectorScopePicker`** — least-privilege checkboxes for what the agent can read, with write access as a separate switch\n- **`Md3ConnectorLivePill`** — a tonal chip with a pulsing dot: \"Reading 12 docs from Drive…\"\n- Types: `Md3ConnectorProps`, `Md3ConnectorListProps`, `Md3ConnectorScopePickerProps`, `Md3ConnectorLivePillProps`, `Md3ConnectorStatus`, `Md3ConnectorScope` (plus `ConnectorStatus`, `ConnectorScope`)\n\n## Install\n\n```bash\npnpm add @nucleux/md3-connectors @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Connector, Md3ConnectorList } from \"@nucleux/md3-connectors\";\n\n<Md3ConnectorList>\n  <Md3Connector name=\"Google Drive\" connected account=\"sam@acme.com\" onDisconnect={disconnect} />\n  <Md3Connector name=\"Slack\" status=\"expired\" account=\"sam@acme.com\" onReconnect={signIn} />\n  <Md3Connector name=\"Notion\" scopes={[\"Read pages you share\"]} onConnect={connect} />\n</Md3ConnectorList>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-consent",
+      "package": "@nucleux/md3-consent",
+      "kind": "component",
+      "description": "The `inline-card` consent in Material 3 — the twin of `Consent`, with the\nsame API. A request raised by the work itself on an extra-large-corner\nsurface container: a headline, a one-line summary, each permission as a\nlist row with its own Md3Checkbox (nothing preselected), Not now and\nAllow as M3 buttons of equal size, and a link to the full policy. It rises\nonce on entry and then holds still — no colour that makes one answer look\nsafer. For the blocking first-run version use `Md3ConsentDialog`; for the\nstanding control in settings use `Md3ConsentToggle`.",
+      "summary": "Material 3 Consent — asks before the agent accesses something sensitive, with two real choices — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-consent",
+        "consent"
+      ],
+      "exports": [
+        "Md3Consent",
+        "Md3ConsentDialog",
+        "Md3ConsentToggle",
+        "Md3ConsentProps",
+        "Md3ConsentRequestProps",
+        "Md3ConsentDialogProps",
+        "Md3ConsentToggleProps"
+      ],
+      "components": [
+        "Md3Consent",
+        "Md3ConsentDialog",
+        "Md3ConsentToggle"
+      ],
+      "import": "import { Md3Consent, Md3ConsentDialog, Md3ConsentToggle } from \"@nucleux/md3-consent\";",
+      "installSingle": "pnpm add @nucleux/md3-consent @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-consent\n\nMaterial 3 Consent — asks before the agent accesses something sensitive, with two real choices — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThe Material 3 twin of [`@nucleux/consent`](https://www.npmjs.com/package/@nucleux/consent): it shares that package's API — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, state layers and motion (with reduced-motion handling).\n\n## Exports\n\n- **`Md3Consent`** — the inline-card request: `title`, `description`, `permissions`, `denyLabel` / `onDeny`, `secondaryLabel` / `onSecondary`, `allowLabel` / `onAllow`, `policyHref`, `policyLabel`\n- **`Md3ConsentDialog`** — the blocking-modal request on Md3Dialog (`open`, `onOpenChange`); Escape and the scrim do not close it\n- **`Md3ConsentToggle`** — the settings-toggle: an Md3Switch named by `title`, described by `description`\n- Types: `Md3ConsentProps`, `Md3ConsentRequestProps`, `Md3ConsentDialogProps`, `Md3ConsentToggleProps`, `ConsentPermission`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-consent @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Consent } from \"@nucleux/md3-consent\";\n\n<Md3Consent title=\"Allow workspace access?\" permissions={[{ id: \"read\", label: \"Read selected files\" }]} onAllow={(ids) => grant(ids)} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -7603,6 +7972,80 @@
       }
     },
     {
+      "name": "md3-disclaimer",
+      "package": "@nucleux/md3-disclaimer",
+      "kind": "component",
+      "description": "The Material 3 statement of what the agent can and can't do — the same API\nand behaviour as `Disclaimer`. Calm and informative, never the error colour:\nthe capabilities list is a filled M3 card with an info mark in secondary;\nthe limitations card is a low surface whose leading rule takes the tertiary\nrole (a known limit is not a failure); the cutoff note is a full-corner,\nbody-small standing line. Points beyond `maxItems` (3) sit behind a text\n\"Show all\" button, and `groups` render as labelled rows (can / can't /\nneeds approval / may get wrong) with the label in its own column.",
+      "summary": "Material 3 Disclaimer — a short, honest statement of what the agent can and can't do — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-disclaimer",
+        "disclaimer",
+        "limits",
+        "capabilities"
+      ],
+      "exports": [
+        "Md3Disclaimer",
+        "Md3DisclaimerProps",
+        "Md3DisclaimerVariant"
+      ],
+      "components": [
+        "Md3Disclaimer"
+      ],
+      "import": "import { Md3Disclaimer } from \"@nucleux/md3-disclaimer\";",
+      "installSingle": "pnpm add @nucleux/md3-disclaimer @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-disclaimer\n\nMaterial 3 Disclaimer — a short, honest statement of what the agent can and can't do — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/disclaimer`](https://www.npmjs.com/package/@nucleux/disclaimer) (`Disclaimer`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3Disclaimer`** — what the agent can and can't do: a filled card with an info mark, a limitations card with a tertiary rule, or a one-line cutoff note; \"Show all\" past three points; labelled `groups` rows\n- Types: `Md3DisclaimerProps`, `Md3DisclaimerVariant`, `DisclaimerGroup`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-disclaimer @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Disclaimer } from \"@nucleux/md3-disclaimer\";\n\n<Md3Disclaimer agentName=\"Aria\" items={[\"Summarise documents\", \"Draft replies\"]} cutoff=\"April 2026\" />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-disclosure",
+      "package": "@nucleux/md3-disclosure",
+      "kind": "component",
+      "description": "A clear label that tells people they are dealing with an AI, and marks\nwhat it produced, at the point it matters — the Material 3 twin of\n`Disclosure`, with the same API. The chip variants are M3 assist chips on\nthe secondary-container disclosure role; `banner` and `first-run-banner`\nare standing notices on the tertiary container; `footer-attribution` is a\ncaption under a divider. With `details`, the label becomes a state-layer\ntoggle that grows an outlined Md3Card in place saying what the agent did,\nwhat it used and what nobody checked. The marks are the shared reserved\nglyphs from `@nucleux/md3-ai-icons`.",
+      "summary": "Material 3 Disclosure — a clear label that says where AI is involved, at the point it matters — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-disclosure",
+        "disclosure"
+      ],
+      "exports": [
+        "Md3Disclosure",
+        "Md3DisclosureProps",
+        "Md3DisclosureVariant"
+      ],
+      "components": [
+        "Md3Disclosure"
+      ],
+      "import": "import { Md3Disclosure } from \"@nucleux/md3-disclosure\";",
+      "installSingle": "pnpm add @nucleux/md3-disclosure @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-disclosure\n\nMaterial 3 Disclosure — a clear label that says where AI is involved, at the point it matters — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThe Material 3 twin of [`@nucleux/disclosure`](https://www.npmjs.com/package/@nucleux/disclosure): it shares that package's API — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, state layers and motion (with reduced-motion handling).\n\n## Exports\n\n- **`Md3Disclosure`** — `variant` header-badge / footer-attribution / input-chip / first-run-banner / pill / badge / banner; `label`, `icon`, `agentName`, `details` (opens an outlined Md3Card in place), `heading`, `policyHref`, `policyLabel`, `onDismiss`, `dismissLabel`\n- Types: `Md3DisclosureProps`, `Md3DisclosureVariant`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-disclosure @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Disclosure } from \"@nucleux/md3-disclosure\";\n\n<Md3Disclosure variant=\"footer-attribution\" agentName=\"Aria\" details=\"Not checked: the figures.\" />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "md3-divider",
       "package": "@nucleux/md3-divider",
       "kind": "component",
@@ -7656,6 +8099,48 @@
         }
       ],
       "readme": "# @nucleux/md3-divider\n\nMaterial 3 divider — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-divider @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Divider } from \"@nucleux/md3-divider\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-example-gallery",
+      "package": "@nucleux/md3-example-gallery",
+      "kind": "component",
+      "description": "One Material 3 example card — the same API as `ExampleGalleryItem`. An\noutlined, actionable M3 card (large corner, outline-variant hairline) with\nan on-surface state layer: hover lifts it to level 2, press settles it. The\ntile is a thumbnail of the output or a tonal container with the icon, above\nthe task name, a line on what came back and what it needs. The whole card\nis one button; a chosen example takes the secondary container.",
+      "summary": "Material 3 Example Gallery — real, product-specific tasks that place an editable request in the composer — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-example-gallery",
+        "example-gallery",
+        "examples",
+        "gallery"
+      ],
+      "exports": [
+        "Md3ExampleGalleryItem",
+        "Md3ExampleGallery",
+        "Md3ExampleGalleryProps",
+        "Md3ExampleGalleryItemProps",
+        "Md3ExampleGalleryVariant",
+        "Md3ExampleGallerySelectBehavior"
+      ],
+      "components": [
+        "Md3ExampleGalleryItem",
+        "Md3ExampleGallery"
+      ],
+      "import": "import { Md3ExampleGalleryItem, Md3ExampleGallery } from \"@nucleux/md3-example-gallery\";",
+      "installSingle": "pnpm add @nucleux/md3-example-gallery @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-example-gallery\n\nMaterial 3 Example Gallery — real, product-specific tasks that place an editable request in the composer — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/example-gallery`](https://www.npmjs.com/package/@nucleux/example-gallery) (`ExampleGallery`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3ExampleGallery`** — curated examples as outlined M3 cards in a grid, a strip or `Md3Tabs` by category; fills the composer via `onSelect` or previews in an `Md3Dialog` first; `collapsed` folds to a text button\n- **`Md3ExampleGalleryItem`** — one example card\n- Types: `Md3ExampleGalleryProps`, `Md3ExampleGalleryItemProps`, `Md3ExampleGalleryVariant`, `Md3ExampleGallerySelectBehavior`, `ExampleGalleryExample`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-example-gallery @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3ExampleGallery } from \"@nucleux/md3-example-gallery\";\n\n<Md3ExampleGallery examples={examples} selectBehavior=\"preview\" onSelect={(prompt) => setDraft(prompt)} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -7872,6 +8357,83 @@
       }
     },
     {
+      "name": "md3-gesture",
+      "package": "@nucleux/md3-gesture",
+      "kind": "component",
+      "description": "Material 3 gesture input: turns swipes, circles and pinches on a target\nregion into AI actions using pointer events. Each gesture maps to one action;\nrecognition is the app's `recognize` callback or the shared geometric\n`recognizeSimpleGesture`. The mark draws in the primary colour as you draw,\nwhat was captured gets a primary boundary and a named label, is announced,\nand waits in an MD3 bar for Confirm or Dismiss (or fires and offers Undo with\n`confirm={false}`). Every gesture has a keyboard equivalent on the focused\ntarget and an assist chip, so nothing is pointer-only; motion stops under\nreduced motion. Shares its API with `GestureInput` from `@nucleux/gesture`.\nVariants: circle-to-select, swipe-action, pinch-context.",
+      "summary": "Material 3 Gesture Input — swipes, circles and pinches as named, confirmable signals — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-gesture",
+        "gesture",
+        "swipe",
+        "pinch",
+        "pointer"
+      ],
+      "exports": [
+        "Md3GestureInput",
+        "Md3GestureInputProps",
+        "recognizeSimpleGesture"
+      ],
+      "components": [
+        "Md3GestureInput"
+      ],
+      "import": "import { Md3GestureInput } from \"@nucleux/md3-gesture\";",
+      "installSingle": "pnpm add @nucleux/md3-gesture @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-gesture\n\nMaterial 3 Gesture Input — swipes, circles and pinches as named, confirmable signals — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThis is the Material 3 twin of [`@nucleux/gesture`](https://www.npmjs.com/package/@nucleux/gesture) (`GestureInput`). It shares the twin's API exactly — the props types are the twin's own — so you can switch families by changing only the import. Only the look differs: MD3 colour roles, shape, elevation, state layers and motion (stilled under reduced motion).\n\n## Exports\n\n- **`Md3GestureInput`** — circle-to-select / swipe-action / pinch-context; the mark draws in primary, the capture is named and waits for Confirm (or fires with Undo), and every gesture has a key and an assist chip\n- **`recognizeSimpleGesture`** — re-exported from `@nucleux/gesture`\n- Types: `Md3GestureInputProps`, `Md3GestureInputVariant`, `Md3GestureInputBuiltInGesture`, `Md3GestureInputGesture`, `Md3GestureInputSource`, `Md3GestureInputRecognizer`, `GestureInputPoint`, `GestureInputBounds`, `GestureInputAction`, `GestureInputEvent`, `GestureInputRecognizeRequest`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-gesture @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3GestureInput } from \"@nucleux/md3-gesture\";\n\n<Md3GestureInput\n  actions={[\n    { gesture: \"swipe-left\", label: \"Summarise\" },\n    { gesture: \"swipe-right\", label: \"File away\" },\n  ]}\n  onGesture={(e) => run(e.action)}\n>\n  <ThreadCard />\n</Md3GestureInput>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-handwriting",
+      "package": "@nucleux/md3-handwriting",
+      "kind": "component",
+      "description": "Material 3 handwriting input: a pointer-driven writing pad (pen pressure\naware) whose ink the app's own recogniser (`onRecognize`) reads into text.\nThe reading appears under the ink, never over it; words the recogniser was\nunsure of carry a dotted underline and a “?” in the error tone and must be\nsettled from their alternatives (an MD3 menu) before Add to message is\nenabled, and the reading stays editable in an MD3 text field. Undo stroke,\nClear, Retry and a Type-instead fallback are always available, a slow sheen\ncrosses the pad while it is read (still under reduced motion), and nothing is\nsent when writing finishes. Shares its API with `HandwritingInput` from\n`@nucleux/handwriting`. Variants: draw-pad, live-ocr, annotation-stroke.",
+      "summary": "Material 3 Handwriting Input — write the request by hand, settle uncertain words, add it yourself — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-handwriting",
+        "handwriting",
+        "pen",
+        "stylus",
+        "ink"
+      ],
+      "exports": [
+        "Md3HandwritingInput",
+        "Md3HandwritingInputProps"
+      ],
+      "components": [
+        "Md3HandwritingInput"
+      ],
+      "import": "import { Md3HandwritingInput } from \"@nucleux/md3-handwriting\";",
+      "installSingle": "pnpm add @nucleux/md3-handwriting @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-handwriting\n\nMaterial 3 Handwriting Input — write the request by hand, settle uncertain words, add it yourself — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThis is the Material 3 twin of [`@nucleux/handwriting`](https://www.npmjs.com/package/@nucleux/handwriting) (`HandwritingInput`). It shares the twin's API exactly — the props types are the twin's own — so you can switch families by changing only the import. Only the look differs: MD3 colour roles, shape, elevation, state layers and motion (stilled under reduced motion).\n\n## Exports\n\n- **`Md3HandwritingInput`** — draw-pad / live-ocr / annotation-stroke; the reading sits under the ink, uncertain words are “?” buttons with an MD3 menu of alternatives, and Add to message waits until they are settled\n- Types: `Md3HandwritingInputProps`, `Md3HandwritingInputVariant`, `Md3HandwritingInputConvert`, `Md3HandwritingInputMode`, `Md3HandwritingInputStatus`, `HandwritingPoint`, `HandwritingStroke`, `HandwritingWord`, `HandwritingRecognition`, `HandwritingRecognizeRequest`, `HandwritingAcceptDetail`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-handwriting @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3HandwritingInput } from \"@nucleux/md3-handwriting\";\n\n<Md3HandwritingInput onRecognize={myRecognizer} onAccept={(text) => append(text)} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "md3-icon-button",
       "package": "@nucleux/md3-icon-button",
       "kind": "component",
@@ -7934,6 +8496,126 @@
         }
       ],
       "readme": "# @nucleux/md3-icon-button\n\nMaterial 3 icon button — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-icon-button @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3IconButton } from \"@nucleux/md3-icon-button\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-iconography",
+      "package": "@nucleux/md3-iconography",
+      "kind": "component",
+      "description": "A control that runs AI, drawn with the reserved AI mark for its intent —\nsparkle to generate, refresh to regenerate, wand to transform — as a\nMaterial 3 Md3Button (or an Md3IconButton with an M3 plain tooltip when\n`iconOnly`). The twin of `Iconography`, with the same API: the mark\ncarries `md-primary` on tonal, outlined and text buttons; hover, focus and\npress are the buttons' own 8% / 12% state layers; while `working` the mark\nswaps to the turning working mark, clicks are ignored and the words are\nannounced politely. Reserve it for actions that actually call a model.",
+      "summary": "Material 3 Iconography — controls that run AI, drawn with the reserved AI mark for their intent — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-iconography",
+        "iconography"
+      ],
+      "exports": [
+        "Md3Iconography",
+        "Md3IconographyProps",
+        "Md3IconographyIntent"
+      ],
+      "components": [
+        "Md3Iconography"
+      ],
+      "import": "import { Md3Iconography } from \"@nucleux/md3-iconography\";",
+      "installSingle": "pnpm add @nucleux/md3-iconography @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-iconography\n\nMaterial 3 Iconography — controls that run AI, drawn with the reserved AI mark for their intent — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThe Material 3 twin of [`@nucleux/iconography`](https://www.npmjs.com/package/@nucleux/iconography): it shares that package's API — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, state layers and motion (with reduced-motion handling).\n\n## Exports\n\n- **`Md3Iconography`** — an Md3Button (or Md3IconButton with a plain tooltip when `iconOnly`) that runs AI, drawn with the reserved mark for its `intent` (generate / regenerate / transform); `label`, `agentName`, `tooltip`, `tooltipSide`, `working`, `workingLabel`, plus the twin's `variant` / `size`, mapped to M3 button roles\n- Types: `Md3IconographyProps`, `Md3IconographyIntent`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-iconography @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Iconography } from \"@nucleux/md3-iconography\";\n\n<Md3Iconography intent=\"transform\" label=\"Rewrite\" variant=\"secondary\" />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-initial-cta",
+      "package": "@nucleux/md3-initial-cta",
+      "kind": "component",
+      "description": "The Material 3 empty-state composer — the same API and behaviour as\n`InitialCta`, composed from {@link Md3OpenInput} and\n{@link Md3SuggestedPrompts}, so the invitation is visibly the same object as\nthe working composer it becomes. An open headline (M3 headline type), at\nmost one supporting line, then the composer; optional `suggestions` sit\nbelow as suggestion chips and place their prompt in the field — focused,\neditable, never sent — and step aside once the person writes. Variants: a\ncentred hero, a tonal primary-container surface for brand moments, and a\nmulti-modal row with standard icon buttons for voice, file and image.",
+      "summary": "Material 3 Initial CTA — the large, inviting composer that anchors an empty workspace — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-initial-cta",
+        "initial-cta",
+        "empty-state",
+        "composer"
+      ],
+      "exports": [
+        "Md3InitialCta",
+        "Md3InitialCtaProps",
+        "Md3InitialCtaVariant",
+        "Md3InitialCtaHeadingLevel"
+      ],
+      "components": [
+        "Md3InitialCta"
+      ],
+      "import": "import { Md3InitialCta } from \"@nucleux/md3-initial-cta\";",
+      "installSingle": "pnpm add @nucleux/md3-initial-cta @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-initial-cta\n\nMaterial 3 Initial CTA — the large, inviting composer that anchors an empty workspace — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/initial-cta`](https://www.npmjs.com/package/@nucleux/initial-cta) (`InitialCta`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3InitialCta`** — the empty-state composer: an open headline, one supporting line and `Md3OpenInput`, with optional `suggestions` (`Md3SuggestedPrompts`) that place their prompt in the field; variants centered-hero / gradient-cta / multi-modal-row\n- Types: `Md3InitialCtaProps`, `Md3InitialCtaVariant`, `Md3InitialCtaHeadingLevel`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-initial-cta @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3InitialCta } from \"@nucleux/md3-initial-cta\";\n\n<Md3InitialCta\n  aria-label=\"Message Aria\"\n  description=\"Ask about your accounts, draft emails, or analyse data.\"\n  suggestions={[\"Summarise renewal risks\", \"Draft a follow-up to Acme\"]}\n  onSubmit={send}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-knowledge-base",
+      "package": "@nucleux/md3-knowledge-base",
+      "kind": "component",
+      "description": "Material 3 twin of `KnowledgeBase`: lets people choose which knowledge bases\nthe agent grounds in for this session — a card holding a list of checkable\nrows (default) or a wrap of filter chips with document counts\n(`variant=\"chips\"`). Readiness is a word on each row (Ready, Processing,\nNeeds refresh, Couldn't process) led by a ring (not usable yet) or a filled\ndisc (usable); a failed row is outlined in error, not flooded, with its\nRetry/Refresh on the row itself. Shares the API of `@nucleux/knowledge-base`.",
+      "summary": "Material 3 Knowledge Base — persistent, named sources the agent grounds in, with readiness and provenance — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "knowledge-base",
+        "rag",
+        "sources"
+      ],
+      "exports": [
+        "Md3KnowledgeBase",
+        "Md3KnowledgeBaseSources",
+        "Md3KnowledgeBaseCoverage",
+        "Md3KnowledgeBaseProps",
+        "Md3KnowledgeBaseSourcesProps",
+        "Md3KnowledgeBaseCoverageProps",
+        "Md3KnowledgeBaseVariant",
+        "Md3KnowledgeBaseCoverageLevel",
+        "Md3KnowledgeSourceStatus"
+      ],
+      "components": [
+        "Md3KnowledgeBase",
+        "Md3KnowledgeBaseSources",
+        "Md3KnowledgeBaseCoverage"
+      ],
+      "import": "import { Md3KnowledgeBase, Md3KnowledgeBaseSources, Md3KnowledgeBaseCoverage } from \"@nucleux/md3-knowledge-base\";",
+      "installSingle": "pnpm add @nucleux/md3-knowledge-base @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-knowledge-base\n\nMaterial 3 Knowledge Base — persistent, named sources the agent grounds in, with readiness and provenance — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThis is the Material 3 twin of [`@nucleux/knowledge-base`](../knowledge-base) and **shares its API**: the props types are re-exported from it, so switching families is a change of import only.\n\n## Exports\n\n- **`Md3KnowledgeBase`** — pick the bases the agent grounds in: a card of checkable list rows (default) or a wrap of filter chips with document counts (`variant=\"chips\"`). Readiness is a word on each row (Ready, Processing, Needs refresh, Couldn't process) led by a ring (not usable yet) or a filled disc (usable); a failed row is outlined in error with Retry on the row (`onRefresh`); `onAdd` adds an \"Add a base\" control.\n- **`Md3KnowledgeBaseSources`** — the documents (and sections) an answer read; while `reading`, a pulsing tonal band says so, politely announced.\n- **`Md3KnowledgeBaseCoverage`** — a tonal label: \"Well-covered · 14 matches\", \"Partly covered\", \"Thin coverage\".\n- Types: `Md3KnowledgeBaseProps`, `Md3KnowledgeBaseSourcesProps`, `Md3KnowledgeBaseCoverageProps`, `Md3KnowledgeBaseVariant`, `Md3KnowledgeBaseCoverageLevel`, `Md3KnowledgeSourceStatus`, `KnowledgeSource`, `KnowledgeBaseSourceRef`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-knowledge-base @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3KnowledgeBase, Md3KnowledgeBaseSources, Md3KnowledgeBaseCoverage } from \"@nucleux/md3-knowledge-base\";\n\n<Md3KnowledgeBase\n  heading=\"Active knowledge\"\n  onRefresh={(id) => reindex(id)}\n  sources={[\n    { id: \"crm\", name: \"CRM records\", status: \"ready\", count: 18240 },\n    { id: \"msa\", name: \"MSA Template.pdf\", status: \"error\", meta: \"Password-protected\" },\n  ]}\n/>\n<Md3KnowledgeBaseSources baseName=\"Sales playbook\" sources={[{ id: \"1\", name: \"Renewal Playbook v3\", section: \"§4.1\" }]} />\n<Md3KnowledgeBaseCoverage level=\"high\" matches={14} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -8082,6 +8764,61 @@
       }
     },
     {
+      "name": "md3-mcp-connection",
+      "package": "@nucleux/md3-mcp-connection",
+      "kind": "component",
+      "description": "Material 3 twin of McpConnection: an outlined card for a Model Context\nProtocol server with its name, address and status (a ring while it can't be\nused, a filled disc when it can, and always a word), the three named\nestablishment steps — reach, sign in, discover — resolving one at a time so\na failure names the step that broke, the signed-in account and its scopes as\nsmall outlined chips, and Connect / Disconnect / Try again as M3 buttons. It\ntakes exactly the props of `McpConnection`; the app owns all networking and\nmoves `status` and `stage`.",
+      "summary": "Material 3 MCP Connection — connect a server, discover what it can do, and decide before the agent uses it — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "mcp-connection",
+        "mcp",
+        "model-context-protocol",
+        "tools"
+      ],
+      "exports": [
+        "Md3McpConnection",
+        "Md3McpConnectionTool",
+        "Md3McpConnectionTools",
+        "Md3McpConnectionPermission",
+        "Md3McpConnectionActionPreview",
+        "Md3McpConnectionProps",
+        "Md3McpConnectionToolProps",
+        "Md3McpConnectionToolsProps",
+        "Md3McpConnectionPermissionProps",
+        "Md3McpConnectionActionPreviewProps",
+        "Md3McpConnectionStatus",
+        "Md3McpConnectionStage",
+        "Md3McpConnectionToolRisk",
+        "Md3McpConnectionToolAvailability",
+        "Md3McpConnectionPermissionValue",
+        "Md3McpConnectionActionStatus"
+      ],
+      "components": [
+        "Md3McpConnection",
+        "Md3McpConnectionTool",
+        "Md3McpConnectionTools",
+        "Md3McpConnectionPermission",
+        "Md3McpConnectionActionPreview"
+      ],
+      "import": "import { Md3McpConnection, Md3McpConnectionTool, Md3McpConnectionTools, Md3McpConnectionPermission } from \"@nucleux/md3-mcp-connection\";",
+      "installSingle": "pnpm add @nucleux/md3-mcp-connection @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-mcp-connection\n\nMaterial 3 MCP Connection — connect a server, discover what it can do, and decide before the agent uses it — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThis is the Material 3 twin of [`@nucleux/mcp-connection`](../mcp-connection). It shares that package's API exactly — same props, callbacks, states and accessible names — so you switch families by changing only the import. Only the look differs.\n\n## Exports\n\n- **`Md3McpConnection`** — outlined card for a server: name, address, status (ring when unusable, filled disc when ready, always a word), named establishment steps (reach, sign in, discover), account and scopes, Connect / Disconnect / Try again / Sign in again\n- **`Md3McpConnectionTools`** — tools grouped least dangerous first (Reads only, Changes things, Destructive), with the trust note\n- **`Md3McpConnectionTool`** — one expandable tool row (schema behind the row) with an optional `Md3Switch`\n- **`Md3McpConnectionPermission`** — Always / Just this once / Don't allow as an `Md3RadioGroup`; no \"Always\" for destructive subjects\n- **`Md3McpConnectionActionPreview`** — the approval gate: call, arguments, effect, Approve / Edit / Never allow, then running / result / tool error\n- Types: `Md3McpConnectionProps`, `Md3McpConnectionToolsProps`, `Md3McpConnectionToolProps`, `Md3McpConnectionPermissionProps`, `Md3McpConnectionActionPreviewProps`, `Md3McpConnectionStatus`, `Md3McpConnectionStage`, `Md3McpConnectionToolRisk`, `Md3McpConnectionToolAvailability`, `Md3McpConnectionPermissionValue`, `Md3McpConnectionActionStatus`, `McpConnectionToolInfo` (all aliases of the twin's types)\n\n## Install\n\n```bash\npnpm add @nucleux/md3-mcp-connection @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3McpConnection, Md3McpConnectionTools } from \"@nucleux/md3-mcp-connection\";\n\n<Md3McpConnection name=\"Linear MCP\" address=\"https://mcp.linear.app/sse\" status=\"connected\" onDisconnect={disconnect}>\n  <Md3McpConnectionTools tools={tools} onToolEnabledChange={setEnabled} />\n</Md3McpConnection>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "md3-menu",
       "package": "@nucleux/md3-menu",
       "kind": "component",
@@ -8207,6 +8944,80 @@
         }
       ],
       "readme": "# @nucleux/md3-message\n\nMaterial 3 chat message row — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-message @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Message } from \"@nucleux/md3-message\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-model-selection",
+      "package": "@nucleux/md3-model-selection",
+      "kind": "component",
+      "description": "The Material 3 twin of `ModelSelection`: lets the user pick the model for the\ntask with the same props, callbacks, keyboard model and accessible names.\n`variant=\"dropdown\"` (default) is a small text-button trigger in the composer\nopening an M3 menu listbox (arrow keys, Home/End, Escape returns focus) where\nthe selected row takes a secondary-container wash and a tick; `\"tradeoff\"`\nlays models out as outlined M3 radio cards with speed, quality and cost in\nhuman terms; `\"auto-route\"` puts an M3 switch first, shows the model it is\nusing now, and reveals the picker when switched off. Recommended and\nunavailable models are marked in words; an unavailable model keeps its row and\nsays what answers instead.",
+      "summary": "Material 3 Model Selection — choose which model answers, and know what changes when you do — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "model-selection",
+        "model-picker",
+        "auto-route"
+      ],
+      "exports": [
+        "Md3ModelSelection",
+        "Md3ModelSelectionProps",
+        "Md3ModelSelectionVariant"
+      ],
+      "components": [
+        "Md3ModelSelection"
+      ],
+      "import": "import { Md3ModelSelection } from \"@nucleux/md3-model-selection\";",
+      "installSingle": "pnpm add @nucleux/md3-model-selection @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-model-selection\n\nMaterial 3 Model Selection — choose which model answers, and know what changes when you do — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThis is the Material 3 twin of [`@nucleux/model-selection`](https://github.com/intelligaia-open-labs/nucleux/tree/main/packages/model-selection) and **shares its API**: the same props, callbacks, keyboard model and accessible names. Switch families by changing only the import.\n\n## Exports\n\n- **`Md3ModelSelection`** — `variant` `\"dropdown\"` (an M3 menu listbox behind a small text button), `\"tradeoff\"` (outlined M3 radio cards with speed, quality and cost), or `\"auto-route\"` (an M3 switch that reveals the picker when off)\n- Types: `Md3ModelSelectionProps`, `Md3ModelSelectionVariant`, `ModelOption`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-model-selection @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3ModelSelection } from \"@nucleux/md3-model-selection\";\n\n<Md3ModelSelection\n  defaultValue=\"sonnet\"\n  onValueChange={setModel}\n  models={[\n    { value: \"opus\", label: \"Opus\", description: \"Hard problems and long documents\", recommended: true },\n    { value: \"sonnet\", label: \"Sonnet\", description: \"Everyday writing and analysis\" },\n    { value: \"haiku\", label: \"Haiku\", description: \"Quick answers\", disabled: true, unavailableReason: \"Not in your plan\" },\n  ]}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-name",
+      "package": "@nucleux/md3-name",
+      "kind": "component",
+      "description": "The agent's name in Material 3 — the twin of `AgentName`, with the same\nAPI. Typography does the work: `wordmark` sets the name in headline type\nwith its role in body-small on-surface-variant; `name-status` is a\nsurface-container pill that reads \"Aria is drafting\" in a polite live\nregion, with the working ring on the mark; `name-avatar-lockup` puts the\nMd3AgentAvatar beside the name (title-small) and its role, on an outlined\ncontainer. The descriptor keeps the name honest by saying what it is.",
+      "summary": "Material 3 Agent Name — a short, consistent name and role for the agent on every surface — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-name",
+        "name",
+        "agent-name"
+      ],
+      "exports": [
+        "Md3AgentName",
+        "Md3AgentNameProps",
+        "Md3AgentNameVariant"
+      ],
+      "components": [
+        "Md3AgentName"
+      ],
+      "import": "import { Md3AgentName } from \"@nucleux/md3-name\";",
+      "installSingle": "pnpm add @nucleux/md3-name @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-name\n\nMaterial 3 Agent Name — a short, consistent name and role for the agent on every surface — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThe Material 3 twin of [`@nucleux/name`](https://www.npmjs.com/package/@nucleux/name): it shares that package's API — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, state layers and motion (with reduced-motion handling).\n\n## Exports\n\n- **`Md3AgentName`** — the agent's name: `variant` wordmark / name-status (\"Aria is drafting\", announced politely) / name-avatar-lockup; `descriptor`, `status`, `working`, `formerName`, `avatarSrc`, `avatarGlyph`\n- Types: `Md3AgentNameProps`, `Md3AgentNameVariant`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-name @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3AgentName } from \"@nucleux/md3-name\";\n\n<Md3AgentName name=\"Aria\" variant=\"name-status\" status=\"drafting\" />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -8492,6 +9303,168 @@
       }
     },
     {
+      "name": "md3-nudges",
+      "package": "@nucleux/md3-nudges",
+      "kind": "component",
+      "description": "An action inside a Material 3 nudge (\"Try it\", \"Not now\") — the same API\nas `NudgeAction` (the shadcn `ButtonProps`, so `variant`, `size`, `asChild`\nand `leftIcon`/`rightIcon` all work), drawn as an M3 small button: a\nfull-corner capsule with an on-colour state layer. `primary` is filled,\n`secondary` tonal, `ghost` a text button that takes on-primary-container on\nthe anchored bubble.",
+      "summary": "Material 3 Nudges — a quiet, dismissible tip about a capability that would help right now — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-nudges",
+        "nudges",
+        "nudge",
+        "tip"
+      ],
+      "exports": [
+        "Md3NudgeAction",
+        "Md3Nudge",
+        "Md3NudgeProps",
+        "Md3NudgeActionProps",
+        "Md3NudgeVariant",
+        "Md3NudgeSide",
+        "Md3NudgePersist"
+      ],
+      "components": [
+        "Md3NudgeAction",
+        "Md3Nudge"
+      ],
+      "import": "import { Md3NudgeAction, Md3Nudge } from \"@nucleux/md3-nudges\";",
+      "installSingle": "pnpm add @nucleux/md3-nudges @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-nudges\n\nMaterial 3 Nudges — a quiet, dismissible tip about a capability that would help right now — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/nudges`](https://www.npmjs.com/package/@nucleux/nudges) (`Nudge`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3Nudge`** — a dismissible tip: a filled inline card, an anchored primary-container bubble (`tooltip-nudge`) or a primary ring with a \"New\" badge (`highlight-pulse`); Why this tip?, Try it, Not now; remembered with `nudgeId`\n- **`Md3NudgeAction`** — an extra action inside the nudge (takes the shadcn `ButtonProps`)\n- Types: `Md3NudgeProps`, `Md3NudgeActionProps`, `Md3NudgeVariant`, `Md3NudgeSide`, `Md3NudgePersist`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-nudges @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Nudge } from \"@nucleux/md3-nudges\";\n\n<Md3Nudge\n  nudgeId=\"pdf-upload\"\n  message=\"You can ask Aria about text you select in a transcript.\"\n  reason=\"You selected transcript text twice today.\"\n  onTry={openSelectionAsk}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-open-input",
+      "package": "@nucleux/md3-open-input",
+      "kind": "component",
+      "description": "The Material 3 persistent composer for any natural-language ask — the same\nAPI and behaviour as `OpenInput`, drawn as an M3 composer: a tonal surface\nwith a hairline outline whose focus is a shape change (the outline takes the\nprimary colour and the corner squares up a step), a field that eases taller\nline by line to `maxHeight` and then scrolls, and a filled send icon button\nthat is disabled only while there is nothing to send and carries the send key\nas `aria-keyshortcuts`. A failed send keeps the text, takes the error colour\non the edge and shows one error-container row with Retry; while `loading` the\nsend button becomes a tonal Stop. Motion is dropped under reduced motion.",
+      "summary": "Material 3 Open Input — the persistent free-form composer for any natural-language ask — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-open-input",
+        "open-input",
+        "composer",
+        "prompt"
+      ],
+      "exports": [
+        "Md3OpenInput",
+        "Md3OpenInputProps",
+        "Md3OpenInputVariant",
+        "Md3OpenInputSendKey"
+      ],
+      "components": [
+        "Md3OpenInput"
+      ],
+      "import": "import { Md3OpenInput } from \"@nucleux/md3-open-input\";",
+      "installSingle": "pnpm add @nucleux/md3-open-input @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-open-input\n\nMaterial 3 Open Input — the persistent free-form composer for any natural-language ask — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/open-input`](https://www.npmjs.com/package/@nucleux/open-input) (`OpenInput`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3OpenInput`** — the persistent composer: auto-grows to `maxHeight`, Enter or ⌘/Ctrl+Enter sends (`sendKey`), counter near `maxLength`, keeps the text and offers Retry when `onSubmit` rejects, Stop while `loading`; variants expanding-area / single-line / input-with-send\n- Types: `Md3OpenInputProps`, `Md3OpenInputVariant`, `Md3OpenInputSendKey`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-open-input @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3OpenInput } from \"@nucleux/md3-open-input\";\n\n<Md3OpenInput label=\"Ask Aria\" placeholder=\"Ask about this project…\" onSubmit={send} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-personality",
+      "package": "@nucleux/md3-personality",
+      "kind": "component",
+      "description": "The `tone-matrix` in Material 3 — the twin of `Personality`, with the same\nAPI and keyboard model. A small set of writing styles as M3 filter chips:\nthe selected one takes the secondary-container role and a leading check;\nhover, focus and press are the chip's 8% / 12% state layer. It is a radio\ngroup with roving focus (arrow keys move and select, Home / End jump).\nTone changes how the agent writes, never what it may do — keep\npermission, caveat and refusal strings outside it.",
+      "summary": "Material 3 Personality — choose how the agent writes while the trust language stays fixed — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-personality",
+        "personality"
+      ],
+      "exports": [
+        "Md3Personality",
+        "Md3PersonalityVoiceCard",
+        "Md3PersonalitySampleDialog",
+        "Md3PersonalityProps",
+        "Md3PersonalityVoiceCardProps",
+        "Md3PersonalitySampleDialogProps"
+      ],
+      "components": [
+        "Md3Personality",
+        "Md3PersonalityVoiceCard",
+        "Md3PersonalitySampleDialog"
+      ],
+      "import": "import { Md3Personality, Md3PersonalityVoiceCard, Md3PersonalitySampleDialog } from \"@nucleux/md3-personality\";",
+      "installSingle": "pnpm add @nucleux/md3-personality @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-personality\n\nMaterial 3 Personality — choose how the agent writes while the trust language stays fixed — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThe Material 3 twin of [`@nucleux/personality`](https://www.npmjs.com/package/@nucleux/personality): it shares that package's API — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, state layers and motion (with reduced-motion handling).\n\n## Exports\n\n- **`Md3Personality`** — the tone-matrix: a radio group of M3 filter chips with roving focus; `options`, `value`, `defaultValue`, `onValueChange`, `label`\n- **`Md3PersonalityVoiceCard`** — one sample utterance plus voice tags\n- **`Md3PersonalitySampleDialog`** — a short exchange; `fixed` lines carry a lock and \"Same in every personality\"\n- `defaultTones`, types `ToneOption`, `PersonalitySampleTurn` (shared with `@nucleux/personality`)\n- Types: `Md3PersonalityProps`, `Md3PersonalityVoiceCardProps`, `Md3PersonalitySampleDialogProps`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-personality @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Personality } from \"@nucleux/md3-personality\";\n\n<Md3Personality defaultValue=\"professional\" onValueChange={setTone} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-proactive",
+      "package": "@nucleux/md3-proactive",
+      "kind": "component",
+      "description": "The Material 3 proactive suggestion — the same API and behaviour as\n`ProactiveSuggestion`. The agent leads with the finding, can show the\nevidence, and offers exactly one next action (a filled M3 small button\nthat shows the working mark and `pendingLabel` while `onAction` is\npending), an optional text-button snooze and a dismiss icon button (or\nEscape). The contextual banner is a secondary-container card with a\n\"Suggested by\" provenance line; the inline suggestion a single capsule\nbeside its row; the side toast a level-3 surface in the corner. It rises\nin on the emphasized-decelerate curve, is announced politely, and with an\n`evidenceKey` a dismissal is remembered for the same facts.",
+      "summary": "Material 3 Proactive Suggestions — the agent notices something and offers one reviewable next step — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-proactive",
+        "proactive",
+        "suggestion",
+        "proactive-suggestion"
+      ],
+      "exports": [
+        "Md3ProactiveSuggestion",
+        "Md3ProactiveSuggestionProps",
+        "Md3ProactiveSuggestionVariant",
+        "Md3ProactiveSuggestionPersist"
+      ],
+      "components": [
+        "Md3ProactiveSuggestion"
+      ],
+      "import": "import { Md3ProactiveSuggestion } from \"@nucleux/md3-proactive\";",
+      "installSingle": "pnpm add @nucleux/md3-proactive @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-proactive\n\nMaterial 3 Proactive Suggestions — the agent notices something and offers one reviewable next step — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/proactive`](https://www.npmjs.com/package/@nucleux/proactive) (`ProactiveSuggestion`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3ProactiveSuggestion`** — an unsolicited suggestion with the finding, the evidence, one action (working state while it runs), snooze and dismiss; a secondary-container banner, an inline capsule or a side toast; remembered per `evidenceKey`\n- Types: `Md3ProactiveSuggestionProps`, `Md3ProactiveSuggestionVariant`, `Md3ProactiveSuggestionPersist`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-proactive @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3ProactiveSuggestion } from \"@nucleux/md3-proactive\";\n\n<Md3ProactiveSuggestion\n  agentName=\"Aria\"\n  evidenceKey=\"blockers-w38\"\n  title=\"Two release blockers have no owner\"\n  description=\"Assign owners before the release?\"\n  actionLabel=\"Review\"\n  onAction={openReview}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "md3-progress",
       "package": "@nucleux/md3-progress",
       "kind": "component",
@@ -8655,6 +9628,45 @@
         }
       ],
       "readme": "# @nucleux/md3-radio\n\nMaterial 3 radio group — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-radio @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Radio } from \"@nucleux/md3-radio\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-randomize",
+      "package": "@nucleux/md3-randomize",
+      "kind": "component",
+      "description": "The Material 3 \"surprise me\" control — the same API and behaviour as\n`Randomize`. It sits beside the composer, never replaces it, and sends\nnothing: the chosen prompt goes to `onSelect` to be placed in the composer,\neditable, and if the composer already holds the person's words it asks\nfirst (Replace, Add below, Cancel) in a level-2 surface. Drawn as a tonal\ndice icon button for a composer toolbar, an outlined shuffle bar that\npreviews the pick, or a random card whose ground is tinted while a\ndirection is still being found and resolves to an outlined edge once it\nlands. Working uses the M3 loading indicator; no dice animation.",
+      "summary": "Material 3 Randomize — a surprise-me control that places a random, editable starter in the composer — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-randomize",
+        "randomize",
+        "surprise",
+        "dice"
+      ],
+      "exports": [
+        "Md3Randomize",
+        "Md3RandomizeProps",
+        "Md3RandomizeVariant",
+        "Md3RandomizeUseMode"
+      ],
+      "components": [
+        "Md3Randomize"
+      ],
+      "import": "import { Md3Randomize } from \"@nucleux/md3-randomize\";",
+      "installSingle": "pnpm add @nucleux/md3-randomize @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-randomize\n\nMaterial 3 Randomize — a surprise-me control that places a random, editable starter in the composer — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/randomize`](https://www.npmjs.com/package/@nucleux/randomize) (`Randomize`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3Randomize`** — a surprise-me control (tonal dice icon button, shuffle bar or random card) that places a random, editable starter via `onSelect` and asks before replacing the person's `draft`; `prompts` pool or async `generate`\n- Types: `Md3RandomizeProps`, `Md3RandomizeVariant`, `Md3RandomizeUseMode`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-randomize @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Randomize } from \"@nucleux/md3-randomize\";\n\n<Md3Randomize draft={draft} prompts={starters} onSelect={(p, { mode }) => setDraft(mode === \"append\" ? `${draft}\\n\\n${p}` : p)} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -9271,6 +10283,96 @@
       }
     },
     {
+      "name": "md3-structured-input",
+      "package": "@nucleux/md3-structured-input",
+      "kind": "component",
+      "description": "Material 3 structured input: an agent-generated clarifying question as a\ncompact MD3 card — single or multi-select options drawn as MD3 radio and\ncheckbox rows with a state layer, a free-text escape, and a skip. Arrow keys\nmove and select in single mode, exactly as in the twin. The other variants\nare composable siblings: {@link Md3StructuredInputSlots},\n{@link Md3StructuredInputTags} and {@link Md3StructuredInputWizard}. Shares\nits API with `StructuredInput` from `@nucleux/structured-input`.",
+      "summary": "Material 3 Structured Input — a compact form for exact values, suggestions marked and every value yours — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-structured-input",
+        "structured-input",
+        "form",
+        "slots",
+        "wizard"
+      ],
+      "exports": [
+        "Md3StructuredInput",
+        "Md3StructuredInputSlots",
+        "Md3StructuredInputTags",
+        "Md3StructuredInputWizard",
+        "Md3StructuredInputProps",
+        "Md3StructuredInputSlotsProps",
+        "Md3StructuredInputTagsProps",
+        "Md3StructuredInputWizardProps",
+        "structuredPartsToText"
+      ],
+      "components": [
+        "Md3StructuredInput",
+        "Md3StructuredInputSlots",
+        "Md3StructuredInputTags",
+        "Md3StructuredInputWizard"
+      ],
+      "import": "import { Md3StructuredInput, Md3StructuredInputSlots, Md3StructuredInputTags, Md3StructuredInputWizard } from \"@nucleux/md3-structured-input\";",
+      "installSingle": "pnpm add @nucleux/md3-structured-input @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-structured-input\n\nMaterial 3 Structured Input — a compact form for exact values, suggestions marked and every value yours — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThis is the Material 3 twin of [`@nucleux/structured-input`](https://www.npmjs.com/package/@nucleux/structured-input) (`StructuredInput`). It shares the twin's API exactly — the props types are the twin's own — so you can switch families by changing only the import. Only the look differs: MD3 colour roles, shape, elevation, state layers and motion (stilled under reduced motion).\n\n## Exports\n\n- **`Md3StructuredInput`** — a clarifying question as MD3 radio / checkbox rows, free-text escape and skip\n- **`Md3StructuredInputSlots`** — 2–4 labelled MD3 outlined fields; “Suggested” marks become “Edited by you”\n- **`Md3StructuredInputTags`** — `@` / `p:` / `/` tags become tonal input chips, suggestions as MD3 suggestion chips\n- **`Md3StructuredInputWizard`** — multi-step MD3 card with a segmented progress track\n- **`structuredPartsToText`** — re-exported from `@nucleux/structured-input`\n- Types: `Md3StructuredInputProps`, `Md3StructuredInputSlotsProps`, `Md3StructuredInputTagsProps`, `Md3StructuredInputWizardProps`, `StructuredOption`, `StructuredInputSlot`, `StructuredInputValues`, `StructuredInputTagTrigger`, `StructuredInputPart`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-structured-input @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3StructuredInput } from \"@nucleux/md3-structured-input\";\n\n<Md3StructuredInput\n  question=\"Which audience is this for?\"\n  options={[{ value: \"execs\", label: \"Executives\" }, { value: \"eng\", label: \"Engineers\" }]}\n  onSubmit={(values) => answer(values)}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-suggested-prompts",
+      "package": "@nucleux/md3-suggested-prompts",
+      "kind": "component",
+      "description": "One Material 3 suggested prompt — the same API as `SuggestedPrompt`. In a\nchip row it is an outlined M3 suggestion chip (`Md3Chip`, 32dp, small\ncorner, 18dp leading icon in primary) whose hover is a solid surface fill;\nin a card list it is an outlined, actionable M3 card with a title and one\nsupporting line; in a contextual tooltip it is a compact text action. A\nchosen prompt (`selected`) takes the secondary container and `aria-pressed`.",
+      "summary": "Material 3 Suggested Prompts — a few ready-made requests that place editable text in the composer — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-suggested-prompts",
+        "suggested-prompts",
+        "suggestions",
+        "chip"
+      ],
+      "exports": [
+        "Md3SuggestedPrompt",
+        "Md3SuggestedPrompts",
+        "Md3SuggestedPromptsProps",
+        "Md3SuggestedPromptProps",
+        "Md3SuggestedPromptsVariant",
+        "Md3SuggestedPromptsAfterSelect"
+      ],
+      "components": [
+        "Md3SuggestedPrompt",
+        "Md3SuggestedPrompts"
+      ],
+      "import": "import { Md3SuggestedPrompt, Md3SuggestedPrompts } from \"@nucleux/md3-suggested-prompts\";",
+      "installSingle": "pnpm add @nucleux/md3-suggested-prompts @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-suggested-prompts\n\nMaterial 3 Suggested Prompts — a few ready-made requests that place editable text in the composer — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/suggested-prompts`](https://www.npmjs.com/package/@nucleux/suggested-prompts) (`SuggestedPrompts`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3SuggestedPrompts`** — 3–5 ready-made prompts as M3 suggestion chips, outlined cards or a rich tooltip; `onSelect` hands back the fuller prompt; `afterSelect` keep / mark / remove\n- **`Md3SuggestedPrompt`** — one suggestion (chip, card or tooltip action, from the surrounding variant)\n- Types: `Md3SuggestedPromptsProps`, `Md3SuggestedPromptProps`, `Md3SuggestedPromptsVariant`, `Md3SuggestedPromptsAfterSelect`, `SuggestedPromptItem`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-suggested-prompts @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3SuggestedPrompts } from \"@nucleux/md3-suggested-prompts\";\n\n<Md3SuggestedPrompts\n  label=\"Try asking:\"\n  items={[{ title: \"Find unresolved decisions\", prompt: \"Find the unresolved decisions blocking the September release.\" }]}\n  onSelect={(prompt) => setDraft(prompt)}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "md3-switch",
       "package": "@nucleux/md3-switch",
       "kind": "component",
@@ -9428,6 +10530,49 @@
         }
       ],
       "readme": "# @nucleux/md3-tabs\n\nMaterial 3 primary tabs — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-tabs @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Tabs } from \"@nucleux/md3-tabs\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-templates",
+      "package": "@nucleux/md3-templates",
+      "kind": "component",
+      "description": "The Material 3 fill-in-the-blank template — the same API and behaviour as\n`Templates`. An outlined M3 card whose sentence sits on a surface-container\nground; each slot is an inline free-text field drawn as a dashed, small-corner\ngap while empty and a solid secondary-container chip once filled (the\ndifference is shape and weight, not hue). Required slots are counted\n(\"1 blank left\") and hold the filled \"Use this prompt\" button until they are\nfilled; nothing runs on its own.",
+      "summary": "Material 3 Templates — fill-in-the-blank prompts, prefilled lists and a categorised template browser — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-templates",
+        "templates",
+        "templates",
+        "prompt"
+      ],
+      "exports": [
+        "Md3Templates",
+        "Md3TemplatesList",
+        "Md3TemplatesBrowser",
+        "Md3TemplatesProps",
+        "Md3TemplatesListProps",
+        "Md3TemplatesBrowserProps"
+      ],
+      "components": [
+        "Md3Templates",
+        "Md3TemplatesList",
+        "Md3TemplatesBrowser"
+      ],
+      "import": "import { Md3Templates, Md3TemplatesList, Md3TemplatesBrowser } from \"@nucleux/md3-templates\";",
+      "installSingle": "pnpm add @nucleux/md3-templates @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-templates\n\nMaterial 3 Templates — fill-in-the-blank prompts, prefilled lists and a categorised template browser — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/templates`](https://www.npmjs.com/package/@nucleux/templates) (`Templates`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3Templates`** — a fill-in-the-blank sentence: dashed slots turn into secondary-container chips; required slots hold \"Use this prompt\"\n- **`Md3TemplatesList`** — fully written prompts as outlined M3 rows\n- **`Md3TemplatesBrowser`** — categories as vertical, navigation-drawer-style tabs with the category's templates\n- Types: `Md3TemplatesProps`, `Md3TemplatesListProps`, `Md3TemplatesBrowserProps`, `PromptSegment`, `PromptSlot`, `TemplatesListItem`, `TemplatesCategory`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-templates @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Templates } from \"@nucleux/md3-templates\";\n\n<Md3Templates\n  segments={[\"Summarise \", { slot: \"meeting\", placeholder: \"the standup\", required: true }, \" for the team.\"]}\n  onComplete={(prompt) => setDraft(prompt)}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -9845,6 +10990,83 @@
         }
       ],
       "readme": "# @nucleux/md3-top-app-bar\n\nMaterial 3 top app bar — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-top-app-bar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3TopAppBar } from \"@nucleux/md3-top-app-bar\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-visual-input",
+      "package": "@nucleux/md3-visual-input",
+      "kind": "component",
+      "description": "Material 3 visual input: lets people add an image, screenshot or photo as\ncontext to their ask — drag-and-drop onto a dashed MD3 drop zone, paste from\nthe clipboard, browse, or camera capture (`<input capture>`). Each visual\nrises in as a removable card with a real preview, limits are checked with\nplain-language errors in an error-container alert, and nothing is ever sent:\nthe app pairs the files with the words and sends on the person's command.\nShares its API and validation (`fileMatchesAccept`) with `VisualInput` from\n`@nucleux/visual-input`. Variants: drag-drop, paste-chip, camera-capture.",
+      "summary": "Material 3 Visual Input — show the agent an image, a photo or a screenshot as context on the composer — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-visual-input",
+        "visual-input",
+        "image",
+        "upload",
+        "camera"
+      ],
+      "exports": [
+        "Md3VisualInput",
+        "Md3VisualInputProps",
+        "fileMatchesAccept"
+      ],
+      "components": [
+        "Md3VisualInput"
+      ],
+      "import": "import { Md3VisualInput } from \"@nucleux/md3-visual-input\";",
+      "installSingle": "pnpm add @nucleux/md3-visual-input @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-visual-input\n\nMaterial 3 Visual Input — show the agent an image, a photo or a screenshot as context on the composer — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThis is the Material 3 twin of [`@nucleux/visual-input`](https://www.npmjs.com/package/@nucleux/visual-input) (`VisualInput`). It shares the twin's API exactly — the props types are the twin's own — so you can switch families by changing only the import. Only the look differs: MD3 colour roles, shape, elevation, state layers and motion (stilled under reduced motion).\n\n## Exports\n\n- **`Md3VisualInput`** — drag-drop / paste-chip / camera-capture; previews rise in as removable MD3 cards, errors land in an error-container alert, nothing is ever sent\n- **`fileMatchesAccept`** — re-exported from `@nucleux/visual-input`\n- Types: `Md3VisualInputProps`, `Md3VisualInputVariant`, `Md3VisualInputSource`, `Md3VisualInputFileStatus`, `Md3VisualInputRejectionReason`, `VisualInputFile`, `VisualInputRejection`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-visual-input @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3VisualInput } from \"@nucleux/md3-visual-input\";\n\n<Md3VisualInput\n  variant=\"paste-chip\"\n  seeText=\"Aria will see this when you send\"\n  onFilesChange={setFiles}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-voice-input",
+      "package": "@nucleux/md3-voice-input",
+      "kind": "component",
+      "description": "Material 3 voice input: speech as an input method into the composer — a mic\ntrigger, a clearly lit capturing state (secondary waveform or pulsing error\nstop button, clock, live words over a soft gradient that answers the voice),\nPause/Resume, Cancel and Stop, then a transcribing state with the MD3 loading\nindicator. Stop never sends: the transcript goes to the field for the person\nto review. State is announced through a polite live region and every\nanimation stops under reduced motion. Shares its API with `VoiceInput` from\n`@nucleux/voice-input`. Variants: waveform, mic-button, transcript-stream.",
+      "summary": "Material 3 Voice Input — speak the request into the composer, review the words, send them yourself — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-voice-input",
+        "voice-input",
+        "voice",
+        "dictation",
+        "microphone"
+      ],
+      "exports": [
+        "Md3VoiceInput",
+        "Md3VoiceInputProps"
+      ],
+      "components": [
+        "Md3VoiceInput"
+      ],
+      "import": "import { Md3VoiceInput } from \"@nucleux/md3-voice-input\";",
+      "installSingle": "pnpm add @nucleux/md3-voice-input @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-voice-input\n\nMaterial 3 Voice Input — speak the request into the composer, review the words, send them yourself — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThis is the Material 3 twin of [`@nucleux/voice-input`](https://www.npmjs.com/package/@nucleux/voice-input) (`VoiceInput`). It shares the twin's API exactly — the props types are the twin's own — so you can switch families by changing only the import. Only the look differs: MD3 colour roles, shape, elevation, state layers and motion (stilled under reduced motion).\n\n## Exports\n\n- **`Md3VoiceInput`** — waveform / mic-button / transcript-stream; a lit secondary mic state over a soft gradient, Pause/Resume, Cancel and Stop (which never sends), an MD3 loading indicator while transcribing\n- Types: `Md3VoiceInputProps`, `Md3VoiceInputState`, `Md3VoiceInputVariant`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-voice-input @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3VoiceInput } from \"@nucleux/md3-voice-input\";\n\n<Md3VoiceInput state={state} duration=\"0:08\" onStart={start} onPause={pause} onConfirm={stop} onCancel={cancel} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"

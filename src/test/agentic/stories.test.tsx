@@ -4,8 +4,9 @@ import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 import { composeStories } from "@storybook/react";
 
-// Every story of every agentic package (nucleux.in's Available patterns) must
-// render and pass axe — the stories are the documented variants of each pattern.
+// Every story of every agentic package (nucleux.in's Available patterns) and of
+// its Material 3 twin must render and pass axe — the stories are the documented
+// variants of each pattern.
 const AGENTIC = [
   "agent-avatar", "ai-icons", "attachments", "autocomplete", "caveat", "color", "connectors", "consent",
   "disclaimer", "disclosure", "example-gallery", "gesture", "handwriting", "iconography", "initial-cta",
@@ -17,11 +18,12 @@ const modules = import.meta.glob("../../../packages/*/src/*.stories.tsx", { eage
   string,
   Parameters<typeof composeStories>[0]
 >;
-const byPackage = Object.entries(modules).filter(([path]) => AGENTIC.includes(path.split("/").at(-3)!));
+const BOTH = [...AGENTIC, ...AGENTIC.map((n) => `md3-${n}`)];
+const byPackage = Object.entries(modules).filter(([path]) => BOTH.includes(path.split("/").at(-3)!));
 
 describe("agentic pattern stories", () => {
-  it("every agentic package has stories", () => {
-    expect(byPackage.map(([p]) => p.split("/").at(-3)).sort()).toEqual([...AGENTIC].sort());
+  it("every agentic package and its Material 3 twin has stories", () => {
+    expect(byPackage.map(([p]) => p.split("/").at(-3)).sort()).toEqual([...BOTH].sort());
   });
 
   for (const [path, mod] of byPackage) {

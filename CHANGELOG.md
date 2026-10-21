@@ -48,6 +48,15 @@ md3-tool-call. Replacements: `IconButton` → `Button size="icon" | "icon-sm" |
 `SearchInput` → `Input type="search"`; `PageHeader` → a `<header>` with an
 `<h1>`. `global-nav` and `nav-panel` go when the shadcn `sidebar` lands.
 
+#### Added (phase 5: Material 3 twins of the agentic patterns)
+- 29 `md3-<name>` packages, the Material 3 twin of every agentic pattern
+  (`Md3Disclosure`, `Md3Consent`, `Md3OpenInput`, `Md3Attachments`, …), styled
+  from nucleux.in's Material 3 pages. Their props types are the shadcn twin's own
+  types, so switching families is an import change; behaviour is the same and
+  each twin passes the shadcn package's test suite.
+- `md3-progress`: the indeterminate spinner and linear pulse stop under
+  reduced motion.
+
 #### Added (phase 4: nucleux.in's agentic patterns, shadcn family)
 - 17 new packages, built from each pattern's spec on nucleux.in (variants,
   behaviour rules, copy): `agent-avatar`, `name` (`AgentName`), `iconography`,

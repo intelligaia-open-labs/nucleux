@@ -1720,6 +1720,40 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-agent-avatar:
+    dependencies:
+      '@nucleux/agent-avatar':
+        specifier: workspace:*
+        version: link:../agent-avatar
+      '@nucleux/md3-ai-icons':
+        specifier: workspace:*
+        version: link:../md3-ai-icons
+      '@nucleux/md3-color':
+        specifier: workspace:*
+        version: link:../md3-color
+      '@nucleux/md3-progress':
+        specifier: workspace:*
+        version: link:../md3-progress
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-agent-composer:
     dependencies:
       '@nucleux/utils':
@@ -1728,6 +1762,96 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-ai-icons:
+    dependencies:
+      '@nucleux/ai-icons':
+        specifier: workspace:*
+        version: link:../ai-icons
+      '@nucleux/md3-color':
+        specifier: workspace:*
+        version: link:../md3-color
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-attachments:
+    dependencies:
+      '@nucleux/attachments':
+        specifier: workspace:*
+        version: link:../attachments
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/md3-progress':
+        specifier: workspace:*
+        version: link:../md3-progress
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-autocomplete:
+    dependencies:
+      '@nucleux/autocomplete':
+        specifier: workspace:*
+        version: link:../autocomplete
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
       react-dom:
         specifier: '>=18'
         version: 18.3.1(react@18.3.1)
@@ -1926,6 +2050,34 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-caveat:
+    dependencies:
+      '@nucleux/caveat':
+        specifier: workspace:*
+        version: link:../caveat
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-checkbox:
     dependencies:
       '@nucleux/utils':
@@ -1959,6 +2111,111 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-color:
+    dependencies:
+      '@nucleux/color':
+        specifier: workspace:*
+        version: link:../color
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-connectors:
+    dependencies:
+      '@nucleux/connectors':
+        specifier: workspace:*
+        version: link:../connectors
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-card':
+        specifier: workspace:*
+        version: link:../md3-card
+      '@nucleux/md3-checkbox':
+        specifier: workspace:*
+        version: link:../md3-checkbox
+      '@nucleux/md3-progress':
+        specifier: workspace:*
+        version: link:../md3-progress
+      '@nucleux/md3-switch':
+        specifier: workspace:*
+        version: link:../md3-switch
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-consent:
+    dependencies:
+      '@nucleux/consent':
+        specifier: workspace:*
+        version: link:../consent
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-checkbox':
+        specifier: workspace:*
+        version: link:../md3-checkbox
+      '@nucleux/md3-dialog':
+        specifier: workspace:*
+        version: link:../md3-dialog
+      '@nucleux/md3-switch':
+        specifier: workspace:*
+        version: link:../md3-switch
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
       react-dom:
         specifier: '>=18'
         version: 18.3.1(react@18.3.1)
@@ -2029,6 +2286,80 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-disclaimer:
+    dependencies:
+      '@nucleux/disclaimer':
+        specifier: workspace:*
+        version: link:../disclaimer
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-card':
+        specifier: workspace:*
+        version: link:../md3-card
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-disclosure:
+    dependencies:
+      '@nucleux/disclosure':
+        specifier: workspace:*
+        version: link:../disclosure
+      '@nucleux/md3-ai-icons':
+        specifier: workspace:*
+        version: link:../md3-ai-icons
+      '@nucleux/md3-card':
+        specifier: workspace:*
+        version: link:../md3-card
+      '@nucleux/md3-color':
+        specifier: workspace:*
+        version: link:../md3-color
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-divider:
     dependencies:
       '@nucleux/utils':
@@ -2044,6 +2375,43 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-example-gallery:
+    dependencies:
+      '@nucleux/example-gallery':
+        specifier: workspace:*
+        version: link:../example-gallery
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-dialog':
+        specifier: workspace:*
+        version: link:../md3-dialog
+      '@nucleux/md3-tabs':
+        specifier: workspace:*
+        version: link:../md3-tabs
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2107,6 +2475,86 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-gesture:
+    dependencies:
+      '@nucleux/gesture':
+        specifier: workspace:*
+        version: link:../gesture
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-chip':
+        specifier: workspace:*
+        version: link:../md3-chip
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-handwriting:
+    dependencies:
+      '@nucleux/handwriting':
+        specifier: workspace:*
+        version: link:../handwriting
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-chip':
+        specifier: workspace:*
+        version: link:../md3-chip
+      '@nucleux/md3-loading-indicator':
+        specifier: workspace:*
+        version: link:../md3-loading-indicator
+      '@nucleux/md3-menu':
+        specifier: workspace:*
+        version: link:../md3-menu
+      '@nucleux/md3-text-field':
+        specifier: workspace:*
+        version: link:../md3-text-field
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-icon-button:
     dependencies:
       '@nucleux/utils':
@@ -2122,6 +2570,117 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-iconography:
+    dependencies:
+      '@nucleux/iconography':
+        specifier: workspace:*
+        version: link:../iconography
+      '@nucleux/md3-ai-icons':
+        specifier: workspace:*
+        version: link:../md3-ai-icons
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-initial-cta:
+    dependencies:
+      '@nucleux/initial-cta':
+        specifier: workspace:*
+        version: link:../initial-cta
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/md3-open-input':
+        specifier: workspace:*
+        version: link:../md3-open-input
+      '@nucleux/md3-suggested-prompts':
+        specifier: workspace:*
+        version: link:../md3-suggested-prompts
+      '@nucleux/open-input':
+        specifier: workspace:*
+        version: link:../open-input
+      '@nucleux/suggested-prompts':
+        specifier: workspace:*
+        version: link:../suggested-prompts
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-knowledge-base:
+    dependencies:
+      '@nucleux/knowledge-base':
+        specifier: workspace:*
+        version: link:../knowledge-base
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-chip':
+        specifier: workspace:*
+        version: link:../md3-chip
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2182,6 +2741,46 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-mcp-connection:
+    dependencies:
+      '@nucleux/mcp-connection':
+        specifier: workspace:*
+        version: link:../mcp-connection
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-progress':
+        specifier: workspace:*
+        version: link:../md3-progress
+      '@nucleux/md3-radio':
+        specifier: workspace:*
+        version: link:../md3-radio
+      '@nucleux/md3-switch':
+        specifier: workspace:*
+        version: link:../md3-switch
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-menu:
     dependencies:
       '@nucleux/utils':
@@ -2215,6 +2814,71 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-model-selection:
+    dependencies:
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-radio':
+        specifier: workspace:*
+        version: link:../md3-radio
+      '@nucleux/md3-switch':
+        specifier: workspace:*
+        version: link:../md3-switch
+      '@nucleux/model-selection':
+        specifier: workspace:*
+        version: link:../model-selection
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-name:
+    dependencies:
+      '@nucleux/md3-agent-avatar':
+        specifier: workspace:*
+        version: link:../md3-agent-avatar
+      '@nucleux/name':
+        specifier: workspace:*
+        version: link:../name
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
       react-dom:
         specifier: '>=18'
         version: 18.3.1(react@18.3.1)
@@ -2307,6 +2971,145 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-nudges:
+    dependencies:
+      '@nucleux/button':
+        specifier: workspace:*
+        version: link:../button
+      '@nucleux/md3-badge':
+        specifier: workspace:*
+        version: link:../md3-badge
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/nudges':
+        specifier: workspace:*
+        version: link:../nudges
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-open-input:
+    dependencies:
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/md3-loading-indicator':
+        specifier: workspace:*
+        version: link:../md3-loading-indicator
+      '@nucleux/open-input':
+        specifier: workspace:*
+        version: link:../open-input
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-personality:
+    dependencies:
+      '@nucleux/personality':
+        specifier: workspace:*
+        version: link:../personality
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-proactive:
+    dependencies:
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/md3-loading-indicator':
+        specifier: workspace:*
+        version: link:../md3-loading-indicator
+      '@nucleux/proactive':
+        specifier: workspace:*
+        version: link:../proactive
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-progress:
     dependencies:
       '@nucleux/utils':
@@ -2347,6 +3150,43 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-randomize:
+    dependencies:
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/md3-loading-indicator':
+        specifier: workspace:*
+        version: link:../md3-loading-indicator
+      '@nucleux/randomize':
+        specifier: workspace:*
+        version: link:../randomize
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2513,6 +3353,77 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-structured-input:
+    dependencies:
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-card':
+        specifier: workspace:*
+        version: link:../md3-card
+      '@nucleux/md3-chip':
+        specifier: workspace:*
+        version: link:../md3-chip
+      '@nucleux/structured-input':
+        specifier: workspace:*
+        version: link:../structured-input
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-suggested-prompts:
+    dependencies:
+      '@nucleux/md3-chip':
+        specifier: workspace:*
+        version: link:../md3-chip
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/suggested-prompts':
+        specifier: workspace:*
+        version: link:../suggested-prompts
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-switch:
     dependencies:
       '@nucleux/utils':
@@ -2553,6 +3464,37 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-templates:
+    dependencies:
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/templates':
+        specifier: workspace:*
+        version: link:../templates
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2683,6 +3625,77 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-visual-input:
+    dependencies:
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      '@nucleux/visual-input':
+        specifier: workspace:*
+        version: link:../visual-input
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-voice-input:
+    dependencies:
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/md3-loading-indicator':
+        specifier: workspace:*
+        version: link:../md3-loading-indicator
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      '@nucleux/voice-input':
+        specifier: workspace:*
+        version: link:../voice-input
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -3336,9 +4349,21 @@ importers:
       '@nucleux/md3-action-confirmation':
         specifier: workspace:*
         version: link:../md3-action-confirmation
+      '@nucleux/md3-agent-avatar':
+        specifier: workspace:*
+        version: link:../md3-agent-avatar
       '@nucleux/md3-agent-composer':
         specifier: workspace:*
         version: link:../md3-agent-composer
+      '@nucleux/md3-ai-icons':
+        specifier: workspace:*
+        version: link:../md3-ai-icons
+      '@nucleux/md3-attachments':
+        specifier: workspace:*
+        version: link:../md3-attachments
+      '@nucleux/md3-autocomplete':
+        specifier: workspace:*
+        version: link:../md3-autocomplete
       '@nucleux/md3-badge':
         specifier: workspace:*
         version: link:../md3-badge
@@ -3360,42 +4385,87 @@ importers:
       '@nucleux/md3-carousel':
         specifier: workspace:*
         version: link:../md3-carousel
+      '@nucleux/md3-caveat':
+        specifier: workspace:*
+        version: link:../md3-caveat
       '@nucleux/md3-checkbox':
         specifier: workspace:*
         version: link:../md3-checkbox
       '@nucleux/md3-chip':
         specifier: workspace:*
         version: link:../md3-chip
+      '@nucleux/md3-color':
+        specifier: workspace:*
+        version: link:../md3-color
+      '@nucleux/md3-connectors':
+        specifier: workspace:*
+        version: link:../md3-connectors
+      '@nucleux/md3-consent':
+        specifier: workspace:*
+        version: link:../md3-consent
       '@nucleux/md3-date-picker':
         specifier: workspace:*
         version: link:../md3-date-picker
       '@nucleux/md3-dialog':
         specifier: workspace:*
         version: link:../md3-dialog
+      '@nucleux/md3-disclaimer':
+        specifier: workspace:*
+        version: link:../md3-disclaimer
+      '@nucleux/md3-disclosure':
+        specifier: workspace:*
+        version: link:../md3-disclosure
       '@nucleux/md3-divider':
         specifier: workspace:*
         version: link:../md3-divider
+      '@nucleux/md3-example-gallery':
+        specifier: workspace:*
+        version: link:../md3-example-gallery
       '@nucleux/md3-fab':
         specifier: workspace:*
         version: link:../md3-fab
       '@nucleux/md3-fab-menu':
         specifier: workspace:*
         version: link:../md3-fab-menu
+      '@nucleux/md3-gesture':
+        specifier: workspace:*
+        version: link:../md3-gesture
+      '@nucleux/md3-handwriting':
+        specifier: workspace:*
+        version: link:../md3-handwriting
       '@nucleux/md3-icon-button':
         specifier: workspace:*
         version: link:../md3-icon-button
+      '@nucleux/md3-iconography':
+        specifier: workspace:*
+        version: link:../md3-iconography
+      '@nucleux/md3-initial-cta':
+        specifier: workspace:*
+        version: link:../md3-initial-cta
+      '@nucleux/md3-knowledge-base':
+        specifier: workspace:*
+        version: link:../md3-knowledge-base
       '@nucleux/md3-list':
         specifier: workspace:*
         version: link:../md3-list
       '@nucleux/md3-loading-indicator':
         specifier: workspace:*
         version: link:../md3-loading-indicator
+      '@nucleux/md3-mcp-connection':
+        specifier: workspace:*
+        version: link:../md3-mcp-connection
       '@nucleux/md3-menu':
         specifier: workspace:*
         version: link:../md3-menu
       '@nucleux/md3-message':
         specifier: workspace:*
         version: link:../md3-message
+      '@nucleux/md3-model-selection':
+        specifier: workspace:*
+        version: link:../md3-model-selection
+      '@nucleux/md3-name':
+        specifier: workspace:*
+        version: link:../md3-name
       '@nucleux/md3-navigation-bar':
         specifier: workspace:*
         version: link:../md3-navigation-bar
@@ -3405,12 +4475,27 @@ importers:
       '@nucleux/md3-navigation-rail':
         specifier: workspace:*
         version: link:../md3-navigation-rail
+      '@nucleux/md3-nudges':
+        specifier: workspace:*
+        version: link:../md3-nudges
+      '@nucleux/md3-open-input':
+        specifier: workspace:*
+        version: link:../md3-open-input
+      '@nucleux/md3-personality':
+        specifier: workspace:*
+        version: link:../md3-personality
+      '@nucleux/md3-proactive':
+        specifier: workspace:*
+        version: link:../md3-proactive
       '@nucleux/md3-progress':
         specifier: workspace:*
         version: link:../md3-progress
       '@nucleux/md3-radio':
         specifier: workspace:*
         version: link:../md3-radio
+      '@nucleux/md3-randomize':
+        specifier: workspace:*
+        version: link:../md3-randomize
       '@nucleux/md3-search':
         specifier: workspace:*
         version: link:../md3-search
@@ -3429,12 +4514,21 @@ importers:
       '@nucleux/md3-split-button':
         specifier: workspace:*
         version: link:../md3-split-button
+      '@nucleux/md3-structured-input':
+        specifier: workspace:*
+        version: link:../md3-structured-input
+      '@nucleux/md3-suggested-prompts':
+        specifier: workspace:*
+        version: link:../md3-suggested-prompts
       '@nucleux/md3-switch':
         specifier: workspace:*
         version: link:../md3-switch
       '@nucleux/md3-tabs':
         specifier: workspace:*
         version: link:../md3-tabs
+      '@nucleux/md3-templates':
+        specifier: workspace:*
+        version: link:../md3-templates
       '@nucleux/md3-text-field':
         specifier: workspace:*
         version: link:../md3-text-field
@@ -3450,6 +4544,12 @@ importers:
       '@nucleux/md3-top-app-bar':
         specifier: workspace:*
         version: link:../md3-top-app-bar
+      '@nucleux/md3-visual-input':
+        specifier: workspace:*
+        version: link:../md3-visual-input
+      '@nucleux/md3-voice-input':
+        specifier: workspace:*
+        version: link:../md3-voice-input
       '@nucleux/menubar':
         specifier: workspace:*
         version: link:../menubar
