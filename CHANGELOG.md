@@ -8,7 +8,7 @@ The format is machine-readable: each version heading starts with `## ` followed
 by a version tag and date, and entries are grouped under `### Added`, `### Changed`,
 `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings.
 
-## [0.7.0] — unreleased
+## [0.7.0] — 2026-10-21
 
 nucleux.in marked six more patterns *Available* (Initially → Prompt Scaffolds).
 Each ships in both families with one API, as the other agentic patterns do.

@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-name",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Agent Name — a short, consistent name and role for the agent on every surface — Nucleux agentic UI for React.",

@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-visual-input",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Visual Input — show the agent an image, a photo or a screenshot as context on the composer — Nucleux agentic UI for React.",

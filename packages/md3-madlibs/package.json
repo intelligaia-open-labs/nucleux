@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-madlibs",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Madlibs — a request written as a sentence with a few labelled blanks, filled and reviewed before it goes to the composer — Nucleux agentic UI for React.",

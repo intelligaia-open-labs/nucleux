@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/agent-avatar",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "sideEffects": false,
   "description": "Avatar — a consistent, non-photographic mark that represents the AI on every surface — Nucleux agentic UI for React.",

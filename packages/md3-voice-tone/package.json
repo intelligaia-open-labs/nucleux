@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-voice-tone",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Voice & Tone — say how the reply should sound (tone cards, a rules list, a sample line), shown as a Tone chip in the composer and never editing the prompt — Nucleux agentic UI for React.",

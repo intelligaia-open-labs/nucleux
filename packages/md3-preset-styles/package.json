@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-preset-styles",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Preset Styles — named styles for how replies are written, previewed and switchable mid-conversation — Nucleux agentic UI for React.",
