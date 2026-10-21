@@ -62,7 +62,8 @@ and restyle it onto Nucleux tokens — do not hand-roll it.
   Md3DatePicker, Md3TimePicker, Md3LinearProgress, Md3Snackbar, Md3Tooltip,
   Md3Tabs, Md3TopAppBar, Md3NavigationBar, Md3NavigationDrawer,
   Md3NavigationRail, Md3Divider, Md3Banner, Md3Message, Md3ActionConfirmation,
-  Md3AgentComposer
+  Md3AgentComposer; plus a Material 3 twin of every agentic component above, with
+  the same props (Md3Disclosure, Md3Consent, Md3OpenInput, Md3Attachments, …)
 
 Common props follow the system conventions: `variant` (not `severity`/`color`),
 `align` (not `alignItems`), `size`, `orientation`. Style only with semantic

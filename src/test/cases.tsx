@@ -2,6 +2,39 @@ import type { ReactElement } from "react";
 import { Home, Mic } from "lucide-react";
 
 import {
+  Md3AiIcons,
+  Md3AiIcon,
+  Md3AiColor,
+  Md3Iconography,
+  Md3AgentAvatar,
+  Md3AgentName,
+  Md3Disclosure,
+  Md3Caveat,
+  Md3Consent,
+  Md3Personality,
+  Md3ExampleGallery,
+  Md3Templates,
+  Md3Nudge,
+  Md3Disclaimer,
+  Md3InitialCta,
+  Md3OpenInput,
+  Md3SuggestedPrompts,
+  Md3ProactiveSuggestion,
+  Md3Randomize,
+  Md3Autocomplete,
+  Md3McpConnection,
+  Md3McpConnectionTools,
+  Md3Attachments,
+  Md3AttachmentsTray,
+  Md3AttachmentsTrigger,
+  Md3ModelSelection,
+  Md3KnowledgeBase,
+  Md3Connector,
+  Md3VisualInput,
+  Md3HandwritingInput,
+  Md3GestureInput,
+  Md3VoiceInput,
+  Md3StructuredInput,
   AiIcons,
   AiIcon,
   AiColor,
@@ -535,6 +568,69 @@ export const cases: { name: string; ui: ReactElement }[] = [
     ),
   },
   { name: "Sonner", ui: <Toaster /> },
+  { name: "Md3AiIcons", ui: <div><Md3AiIcons variant="sparkle" label="AI" /><Md3AiIcon role="generated-content" label="Generated with AI" /></div> },
+  { name: "Md3AiColor", ui: <Md3AiColor variant="soft-glow" working label="Aria is working">Pulling the renewal numbers.</Md3AiColor> },
+  { name: "Md3Iconography", ui: <Md3Iconography label="Generate" agentName="Aria" iconOnly /> },
+  { name: "Md3AgentAvatar", ui: <Md3AgentAvatar name="Aria" status="online" statusLabel="Online · ready" shape="rounded" /> },
+  { name: "Md3AgentName", ui: <Md3AgentName name="Aria" variant="name-status" status="drafting" /> },
+  { name: "Md3Disclosure", ui: <Md3Disclosure variant="footer-attribution" agentName="Aria" details="Not checked: the figures." /> },
+  { name: "Md3Caveat", ui: <Md3Caveat variant="output-footer">2 of 8 interviews could not be opened.</Md3Caveat> },
+  {
+    name: "Md3Consent",
+    ui: <Md3Consent title="Allow workspace access?" description="Choose what Aria can read." policyHref="#privacy" permissions={[{ id: "read", label: "Read selected files" }]} />,
+  },
+  { name: "Md3Personality", ui: <Md3Personality defaultValue="direct" /> },
+  { name: "Md3ExampleGallery", ui: <Md3ExampleGallery examples={[{ title: "Summarise renewal risks", prompt: "Summarise the renewal risks.", category: "Summaries" }]} /> },
+  { name: "Md3Templates", ui: <Md3Templates segments={["Summarise ", { slot: "meeting", placeholder: "the standup", required: true }, "."]} /> },
+  { name: "Md3Nudge", ui: <Md3Nudge title="New: streaming summaries" message="Aria now drafts as you watch." onTry={() => {}} persist="none" /> },
+  { name: "Md3Disclaimer", ui: <Md3Disclaimer agentName="Aria" items={["Summarise documents", "Draft replies", "Pull sources"]} cutoff="Apr 2026" /> },
+  { name: "Md3InitialCta", ui: <Md3InitialCta aria-label="Message Aria" suggestions={["Summarise renewal risks", "Draft a follow-up"]} onSubmit={() => {}} /> },
+  { name: "Md3OpenInput", ui: <Md3OpenInput aria-label="Message Aria" onSubmit={() => {}} /> },
+  { name: "Md3SuggestedPrompts", ui: <Md3SuggestedPrompts label="Try asking:" items={["Summarise renewal risks this week", "Draft a follow-up to Acme Corp"]} /> },
+  {
+    name: "Md3ProactiveSuggestion",
+    ui: <Md3ProactiveSuggestion agentName="Aria" title="Three renewals expire this week" actionLabel="Draft emails" persist="none" />,
+  },
+  { name: "Md3Randomize", ui: <Md3Randomize variant="random-card" prompts={["Draft a one-paragraph product brief."]} onSelect={() => {}} /> },
+  { name: "Md3Autocomplete", ui: <Md3Autocomplete label="Prompt" defaultValue="Thanks for the deck." suggestion=" I've shared it with the team." /> },
+  {
+    name: "Md3McpConnection",
+    ui: (
+      <Md3McpConnection name="Linear MCP" status="connected" onDisconnect={() => {}}>
+        <Md3McpConnectionTools tools={[{ id: "read_issue", title: "Read issue", risk: "read" }]} onToolEnabledChange={() => {}} />
+      </Md3McpConnection>
+    ),
+  },
+  {
+    name: "Md3Attachments",
+    ui: (
+      <Md3Attachments onRemove={() => {}} items={[{ id: "1", name: "Q2-renewals.csv", size: 49152, type: "text/csv", status: "ready" }]}>
+        <Md3AttachmentsTray />
+        <Md3AttachmentsTrigger />
+      </Md3Attachments>
+    ),
+  },
+  {
+    name: "Md3ModelSelection",
+    ui: <Md3ModelSelection variant="tradeoff" label="Model" defaultValue="sonnet" models={[{ value: "opus", label: "Opus" }, { value: "sonnet", label: "Sonnet", recommended: true }]} />,
+  },
+  { name: "Md3KnowledgeBase", ui: <Md3KnowledgeBase variant="chips" heading="Grounded in" defaultValue={["docs"]} sources={[{ id: "docs", name: "Product docs", count: 412 }]} /> },
+  { name: "Md3Connector", ui: <Md3Connector name="Google Drive" connected account="sam@acme.com" onDisconnect={() => {}} /> },
+  { name: "Md3VisualInput", ui: <Md3VisualInput variant="drag-drop" /> },
+  { name: "Md3HandwritingInput", ui: <Md3HandwritingInput defaultMode="type" /> },
+  {
+    name: "Md3GestureInput",
+    ui: (
+      <Md3GestureInput variant="swipe-action" actions={[{ gesture: "swipe-left", label: "Summarise" }]}>
+        <div>Slack thread: #renewals</div>
+      </Md3GestureInput>
+    ),
+  },
+  { name: "Md3VoiceInput", ui: <Md3VoiceInput variant="transcript-stream" state="recording" transcript="Find me the renewal numbers" onConfirm={() => {}} /> },
+  {
+    name: "Md3StructuredInput",
+    ui: <Md3StructuredInput question="Which audience is this for?" options={[{ value: "execs", label: "Executives" }, { value: "eng", label: "Engineers" }]} onSubmit={() => {}} />,
+  },
   {
     name: "AiIcons",
     ui: (

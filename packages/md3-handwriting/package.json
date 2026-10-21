@@ -1,0 +1,70 @@
+{
+  "name": "@nucleux/md3-handwriting",
+  "version": "0.5.0",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Material 3 Handwriting Input — write the request by hand, settle uncertain words, add it yourself — Nucleux agentic UI for React.",
+  "keywords": [
+    "nucleux",
+    "react",
+    "ui",
+    "components",
+    "agentic",
+    "ai",
+    "tailwind",
+    "md3",
+    "material",
+    "md3-handwriting",
+    "handwriting",
+    "pen",
+    "stylus",
+    "ink"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@nucleux/handwriting": "workspace:*",
+    "@nucleux/md3-button": "workspace:*",
+    "@nucleux/md3-chip": "workspace:*",
+    "@nucleux/md3-loading-indicator": "workspace:*",
+    "@nucleux/md3-menu": "workspace:*",
+    "@nucleux/md3-text-field": "workspace:*",
+    "@nucleux/utils": "workspace:*",
+    "lucide-react": "^0.469.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "@types/react": "^18.3.18",
+    "react": "^18.3.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelligaia-open-labs/nucleux.git",
+    "directory": "packages/md3-handwriting"
+  },
+  "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme"
+}

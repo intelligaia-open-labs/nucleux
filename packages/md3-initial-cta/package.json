@@ -1,0 +1,69 @@
+{
+  "name": "@nucleux/md3-initial-cta",
+  "version": "0.5.0",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Material 3 Initial CTA — the large, inviting composer that anchors an empty workspace — Nucleux agentic UI for React.",
+  "keywords": [
+    "nucleux",
+    "react",
+    "ui",
+    "components",
+    "agentic",
+    "ai",
+    "tailwind",
+    "md3",
+    "material",
+    "md3-initial-cta",
+    "initial-cta",
+    "empty-state",
+    "composer"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@nucleux/initial-cta": "workspace:*",
+    "@nucleux/md3-icon-button": "workspace:*",
+    "@nucleux/md3-open-input": "workspace:*",
+    "@nucleux/md3-suggested-prompts": "workspace:*",
+    "@nucleux/open-input": "workspace:*",
+    "@nucleux/suggested-prompts": "workspace:*",
+    "@nucleux/utils": "workspace:*",
+    "lucide-react": "^0.469.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "@types/react": "^18.3.18",
+    "react": "^18.3.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelligaia-open-labs/nucleux.git",
+    "directory": "packages/md3-initial-cta"
+  },
+  "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme"
+}
