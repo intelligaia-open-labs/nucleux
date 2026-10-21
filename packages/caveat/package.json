@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Caveat — says what is incomplete, uncertain or out of date about an AI result — Nucleux agentic UI for React.",
+  "description": "Caveat \u2014 says what is incomplete, uncertain or out of date about an AI result \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -36,6 +36,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
+    "@nucleux/tooltip": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0"
   },

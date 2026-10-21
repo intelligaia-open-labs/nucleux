@@ -36,6 +36,12 @@
     "react-dom": ">=18"
   },
   "dependencies": {
+    "@nucleux/badge": "workspace:*",
+    "@nucleux/button": "workspace:*",
+    "@nucleux/field": "workspace:*",
+    "@nucleux/input": "workspace:*",
+    "@nucleux/select": "workspace:*",
+    "@nucleux/textarea": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0"
   },

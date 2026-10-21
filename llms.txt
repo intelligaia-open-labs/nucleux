@@ -79,14 +79,18 @@ than hand-rolling one. The MCP server (`@nucleux/mcp`) names the shadcn equivale
 - `pnpm build` — tsup build all packages (ESM + CJS + .d.ts)
 - `pnpm validate` — full gate (typecheck → test → build → build-storybook)
 
-## Component catalog (123 packages)
+## Component catalog (140 packages)
 
 Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do not edit by hand.
 
-### shadcn family (79)
+### shadcn family (96)
 
 - **accordion** (`@nucleux/accordion`) — Collapsible accordion panels.
   Exports: `Accordion, AccordionItem, AccordionTrigger, AccordionContent, AccordionProps, AccordionItemProps, AccordionTriggerProps, AccordionContentProps`
+- **agent-avatar** (`@nucleux/agent-avatar`) — Avatar — a consistent, non-photographic mark that represents the AI on every surface.
+  Exports: `AgentAvatar, AgentAvatarSize, AgentAvatarShape, AgentAvatarStatus, AgentAvatarProps`
+- **ai-icons** (`@nucleux/ai-icons`) — Icons — a small, stable AI mark vocabulary: action, generated, working and tool use.
+  Exports: `AiSparkleIcon, AiGeneratedIcon, AiWorkingIcon, AiWandIcon, AiRegenerateIcon, AiToolIcon, aiGlyphs, defaultAiIconGlyphs, …`
 - **alert** (`@nucleux/alert`) — Contextual message banner (info/success/warning/error).
   Exports: `Alert, AlertVariant, AlertProps`
 - **alert-dialog** (`@nucleux/alert-dialog`) — Modal confirmation dialog.
@@ -95,6 +99,10 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `AspectRatio, AspectRatioProps`
 - **attachment** (`@nucleux/attachment`) — Removable file and image attachments.
   Exports: `Attachment, AttachmentGroup, AttachmentProps, AttachmentGroupProps`
+- **attachments** (`@nucleux/attachments`) — Attachments — upload files, photos, docs for the AI to read.
+  Exports: `formatFileSize, Attachments, AttachmentsItem, AttachmentsTray, AttachmentsTrigger, AttachmentsDropZone, AttachmentsNote, AttachmentsVariant, …`
+- **autocomplete** (`@nucleux/autocomplete`) — Autocomplete — ghost text that anticipates and completes user actions.
+  Exports: `Autocomplete, AutocompleteVariant, AutocompleteAcceptKey, AutocompleteState, AutocompleteRequest, AutocompleteProps`
 - **avatar** (`@nucleux/avatar`) — Avatar with image, initials, or role icon.
   Exports: `Avatar, AvatarProps`
 - **badge** (`@nucleux/badge`) — Compact status pill / label.
@@ -114,7 +122,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **carousel** (`@nucleux/carousel`) — Swipeable content carousel.
   Exports: `Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselProps, CarouselContentProps, CarouselItemProps`
 - **caveat** (`@nucleux/caveat`) — Caveat — says what is incomplete, uncertain or out of date about an AI result.
-  Exports: `Caveat, CaveatProps`
+  Exports: `Caveat, CaveatTooltip, CaveatVariant, CaveatProps, CaveatTooltipProps`
 - **chart** (`@nucleux/chart`) — Composable chart primitives.
   Exports: `ChartTooltip, ChartLegend, ChartContainer, ChartTooltipContent, ChartLegendContent, ChartSeriesConfig, ChartConfig, ChartContainerProps, …`
 - **checkbox** (`@nucleux/checkbox`) — Accessible checkbox.
@@ -123,14 +131,16 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `CodeBlock, CodeBlockProps`
 - **collapsible** (`@nucleux/collapsible`) — Single collapsible disclosure region.
   Exports: `Collapsible, CollapsibleTrigger, CollapsibleContent, CollapsibleProps, CollapsibleTriggerProps, CollapsibleContentProps`
+- **color** (`@nucleux/color`) — Color — a reserved AI accent and working treatment that signals AI is active.
+  Exports: `aiColorClasses, AiColor, AiColorHighlight, AiColorDot, AiColorWorkingRing, AiColorToken, AiColorVariant, AiColorProps, …`
 - **combobox** (`@nucleux/combobox`) — Searchable single-select combobox.
   Exports: `Combobox, ComboboxOption, ComboboxProps`
 - **command** (`@nucleux/command`) — Searchable command palette.
   Exports: `Command, CommandInput, CommandList, CommandGroup, CommandItem, CommandEmpty, CommandProps, CommandInputProps, …`
 - **connectors** (`@nucleux/connectors`) — Connectors — connect an external tool or data source.
-  Exports: `Connector, ConnectorProps`
+  Exports: `Connector, ConnectorList, ConnectorScopePicker, ConnectorLivePill, ConnectorStatus, ConnectorProps, ConnectorListProps, ConnectorScope, …`
 - **consent** (`@nucleux/consent`) — Consent — asks before the agent accesses something sensitive or acts.
-  Exports: `Consent, ConsentPermission, ConsentProps`
+  Exports: `Consent, ConsentDialog, ConsentToggle, ConsentPermission, ConsentRequestProps, ConsentProps, ConsentDialogProps, ConsentToggleProps`
 - **context-menu** (`@nucleux/context-menu`) — Right-click context menu.
   Exports: `ContextMenu, ContextMenuItem, ContextMenuSeparator, ContextMenuLabel, ContextMenuProps, ContextMenuItemProps`
 - **data-table** (`@nucleux/data-table`) — Sortable, paginated data table.
@@ -141,6 +151,8 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `Dialog, DialogHeader, DialogTitle, DialogDescription, DialogFooter, ModalHeader, ModalTitle, ModalDescription, …`
 - **direction** (`@nucleux/direction`) — Text direction (LTR/RTL) provider and hook.
   Exports: `DirectionProvider, useDirection, Direction, DirectionProviderProps`
+- **disclaimer** (`@nucleux/disclaimer`) — Disclaimer — a first-impression clarification of what the AI is, isn't, and what it doesn't know.
+  Exports: `Disclaimer, DisclaimerVariant, DisclaimerGroup, DisclaimerProps`
 - **disclosure** (`@nucleux/disclosure`) — Disclosure — marks where AI is involved: an AI action, AI at work, or AI-generated content.
   Exports: `Disclosure, DisclosureVariant, DisclosureProps`
 - **drawer** (`@nucleux/drawer`) — Draggable edge drawer with focus trap and scroll lock.
@@ -149,12 +161,22 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuGroup, DropdownMenuSeparator, DropdownMenuShortcut, …`
 - **empty** (`@nucleux/empty`) — Empty state — media, title, description and actions.
   Exports: `Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent, EmptyMediaProps`
+- **example-gallery** (`@nucleux/example-gallery`) — Example Gallery — a wall of curated outputs that shows users what's possible before they type.
+  Exports: `ExampleGalleryItem, ExampleGallery, ExampleGalleryVariant, ExampleGallerySelectBehavior, ExampleGalleryExample, ExampleGalleryItemProps, ExampleGalleryProps`
 - **field** (`@nucleux/field`) — Form field layout — label, control, description and error.
   Exports: `FieldSet, FieldLegend, FieldGroup, fieldVariants, Field, FieldContent, FieldLabel, FieldTitle, …`
 - **form** (`@nucleux/form`) — Accessible form primitives.
   Exports: `Form, FormField, useFormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage`
+- **gesture** (`@nucleux/gesture`) — Gesture Input — swipes, pinches, circles as expressive signals.
+  Exports: `recognizeSimpleGesture, GestureInput, GestureInputVariant, GestureInputBuiltInGesture, GestureInputGesture, GestureInputSource, GestureInputPoint, GestureInputBounds, …`
+- **handwriting** (`@nucleux/handwriting`) — Handwriting Input — hand-drawn input recognised as text or instructions.
+  Exports: `HandwritingInput, HandwritingInputVariant, HandwritingInputConvert, HandwritingInputMode, HandwritingInputStatus, HandwritingPoint, HandwritingStroke, HandwritingWord, …`
 - **hover-card** (`@nucleux/hover-card`) — Hover-triggered content card.
   Exports: `HoverCard, HoverCardProps`
+- **iconography** (`@nucleux/iconography`) — Iconography — reserved AI action controls: sparkle = generate, refresh = regenerate, wand = transform.
+  Exports: `Iconography, IconographyIntent, IconographyProps`
+- **initial-cta** (`@nucleux/initial-cta`) — Initial CTA — the large, inviting input that anchors the empty state.
+  Exports: `InitialCta, InitialCtaVariant, InitialCtaHeadingLevel, InitialCtaProps`
 - **input** (`@nucleux/input`) — Text input field.
   Exports: `Input, InputProps`
 - **input-group** (`@nucleux/input-group`) — Input with attached icons, text and buttons.
@@ -166,11 +188,13 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **kbd** (`@nucleux/kbd`) — Keyboard key and shortcut display.
   Exports: `Kbd, KbdGroup, KbdProps, KbdGroupProps`
 - **knowledge-base** (`@nucleux/knowledge-base`) — Knowledge Base — choose the sources the agent may draw on.
-  Exports: `KnowledgeBase, KnowledgeSource, KnowledgeBaseProps`
+  Exports: `KnowledgeBase, KnowledgeBaseSources, KnowledgeBaseCoverage, KnowledgeBaseVariant, KnowledgeSourceStatus, KnowledgeBaseCoverageLevel, KnowledgeSource, KnowledgeBaseProps, …`
 - **label** (`@nucleux/label`) — Accessible form label.
   Exports: `Label, LabelProps`
 - **marker** (`@nucleux/marker`) — Inline note or divider marker for timelines and threads.
   Exports: `markerVariants, Marker, MarkerIcon, MarkerContent, MarkerVariant, MarkerProps, MarkerIconProps, MarkerContentProps`
+- **mcp-connection** (`@nucleux/mcp-connection`) — MCP Server Connection — standardised tool access so the AI can act, not just answer.
+  Exports: `McpConnection, McpConnectionTool, McpConnectionTools, McpConnectionPermission, McpConnectionActionPreview, McpConnectionStatus, McpConnectionStage, McpConnectionToolRisk, …`
 - **menubar** (`@nucleux/menubar`) — Application menu bar.
   Exports: `Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem, MenubarSeparator, MenubarProps, MenubarMenuProps, …`
 - **message** (`@nucleux/message`) — Chat message row with avatar + bubble.
@@ -178,25 +202,33 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **message-scroller** (`@nucleux/message-scroller`) — Auto-scrolling message list container.
   Exports: `MessageScroller, MessageScrollerProps`
 - **model-selection** (`@nucleux/model-selection`) — Model Selection — choose which model handles the request.
-  Exports: `ModelSelection, ModelOption, ModelSelectionProps`
+  Exports: `ModelSelection, ModelSelectionVariant, ModelOption, ModelSelectionProps`
+- **name** (`@nucleux/name`) — Name — a consistent name and role for the AI so it can be referred to and remembered.
+  Exports: `AgentName, AgentNameVariant, AgentNameProps`
 - **native-select** (`@nucleux/native-select`) — Styled native <select>.
   Exports: `NativeSelect, NativeSelectOption, NativeSelectOptGroup, NativeSelectProps`
 - **navigation-menu** (`@nucleux/navigation-menu`) — Navigation menu with dropdown panels.
   Exports: `NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink, NavigationMenuProps, NavigationMenuListProps, …`
-- **open-input** (`@nucleux/open-input`) — Open Input — free-form natural-language input.
-  Exports: `OpenInput, OpenInputProps`
+- **nudges** (`@nucleux/nudges`) — Nudges — tiny contextual hints that surface features the user hasn't discovered yet.
+  Exports: `NudgeAction, Nudge, NudgeVariant, NudgeSide, NudgePersist, NudgeActionProps, NudgeProps`
+- **open-input** (`@nucleux/open-input`) — Open Input — free-form text box for any natural-language ask.
+  Exports: `OpenInput, OpenInputVariant, OpenInputSendKey, OpenInputProps`
 - **pagination** (`@nucleux/pagination`) — Page navigation controls.
   Exports: `Pagination, PaginationProps`
 - **personality** (`@nucleux/personality`) — Personality — the voice and tone the assistant speaks in.
-  Exports: `defaultTones, Personality, ToneOption, PersonalityProps`
+  Exports: `defaultTones, Personality, PersonalityVoiceCard, PersonalitySampleDialog, ToneOption, PersonalityProps, PersonalityVoiceCardProps, PersonalitySampleTurn, …`
 - **popover** (`@nucleux/popover`) — Click popover with outside-click/Escape.
   Exports: `Popover, PopoverTrigger, PopoverContent, PopoverProps, PopoverTriggerProps, PopoverContentProps`
+- **proactive** (`@nucleux/proactive`) — Proactive Suggestions — invisible AI moments that arrive exactly when needed.
+  Exports: `ProactiveSuggestion, ProactiveSuggestionVariant, ProactiveSuggestionPersist, ProactiveSuggestionProps`
 - **progress** (`@nucleux/progress`) — Determinate/indeterminate progress bar.
   Exports: `Progress, ProgressSize, ProgressProps`
 - **questionnaire** (`@nucleux/questionnaire`) — Multi-step questionnaire with single, multiple, freeform and skippable answers.
   Exports: `Questionnaire, QuestionnaireProgress, QuestionnaireItem, QuestionnaireTitle, QuestionnaireDescription, QuestionnaireChoices, QuestionnaireChoice, QuestionnaireChoiceDescription, …`
 - **radio-group** (`@nucleux/radio-group`) — Single-select radio group.
   Exports: `RadioGroup, Radio, RadioGroupProps, RadioProps`
+- **randomize** (`@nucleux/randomize`) — Randomize — a 'dice' that kickstarts the experience with a fun result.
+  Exports: `Randomize, RandomizeVariant, RandomizeUseMode, RandomizeProps`
 - **resizable** (`@nucleux/resizable`) — Resizable split panels.
   Exports: `ResizablePanelGroup, ResizablePanel, ResizableHandle, ResizablePanelGroupProps, ResizablePanelProps, ResizableHandleProps`
 - **scroll-area** (`@nucleux/scroll-area`) — Styled scroll container.
@@ -218,17 +250,17 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **spinner** (`@nucleux/spinner`) — Animated loading indicator.
   Exports: `Spinner, SpinnerProps`
 - **structured-input** (`@nucleux/structured-input`) — StructuredInput — an agent's structured clarifying question.
-  Exports: `StructuredInput, StructuredOption, StructuredInputProps`
-- **suggested-prompts** (`@nucleux/suggested-prompts`) — Suggested Prompts — preset asks that jump-start a conversation.
-  Exports: `SuggestedPrompt, SuggestedPrompts, SuggestedPromptProps, SuggestedPromptsProps`
+  Exports: `StructuredInput, StructuredInputSlots, structuredPartsToText, StructuredInputTags, StructuredInputWizard, StructuredOption, StructuredInputProps, StructuredInputSlot, …`
+- **suggested-prompts** (`@nucleux/suggested-prompts`) — Suggested Prompts — smart, context-aware preset actions to jumpstart engagement.
+  Exports: `SuggestedPrompt, SuggestedPrompts, SuggestedPromptsVariant, SuggestedPromptsAfterSelect, SuggestedPromptItem, SuggestedPromptProps, SuggestedPromptsProps`
 - **switch** (`@nucleux/switch`) — Accessible on/off toggle.
   Exports: `Switch, SwitchSize, SwitchProps`
 - **table** (`@nucleux/table`) — Semantic table primitives.
   Exports: `Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption, TableProps, …`
 - **tabs** (`@nucleux/tabs`) — Accessible tabs (horizontal/vertical).
   Exports: `Tabs, TabsList, TabsTrigger, TabsContent, TabsProps, TabsListProps, TabsTriggerProps, TabsContentProps`
-- **templates** (`@nucleux/templates`) — Templates — fill-in-the-blank prompt scaffolds.
-  Exports: `Templates, PromptSegment, TemplatesProps`
+- **templates** (`@nucleux/templates`) — Templates — fill-in-the-blank prompt scaffolds that turn vague intent into a good question.
+  Exports: `Templates, TemplatesList, TemplatesBrowser, PromptSlot, PromptSegment, TemplatesProps, TemplatesListItem, TemplatesListProps, …`
 - **textarea** (`@nucleux/textarea`) — Multi-line text input.
   Exports: `Textarea, TextareaProps`
 - **toast** (`@nucleux/toast`) — Toast notifications + ToastProvider/useToast.
@@ -241,8 +273,10 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `Tooltip, TooltipSide, TooltipProps`
 - **trace** (`@nucleux/trace`) — Compact, collapsible list of agent steps.
   Exports: `Trace, TraceLine, TraceIcon, TraceTitle, TraceDescription, TraceCollapsible, TraceCollapsibleTrigger, TraceCollapsibleContent, …`
+- **visual-input** (`@nucleux/visual-input`) — Visual Input — attach images, screenshots, or videos as part of the ask.
+  Exports: `fileMatchesAccept, VisualInput, VisualInputVariant, VisualInputSource, VisualInputFileStatus, VisualInputFile, VisualInputRejectionReason, VisualInputRejection, …`
 - **voice-input** (`@nucleux/voice-input`) — VoiceInput — a live dictation bar with a waveform.
-  Exports: `VoiceInput, VoiceInputState, VoiceInputProps`
+  Exports: `VoiceInput, VoiceInputState, VoiceInputVariant, VoiceInputProps`
 
 ### Material 3 family (39)
 

@@ -26,6 +26,8 @@
   },
   "dependencies": {
     "@nucleux/button": "workspace:*",
+    "@nucleux/dialog": "workspace:*",
+    "@nucleux/switch": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0"
   },
@@ -45,7 +47,7 @@
     "directory": "packages/consent"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Consent — asks before the agent accesses something sensitive or acts — Nucleux agentic UI for React.",
+  "description": "Consent \u2014 asks before the agent accesses something sensitive or acts \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

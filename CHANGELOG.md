@@ -48,6 +48,27 @@ md3-tool-call. Replacements: `IconButton` → `Button size="icon" | "icon-sm" |
 `SearchInput` → `Input type="search"`; `PageHeader` → a `<header>` with an
 `<h1>`. `global-nav` and `nav-panel` go when the shadcn `sidebar` lands.
 
+#### Added (phase 4: nucleux.in's agentic patterns, shadcn family)
+- 17 new packages, built from each pattern's spec on nucleux.in (variants,
+  behaviour rules, copy): `agent-avatar`, `name` (`AgentName`), `iconography`,
+  `color` (`AiColor`), `ai-icons`, `example-gallery`, `nudges` (`Nudge`),
+  `disclaimer`, `initial-cta`, `proactive` (`ProactiveSuggestion`), `randomize`,
+  `autocomplete`, `mcp-connection`, `attachments`, `visual-input`, `handwriting`
+  (`HandwritingInput`), `gesture` (`GestureInput`). Recognition, suggestions and
+  connections are always the app's callbacks; nothing calls a network.
+- The 12 existing agentic packages were reviewed against their specs and gained
+  the missing variants and behaviour (additive): e.g. Disclosure (first-run
+  banner, details in place), Consent (`ConsentDialog`, `ConsentToggle`, policy
+  link), OpenInput (async send with retry, `sendKey`, counter), Templates
+  (`TemplatesList`, `TemplatesBrowser`), ModelSelection (trade-off and
+  auto-route), KnowledgeBase (sources, coverage), Connectors (scope picker, live
+  pill), VoiceInput (mic-button, live transcript, pause), StructuredInput
+  (named slots, tag input, wizard).
+- Behaviour changes: OpenInput's send button sits in a footer row; SuggestedPrompts
+  shows at most `max` (5) items; Connector's root is now a column.
+- Fixed: Personality and StructuredInput radio groups gain arrow-key roving
+  focus; ModelSelection's dropdown is keyboard operable.
+
 #### Added (phase 3: the remaining Material 3 basics)
 - `md3-button-group` (standard and connected, five sizes, single and multiple
   selection), `md3-split-button` (four styles, menu with keyboard support),

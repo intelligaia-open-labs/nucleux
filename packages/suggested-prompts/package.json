@@ -25,14 +25,15 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@nucleux/utils": "workspace:*"
+    "@nucleux/button": "workspace:*",
+    "@nucleux/utils": "workspace:*",
+    "lucide-react": "^0.469.0"
   },
   "devDependencies": {
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
     "@types/react": "^18.3.18",
-    "react": "^18.3.1",
-    "lucide-react": "^0.469.0"
+    "react": "^18.3.1"
   },
   "publishConfig": {
     "access": "public"
@@ -44,7 +45,7 @@
     "directory": "packages/suggested-prompts"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Suggested Prompts — preset asks that jump-start a conversation — Nucleux agentic UI for React.",
+  "description": "Suggested Prompts — smart, context-aware preset actions to jumpstart engagement — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

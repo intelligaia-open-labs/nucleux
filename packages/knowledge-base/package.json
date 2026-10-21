@@ -37,6 +37,9 @@
   },
   "dependencies": {
     "@nucleux/utils": "workspace:*",
+    "@nucleux/badge": "workspace:*",
+    "@nucleux/button": "workspace:*",
+    "@nucleux/spinner": "workspace:*",
     "lucide-react": "^0.469.0"
   },
   "devDependencies": {

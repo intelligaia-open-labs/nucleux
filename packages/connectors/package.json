@@ -37,6 +37,10 @@
   },
   "dependencies": {
     "@nucleux/utils": "workspace:*",
+    "@nucleux/button": "workspace:*",
+    "@nucleux/checkbox": "workspace:*",
+    "@nucleux/spinner": "workspace:*",
+    "@nucleux/switch": "workspace:*",
     "lucide-react": "^0.469.0"
   },
   "devDependencies": {
