@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-autocomplete",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Autocomplete — ghost text that anticipates and completes user actions — Nucleux agentic UI for React.",

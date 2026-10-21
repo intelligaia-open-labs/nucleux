@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/toggle",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Two-state pressable toggle button \u2014 Nucleux agentic UI for React.",
+  "description": "Two-state pressable toggle button — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

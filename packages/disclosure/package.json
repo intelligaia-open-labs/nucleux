@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/disclosure",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Disclosure \u2014 marks where AI is involved: an AI action, AI at work, or AI-generated content \u2014 Nucleux agentic UI for React.",
+  "description": "Disclosure — marks where AI is involved: an AI action, AI at work, or AI-generated content — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

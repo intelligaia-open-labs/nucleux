@@ -96,7 +96,7 @@ Discovery is concise; details come on request, so no call returns the whole cata
 | `search_patterns` | Find curated page patterns by intent ("admin dashboard to monitor metrics and manage users"). Returns ids, summaries, use cases, required components. |
 | `get_pattern` | Full spec for one pattern: when (not) to use it, components, composition tree, layout, responsive and accessibility rules, tokens, states, anti-patterns, and a typechecked TSX example. |
 | `search_components` | Keyword search across component names, descriptions and keywords. |
-| `get_component` | Exact contract for one component: import line, exports, every prop with type, required, default, allowed values and deprecations, plus the patterns that use it. `framework: "html"` returns static markup instead. |
+| `get_component` | Exact contract for one component: import line, exports, every prop with type, required, default, allowed values and deprecations, plus the patterns that use it and its twin in the other family (shadcn ↔ Material 3, and whether they share props). `framework: "html"` returns static markup instead.
 | `validate_design` | Check a plan (pattern ids + component tree with props) against the catalog. Returns JSON issues: unknown patterns/components, props a component lacks, invalid variant values, missing required or deprecated props, pattern components left out. |
 | `get_setup` | Requirements and install for `react` (pass `packageManager` and `configModule`) or plain `html`. |
 | `list_components` | Every component with a one-line description. |

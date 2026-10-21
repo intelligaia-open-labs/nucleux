@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/date-picker",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Date picker with calendar popover \u2014 Nucleux agentic UI for React.",
+  "description": "Date picker with calendar popover — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/personality",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Personality \u2014 the voice and tone the assistant speaks in \u2014 Nucleux agentic UI for React.",
+  "description": "Personality — the voice and tone the assistant speaks in — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

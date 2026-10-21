@@ -1,6 +1,6 @@
 {
   "library": "@nucleux/react",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "generatedFrom": "packages/* (do not edit — run scripts/gen-mcp-catalog.mjs)",
   "setup": {
     "installFull": "pnpm add @nucleux/react @nucleux/tokens",
@@ -262,6 +262,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-agent-avatar",
+        "package": "@nucleux/md3-agent-avatar",
+        "component": "Md3AgentAvatar",
+        "sharesApi": true
       }
     },
     {
@@ -306,6 +312,7 @@
         "AiIconsProps"
       ],
       "components": [
+        "AiIcons",
         "AiSparkleIcon",
         "AiGeneratedIcon",
         "AiWorkingIcon",
@@ -313,10 +320,9 @@
         "AiRegenerateIcon",
         "AiToolIcon",
         "AiIconProvider",
-        "AiIcon",
-        "AiIcons"
+        "AiIcon"
       ],
-      "import": "import { AiSparkleIcon, AiGeneratedIcon, AiWorkingIcon, AiWandIcon } from \"@nucleux/ai-icons\";",
+      "import": "import { AiIcons, AiSparkleIcon, AiGeneratedIcon, AiWorkingIcon } from \"@nucleux/ai-icons\";",
       "installSingle": "pnpm add @nucleux/ai-icons @nucleux/tokens",
       "props": [
         {
@@ -447,6 +453,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-ai-icons",
+        "package": "@nucleux/md3-ai-icons",
+        "component": "Md3AiIcons",
+        "sharesApi": true
       }
     },
     {
@@ -1006,6 +1018,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-attachments",
+        "package": "@nucleux/md3-attachments",
+        "component": "Md3Attachments",
+        "sharesApi": true
       }
     },
     {
@@ -1178,6 +1196,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-autocomplete",
+        "package": "@nucleux/md3-autocomplete",
+        "component": "Md3Autocomplete",
+        "sharesApi": true
       }
     },
     {
@@ -1326,6 +1350,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-badge",
+        "package": "@nucleux/md3-badge",
+        "component": "Md3Badge",
+        "sharesApi": false
       }
     },
     {
@@ -1485,12 +1515,12 @@
         "BubbleReactionsProps"
       ],
       "components": [
-        "BubbleGroup",
         "Bubble",
+        "BubbleGroup",
         "BubbleContent",
         "BubbleReactions"
       ],
-      "import": "import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from \"@nucleux/bubble\";",
+      "import": "import { Bubble, BubbleGroup, BubbleContent, BubbleReactions } from \"@nucleux/bubble\";",
       "installSingle": "pnpm add @nucleux/bubble @nucleux/tokens",
       "props": [
         {
@@ -1689,6 +1719,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-button",
+        "package": "@nucleux/md3-button",
+        "component": "Md3Button",
+        "sharesApi": false
       }
     },
     {
@@ -1766,6 +1802,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-button-group",
+        "package": "@nucleux/md3-button-group",
+        "component": "Md3ButtonGroup",
+        "sharesApi": false
       }
     },
     {
@@ -1966,6 +2008,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-card",
+        "package": "@nucleux/md3-card",
+        "component": "Md3Card",
+        "sharesApi": false
       }
     },
     {
@@ -2039,6 +2087,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-carousel",
+        "package": "@nucleux/md3-carousel",
+        "component": "Md3Carousel",
+        "sharesApi": false
       }
     },
     {
@@ -2144,6 +2198,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-caveat",
+        "package": "@nucleux/md3-caveat",
+        "component": "Md3Caveat",
+        "sharesApi": true
       }
     },
     {
@@ -2312,6 +2372,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-checkbox",
+        "package": "@nucleux/md3-checkbox",
+        "component": "Md3Checkbox",
+        "sharesApi": false
       }
     },
     {
@@ -2561,6 +2627,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-color",
+        "package": "@nucleux/md3-color",
+        "component": "Md3AiColor",
+        "sharesApi": true
       }
     },
     {
@@ -2996,6 +3068,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-connectors",
+        "package": "@nucleux/md3-connectors",
+        "component": "Md3Connector",
+        "sharesApi": true
       }
     },
     {
@@ -3190,6 +3268,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-consent",
+        "package": "@nucleux/md3-consent",
+        "component": "Md3Consent",
+        "sharesApi": true
       }
     },
     {
@@ -3427,6 +3511,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-date-picker",
+        "package": "@nucleux/md3-date-picker",
+        "component": "Md3DatePicker",
+        "sharesApi": false
       }
     },
     {
@@ -3577,6 +3667,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-dialog",
+        "package": "@nucleux/md3-dialog",
+        "component": "Md3Dialog",
+        "sharesApi": false
       }
     },
     {
@@ -3750,6 +3846,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-disclaimer",
+        "package": "@nucleux/md3-disclaimer",
+        "component": "Md3Disclaimer",
+        "sharesApi": true
       }
     },
     {
@@ -3865,6 +3967,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-disclosure",
+        "package": "@nucleux/md3-disclosure",
+        "component": "Md3Disclosure",
+        "sharesApi": true
       }
     },
     {
@@ -4385,10 +4493,10 @@
         "ExampleGalleryProps"
       ],
       "components": [
-        "ExampleGalleryItem",
-        "ExampleGallery"
+        "ExampleGallery",
+        "ExampleGalleryItem"
       ],
-      "import": "import { ExampleGalleryItem, ExampleGallery } from \"@nucleux/example-gallery\";",
+      "import": "import { ExampleGallery, ExampleGalleryItem } from \"@nucleux/example-gallery\";",
       "installSingle": "pnpm add @nucleux/example-gallery @nucleux/tokens",
       "props": [
         {
@@ -4551,6 +4659,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-example-gallery",
+        "package": "@nucleux/md3-example-gallery",
+        "component": "Md3ExampleGallery",
+        "sharesApi": true
       }
     },
     {
@@ -4595,10 +4709,10 @@
         "FieldErrorProps"
       ],
       "components": [
+        "Field",
         "FieldSet",
         "FieldLegend",
         "FieldGroup",
-        "Field",
         "FieldContent",
         "FieldLabel",
         "FieldTitle",
@@ -4606,7 +4720,7 @@
         "FieldSeparator",
         "FieldError"
       ],
-      "import": "import { FieldSet, FieldLegend, FieldGroup, Field } from \"@nucleux/field\";",
+      "import": "import { Field, FieldSet, FieldLegend, FieldGroup } from \"@nucleux/field\";",
       "installSingle": "pnpm add @nucleux/field @nucleux/tokens",
       "props": [
         {
@@ -4878,6 +4992,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-gesture",
+        "package": "@nucleux/md3-gesture",
+        "component": "Md3GestureInput",
+        "sharesApi": true
       }
     },
     {
@@ -5069,6 +5189,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-handwriting",
+        "package": "@nucleux/md3-handwriting",
+        "component": "Md3HandwritingInput",
+        "sharesApi": true
       }
     },
     {
@@ -5291,6 +5417,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-iconography",
+        "package": "@nucleux/md3-iconography",
+        "component": "Md3Iconography",
+        "sharesApi": true
       }
     },
     {
@@ -5426,6 +5558,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-initial-cta",
+        "package": "@nucleux/md3-initial-cta",
+        "component": "Md3InitialCta",
+        "sharesApi": true
       }
     },
     {
@@ -5708,9 +5846,9 @@
         "ItemFooterProps"
       ],
       "components": [
+        "Item",
         "ItemGroup",
         "ItemSeparator",
-        "Item",
         "ItemMedia",
         "ItemContent",
         "ItemTitle",
@@ -5719,7 +5857,7 @@
         "ItemHeader",
         "ItemFooter"
       ],
-      "import": "import { ItemGroup, ItemSeparator, Item, ItemMedia } from \"@nucleux/item\";",
+      "import": "import { Item, ItemGroup, ItemSeparator, ItemMedia } from \"@nucleux/item\";",
       "installSingle": "pnpm add @nucleux/item @nucleux/tokens",
       "props": [
         {
@@ -6003,6 +6141,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-knowledge-base",
+        "package": "@nucleux/md3-knowledge-base",
+        "component": "Md3KnowledgeBase",
+        "sharesApi": true
       }
     },
     {
@@ -6510,6 +6654,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-mcp-connection",
+        "package": "@nucleux/md3-mcp-connection",
+        "component": "Md3McpConnection",
+        "sharesApi": true
       }
     },
     {
@@ -6645,6 +6795,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "agent-avatar",
+        "package": "@nucleux/agent-avatar",
+        "component": "AgentAvatar",
+        "sharesApi": true
       }
     },
     {
@@ -6782,6 +6938,7 @@
         "Md3AiIconsTone"
       ],
       "components": [
+        "Md3AiIcons",
         "Md3AiSparkleIcon",
         "Md3AiGeneratedIcon",
         "Md3AiWorkingIcon",
@@ -6789,16 +6946,21 @@
         "Md3AiRegenerateIcon",
         "Md3AiToolIcon",
         "Md3AiIconProvider",
-        "Md3AiIcon",
-        "Md3AiIcons"
+        "Md3AiIcon"
       ],
-      "import": "import { Md3AiSparkleIcon, Md3AiGeneratedIcon, Md3AiWorkingIcon, Md3AiWandIcon } from \"@nucleux/md3-ai-icons\";",
+      "import": "import { Md3AiIcons, Md3AiSparkleIcon, Md3AiGeneratedIcon, Md3AiWorkingIcon } from \"@nucleux/md3-ai-icons\";",
       "installSingle": "pnpm add @nucleux/md3-ai-icons @nucleux/tokens",
       "props": [],
       "readme": "# @nucleux/md3-ai-icons\n\nMaterial 3 AI Icons — one reserved mark per AI meaning, always with words — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nThe Material 3 twin of [`@nucleux/ai-icons`](https://www.npmjs.com/package/@nucleux/ai-icons): it shares that package's API — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, state layers and motion (with reduced-motion handling).\n\n## Exports\n\n- **`Md3AiIcon`** — one AI meaning (`role` ai-action / generated-content / agent-working / tool-use) with its reserved mark and `label`; generated content sits in an outlined assist chip\n- **`Md3AiIcons`** — the AI presence mark: `variant` sparkle / thinking-orb / branded-mark, `size`, `tone`, `label`, `glyph`\n- **`Md3AiIconProvider`** — sets the approved glyph per role once (shares its context with `AiIconProvider`)\n- Glyphs: `Md3AiSparkleIcon`, `Md3AiGeneratedIcon`, `Md3AiWorkingIcon`, `Md3AiWandIcon`, `Md3AiRegenerateIcon`, `Md3AiToolIcon` (the same drawings as `@nucleux/ai-icons`)\n- Shared vocabulary (re-exported from `@nucleux/ai-icons`): `useAiGlyph`, `aiGlyphs`, `defaultAiIconGlyphs`, types `AiIconRole`, `AiGlyphName`, `AiIconGlyphs`\n- Types: `Md3AiIconProps`, `Md3AiIconsProps`, `Md3AiIconsVariant`, `Md3AiIconsSize`, `Md3AiIconsTone`, `Md3AiGlyphProps`, `Md3AiWorkingIconProps`, `Md3AiIconProviderProps`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-ai-icons @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3AiIcon } from \"@nucleux/md3-ai-icons\";\n\n<Md3AiIcon role=\"agent-working\" label=\"Rewriting release note…\" />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "ai-icons",
+        "package": "@nucleux/ai-icons",
+        "component": "AiIcons",
+        "sharesApi": true
       }
     },
     {
@@ -6853,6 +7015,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "attachments",
+        "package": "@nucleux/attachments",
+        "component": "Attachments",
+        "sharesApi": true
       }
     },
     {
@@ -6894,6 +7062,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "autocomplete",
+        "package": "@nucleux/autocomplete",
+        "component": "Autocomplete",
+        "sharesApi": true
       }
     },
     {
@@ -6954,6 +7128,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "badge",
+        "package": "@nucleux/badge",
+        "component": "Badge",
+        "sharesApi": false
       }
     },
     {
@@ -7135,6 +7315,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "button",
+        "package": "@nucleux/button",
+        "component": "Button",
+        "sharesApi": false
       }
     },
     {
@@ -7307,6 +7493,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "button-group",
+        "package": "@nucleux/button-group",
+        "component": "ButtonGroup",
+        "sharesApi": false
       }
     },
     {
@@ -7368,6 +7560,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "card",
+        "package": "@nucleux/card",
+        "component": "CardContainer",
+        "sharesApi": false
       }
     },
     {
@@ -7495,6 +7693,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "carousel",
+        "package": "@nucleux/carousel",
+        "component": "Carousel",
+        "sharesApi": false
       }
     },
     {
@@ -7534,6 +7738,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "caveat",
+        "package": "@nucleux/caveat",
+        "component": "Caveat",
+        "sharesApi": true
       }
     },
     {
@@ -7598,6 +7808,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "checkbox",
+        "package": "@nucleux/checkbox",
+        "component": "Checkbox",
+        "sharesApi": false
       }
     },
     {
@@ -7720,6 +7936,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "color",
+        "package": "@nucleux/color",
+        "component": "AiColor",
+        "sharesApi": true
       }
     },
     {
@@ -7767,6 +7989,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "connectors",
+        "package": "@nucleux/connectors",
+        "component": "Connector",
+        "sharesApi": true
       }
     },
     {
@@ -7809,6 +8037,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "consent",
+        "package": "@nucleux/consent",
+        "component": "Consent",
+        "sharesApi": true
       }
     },
     {
@@ -7885,6 +8119,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "date-picker",
+        "package": "@nucleux/date-picker",
+        "component": "DatePicker",
+        "sharesApi": false
       }
     },
     {
@@ -7969,6 +8209,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "dialog",
+        "package": "@nucleux/dialog",
+        "component": "Dialog",
+        "sharesApi": false
       }
     },
     {
@@ -8007,6 +8253,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "disclaimer",
+        "package": "@nucleux/disclaimer",
+        "component": "Disclaimer",
+        "sharesApi": true
       }
     },
     {
@@ -8043,6 +8295,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "disclosure",
+        "package": "@nucleux/disclosure",
+        "component": "Disclosure",
+        "sharesApi": true
       }
     },
     {
@@ -8134,16 +8392,22 @@
         "Md3ExampleGallerySelectBehavior"
       ],
       "components": [
-        "Md3ExampleGalleryItem",
-        "Md3ExampleGallery"
+        "Md3ExampleGallery",
+        "Md3ExampleGalleryItem"
       ],
-      "import": "import { Md3ExampleGalleryItem, Md3ExampleGallery } from \"@nucleux/md3-example-gallery\";",
+      "import": "import { Md3ExampleGallery, Md3ExampleGalleryItem } from \"@nucleux/md3-example-gallery\";",
       "installSingle": "pnpm add @nucleux/md3-example-gallery @nucleux/tokens",
       "props": [],
       "readme": "# @nucleux/md3-example-gallery\n\nMaterial 3 Example Gallery — real, product-specific tasks that place an editable request in the composer — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/example-gallery`](https://www.npmjs.com/package/@nucleux/example-gallery) (`ExampleGallery`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3ExampleGallery`** — curated examples as outlined M3 cards in a grid, a strip or `Md3Tabs` by category; fills the composer via `onSelect` or previews in an `Md3Dialog` first; `collapsed` folds to a text button\n- **`Md3ExampleGalleryItem`** — one example card\n- Types: `Md3ExampleGalleryProps`, `Md3ExampleGalleryItemProps`, `Md3ExampleGalleryVariant`, `Md3ExampleGallerySelectBehavior`, `ExampleGalleryExample`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-example-gallery @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3ExampleGallery } from \"@nucleux/md3-example-gallery\";\n\n<Md3ExampleGallery examples={examples} selectBehavior=\"preview\" onSelect={(prompt) => setDraft(prompt)} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "example-gallery",
+        "package": "@nucleux/example-gallery",
+        "component": "ExampleGallery",
+        "sharesApi": true
       }
     },
     {
@@ -8393,6 +8657,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "gesture",
+        "package": "@nucleux/gesture",
+        "component": "GestureInput",
+        "sharesApi": true
       }
     },
     {
@@ -8431,6 +8701,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "handwriting",
+        "package": "@nucleux/handwriting",
+        "component": "HandwritingInput",
+        "sharesApi": true
       }
     },
     {
@@ -8535,6 +8811,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "iconography",
+        "package": "@nucleux/iconography",
+        "component": "Iconography",
+        "sharesApi": true
       }
     },
     {
@@ -8574,6 +8856,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "initial-cta",
+        "package": "@nucleux/initial-cta",
+        "component": "InitialCta",
+        "sharesApi": true
       }
     },
     {
@@ -8619,6 +8907,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "knowledge-base",
+        "package": "@nucleux/knowledge-base",
+        "component": "KnowledgeBase",
+        "sharesApi": true
       }
     },
     {
@@ -8816,6 +9110,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "mcp-connection",
+        "package": "@nucleux/mcp-connection",
+        "component": "McpConnection",
+        "sharesApi": true
       }
     },
     {
@@ -8947,6 +9247,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "message",
+        "package": "@nucleux/message",
+        "component": "Message",
+        "sharesApi": false
       }
     },
     {
@@ -8984,6 +9290,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "model-selection",
+        "package": "@nucleux/model-selection",
+        "component": "ModelSelection",
+        "sharesApi": true
       }
     },
     {
@@ -9021,6 +9333,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "name",
+        "package": "@nucleux/name",
+        "component": "AgentName",
+        "sharesApi": true
       }
     },
     {
@@ -9333,16 +9651,22 @@
         "Md3NudgePersist"
       ],
       "components": [
-        "Md3NudgeAction",
-        "Md3Nudge"
+        "Md3Nudge",
+        "Md3NudgeAction"
       ],
-      "import": "import { Md3NudgeAction, Md3Nudge } from \"@nucleux/md3-nudges\";",
+      "import": "import { Md3Nudge, Md3NudgeAction } from \"@nucleux/md3-nudges\";",
       "installSingle": "pnpm add @nucleux/md3-nudges @nucleux/tokens",
       "props": [],
       "readme": "# @nucleux/md3-nudges\n\nMaterial 3 Nudges — a quiet, dismissible tip about a capability that would help right now — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/nudges`](https://www.npmjs.com/package/@nucleux/nudges) (`Nudge`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3Nudge`** — a dismissible tip: a filled inline card, an anchored primary-container bubble (`tooltip-nudge`) or a primary ring with a \"New\" badge (`highlight-pulse`); Why this tip?, Try it, Not now; remembered with `nudgeId`\n- **`Md3NudgeAction`** — an extra action inside the nudge (takes the shadcn `ButtonProps`)\n- Types: `Md3NudgeProps`, `Md3NudgeActionProps`, `Md3NudgeVariant`, `Md3NudgeSide`, `Md3NudgePersist`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-nudges @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Nudge } from \"@nucleux/md3-nudges\";\n\n<Md3Nudge\n  nudgeId=\"pdf-upload\"\n  message=\"You can ask Aria about text you select in a transcript.\"\n  reason=\"You selected transcript text twice today.\"\n  onTry={openSelectionAsk}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "nudges",
+        "package": "@nucleux/nudges",
+        "component": "Nudge",
+        "sharesApi": true
       }
     },
     {
@@ -9382,6 +9706,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "open-input",
+        "package": "@nucleux/open-input",
+        "component": "OpenInput",
+        "sharesApi": true
       }
     },
     {
@@ -9423,6 +9753,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "personality",
+        "package": "@nucleux/personality",
+        "component": "Personality",
+        "sharesApi": true
       }
     },
     {
@@ -9462,6 +9798,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "proactive",
+        "package": "@nucleux/proactive",
+        "component": "ProactiveSuggestion",
+        "sharesApi": true
       }
     },
     {
@@ -9551,6 +9893,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "progress",
+        "package": "@nucleux/progress",
+        "component": "Progress",
+        "sharesApi": false
       }
     },
     {
@@ -9576,10 +9924,10 @@
         "Md3RadioProps"
       ],
       "components": [
-        "Md3RadioGroup",
-        "Md3Radio"
+        "Md3Radio",
+        "Md3RadioGroup"
       ],
-      "import": "import { Md3RadioGroup, Md3Radio } from \"@nucleux/md3-radio\";",
+      "import": "import { Md3Radio, Md3RadioGroup } from \"@nucleux/md3-radio\";",
       "installSingle": "pnpm add @nucleux/md3-radio @nucleux/tokens",
       "props": [
         {
@@ -9670,6 +10018,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "randomize",
+        "package": "@nucleux/randomize",
+        "component": "Randomize",
+        "sharesApi": true
       }
     },
     {
@@ -10079,6 +10433,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "slider",
+        "package": "@nucleux/slider",
+        "component": "Slider",
+        "sharesApi": false
       }
     },
     {
@@ -10328,6 +10688,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "structured-input",
+        "package": "@nucleux/structured-input",
+        "component": "StructuredInput",
+        "sharesApi": true
       }
     },
     {
@@ -10360,16 +10726,22 @@
         "Md3SuggestedPromptsAfterSelect"
       ],
       "components": [
-        "Md3SuggestedPrompt",
-        "Md3SuggestedPrompts"
+        "Md3SuggestedPrompts",
+        "Md3SuggestedPrompt"
       ],
-      "import": "import { Md3SuggestedPrompt, Md3SuggestedPrompts } from \"@nucleux/md3-suggested-prompts\";",
+      "import": "import { Md3SuggestedPrompts, Md3SuggestedPrompt } from \"@nucleux/md3-suggested-prompts\";",
       "installSingle": "pnpm add @nucleux/md3-suggested-prompts @nucleux/tokens",
       "props": [],
       "readme": "# @nucleux/md3-suggested-prompts\n\nMaterial 3 Suggested Prompts — a few ready-made requests that place editable text in the composer — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/suggested-prompts`](https://www.npmjs.com/package/@nucleux/suggested-prompts) (`SuggestedPrompts`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3SuggestedPrompts`** — 3–5 ready-made prompts as M3 suggestion chips, outlined cards or a rich tooltip; `onSelect` hands back the fuller prompt; `afterSelect` keep / mark / remove\n- **`Md3SuggestedPrompt`** — one suggestion (chip, card or tooltip action, from the surrounding variant)\n- Types: `Md3SuggestedPromptsProps`, `Md3SuggestedPromptProps`, `Md3SuggestedPromptsVariant`, `Md3SuggestedPromptsAfterSelect`, `SuggestedPromptItem`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-suggested-prompts @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3SuggestedPrompts } from \"@nucleux/md3-suggested-prompts\";\n\n<Md3SuggestedPrompts\n  label=\"Try asking:\"\n  items={[{ title: \"Find unresolved decisions\", prompt: \"Find the unresolved decisions blocking the September release.\" }]}\n  onSelect={(prompt) => setDraft(prompt)}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "suggested-prompts",
+        "package": "@nucleux/suggested-prompts",
+        "component": "SuggestedPrompts",
+        "sharesApi": true
       }
     },
     {
@@ -10435,6 +10807,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "switch",
+        "package": "@nucleux/switch",
+        "component": "Switch",
+        "sharesApi": false
       }
     },
     {
@@ -10533,6 +10911,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "tabs",
+        "package": "@nucleux/tabs",
+        "component": "Tabs",
+        "sharesApi": false
       }
     },
     {
@@ -10576,6 +10960,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "templates",
+        "package": "@nucleux/templates",
+        "component": "Templates",
+        "sharesApi": true
       }
     },
     {
@@ -10920,6 +11310,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "tooltip",
+        "package": "@nucleux/tooltip",
+        "component": "Tooltip",
+        "sharesApi": false
       }
     },
     {
@@ -11032,6 +11428,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "visual-input",
+        "package": "@nucleux/visual-input",
+        "component": "VisualInput",
+        "sharesApi": true
       }
     },
     {
@@ -11070,6 +11472,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "voice-input",
+        "package": "@nucleux/voice-input",
+        "component": "VoiceInput",
+        "sharesApi": true
       }
     },
     {
@@ -11228,6 +11636,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-message",
+        "package": "@nucleux/md3-message",
+        "component": "Md3Message",
+        "sharesApi": false
       }
     },
     {
@@ -11402,6 +11816,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-model-selection",
+        "package": "@nucleux/md3-model-selection",
+        "component": "Md3ModelSelection",
+        "sharesApi": true
       }
     },
     {
@@ -11500,6 +11920,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-name",
+        "package": "@nucleux/md3-name",
+        "component": "Md3AgentName",
+        "sharesApi": true
       }
     },
     {
@@ -11657,10 +12083,10 @@
         "NudgeProps"
       ],
       "components": [
-        "NudgeAction",
-        "Nudge"
+        "Nudge",
+        "NudgeAction"
       ],
-      "import": "import { NudgeAction, Nudge } from \"@nucleux/nudges\";",
+      "import": "import { Nudge, NudgeAction } from \"@nucleux/nudges\";",
       "installSingle": "pnpm add @nucleux/nudges @nucleux/tokens",
       "props": [
         {
@@ -11821,6 +12247,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-nudges",
+        "package": "@nucleux/md3-nudges",
+        "component": "Md3Nudge",
+        "sharesApi": true
       }
     },
     {
@@ -11984,6 +12416,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-open-input",
+        "package": "@nucleux/md3-open-input",
+        "component": "Md3OpenInput",
+        "sharesApi": true
       }
     },
     {
@@ -12191,6 +12629,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-personality",
+        "package": "@nucleux/md3-personality",
+        "component": "Md3Personality",
+        "sharesApi": true
       }
     },
     {
@@ -12493,6 +12937,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-proactive",
+        "package": "@nucleux/md3-proactive",
+        "component": "Md3ProactiveSuggestion",
+        "sharesApi": true
       }
     },
     {
@@ -12566,6 +13016,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-progress",
+        "package": "@nucleux/md3-progress",
+        "component": "Md3LinearProgress",
+        "sharesApi": false
       }
     },
     {
@@ -13144,6 +13600,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-randomize",
+        "package": "@nucleux/md3-randomize",
+        "component": "Md3Randomize",
+        "sharesApi": true
       }
     },
     {
@@ -13866,8 +14328,8 @@
         "SidebarMenuSubButtonProps"
       ],
       "components": [
-        "SidebarProvider",
         "Sidebar",
+        "SidebarProvider",
         "SidebarTrigger",
         "SidebarRail",
         "SidebarInset",
@@ -13890,7 +14352,7 @@
         "SidebarMenuSubItem",
         "SidebarMenuSubButton"
       ],
-      "import": "import { SidebarProvider, Sidebar, SidebarTrigger, SidebarRail } from \"@nucleux/sidebar\";",
+      "import": "import { Sidebar, SidebarProvider, SidebarTrigger, SidebarRail } from \"@nucleux/sidebar\";",
       "installSingle": "pnpm add @nucleux/sidebar @nucleux/tokens",
       "props": [
         {
@@ -14254,6 +14716,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-slider",
+        "package": "@nucleux/md3-slider",
+        "component": "Md3Slider",
+        "sharesApi": false
       }
     },
     {
@@ -14635,6 +15103,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-structured-input",
+        "package": "@nucleux/md3-structured-input",
+        "component": "Md3StructuredInput",
+        "sharesApi": true
       }
     },
     {
@@ -14663,10 +15137,10 @@
         "SuggestedPromptsProps"
       ],
       "components": [
-        "SuggestedPrompt",
-        "SuggestedPrompts"
+        "SuggestedPrompts",
+        "SuggestedPrompt"
       ],
-      "import": "import { SuggestedPrompt, SuggestedPrompts } from \"@nucleux/suggested-prompts\";",
+      "import": "import { SuggestedPrompts, SuggestedPrompt } from \"@nucleux/suggested-prompts\";",
       "installSingle": "pnpm add @nucleux/suggested-prompts @nucleux/tokens",
       "props": [
         {
@@ -14789,6 +15263,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-suggested-prompts",
+        "package": "@nucleux/md3-suggested-prompts",
+        "component": "Md3SuggestedPrompts",
+        "sharesApi": true
       }
     },
     {
@@ -14862,6 +15342,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-switch",
+        "package": "@nucleux/md3-switch",
+        "component": "Md3Switch",
+        "sharesApi": false
       }
     },
     {
@@ -15150,6 +15636,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-tabs",
+        "package": "@nucleux/md3-tabs",
+        "component": "Md3Tabs",
+        "sharesApi": false
       }
     },
     {
@@ -15300,6 +15792,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-templates",
+        "package": "@nucleux/md3-templates",
+        "component": "Md3Templates",
+        "sharesApi": true
       }
     },
     {
@@ -15731,6 +16229,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-tooltip",
+        "package": "@nucleux/md3-tooltip",
+        "component": "Md3Tooltip",
+        "sharesApi": false
       }
     },
     {
@@ -16035,6 +16539,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-visual-input",
+        "package": "@nucleux/md3-visual-input",
+        "component": "Md3VisualInput",
+        "sharesApi": true
       }
     },
     {
@@ -16180,6 +16690,12 @@
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-voice-input",
+        "package": "@nucleux/md3-voice-input",
+        "component": "Md3VoiceInput",
+        "sharesApi": true
       }
     }
   ],

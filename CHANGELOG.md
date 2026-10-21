@@ -8,15 +8,33 @@ The format is machine-readable: each version heading starts with `## ` followed
 by a version tag and date, and entries are grouped under `### Added`, `### Changed`,
 `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings.
 
-## [Unreleased]
+## [0.6.0] — unreleased
 
-### 0.6.0: package set matches nucleux.in (breaking)
+### Package set matches nucleux.in (breaking)
 
-The package set now follows nucleux.in: shadcn/ui's component list, Material 3's
-component list (`md3-*`), and the agentic patterns marked *Available*. This
-section covers phase 1 (renames and removals); new components follow.
+Every package now belongs to one of three lists, and nothing else ships:
 
-#### Renamed (old name → new name)
+- **shadcn family basics:** every component in shadcn/ui's list (67 of 67).
+- **Material 3 family basics:** every component in Material 3's list (36 of 36,
+  `md3-*`).
+- **Agentic:** the 29 patterns marked *Available* on nucleux.in, each in both
+  families (`<name>` and `md3-<name>`) with the same props.
+
+#### Upgrading from 0.5.x
+- Rename imports using the table below. At release the 0.5.x packages are deprecated on npm
+  with a message naming the replacement (`scripts/deprecations.json`).
+- **`@nucleux/select` changed meaning.** In 0.5.x it was a styled native
+  `<select>`; that is now `@nucleux/native-select` (`NativeSelect`). In 0.6.0,
+  `@nucleux/select` is shadcn's custom listbox (`Select`, `SelectTrigger`,
+  `SelectValue`, `SelectContent`, `SelectItem`).
+- `@nucleux/sidebar` is now shadcn's Sidebar (`SidebarProvider`, `Sidebar`,
+  `SidebarMenu*`…); the 0.5.x icon rail (`SidebarItem`, `footer`) is gone.
+- The `nucleux` MCP server's `get_component` names each component's twin in
+  the other family; agents are told to pick one family per app.
+
+#### Renamed and removed (phase 1)
+
+##### Renamed (old name → new name)
 | Package | Exports |
 |---|---|
 | `menu` → `dropdown-menu` | `Menu`/`MenuItem`/`MenuLabel`/`MenuSeparator` → `DropdownMenu` + `DropdownMenuTrigger`/`Content`/`Item`/`Label`/`Group`/`Separator`/`Shortcut` (shadcn API: owns its trigger, open state and keyboard navigation) |

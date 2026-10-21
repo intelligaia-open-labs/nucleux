@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-structured-input",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Structured Input — a compact form for exact values, suggestions marked and every value yours — Nucleux agentic UI for React.",

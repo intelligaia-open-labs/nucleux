@@ -138,14 +138,23 @@ Two families, one package each: shadcn-style (`@nucleux/<name>`) and Material 3
 (`@nucleux/md3-<name>`). The set matches nucleux.in: shadcn/ui's component
 list, Material 3's component list, and the agentic patterns marked *Available*.
 
-Basics (Button, Input, Textarea, NativeSelect, Checkbox, RadioGroup, Switch,
-Slider, Badge, Avatar, CardContainer, Alert, Tooltip, Progress, Skeleton,
-Accordion, Tabs, Breadcrumb, DropdownMenu, Dialog, AlertDialog, Sheet, Popover,
-Toast, Empty, Table, DataTable, Calendar, DatePicker, Combobox, Command, …) ·
-Agentic (Disclosure, Caveat, Consent, Personality, Templates,
-SuggestedPrompts, OpenInput, ModelSelection, KnowledgeBase, Connector,
-VoiceInput, StructuredInput, Message, MessageScroller) · Material 3 (Md3Button,
-Md3Card, Md3Chip, Md3TextField, Md3Dialog, Md3NavigationRail, Md3TopAppBar, …).
+- **Basics, shadcn family** — every component in shadcn/ui's list (67): Button,
+  Input, Select, DropdownMenu, Dialog, Sheet, Drawer, Sidebar, Field, InputGroup,
+  Item, Empty, Table, DataTable, Calendar, DatePicker, Command, Sonner, …
+- **Basics, Material 3 family** — every component in Material 3's list (36):
+  Md3Button, Md3ButtonGroup, Md3SplitButton, Md3Fab, Md3FabMenu, Md3Card,
+  Md3TextField, Md3Dialog, Md3SideSheet, Md3Carousel, Md3Toolbar,
+  Md3LoadingIndicator, Md3NavigationRail, …
+- **Agentic, both families** — the 29 patterns marked *Available* on nucleux.in:
+  Disclosure, Caveat, Consent, AgentAvatar, AgentName, Personality, Iconography,
+  AiColor, AiIcons, ExampleGallery, Templates, Nudge, Disclaimer, InitialCta,
+  OpenInput, SuggestedPrompts, Autocomplete, ProactiveSuggestion, Randomize,
+  ModelSelection, KnowledgeBase, McpConnection, Connector, Attachments,
+  VoiceInput, VisualInput, HandwritingInput, GestureInput, StructuredInput — each
+  also as an `Md3` twin (`Md3Disclosure`, `Md3OpenInput`, …) **with the same
+  props**, so switching families is an import change.
+
+Pick one family per app. `llms.txt` lists every package.
 
 ## Theming
 

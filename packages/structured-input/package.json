@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/structured-input",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "StructuredInput \u2014 an agent's structured clarifying question \u2014 Nucleux agentic UI for React.",
+  "description": "StructuredInput — an agent's structured clarifying question — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

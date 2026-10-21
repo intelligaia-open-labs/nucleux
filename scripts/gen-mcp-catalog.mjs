@@ -107,6 +107,14 @@ for (const name of readdirSync(pkgsDir)) {
   const components = NON_COMPONENT.has(name)
     ? []
     : exportsList.filter((n) => /^[A-Z]/.test(n) && !typeOnly.has(n) && !/(Props|Variant|Data|Context|Ref)$/.test(n));
+  // Lead with the package's main component (Nudge, not NudgeAction): the export
+  // named after the package, else the shortest name that prefixes the others.
+  const pascal = name.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join("").replace(/^Md3/, "Md3");
+  const main =
+    components.find((c) => c.toLowerCase() === pascal.toLowerCase()) ??
+    components.find((c) => c.toLowerCase() === pascal.toLowerCase().replace(/s$/, "")) ??
+    [...components].sort((x, y) => x.length - y.length).find((c) => components.every((o) => o === c || o.startsWith(c)));
+  if (main) components.splice(components.indexOf(main), 1), components.unshift(main);
   const readme = existsSync(join(dir, "README.md")) ? readFileSync(join(dir, "README.md"), "utf8") : "";
 
   packages.push({
@@ -131,6 +139,24 @@ for (const name of readdirSync(pkgsDir)) {
 }
 
 packages.sort((a, b) => a.name.localeCompare(b.name));
+
+// Twins across the two families: <name> (shadcn) ↔ md3-<name> (Material 3).
+// Agentic twins share one props API (the md3 package depends on its twin and
+// re-exports its types); basic pairs like button/md3-button differ.
+const byName = new Map(packages.map((p) => [p.name, p]));
+const depsOf = (name) => {
+  const pj = JSON.parse(readFileSync(join(pkgsDir, name, "package.json"), "utf8"));
+  return pj.dependencies ?? {};
+};
+for (const p of packages) {
+  if (p.kind !== "component") continue;
+  const twinName = p.name.startsWith("md3-") ? p.name.slice(4) : `md3-${p.name}`;
+  const twin = byName.get(twinName);
+  if (!twin || twin.kind !== "component") continue;
+  const md3 = p.name.startsWith("md3-") ? p.name : twinName;
+  const shadcn = p.name.startsWith("md3-") ? twinName : p.name;
+  p.twin = { name: twin.name, package: twin.package, component: twin.components[0], sharesApi: `@nucleux/${shadcn}` in depsOf(md3) };
+}
 
 // Example compositions live in the umbrella package.
 const examples = [];

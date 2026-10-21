@@ -1,0 +1,276 @@
+{
+  "generatedFrom": "packages published in 0.5.0 (tag v0.5.0) that are not in 0.6.0",
+  "range": "<0.6.0",
+  "packages": [
+    {
+      "name": "@nucleux/action-confirmation",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Consent (@nucleux/consent) or AlertDialog (@nucleux/alert-dialog)."
+    },
+    {
+      "name": "@nucleux/action-plan",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/action-tile",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Item (@nucleux/item)."
+    },
+    {
+      "name": "@nucleux/activity-log",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/agent-composer",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use OpenInput (@nucleux/open-input)."
+    },
+    {
+      "name": "@nucleux/agent-steps",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Trace (@nucleux/trace)."
+    },
+    {
+      "name": "@nucleux/ai-disclosure",
+      "replacement": "@nucleux/disclosure",
+      "message": "Renamed to @nucleux/disclosure in 0.6.0 (AiDisclosure → Disclosure; AiCaveat → Caveat in @nucleux/caveat)."
+    },
+    {
+      "name": "@nucleux/attachment-tile",
+      "replacement": "@nucleux/attachment",
+      "message": "Renamed to @nucleux/attachment in 0.6.0 (AttachmentTile → Attachment, AttachmentTray → AttachmentGroup)."
+    },
+    {
+      "name": "@nucleux/audio-message",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/capability-overview",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use ExampleGallery (@nucleux/example-gallery) and Disclaimer (@nucleux/disclaimer)."
+    },
+    {
+      "name": "@nucleux/checklist",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Item (@nucleux/item)."
+    },
+    {
+      "name": "@nucleux/chip",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Badge (@nucleux/badge)."
+    },
+    {
+      "name": "@nucleux/citation",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/confidence-indicator",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Caveat (@nucleux/caveat)."
+    },
+    {
+      "name": "@nucleux/connector-card",
+      "replacement": "@nucleux/connectors",
+      "message": "Renamed to @nucleux/connectors in 0.6.0 (ConnectorCard → Connector)."
+    },
+    {
+      "name": "@nucleux/error-state",
+      "replacement": "@nucleux/empty",
+      "message": "Renamed to @nucleux/empty in 0.6.0 (ErrorState → Empty (+EmptyHeader/Media/Title/Description/Content))."
+    },
+    {
+      "name": "@nucleux/follow-up",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/getting-started-pill",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/global-nav",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Sidebar + SidebarInset (@nucleux/sidebar); see the app-shell pattern."
+    },
+    {
+      "name": "@nucleux/icon-button",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Button with size=\"icon\" (@nucleux/button)."
+    },
+    {
+      "name": "@nucleux/inline-feedback",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/input-bar",
+      "replacement": "@nucleux/open-input",
+      "message": "Renamed to @nucleux/open-input in 0.6.0 (InputBar → OpenInput)."
+    },
+    {
+      "name": "@nucleux/knowledge-base-picker",
+      "replacement": "@nucleux/knowledge-base",
+      "message": "Renamed to @nucleux/knowledge-base in 0.6.0 (KnowledgeBasePicker → KnowledgeBase)."
+    },
+    {
+      "name": "@nucleux/link-button",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Button variant=\"link\" asChild (@nucleux/button)."
+    },
+    {
+      "name": "@nucleux/md3-action-plan",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, no Material 3 replacement."
+    },
+    {
+      "name": "@nucleux/md3-activity-log",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, no Material 3 replacement."
+    },
+    {
+      "name": "@nucleux/md3-agent-steps",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, no Material 3 replacement; use Trace (@nucleux/trace) under md3-theme."
+    },
+    {
+      "name": "@nucleux/md3-reasoning",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, no Material 3 replacement; use Trace (@nucleux/trace) under md3-theme."
+    },
+    {
+      "name": "@nucleux/md3-thread",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use MessageScroller (@nucleux/message-scroller) with Md3Message (@nucleux/md3-message)."
+    },
+    {
+      "name": "@nucleux/md3-tool-call",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, no Material 3 replacement; use Trace (@nucleux/trace) under md3-theme."
+    },
+    {
+      "name": "@nucleux/media-card",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use CardContainer (@nucleux/card) or Item (@nucleux/item)."
+    },
+    {
+      "name": "@nucleux/memory-summary",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/menu",
+      "replacement": "@nucleux/dropdown-menu",
+      "message": "Renamed to @nucleux/dropdown-menu in 0.6.0 (Menu/MenuItem → DropdownMenu/DropdownMenuItem (+Trigger/Content))."
+    },
+    {
+      "name": "@nucleux/model-selector",
+      "replacement": "@nucleux/model-selection",
+      "message": "Renamed to @nucleux/model-selection in 0.6.0 (ModelSelector → ModelSelection)."
+    },
+    {
+      "name": "@nucleux/modular-consent",
+      "replacement": "@nucleux/consent",
+      "message": "Renamed to @nucleux/consent in 0.6.0 (ModularConsent → Consent)."
+    },
+    {
+      "name": "@nucleux/nav-panel",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Sidebar (@nucleux/sidebar)."
+    },
+    {
+      "name": "@nucleux/page-header",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use a <header> with an <h1>; see the list-page pattern."
+    },
+    {
+      "name": "@nucleux/privacy-notice",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/prompt-enhancer",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/prompt-template",
+      "replacement": "@nucleux/templates",
+      "message": "Renamed to @nucleux/templates in 0.6.0 (PromptTemplate → Templates)."
+    },
+    {
+      "name": "@nucleux/reasoning",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Trace with TraceCollapsible (@nucleux/trace)."
+    },
+    {
+      "name": "@nucleux/related-patterns-grid",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/response-comparison",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/rewrite-menu",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/rich-checkbox-group",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Checkbox (@nucleux/checkbox) or Consent (@nucleux/consent)."
+    },
+    {
+      "name": "@nucleux/right-sidebar",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/search-input",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Input type=\"search\" or InputGroup (@nucleux/input-group)."
+    },
+    {
+      "name": "@nucleux/session-recap",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    },
+    {
+      "name": "@nucleux/streaming-text",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Message with streaming (@nucleux/message)."
+    },
+    {
+      "name": "@nucleux/suggestions",
+      "replacement": "@nucleux/suggested-prompts",
+      "message": "Renamed to @nucleux/suggested-prompts in 0.6.0 (Suggestions → SuggestedPrompts, SuggestionChip → SuggestedPrompt)."
+    },
+    {
+      "name": "@nucleux/thread",
+      "replacement": "@nucleux/message-scroller",
+      "message": "Renamed to @nucleux/message-scroller in 0.6.0 (Thread → MessageScroller)."
+    },
+    {
+      "name": "@nucleux/tone-selector",
+      "replacement": "@nucleux/personality",
+      "message": "Renamed to @nucleux/personality in 0.6.0 (ToneSelector → Personality)."
+    },
+    {
+      "name": "@nucleux/tool-call",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set. Instead, use Trace (@nucleux/trace)."
+    },
+    {
+      "name": "@nucleux/typing-indicator",
+      "replacement": null,
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+    }
+  ]
+}

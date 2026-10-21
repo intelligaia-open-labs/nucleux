@@ -39,6 +39,8 @@ $40 for all eight requests in both arms), 5–15 minutes each.
 
 ## Results: eight requests, 2026-10-15/16
 
+> These results describe Nucleux 0.5.0. 0.6.0 renamed and replaced many components (see CHANGELOG.md); the benchmark has not been re-run on it.
+
 All eight requests, one run per arm (16 runs), Claude Code 2.1.300 with
 `claude-opus-5-5`, fresh Vite 6 + React 19 + TypeScript apps, Nucleux 0.5.0
 from local tarballs (Tailwind not set up; each agent had to do it). The
