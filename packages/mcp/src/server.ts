@@ -122,6 +122,14 @@ function renderComponent(p: Pkg): string {
       lines.push(...(members.length ? members.map(renderMember) : ["- (no own props)"]));
     }
   }
+  const twin = (p as Pkg & { twin?: { component?: string; package: string; sharesApi: boolean } }).twin;
+  if (twin)
+    lines.push(
+      "",
+      `**${p.name.startsWith("md3-") ? "shadcn" : "Material 3"} twin:** \`${twin.component}\` (${twin.package})${
+        twin.sharesApi ? " — same props; switch families by changing the import" : " — different props; read its contract"
+      }`,
+    );
   const used = patternsUsing(p.exports);
   if (used.length)
     lines.push("", `**Used in patterns:** ${used.map((x) => x.id).join(", ")} (see get_pattern)`);

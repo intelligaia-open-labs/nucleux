@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/templates",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
   "description": "Templates — fill-in-the-blank prompt scaffolds that turn vague intent into a good question — Nucleux agentic UI for React.",

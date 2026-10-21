@@ -35,6 +35,21 @@ describe("agent-facing docs", () => {
     ).not.toThrow();
   });
 
+  it("the npm deprecation list names only packages 0.6.0 no longer ships, with real replacements", () => {
+    const list = JSON.parse(readFileSync(resolve(root, "scripts/deprecations.json"), "utf8")) as {
+      packages: Array<{ name: string; replacement: string | null; message: string }>;
+    };
+    const shipped = new Set(catalog.packages.map((p) => p.package));
+    expect(list.packages.length).toBeGreaterThan(40);
+    for (const p of list.packages) {
+      expect(shipped.has(p.name)).toBe(false);
+      if (p.replacement) {
+        expect(shipped.has(p.replacement)).toBe(true);
+        expect(p.message).toContain(p.replacement);
+      }
+    }
+  });
+
   it("llms.txt lists exactly the packages in the catalog", () => {
     expect(() => execFileSync("node", [resolve(root, "scripts/gen-llms.mjs"), "--check"], { stdio: "pipe" })).not.toThrow();
   });

@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/form",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Accessible form primitives \u2014 Nucleux agentic UI for React.",
+  "description": "Accessible form primitives — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/caveat",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Caveat \u2014 says what is incomplete, uncertain or out of date about an AI result \u2014 Nucleux agentic UI for React.",
+  "description": "Caveat — says what is incomplete, uncertain or out of date about an AI result — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

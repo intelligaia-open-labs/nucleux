@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-templates",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Templates — fill-in-the-blank prompts, prefilled lists and a categorised template browser — Nucleux agentic UI for React.",

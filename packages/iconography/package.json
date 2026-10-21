@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/iconography",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Iconography \u2014 reserved AI action controls: sparkle = generate, refresh = regenerate, wand = transform \u2014 Nucleux agentic UI for React.",
+  "description": "Iconography — reserved AI action controls: sparkle = generate, refresh = regenerate, wand = transform — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-voice-input",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Voice Input — speak the request into the composer, review the words, send them yourself — Nucleux agentic UI for React.",

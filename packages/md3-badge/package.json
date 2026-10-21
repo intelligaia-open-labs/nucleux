@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/md3-badge",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Material 3 badge \u2014 Nucleux agentic UI for React.",
+  "description": "Material 3 badge — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

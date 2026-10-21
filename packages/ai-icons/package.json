@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/ai-icons",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Icons \u2014 a small, stable AI mark vocabulary: action, generated, working and tool use \u2014 Nucleux agentic UI for React.",
+  "description": "Icons — a small, stable AI mark vocabulary: action, generated, working and tool use — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/hover-card",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Hover-triggered content card \u2014 Nucleux agentic UI for React.",
+  "description": "Hover-triggered content card — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

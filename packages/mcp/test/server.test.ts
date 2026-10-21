@@ -153,6 +153,15 @@ describe("MCP server", () => {
     expect(text).toMatch(/Used in patterns:.*list-page/);
   });
 
+  it("get_component names the twin in the other family and whether it shares props", async () => {
+    const shadcn = (await call("get_component", { name: "Nudge" })).text;
+    expect(shadcn).toMatch(/Material 3 twin:\*\* `Md3Nudge` \(@nucleux\/md3-nudges\) — same props/);
+    const md3 = (await call("get_component", { name: "Md3Nudge" })).text;
+    expect(md3).toMatch(/shadcn twin:\*\* `Nudge` \(@nucleux\/nudges\) — same props/);
+    const basic = (await call("get_component", { name: "Button" })).text;
+    expect(basic).toMatch(/Material 3 twin:\*\* `Md3Button` .* different props/);
+  });
+
   it("get_component resolves utility exports like cn", async () => {
     const { text } = await call("get_component", { name: "cn" });
     expect(text).toContain('import { cn, Slot } from "@nucleux/utils"');

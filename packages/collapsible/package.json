@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/collapsible",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Single collapsible disclosure region \u2014 Nucleux agentic UI for React.",
+  "description": "Single collapsible disclosure region — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/sheet",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Sheet \u2014 a slide-over drawer panel \u2014 Nucleux agentic UI for React.",
+  "description": "Sheet — a slide-over drawer panel — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

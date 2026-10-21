@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/command",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Searchable command palette \u2014 Nucleux agentic UI for React.",
+  "description": "Searchable command palette — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
