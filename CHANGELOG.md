@@ -48,6 +48,15 @@ md3-tool-call. Replacements: `IconButton` → `Button size="icon" | "icon-sm" |
 `SearchInput` → `Input type="search"`; `PageHeader` → a `<header>` with an
 `<h1>`. `global-nav` and `nav-panel` go when the shadcn `sidebar` lands.
 
+#### Added (phase 3: the remaining Material 3 basics)
+- `md3-button-group` (standard and connected, five sizes, single and multiple
+  selection), `md3-split-button` (four styles, menu with keyboard support),
+  `md3-toolbar` (docked and floating, vertical, roving focus), `md3-fab-menu`,
+  `md3-loading-indicator` (M3 Expressive shape morph; still under reduced
+  motion), `md3-side-sheet` (standard and modal) and `md3-carousel`
+  (multi-browse, uncontained, hero and full-screen, on embla). Every component in
+  Material 3's list now has an `md3-*` package.
+
 #### Added (phase 2: the remaining shadcn/ui basics)
 - New packages, ported from shadcn/ui without Radix, keeping shadcn's exports,
   props and `data-slot` attributes: `bubble`, `button-group`, `direction`,

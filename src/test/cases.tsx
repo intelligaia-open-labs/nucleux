@@ -2,6 +2,20 @@ import type { ReactElement } from "react";
 import { Home, Mic } from "lucide-react";
 
 import {
+  Md3ButtonGroup,
+  Md3ButtonGroupItem,
+  Md3SplitButton,
+  Md3Toolbar,
+  Md3ToolbarIconButton,
+  Md3FabMenu,
+  Md3FabMenuItem,
+  Md3LoadingIndicator,
+  Md3SideSheet,
+  Md3SideSheetHeader,
+  Md3SideSheetBody,
+  Md3SideSheetActions,
+  Md3Carousel,
+  Md3CarouselItem,
   Drawer,
   DrawerClose,
   DrawerContent,
@@ -499,6 +513,87 @@ export const cases: { name: string; ui: ReactElement }[] = [
     ),
   },
   { name: "Sonner", ui: <Toaster /> },
+  {
+    name: "Md3ButtonGroup",
+    ui: (
+      <Md3ButtonGroup aria-label="Time range" variant="connected" selectionMode="single" defaultValue="week">
+        <Md3ButtonGroupItem value="day">Day</Md3ButtonGroupItem>
+        <Md3ButtonGroupItem value="week">Week</Md3ButtonGroupItem>
+        <Md3ButtonGroupItem value="month">Month</Md3ButtonGroupItem>
+      </Md3ButtonGroup>
+    ),
+  },
+  {
+    name: "Md3SplitButton",
+    ui: (
+      <Md3SplitButton
+        icon={<Home />}
+        menuLabel="More save options"
+        defaultOpen
+        menu={
+          <>
+            <Md3MenuItem>Save a copy</Md3MenuItem>
+            <Md3MenuItem>Export as PDF</Md3MenuItem>
+          </>
+        }
+      >
+        Save
+      </Md3SplitButton>
+    ),
+  },
+  {
+    name: "Md3Toolbar",
+    ui: (
+      <Md3Toolbar type="floating" color="vibrant" aria-label="Text formatting">
+        <Md3ToolbarIconButton aria-label="Bold" selected>
+          <Home />
+        </Md3ToolbarIconButton>
+        <Md3ToolbarIconButton aria-label="Italic">
+          <Mic />
+        </Md3ToolbarIconButton>
+      </Md3Toolbar>
+    ),
+  },
+  {
+    name: "Md3FabMenu",
+    ui: (
+      <Md3FabMenu label="Create" icon={<Home />} defaultOpen>
+        <Md3FabMenuItem icon={<Mic />}>Document</Md3FabMenuItem>
+        <Md3FabMenuItem icon={<Home />}>Image</Md3FabMenuItem>
+      </Md3FabMenu>
+    ),
+  },
+  {
+    name: "Md3LoadingIndicator",
+    ui: (
+      <div>
+        <Md3LoadingIndicator aria-label="Loading messages" />
+        <Md3LoadingIndicator variant="contained" aria-label="Generating a reply" />
+      </div>
+    ),
+  },
+  {
+    name: "Md3SideSheet",
+    ui: (
+      <Md3SideSheet divider>
+        <Md3SideSheetHeader onBack={() => {}}>Filters</Md3SideSheetHeader>
+        <Md3SideSheetBody>Narrow the product list.</Md3SideSheetBody>
+        <Md3SideSheetActions>
+          <button type="button">Apply</button>
+        </Md3SideSheetActions>
+      </Md3SideSheet>
+    ),
+  },
+  {
+    name: "Md3Carousel",
+    ui: (
+      <Md3Carousel aria-label="Destinations" layout="multi-browse">
+        <Md3CarouselItem label="Lisbon" />
+        <Md3CarouselItem label="Kyoto" />
+        <Md3CarouselItem label="Oaxaca" />
+      </Md3Carousel>
+    ),
+  },
   {
     name: "Drawer",
     ui: (

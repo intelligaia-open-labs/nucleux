@@ -79,7 +79,7 @@ than hand-rolling one. The MCP server (`@nucleux/mcp`) names the shadcn equivale
 - `pnpm build` — tsup build all packages (ESM + CJS + .d.ts)
 - `pnpm validate` — full gate (typecheck → test → build → build-storybook)
 
-## Component catalog (116 packages)
+## Component catalog (123 packages)
 
 Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do not edit by hand.
 
@@ -244,7 +244,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **voice-input** (`@nucleux/voice-input`) — VoiceInput — a live dictation bar with a waveform.
   Exports: `VoiceInput, VoiceInputState, VoiceInputProps`
 
-### Material 3 family (32)
+### Material 3 family (39)
 
 - **md3-action-confirmation** (`@nucleux/md3-action-confirmation`) — Material 3 agent action confirmation.
   Exports: `Md3ActionConfirmation, Md3ActionConfirmationVariant, Md3ActionConfirmationProps`
@@ -258,8 +258,12 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `Md3BottomSheet, Md3BottomSheetProps`
 - **md3-button** (`@nucleux/md3-button`) — Material 3 button (filled, tonal, outlined, text, elevated).
   Exports: `Md3Button, Md3ButtonVariant, Md3ButtonProps`
+- **md3-button-group** (`@nucleux/md3-button-group`) — Material 3 button group.
+  Exports: `Md3ButtonGroup, Md3ButtonGroupItem, Md3ButtonGroupVariant, Md3ButtonGroupSize, Md3ButtonGroupShape, Md3ButtonGroupSelectionMode, Md3ButtonGroupItemVariant, Md3ButtonGroupProps, …`
 - **md3-card** (`@nucleux/md3-card`) — Material 3 card (elevated, filled, outlined).
   Exports: `Md3Card, Md3CardVariant, Md3CardProps`
+- **md3-carousel** (`@nucleux/md3-carousel`) — Material 3 carousel.
+  Exports: `Md3Carousel, Md3CarouselItem, Md3CarouselLayout, Md3CarouselAlignment, Md3CarouselProps, Md3CarouselItemProps`
 - **md3-checkbox** (`@nucleux/md3-checkbox`) — Material 3 checkbox.
   Exports: `Md3Checkbox, Md3CheckboxProps`
 - **md3-chip** (`@nucleux/md3-chip`) — Material 3 chip (assist, filter, input, suggestion).
@@ -272,10 +276,14 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `Md3Divider, Md3DividerProps`
 - **md3-fab** (`@nucleux/md3-fab`) — Material 3 floating action button.
   Exports: `Md3Fab, Md3FabSize, Md3FabColor, Md3FabProps`
+- **md3-fab-menu** (`@nucleux/md3-fab-menu`) — Material 3 floating action button menu.
+  Exports: `Md3FabMenu, Md3FabMenuItem, Md3FabMenuColor, Md3FabMenuFabSize, Md3FabMenuAlign, Md3FabMenuProps, Md3FabMenuItemProps`
 - **md3-icon-button** (`@nucleux/md3-icon-button`) — Material 3 icon button.
   Exports: `Md3IconButton, Md3IconButtonVariant, Md3IconButtonProps`
 - **md3-list** (`@nucleux/md3-list`) — Material 3 list.
   Exports: `Md3List, Md3ListItem, Md3ListItemProps`
+- **md3-loading-indicator** (`@nucleux/md3-loading-indicator`) — Material 3 loading indicator.
+  Exports: `Md3LoadingIndicator, Md3LoadingIndicatorVariant, Md3LoadingIndicatorProps`
 - **md3-menu** (`@nucleux/md3-menu`) — Material 3 menu surface.
   Exports: `Md3Menu, Md3MenuItem, Md3MenuDivider, Md3MenuItemProps`
 - **md3-message** (`@nucleux/md3-message`) — Material 3 chat message row.
@@ -294,10 +302,14 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `Md3Search, Md3SearchProps`
 - **md3-segmented-button** (`@nucleux/md3-segmented-button`) — Material 3 segmented button.
   Exports: `Md3SegmentedButton, Md3SegmentedButtonItem, Md3SegmentedButtonProps, Md3SegmentedButtonItemProps`
+- **md3-side-sheet** (`@nucleux/md3-side-sheet`) — Material 3 side sheet.
+  Exports: `Md3SideSheet, Md3SideSheetHeader, Md3SideSheetBody, Md3SideSheetActions, Md3SideSheetVariant, Md3SideSheetSide, Md3SideSheetProps, Md3SideSheetHeaderProps, …`
 - **md3-slider** (`@nucleux/md3-slider`) — Material 3 slider.
   Exports: `Md3Slider, Md3SliderProps`
 - **md3-snackbar** (`@nucleux/md3-snackbar`) — Material 3 snackbar.
   Exports: `Md3Snackbar, Md3SnackbarProps`
+- **md3-split-button** (`@nucleux/md3-split-button`) — Material 3 split button.
+  Exports: `Md3SplitButton, Md3SplitButtonVariant, Md3SplitButtonSize, Md3SplitButtonMenuAlign, Md3SplitButtonProps`
 - **md3-switch** (`@nucleux/md3-switch`) — Material 3 switch.
   Exports: `Md3Switch, Md3SwitchProps`
 - **md3-tabs** (`@nucleux/md3-tabs`) — Material 3 primary tabs.
@@ -306,6 +318,8 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `Md3TextField, Md3TextFieldVariant, Md3TextFieldProps`
 - **md3-time-picker** (`@nucleux/md3-time-picker`) — Material 3 time picker (input).
   Exports: `Md3TimePicker, Md3TimePeriod, Md3TimeValue, Md3TimePickerProps`
+- **md3-toolbar** (`@nucleux/md3-toolbar`) — Material 3 docked and floating toolbar.
+  Exports: `Md3Toolbar, Md3ToolbarIconButton, Md3ToolbarType, Md3ToolbarOrientation, Md3ToolbarColor, Md3ToolbarProps, Md3ToolbarIconButtonProps`
 - **md3-tooltip** (`@nucleux/md3-tooltip`) — Material 3 tooltip (plain, rich).
   Exports: `Md3Tooltip, Md3TooltipProps`
 - **md3-top-app-bar** (`@nucleux/md3-top-app-bar`) — Material 3 top app bar.

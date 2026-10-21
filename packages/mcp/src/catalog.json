@@ -22,8 +22,8 @@
     "note": "Every component is also re-exported from the @nucleux/react umbrella. Icons in the examples come from lucide-react (optional; any icon set works)."
   },
   "counts": {
-    "components": 111,
-    "packages": 116,
+    "components": 118,
+    "packages": 123,
     "examples": 6
   },
   "packages": [
@@ -4404,6 +4404,178 @@
       }
     },
     {
+      "name": "md3-button-group",
+      "package": "@nucleux/md3-button-group",
+      "kind": "component",
+      "description": "A Material 3 Expressive button group: an invisible container that spaces related\nbuttons and adjusts their shape. The `standard` variant keeps each button's shape\nand widens a button while it is pressed; the `connected` variant (the successor to\nsegmented buttons) joins buttons with 2px gaps, small inner corners and fully\nrounded outer corners. Set `selectionMode` to turn items with a `value` into\nsingle- or multi-select toggle buttons whose shape morphs when selected.\nCompose with Md3ButtonGroupItem.",
+      "summary": "Material 3 button group — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "button-group",
+        "md3-button-group"
+      ],
+      "exports": [
+        "Md3ButtonGroup",
+        "Md3ButtonGroupItem",
+        "Md3ButtonGroupVariant",
+        "Md3ButtonGroupSize",
+        "Md3ButtonGroupShape",
+        "Md3ButtonGroupSelectionMode",
+        "Md3ButtonGroupItemVariant",
+        "Md3ButtonGroupProps",
+        "Md3ButtonGroupItemProps"
+      ],
+      "components": [
+        "Md3ButtonGroup",
+        "Md3ButtonGroupItem"
+      ],
+      "import": "import { Md3ButtonGroup, Md3ButtonGroupItem } from \"@nucleux/md3-button-group\";",
+      "installSingle": "pnpm add @nucleux/md3-button-group @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3ButtonGroupProps",
+          "source": "export interface Md3ButtonGroupProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"defaultValue\"> {\n  /** `standard` keeps each button's own shape; `connected` joins them with 2px gaps and small inner corners. */\n  variant?: Md3ButtonGroupVariant;\n  /** Button size applied to every item: XS 32px, S 40px, M 56px, L 96px, XL 136px tall. */\n  size?: Md3ButtonGroupSize;\n  /** Default shape of the buttons. Selected toggle buttons morph to the other shape. */\n  shape?: Md3ButtonGroupShape;\n  /** Colour style applied to items that don't set their own `variant`. */\n  buttonVariant?: Md3ButtonGroupItemVariant;\n  /** `none` for plain action buttons, `single`/`multiple` to make items with a `value` toggle. */\n  selectionMode?: Md3ButtonGroupSelectionMode;\n  /** When true, the last selected item can't be deselected. */\n  selectionRequired?: boolean;\n  value?: string | string[];\n  defaultValue?: string | string[];\n  /** Called with a string in `single` mode (\"\" when cleared) and a string array in `multiple` mode. */\n  onValueChange?: (value: string | string[]) => void;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"defaultValue\">"
+          ],
+          "members": [
+            {
+              "name": "variant",
+              "type": "Md3ButtonGroupVariant",
+              "required": false,
+              "description": "`standard` keeps each button's own shape; `connected` joins them with 2px gaps and small inner corners.",
+              "values": [
+                "standard",
+                "connected"
+              ],
+              "default": "\"standard\""
+            },
+            {
+              "name": "size",
+              "type": "Md3ButtonGroupSize",
+              "required": false,
+              "description": "Button size applied to every item: XS 32px, S 40px, M 56px, L 96px, XL 136px tall.",
+              "values": [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl"
+              ],
+              "default": "\"sm\""
+            },
+            {
+              "name": "shape",
+              "type": "Md3ButtonGroupShape",
+              "required": false,
+              "description": "Default shape of the buttons. Selected toggle buttons morph to the other shape.",
+              "values": [
+                "round",
+                "square"
+              ],
+              "default": "\"round\""
+            },
+            {
+              "name": "buttonVariant",
+              "type": "Md3ButtonGroupItemVariant",
+              "required": false,
+              "description": "Colour style applied to items that don't set their own `variant`.",
+              "values": [
+                "filled",
+                "tonal",
+                "elevated",
+                "outlined",
+                "text"
+              ],
+              "default": "\"filled\""
+            },
+            {
+              "name": "selectionMode",
+              "type": "Md3ButtonGroupSelectionMode",
+              "required": false,
+              "description": "`none` for plain action buttons, `single`/`multiple` to make items with a `value` toggle.",
+              "values": [
+                "none",
+                "single",
+                "multiple"
+              ],
+              "default": "\"none\""
+            },
+            {
+              "name": "selectionRequired",
+              "type": "boolean",
+              "required": false,
+              "description": "When true, the last selected item can't be deselected.",
+              "default": "false"
+            },
+            {
+              "name": "value",
+              "type": "string | string[]",
+              "required": false
+            },
+            {
+              "name": "defaultValue",
+              "type": "string | string[]",
+              "required": false
+            },
+            {
+              "name": "onValueChange",
+              "type": "(value: string | string[]) => void",
+              "required": false,
+              "description": "Called with a string in `single` mode (\"\" when cleared) and a string array in `multiple` mode."
+            }
+          ]
+        },
+        {
+          "name": "Md3ButtonGroupItemProps",
+          "source": "export interface Md3ButtonGroupItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  /** Identifies the item for selection. Items without a value act as plain buttons. */\n  value?: string;\n  /** Colour style; defaults to the group's `buttonVariant`. */\n  variant?: Md3ButtonGroupItemVariant;\n  /** Leading icon. Pass an icon with no children (and an `aria-label`) for an icon button. */\n  icon?: React.ReactNode;\n}",
+          "extends": [
+            "React.ButtonHTMLAttributes<HTMLButtonElement>"
+          ],
+          "members": [
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the item for selection. Items without a value act as plain buttons."
+            },
+            {
+              "name": "variant",
+              "type": "Md3ButtonGroupItemVariant",
+              "required": false,
+              "description": "Colour style; defaults to the group's `buttonVariant`.",
+              "values": [
+                "filled",
+                "tonal",
+                "elevated",
+                "outlined",
+                "text"
+              ]
+            },
+            {
+              "name": "icon",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Leading icon. Pass an icon with no children (and an `aria-label`) for an icon button."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/md3-button-group\n\nMaterial 3 button group — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Md3ButtonGroup`** — root (`variant=\"standard\" | \"connected\"`, `size=\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"`, `shape=\"round\" | \"square\"`, `buttonVariant`, `selectionMode=\"none\" | \"single\" | \"multiple\"`, `selectionRequired`, `value` / `defaultValue` / `onValueChange`)\n- **`Md3ButtonGroupItem`** — a button in the group (`value`, `variant`, `icon`); toggles with `aria-pressed` when the group is selectable\n- Types: `Md3ButtonGroupProps`, `Md3ButtonGroupItemProps`, `Md3ButtonGroupVariant`, `Md3ButtonGroupSize`, `Md3ButtonGroupShape`, `Md3ButtonGroupSelectionMode`, `Md3ButtonGroupItemVariant`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-button-group @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3ButtonGroup, Md3ButtonGroupItem } from \"@nucleux/md3-button-group\";\n\n<Md3ButtonGroup aria-label=\"Time range\" variant=\"connected\" selectionMode=\"single\" defaultValue=\"week\">\n  <Md3ButtonGroupItem value=\"day\">Day</Md3ButtonGroupItem>\n  <Md3ButtonGroupItem value=\"week\">Week</Md3ButtonGroupItem>\n  <Md3ButtonGroupItem value=\"month\">Month</Md3ButtonGroupItem>\n</Md3ButtonGroup>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "md3-card",
       "package": "@nucleux/md3-card",
       "kind": "component",
@@ -4459,6 +4631,133 @@
         }
       ],
       "readme": "# @nucleux/md3-card\n\nMaterial 3 card (elevated, filled, outlined) — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-card @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Card } from \"@nucleux/md3-card\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-carousel",
+      "package": "@nucleux/md3-carousel",
+      "kind": "component",
+      "description": "A Material Design 3 carousel built on Embla. Items are full-bleed tiles with\n28px corners and 8px gaps; as they scroll toward the edges they are masked\n(clipped symmetrically from both sides, so imagery stays centred) down to a\nsmall sliver, and the following items close up behind them, reproducing the\nM3 keyline motion. Four layouts: multi-browse, uncontained, hero (start or\ncentre aligned) and full-screen. The root is a labelled, focusable\n`region` with `aria-roledescription=\"carousel\"`; Left/Right arrows move one\nitem, Home/End jump to the ends, and each Md3CarouselItem is a labelled\n`group` slide (\"2 of 6\" by default).",
+      "summary": "Material 3 carousel — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-carousel",
+        "md3",
+        "material",
+        "carousel"
+      ],
+      "exports": [
+        "Md3Carousel",
+        "Md3CarouselItem",
+        "Md3CarouselLayout",
+        "Md3CarouselAlignment",
+        "Md3CarouselProps",
+        "Md3CarouselItemProps"
+      ],
+      "components": [
+        "Md3Carousel",
+        "Md3CarouselItem"
+      ],
+      "import": "import { Md3Carousel, Md3CarouselItem } from \"@nucleux/md3-carousel\";",
+      "installSingle": "pnpm add @nucleux/md3-carousel @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3CarouselProps",
+          "source": "export interface Md3CarouselProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Accessible name of the carousel region (required). */\n  \"aria-label\": string;\n  /**\n   * M3 carousel layout. `multi-browse` shows large, medium and small items;\n   * `uncontained` keeps every item at full size and lets the last one run off\n   * the edge; `hero` shows one large item plus small peek items; `full-screen`\n   * shows one item that fills the carousel. Defaults to \"multi-browse\".\n   */\n  layout?: Md3CarouselLayout;\n  /** Hero only: put the large item at the start (with a small item after it) or centred between two small items. Defaults to \"start\". */\n  alignment?: Md3CarouselAlignment;\n  /** Full-size width of a large item in px, for `multi-browse` and `uncontained`. Defaults to 200. */\n  itemWidth?: number;\n  /** Width of a fully masked (small) item in px; M3 allows 40–56. Defaults to 56. */\n  smallItemWidth?: number;\n  /** Extra Embla options (loop, dragFree…); `axis` and `align` are set by the layout. */\n  opts?: Omit<EmblaOptionsType, \"axis\">;\n  /** Receive the Embla API instance once ready. */\n  setApi?: (api: EmblaCarouselType | undefined) => void;\n  /** Called with the index of the item at the focal position after each snap. */\n  onIndexChange?: (index: number) => void;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": true,
+              "description": "Accessible name of the carousel region (required)."
+            },
+            {
+              "name": "layout",
+              "type": "Md3CarouselLayout",
+              "required": false,
+              "description": "M3 carousel layout. `multi-browse` shows large, medium and small items; `uncontained` keeps every item at full size and lets the last one run off the edge; `hero` shows one large item plus small peek items; `full-screen` shows one item that fills the carousel. Defaults to \"multi-browse\".",
+              "values": [
+                "multi-browse",
+                "uncontained",
+                "hero",
+                "full-screen"
+              ],
+              "default": "\"multi-browse\""
+            },
+            {
+              "name": "alignment",
+              "type": "Md3CarouselAlignment",
+              "required": false,
+              "description": "Hero only: put the large item at the start (with a small item after it) or centred between two small items. Defaults to \"start\".",
+              "values": [
+                "start",
+                "center"
+              ],
+              "default": "\"start\""
+            },
+            {
+              "name": "itemWidth",
+              "type": "number",
+              "required": false,
+              "description": "Full-size width of a large item in px, for `multi-browse` and `uncontained`. Defaults to 200.",
+              "default": "200"
+            },
+            {
+              "name": "smallItemWidth",
+              "type": "number",
+              "required": false,
+              "description": "Width of a fully masked (small) item in px; M3 allows 40–56. Defaults to 56.",
+              "default": "56"
+            },
+            {
+              "name": "opts",
+              "type": "Omit<EmblaOptionsType, \"axis\">",
+              "required": false,
+              "description": "Extra Embla options (loop, dragFree…); `axis` and `align` are set by the layout."
+            },
+            {
+              "name": "setApi",
+              "type": "(api: EmblaCarouselType | undefined) => void",
+              "required": false,
+              "description": "Receive the Embla API instance once ready."
+            },
+            {
+              "name": "onIndexChange",
+              "type": "(index: number) => void",
+              "required": false,
+              "description": "Called with the index of the item at the focal position after each snap."
+            }
+          ]
+        },
+        {
+          "name": "Md3CarouselItemProps",
+          "source": "export interface Md3CarouselItemProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Short text shown over the bottom of the item; it fades out as the item is masked. */\n  label?: React.ReactNode;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "label",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Short text shown over the bottom of the item; it fades out as the item is masked."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/md3-carousel\n\nMaterial 3 carousel — multi-browse, uncontained, hero and full-screen layouts with masked items — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Md3Carousel`** — labelled `region` (required `aria-label`; `layout=\"multi-browse\" | \"uncontained\" | \"hero\" | \"full-screen\"`, `alignment` for hero, `itemWidth`, `smallItemWidth`, `setApi`, `onIndexChange`); arrow keys, Home and End move between items\n- **`Md3CarouselItem`** — a slide (`role=\"group\"`, labelled \"n of total\"); optional `label` that fades as the item is masked\n\n## Install\n\n```bash\npnpm add @nucleux/md3-carousel @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Carousel, Md3CarouselItem } from \"@nucleux/md3-carousel\";\n\n<Md3Carousel aria-label=\"Destinations\" layout=\"multi-browse\" itemWidth={220}>\n  {photos.map((p) => (\n    <Md3CarouselItem key={p.id} label={p.title}>\n      <img src={p.src} alt={p.alt} />\n    </Md3CarouselItem>\n  ))}\n</Md3Carousel>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -4895,6 +5194,143 @@
       }
     },
     {
+      "name": "md3-fab-menu",
+      "package": "@nucleux/md3-fab-menu",
+      "kind": "component",
+      "description": "A Material Design 3 Expressive FAB menu. A FAB that, when pressed, turns into a\nround close button and opens a stack of 2–6 large pill-shaped menu items above it,\nin the primary, secondary or tertiary colour set. The FAB is a menu button\n(`aria-haspopup=\"menu\"`, `aria-expanded`); the items form a `role=\"menu\"` with\narrow-key, Home and End navigation. Escape, Tab, choosing an item or clicking\noutside closes it, and focus returns to the FAB. Compose with Md3FabMenuItem.",
+      "summary": "Material 3 floating action button menu — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-fab-menu",
+        "fab-menu",
+        "fab"
+      ],
+      "exports": [
+        "Md3FabMenu",
+        "Md3FabMenuItem",
+        "Md3FabMenuColor",
+        "Md3FabMenuFabSize",
+        "Md3FabMenuAlign",
+        "Md3FabMenuProps",
+        "Md3FabMenuItemProps"
+      ],
+      "components": [
+        "Md3FabMenu",
+        "Md3FabMenuItem"
+      ],
+      "import": "import { Md3FabMenu, Md3FabMenuItem } from \"@nucleux/md3-fab-menu\";",
+      "installSingle": "pnpm add @nucleux/md3-fab-menu @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3FabMenuProps",
+          "source": "export interface Md3FabMenuProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Controlled open state. */\n  open?: boolean;\n  defaultOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  /** Colour set: the closed FAB, the close button and the items all follow it. */\n  color?: Md3FabMenuColor;\n  /** Size of the FAB while closed. Once open it becomes a 56px round close button. */\n  fabSize?: Md3FabMenuFabSize;\n  /** Icon shown on the FAB while the menu is closed. */\n  icon: React.ReactNode;\n  /** Icon shown on the close button (defaults to an X). */\n  closeIcon?: React.ReactNode;\n  /** Accessible name of the FAB, e.g. \"Create\". */\n  label: string;\n  /** Which edge the FAB and items line up against (default \"end\"). */\n  align?: Md3FabMenuAlign;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": false,
+              "description": "Controlled open state."
+            },
+            {
+              "name": "defaultOpen",
+              "type": "boolean",
+              "required": false,
+              "default": "false"
+            },
+            {
+              "name": "onOpenChange",
+              "type": "(open: boolean) => void",
+              "required": false
+            },
+            {
+              "name": "color",
+              "type": "Md3FabMenuColor",
+              "required": false,
+              "description": "Colour set: the closed FAB, the close button and the items all follow it.",
+              "values": [
+                "primary",
+                "secondary",
+                "tertiary"
+              ],
+              "default": "\"primary\""
+            },
+            {
+              "name": "fabSize",
+              "type": "Md3FabMenuFabSize",
+              "required": false,
+              "description": "Size of the FAB while closed. Once open it becomes a 56px round close button.",
+              "values": [
+                "small",
+                "regular",
+                "large"
+              ],
+              "default": "\"regular\""
+            },
+            {
+              "name": "icon",
+              "type": "React.ReactNode",
+              "required": true,
+              "description": "Icon shown on the FAB while the menu is closed."
+            },
+            {
+              "name": "closeIcon",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Icon shown on the close button (defaults to an X)."
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "required": true,
+              "description": "Accessible name of the FAB, e.g. \"Create\"."
+            },
+            {
+              "name": "align",
+              "type": "Md3FabMenuAlign",
+              "required": false,
+              "description": "Which edge the FAB and items line up against (default \"end\").",
+              "values": [
+                "start",
+                "end"
+              ],
+              "default": "\"end\""
+            }
+          ]
+        },
+        {
+          "name": "Md3FabMenuItemProps",
+          "source": "export interface Md3FabMenuItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  /** Leading icon. */\n  icon?: React.ReactNode;\n}",
+          "extends": [
+            "React.ButtonHTMLAttributes<HTMLButtonElement>"
+          ],
+          "members": [
+            {
+              "name": "icon",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Leading icon."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/md3-fab-menu\n\nMaterial 3 floating action button menu — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Md3FabMenu`** — a FAB (`label`, `icon`, `fabSize` small/regular/large) that turns into a close button and opens a stack of items; `color` primary/secondary/tertiary, `align` start/end, `open`/`defaultOpen`/`onOpenChange`\n- **`Md3FabMenuItem`** — one 56px pill action with `icon` and a label; choosing it closes the menu (call `preventDefault()` in `onClick` to keep it open)\n- Types: `Md3FabMenuProps`, `Md3FabMenuItemProps`, `Md3FabMenuColor`, `Md3FabMenuFabSize`, `Md3FabMenuAlign`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-fab-menu @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3FabMenu, Md3FabMenuItem } from \"@nucleux/md3-fab-menu\";\n\n<Md3FabMenu label=\"Create\" icon={<Plus />}>\n  <Md3FabMenuItem icon={<MessageSquarePlus />} onClick={newChat}>New chat</Md3FabMenuItem>\n  <Md3FabMenuItem icon={<FileText />} onClick={newDoc}>New document</Md3FabMenuItem>\n</Md3FabMenu>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "md3-icon-button",
       "package": "@nucleux/md3-icon-button",
       "kind": "component",
@@ -5028,6 +5464,77 @@
         }
       ],
       "readme": "# @nucleux/md3-list\n\nMaterial 3 list — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-list @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3List } from \"@nucleux/md3-list\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-loading-indicator",
+      "package": "@nucleux/md3-loading-indicator",
+      "kind": "component",
+      "description": "A Material Design 3 Expressive loading indicator: an indeterminate\n`role=\"progressbar\"` whose shape continuously morphs and turns through the seven\nM3 Expressive shapes, for waits under about five seconds. The default variant\ndraws the shape in primary; the contained variant puts it in on-primary-container\nover a round primary-container backdrop. Under `prefers-reduced-motion: reduce`\nthe shape stays still and only fades gently. Give it an `aria-label` that says\nwhat is loading. Use Md3LinearProgress or Md3CircularProgress when progress is\nknown.",
+      "summary": "Material 3 loading indicator — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-loading-indicator",
+        "loading-indicator",
+        "spinner"
+      ],
+      "exports": [
+        "Md3LoadingIndicator",
+        "Md3LoadingIndicatorVariant",
+        "Md3LoadingIndicatorProps"
+      ],
+      "components": [
+        "Md3LoadingIndicator"
+      ],
+      "import": "import { Md3LoadingIndicator } from \"@nucleux/md3-loading-indicator\";",
+      "installSingle": "pnpm add @nucleux/md3-loading-indicator @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3LoadingIndicatorProps",
+          "source": "export interface Md3LoadingIndicatorProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** \"default\" draws the shape alone; \"contained\" adds a round primary-container backdrop. */\n  variant?: Md3LoadingIndicatorVariant;\n  /** Overall size in px (default 48). The morphing shape takes 38/48 of it, as in the spec. */\n  size?: number;\n  /** Accessible name announced for the progressbar (default \"Loading\"). */\n  \"aria-label\"?: string;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "variant",
+              "type": "Md3LoadingIndicatorVariant",
+              "required": false,
+              "description": "\"default\" draws the shape alone; \"contained\" adds a round primary-container backdrop.",
+              "values": [
+                "default",
+                "contained"
+              ],
+              "default": "\"default\""
+            },
+            {
+              "name": "size",
+              "type": "number",
+              "required": false,
+              "description": "Overall size in px (default 48). The morphing shape takes 38/48 of it, as in the spec.",
+              "default": "48"
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name announced for the progressbar (default \"Loading\")."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/md3-loading-indicator\n\nMaterial 3 loading indicator — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Md3LoadingIndicator`** — the M3 Expressive shape-morphing indicator, indeterminate `role=\"progressbar\"`; `variant` default/contained, `size` in px (default 48), `aria-label` (default \"Loading\"). Holds still and fades gently under `prefers-reduced-motion`.\n- Types: `Md3LoadingIndicatorProps`, `Md3LoadingIndicatorVariant`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-loading-indicator @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3LoadingIndicator } from \"@nucleux/md3-loading-indicator\";\n\n<Md3LoadingIndicator aria-label=\"Loading messages\" />\n<Md3LoadingIndicator variant=\"contained\" aria-label=\"Generating a reply\" />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -5766,6 +6273,175 @@
       }
     },
     {
+      "name": "md3-side-sheet",
+      "package": "@nucleux/md3-side-sheet",
+      "kind": "component",
+      "description": "A Material Design 3 side sheet: a surface of supplementary content anchored to\nthe left or right edge. The `standard` variant is an in-layout, non-modal\n`<aside>` on the surface colour that sits beside the main content; the `modal`\nvariant portals a `role=\"dialog\"` panel on surface-container-low over a scrim,\nmoves focus into it, traps Tab, locks body scroll, closes on Escape or a scrim\nclick and returns focus to whatever opened it. Compose it from\nMd3SideSheetHeader (title with optional back and close icon buttons),\nMd3SideSheetBody and Md3SideSheetActions.",
+      "summary": "Material 3 side sheet — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3-side-sheet",
+        "md3",
+        "material",
+        "side-sheet"
+      ],
+      "exports": [
+        "Md3SideSheet",
+        "Md3SideSheetHeader",
+        "Md3SideSheetBody",
+        "Md3SideSheetActions",
+        "Md3SideSheetVariant",
+        "Md3SideSheetSide",
+        "Md3SideSheetProps",
+        "Md3SideSheetHeaderProps",
+        "Md3SideSheetBodyProps",
+        "Md3SideSheetActionsProps"
+      ],
+      "components": [
+        "Md3SideSheet",
+        "Md3SideSheetHeader",
+        "Md3SideSheetBody",
+        "Md3SideSheetActions"
+      ],
+      "import": "import { Md3SideSheet, Md3SideSheetHeader, Md3SideSheetBody, Md3SideSheetActions } from \"@nucleux/md3-side-sheet\";",
+      "installSingle": "pnpm add @nucleux/md3-side-sheet @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3SideSheetProps",
+          "source": "export interface Md3SideSheetProps extends React.HTMLAttributes<HTMLElement> {\n  /** `standard` sits in the page layout beside the content; `modal` floats over a scrim. Defaults to \"standard\". */\n  variant?: Md3SideSheetVariant;\n  /** Screen (or layout) edge the sheet is attached to. Defaults to \"right\". */\n  side?: Md3SideSheetSide;\n  /** Whether the sheet is shown. Defaults to true for standard sheets and false for modal ones. */\n  open?: boolean;\n  /** Called when the sheet asks to close (close button, Escape or scrim click). */\n  onOpenChange?: (open: boolean) => void;\n  /** Modal only: when false, Escape and scrim clicks do not close the sheet. Defaults to true. */\n  dismissible?: boolean;\n  /** Standard only: draw a divider on the edge facing the content. Defaults to false. */\n  divider?: boolean;\n  /** Modal only: element to portal into. Defaults to `document.body`. */\n  container?: HTMLElement | null;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLElement>"
+          ],
+          "members": [
+            {
+              "name": "variant",
+              "type": "Md3SideSheetVariant",
+              "required": false,
+              "description": "`standard` sits in the page layout beside the content; `modal` floats over a scrim. Defaults to \"standard\".",
+              "values": [
+                "standard",
+                "modal"
+              ],
+              "default": "\"standard\""
+            },
+            {
+              "name": "side",
+              "type": "Md3SideSheetSide",
+              "required": false,
+              "description": "Screen (or layout) edge the sheet is attached to. Defaults to \"right\".",
+              "values": [
+                "left",
+                "right"
+              ],
+              "default": "\"right\""
+            },
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": false,
+              "description": "Whether the sheet is shown. Defaults to true for standard sheets and false for modal ones."
+            },
+            {
+              "name": "onOpenChange",
+              "type": "(open: boolean) => void",
+              "required": false,
+              "description": "Called when the sheet asks to close (close button, Escape or scrim click)."
+            },
+            {
+              "name": "dismissible",
+              "type": "boolean",
+              "required": false,
+              "description": "Modal only: when false, Escape and scrim clicks do not close the sheet. Defaults to true.",
+              "default": "true"
+            },
+            {
+              "name": "divider",
+              "type": "boolean",
+              "required": false,
+              "description": "Standard only: draw a divider on the edge facing the content. Defaults to false.",
+              "default": "false"
+            },
+            {
+              "name": "container",
+              "type": "HTMLElement | null",
+              "required": false,
+              "description": "Modal only: element to portal into. Defaults to `document.body`."
+            }
+          ]
+        },
+        {
+          "name": "Md3SideSheetHeaderProps",
+          "source": "export interface Md3SideSheetHeaderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"title\"> {\n  /** When set, shows a leading back icon button that calls this handler. */\n  onBack?: () => void;\n  /** Accessible name of the back button. Defaults to \"Back\". */\n  backLabel?: string;\n  /** Show the trailing close icon button. Defaults to true. */\n  showClose?: boolean;\n  /** Accessible name of the close button. Defaults to \"Close\". */\n  closeLabel?: string;\n  /** Draw a divider under the header. Defaults to false. */\n  divider?: boolean;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"title\">"
+          ],
+          "members": [
+            {
+              "name": "onBack",
+              "type": "() => void",
+              "required": false,
+              "description": "When set, shows a leading back icon button that calls this handler."
+            },
+            {
+              "name": "backLabel",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name of the back button. Defaults to \"Back\".",
+              "default": "\"Back\""
+            },
+            {
+              "name": "showClose",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the trailing close icon button. Defaults to true.",
+              "default": "true"
+            },
+            {
+              "name": "closeLabel",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name of the close button. Defaults to \"Close\".",
+              "default": "\"Close\""
+            },
+            {
+              "name": "divider",
+              "type": "boolean",
+              "required": false,
+              "description": "Draw a divider under the header. Defaults to false.",
+              "default": "false"
+            }
+          ]
+        },
+        {
+          "name": "Md3SideSheetActionsProps",
+          "source": "export interface Md3SideSheetActionsProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Draw the divider above the actions. Defaults to true. */\n  divider?: boolean;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "divider",
+              "type": "boolean",
+              "required": false,
+              "description": "Draw the divider above the actions. Defaults to true.",
+              "default": "true"
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/md3-side-sheet\n\nMaterial 3 side sheet — standard (in-layout) and modal, left or right edge — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Md3SideSheet`** — root (`variant=\"standard\" | \"modal\"`, `side=\"left\" | \"right\"`, `open` / `onOpenChange`; modal adds a scrim, focus trap, Escape / scrim close, focus restore and scroll lock)\n- **`Md3SideSheetHeader`** — headline with optional back (`onBack`) and close icon buttons; labels the sheet\n- **`Md3SideSheetBody`** — scrollable content\n- **`Md3SideSheetActions`** — bottom action row with a divider\n\n## Install\n\n```bash\npnpm add @nucleux/md3-side-sheet @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3SideSheet, Md3SideSheetHeader, Md3SideSheetBody, Md3SideSheetActions } from \"@nucleux/md3-side-sheet\";\n\n<Md3SideSheet variant=\"modal\" open={open} onOpenChange={setOpen}>\n  <Md3SideSheetHeader>Filters</Md3SideSheetHeader>\n  <Md3SideSheetBody>…</Md3SideSheetBody>\n  <Md3SideSheetActions>\n    <Md3Button onClick={() => setOpen(false)}>Apply</Md3Button>\n  </Md3SideSheetActions>\n</Md3SideSheet>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
       "name": "md3-slider",
       "package": "@nucleux/md3-slider",
       "kind": "component",
@@ -5910,6 +6586,144 @@
         }
       ],
       "readme": "# @nucleux/md3-snackbar\n\nMaterial 3 snackbar — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-snackbar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Snackbar } from \"@nucleux/md3-snackbar\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-split-button",
+      "package": "@nucleux/md3-split-button",
+      "kind": "component",
+      "description": "A Material 3 Expressive split button: a leading button for the primary action\njoined (2px apart, small inner corners) to a trailing menu button that opens a\nmenu of related actions. When the menu opens the trailing button becomes fully\nround and its chevron turns over. The menu uses Md3Menu with menu-button\nsemantics: `aria-haspopup`/`aria-expanded` on the trailing button, arrow-key\nnavigation between items, and Escape, Tab, outside click or choosing an item to\nclose. Filled, tonal, elevated and outlined colour styles in five sizes.",
+      "summary": "Material 3 split button — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "split-button",
+        "md3-split-button"
+      ],
+      "exports": [
+        "Md3SplitButton",
+        "Md3SplitButtonVariant",
+        "Md3SplitButtonSize",
+        "Md3SplitButtonMenuAlign",
+        "Md3SplitButtonProps"
+      ],
+      "components": [
+        "Md3SplitButton"
+      ],
+      "import": "import { Md3SplitButton } from \"@nucleux/md3-split-button\";",
+      "installSingle": "pnpm add @nucleux/md3-split-button @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3SplitButtonProps",
+          "source": "export interface Md3SplitButtonProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onClick\"> {\n  variant?: Md3SplitButtonVariant;\n  /** XS 32px, S 40px, M 56px, L 96px, XL 136px tall. */\n  size?: Md3SplitButtonSize;\n  /** Leading icon of the action button. */\n  icon?: React.ReactNode;\n  /** Accessible name for the action button when it shows only an icon. */\n  actionLabel?: string;\n  /** Click handler of the leading (primary action) button. */\n  onClick?: React.MouseEventHandler<HTMLButtonElement>;\n  /** Menu contents — usually Md3MenuItem / Md3MenuDivider elements from `@nucleux/md3-menu`. */\n  menu: React.ReactNode;\n  /** Accessible name of the trailing menu button. */\n  menuLabel?: string;\n  /** Which edge of the split button the menu lines up with. */\n  menuAlign?: Md3SplitButtonMenuAlign;\n  open?: boolean;\n  defaultOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  /** Disables both the action and the menu button. */\n  disabled?: boolean;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onClick\">"
+          ],
+          "members": [
+            {
+              "name": "variant",
+              "type": "Md3SplitButtonVariant",
+              "required": false,
+              "values": [
+                "filled",
+                "tonal",
+                "elevated",
+                "outlined"
+              ],
+              "default": "\"filled\""
+            },
+            {
+              "name": "size",
+              "type": "Md3SplitButtonSize",
+              "required": false,
+              "description": "XS 32px, S 40px, M 56px, L 96px, XL 136px tall.",
+              "values": [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl"
+              ],
+              "default": "\"sm\""
+            },
+            {
+              "name": "icon",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Leading icon of the action button."
+            },
+            {
+              "name": "actionLabel",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name for the action button when it shows only an icon."
+            },
+            {
+              "name": "onClick",
+              "type": "React.MouseEventHandler<HTMLButtonElement>",
+              "required": false,
+              "description": "Click handler of the leading (primary action) button."
+            },
+            {
+              "name": "menu",
+              "type": "React.ReactNode",
+              "required": true,
+              "description": "Menu contents — usually Md3MenuItem / Md3MenuDivider elements from `@nucleux/md3-menu`."
+            },
+            {
+              "name": "menuLabel",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name of the trailing menu button.",
+              "default": "\"More options\""
+            },
+            {
+              "name": "menuAlign",
+              "type": "Md3SplitButtonMenuAlign",
+              "required": false,
+              "description": "Which edge of the split button the menu lines up with.",
+              "values": [
+                "start",
+                "end"
+              ],
+              "default": "\"end\""
+            },
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": false
+            },
+            {
+              "name": "defaultOpen",
+              "type": "boolean",
+              "required": false,
+              "default": "false"
+            },
+            {
+              "name": "onOpenChange",
+              "type": "(open: boolean) => void",
+              "required": false
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": "Disables both the action and the menu button."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/md3-split-button\n\nMaterial 3 split button — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Md3SplitButton`** — leading action button plus a trailing menu button (`variant=\"filled\" | \"tonal\" | \"elevated\" | \"outlined\"`, `size=\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"`, `icon`, `onClick`, `menu`, `menuLabel`, `menuAlign`, `open` / `defaultOpen` / `onOpenChange`, `disabled`)\n- Types: `Md3SplitButtonProps`, `Md3SplitButtonVariant`, `Md3SplitButtonSize`, `Md3SplitButtonMenuAlign`\n\nFill `menu` with `Md3MenuItem` / `Md3MenuDivider` from `@nucleux/md3-menu`.\n\n## Install\n\n```bash\npnpm add @nucleux/md3-split-button @nucleux/md3-menu @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3SplitButton } from \"@nucleux/md3-split-button\";\nimport { Md3MenuItem } from \"@nucleux/md3-menu\";\n\n<Md3SplitButton\n  onClick={save}\n  menuLabel=\"More save options\"\n  menu={\n    <>\n      <Md3MenuItem onClick={saveCopy}>Save a copy</Md3MenuItem>\n      <Md3MenuItem onClick={exportPdf}>Export as PDF</Md3MenuItem>\n    </>\n  }\n>\n  Save\n</Md3SplitButton>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
@@ -6240,6 +7054,97 @@
         }
       ],
       "readme": "# @nucleux/md3-time-picker\n\nMaterial 3 time picker (input) — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n## Install\n\n```bash\npnpm add @nucleux/md3-time-picker @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3TimePicker } from \"@nucleux/md3-time-picker\";\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      }
+    },
+    {
+      "name": "md3-toolbar",
+      "package": "@nucleux/md3-toolbar",
+      "kind": "component",
+      "description": "A Material 3 Expressive toolbar for actions related to the current page. The\n`docked` type spans the bottom (or top) of the screen at 64px tall and replaces\nthe bottom app bar; the `floating` type is an elevated, fully rounded container\nthat floats over content in a horizontal or vertical orientation and pairs well\nwith an Md3Fab placed beside it. Both come in standard and vibrant colours. It\nimplements the WAI-ARIA toolbar pattern: one Tab stop, with arrow keys (Left/Right,\nor Up/Down when vertical), Home and End moving focus between its controls.\nGive it an `aria-label`, and use Md3ToolbarIconButton for colour-matched icon buttons.",
+      "summary": "Material 3 docked and floating toolbar — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "toolbar",
+        "md3-toolbar"
+      ],
+      "exports": [
+        "Md3Toolbar",
+        "Md3ToolbarIconButton",
+        "Md3ToolbarType",
+        "Md3ToolbarOrientation",
+        "Md3ToolbarColor",
+        "Md3ToolbarProps",
+        "Md3ToolbarIconButtonProps"
+      ],
+      "components": [
+        "Md3Toolbar",
+        "Md3ToolbarIconButton"
+      ],
+      "import": "import { Md3Toolbar, Md3ToolbarIconButton } from \"@nucleux/md3-toolbar\";",
+      "installSingle": "pnpm add @nucleux/md3-toolbar @nucleux/tokens",
+      "props": [
+        {
+          "name": "Md3ToolbarProps",
+          "source": "export interface Md3ToolbarProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** `docked` spans the width of its container (replaces the bottom app bar); `floating` is a pill above content. */\n  type?: Md3ToolbarType;\n  /** Layout of a floating toolbar. Docked toolbars are always horizontal. */\n  orientation?: Md3ToolbarOrientation;\n  /** `standard` uses surface-container; `vibrant` uses primary-container for more emphasis. */\n  color?: Md3ToolbarColor;\n  /** Whether arrow keys wrap from the last control to the first and back. */\n  loop?: boolean;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "type",
+              "type": "Md3ToolbarType",
+              "required": false,
+              "description": "`docked` spans the width of its container (replaces the bottom app bar); `floating` is a pill above content.",
+              "values": [
+                "docked",
+                "floating"
+              ],
+              "default": "\"docked\""
+            },
+            {
+              "name": "orientation",
+              "type": "Md3ToolbarOrientation",
+              "required": false,
+              "description": "Layout of a floating toolbar. Docked toolbars are always horizontal.",
+              "values": [
+                "horizontal",
+                "vertical"
+              ],
+              "default": "\"horizontal\""
+            },
+            {
+              "name": "color",
+              "type": "Md3ToolbarColor",
+              "required": false,
+              "description": "`standard` uses surface-container; `vibrant` uses primary-container for more emphasis.",
+              "values": [
+                "standard",
+                "vibrant"
+              ],
+              "default": "\"standard\""
+            },
+            {
+              "name": "loop",
+              "type": "boolean",
+              "required": false,
+              "description": "Whether arrow keys wrap from the last control to the first and back.",
+              "default": "true"
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/md3-toolbar\n\nMaterial 3 docked and floating toolbar — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n\n## Exports\n\n- **`Md3Toolbar`** — `role=\"toolbar\"` with arrow-key roving focus (`type=\"docked\" | \"floating\"`, `orientation=\"horizontal\" | \"vertical\"` for floating, `color=\"standard\" | \"vibrant\"`, `loop`)\n- **`Md3ToolbarIconButton`** — an `Md3IconButton` coloured for the toolbar; `selected` for toggled actions\n- Types: `Md3ToolbarProps`, `Md3ToolbarIconButtonProps`, `Md3ToolbarType`, `Md3ToolbarOrientation`, `Md3ToolbarColor`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-toolbar @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Toolbar, Md3ToolbarIconButton } from \"@nucleux/md3-toolbar\";\n\n<Md3Toolbar type=\"floating\" color=\"vibrant\" aria-label=\"Text formatting\">\n  <Md3ToolbarIconButton aria-label=\"Bold\" selected><Bold /></Md3ToolbarIconButton>\n  <Md3ToolbarIconButton aria-label=\"Italic\"><Italic /></Md3ToolbarIconButton>\n</Md3Toolbar>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
       "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"

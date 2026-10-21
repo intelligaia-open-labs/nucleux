@@ -112,5 +112,12 @@
   "@nucleux/spinner": "packages/spinner/src/index.tsx",
   "@nucleux/trace": "packages/trace/src/index.tsx",
   "@nucleux/drawer": "packages/drawer/src/index.tsx",
-  "@nucleux/questionnaire": "packages/questionnaire/src/index.tsx"
+  "@nucleux/questionnaire": "packages/questionnaire/src/index.tsx",
+  "@nucleux/md3-button-group": "packages/md3-button-group/src/index.tsx",
+  "@nucleux/md3-carousel": "packages/md3-carousel/src/index.tsx",
+  "@nucleux/md3-fab-menu": "packages/md3-fab-menu/src/index.tsx",
+  "@nucleux/md3-loading-indicator": "packages/md3-loading-indicator/src/index.tsx",
+  "@nucleux/md3-side-sheet": "packages/md3-side-sheet/src/index.tsx",
+  "@nucleux/md3-split-button": "packages/md3-split-button/src/index.tsx",
+  "@nucleux/md3-toolbar": "packages/md3-toolbar/src/index.tsx"
 }

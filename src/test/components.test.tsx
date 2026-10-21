@@ -1,10 +1,26 @@
-import { createRef, type FormEvent } from "react";
+import { createRef, useState, type FormEvent } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import { Home, Mic } from "lucide-react";
 import {
+  Md3ButtonGroup,
+  Md3ButtonGroupItem,
+  Md3SplitButton,
+  Md3MenuItem,
+  Md3Toolbar,
+  Md3ToolbarIconButton,
+  Md3FabMenu,
+  Md3FabMenuItem,
+  Md3LoadingIndicator,
+  Md3SideSheet,
+  Md3SideSheetHeader,
+  Md3SideSheetBody,
+  Md3SideSheetActions,
+  Md3Carousel,
+  Md3CarouselItem,
+  type Md3CarouselProps,
   Drawer,
   DrawerClose,
   DrawerContent,
@@ -1175,6 +1191,310 @@ describe("interaction: components behave", () => {
     await user.keyboard("{Control>}{Enter}{/Control}");
     expect(onSubmit).toHaveBeenCalledTimes(1);
     expect(onSubmit.mock.results[0]!.value).toEqual({ direction: ["Something else"], signals: [] });
+  });
+
+  it("Md3ButtonGroup toggles single selection and respects selectionRequired", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(
+      <Md3ButtonGroup aria-label="Time range" variant="connected" selectionMode="single" selectionRequired defaultValue="week" onValueChange={onValueChange}>
+        <Md3ButtonGroupItem value="day">Day</Md3ButtonGroupItem>
+        <Md3ButtonGroupItem value="week">Week</Md3ButtonGroupItem>
+      </Md3ButtonGroup>,
+    );
+    expect(screen.getByRole("button", { name: "Week" })).toHaveAttribute("aria-pressed", "true");
+    await user.click(screen.getByRole("button", { name: "Day" }));
+    expect(onValueChange).toHaveBeenLastCalledWith("day");
+    expect(screen.getByRole("button", { name: "Day" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Week" })).toHaveAttribute("aria-pressed", "false");
+    await user.click(screen.getByRole("button", { name: "Day" }));
+    expect(screen.getByRole("button", { name: "Day" })).toHaveAttribute("aria-pressed", "true");
+    expect(onValueChange).toHaveBeenCalledTimes(1);
+  });
+
+  it("Md3ButtonGroup supports multiple selection and plain action items", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    const onClick = vi.fn();
+    render(
+      <Md3ButtonGroup aria-label="Text style" selectionMode="multiple" onValueChange={onValueChange}>
+        <Md3ButtonGroupItem value="bold" icon={<Home />} aria-label="Bold" />
+        <Md3ButtonGroupItem value="italic" icon={<Mic />} aria-label="Italic" />
+        <Md3ButtonGroupItem onClick={onClick}>Clear</Md3ButtonGroupItem>
+      </Md3ButtonGroup>,
+    );
+    await user.click(screen.getByRole("button", { name: "Bold" }));
+    await user.click(screen.getByRole("button", { name: "Italic" }));
+    expect(onValueChange).toHaveBeenLastCalledWith(["bold", "italic"]);
+    await user.click(screen.getByRole("button", { name: "Clear" }));
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole("button", { name: "Clear" })).not.toHaveAttribute("aria-pressed");
+  });
+
+  it("Md3SplitButton runs the primary action and opens the menu from the trailing button", async () => {
+    const user = userEvent.setup();
+    const onSave = vi.fn();
+    const onCopy = vi.fn();
+    render(
+      <Md3SplitButton
+        onClick={onSave}
+        menuLabel="More save options"
+        menu={
+          <>
+            <Md3MenuItem onClick={onCopy}>Save a copy</Md3MenuItem>
+            <Md3MenuItem>Export as PDF</Md3MenuItem>
+          </>
+        }
+      >
+        Save
+      </Md3SplitButton>,
+    );
+    await user.click(screen.getByRole("button", { name: "Save" }));
+    expect(onSave).toHaveBeenCalledTimes(1);
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    const trigger = screen.getByRole("button", { name: "More save options" });
+    expect(trigger).toHaveAttribute("aria-haspopup", "menu");
+    await user.click(trigger);
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByRole("menuitem", { name: "Save a copy" })).toHaveFocus();
+    await user.click(screen.getByRole("menuitem", { name: "Save a copy" }));
+    expect(onCopy).toHaveBeenCalledTimes(1);
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+  });
+
+  it("Md3SplitButton navigates the menu with arrow keys and closes on Escape", async () => {
+    const user = userEvent.setup();
+    const onOpenChange = vi.fn();
+    render(
+      <Md3SplitButton onOpenChange={onOpenChange} menuLabel="More options" menu={<><Md3MenuItem>One</Md3MenuItem><Md3MenuItem>Two</Md3MenuItem></>}>
+        Save
+      </Md3SplitButton>,
+    );
+    const trigger = screen.getByRole("button", { name: "More options" });
+    trigger.focus();
+    await user.keyboard("{ArrowDown}");
+    expect(screen.getByRole("menuitem", { name: "One" })).toHaveFocus();
+    await user.keyboard("{ArrowDown}");
+    expect(screen.getByRole("menuitem", { name: "Two" })).toHaveFocus();
+    await user.keyboard("{ArrowDown}");
+    expect(screen.getByRole("menuitem", { name: "One" })).toHaveFocus();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+    expect(onOpenChange).toHaveBeenLastCalledWith(false);
+  });
+
+  it("Md3Toolbar has one tab stop and moves focus with arrow keys, Home and End", async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <Md3Toolbar type="floating" aria-label="Formatting">
+          <Md3ToolbarIconButton aria-label="Bold"><Home /></Md3ToolbarIconButton>
+          <Md3ToolbarIconButton aria-label="Italic" disabled><Home /></Md3ToolbarIconButton>
+          <Md3ToolbarIconButton aria-label="Underline"><Home /></Md3ToolbarIconButton>
+        </Md3Toolbar>
+        <button type="button">After</button>
+      </>,
+    );
+    expect(screen.getByRole("toolbar", { name: "Formatting" })).toHaveAttribute("aria-orientation", "horizontal");
+    await user.tab();
+    expect(screen.getByRole("button", { name: "Bold" })).toHaveFocus();
+    await user.keyboard("{ArrowRight}");
+    expect(screen.getByRole("button", { name: "Underline" })).toHaveFocus();
+    await user.keyboard("{ArrowRight}");
+    expect(screen.getByRole("button", { name: "Bold" })).toHaveFocus();
+    await user.keyboard("{End}");
+    expect(screen.getByRole("button", { name: "Underline" })).toHaveFocus();
+    await user.tab();
+    expect(screen.getByRole("button", { name: "After" })).toHaveFocus();
+    await user.tab({ shift: true });
+    expect(screen.getByRole("button", { name: "Underline" })).toHaveFocus();
+  });
+
+  it("Md3Toolbar uses Up/Down when vertical", async () => {
+    const user = userEvent.setup();
+    const onClick = vi.fn();
+    render(
+      <Md3Toolbar type="floating" orientation="vertical" aria-label="Tools">
+        <Md3ToolbarIconButton aria-label="Bold"><Home /></Md3ToolbarIconButton>
+        <Md3ToolbarIconButton aria-label="Italic" onClick={onClick}><Home /></Md3ToolbarIconButton>
+      </Md3Toolbar>,
+    );
+    expect(screen.getByRole("toolbar")).toHaveAttribute("aria-orientation", "vertical");
+    await user.tab();
+    await user.keyboard("{ArrowRight}");
+    expect(screen.getByRole("button", { name: "Bold" })).toHaveFocus();
+    await user.keyboard("{ArrowDown}");
+    expect(screen.getByRole("button", { name: "Italic" })).toHaveFocus();
+    await user.keyboard("{Enter}");
+    expect(onClick).toHaveBeenCalledTimes(1);
+    await user.keyboard("{ArrowUp}");
+    expect(screen.getByRole("button", { name: "Bold" })).toHaveFocus();
+  });
+
+  it("Md3FabMenu opens from the FAB, moves with arrow keys and closes on Escape returning focus", async () => {
+    const user = userEvent.setup();
+    render(
+      <Md3FabMenu label="Create" icon={<Home />}>
+        <Md3FabMenuItem icon={<Home />}>Document</Md3FabMenuItem>
+        <Md3FabMenuItem icon={<Mic />}>Image</Md3FabMenuItem>
+      </Md3FabMenu>,
+    );
+    const fab = screen.getByRole("button", { name: "Create" });
+    expect(fab).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    await user.click(fab);
+    expect(fab).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByRole("menu", { name: "Create" })).toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: "Document" })).toHaveFocus();
+    await user.keyboard("{ArrowDown}");
+    expect(screen.getByRole("menuitem", { name: "Image" })).toHaveFocus();
+    await user.keyboard("{ArrowDown}");
+    expect(screen.getByRole("menuitem", { name: "Document" })).toHaveFocus();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    expect(fab).toHaveFocus();
+  });
+
+  it("Md3FabMenu runs an item's onClick, closes, and closes on outside click", async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    const onOpenChange = vi.fn();
+    render(
+      <div>
+        <p>Outside</p>
+        <Md3FabMenu label="Create" icon={<Home />} onOpenChange={onOpenChange}>
+          <Md3FabMenuItem onClick={onSelect}>Document</Md3FabMenuItem>
+          <Md3FabMenuItem>Image</Md3FabMenuItem>
+        </Md3FabMenu>
+      </div>,
+    );
+    const fab = screen.getByRole("button", { name: "Create" });
+    await user.click(fab);
+    expect(onOpenChange).toHaveBeenLastCalledWith(true);
+    await user.click(screen.getByRole("menuitem", { name: "Document" }));
+    expect(onSelect).toHaveBeenCalledTimes(1);
+    expect(onOpenChange).toHaveBeenLastCalledWith(false);
+    expect(fab).toHaveFocus();
+    await user.click(fab);
+    await user.click(screen.getByText("Outside"));
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+  });
+
+  it("Md3LoadingIndicator is a named indeterminate progressbar that holds still under reduced motion", () => {
+    const { unmount } = render(<Md3LoadingIndicator variant="contained" aria-label="Loading messages" />);
+    const bar = screen.getByRole("progressbar", { name: "Loading messages" });
+    expect(bar).not.toHaveAttribute("aria-valuenow");
+    expect(bar.querySelector("animate")).not.toBeNull();
+    unmount();
+    const original = window.matchMedia;
+    window.matchMedia = ((query: string) => ({ ...original(query), matches: query.includes("reduce") })) as typeof window.matchMedia;
+    try {
+      render(<Md3LoadingIndicator aria-label="Loading" />);
+      expect(screen.getByRole("progressbar", { name: "Loading" }).querySelector("animate")).toBeNull();
+    } finally {
+      window.matchMedia = original;
+    }
+  });
+
+  it("Md3SideSheet (modal) traps focus, closes on Escape and restores focus", async () => {
+    const user = userEvent.setup();
+    function Demo() {
+      const [open, setOpen] = useState(false);
+      return (
+        <>
+          <button type="button" onClick={() => setOpen(true)}>Open filters</button>
+          <Md3SideSheet variant="modal" open={open} onOpenChange={setOpen}>
+            <Md3SideSheetHeader>Filters</Md3SideSheetHeader>
+            <Md3SideSheetBody>Narrow the product list.</Md3SideSheetBody>
+            <Md3SideSheetActions><button type="button">Apply</button></Md3SideSheetActions>
+          </Md3SideSheet>
+        </>
+      );
+    }
+    render(<Demo />);
+    const trigger = screen.getByRole("button", { name: "Open filters" });
+    await user.click(trigger);
+    const dialog = screen.getByRole("dialog", { name: "Filters" });
+    expect(dialog).toHaveAttribute("aria-modal", "true");
+    expect(dialog).toHaveFocus();
+    expect(document.body.style.overflow).toBe("hidden");
+    expect(await axe(document.body, { rules: { region: { enabled: false }, "color-contrast": { enabled: false } } })).toHaveNoViolations();
+    await user.tab();
+    expect(screen.getByRole("button", { name: "Close" })).toHaveFocus();
+    await user.tab();
+    expect(screen.getByRole("button", { name: "Apply" })).toHaveFocus();
+    await user.tab();
+    expect(screen.getByRole("button", { name: "Close" })).toHaveFocus();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+    expect(document.body.style.overflow).toBe("");
+  });
+
+  it("Md3SideSheet closes from the scrim and the close button, calls onBack, and the standard one is a labelled region", async () => {
+    const user = userEvent.setup();
+    const onOpenChange = vi.fn();
+    const onBack = vi.fn();
+    const { unmount } = render(
+      <Md3SideSheet variant="modal" side="left" open onOpenChange={onOpenChange}>
+        <Md3SideSheetHeader onBack={onBack}>Notifications</Md3SideSheetHeader>
+        <Md3SideSheetBody>Choose updates.</Md3SideSheetBody>
+      </Md3SideSheet>,
+    );
+    await user.click(screen.getByRole("button", { name: "Back" }));
+    expect(onBack).toHaveBeenCalledTimes(1);
+    await user.click(screen.getByRole("button", { name: "Close" }));
+    expect(onOpenChange).toHaveBeenLastCalledWith(false);
+    onOpenChange.mockClear();
+    await user.click(document.querySelector('[data-slot="md3-side-sheet-scrim"]')!);
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+    unmount();
+    function Standard() {
+      const [open, setOpen] = useState(true);
+      return (
+        <Md3SideSheet open={open} onOpenChange={setOpen}>
+          <Md3SideSheetHeader>Details</Md3SideSheetHeader>
+          <Md3SideSheetBody>Item details.</Md3SideSheetBody>
+        </Md3SideSheet>
+      );
+    }
+    render(<Standard />);
+    expect(screen.getByRole("complementary", { name: "Details" })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Close" }));
+    expect(screen.queryByRole("complementary")).not.toBeInTheDocument();
+  });
+
+  it("Md3Carousel labels the region and slides, and moves with arrow, Home and End keys", async () => {
+    const user = userEvent.setup();
+    let api: Parameters<NonNullable<Md3CarouselProps["setApi"]>>[0];
+    render(
+      <Md3Carousel aria-label="Destinations" layout="hero" setApi={(a) => (api = a)}>
+        <Md3CarouselItem label="Lisbon" />
+        <Md3CarouselItem label="Kyoto" />
+        <Md3CarouselItem label="Oaxaca" />
+      </Md3Carousel>,
+    );
+    const region = screen.getByRole("region", { name: "Destinations" });
+    expect(region).toHaveAttribute("aria-roledescription", "carousel");
+    const slides = screen.getAllByRole("group");
+    expect(slides).toHaveLength(3);
+    expect(slides[1]).toHaveAttribute("aria-roledescription", "slide");
+    expect(slides[1]).toHaveAccessibleName("2 of 3");
+    expect(api).toBeDefined();
+    const next = vi.spyOn(api!, "scrollNext");
+    const prev = vi.spyOn(api!, "scrollPrev");
+    const to = vi.spyOn(api!, "scrollTo");
+    region.focus();
+    await user.keyboard("{ArrowRight}");
+    expect(next).toHaveBeenCalled();
+    await user.keyboard("{ArrowLeft}");
+    expect(prev).toHaveBeenCalled();
+    await user.keyboard("{End}");
+    expect(to).toHaveBeenLastCalledWith(api!.scrollSnapList().length - 1, false);
+    await user.keyboard("{Home}");
+    expect(to).toHaveBeenLastCalledWith(0, false);
   });
 
   it("Menubar opens a menu on trigger click", async () => {
