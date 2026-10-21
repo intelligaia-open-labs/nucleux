@@ -1,0 +1,28 @@
+name: Deprecate removed packages
+
+# Marks the 0.5.x versions of packages that 0.6.0 renamed or removed as
+# deprecated on npm (scripts/deprecations.json). Run manually; it is safe to
+# re-run, because packages that already carry their message are skipped.
+# Uses the NPM_TOKEN secret, which (unlike a personal login) satisfies the
+# @nucleux scope's two-factor requirement for writes.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deprecate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Deprecate
+        run: node scripts/deprecate-removed.mjs --run
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
