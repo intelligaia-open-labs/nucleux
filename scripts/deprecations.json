@@ -195,7 +195,8 @@
     {
       "name": "@nucleux/prompt-enhancer",
       "replacement": null,
-      "message": "Removed in 0.6.0: not part of the nucleux.in component set."
+      "message": "Removed in 0.6.0: not part of the nucleux.in component set.",
+      "revived": "0.7.0"
     },
     {
       "name": "@nucleux/prompt-template",
@@ -250,7 +251,8 @@
     {
       "name": "@nucleux/suggestions",
       "replacement": "@nucleux/suggested-prompts",
-      "message": "Renamed to @nucleux/suggested-prompts in 0.6.0 (Suggestions → SuggestedPrompts, SuggestionChip → SuggestedPrompt)."
+      "message": "Renamed to @nucleux/suggested-prompts in 0.6.0 (Suggestions → SuggestedPrompts, SuggestionChip → SuggestedPrompt).",
+      "revived": "0.7.0"
     },
     {
       "name": "@nucleux/thread",

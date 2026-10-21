@@ -41,7 +41,9 @@ contracts, then write code.
    same props in both families.
 5. For AI features use the agentic components (nucleux.in's patterns):
    `Disclosure` and `Caveat` for AI output, `Consent` before acting,
-   `OpenInput`/`InitialCta`/`SuggestedPrompts` for asking, `Attachments`,
+   `OpenInput`/`InitialCta`/`SuggestedPrompts` for asking, the Prompt Scaffolds
+   (`Suggestions`, `Madlibs`, `PromptEnhancer`, `Modes`, `VoiceTone`,
+   `PresetStyles`) for shaping a request beside the composer, `Attachments`,
    `VoiceInput` and friends for input, `ModelSelection`, `KnowledgeBase`,
    `Connector` and `McpConnection` for context. Search for them with
    `search_components` instead of building your own.

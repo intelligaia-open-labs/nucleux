@@ -165,5 +165,17 @@
   "@nucleux/md3-suggested-prompts": "packages/md3-suggested-prompts/src/index.tsx",
   "@nucleux/md3-templates": "packages/md3-templates/src/index.tsx",
   "@nucleux/md3-visual-input": "packages/md3-visual-input/src/index.tsx",
-  "@nucleux/md3-voice-input": "packages/md3-voice-input/src/index.tsx"
+  "@nucleux/md3-voice-input": "packages/md3-voice-input/src/index.tsx",
+  "@nucleux/madlibs": "packages/madlibs/src/index.tsx",
+  "@nucleux/md3-madlibs": "packages/md3-madlibs/src/index.tsx",
+  "@nucleux/md3-modes": "packages/md3-modes/src/index.tsx",
+  "@nucleux/md3-preset-styles": "packages/md3-preset-styles/src/index.tsx",
+  "@nucleux/md3-prompt-enhancer": "packages/md3-prompt-enhancer/src/index.tsx",
+  "@nucleux/md3-suggestions": "packages/md3-suggestions/src/index.tsx",
+  "@nucleux/md3-voice-tone": "packages/md3-voice-tone/src/index.tsx",
+  "@nucleux/modes": "packages/modes/src/index.tsx",
+  "@nucleux/preset-styles": "packages/preset-styles/src/index.tsx",
+  "@nucleux/prompt-enhancer": "packages/prompt-enhancer/src/index.tsx",
+  "@nucleux/suggestions": "packages/suggestions/src/index.tsx",
+  "@nucleux/voice-tone": "packages/voice-tone/src/index.tsx"
 }

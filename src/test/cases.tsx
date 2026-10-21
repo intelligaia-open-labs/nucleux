@@ -342,6 +342,20 @@ import {
   Md3AgentComposer,
   Md3ActionConfirmation,
 } from "@nucleux/react";
+import {
+  Suggestions,
+  Md3Suggestions,
+  Madlibs,
+  Md3Madlibs,
+  PromptEnhancer,
+  Md3PromptEnhancer,
+  Modes,
+  Md3Modes,
+  VoiceTone,
+  Md3VoiceTone,
+  PresetStyles,
+  Md3PresetStyles,
+} from "@nucleux/react";
 import { useForm } from "react-hook-form";
 
 /**
@@ -386,6 +400,35 @@ const dataTableRows = [
  * One render case per component: used by the smoke/a11y/ref tests and, via
  * packages/mcp/gen/fixtures.tsx, by the MCP server's HTML snippets.
  */
+// Prompt Scaffolds (0.7.0) — shared sample data for both families.
+const scaffoldSuggestions = [
+  { id: "blockers", label: "Include unresolved blockers" },
+  { id: "owner", label: "Group the work by owner" },
+  { id: "august", label: "Compare with the August release" },
+];
+const madlibsBlanks = [
+  { id: "document", label: "Document", options: ["Q3 Customer Research", "September release notes"] },
+  { id: "audience", label: "Audience", options: ["Leadership", "Engineering"] },
+  { id: "topic", label: "Topic", options: ["Onboarding issues", "Pricing feedback"] },
+];
+const enhancerSuggestion = {
+  changes: [
+    { id: "time", text: " from the last quarter", reason: "A time range makes the summary comparable with the last one.", assumption: "Assumes you mean the last quarter." },
+    { id: "theme", text: ", grouped by recurring theme", reason: "Themes make issues easier to act on than a list of comments." },
+  ],
+};
+const modeOptions = [
+  { id: "fast", name: "Fast", meta: "~3 seconds", description: "everyday asks and quick lookups" },
+  { id: "balanced", name: "Balanced", meta: "~15 seconds", description: "most tasks" },
+  { id: "deep", name: "Deep research", meta: "~1 minute", description: "multi-source, high-stakes", unavailable: "Not on this plan." },
+];
+const outputStyles = [
+  { id: "photo", name: "Photo", swatch: "destructive" as const },
+  { id: "illustration", name: "Illustration", swatch: "info" as const },
+  { id: "isometric", name: "Isometric", swatch: "success" as const },
+  { id: "sketch", name: "Sketch", swatch: "warning" as const },
+];
+
 export const cases: { name: string; ui: ReactElement }[] = [
   { name: "Avatar", ui: <Avatar name="Eric Idle" /> },
   { name: "Personality", ui: <Personality defaultValue="professional" onValueChange={() => {}} /> },
@@ -1455,4 +1498,16 @@ export const cases: { name: string; ui: ReactElement }[] = [
       />
     ),
   },
+  { name: "Suggestions", ui: <Suggestions suggestions={scaffoldSuggestions} label="Aria suggests" reason="3 blockers are open." actionLabel="Add to prompt" onDismiss={() => {}} /> },
+  { name: "Md3Suggestions", ui: <Md3Suggestions suggestions={scaffoldSuggestions} label="Aria suggests" reason="3 blockers are open." actionLabel="Add to prompt" onDismiss={() => {}} /> },
+  { name: "Madlibs", ui: <Madlibs template="Summarize {document} for {audience}[, focusing on {topic}]." blanks={madlibsBlanks} defaultValues={{ document: "Q3 Customer Research" }} onUse={() => {}} /> },
+  { name: "Md3Madlibs", ui: <Md3Madlibs template="Summarize {document} for {audience}[, focusing on {topic}]." blanks={madlibsBlanks} defaultValues={{ document: "Q3 Customer Research" }} onUse={() => {}} /> },
+  { name: "PromptEnhancer", ui: <PromptEnhancer defaultValue="Summarize customer feedback." defaultState="enhanced" defaultSuggestion={enhancerSuggestion} hint="Aria will expand this prompt" onEnhance={() => enhancerSuggestion} /> },
+  { name: "Md3PromptEnhancer", ui: <Md3PromptEnhancer defaultValue="Summarize customer feedback." defaultState="enhanced" defaultSuggestion={enhancerSuggestion} hint="Aria will expand this prompt" onEnhance={() => enhancerSuggestion} /> },
+  { name: "Modes", ui: <Modes variant="list" defaultValue="fast" modes={modeOptions} /> },
+  { name: "Md3Modes", ui: <Md3Modes variant="list" defaultValue="fast" modes={modeOptions} /> },
+  { name: "VoiceTone", ui: <VoiceTone defaultValue="professional" rules={[{ id: "no-emojis", label: "No emojis" }]} defaultRuleValues={["no-emojis"]} /> },
+  { name: "Md3VoiceTone", ui: <Md3VoiceTone defaultValue="professional" rules={[{ id: "no-emojis", label: "No emojis" }]} defaultRuleValues={["no-emojis"]} /> },
+  { name: "PresetStyles", ui: <PresetStyles styles={outputStyles} defaultValue="photo" allowReference lockable defaultLocked /> },
+  { name: "Md3PresetStyles", ui: <Md3PresetStyles styles={outputStyles} defaultValue="photo" allowReference lockable defaultLocked /> },
 ];

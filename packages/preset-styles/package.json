@@ -1,0 +1,70 @@
+{
+  "name": "@nucleux/preset-styles",
+  "version": "0.6.0",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Preset Styles — one-click named styles for how the agent's output looks or reads — Nucleux agentic UI for React.",
+  "keywords": [
+    "nucleux",
+    "react",
+    "ui",
+    "components",
+    "agentic",
+    "ai",
+    "tailwind",
+    "preset-styles",
+    "styles",
+    "style-picker",
+    "prompt-scaffold"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@nucleux/badge": "workspace:*",
+    "@nucleux/button": "workspace:*",
+    "@nucleux/card": "workspace:*",
+    "@nucleux/input": "workspace:*",
+    "@nucleux/label": "workspace:*",
+    "@nucleux/open-input": "workspace:*",
+    "@nucleux/spinner": "workspace:*",
+    "@nucleux/textarea": "workspace:*",
+    "@nucleux/toggle-group": "workspace:*",
+    "@nucleux/utils": "workspace:*",
+    "lucide-react": "^0.469.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "@types/react": "^18.3.18",
+    "react": "^18.3.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelligaia-open-labs/nucleux.git",
+    "directory": "packages/preset-styles"
+  },
+  "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme"
+}

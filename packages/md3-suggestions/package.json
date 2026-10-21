@@ -1,0 +1,70 @@
+{
+  "name": "@nucleux/md3-suggestions",
+  "version": "0.6.0",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Material 3 Suggestions — agent-marked suggestion chips above the composer that add to the request, never send it — Nucleux agentic UI for React.",
+  "keywords": [
+    "nucleux",
+    "react",
+    "ui",
+    "components",
+    "agentic",
+    "ai",
+    "tailwind",
+    "md3",
+    "material",
+    "md3-suggestions",
+    "suggestions",
+    "prompt-scaffold",
+    "chips"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@nucleux/md3-agent-composer": "workspace:*",
+    "@nucleux/md3-ai-icons": "workspace:*",
+    "@nucleux/md3-button": "workspace:*",
+    "@nucleux/md3-chip": "workspace:*",
+    "@nucleux/md3-icon-button": "workspace:*",
+    "@nucleux/md3-loading-indicator": "workspace:*",
+    "@nucleux/suggestions": "workspace:*",
+    "@nucleux/utils": "workspace:*",
+    "lucide-react": "^0.469.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "@types/react": "^18.3.18",
+    "react": "^18.3.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelligaia-open-labs/nucleux.git",
+    "directory": "packages/md3-suggestions"
+  },
+  "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme"
+}

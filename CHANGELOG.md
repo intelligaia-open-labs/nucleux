@@ -8,7 +8,34 @@ The format is machine-readable: each version heading starts with `## ` followed
 by a version tag and date, and entries are grouped under `### Added`, `### Changed`,
 `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings.
 
-## [0.6.0] — unreleased
+## [0.7.0] — unreleased
+
+nucleux.in marked six more patterns *Available* (Initially → Prompt Scaffolds).
+Each ships in both families with one API, as the other agentic patterns do.
+
+### Added
+- `@nucleux/suggestions` / `@nucleux/md3-suggestions` — `Suggestions`,
+  `SuggestionsComposer`: a few details Aria suggests adding to the request being
+  written; appended only when chosen, confirmed with Undo, never sent.
+- `@nucleux/madlibs` / `@nucleux/md3-madlibs` — `Madlibs`: a request written as a
+  sentence with labelled blanks (`{blank}`, `[optional clause]`), placed in the
+  composer for editing before sending.
+- `@nucleux/prompt-enhancer` / `@nucleux/md3-prompt-enhancer` — `PromptEnhancer`:
+  a clearer version of the request, every addition marked, explained and
+  removable; the original is kept until the person chooses.
+- `@nucleux/modes` / `@nucleux/md3-modes` — `Modes` (+`Segmented`, `List`, `Chip`,
+  `Picker`, `Note`): how the agent approaches the task, chosen in the composer.
+- `@nucleux/voice-tone` / `@nucleux/md3-voice-tone` — `VoiceTone`: how the reply
+  should sound, sent beside the prompt as a setting.
+- `@nucleux/preset-styles` / `@nucleux/md3-preset-styles` — `PresetStyles`: named
+  styles for replies or outputs, previewed and switchable, plus create-a-style.
+
+### Changed
+- `@nucleux/suggestions` and `@nucleux/prompt-enhancer` are names again: 0.7.0 is
+  nucleux.in's pattern, with a new API. Their 0.5.x versions stay deprecated
+  (Suggestions 0.5.x became `SuggestedPrompts`).
+
+## [0.6.0] — 2026-10-21
 
 ### Package set matches nucleux.in (breaking)
 

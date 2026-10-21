@@ -1,0 +1,71 @@
+{
+  "name": "@nucleux/md3-voice-tone",
+  "version": "0.6.0",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Material 3 Voice & Tone — say how the reply should sound (tone cards, a rules list, a sample line), shown as a Tone chip in the composer and never editing the prompt — Nucleux agentic UI for React.",
+  "keywords": [
+    "nucleux",
+    "react",
+    "ui",
+    "components",
+    "agentic",
+    "ai",
+    "tailwind",
+    "md3",
+    "material",
+    "md3-voice-tone",
+    "voice-tone",
+    "tone",
+    "prompt-scaffold"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@nucleux/md3-agent-composer": "workspace:*",
+    "@nucleux/md3-button": "workspace:*",
+    "@nucleux/md3-card": "workspace:*",
+    "@nucleux/md3-checkbox": "workspace:*",
+    "@nucleux/md3-chip": "workspace:*",
+    "@nucleux/md3-slider": "workspace:*",
+    "@nucleux/md3-text-field": "workspace:*",
+    "@nucleux/utils": "workspace:*",
+    "@nucleux/voice-tone": "workspace:*",
+    "lucide-react": "^0.469.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "@types/react": "^18.3.18",
+    "react": "^18.3.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelligaia-open-labs/nucleux.git",
+    "directory": "packages/md3-voice-tone"
+  },
+  "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme"
+}
