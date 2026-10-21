@@ -37,12 +37,13 @@ describe("agent-facing docs", () => {
 
   it("the npm deprecation list names only packages 0.6.0 no longer ships, with real replacements", () => {
     const list = JSON.parse(readFileSync(resolve(root, "scripts/deprecations.json"), "utf8")) as {
-      packages: Array<{ name: string; replacement: string | null; message: string }>;
+      packages: Array<{ name: string; replacement: string | null; message: string; revived?: string }>;
     };
     const shipped = new Set(catalog.packages.map((p) => p.package));
     expect(list.packages.length).toBeGreaterThan(40);
     for (const p of list.packages) {
-      expect(shipped.has(p.name)).toBe(false);
+      // A name nucleux.in later reused for a new pattern ships again; only its 0.5.x versions stay deprecated.
+      expect(shipped.has(p.name)).toBe(Boolean(p.revived));
       if (p.replacement) {
         expect(shipped.has(p.replacement)).toBe(true);
         expect(p.message).toContain(p.replacement);

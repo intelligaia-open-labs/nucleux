@@ -145,12 +145,14 @@ list, Material 3's component list, and the agentic patterns marked *Available*.
   Md3Button, Md3ButtonGroup, Md3SplitButton, Md3Fab, Md3FabMenu, Md3Card,
   Md3TextField, Md3Dialog, Md3SideSheet, Md3Carousel, Md3Toolbar,
   Md3LoadingIndicator, Md3NavigationRail, …
-- **Agentic, both families** — the 29 patterns marked *Available* on nucleux.in:
+- **Agentic, both families** — the 35 patterns marked *Available* on nucleux.in:
   Disclosure, Caveat, Consent, AgentAvatar, AgentName, Personality, Iconography,
   AiColor, AiIcons, ExampleGallery, Templates, Nudge, Disclaimer, InitialCta,
   OpenInput, SuggestedPrompts, Autocomplete, ProactiveSuggestion, Randomize,
   ModelSelection, KnowledgeBase, McpConnection, Connector, Attachments,
-  VoiceInput, VisualInput, HandwritingInput, GestureInput, StructuredInput — each
+  VoiceInput, VisualInput, HandwritingInput, GestureInput, StructuredInput, and
+  the Prompt Scaffolds Suggestions, Madlibs, PromptEnhancer, Modes, VoiceTone,
+  PresetStyles — each
   also as an `Md3` twin (`Md3Disclosure`, `Md3OpenInput`, …) **with the same
   props**, so switching families is an import change.
 

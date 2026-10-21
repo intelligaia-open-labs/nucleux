@@ -1,0 +1,70 @@
+{
+  "name": "@nucleux/md3-prompt-enhancer",
+  "version": "0.7.0",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Material 3 Prompt Enhancer — proposes a clearer version of the request you wrote, every addition marked and explained — Nucleux agentic UI for React.",
+  "keywords": [
+    "nucleux",
+    "react",
+    "ui",
+    "components",
+    "agentic",
+    "ai",
+    "tailwind",
+    "md3",
+    "material",
+    "md3-prompt-enhancer",
+    "prompt-enhancer",
+    "prompt",
+    "enhance",
+    "prompt-scaffold"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@nucleux/md3-agent-composer": "workspace:*",
+    "@nucleux/md3-button": "workspace:*",
+    "@nucleux/md3-card": "workspace:*",
+    "@nucleux/md3-checkbox": "workspace:*",
+    "@nucleux/md3-switch": "workspace:*",
+    "@nucleux/prompt-enhancer": "workspace:*",
+    "@nucleux/utils": "workspace:*",
+    "lucide-react": "^0.469.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "@types/react": "^18.3.18",
+    "react": "^18.3.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelligaia-open-labs/nucleux.git",
+    "directory": "packages/md3-prompt-enhancer"
+  },
+  "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme"
+}

@@ -53,7 +53,8 @@ and restyle it onto Nucleux tokens — do not hand-roll it.
   AiIcons, AiIcon, ExampleGallery, Templates (+List/Browser), Nudge, Disclaimer,
   InitialCta, OpenInput, SuggestedPrompts, Autocomplete, ProactiveSuggestion,
   Randomize, ModelSelection, KnowledgeBase, McpConnection, Connector, Attachments,
-  VoiceInput, VisualInput, HandwritingInput, GestureInput, StructuredInput
+  VoiceInput, VisualInput, HandwritingInput, GestureInput, StructuredInput,
+  Suggestions, Madlibs, PromptEnhancer, Modes, VoiceTone, PresetStyles
 - **Material 3:** Md3Button, Md3ButtonGroup, Md3SplitButton, Md3Fab, Md3FabMenu,
   Md3IconButton, Md3SegmentedButton, Md3Toolbar, Md3LoadingIndicator, Md3SideSheet,
   Md3Carousel,

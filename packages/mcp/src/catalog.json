@@ -1,6 +1,6 @@
 {
   "library": "@nucleux/react",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "generatedFrom": "packages/* (do not edit — run scripts/gen-mcp-catalog.mjs)",
   "setup": {
     "installFull": "pnpm add @nucleux/react @nucleux/tokens",
@@ -22,8 +22,8 @@
     "note": "Every component is also re-exported from the @nucleux/react umbrella. Icons in the examples come from lucide-react (optional; any icon set works)."
   },
   "counts": {
-    "components": 164,
-    "packages": 169,
+    "components": 176,
+    "packages": 181,
     "examples": 6
   },
   "packages": [
@@ -6199,6 +6199,242 @@
       }
     },
     {
+      "name": "madlibs",
+      "package": "@nucleux/madlibs",
+      "kind": "component",
+      "description": "Madlibs — a request written as a natural sentence with a few labelled\nblanks (\"Write a [friendly] reply to [Sam] about [the proposal].\"). Each\nblank is an inline field with suggested values and a free-text fallback;\noptional clauses leave the sentence while empty; the assembled request\nshows as it fills. An agent-suggested value stays marked until kept. Use\nprompt names any missing blank in words (clearing nothing) and otherwise\nhands the sentence to `onUse` for the composer — it never sends — then\nconfirms with Undo. Variants: inline dropdowns, form rows, chip builder.",
+      "summary": "Madlibs — a request written as a sentence with a few labelled blanks, filled and reviewed before it goes to the composer — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "madlibs",
+        "prompt-scaffold",
+        "fill-in-the-blank"
+      ],
+      "exports": [
+        "parseMadlibsTemplate",
+        "getMadlibsBlanks",
+        "assembleMadlibsPrompt",
+        "madlibsBlankWidth",
+        "useMadlibs",
+        "useMadlibsBlank",
+        "Madlibs",
+        "MadlibsVariant",
+        "MadlibsBlankStyle",
+        "MadlibsDensity",
+        "MadlibsValues",
+        "MadlibsBlank",
+        "MadlibsSuggestion",
+        "MadlibsPart",
+        "MadlibsTemplatePart",
+        "MadlibsStatus",
+        "MadlibsProps",
+        "MadlibsController",
+        "UseMadlibsBlankOptions"
+      ],
+      "components": [
+        "Madlibs"
+      ],
+      "import": "import { Madlibs } from \"@nucleux/madlibs\";",
+      "installSingle": "pnpm add @nucleux/madlibs @nucleux/tokens",
+      "props": [
+        {
+          "name": "MadlibsProps",
+          "source": "export interface MadlibsProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"defaultValue\" | \"onChange\"> {\n  /**\n   * The scaffold sentence. `{id}` is a blank; `[ … ]` wraps an optional clause\n   * that leaves the sentence while its blank is empty:\n   * `\"Summarize {document} for {audience}[, focusing on {topic}].\"`\n   * Blanks outside a clause are required. Keep it to two–four blanks — more is a form.\n   */\n  template: string;\n  /** Label and options for each blank in the template. */\n  blanks: MadlibsBlank[];\n  /** Controlled values, keyed by blank id. */\n  values?: MadlibsValues;\n  /** Initial values when uncontrolled. */\n  defaultValues?: MadlibsValues;\n  /** Called with every change to the values. */\n  onValuesChange?: (values: MadlibsValues) => void;\n  /**\n   * Called by Use prompt once every required blank is filled, with the\n   * assembled sentence. Put it in the composer for a final edit — the scaffold\n   * never sends.\n   */\n  onUse?: (prompt: string, values: MadlibsValues) => void;\n  /**\n   * Called by Undo after the prompt was placed. Restore the composer's previous\n   * draft; the scaffold returns to its blanks. Without it, no Undo is offered.\n   */\n  onUndo?: () => void;\n  /** Controlled \"placed in the composer\" state. */\n  placed?: boolean;\n  /** Initial placed state when uncontrolled. */\n  defaultPlaced?: boolean;\n  /** Called when the placed state changes (Use prompt, Undo, Back to the blanks). */\n  onPlacedChange?: (placed: boolean) => void;\n  /** A value the agent inferred for an empty blank, shown marked until kept. */\n  suggestion?: MadlibsSuggestion | null;\n  /** Called when the person keeps the suggestion (its value becomes the blank's value). */\n  onSuggestionKeep?: (suggestion: MadlibsSuggestion) => void;\n  /** Called when the person clears the suggestion. */\n  onSuggestionClear?: (suggestion: MadlibsSuggestion) => void;\n  /** Who suggests values. Defaults to \"the assistant\". */\n  agentName?: string;\n  /** Overline above the sentence. Defaults to \"Build your request\". */\n  heading?: React.ReactNode;\n  /** Helper line under the heading. */\n  description?: React.ReactNode;\n  /** Small print beside Use prompt. Defaults to \"Nothing is sent until you send it.\"; `null` hides it. */\n  note?: React.ReactNode;\n  /** Label of the use button. Defaults to \"Use prompt\". */\n  submitLabel?: string;\n  /** Overline once placed. Defaults to \"Placed in the composer\". */\n  placedHeading?: React.ReactNode;\n  /** Message once placed. */\n  placedMessage?: React.ReactNode;\n  /** Show the assembled request as it fills. Defaults to true. */\n  showPreview?: boolean;\n  /** Label of the assembled request. Defaults to \"Preview\". */\n  previewLabel?: string;\n  /** Layout. Defaults to \"inline-dropdowns\". */\n  variant?: MadlibsVariant;\n  /** Blank treatment. Defaults to \"filled\". */\n  blankStyle?: MadlibsBlankStyle;\n  /** Spacing. Defaults to \"comfortable\". */\n  density?: MadlibsDensity;\n  /** Flag missing required blanks from the start, as if Use prompt had been pressed. */\n  defaultShowErrors?: boolean;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"defaultValue\" | \"onChange\">"
+          ],
+          "members": [
+            {
+              "name": "template",
+              "type": "string",
+              "required": true,
+              "description": "The scaffold sentence. `{id}` is a blank; `[ … ]` wraps an optional clause that leaves the sentence while its blank is empty: `\"Summarize {document} for {audience}[, focusing on {topic}].\"` Blanks outside a clause are required. Keep it to two–four blanks — more is a form."
+            },
+            {
+              "name": "blanks",
+              "type": "MadlibsBlank[]",
+              "required": true,
+              "description": "Label and options for each blank in the template."
+            },
+            {
+              "name": "values",
+              "type": "MadlibsValues",
+              "required": false,
+              "description": "Controlled values, keyed by blank id."
+            },
+            {
+              "name": "defaultValues",
+              "type": "MadlibsValues",
+              "required": false,
+              "description": "Initial values when uncontrolled."
+            },
+            {
+              "name": "onValuesChange",
+              "type": "(values: MadlibsValues) => void",
+              "required": false,
+              "description": "Called with every change to the values."
+            },
+            {
+              "name": "onUse",
+              "type": "(prompt: string, values: MadlibsValues) => void",
+              "required": false,
+              "description": "Called by Use prompt once every required blank is filled, with the assembled sentence. Put it in the composer for a final edit — the scaffold never sends."
+            },
+            {
+              "name": "onUndo",
+              "type": "() => void",
+              "required": false,
+              "description": "Called by Undo after the prompt was placed. Restore the composer's previous draft; the scaffold returns to its blanks. Without it, no Undo is offered."
+            },
+            {
+              "name": "placed",
+              "type": "boolean",
+              "required": false,
+              "description": "Controlled \"placed in the composer\" state."
+            },
+            {
+              "name": "defaultPlaced",
+              "type": "boolean",
+              "required": false,
+              "description": "Initial placed state when uncontrolled."
+            },
+            {
+              "name": "onPlacedChange",
+              "type": "(placed: boolean) => void",
+              "required": false,
+              "description": "Called when the placed state changes (Use prompt, Undo, Back to the blanks)."
+            },
+            {
+              "name": "suggestion",
+              "type": "MadlibsSuggestion | null",
+              "required": false,
+              "description": "A value the agent inferred for an empty blank, shown marked until kept."
+            },
+            {
+              "name": "onSuggestionKeep",
+              "type": "(suggestion: MadlibsSuggestion) => void",
+              "required": false,
+              "description": "Called when the person keeps the suggestion (its value becomes the blank's value)."
+            },
+            {
+              "name": "onSuggestionClear",
+              "type": "(suggestion: MadlibsSuggestion) => void",
+              "required": false,
+              "description": "Called when the person clears the suggestion."
+            },
+            {
+              "name": "agentName",
+              "type": "string",
+              "required": false,
+              "description": "Who suggests values. Defaults to \"the assistant\"."
+            },
+            {
+              "name": "heading",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Overline above the sentence. Defaults to \"Build your request\"."
+            },
+            {
+              "name": "description",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Helper line under the heading."
+            },
+            {
+              "name": "note",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Small print beside Use prompt. Defaults to \"Nothing is sent until you send it.\"; `null` hides it."
+            },
+            {
+              "name": "submitLabel",
+              "type": "string",
+              "required": false,
+              "description": "Label of the use button. Defaults to \"Use prompt\"."
+            },
+            {
+              "name": "placedHeading",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Overline once placed. Defaults to \"Placed in the composer\"."
+            },
+            {
+              "name": "placedMessage",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Message once placed."
+            },
+            {
+              "name": "showPreview",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the assembled request as it fills. Defaults to true."
+            },
+            {
+              "name": "previewLabel",
+              "type": "string",
+              "required": false,
+              "description": "Label of the assembled request. Defaults to \"Preview\"."
+            },
+            {
+              "name": "variant",
+              "type": "MadlibsVariant",
+              "required": false,
+              "description": "Layout. Defaults to \"inline-dropdowns\".",
+              "values": [
+                "inline-dropdowns",
+                "form-rows",
+                "chip-builder"
+              ]
+            },
+            {
+              "name": "blankStyle",
+              "type": "MadlibsBlankStyle",
+              "required": false,
+              "description": "Blank treatment. Defaults to \"filled\".",
+              "values": [
+                "filled",
+                "underline"
+              ]
+            },
+            {
+              "name": "density",
+              "type": "MadlibsDensity",
+              "required": false,
+              "description": "Spacing. Defaults to \"comfortable\".",
+              "values": [
+                "comfortable",
+                "compact"
+              ]
+            },
+            {
+              "name": "defaultShowErrors",
+              "type": "boolean",
+              "required": false,
+              "description": "Flag missing required blanks from the start, as if Use prompt had been pressed."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/madlibs\n\nMadlibs — a request written as a sentence with a few labelled blanks, filled and reviewed before it goes to the composer — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nA fill-in-the-blank prompt scaffold: \"Summarize [document] for [audience], focusing on [topic].\" Each blank has a\nhuman label, suggested values and a free-text fallback; an optional clause (`[ … ]`) leaves the sentence while its\nblank is empty; the assembled request shows as it fills. An agent-suggested value stays marked until kept. Use prompt\nnames any missing blank in words (clearing nothing), otherwise hands the sentence to `onUse` for your composer — the\nscaffold never sends — and confirms with Undo.\n\n## Exports\n\n- **`Madlibs`** — the scaffold card\n- `useMadlibs`, `useMadlibsBlank` — the shared state machine and blank keyboard/ARIA wiring (used by `@nucleux/md3-madlibs`)\n- `parseMadlibsTemplate`, `getMadlibsBlanks`, `assembleMadlibsPrompt`, `madlibsBlankWidth` — template helpers\n- Types: `MadlibsProps`, `MadlibsBlank`, `MadlibsValues`, `MadlibsSuggestion`, `MadlibsVariant`, `MadlibsBlankStyle`, `MadlibsDensity`, `MadlibsStatus`, `MadlibsPart`, `MadlibsTemplatePart`, `MadlibsController`, `UseMadlibsBlankOptions`\n\n## Variants\n\n| `variant` | Use |\n| --- | --- |\n| `inline-dropdowns` (default) | A flowing sentence; each blank is an inline field with a list of values |\n| `form-rows` | One labelled row per blank, when each slot needs room |\n| `chip-builder` | Tap chips to fill the next blank; tap a filled chip to remove it |\n\n`blankStyle` (`filled` / `underline`) and `density` (`comfortable` / `compact`) adjust the look.\n\n## Keyboard\n\nEach blank is an editable combobox: type anything, or ArrowDown/ArrowUp to open and move through its values, Enter to\npick, Escape to close.\n\n## Install\n\n```bash\npnpm add @nucleux/madlibs @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Madlibs } from \"@nucleux/madlibs\";\nimport { OpenInput } from \"@nucleux/open-input\";\n\n<Madlibs\n  template=\"Summarize {document} for {audience}[, focusing on {topic}].\"\n  blanks={[\n    { id: \"document\", label: \"Document\", options: [\"Q3 Customer Research\", \"September release notes\"] },\n    { id: \"audience\", label: \"Audience\", options: [\"Leadership\", \"Engineering\"] },\n    { id: \"topic\", label: \"Topic\", options: [\"Onboarding issues\", \"Pricing feedback\"] },\n  ]}\n  suggestion={{ blank: \"audience\", value: \"Leadership\", reason: \"the document's owner is the leadership team.\" }}\n  onUse={(prompt) => { previous.current = draft; setDraft(prompt); }}\n  onUndo={() => setDraft(previous.current)}\n/>\n<OpenInput aria-label=\"Message\" value={draft} onValueChange={setDraft} onSubmit={send} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-madlibs",
+        "package": "@nucleux/md3-madlibs",
+        "component": "Md3Madlibs",
+        "sharesApi": true
+      }
+    },
+    {
       "name": "marker",
       "package": "@nucleux/marker",
       "kind": "component",
@@ -9058,6 +9294,56 @@
       }
     },
     {
+      "name": "md3-madlibs",
+      "package": "@nucleux/md3-madlibs",
+      "kind": "component",
+      "description": "Material 3 Madlibs — the same scaffold and API as `Madlibs` from\n`@nucleux/madlibs`: a sentence with labelled blanks (tonal inline fields\nthat settle into the sentence as they fill), optional clauses, the\nassembled request below, and Use prompt, which places the sentence in the\ncomposer (never sends) and confirms with Undo. An agent-suggested value is\nitalic, primary-tinted and marked until kept; a missing required blank\ngets an error outline and words, and keeps everything else.",
+      "summary": "Material 3 Madlibs — a request written as a sentence with a few labelled blanks, filled and reviewed before it goes to the composer — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-madlibs",
+        "madlibs",
+        "prompt-scaffold",
+        "fill-in-the-blank"
+      ],
+      "exports": [
+        "Md3Madlibs",
+        "Md3MadlibsProps",
+        "Md3MadlibsVariant",
+        "Md3MadlibsBlankStyle",
+        "Md3MadlibsDensity",
+        "Md3MadlibsValues",
+        "Md3MadlibsBlank",
+        "Md3MadlibsSuggestion",
+        "Md3MadlibsStatus"
+      ],
+      "components": [
+        "Md3Madlibs"
+      ],
+      "import": "import { Md3Madlibs } from \"@nucleux/md3-madlibs\";",
+      "installSingle": "pnpm add @nucleux/md3-madlibs @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-madlibs\n\nMaterial 3 Madlibs — a request written as a sentence with a few labelled blanks, filled and reviewed before it goes to the composer — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/madlibs`](https://www.npmjs.com/package/@nucleux/madlibs) (`Madlibs`) — the props types are re-exported from it and the state logic is shared — so you switch families by changing only the import. Only the look differs: tonal inline fields that settle into the sentence as they fill, an italic primary-tinted suggested value, an error outline with words, Material 3 colour roles, shape and state layers (motion reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3Madlibs`** — the scaffold card (variants `inline-dropdowns`, `form-rows`, `chip-builder`; `blankStyle` `filled` / `underline`; `density`)\n- Types: `Md3MadlibsProps`, `Md3MadlibsBlank`, `Md3MadlibsValues`, `Md3MadlibsSuggestion`, `Md3MadlibsVariant`, `Md3MadlibsBlankStyle`, `Md3MadlibsDensity`, `Md3MadlibsStatus`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-madlibs @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Madlibs } from \"@nucleux/md3-madlibs\";\nimport { Md3AgentComposer } from \"@nucleux/md3-agent-composer\";\n\n<Md3Madlibs\n  template=\"Summarize {document} for {audience}[, focusing on {topic}].\"\n  blanks={blanks}\n  description=\"Fill in the blanks — you can edit the whole sentence before sending.\"\n  onUse={(prompt) => { previous.current = draft; setDraft(prompt); }}\n  onUndo={() => setDraft(previous.current)}\n/>\n<Md3AgentComposer placeholder=\"Or write your own request…\" value={draft} onValueChange={setDraft} onSubmit={send} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "madlibs",
+        "package": "@nucleux/madlibs",
+        "component": "Madlibs",
+        "sharesApi": true
+      }
+    },
+    {
       "name": "md3-mcp-connection",
       "package": "@nucleux/md3-mcp-connection",
       "kind": "component",
@@ -9295,6 +9581,68 @@
         "name": "model-selection",
         "package": "@nucleux/model-selection",
         "component": "ModelSelection",
+        "sharesApi": true
+      }
+    },
+    {
+      "name": "md3-modes",
+      "package": "@nucleux/md3-modes",
+      "kind": "component",
+      "description": "Material 3 segmented control for Modes: an outlined track of segments, the\nactive one in secondary-container with a check. Same radio group and keyboard\nmodel as the shadcn `ModesSegmented` (Arrow keys move, Space/Enter choose).",
+      "summary": "Material 3 Modes — choose how the agent approaches a request (Brainstorm, Draft, Review, Plan), shown as a chip in the composer and switchable before sending — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-modes",
+        "modes",
+        "mode-picker",
+        "prompt-scaffolds"
+      ],
+      "exports": [
+        "Md3ModesSegmented",
+        "Md3ModesList",
+        "Md3ModesChip",
+        "Md3ModesPicker",
+        "Md3ModesNote",
+        "Md3Modes",
+        "Md3ModeOption",
+        "Md3ModesNotice",
+        "Md3ModesVariant",
+        "Md3ModesSubmitDetails",
+        "Md3ModesProps",
+        "Md3ModesSegmentedProps",
+        "Md3ModesListProps",
+        "Md3ModesChipProps",
+        "Md3ModesPickerProps",
+        "Md3ModesNoteProps"
+      ],
+      "components": [
+        "Md3Modes",
+        "Md3ModesSegmented",
+        "Md3ModesList",
+        "Md3ModesChip",
+        "Md3ModesPicker",
+        "Md3ModesNote"
+      ],
+      "import": "import { Md3Modes, Md3ModesSegmented, Md3ModesList, Md3ModesChip } from \"@nucleux/md3-modes\";",
+      "installSingle": "pnpm add @nucleux/md3-modes @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-modes\n\nMaterial 3 Modes — choose how the agent approaches a request (Brainstorm, Draft, Review, Plan), shown as a chip in the composer and switchable before sending — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, states, keyboard model and accessible names are those of [`@nucleux/modes`](https://www.npmjs.com/package/@nucleux/modes) (`Modes`) — the props types are re-exported from it and the state logic (`useModes`) is shared — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`). In the `composer` variant the Mode chip sits in an `Md3AgentComposer` toolbar and the picker grows up from the composer.\n\n## Exports\n\n- **`Md3Modes`** — the whole pattern (`variant`: `composer` · `segmented` · `list` · `chip`)\n- **`Md3ModesSegmented`** — an `Md3SegmentedButton` of modes (radio group)\n- **`Md3ModesList`** — mode rows: 40dp icon tile, name, what changes, unavailable reason, trailing check\n- **`Md3ModesChip`** — outlined \"Mode ▾\" assist chip, or tonal \"Mode **Plan** ▾ ×\" once set\n- **`Md3ModesPicker`** — the menu-surface dialog: heading, rows, error-container alert, \"No mode\"\n- **`Md3ModesNote`** — \"Mode changed to … Your text is unchanged.\" with Undo\n- Types: `Md3ModesProps`, `Md3ModeOption`, `Md3ModesVariant`, `Md3ModesNotice`, `Md3ModesSubmitDetails`, and each sub-component's `Md3…Props`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-modes @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3Modes } from \"@nucleux/md3-modes\";\nimport { Flag, Lightbulb, NotebookPen, Eye } from \"lucide-react\";\n\n<Md3Modes\n  modes={[\n    { id: \"brainstorm\", name: \"Brainstorm\", icon: <Lightbulb />, description: \"Explore several possible directions.\" },\n    { id: \"draft\", name: \"Draft\", icon: <NotebookPen />, description: \"Write a first version you can edit.\" },\n    { id: \"review\", name: \"Review\", icon: <Eye />, description: \"Check existing work for gaps and risks.\" },\n    { id: \"plan\", name: \"Plan\", icon: <Flag />, description: \"Break the work into steps with owners and dates.\" },\n  ]}\n  onSubmit={(text, { mode }) => send(text, { mode: mode?.id })}\n/>\n```\n\n`sendLabel` is accepted for API parity; the send button is named by `Md3AgentComposer` (\"Send\").\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "modes",
+        "package": "@nucleux/modes",
+        "component": "Modes",
         "sharesApi": true
       }
     },
@@ -9762,6 +10110,59 @@
       }
     },
     {
+      "name": "md3-preset-styles",
+      "package": "@nucleux/md3-preset-styles",
+      "kind": "component",
+      "description": "The Material 3 twin of `PresetStyles` — same props, states, keyboard model\nand accessible names (they share `usePresetStyles`). In `variant=\"menu\"` the\nStyle control sits in `Md3AgentComposer`'s toolbar and opens \"Use style\": a\nmenu surface with the styles on the left (secondary-container for the chosen\none, a state layer for the one being previewed) and a sample reply on the\nright that follows pointer and focus; Create & edit styles opens an outlined\ncard with a segmented \"Start from\", a linear progress while the app\ngenerates, then a review card with filled text fields and Save / Save and\nuse. `\"grid\"` and `\"list\"` draw the swatches on M3 container roles with a\nprimary outline for the chosen one. Motion is reduced under\n`prefers-reduced-motion`.",
+      "summary": "Material 3 Preset Styles — named styles for how replies are written, previewed and switchable mid-conversation — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-preset-styles",
+        "preset-styles",
+        "styles",
+        "style-picker",
+        "prompt-scaffold"
+      ],
+      "exports": [
+        "Md3PresetStyles",
+        "Md3PresetStylesProps",
+        "Md3PresetStylesVariant",
+        "Md3PresetStylesView",
+        "Md3PresetStylesNotice",
+        "Md3PresetStyle",
+        "Md3PresetStyleSwatch",
+        "Md3PresetStyleReference",
+        "Md3PresetStyleRequest",
+        "Md3PresetStyleDraft",
+        "Md3PresetStyleSource"
+      ],
+      "components": [
+        "Md3PresetStyles"
+      ],
+      "import": "import { Md3PresetStyles } from \"@nucleux/md3-preset-styles\";",
+      "installSingle": "pnpm add @nucleux/md3-preset-styles @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-preset-styles\n\nMaterial 3 Preset Styles — named styles for how replies are written, previewed and switchable mid-conversation — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model, states and accessible names are those of [`@nucleux/preset-styles`](https://www.npmjs.com/package/@nucleux/preset-styles) (`PresetStyles`) — the props types are re-exported from it and both run on its `usePresetStyles` — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3PresetStyles`** — `variant=\"menu\"`: the Style control in `Md3AgentComposer`'s toolbar opens \"Use style\" — styles on the left (secondary-container for the chosen one), a sample reply on the right that follows pointer and focus, Create & edit styles (an outlined card with a segmented \"Start from\", linear progress, then a review card with filled text fields). `\"grid\"` / `\"list\"`: swatches on M3 container roles with a primary outline.\n- Types: `Md3PresetStylesProps`, `Md3PresetStyle`, `Md3PresetStylesVariant`, `Md3PresetStylesView`, `Md3PresetStylesNotice`, `Md3PresetStyleSwatch`, `Md3PresetStyleReference`, `Md3PresetStyleRequest`, `Md3PresetStyleDraft`, `Md3PresetStyleSource`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-preset-styles @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3PresetStyles } from \"@nucleux/md3-preset-styles\";\n\n<Md3PresetStyles\n  variant=\"menu\"\n  styles={styles}\n  previewPrompt=\"Summarize the October release.\"\n  onGenerateStyle={(req) => api.generateStyle(req)}\n  onSubmit={(text, style) => send(text, { style })}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "preset-styles",
+        "package": "@nucleux/preset-styles",
+        "component": "PresetStyles",
+        "sharesApi": true
+      }
+    },
+    {
       "name": "md3-proactive",
       "package": "@nucleux/md3-proactive",
       "kind": "component",
@@ -9899,6 +10300,57 @@
         "package": "@nucleux/progress",
         "component": "Progress",
         "sharesApi": false
+      }
+    },
+    {
+      "name": "md3-prompt-enhancer",
+      "package": "@nucleux/md3-prompt-enhancer",
+      "kind": "component",
+      "description": "The Material 3 Prompt Enhancer: an Improve-style tool in the\n`Md3AgentComposer` toolbar proposes a clearer version of the request, shown\nin an outlined card above the composer — what they wrote beside the\nsuggestion, every addition highlighted in primary-container and explained,\nassumptions labelled, each change removable with a checkbox. Use updates the\ncomposer with Undo and sends nothing; Edit, Keep original and a failure line\nthat leaves the original untouched are built in. Same API, states and\naccessible names as `PromptEnhancer` from `@nucleux/prompt-enhancer`.",
+      "summary": "Material 3 Prompt Enhancer — proposes a clearer version of the request you wrote, every addition marked and explained — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-prompt-enhancer",
+        "prompt-enhancer",
+        "prompt",
+        "enhance",
+        "prompt-scaffold"
+      ],
+      "exports": [
+        "Md3PromptEnhancer",
+        "Md3PromptEnhancerProps",
+        "Md3PromptEnhancerVariant",
+        "Md3PromptEnhancerState",
+        "Md3PromptEnhancerDiffStyle",
+        "Md3PromptEnhancerChange",
+        "Md3PromptEnhancerSuggestion",
+        "Md3PromptEnhancerSegment",
+        "Md3PromptEnhancerController"
+      ],
+      "components": [
+        "Md3PromptEnhancer"
+      ],
+      "import": "import { Md3PromptEnhancer } from \"@nucleux/md3-prompt-enhancer\";",
+      "installSingle": "pnpm add @nucleux/md3-prompt-enhancer @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-prompt-enhancer\n\nMaterial 3 Prompt Enhancer — proposes a clearer version of the request you wrote, every addition marked and explained — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, states, keyboard model and accessible names are those of [`@nucleux/prompt-enhancer`](https://www.npmjs.com/package/@nucleux/prompt-enhancer) (`PromptEnhancer`) — the props types are re-exported from it and the logic is its `usePromptEnhancer` — so you switch families by changing only the import. Only the look differs: an outlined review card above an `Md3AgentComposer`, primary-container highlights, M3 checkboxes, text/outlined/filled buttons, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3PromptEnhancer`** — the composer with an Enhance tool, the review card and status lines\n- Types: `Md3PromptEnhancerProps`, `Md3PromptEnhancerVariant`, `Md3PromptEnhancerState`, `Md3PromptEnhancerDiffStyle`, `Md3PromptEnhancerChange`, `Md3PromptEnhancerSuggestion`, `Md3PromptEnhancerSegment`, `Md3PromptEnhancerController`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-prompt-enhancer @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3PromptEnhancer } from \"@nucleux/md3-prompt-enhancer\";\n\n<Md3PromptEnhancer\n  value={draft}\n  onValueChange={setDraft}\n  onEnhance={(prompt, { signal }) => api.enhance(prompt, { signal })}\n  onSubmit={send}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "prompt-enhancer",
+        "package": "@nucleux/prompt-enhancer",
+        "component": "PromptEnhancer",
+        "sharesApi": true
       }
     },
     {
@@ -10745,6 +11197,56 @@
       }
     },
     {
+      "name": "md3-suggestions",
+      "package": "@nucleux/md3-suggestions",
+      "kind": "component",
+      "description": "The Material 3 suggestions row — the same API and behaviour as\n`Suggestions`: at most three verb-labelled chips above the composer\n(\"compose\"), under an answer (\"follow-up\") or as a floating toolbar on a\nselection (\"selection\"). The row is headed by the agent's mark and name\n(`label`, \"Aria suggests\") with an info icon button that reveals why\n(`reason`) and a close icon button (Escape too); compose chips are outlined\nM3 suggestion chips with a leading primary add icon and the standard state\nlayer. Choosing a chip only calls `onSelect` — never sends — and `status`\nswaps the row for a one-line confirmation with a text Undo, a dismissed or\nno-longer-relevant line, a loading indicator or an error-container line\nwith Retry. Arrow keys, Home and End move between chips; motion is reduced\nunder `prefers-reduced-motion`.",
+      "summary": "Material 3 Suggestions — agent-marked suggestion chips above the composer that add to the request, never send it — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-suggestions",
+        "suggestions",
+        "prompt-scaffold",
+        "chips"
+      ],
+      "exports": [
+        "Md3Suggestions",
+        "Md3SuggestionsComposer",
+        "Md3SuggestionsProps",
+        "Md3SuggestionsComposerProps",
+        "Md3SuggestionItem",
+        "Md3SuggestionsVariant",
+        "Md3SuggestionsStatus",
+        "Md3SuggestionsMessages"
+      ],
+      "components": [
+        "Md3Suggestions",
+        "Md3SuggestionsComposer"
+      ],
+      "import": "import { Md3Suggestions, Md3SuggestionsComposer } from \"@nucleux/md3-suggestions\";",
+      "installSingle": "pnpm add @nucleux/md3-suggestions @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-suggestions\n\nMaterial 3 Suggestions — agent-marked suggestion chips above the composer that add to the request, never send it — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model, states and accessible names are those of [`@nucleux/suggestions`](https://www.npmjs.com/package/@nucleux/suggestions) (`Suggestions`, `SuggestionsComposer`) — the props types are re-exported from it and the state logic is shared — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, outlined suggestion chips with a primary add icon, state layers, a raised composer card, and motion reduced under `prefers-reduced-motion`.\n\n## Exports\n\n- **`Md3Suggestions`** — the \"Aria suggests\" chip row with Why and Dismiss icon buttons, its status lines (added with Undo, dismissed, no longer relevant, loading, error with Retry), plus `follow-up` and `selection` variants\n- **`Md3SuggestionsComposer`** — the row wired to `Md3AgentComposer`\n- Re-exported helpers: `appendSuggestion`, `suggestionsMessages`\n- Types: `Md3SuggestionsProps`, `Md3SuggestionsComposerProps`, `Md3SuggestionItem`, `Md3SuggestionsVariant`, `Md3SuggestionsStatus`, `Md3SuggestionsMessages`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-suggestions @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3SuggestionsComposer } from \"@nucleux/md3-suggestions\";\n\n<Md3SuggestionsComposer\n  defaultValue=\"Summarize the September release.\"\n  label=\"Aria suggests\"\n  reason=\"Release summaries are read to decide what still needs attention.\"\n  suggestions={[\n    { label: \"Include unresolved blockers\" },\n    { label: \"Group the work by owner\" },\n    { label: \"Compare with the August release\" },\n  ]}\n  isRelevant={(draft) => /release/i.test(draft)}\n  onSubmit={send}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "suggestions",
+        "package": "@nucleux/suggestions",
+        "component": "Suggestions",
+        "sharesApi": true
+      }
+    },
+    {
       "name": "md3-switch",
       "package": "@nucleux/md3-switch",
       "kind": "component",
@@ -11481,6 +11983,49 @@
       }
     },
     {
+      "name": "md3-voice-tone",
+      "package": "@nucleux/md3-voice-tone",
+      "kind": "component",
+      "description": "Voice & Tone in Material 3 — the twin of `VoiceTone`, with the same props, callbacks, keyboard\nmodel and accessible names (the logic is `useVoiceTone` from `@nucleux/voice-tone`). In the\ncomposer (`variant=\"composer\"`), a Tone chip sits in the `Md3AgentComposer` toolbar: closed it is\nan outlined assist chip; set, it takes the secondary-container role and reads “Tone Professional”\nwith a chevron to change and × to remove (with Undo). It opens a surface-container picker of tone\ncards — the chosen card gets a 2px primary outline and a check — with a sample line that follows\nfocus and hover, the agent's recommendation marked but never applied, and an outlined “Or describe\na tone” field. `variant=\"settings\"` is the same choice as an outlined card with a rules list of\n`Md3Checkbox`es and a sample sentence. Tone travels beside the prompt as a setting; the prompt text\nis never edited, and state layers and motion respect `prefers-reduced-motion`.",
+      "summary": "Material 3 Voice & Tone — say how the reply should sound (tone cards, a rules list, a sample line), shown as a Tone chip in the composer and never editing the prompt — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "md3",
+        "material",
+        "md3-voice-tone",
+        "voice-tone",
+        "tone",
+        "prompt-scaffold"
+      ],
+      "exports": [
+        "Md3VoiceTone",
+        "Md3VoiceToneProps"
+      ],
+      "components": [
+        "Md3VoiceTone"
+      ],
+      "import": "import { Md3VoiceTone } from \"@nucleux/md3-voice-tone\";",
+      "installSingle": "pnpm add @nucleux/md3-voice-tone @nucleux/tokens",
+      "props": [],
+      "readme": "# @nucleux/md3-voice-tone\n\nMaterial 3 Voice & Tone — say how the reply should sound (tone cards, a rules list, a sample line), shown as a Tone chip in the composer and never editing the prompt — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/voice-tone`](https://www.npmjs.com/package/@nucleux/voice-tone) (`VoiceTone`) — the props types are re-exported from it and the logic is its `useVoiceTone` — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3VoiceTone`** — a Tone chip in `Md3AgentComposer` (outlined assist chip; set, a secondary-container chip “Tone Professional” with change and remove) opening a surface-container picker of tone cards with a sample line, the recommendation marked and an outlined “Or describe a tone” field; or (`variant=\"settings\"`) an outlined card with tone presets, `Md3Checkbox` rules and a sample sentence\n- Re-exported from the twin: `useVoiceTone`, `defaultVoiceTones`, `defaultVoiceToneRules`, `VOICE_TONE_CUSTOM`\n- Types: `Md3VoiceToneProps`, `VoiceToneOption`, `VoiceToneRule`, `VoiceToneSetting`, `VoiceToneVariant`, `VoiceToneLayout`, `VoiceToneNotice`, `VoiceToneState`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-voice-tone @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3VoiceTone } from \"@nucleux/md3-voice-tone\";\n\n<Md3VoiceTone\n  variant=\"composer\"\n  defaultValue=\"professional\"\n  onSubmit={(text, setting) => send(text, { tone: setting })}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "voice-tone",
+        "package": "@nucleux/voice-tone",
+        "component": "VoiceTone",
+        "sharesApi": true
+      }
+    },
+    {
       "name": "menubar",
       "package": "@nucleux/menubar",
       "kind": "component",
@@ -11821,6 +12366,377 @@
         "name": "md3-model-selection",
         "package": "@nucleux/md3-model-selection",
         "component": "Md3ModelSelection",
+        "sharesApi": true
+      }
+    },
+    {
+      "name": "modes",
+      "package": "@nucleux/modes",
+      "kind": "component",
+      "description": "The segmented control: three or four labelled segments in a bordered track,\nthe active one filled with the primary colour. A radio group with roving\nfocus (Arrow keys move, Space/Enter choose).",
+      "summary": "Modes — choose how the agent works on a request (Fast, Balanced, Deep research), shown in the composer and switchable before sending — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "modes",
+        "mode-picker",
+        "prompt-scaffolds"
+      ],
+      "exports": [
+        "useModes",
+        "useModesRoving",
+        "useModesDismiss",
+        "modesLabels",
+        "modeSupportingText",
+        "ModesSegmented",
+        "ModesList",
+        "ModesChip",
+        "ModesPicker",
+        "ModesNote",
+        "Modes",
+        "ModeOption",
+        "ModesNotice",
+        "ModesVariant",
+        "UseModesOptions",
+        "ModesState",
+        "ModesSegmentedProps",
+        "ModesListProps",
+        "ModesChipProps",
+        "ModesPickerProps",
+        "ModesNoteProps",
+        "ModesSubmitDetails",
+        "ModesProps"
+      ],
+      "components": [
+        "Modes",
+        "ModesSegmented",
+        "ModesList",
+        "ModesChip",
+        "ModesPicker",
+        "ModesNote"
+      ],
+      "import": "import { Modes, ModesSegmented, ModesList, ModesChip } from \"@nucleux/modes\";",
+      "installSingle": "pnpm add @nucleux/modes @nucleux/tokens",
+      "props": [
+        {
+          "name": "ModesSegmentedProps",
+          "source": "export interface ModesSegmentedProps\n  extends ModesGroupBase,\n    Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\" | \"defaultValue\"> {}",
+          "extends": [
+            "ModesGroupBase",
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\" | \"defaultValue\">"
+          ],
+          "members": []
+        },
+        {
+          "name": "ModesListProps",
+          "source": "export interface ModesListProps\n  extends ModesGroupBase,\n    Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\" | \"defaultValue\"> {\n  /** Show each mode's description (meta such as latency always shows). Defaults to true. */\n  showDescriptions?: boolean;\n  /** Draw the rows as a bordered card with dividers (default) or as bare menu rows. */\n  framed?: boolean;\n}",
+          "extends": [
+            "ModesGroupBase",
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\" | \"defaultValue\">"
+          ],
+          "members": [
+            {
+              "name": "showDescriptions",
+              "type": "boolean",
+              "required": false,
+              "description": "Show each mode's description (meta such as latency always shows). Defaults to true.",
+              "default": "true"
+            },
+            {
+              "name": "framed",
+              "type": "boolean",
+              "required": false,
+              "description": "Draw the rows as a bordered card with dividers (default) or as bare menu rows.",
+              "default": "true"
+            }
+          ]
+        },
+        {
+          "name": "ModesChipProps",
+          "source": "export interface ModesChipProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, \"children\"> {\n  /** The active mode, or null (the chip then reads just the label). */\n  mode: ModeOption | null;\n  /** The setting's name. Defaults to \"Mode\". */\n  label?: string;\n  /** Whether the picker it controls is open (sets `aria-expanded`). */\n  open?: boolean;\n  /** Shows a remove button that clears the mode. */\n  onRemove?: () => void;\n}",
+          "extends": [
+            "Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, \"children\">"
+          ],
+          "members": [
+            {
+              "name": "mode",
+              "type": "ModeOption | null",
+              "required": true,
+              "description": "The active mode, or null (the chip then reads just the label)."
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "required": false,
+              "description": "The setting's name. Defaults to \"Mode\".",
+              "default": "\"Mode\""
+            },
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": false,
+              "description": "Whether the picker it controls is open (sets `aria-expanded`).",
+              "default": "false"
+            },
+            {
+              "name": "onRemove",
+              "type": "() => void",
+              "required": false,
+              "description": "Shows a remove button that clears the mode."
+            }
+          ]
+        },
+        {
+          "name": "ModesPickerProps",
+          "source": "export interface ModesPickerProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\" | \"defaultValue\" | \"title\"> {\n  modes: ModeOption[];\n  value: string | null;\n  onSelect: (id: string) => void;\n  /** Shows \"No mode\" while a mode is active. */\n  onClear?: () => void;\n  /** Called on Escape. */\n  onClose?: () => void;\n  /** The setting's name, used for the heading and accessible names. Defaults to \"Mode\". */\n  label?: string;\n  /** One line under the heading. */\n  description?: React.ReactNode;\n  /** The unavailable mode the person just tried, if any; its reason shows as an alert. */\n  rejected?: ModeOption | null;\n  showDescriptions?: boolean;\n  /** Move focus to the active (or first) mode when it mounts. */\n  autoFocus?: boolean;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\" | \"defaultValue\" | \"title\">"
+          ],
+          "members": [
+            {
+              "name": "modes",
+              "type": "ModeOption[]",
+              "required": true
+            },
+            {
+              "name": "value",
+              "type": "string | null",
+              "required": true
+            },
+            {
+              "name": "onSelect",
+              "type": "(id: string) => void",
+              "required": true
+            },
+            {
+              "name": "onClear",
+              "type": "() => void",
+              "required": false,
+              "description": "Shows \"No mode\" while a mode is active."
+            },
+            {
+              "name": "onClose",
+              "type": "() => void",
+              "required": false,
+              "description": "Called on Escape."
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "required": false,
+              "description": "The setting's name, used for the heading and accessible names. Defaults to \"Mode\".",
+              "default": "\"Mode\""
+            },
+            {
+              "name": "description",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "One line under the heading.",
+              "default": "\"How the agent approaches this request. Model and effort stay as they are.\""
+            },
+            {
+              "name": "rejected",
+              "type": "ModeOption | null",
+              "required": false,
+              "description": "The unavailable mode the person just tried, if any; its reason shows as an alert."
+            },
+            {
+              "name": "showDescriptions",
+              "type": "boolean",
+              "required": false,
+              "default": "true"
+            },
+            {
+              "name": "autoFocus",
+              "type": "boolean",
+              "required": false,
+              "description": "Move focus to the active (or first) mode when it mounts.",
+              "default": "false"
+            }
+          ]
+        },
+        {
+          "name": "ModesNoteProps",
+          "source": "export interface ModesNoteProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Shows an Undo button that restores the previous mode. */\n  onUndo?: () => void;\n}",
+          "extends": [
+            "React.HTMLAttributes<HTMLDivElement>"
+          ],
+          "members": [
+            {
+              "name": "onUndo",
+              "type": "() => void",
+              "required": false,
+              "description": "Shows an Undo button that restores the previous mode."
+            }
+          ]
+        },
+        {
+          "name": "ModesProps",
+          "source": "export interface ModesProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"defaultValue\" | \"onSubmit\" | \"onChange\"> {\n  /** The modes the product supports, in order. */\n  modes: ModeOption[];\n  /** Active mode id (controlled); null for none. */\n  value?: string | null;\n  /** Initial mode id when uncontrolled. Defaults to none. */\n  defaultValue?: string | null;\n  /** Called with the new mode id (null when cleared). */\n  onValueChange?: (id: string | null, mode: ModeOption | null) => void;\n  /** Presentation. Defaults to \"composer\" (the site's live preview). */\n  variant?: ModesVariant;\n  /** Whether the chip's picker is open (controlled). */\n  open?: boolean;\n  /** Initial picker state when uncontrolled. */\n  defaultOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  /** Allow clearing the mode (chip ×, \"No mode\"). Defaults to true. */\n  clearable?: boolean;\n  /** Show each mode's one-line description. Defaults to true. */\n  showDescriptions?: boolean;\n  /** The setting's name. Defaults to \"Mode\". */\n  label?: string;\n  /** Line under the picker heading. */\n  pickerDescription?: string;\n  /** Initial notice, e.g. to show a just-changed or refused state. */\n  defaultNotice?: ModesNotice;\n  /** Called when someone chooses a mode that can't be applied here. */\n  onUnavailable?: (mode: ModeOption) => void;\n  /** Composer text (controlled). The mode never changes it. */\n  draft?: string;\n  /** Initial composer text when uncontrolled. */\n  defaultDraft?: string;\n  onDraftChange?: (text: string) => void;\n  /** Called when the person sends from the composer, with the active mode. Modes never sends on its own. */\n  onSubmit?: (text: string, details: ModesSubmitDetails) => void;\n  /** Composer placeholder. */\n  placeholder?: string;\n  /** Composer controls before the field (attach…). */\n  composerLeading?: React.ReactNode;\n  /** Composer controls after the mode chip (model chip, voice…). */\n  composerActions?: React.ReactNode;\n  /** Accessible name of the send button. Defaults to \"Send\". */\n  sendLabel?: string;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"defaultValue\" | \"onSubmit\" | \"onChange\">"
+          ],
+          "members": [
+            {
+              "name": "modes",
+              "type": "ModeOption[]",
+              "required": true,
+              "description": "The modes the product supports, in order."
+            },
+            {
+              "name": "value",
+              "type": "string | null",
+              "required": false,
+              "description": "Active mode id (controlled); null for none."
+            },
+            {
+              "name": "defaultValue",
+              "type": "string | null",
+              "required": false,
+              "description": "Initial mode id when uncontrolled. Defaults to none."
+            },
+            {
+              "name": "onValueChange",
+              "type": "(id: string | null, mode: ModeOption | null) => void",
+              "required": false,
+              "description": "Called with the new mode id (null when cleared)."
+            },
+            {
+              "name": "variant",
+              "type": "ModesVariant",
+              "required": false,
+              "description": "Presentation. Defaults to \"composer\" (the site's live preview).",
+              "values": [
+                "composer",
+                "segmented",
+                "list",
+                "chip"
+              ],
+              "default": "\"composer\""
+            },
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": false,
+              "description": "Whether the chip's picker is open (controlled)."
+            },
+            {
+              "name": "defaultOpen",
+              "type": "boolean",
+              "required": false,
+              "description": "Initial picker state when uncontrolled."
+            },
+            {
+              "name": "onOpenChange",
+              "type": "(open: boolean) => void",
+              "required": false
+            },
+            {
+              "name": "clearable",
+              "type": "boolean",
+              "required": false,
+              "description": "Allow clearing the mode (chip ×, \"No mode\"). Defaults to true.",
+              "default": "true"
+            },
+            {
+              "name": "showDescriptions",
+              "type": "boolean",
+              "required": false,
+              "description": "Show each mode's one-line description. Defaults to true.",
+              "default": "true"
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "required": false,
+              "description": "The setting's name. Defaults to \"Mode\".",
+              "default": "\"Mode\""
+            },
+            {
+              "name": "pickerDescription",
+              "type": "string",
+              "required": false,
+              "description": "Line under the picker heading."
+            },
+            {
+              "name": "defaultNotice",
+              "type": "ModesNotice",
+              "required": false,
+              "description": "Initial notice, e.g. to show a just-changed or refused state."
+            },
+            {
+              "name": "onUnavailable",
+              "type": "(mode: ModeOption) => void",
+              "required": false,
+              "description": "Called when someone chooses a mode that can't be applied here."
+            },
+            {
+              "name": "draft",
+              "type": "string",
+              "required": false,
+              "description": "Composer text (controlled). The mode never changes it."
+            },
+            {
+              "name": "defaultDraft",
+              "type": "string",
+              "required": false,
+              "description": "Initial composer text when uncontrolled.",
+              "default": "\"\""
+            },
+            {
+              "name": "onDraftChange",
+              "type": "(text: string) => void",
+              "required": false
+            },
+            {
+              "name": "onSubmit",
+              "type": "(text: string, details: ModesSubmitDetails) => void",
+              "required": false,
+              "description": "Called when the person sends from the composer, with the active mode. Modes never sends on its own."
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "required": false,
+              "description": "Composer placeholder.",
+              "default": "\"Ask Aria…\""
+            },
+            {
+              "name": "composerLeading",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Composer controls before the field (attach…)."
+            },
+            {
+              "name": "composerActions",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Composer controls after the mode chip (model chip, voice…)."
+            },
+            {
+              "name": "sendLabel",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name of the send button. Defaults to \"Send\".",
+              "default": "\"Send\""
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/modes\n\nModes — choose how the agent works on a request (Fast, Balanced, Deep research), shown in the composer and switchable before sending — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nA named set of behaviour presets that makes the speed/depth trade-off — or the\nway of working — legible without exposing raw parameters. Each mode says what\nchanges and how long it takes; the active mode sits in the composer as a chip\nthat can be changed or cleared before sending; unavailable modes stay listed\nwith the reason; a change adds one quiet line with Undo. Choosing a mode never\ntouches the prompt text, and Modes never sends on its own.\n\n## Exports\n\n- **`Modes`** — the whole pattern (`variant`: `composer` · `segmented` · `list` · `chip`)\n- **`ModesSegmented`** — the segmented control (radio group)\n- **`ModesList`** — rich rows: icon, name, expected speed · what it's for, unavailable reason\n- **`ModesChip`** — the composer chip (\"⚡ Fast ▾\") with an optional ×\n- **`ModesPicker`** — the dialog the chip opens: heading, rows, refusal alert, \"No mode\"\n- **`ModesNote`** — \"Mode changed to … Your text is unchanged.\" with Undo\n- Shared logic (also used by `@nucleux/md3-modes`): `useModes`, `useModesRoving`, `useModesDismiss`, `modesLabels`, `modeSupportingText`\n- Types: `ModesProps`, `ModeOption`, `ModesVariant`, `ModesNotice`, `ModesSubmitDetails`, `UseModesOptions`, `ModesState`, and each sub-component's `…Props`\n\n## Variants\n\n| `variant` | Use |\n| --- | --- |\n| `composer` (default) | The site's live preview: segmented control, the mode list and the chip in the composer. |\n| `segmented` | Three or four labelled segments — session-level, like a tab (right rail, code). |\n| `list` | Rich rows with expected speed — generation settings. |\n| `chip` | Only the chip and its picker — beside the send button (chat, email). |\n\n## Behaviour\n\n- `modes` (`{ id, name, shortName?, description?, meta?, icon?, unavailable? }[]`), `value` / `defaultValue` / `onValueChange(id | null, mode | null)`.\n- `open` / `defaultOpen` / `onOpenChange` for the picker; `clearable` (default true); `showDescriptions` (default true); `label` (default \"Mode\").\n- Choosing an `unavailable` mode is refused: it isn't applied, the picker shows why (`role=\"alert\"`), `onUnavailable(mode)` fires.\n- Composer: `draft` / `defaultDraft` / `onDraftChange`, `onSubmit(text, { mode })`, `placeholder`, `composerLeading`, `composerActions`, `sendLabel`.\n- Keyboard: radio groups with one tab stop; Arrow keys / Home / End move, Space or Enter chooses; Escape closes the picker and returns focus to the chip. Changes are announced politely.\n\n## Install\n\n```bash\npnpm add @nucleux/modes @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Modes } from \"@nucleux/modes\";\n\n<Modes\n  modes={[\n    { id: \"fast\", name: \"Fast\", icon: \"⚡\", meta: \"~3 seconds\", description: \"everyday asks and quick lookups\" },\n    { id: \"balanced\", name: \"Balanced\", icon: \"⚖️\", meta: \"~15 seconds\", description: \"most tasks\" },\n    { id: \"deep\", name: \"Deep research\", shortName: \"Deep\", icon: \"🧠\", meta: \"~1 minute\", description: \"multi-source, high-stakes\" },\n  ]}\n  defaultValue=\"balanced\"\n  onSubmit={(text, { mode }) => send(text, { mode: mode?.id })}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-modes",
+        "package": "@nucleux/md3-modes",
+        "component": "Md3Modes",
         "sharesApi": true
       }
     },
@@ -12764,6 +13680,292 @@
       }
     },
     {
+      "name": "preset-styles",
+      "package": "@nucleux/preset-styles",
+      "kind": "component",
+      "description": "One-tap named styles that set how the agent's output looks or reads, without\nrestating it in every request. `variant=\"grid\"` (default) is a swatch grid\npicked before generating, with a \"Match a style\" reference-image drop and a\nper-project lock; `\"list\"` is a short list of brand-agreed presets;\n`\"menu\"` puts a Style control in the composer that opens \"Use style\" — each\nstyle with one line on what it changes, a sample reply that follows pointer\nand focus, and \"Create & edit styles\", which turns writing the person likes\n(or a description) into their own style through the app's\n`onGenerateStyle`, reviewed and editable before saving. Choosing applies at\nonce, the chip names the style, × goes back to the base style with Undo, and\nthe request text is never edited. Arrow keys move between styles; Escape\ncloses the menu and returns focus to the control.",
+      "summary": "Preset Styles — one-click named styles for how the agent's output looks or reads — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "preset-styles",
+        "styles",
+        "style-picker",
+        "prompt-scaffold"
+      ],
+      "exports": [
+        "presetStylesCopy",
+        "presetStylesNoticeText",
+        "presetStylesMoveFocus",
+        "usePresetStyles",
+        "PresetStyles",
+        "PresetStylesVariant",
+        "PresetStyleSwatch",
+        "PresetStylesView",
+        "PresetStylesNotice",
+        "PresetStyleSource",
+        "PresetStyle",
+        "PresetStyleReference",
+        "PresetStyleRequest",
+        "PresetStyleDraft",
+        "PresetStylesProps",
+        "PresetStylesState"
+      ],
+      "components": [
+        "PresetStyles"
+      ],
+      "import": "import { PresetStyles } from \"@nucleux/preset-styles\";",
+      "installSingle": "pnpm add @nucleux/preset-styles @nucleux/tokens",
+      "props": [
+        {
+          "name": "PresetStylesProps",
+          "source": "export interface PresetStylesProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"defaultValue\" | \"onSubmit\"> {\n  /** The presets, in order. In `\"menu\"`, the first one is the base style (Normal) unless `baseStyle` says otherwise. */\n  styles: PresetStyle[];\n  /** Chosen style id (controlled). */\n  value?: string;\n  /** Initial style id (uncontrolled). Defaults to the base style. */\n  defaultValue?: string;\n  /** Called when a style is chosen (or × returns to the base style). Never touches the request text. */\n  onValueChange?: (id: string) => void;\n  /** Layout. Defaults to `\"grid\"`. */\n  variant?: PresetStylesVariant;\n  /** Heading. Defaults to `\"Output style\"` (grid, list) or `\"Use style\"` (menu). Also the group's accessible name. */\n  label?: string;\n  /** Menu sub-heading. Defaults to `\"How {agentName} writes its replies — not what it knows or does.\"`. */\n  description?: string;\n  /** The plain style × goes back to. Defaults to the first style. */\n  baseStyle?: string;\n  /** Who writes, for the copy. Defaults to `\"Aria\"`. */\n  agentName?: string;\n\n  /** Grid / list: show the per-project lock line. */\n  lockable?: boolean;\n  /** Locked (controlled). */\n  locked?: boolean;\n  /** Initially locked (uncontrolled). */\n  defaultLocked?: boolean;\n  /** Called when the lock is switched. */\n  onLockedChange?: (locked: boolean) => void;\n  /** What the lock covers. Defaults to `\"this project\"`. */\n  lockScope?: string;\n\n  /** Grid / list: show the \"Match a style\" reference-image drop. */\n  allowReference?: boolean;\n  /** The attached reference (controlled; `null` for none). */\n  reference?: PresetStyleReference | null;\n  /** Initially attached reference (uncontrolled). */\n  defaultReference?: PresetStyleReference | null;\n  /** Called with the dropped or picked image, or `null` when removed. */\n  onReferenceChange?: (file: File | null) => void;\n\n  /** Menu: what is showing at first. Defaults to `\"closed\"`. */\n  defaultView?: PresetStylesView;\n  /** Menu: called when the menu or a card opens or closes. */\n  onViewChange?: (view: PresetStylesView) => void;\n  /** Menu: show a sample reply for the style under the pointer or focus. Defaults to `true`. */\n  showPreview?: boolean;\n  /** Menu: the style previewed when the menu opens. Defaults to the chosen one. */\n  defaultPreview?: string;\n  /** Menu: the familiar request the preview answers, e.g. `\"Summarize the October release.\"`. */\n  previewPrompt?: string;\n  /** Menu: what a style applies to. Defaults to `\"new messages, edits and retries\"`. */\n  scope?: string;\n  /** Menu: the conversation already has replies — switching says earlier ones keep their style. */\n  earlierReplies?: boolean;\n  /** Menu: the confirmation line shown at first (restoring UI). */\n  defaultNotice?: PresetStylesNotice | null;\n\n  /** Menu: makes a custom style from an example or a description. Enables \"Create & edit styles\". */\n  onGenerateStyle?: (request: PresetStyleRequest) => Promise<PresetStyleDraft>;\n  /** Menu: called when a custom style is saved (`use` = Save and use). It is also kept locally. */\n  onSaveStyle?: (style: PresetStyle, use: boolean) => void;\n  /** Menu: the generated draft to review when `defaultView=\"review\"`. */\n  defaultGenerated?: PresetStyleDraft;\n\n  /** Menu: render the family's composer with the Style control in its toolbar. Defaults to `true`; `false` renders only the control. */\n  withComposer?: boolean;\n  /** Composer text (controlled). */\n  message?: string;\n  /** Composer text at first (uncontrolled). */\n  defaultMessage?: string;\n  /** Called as the composer text changes. */\n  onMessageChange?: (text: string) => void;\n  /** Called on send with the request and the chosen style id. The style is a setting; the text is never edited. */\n  onSubmit?: (text: string, styleId: string) => void;\n  /** Composer placeholder. Defaults to `\"Describe what you need…\"`. */\n  placeholder?: string;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"defaultValue\" | \"onSubmit\">"
+          ],
+          "members": [
+            {
+              "name": "styles",
+              "type": "PresetStyle[]",
+              "required": true,
+              "description": "The presets, in order. In `\"menu\"`, the first one is the base style (Normal) unless `baseStyle` says otherwise."
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": "Chosen style id (controlled)."
+            },
+            {
+              "name": "defaultValue",
+              "type": "string",
+              "required": false,
+              "description": "Initial style id (uncontrolled). Defaults to the base style."
+            },
+            {
+              "name": "onValueChange",
+              "type": "(id: string) => void",
+              "required": false,
+              "description": "Called when a style is chosen (or × returns to the base style). Never touches the request text."
+            },
+            {
+              "name": "variant",
+              "type": "PresetStylesVariant",
+              "required": false,
+              "description": "Layout. Defaults to `\"grid\"`.",
+              "values": [
+                "grid",
+                "list",
+                "menu"
+              ]
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "required": false,
+              "description": "Heading. Defaults to `\"Output style\"` (grid, list) or `\"Use style\"` (menu). Also the group's accessible name."
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "required": false,
+              "description": "Menu sub-heading. Defaults to `\"How {agentName} writes its replies — not what it knows or does.\"`."
+            },
+            {
+              "name": "baseStyle",
+              "type": "string",
+              "required": false,
+              "description": "The plain style × goes back to. Defaults to the first style."
+            },
+            {
+              "name": "agentName",
+              "type": "string",
+              "required": false,
+              "description": "Who writes, for the copy. Defaults to `\"Aria\"`."
+            },
+            {
+              "name": "lockable",
+              "type": "boolean",
+              "required": false,
+              "description": "Grid / list: show the per-project lock line."
+            },
+            {
+              "name": "locked",
+              "type": "boolean",
+              "required": false,
+              "description": "Locked (controlled)."
+            },
+            {
+              "name": "defaultLocked",
+              "type": "boolean",
+              "required": false,
+              "description": "Initially locked (uncontrolled)."
+            },
+            {
+              "name": "onLockedChange",
+              "type": "(locked: boolean) => void",
+              "required": false,
+              "description": "Called when the lock is switched."
+            },
+            {
+              "name": "lockScope",
+              "type": "string",
+              "required": false,
+              "description": "What the lock covers. Defaults to `\"this project\"`."
+            },
+            {
+              "name": "allowReference",
+              "type": "boolean",
+              "required": false,
+              "description": "Grid / list: show the \"Match a style\" reference-image drop."
+            },
+            {
+              "name": "reference",
+              "type": "PresetStyleReference | null",
+              "required": false,
+              "description": "The attached reference (controlled; `null` for none)."
+            },
+            {
+              "name": "defaultReference",
+              "type": "PresetStyleReference | null",
+              "required": false,
+              "description": "Initially attached reference (uncontrolled)."
+            },
+            {
+              "name": "onReferenceChange",
+              "type": "(file: File | null) => void",
+              "required": false,
+              "description": "Called with the dropped or picked image, or `null` when removed."
+            },
+            {
+              "name": "defaultView",
+              "type": "PresetStylesView",
+              "required": false,
+              "description": "Menu: what is showing at first. Defaults to `\"closed\"`.",
+              "values": [
+                "closed",
+                "menu",
+                "create",
+                "review"
+              ]
+            },
+            {
+              "name": "onViewChange",
+              "type": "(view: PresetStylesView) => void",
+              "required": false,
+              "description": "Menu: called when the menu or a card opens or closes."
+            },
+            {
+              "name": "showPreview",
+              "type": "boolean",
+              "required": false,
+              "description": "Menu: show a sample reply for the style under the pointer or focus. Defaults to `true`."
+            },
+            {
+              "name": "defaultPreview",
+              "type": "string",
+              "required": false,
+              "description": "Menu: the style previewed when the menu opens. Defaults to the chosen one."
+            },
+            {
+              "name": "previewPrompt",
+              "type": "string",
+              "required": false,
+              "description": "Menu: the familiar request the preview answers, e.g. `\"Summarize the October release.\"`."
+            },
+            {
+              "name": "scope",
+              "type": "string",
+              "required": false,
+              "description": "Menu: what a style applies to. Defaults to `\"new messages, edits and retries\"`."
+            },
+            {
+              "name": "earlierReplies",
+              "type": "boolean",
+              "required": false,
+              "description": "Menu: the conversation already has replies — switching says earlier ones keep their style."
+            },
+            {
+              "name": "defaultNotice",
+              "type": "PresetStylesNotice | null",
+              "required": false,
+              "description": "Menu: the confirmation line shown at first (restoring UI)."
+            },
+            {
+              "name": "onGenerateStyle",
+              "type": "(request: PresetStyleRequest) => Promise<PresetStyleDraft>",
+              "required": false,
+              "description": "Menu: makes a custom style from an example or a description. Enables \"Create & edit styles\"."
+            },
+            {
+              "name": "onSaveStyle",
+              "type": "(style: PresetStyle, use: boolean) => void",
+              "required": false,
+              "description": "Menu: called when a custom style is saved (`use` = Save and use). It is also kept locally."
+            },
+            {
+              "name": "defaultGenerated",
+              "type": "PresetStyleDraft",
+              "required": false,
+              "description": "Menu: the generated draft to review when `defaultView=\"review\"`."
+            },
+            {
+              "name": "withComposer",
+              "type": "boolean",
+              "required": false,
+              "description": "Menu: render the family's composer with the Style control in its toolbar. Defaults to `true`; `false` renders only the control."
+            },
+            {
+              "name": "message",
+              "type": "string",
+              "required": false,
+              "description": "Composer text (controlled)."
+            },
+            {
+              "name": "defaultMessage",
+              "type": "string",
+              "required": false,
+              "description": "Composer text at first (uncontrolled)."
+            },
+            {
+              "name": "onMessageChange",
+              "type": "(text: string) => void",
+              "required": false,
+              "description": "Called as the composer text changes."
+            },
+            {
+              "name": "onSubmit",
+              "type": "(text: string, styleId: string) => void",
+              "required": false,
+              "description": "Called on send with the request and the chosen style id. The style is a setting; the text is never edited."
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "required": false,
+              "description": "Composer placeholder. Defaults to `\"Describe what you need…\"`."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/preset-styles\n\nPreset Styles — one-click named styles for how the agent's output looks or reads — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nA style communicates in one tap what would take a paragraph to describe. Pick\nit before generating (a swatch grid or a list of brand presets), or set how\nreplies are written from the composer's Style control — with a sample reply\nthat follows the pointer, a chip that names the active style, × back to the\nbase style with Undo, and custom styles made from the person's own writing.\nThe request text is never edited: the style travels with the send.\n\n## Exports\n\n- **`PresetStyles`** — the picker (`variant`: `\"grid\"` | `\"list\"` | `\"menu\"`)\n- **`usePresetStyles`** — its state and behaviour (shared with the Material 3 twin), plus `presetStylesCopy`, `presetStylesNoticeText` and `presetStylesMoveFocus`\n- Types: `PresetStylesProps`, `PresetStyle`, `PresetStylesVariant`, `PresetStylesView`, `PresetStylesNotice`, `PresetStyleSwatch`, `PresetStyleReference`, `PresetStyleRequest`, `PresetStyleDraft`, `PresetStyleSource`\n\n## Variants\n\n| `variant` | Use |\n| --- | --- |\n| `grid` (default) | Swatch tiles picked before generating; `allowReference` adds \"Match a style\" (drop or pick an image), `lockable` the per-project lock. |\n| `list` | A short list of named, brand-agreed presets. |\n| `menu` | A Style control in the composer (`OpenInput`) that opens \"Use style\": styles with one line each, a live preview, Create & edit styles. |\n\n## Behaviour\n\n- `styles`, `value` / `defaultValue` / `onValueChange`. Arrow keys, Home and End move between styles.\n- Grid / list: `lockable`, `locked` / `defaultLocked` / `onLockedChange`, `lockScope`; `allowReference`, `reference` / `defaultReference` / `onReferenceChange(file | null)`.\n- Menu: choosing applies at once and closes; Escape or an outside click closes and returns focus to the control. `previewPrompt` + each style's `sample` drive the preview (`showPreview`). One status line says where the style applies (`scope`, `earlierReplies`); × returns to `baseStyle` with Undo.\n- Custom styles: pass `onGenerateStyle(request) => Promise<draft>` (the app's model call) to enable Create & edit styles — paste or upload an example, or describe the style; the component shows progress and a retryable error, then a review card where name, description and instructions are editable, with a preview, Save and Save and use (`onSaveStyle(style, use)`).\n- `withComposer={false}` renders only the Style control for your own composer; otherwise `message` / `defaultMessage` / `onMessageChange` and `onSubmit(text, styleId)`.\n\n## Usage\n\n```tsx\nimport { PresetStyles } from \"@nucleux/preset-styles\";\n\n<PresetStyles\n  variant=\"menu\"\n  styles={[\n    { id: \"normal\", name: \"Normal\", description: \"Aria’s default replies.\", sample: normalReply },\n    { id: \"concise\", name: \"Concise\", description: \"Shorter, more direct replies.\", sample: conciseReply },\n  ]}\n  previewPrompt=\"Summarize the October release.\"\n  onGenerateStyle={(req) => api.generateStyle(req)}\n  onSubmit={(text, style) => send(text, { style })}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-preset-styles",
+        "package": "@nucleux/md3-preset-styles",
+        "component": "Md3PresetStyles",
+        "sharesApi": true
+      }
+    },
+    {
       "name": "proactive",
       "package": "@nucleux/proactive",
       "kind": "component",
@@ -13022,6 +14224,264 @@
         "package": "@nucleux/md3-progress",
         "component": "Md3LinearProgress",
         "sharesApi": false
+      }
+    },
+    {
+      "name": "prompt-enhancer",
+      "package": "@nucleux/prompt-enhancer",
+      "kind": "component",
+      "description": "The fixed copy both families use, so accessible names match.",
+      "summary": "Prompt Enhancer — a magic-wand action that rewrites a short ask into a precise one, shown as a reviewable diff — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "prompt-enhancer",
+        "prompt",
+        "enhance",
+        "prompt-scaffold"
+      ],
+      "exports": [
+        "PROMPT_ENHANCER_TEXT",
+        "buildEnhancedPrompt",
+        "resolveEnhancedPrompt",
+        "getPromptEnhancerSegments",
+        "describePromptEnhancerChange",
+        "usePromptEnhancer",
+        "splitPromptEnhancerProps",
+        "PromptEnhancer",
+        "PromptEnhancerVariant",
+        "PromptEnhancerState",
+        "PromptEnhancerDiffStyle",
+        "PromptEnhancerChange",
+        "PromptEnhancerSuggestion",
+        "PromptEnhancerSegment",
+        "PromptEnhancerProps",
+        "PromptEnhancerController"
+      ],
+      "components": [
+        "PromptEnhancer",
+        "PROMPT_ENHANCER_TEXT"
+      ],
+      "import": "import { PromptEnhancer, PROMPT_ENHANCER_TEXT } from \"@nucleux/prompt-enhancer\";",
+      "installSingle": "pnpm add @nucleux/prompt-enhancer @nucleux/tokens",
+      "props": [
+        {
+          "name": "PromptEnhancerProps",
+          "source": "export interface PromptEnhancerProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSubmit\" | \"defaultValue\" | \"onChange\"> {\n  /** The composer text (controlled). Omit and use `defaultValue` for an uncontrolled composer. */\n  value?: string;\n  /** Initial composer text when uncontrolled. */\n  defaultValue?: string;\n  /** Called whenever the composer text changes — typing, Use, Undo. */\n  onValueChange?: (value: string) => void;\n  /**\n   * Produces the suggestion for a prompt. No model is called by the component:\n   * the app supplies this. May be async; a rejection shows the failed state and\n   * leaves the original untouched. `signal` aborts when the person cancels.\n   */\n  onEnhance?: (\n    prompt: string,\n    options: { signal: AbortSignal },\n  ) => PromptEnhancerSuggestion | Promise<PromptEnhancerSuggestion>;\n  /** Called with the trimmed text when the person sends. Without it the composer shows no send button. The enhancer never sends on its own. */\n  onSubmit?: (value: string) => void;\n  /** Called when the person uses the suggestion — the composer now holds `enhanced`. */\n  onUse?: (enhanced: string, original: string) => void;\n  /** Called when the person dismisses the suggestion and keeps their prompt. */\n  onKeepOriginal?: () => void;\n  /** Called when the person undoes Use — the composer holds `original` again. */\n  onUndo?: (original: string) => void;\n  /** Called on every state change. */\n  onStateChange?: (state: PromptEnhancerState) => void;\n  /** \"preview-diff\" (default), \"wand-button\" or \"auto-enhance-toggle\". */\n  variant?: PromptEnhancerVariant;\n  /** \"split\" (default) or \"inline\". */\n  diffStyle?: PromptEnhancerDiffStyle;\n  /** Mark each addition and list the changes with a checkbox each. Defaults to true. */\n  showChanges?: boolean;\n  /** Show the reason under each change. Defaults to true. */\n  explain?: boolean;\n  /** Offer Edit, which opens the suggestion in a text field. Defaults to true. */\n  allowEdit?: boolean;\n  /** Offer Keep original. Defaults to true. */\n  allowKeepOriginal?: boolean;\n  /** Offer Undo after Use. Defaults to true. */\n  undo?: boolean;\n  /** Auto-enhance switch (controlled), for the \"auto-enhance-toggle\" variant. */\n  autoEnhance?: boolean;\n  /** Initial auto-enhance switch state when uncontrolled. Defaults to false. */\n  defaultAutoEnhance?: boolean;\n  /** Called when the auto-enhance switch changes. */\n  onAutoEnhanceChange?: (on: boolean) => void;\n  /** State to start in (stories, restored sessions). Defaults to \"original\". States after a suggestion need `defaultSuggestion`. */\n  defaultState?: PromptEnhancerState;\n  /** Suggestion to start with, for `defaultState` \"enhanced\" / \"editing\". */\n  defaultSuggestion?: PromptEnhancerSuggestion;\n  /** Ids of changes that start removed. */\n  defaultRemoved?: string[];\n  /** The prompt as written before Use, for `defaultState` \"accepted\" (what Undo restores). */\n  defaultOriginal?: string;\n  /** Label of the enhance action. Defaults to \"Enhance\". */\n  actionLabel?: string;\n  /** Heading of the review. Defaults to \"Suggested improvements\". */\n  heading?: string;\n  /** Quiet line in the composer footer, e.g. \"Aria will expand this prompt\". */\n  hint?: React.ReactNode;\n  /** Composer placeholder, also its accessible name. Defaults to \"Describe what you need…\". */\n  placeholder?: string;\n  /** Copy for the failed state. Say the original is unchanged. */\n  failureMessage?: string;\n  /** Extra composer tools (model chip, attach…), placed beside the enhance action. */\n  composerActions?: React.ReactNode;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onSubmit\" | \"defaultValue\" | \"onChange\">"
+          ],
+          "members": [
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": "The composer text (controlled). Omit and use `defaultValue` for an uncontrolled composer."
+            },
+            {
+              "name": "defaultValue",
+              "type": "string",
+              "required": false,
+              "description": "Initial composer text when uncontrolled."
+            },
+            {
+              "name": "onValueChange",
+              "type": "(value: string) => void",
+              "required": false,
+              "description": "Called whenever the composer text changes — typing, Use, Undo."
+            },
+            {
+              "name": "onEnhance",
+              "type": "( prompt: string, options: { signal: AbortSignal }, ) => PromptEnhancerSuggestion | Promise<PromptEnhancerSuggestion>",
+              "required": false,
+              "description": "Produces the suggestion for a prompt. No model is called by the component: the app supplies this. May be async; a rejection shows the failed state and leaves the original untouched. `signal` aborts when the person cancels."
+            },
+            {
+              "name": "onSubmit",
+              "type": "(value: string) => void",
+              "required": false,
+              "description": "Called with the trimmed text when the person sends. Without it the composer shows no send button. The enhancer never sends on its own."
+            },
+            {
+              "name": "onUse",
+              "type": "(enhanced: string, original: string) => void",
+              "required": false,
+              "description": "Called when the person uses the suggestion — the composer now holds `enhanced`."
+            },
+            {
+              "name": "onKeepOriginal",
+              "type": "() => void",
+              "required": false,
+              "description": "Called when the person dismisses the suggestion and keeps their prompt."
+            },
+            {
+              "name": "onUndo",
+              "type": "(original: string) => void",
+              "required": false,
+              "description": "Called when the person undoes Use — the composer holds `original` again."
+            },
+            {
+              "name": "onStateChange",
+              "type": "(state: PromptEnhancerState) => void",
+              "required": false,
+              "description": "Called on every state change."
+            },
+            {
+              "name": "variant",
+              "type": "PromptEnhancerVariant",
+              "required": false,
+              "description": "\"preview-diff\" (default), \"wand-button\" or \"auto-enhance-toggle\".",
+              "values": [
+                "preview-diff",
+                "wand-button",
+                "auto-enhance-toggle"
+              ]
+            },
+            {
+              "name": "diffStyle",
+              "type": "PromptEnhancerDiffStyle",
+              "required": false,
+              "description": "\"split\" (default) or \"inline\".",
+              "values": [
+                "split",
+                "inline"
+              ]
+            },
+            {
+              "name": "showChanges",
+              "type": "boolean",
+              "required": false,
+              "description": "Mark each addition and list the changes with a checkbox each. Defaults to true."
+            },
+            {
+              "name": "explain",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the reason under each change. Defaults to true."
+            },
+            {
+              "name": "allowEdit",
+              "type": "boolean",
+              "required": false,
+              "description": "Offer Edit, which opens the suggestion in a text field. Defaults to true."
+            },
+            {
+              "name": "allowKeepOriginal",
+              "type": "boolean",
+              "required": false,
+              "description": "Offer Keep original. Defaults to true."
+            },
+            {
+              "name": "undo",
+              "type": "boolean",
+              "required": false,
+              "description": "Offer Undo after Use. Defaults to true."
+            },
+            {
+              "name": "autoEnhance",
+              "type": "boolean",
+              "required": false,
+              "description": "Auto-enhance switch (controlled), for the \"auto-enhance-toggle\" variant."
+            },
+            {
+              "name": "defaultAutoEnhance",
+              "type": "boolean",
+              "required": false,
+              "description": "Initial auto-enhance switch state when uncontrolled. Defaults to false."
+            },
+            {
+              "name": "onAutoEnhanceChange",
+              "type": "(on: boolean) => void",
+              "required": false,
+              "description": "Called when the auto-enhance switch changes."
+            },
+            {
+              "name": "defaultState",
+              "type": "PromptEnhancerState",
+              "required": false,
+              "description": "State to start in (stories, restored sessions). Defaults to \"original\". States after a suggestion need `defaultSuggestion`.",
+              "values": [
+                "original",
+                "enhancing",
+                "enhanced",
+                "editing",
+                "accepted",
+                "reverted",
+                "failed"
+              ]
+            },
+            {
+              "name": "defaultSuggestion",
+              "type": "PromptEnhancerSuggestion",
+              "required": false,
+              "description": "Suggestion to start with, for `defaultState` \"enhanced\" / \"editing\"."
+            },
+            {
+              "name": "defaultRemoved",
+              "type": "string[]",
+              "required": false,
+              "description": "Ids of changes that start removed."
+            },
+            {
+              "name": "defaultOriginal",
+              "type": "string",
+              "required": false,
+              "description": "The prompt as written before Use, for `defaultState` \"accepted\" (what Undo restores)."
+            },
+            {
+              "name": "actionLabel",
+              "type": "string",
+              "required": false,
+              "description": "Label of the enhance action. Defaults to \"Enhance\"."
+            },
+            {
+              "name": "heading",
+              "type": "string",
+              "required": false,
+              "description": "Heading of the review. Defaults to \"Suggested improvements\"."
+            },
+            {
+              "name": "hint",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Quiet line in the composer footer, e.g. \"Aria will expand this prompt\"."
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "required": false,
+              "description": "Composer placeholder, also its accessible name. Defaults to \"Describe what you need…\"."
+            },
+            {
+              "name": "failureMessage",
+              "type": "string",
+              "required": false,
+              "description": "Copy for the failed state. Say the original is unchanged."
+            },
+            {
+              "name": "composerActions",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Extra composer tools (model chip, attach…), placed beside the enhance action."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/prompt-enhancer\n\nPrompt Enhancer — a magic-wand action that rewrites a short ask into a precise one, shown as a reviewable diff — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nAn Enhance action in the composer expands a terse prompt into a clearer one\nand shows it beside the original — each addition marked, explained and\nremovable, assumptions labelled. It never silently replaces the prompt: Use\nputs the result in the composer with Undo and sends nothing; Keep original and\nEdit are always there, and a failure leaves the original untouched. The\ncomponent calls no model — the app supplies `onEnhance`.\n\n## Exports\n\n- **`PromptEnhancer`** — the composer, the Enhance action and the review\n- **`usePromptEnhancer`** — the shared, non-visual logic (state machine, async enhance with cancel, Use/Undo)\n- Helpers: `buildEnhancedPrompt`, `resolveEnhancedPrompt`, `getPromptEnhancerSegments`, `describePromptEnhancerChange`, `PROMPT_ENHANCER_TEXT`\n- Types: `PromptEnhancerProps`, `PromptEnhancerVariant`, `PromptEnhancerState`, `PromptEnhancerDiffStyle`, `PromptEnhancerChange`, `PromptEnhancerSuggestion`, `PromptEnhancerSegment`, `PromptEnhancerController`\n\n## Variants\n\n| `variant` | Use |\n| --- | --- |\n| `preview-diff` (default) | Original and enhanced side by side (`diffStyle=\"split\"`) or one sentence with additions marked (`\"inline\"`) |\n| `wand-button` | The enhancement is applied in place; Undo restores the original |\n| `auto-enhance-toggle` | A switch: when on, Send enhances the prompt first, then sends it |\n\nStates: `original`, `enhancing` (cancel), `enhanced`, `editing`, `accepted` (Undo), `reverted`, `failed` (Try again / Keep original).\n\n## Install\n\n```bash\npnpm add @nucleux/prompt-enhancer @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { PromptEnhancer } from \"@nucleux/prompt-enhancer\";\n\n<PromptEnhancer\n  value={draft}\n  onValueChange={setDraft}\n  hint=\"Aria will expand this prompt\"\n  onEnhance={(prompt, { signal }) => api.enhance(prompt, { signal })}\n  // resolves with { changes: [{ id, text: \" from the last quarter\", reason, assumption? }] }\n  // or { text: \"the whole enhanced prompt\" }\n  onSubmit={send}\n/>\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-prompt-enhancer",
+        "package": "@nucleux/md3-prompt-enhancer",
+        "component": "Md3PromptEnhancer",
+        "sharesApi": true
       }
     },
     {
@@ -15272,6 +16732,320 @@
       }
     },
     {
+      "name": "suggestions",
+      "package": "@nucleux/suggestions",
+      "kind": "component",
+      "description": "Context-aware quick-action chips that save the person forming, typing and\nsubmitting the obvious next step: above the composer as starters or quick\nedits (\"compose\"), under an answer as follow-ups (\"follow-up\", marked ↳),\nor as a floating toolbar on highlighted content (\"selection\"). At most three\nverb-labelled chips; the row can be marked as the agent's (`label`), explain\nitself behind an info toggle (`reason`) and be dismissed (button or Escape).\nChoosing a chip only calls `onSelect` — it never sends — and the row can\nthen show a one-line confirmation with Undo, a dismissed or no-longer-relevant\nline, a loading line or an error with Retry, through `status`. Arrow keys,\nHome and End move between chips.",
+      "summary": "Suggestions — quick-action chips above the composer, under an answer or on a selection that add to the request, never send it — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "suggestions",
+        "prompt-scaffold",
+        "chips"
+      ],
+      "exports": [
+        "suggestionsMessages",
+        "suggestionKey",
+        "appendSuggestion",
+        "handleSuggestionsKeyDown",
+        "useSuggestions",
+        "Suggestions",
+        "useSuggestionsComposer",
+        "SuggestionsComposer",
+        "SuggestionItem",
+        "SuggestionsVariant",
+        "SuggestionsStatus",
+        "SuggestionsMessages",
+        "SuggestionsProps",
+        "SuggestionsComposerProps"
+      ],
+      "components": [
+        "Suggestions",
+        "SuggestionsComposer"
+      ],
+      "import": "import { Suggestions, SuggestionsComposer } from \"@nucleux/suggestions\";",
+      "installSingle": "pnpm add @nucleux/suggestions @nucleux/tokens",
+      "props": [
+        {
+          "name": "SuggestionsProps",
+          "source": "export interface SuggestionsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\"> {\n  /** The chips. Only the first `max` are shown. */\n  suggestions: SuggestionItem[];\n  /** \"compose\" (default), \"follow-up\" or \"selection\". */\n  variant?: SuggestionsVariant;\n  /** What the row shows. Defaults to \"available\". */\n  status?: SuggestionsStatus;\n  /** Visible heading marking the row as the agent's (\"Aria suggests\"). Also names the group. */\n  label?: React.ReactNode;\n  /** Why these help — behind an info toggle (`aria-expanded`). */\n  reason?: React.ReactNode;\n  /**\n   * Prefix for each chip's accessible name, saying what pressing it does:\n   * \"Add to prompt\" makes a chip read \"Add to prompt: Include unresolved blockers\".\n   */\n  actionLabel?: string;\n  /** Maximum chips shown. Defaults to 3 — more is a menu, not a shortcut. */\n  max?: number;\n  /** A chip whose action is running: it shows a spinner and `aria-busy`. */\n  pendingId?: string;\n  /** The suggestion that was added — named by the \"accepted\" line. */\n  accepted?: SuggestionItem;\n  /** Called with the chosen suggestion and its index. The row never sends anything itself. */\n  onSelect?: (item: SuggestionItem, index: number) => void;\n  /** Shows a dismiss button (Escape works too) and is called when it is pressed. */\n  onDismiss?: () => void;\n  /** Shows Undo on the \"accepted\" line. */\n  onUndo?: () => void;\n  /** Shows Retry on the \"error\" line. */\n  onRetry?: () => void;\n  /** Copy overrides. */\n  messages?: Partial<SuggestionsMessages>;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\">"
+          ],
+          "members": [
+            {
+              "name": "suggestions",
+              "type": "SuggestionItem[]",
+              "required": true,
+              "description": "The chips. Only the first `max` are shown."
+            },
+            {
+              "name": "variant",
+              "type": "SuggestionsVariant",
+              "required": false,
+              "description": "\"compose\" (default), \"follow-up\" or \"selection\".",
+              "values": [
+                "compose",
+                "follow-up",
+                "selection"
+              ]
+            },
+            {
+              "name": "status",
+              "type": "SuggestionsStatus",
+              "required": false,
+              "description": "What the row shows. Defaults to \"available\".",
+              "values": [
+                "idle",
+                "loading",
+                "available",
+                "error",
+                "accepted",
+                "dismissed",
+                "irrelevant"
+              ]
+            },
+            {
+              "name": "label",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Visible heading marking the row as the agent's (\"Aria suggests\"). Also names the group."
+            },
+            {
+              "name": "reason",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Why these help — behind an info toggle (`aria-expanded`)."
+            },
+            {
+              "name": "actionLabel",
+              "type": "string",
+              "required": false,
+              "description": "Prefix for each chip's accessible name, saying what pressing it does: \"Add to prompt\" makes a chip read \"Add to prompt: Include unresolved blockers\"."
+            },
+            {
+              "name": "max",
+              "type": "number",
+              "required": false,
+              "description": "Maximum chips shown. Defaults to 3 — more is a menu, not a shortcut."
+            },
+            {
+              "name": "pendingId",
+              "type": "string",
+              "required": false,
+              "description": "A chip whose action is running: it shows a spinner and `aria-busy`."
+            },
+            {
+              "name": "accepted",
+              "type": "SuggestionItem",
+              "required": false,
+              "description": "The suggestion that was added — named by the \"accepted\" line."
+            },
+            {
+              "name": "onSelect",
+              "type": "(item: SuggestionItem, index: number) => void",
+              "required": false,
+              "description": "Called with the chosen suggestion and its index. The row never sends anything itself."
+            },
+            {
+              "name": "onDismiss",
+              "type": "() => void",
+              "required": false,
+              "description": "Shows a dismiss button (Escape works too) and is called when it is pressed."
+            },
+            {
+              "name": "onUndo",
+              "type": "() => void",
+              "required": false,
+              "description": "Shows Undo on the \"accepted\" line."
+            },
+            {
+              "name": "onRetry",
+              "type": "() => void",
+              "required": false,
+              "description": "Shows Retry on the \"error\" line."
+            },
+            {
+              "name": "messages",
+              "type": "Partial<SuggestionsMessages>",
+              "required": false,
+              "description": "Copy overrides."
+            }
+          ]
+        },
+        {
+          "name": "SuggestionsComposerProps",
+          "source": "export interface SuggestionsComposerProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSubmit\" | \"onSelect\" | \"defaultValue\" | \"onChange\"> {\n  /** Controlled draft. Omit (and use `defaultValue`) for an uncontrolled composer. */\n  value?: string;\n  /** Initial draft when uncontrolled. */\n  defaultValue?: string;\n  /** Called whenever the draft changes — typing, adding a suggestion, Undo. */\n  onValueChange?: (value: string) => void;\n  /** Called with the trimmed draft when the person sends. Suggestions never send on their own. */\n  onSubmit: (value: string) => void | Promise<unknown>;\n  /** Suggestions the app already has for this request (data, no model call). */\n  suggestions?: SuggestionItem[];\n  /**\n   * Fetch suggestions for the draft after a pause in typing. Abort on `signal`.\n   * While pending the row shows a loading line; a rejection shows Retry.\n   */\n  loadSuggestions?: (draft: string, options: { signal: AbortSignal }) => Promise<SuggestionItem[]>;\n  /** How long typing must pause before suggestions are offered, in ms. Defaults to 900. */\n  pauseMs?: number;\n  /** Shortest draft (trimmed) that gets suggestions. Defaults to 12 characters. */\n  minLength?: number;\n  /** Whether the suggestions still fit the draft. When it turns false they withdraw quietly. */\n  isRelevant?: (draft: string, suggestions: SuggestionItem[]) => boolean;\n  /** How a suggestion is added to the draft. Defaults to `appendSuggestion` — after their words, never replacing them. */\n  join?: (draft: string, text: string) => string;\n  /** Visible heading marking the row as the agent's (\"Aria suggests\"). */\n  label?: React.ReactNode;\n  /** Why these help — behind an info toggle. */\n  reason?: React.ReactNode;\n  /** Chip accessible-name prefix. Defaults to \"Add to prompt\". */\n  actionLabel?: string;\n  /** Allow Dismiss. Defaults to true. */\n  dismissible?: boolean;\n  /** Offer Undo after adding. Defaults to true. */\n  undoable?: boolean;\n  /** Maximum chips. Defaults to 3. */\n  max?: number;\n  /** Called after a suggestion was added, with the new draft. */\n  onAccept?: (item: SuggestionItem, draft: string) => void;\n  /** Called when the suggestions are dismissed. */\n  onDismiss?: () => void;\n  /** Called after Undo restored the draft. */\n  onUndo?: () => void;\n  /** Composer placeholder — also the field's accessible name. */\n  placeholder?: string;\n  /** Extra composer controls (attach, voice, model…). */\n  composerActions?: React.ReactNode;\n  /** Show the agent as busy (send becomes stop). */\n  loading?: boolean;\n  /** Called by the stop button while `loading`. */\n  onStop?: () => void;\n  /** Copy overrides for the row. */\n  messages?: Partial<SuggestionsMessages>;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onSubmit\" | \"onSelect\" | \"defaultValue\" | \"onChange\">"
+          ],
+          "members": [
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": "Controlled draft. Omit (and use `defaultValue`) for an uncontrolled composer."
+            },
+            {
+              "name": "defaultValue",
+              "type": "string",
+              "required": false,
+              "description": "Initial draft when uncontrolled."
+            },
+            {
+              "name": "onValueChange",
+              "type": "(value: string) => void",
+              "required": false,
+              "description": "Called whenever the draft changes — typing, adding a suggestion, Undo."
+            },
+            {
+              "name": "onSubmit",
+              "type": "(value: string) => void | Promise<unknown>",
+              "required": true,
+              "description": "Called with the trimmed draft when the person sends. Suggestions never send on their own."
+            },
+            {
+              "name": "suggestions",
+              "type": "SuggestionItem[]",
+              "required": false,
+              "description": "Suggestions the app already has for this request (data, no model call)."
+            },
+            {
+              "name": "loadSuggestions",
+              "type": "(draft: string, options: { signal: AbortSignal }) => Promise<SuggestionItem[]>",
+              "required": false,
+              "description": "Fetch suggestions for the draft after a pause in typing. Abort on `signal`. While pending the row shows a loading line; a rejection shows Retry."
+            },
+            {
+              "name": "pauseMs",
+              "type": "number",
+              "required": false,
+              "description": "How long typing must pause before suggestions are offered, in ms. Defaults to 900."
+            },
+            {
+              "name": "minLength",
+              "type": "number",
+              "required": false,
+              "description": "Shortest draft (trimmed) that gets suggestions. Defaults to 12 characters."
+            },
+            {
+              "name": "isRelevant",
+              "type": "(draft: string, suggestions: SuggestionItem[]) => boolean",
+              "required": false,
+              "description": "Whether the suggestions still fit the draft. When it turns false they withdraw quietly."
+            },
+            {
+              "name": "join",
+              "type": "(draft: string, text: string) => string",
+              "required": false,
+              "description": "How a suggestion is added to the draft. Defaults to `appendSuggestion` — after their words, never replacing them."
+            },
+            {
+              "name": "label",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Visible heading marking the row as the agent's (\"Aria suggests\")."
+            },
+            {
+              "name": "reason",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Why these help — behind an info toggle."
+            },
+            {
+              "name": "actionLabel",
+              "type": "string",
+              "required": false,
+              "description": "Chip accessible-name prefix. Defaults to \"Add to prompt\"."
+            },
+            {
+              "name": "dismissible",
+              "type": "boolean",
+              "required": false,
+              "description": "Allow Dismiss. Defaults to true."
+            },
+            {
+              "name": "undoable",
+              "type": "boolean",
+              "required": false,
+              "description": "Offer Undo after adding. Defaults to true."
+            },
+            {
+              "name": "max",
+              "type": "number",
+              "required": false,
+              "description": "Maximum chips. Defaults to 3."
+            },
+            {
+              "name": "onAccept",
+              "type": "(item: SuggestionItem, draft: string) => void",
+              "required": false,
+              "description": "Called after a suggestion was added, with the new draft."
+            },
+            {
+              "name": "onDismiss",
+              "type": "() => void",
+              "required": false,
+              "description": "Called when the suggestions are dismissed."
+            },
+            {
+              "name": "onUndo",
+              "type": "() => void",
+              "required": false,
+              "description": "Called after Undo restored the draft."
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "required": false,
+              "description": "Composer placeholder — also the field's accessible name."
+            },
+            {
+              "name": "composerActions",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Extra composer controls (attach, voice, model…)."
+            },
+            {
+              "name": "loading",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the agent as busy (send becomes stop)."
+            },
+            {
+              "name": "onStop",
+              "type": "() => void",
+              "required": false,
+              "description": "Called by the stop button while `loading`."
+            },
+            {
+              "name": "messages",
+              "type": "Partial<SuggestionsMessages>",
+              "required": false,
+              "description": "Copy overrides for the row."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/suggestions\n\nSuggestions — quick-action chips above the composer, under an answer or on a selection that add to the request, never send it — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nContext-aware chips that turn the likely next step into a tap. At most three,\nlabelled with verbs. They can be marked as the agent's (\"Aria suggests\"),\nexplain themselves behind an info toggle and be dismissed. Choosing one never\nsends: it is appended after the person's own words, stays editable, and is\nconfirmed in one line with Undo.\n\n## Exports\n\n- **`Suggestions`** — the chip row and its status lines\n- **`SuggestionsComposer`** — the row wired to `OpenInput`: pause before offering, append with Undo, dismiss, withdraw when no longer relevant, optional async loading\n- Helpers shared with the Material 3 twin: `appendSuggestion`, `handleSuggestionsKeyDown`, `useSuggestions`, `useSuggestionsComposer`, `suggestionsMessages`, `suggestionKey`\n- Types: `SuggestionsProps`, `SuggestionsComposerProps`, `SuggestionItem`, `SuggestionsVariant`, `SuggestionsStatus`, `SuggestionsMessages`\n\n## Variants\n\n| `variant` | Use |\n| --- | --- |\n| `compose` (default) | Chips just above the composer: starters or quick edits. |\n| `follow-up` | Under an answer: what to ask next (marked ↳). |\n| `selection` | A floating toolbar of actions on highlighted content (`role=\"toolbar\"`). |\n\n## States (`status`)\n\n`available` (chips) · `loading` · `error` (Retry via `onRetry`) · `accepted` (Undo via `onUndo`) · `dismissed` · `irrelevant` · `idle` (renders nothing).\n\n## Behaviour\n\n- `label` gives the row a visible heading and names the group; without it, pass `aria-label`.\n- `reason` sits behind an info button (`aria-expanded`). `onDismiss` adds a close button; Escape dismisses too.\n- `actionLabel` prefixes each chip's accessible name (\"Add to prompt: Include unresolved blockers\").\n- Arrow keys move between chips, Home/End jump to the ends; every chip is also a Tab stop.\n- `pendingId` marks a chip whose action is running (spinner, `aria-busy`).\n- No model calls: suggestions are data (`suggestions`) or an async `loadSuggestions(draft, { signal })` the app supplies.\n\n## Usage\n\n```tsx\nimport { SuggestionsComposer } from \"@nucleux/suggestions\";\n\n<SuggestionsComposer\n  label=\"Aria suggests\"\n  reason=\"Release summaries are read to decide what still needs attention.\"\n  suggestions={[\n    { label: \"Include unresolved blockers\" },\n    { label: \"Group the work by owner\" },\n    { label: \"Compare with the August release\" },\n  ]}\n  isRelevant={(draft) => /release/i.test(draft)}\n  onSubmit={send}\n/>\n```\n\n```tsx\nimport { Suggestions } from \"@nucleux/suggestions\";\n\n<Suggestions variant=\"follow-up\" aria-label=\"Suggested follow-ups\"\n  suggestions={[{ label: \"Why Acme?\" }, { label: \"Draft outreach\" }]} onSelect={(s) => ask(s.label)} />\n```\n\n## Install\n\n```bash\npnpm add @nucleux/suggestions @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-suggestions",
+        "package": "@nucleux/md3-suggestions",
+        "component": "Md3Suggestions",
+        "sharesApi": true
+      }
+    },
+    {
       "name": "switch",
       "package": "@nucleux/switch",
       "kind": "component",
@@ -16695,6 +18469,259 @@
         "name": "md3-voice-input",
         "package": "@nucleux/md3-voice-input",
         "component": "Md3VoiceInput",
+        "sharesApi": true
+      }
+    },
+    {
+      "name": "voice-tone",
+      "package": "@nucleux/voice-tone",
+      "kind": "component",
+      "description": "The id a described (custom) tone takes as the value.",
+      "summary": "Voice & Tone — say how the reply should sound (named presets, a rules list, a sample line), sent beside the prompt and never editing it — Nucleux agentic UI for React.",
+      "keywords": [
+        "nucleux",
+        "react",
+        "ui",
+        "components",
+        "agentic",
+        "ai",
+        "tailwind",
+        "voice-tone",
+        "tone",
+        "prompt-scaffold"
+      ],
+      "exports": [
+        "VOICE_TONE_CUSTOM",
+        "defaultVoiceTones",
+        "defaultVoiceToneRules",
+        "useVoiceTone",
+        "VoiceTone",
+        "VoiceToneOption",
+        "VoiceToneRule",
+        "VoiceToneSetting",
+        "VoiceToneVariant",
+        "VoiceToneLayout",
+        "VoiceToneNotice",
+        "VoiceToneProps",
+        "VoiceToneState"
+      ],
+      "components": [
+        "VoiceTone",
+        "VOICE_TONE_CUSTOM"
+      ],
+      "import": "import { VoiceTone, VOICE_TONE_CUSTOM } from \"@nucleux/voice-tone\";",
+      "installSingle": "pnpm add @nucleux/voice-tone @nucleux/tokens",
+      "props": [
+        {
+          "name": "VoiceToneProps",
+          "source": "export interface VoiceToneProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"onSubmit\" | \"defaultValue\"> {\n  /** Where the scaffold sits. Defaults to `\"settings\"`. */\n  variant?: VoiceToneVariant;\n  /** How tones are chosen. Defaults to `\"cards\"`. */\n  layout?: VoiceToneLayout;\n  /** The tones on offer — three or four familiar ones. Defaults to {@link defaultVoiceTones}. Pass `[]` for a rules-only panel. */\n  tones?: VoiceToneOption[];\n  /** Chosen tone id (controlled). `null` is the agent's default voice; `\"custom\"` a described tone. */\n  value?: string | null;\n  /** Initial tone id (uncontrolled). Defaults to `null`. */\n  defaultValue?: string | null;\n  /** Called when the tone is chosen, switched, removed or restored. */\n  onValueChange?: (value: string | null) => void;\n  /** Offer “Or describe a tone”. Defaults to `true` in the composer and chip, `false` in settings. */\n  allowCustom?: boolean;\n  /** The described tone (controlled). */\n  customTone?: string;\n  /** Initial described tone (uncontrolled). */\n  defaultCustomTone?: string;\n  /** Called when a described tone is applied. */\n  onCustomToneChange?: (text: string) => void;\n  /** The rules list (settings panel). The composer variants send the rules that are on with each request. */\n  rules?: VoiceToneRule[];\n  /** Ids of the rules that are on (controlled). */\n  ruleValues?: string[];\n  /** Ids of the rules that are on initially (uncontrolled). */\n  defaultRuleValues?: string[];\n  /** Called with the ids of the rules that are on. */\n  onRulesChange?: (ids: string[]) => void;\n  /** Show the sample sentence for the tone in focus or chosen. Defaults to `true`. */\n  showSample?: boolean;\n  /** Let people remove the tone from the composer (with Undo). Defaults to `true`. */\n  removable?: boolean;\n  /** Picker open (controlled), for the composer and chip variants. */\n  open?: boolean;\n  /** Picker open initially (uncontrolled). */\n  defaultOpen?: boolean;\n  /** Called when the picker opens or closes. */\n  onOpenChange?: (open: boolean) => void;\n  /**\n   * Seed the quiet line, e.g. to show a state in docs. A seeded `\"removed\"` line's Undo restores the\n   * recommended (or first) tone.\n   */\n  defaultNotice?: VoiceToneNotice | null;\n  /** Name of the setting — the chip, picker and group label. Defaults to `\"Tone\"`. */\n  label?: string;\n  /** Who writes, for the notices. Defaults to `\"Aria\"`. */\n  agentName?: string;\n  /** Composer text (controlled). The tone never edits it. */\n  draft?: string;\n  /** Initial composer text (uncontrolled). Cleared after a send. */\n  defaultDraft?: string;\n  /** Called when the composer text changes. */\n  onDraftChange?: (text: string) => void;\n  /** Called on send with the trimmed text and the tone setting, sent beside the prompt. */\n  onSubmit?: (text: string, setting: VoiceToneSetting) => void;\n  /** Composer placeholder, also its accessible name. Defaults to `\"Describe what to write…\"`. */\n  placeholder?: string;\n  /** Show the agent as busy — the send button becomes a stop button. */\n  loading?: boolean;\n  /** Called by the stop button while `loading`. */\n  onStop?: () => void;\n  /** More composer tools, placed after the Tone chip. */\n  actions?: React.ReactNode;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"onSubmit\" | \"defaultValue\">"
+          ],
+          "members": [
+            {
+              "name": "variant",
+              "type": "VoiceToneVariant",
+              "required": false,
+              "description": "Where the scaffold sits. Defaults to `\"settings\"`.",
+              "values": [
+                "settings",
+                "composer",
+                "chip"
+              ]
+            },
+            {
+              "name": "layout",
+              "type": "VoiceToneLayout",
+              "required": false,
+              "description": "How tones are chosen. Defaults to `\"cards\"`.",
+              "values": [
+                "cards",
+                "list",
+                "segmented",
+                "slider"
+              ]
+            },
+            {
+              "name": "tones",
+              "type": "VoiceToneOption[]",
+              "required": false,
+              "description": "The tones on offer — three or four familiar ones. Defaults to {@link defaultVoiceTones}. Pass `[]` for a rules-only panel."
+            },
+            {
+              "name": "value",
+              "type": "string | null",
+              "required": false,
+              "description": "Chosen tone id (controlled). `null` is the agent's default voice; `\"custom\"` a described tone."
+            },
+            {
+              "name": "defaultValue",
+              "type": "string | null",
+              "required": false,
+              "description": "Initial tone id (uncontrolled). Defaults to `null`."
+            },
+            {
+              "name": "onValueChange",
+              "type": "(value: string | null) => void",
+              "required": false,
+              "description": "Called when the tone is chosen, switched, removed or restored."
+            },
+            {
+              "name": "allowCustom",
+              "type": "boolean",
+              "required": false,
+              "description": "Offer “Or describe a tone”. Defaults to `true` in the composer and chip, `false` in settings."
+            },
+            {
+              "name": "customTone",
+              "type": "string",
+              "required": false,
+              "description": "The described tone (controlled)."
+            },
+            {
+              "name": "defaultCustomTone",
+              "type": "string",
+              "required": false,
+              "description": "Initial described tone (uncontrolled)."
+            },
+            {
+              "name": "onCustomToneChange",
+              "type": "(text: string) => void",
+              "required": false,
+              "description": "Called when a described tone is applied."
+            },
+            {
+              "name": "rules",
+              "type": "VoiceToneRule[]",
+              "required": false,
+              "description": "The rules list (settings panel). The composer variants send the rules that are on with each request."
+            },
+            {
+              "name": "ruleValues",
+              "type": "string[]",
+              "required": false,
+              "description": "Ids of the rules that are on (controlled)."
+            },
+            {
+              "name": "defaultRuleValues",
+              "type": "string[]",
+              "required": false,
+              "description": "Ids of the rules that are on initially (uncontrolled)."
+            },
+            {
+              "name": "onRulesChange",
+              "type": "(ids: string[]) => void",
+              "required": false,
+              "description": "Called with the ids of the rules that are on."
+            },
+            {
+              "name": "showSample",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the sample sentence for the tone in focus or chosen. Defaults to `true`."
+            },
+            {
+              "name": "removable",
+              "type": "boolean",
+              "required": false,
+              "description": "Let people remove the tone from the composer (with Undo). Defaults to `true`."
+            },
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": false,
+              "description": "Picker open (controlled), for the composer and chip variants."
+            },
+            {
+              "name": "defaultOpen",
+              "type": "boolean",
+              "required": false,
+              "description": "Picker open initially (uncontrolled)."
+            },
+            {
+              "name": "onOpenChange",
+              "type": "(open: boolean) => void",
+              "required": false,
+              "description": "Called when the picker opens or closes."
+            },
+            {
+              "name": "defaultNotice",
+              "type": "VoiceToneNotice | null",
+              "required": false,
+              "description": "Seed the quiet line, e.g. to show a state in docs. A seeded `\"removed\"` line's Undo restores the recommended (or first) tone."
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "required": false,
+              "description": "Name of the setting — the chip, picker and group label. Defaults to `\"Tone\"`."
+            },
+            {
+              "name": "agentName",
+              "type": "string",
+              "required": false,
+              "description": "Who writes, for the notices. Defaults to `\"Aria\"`."
+            },
+            {
+              "name": "draft",
+              "type": "string",
+              "required": false,
+              "description": "Composer text (controlled). The tone never edits it."
+            },
+            {
+              "name": "defaultDraft",
+              "type": "string",
+              "required": false,
+              "description": "Initial composer text (uncontrolled). Cleared after a send."
+            },
+            {
+              "name": "onDraftChange",
+              "type": "(text: string) => void",
+              "required": false,
+              "description": "Called when the composer text changes."
+            },
+            {
+              "name": "onSubmit",
+              "type": "(text: string, setting: VoiceToneSetting) => void",
+              "required": false,
+              "description": "Called on send with the trimmed text and the tone setting, sent beside the prompt."
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "required": false,
+              "description": "Composer placeholder, also its accessible name. Defaults to `\"Describe what to write…\"`."
+            },
+            {
+              "name": "loading",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the agent as busy — the send button becomes a stop button."
+            },
+            {
+              "name": "onStop",
+              "type": "() => void",
+              "required": false,
+              "description": "Called by the stop button while `loading`."
+            },
+            {
+              "name": "actions",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "More composer tools, placed after the Tone chip."
+            }
+          ]
+        }
+      ],
+      "readme": "# @nucleux/voice-tone\n\nVoice & Tone — say how the reply should sound (named presets, a rules list, a sample line), sent beside the prompt and never editing it — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\nA Material 3 twin with the same API ships as [`@nucleux/md3-voice-tone`](https://www.npmjs.com/package/@nucleux/md3-voice-tone).\n\n## Exports\n\n- **`VoiceTone`** — `variant=\"settings\"` (default): a preferences panel with tone presets, a rules list and a sample sentence. `variant=\"composer\"`: a composer with a Tone chip that opens the tone picker (cards, list, segmented or slider; sample line; recommendation marked, never applied; “Or describe a tone”), then names the choice and can be changed or removed with Undo. `variant=\"chip\"`: the chip and picker alone, for your own composer.\n- **`useVoiceTone`** — the shared state and keyboard model (used by the Material 3 twin).\n- **`defaultVoiceTones`**, **`defaultVoiceToneRules`**, **`VOICE_TONE_CUSTOM`**\n- Types: `VoiceToneProps`, `VoiceToneOption`, `VoiceToneRule`, `VoiceToneSetting`, `VoiceToneVariant`, `VoiceToneLayout`, `VoiceToneNotice`, `VoiceToneState`\n\n## Install\n\n```bash\npnpm add @nucleux/voice-tone @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { VoiceTone, defaultVoiceToneRules } from \"@nucleux/voice-tone\";\n\n// Preferences: set once, applied to every reply.\n<VoiceTone defaultValue=\"professional\" rules={defaultVoiceToneRules} onValueChange={saveTone} onRulesChange={saveRules} />\n\n// In the composer: the tone travels with the request as a setting — the prompt is never edited.\n<VoiceTone variant=\"composer\" onSubmit={(text, setting) => send(text, { tone: setting })} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
+      "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+      },
+      "twin": {
+        "name": "md3-voice-tone",
+        "package": "@nucleux/md3-voice-tone",
+        "component": "Md3VoiceTone",
         "sharesApi": true
       }
     }

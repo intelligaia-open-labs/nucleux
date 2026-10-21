@@ -59,6 +59,18 @@ import * as p_visual_input from "@nucleux/visual-input";
 import * as m_visual_input from "@nucleux/md3-visual-input";
 import * as p_voice_input from "@nucleux/voice-input";
 import * as m_voice_input from "@nucleux/md3-voice-input";
+import * as p_madlibs from "@nucleux/madlibs";
+import * as m_madlibs from "@nucleux/md3-madlibs";
+import * as p_modes from "@nucleux/modes";
+import * as m_modes from "@nucleux/md3-modes";
+import * as p_preset_styles from "@nucleux/preset-styles";
+import * as m_preset_styles from "@nucleux/md3-preset-styles";
+import * as p_prompt_enhancer from "@nucleux/prompt-enhancer";
+import * as m_prompt_enhancer from "@nucleux/md3-prompt-enhancer";
+import * as p_suggestions from "@nucleux/suggestions";
+import * as m_suggestions from "@nucleux/md3-suggestions";
+import * as p_voice_tone from "@nucleux/voice-tone";
+import * as m_voice_tone from "@nucleux/md3-voice-tone";
 
 // Each agentic pattern ships twice — @nucleux/<name> (shadcn) and @nucleux/md3-<name>
 // (Material 3) — with one API, so switching families is an import change.
@@ -92,6 +104,12 @@ const PAIRS: Array<[string, Record<string, unknown>, Record<string, unknown>]> =
   ["templates", p_templates, m_templates],
   ["visual-input", p_visual_input, m_visual_input],
   ["voice-input", p_voice_input, m_voice_input],
+  ["madlibs", p_madlibs, m_madlibs],
+  ["modes", p_modes, m_modes],
+  ["preset-styles", p_preset_styles, m_preset_styles],
+  ["prompt-enhancer", p_prompt_enhancer, m_prompt_enhancer],
+  ["suggestions", p_suggestions, m_suggestions],
+  ["voice-tone", p_voice_tone, m_voice_tone],
 ];
 
 const isComponent = (v: unknown) =>

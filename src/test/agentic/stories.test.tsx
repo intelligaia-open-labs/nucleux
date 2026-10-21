@@ -12,6 +12,8 @@ const AGENTIC = [
   "disclaimer", "disclosure", "example-gallery", "gesture", "handwriting", "iconography", "initial-cta",
   "knowledge-base", "mcp-connection", "model-selection", "name", "nudges", "open-input", "personality",
   "proactive", "randomize", "structured-input", "suggested-prompts", "templates", "visual-input", "voice-input",
+  // Prompt Scaffolds (0.7.0)
+  "madlibs", "modes", "preset-styles", "prompt-enhancer", "suggestions", "voice-tone",
 ];
 
 const modules = import.meta.glob("../../../packages/*/src/*.stories.tsx", { eager: true }) as Record<

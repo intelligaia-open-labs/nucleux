@@ -1608,6 +1608,40 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/madlibs:
+    dependencies:
+      '@nucleux/button':
+        specifier: workspace:*
+        version: link:../button
+      '@nucleux/card':
+        specifier: workspace:*
+        version: link:../card
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@nucleux/open-input':
+        specifier: workspace:*
+        version: link:../open-input
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/marker:
     dependencies:
       '@nucleux/utils':
@@ -2741,6 +2775,49 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-madlibs:
+    dependencies:
+      '@nucleux/madlibs':
+        specifier: workspace:*
+        version: link:../madlibs
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-card':
+        specifier: workspace:*
+        version: link:../md3-card
+      '@nucleux/md3-chip':
+        specifier: workspace:*
+        version: link:../md3-chip
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@nucleux/md3-agent-composer':
+        specifier: workspace:*
+        version: link:../md3-agent-composer
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-mcp-connection:
     dependencies:
       '@nucleux/mcp-connection':
@@ -2845,6 +2922,52 @@ importers:
       '@nucleux/model-selection':
         specifier: workspace:*
         version: link:../model-selection
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-modes:
+    dependencies:
+      '@nucleux/md3-agent-composer':
+        specifier: workspace:*
+        version: link:../md3-agent-composer
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-chip':
+        specifier: workspace:*
+        version: link:../md3-chip
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/md3-menu':
+        specifier: workspace:*
+        version: link:../md3-menu
+      '@nucleux/md3-segmented-button':
+        specifier: workspace:*
+        version: link:../md3-segmented-button
+      '@nucleux/modes':
+        specifier: workspace:*
+        version: link:../modes
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
@@ -3073,6 +3196,55 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-preset-styles:
+    dependencies:
+      '@nucleux/md3-agent-composer':
+        specifier: workspace:*
+        version: link:../md3-agent-composer
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-card':
+        specifier: workspace:*
+        version: link:../md3-card
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/md3-progress':
+        specifier: workspace:*
+        version: link:../md3-progress
+      '@nucleux/md3-segmented-button':
+        specifier: workspace:*
+        version: link:../md3-segmented-button
+      '@nucleux/md3-text-field':
+        specifier: workspace:*
+        version: link:../md3-text-field
+      '@nucleux/preset-styles':
+        specifier: workspace:*
+        version: link:../preset-styles
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-proactive:
     dependencies:
       '@nucleux/md3-button':
@@ -3125,6 +3297,49 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-prompt-enhancer:
+    dependencies:
+      '@nucleux/md3-agent-composer':
+        specifier: workspace:*
+        version: link:../md3-agent-composer
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-card':
+        specifier: workspace:*
+        version: link:../md3-card
+      '@nucleux/md3-checkbox':
+        specifier: workspace:*
+        version: link:../md3-checkbox
+      '@nucleux/md3-switch':
+        specifier: workspace:*
+        version: link:../md3-switch
+      '@nucleux/prompt-enhancer':
+        specifier: workspace:*
+        version: link:../prompt-enhancer
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -3401,6 +3616,52 @@ importers:
       '@nucleux/suggested-prompts':
         specifier: workspace:*
         version: link:../suggested-prompts
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/md3-suggestions:
+    dependencies:
+      '@nucleux/md3-agent-composer':
+        specifier: workspace:*
+        version: link:../md3-agent-composer
+      '@nucleux/md3-ai-icons':
+        specifier: workspace:*
+        version: link:../md3-ai-icons
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-chip':
+        specifier: workspace:*
+        version: link:../md3-chip
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/md3-loading-indicator':
+        specifier: workspace:*
+        version: link:../md3-loading-indicator
+      '@nucleux/suggestions':
+        specifier: workspace:*
+        version: link:../suggestions
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
@@ -3706,6 +3967,55 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-voice-tone:
+    dependencies:
+      '@nucleux/md3-agent-composer':
+        specifier: workspace:*
+        version: link:../md3-agent-composer
+      '@nucleux/md3-button':
+        specifier: workspace:*
+        version: link:../md3-button
+      '@nucleux/md3-card':
+        specifier: workspace:*
+        version: link:../md3-card
+      '@nucleux/md3-checkbox':
+        specifier: workspace:*
+        version: link:../md3-checkbox
+      '@nucleux/md3-chip':
+        specifier: workspace:*
+        version: link:../md3-chip
+      '@nucleux/md3-slider':
+        specifier: workspace:*
+        version: link:../md3-slider
+      '@nucleux/md3-text-field':
+        specifier: workspace:*
+        version: link:../md3-text-field
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      '@nucleux/voice-tone':
+        specifier: workspace:*
+        version: link:../voice-tone
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/menubar:
     dependencies:
       '@nucleux/utils':
@@ -3798,6 +4108,37 @@ importers:
       '@nucleux/switch':
         specifier: workspace:*
         version: link:../switch
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/modes:
+    dependencies:
+      '@nucleux/button':
+        specifier: workspace:*
+        version: link:../button
+      '@nucleux/input-group':
+        specifier: workspace:*
+        version: link:../input-group
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
@@ -4036,6 +4377,58 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/preset-styles:
+    dependencies:
+      '@nucleux/badge':
+        specifier: workspace:*
+        version: link:../badge
+      '@nucleux/button':
+        specifier: workspace:*
+        version: link:../button
+      '@nucleux/card':
+        specifier: workspace:*
+        version: link:../card
+      '@nucleux/input':
+        specifier: workspace:*
+        version: link:../input
+      '@nucleux/label':
+        specifier: workspace:*
+        version: link:../label
+      '@nucleux/open-input':
+        specifier: workspace:*
+        version: link:../open-input
+      '@nucleux/spinner':
+        specifier: workspace:*
+        version: link:../spinner
+      '@nucleux/textarea':
+        specifier: workspace:*
+        version: link:../textarea
+      '@nucleux/toggle-group':
+        specifier: workspace:*
+        version: link:../toggle-group
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/proactive:
     dependencies:
       '@nucleux/button':
@@ -4082,6 +4475,49 @@ importers:
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/prompt-enhancer:
+    dependencies:
+      '@nucleux/button':
+        specifier: workspace:*
+        version: link:../button
+      '@nucleux/checkbox':
+        specifier: workspace:*
+        version: link:../checkbox
+      '@nucleux/input-group':
+        specifier: workspace:*
+        version: link:../input-group
+      '@nucleux/spinner':
+        specifier: workspace:*
+        version: link:../spinner
+      '@nucleux/switch':
+        specifier: workspace:*
+        version: link:../switch
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@nucleux/card':
+        specifier: workspace:*
+        version: link:../card
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -4340,6 +4776,9 @@ importers:
       '@nucleux/label':
         specifier: workspace:*
         version: link:../label
+      '@nucleux/madlibs':
+        specifier: workspace:*
+        version: link:../madlibs
       '@nucleux/marker':
         specifier: workspace:*
         version: link:../marker
@@ -4451,6 +4890,9 @@ importers:
       '@nucleux/md3-loading-indicator':
         specifier: workspace:*
         version: link:../md3-loading-indicator
+      '@nucleux/md3-madlibs':
+        specifier: workspace:*
+        version: link:../md3-madlibs
       '@nucleux/md3-mcp-connection':
         specifier: workspace:*
         version: link:../md3-mcp-connection
@@ -4463,6 +4905,9 @@ importers:
       '@nucleux/md3-model-selection':
         specifier: workspace:*
         version: link:../md3-model-selection
+      '@nucleux/md3-modes':
+        specifier: workspace:*
+        version: link:../md3-modes
       '@nucleux/md3-name':
         specifier: workspace:*
         version: link:../md3-name
@@ -4484,12 +4929,18 @@ importers:
       '@nucleux/md3-personality':
         specifier: workspace:*
         version: link:../md3-personality
+      '@nucleux/md3-preset-styles':
+        specifier: workspace:*
+        version: link:../md3-preset-styles
       '@nucleux/md3-proactive':
         specifier: workspace:*
         version: link:../md3-proactive
       '@nucleux/md3-progress':
         specifier: workspace:*
         version: link:../md3-progress
+      '@nucleux/md3-prompt-enhancer':
+        specifier: workspace:*
+        version: link:../md3-prompt-enhancer
       '@nucleux/md3-radio':
         specifier: workspace:*
         version: link:../md3-radio
@@ -4520,6 +4971,9 @@ importers:
       '@nucleux/md3-suggested-prompts':
         specifier: workspace:*
         version: link:../md3-suggested-prompts
+      '@nucleux/md3-suggestions':
+        specifier: workspace:*
+        version: link:../md3-suggestions
       '@nucleux/md3-switch':
         specifier: workspace:*
         version: link:../md3-switch
@@ -4550,6 +5004,9 @@ importers:
       '@nucleux/md3-voice-input':
         specifier: workspace:*
         version: link:../md3-voice-input
+      '@nucleux/md3-voice-tone':
+        specifier: workspace:*
+        version: link:../md3-voice-tone
       '@nucleux/menubar':
         specifier: workspace:*
         version: link:../menubar
@@ -4562,6 +5019,9 @@ importers:
       '@nucleux/model-selection':
         specifier: workspace:*
         version: link:../model-selection
+      '@nucleux/modes':
+        specifier: workspace:*
+        version: link:../modes
       '@nucleux/name':
         specifier: workspace:*
         version: link:../name
@@ -4586,12 +5046,18 @@ importers:
       '@nucleux/popover':
         specifier: workspace:*
         version: link:../popover
+      '@nucleux/preset-styles':
+        specifier: workspace:*
+        version: link:../preset-styles
       '@nucleux/proactive':
         specifier: workspace:*
         version: link:../proactive
       '@nucleux/progress':
         specifier: workspace:*
         version: link:../progress
+      '@nucleux/prompt-enhancer':
+        specifier: workspace:*
+        version: link:../prompt-enhancer
       '@nucleux/questionnaire':
         specifier: workspace:*
         version: link:../questionnaire
@@ -4637,6 +5103,9 @@ importers:
       '@nucleux/suggested-prompts':
         specifier: workspace:*
         version: link:../suggested-prompts
+      '@nucleux/suggestions':
+        specifier: workspace:*
+        version: link:../suggestions
       '@nucleux/switch':
         specifier: workspace:*
         version: link:../switch
@@ -4676,6 +5145,9 @@ importers:
       '@nucleux/voice-input':
         specifier: workspace:*
         version: link:../voice-input
+      '@nucleux/voice-tone':
+        specifier: workspace:*
+        version: link:../voice-tone
       react-dom:
         specifier: '>=18'
         version: 18.3.1(react@18.3.1)
@@ -5032,6 +5504,43 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/suggestions:
+    dependencies:
+      '@nucleux/ai-icons':
+        specifier: workspace:*
+        version: link:../ai-icons
+      '@nucleux/button':
+        specifier: workspace:*
+        version: link:../button
+      '@nucleux/open-input':
+        specifier: workspace:*
+        version: link:../open-input
+      '@nucleux/spinner':
+        specifier: workspace:*
+        version: link:../spinner
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/switch:
     dependencies:
       '@nucleux/utils':
@@ -5364,6 +5873,49 @@ importers:
       '@nucleux/button':
         specifier: workspace:*
         version: link:../button
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/voice-tone:
+    dependencies:
+      '@nucleux/button':
+        specifier: workspace:*
+        version: link:../button
+      '@nucleux/checkbox':
+        specifier: workspace:*
+        version: link:../checkbox
+      '@nucleux/input':
+        specifier: workspace:*
+        version: link:../input
+      '@nucleux/open-input':
+        specifier: workspace:*
+        version: link:../open-input
+      '@nucleux/popover':
+        specifier: workspace:*
+        version: link:../popover
+      '@nucleux/slider':
+        specifier: workspace:*
+        version: link:../slider
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
