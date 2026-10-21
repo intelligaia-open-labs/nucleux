@@ -51,7 +51,9 @@ and restyle it onto Nucleux tokens — do not hand-roll it.
 - **Agentic:** Disclosure, Caveat, Consent, Personality, Templates,
   SuggestedPrompts, OpenInput, ModelSelection, KnowledgeBase, Connector,
   VoiceInput, StructuredInput
-- **Material 3:** Md3Button, Md3Fab, Md3IconButton, Md3SegmentedButton,
+- **Material 3:** Md3Button, Md3ButtonGroup, Md3SplitButton, Md3Fab, Md3FabMenu,
+  Md3IconButton, Md3SegmentedButton, Md3Toolbar, Md3LoadingIndicator, Md3SideSheet,
+  Md3Carousel,
   Md3Card, Md3Chip, Md3Badge, Md3Dialog, Md3BottomSheet, Md3Menu, Md3List,
   Md3TextField, Md3Search, Md3Checkbox, Md3RadioGroup, Md3Switch, Md3Slider,
   Md3DatePicker, Md3TimePicker, Md3LinearProgress, Md3Snackbar, Md3Tooltip,
