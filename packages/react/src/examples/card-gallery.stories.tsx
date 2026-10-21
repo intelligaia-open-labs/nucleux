@@ -11,7 +11,6 @@ import {
   CardDivider,
   CardHeader,
   CardTitle,
-  LinkButton,
   Progress,
 } from "../index";
 
@@ -71,7 +70,9 @@ function ProgressCard() {
       <CardDivider />
       <CardContent className="space-y-3">
         <Progress value={66} aria-label="Onboarding progress" />
-        <LinkButton rightIcon={<ArrowUpRight />}>Continue setup</LinkButton>
+        <Button variant="link" rightIcon={<ArrowUpRight className="size-4" />}>
+          Continue setup
+        </Button>
       </CardContent>
     </CardContainer>
   );

@@ -1,0 +1,362 @@
+{
+  "systemsConfigPath": "/home/jaswant-singh/open-design-system-bench/systems.config.json",
+  "run": "runs/20261008-093844-medium-after-all-fixes",
+  "systems": {
+    "nucleux": {
+      "checks": [
+        {
+          "id": "surface",
+          "title": "Enablement surface",
+          "score": 75,
+          "findings": [
+            {
+              "severity": "info",
+              "message": "CLAUDE.md present at system root."
+            },
+            {
+              "severity": "info",
+              "message": "llms.txt present at system root."
+            },
+            {
+              "severity": "info",
+              "message": "llms.txt (local) is 21.7 KB."
+            },
+            {
+              "severity": "info",
+              "message": "Hosted surface not probed (no docsUrl configured)."
+            },
+            {
+              "severity": "info",
+              "message": "Machine-readable catalog found: pre-extracted catalog snapshot."
+            },
+            {
+              "severity": "info",
+              "message": "MCP server found in workspace package packages/mcp (@nucleux/mcp)."
+            },
+            {
+              "severity": "info",
+              "message": "Skill bundles found: .claude/skills (2 skills)."
+            },
+            {
+              "severity": "info",
+              "message": "No editor rules file (.cursorrules, .cursor/rules, .github/copilot-instructions.md)."
+            },
+            {
+              "severity": "info",
+              "message": "No Code Connect files (*.figma.ts[x]) found.",
+              "fix": "Only 10% of systems in the survey have Code Connect mappings: lowest-adoption asset, but it unlocks the Tier-3 Figma-to-code eval."
+            },
+            {
+              "severity": "info",
+              "message": "No registry hint found (registry.json, publishConfig.registry)."
+            },
+            {
+              "severity": "warn",
+              "message": "Enablement docs (AGENTS.md/CLAUDE.md/llms.txt) predate the newest component source change (git history), so they may be stale.",
+              "fix": "Re-check AGENTS.md/llms.txt after component API changes; agents will confidently cite the stale version."
+            }
+          ]
+        },
+        {
+          "id": "catalog-quality",
+          "title": "Catalog quality",
+          "score": 88.9,
+          "findings": [
+            {
+              "severity": "info",
+              "message": "73 component dirs, 136 exports, 376 props documented."
+            }
+          ]
+        },
+        {
+          "id": "export-hygiene",
+          "title": "Export hygiene",
+          "score": null,
+          "findings": [
+            {
+              "severity": "warn",
+              "message": "package.json has no \"types\"/\"typings\" field.",
+              "fix": "Declare \"types\" so TypeScript-aware agent tooling can resolve prop types without a docgen catalog."
+            },
+            {
+              "severity": "info",
+              "message": "No declared entry point (main/module/exports[\".\"]) points at built output.",
+              "fix": "A package usable outside its own monorepo (by an external agent workspace via npm install) needs a built dist entry, not source-aliased paths."
+            },
+            {
+              "severity": "warn",
+              "message": "No component directories with an index.ts found under packages, and no custom-element declarations either. Reachability was not assessed and the score is withheld.",
+              "fix": "Point componentsSrc at the directory holding the component dirs, if this system has them. If its layout is genuinely neither shape, this check has nothing to measure for it."
+            }
+          ]
+        },
+        {
+          "id": "vocabulary",
+          "title": "Vocabulary convention-distance",
+          "score": 100,
+          "findings": [
+            {
+              "severity": "info",
+              "message": "15 concept(s) aligned with convention, 0 covered under a different name, 25 not represented in this catalog (n/a)."
+            }
+          ]
+        },
+        {
+          "id": "tokens",
+          "title": "Token machine-readability",
+          "score": 73.3,
+          "findings": [
+            {
+              "severity": "info",
+              "message": "64 CSS custom properties found."
+            },
+            {
+              "severity": "info",
+              "message": "39/64 vars (60.9%) reference another var: a semantic layer over primitives."
+            },
+            {
+              "severity": "info",
+              "message": "Light/dark theming signal found (prefers-color-scheme, a data-*theme/color-scheme attribute, a .dark class selector, or a color-scheme declaration)."
+            },
+            {
+              "severity": "info",
+              "message": "No DTCG (*.tokens.json / tokens.json with \"$value\") files found."
+            }
+          ]
+        },
+        {
+          "id": "deprecation",
+          "title": "Deprecation legibility",
+          "score": 60,
+          "findings": [
+            {
+              "severity": "info",
+              "message": "3 @deprecated annotation(s) found across 3 file(s)."
+            },
+            {
+              "severity": "info",
+              "message": "CHANGELOG.md present (changelog) with 4 machine-readable version heading(s)."
+            },
+            {
+              "severity": "info",
+              "message": "No codemods hint found."
+            }
+          ]
+        },
+        {
+          "id": "docs-greppability",
+          "title": "Docs greppability",
+          "score": 100,
+          "findings": [
+            {
+              "severity": "info",
+              "message": "83 markdown file(s) found in the repo."
+            },
+            {
+              "severity": "info",
+              "message": "Catalog available: scoring per-component coverage mode."
+            },
+            {
+              "severity": "info",
+              "message": "136/136 components (100%) are mentioned in at least one markdown file."
+            },
+            {
+              "severity": "info",
+              "message": "llms.txt lists 136/136 components (100%)."
+            }
+          ]
+        }
+      ],
+      "score": {
+        "surface": {
+          "score": 83.7,
+          "checks": [
+            {
+              "id": "surface",
+              "title": "Enablement surface",
+              "score": 75,
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "CLAUDE.md present at system root."
+                },
+                {
+                  "severity": "info",
+                  "message": "llms.txt present at system root."
+                },
+                {
+                  "severity": "info",
+                  "message": "llms.txt (local) is 21.7 KB."
+                },
+                {
+                  "severity": "info",
+                  "message": "Hosted surface not probed (no docsUrl configured)."
+                },
+                {
+                  "severity": "info",
+                  "message": "Machine-readable catalog found: pre-extracted catalog snapshot."
+                },
+                {
+                  "severity": "info",
+                  "message": "MCP server found in workspace package packages/mcp (@nucleux/mcp)."
+                },
+                {
+                  "severity": "info",
+                  "message": "Skill bundles found: .claude/skills (2 skills)."
+                },
+                {
+                  "severity": "info",
+                  "message": "No editor rules file (.cursorrules, .cursor/rules, .github/copilot-instructions.md)."
+                },
+                {
+                  "severity": "info",
+                  "message": "No Code Connect files (*.figma.ts[x]) found.",
+                  "fix": "Only 10% of systems in the survey have Code Connect mappings: lowest-adoption asset, but it unlocks the Tier-3 Figma-to-code eval."
+                },
+                {
+                  "severity": "info",
+                  "message": "No registry hint found (registry.json, publishConfig.registry)."
+                },
+                {
+                  "severity": "warn",
+                  "message": "Enablement docs (AGENTS.md/CLAUDE.md/llms.txt) predate the newest component source change (git history), so they may be stale.",
+                  "fix": "Re-check AGENTS.md/llms.txt after component API changes; agents will confidently cite the stale version."
+                }
+              ]
+            },
+            {
+              "id": "catalog-quality",
+              "title": "Catalog quality",
+              "score": 88.9,
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "73 component dirs, 136 exports, 376 props documented."
+                }
+              ]
+            },
+            {
+              "id": "export-hygiene",
+              "title": "Export hygiene",
+              "score": null,
+              "findings": [
+                {
+                  "severity": "warn",
+                  "message": "package.json has no \"types\"/\"typings\" field.",
+                  "fix": "Declare \"types\" so TypeScript-aware agent tooling can resolve prop types without a docgen catalog."
+                },
+                {
+                  "severity": "info",
+                  "message": "No declared entry point (main/module/exports[\".\"]) points at built output.",
+                  "fix": "A package usable outside its own monorepo (by an external agent workspace via npm install) needs a built dist entry, not source-aliased paths."
+                },
+                {
+                  "severity": "warn",
+                  "message": "No component directories with an index.ts found under packages, and no custom-element declarations either. Reachability was not assessed and the score is withheld.",
+                  "fix": "Point componentsSrc at the directory holding the component dirs, if this system has them. If its layout is genuinely neither shape, this check has nothing to measure for it."
+                }
+              ]
+            },
+            {
+              "id": "vocabulary",
+              "title": "Vocabulary convention-distance",
+              "score": 100,
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "15 concept(s) aligned with convention, 0 covered under a different name, 25 not represented in this catalog (n/a)."
+                }
+              ]
+            },
+            {
+              "id": "tokens",
+              "title": "Token machine-readability",
+              "score": 73.3,
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "64 CSS custom properties found."
+                },
+                {
+                  "severity": "info",
+                  "message": "39/64 vars (60.9%) reference another var: a semantic layer over primitives."
+                },
+                {
+                  "severity": "info",
+                  "message": "Light/dark theming signal found (prefers-color-scheme, a data-*theme/color-scheme attribute, a .dark class selector, or a color-scheme declaration)."
+                },
+                {
+                  "severity": "info",
+                  "message": "No DTCG (*.tokens.json / tokens.json with \"$value\") files found."
+                }
+              ]
+            },
+            {
+              "id": "deprecation",
+              "title": "Deprecation legibility",
+              "score": 60,
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "3 @deprecated annotation(s) found across 3 file(s)."
+                },
+                {
+                  "severity": "info",
+                  "message": "CHANGELOG.md present (changelog) with 4 machine-readable version heading(s)."
+                },
+                {
+                  "severity": "info",
+                  "message": "No codemods hint found."
+                }
+              ]
+            },
+            {
+              "id": "docs-greppability",
+              "title": "Docs greppability",
+              "score": 100,
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "83 markdown file(s) found in the repo."
+                },
+                {
+                  "severity": "info",
+                  "message": "Catalog available: scoring per-component coverage mode."
+                },
+                {
+                  "severity": "info",
+                  "message": "136/136 components (100%) are mentioned in at least one markdown file."
+                },
+                {
+                  "severity": "info",
+                  "message": "llms.txt lists 136/136 components (100%)."
+                }
+              ]
+            }
+          ]
+        },
+        "lift": {
+          "score": 73.7,
+          "raw": 23.7,
+          "note": "guided mean 75.3 - bare mean 51.6 = +23.7 points."
+        },
+        "ceiling": {
+          "score": 37.6,
+          "note": "guided mean 75.3, guided non-fail rate 0% (0/17)."
+        },
+        "engagement": {
+          "score": 42.3,
+          "note": "15/26 ok cells ignored the design system entirely."
+        },
+        "vocabularyBehavioral": {
+          "score": 100,
+          "note": "0/3 hallucinated names match a convention-lexicon entry exactly."
+        },
+        "composite": 67.5,
+        "basis": "full-behavioral",
+        "tier": "Invested",
+        "tierRationale": "composite 67.5 in [40, 70)"
+      }
+    }
+  }
+}

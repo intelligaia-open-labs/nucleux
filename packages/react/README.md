@@ -15,7 +15,7 @@ pnpm add @nucleux/react @nucleux/tokens
 ## Usage
 
 ```tsx
-import { Accordion, ActionTile, AgentComposer, Alert, Avatar, Badge } from "@nucleux/react";
+import { Accordion, Alert, Avatar, Badge, Button, Disclosure } from "@nucleux/react";
 ```
 
 Requires the theme once in your app: `import "@nucleux/tokens/styles.css";`

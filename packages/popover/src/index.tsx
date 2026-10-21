@@ -15,8 +15,11 @@ function usePopover(component: string) {
 }
 
 export interface PopoverProps {
+  /** Whether the popover is open (controlled). */
   open?: boolean;
+  /** Initial open state (uncontrolled). */
   defaultOpen?: boolean;
+  /** Called when the popover requests to open or close. */
   onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
 }
@@ -65,7 +68,15 @@ export function Popover({ open, defaultOpen = false, onOpenChange, children }: P
   );
 }
 
-export const PopoverTrigger = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
+export interface PopoverTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Additional classes merged onto the trigger button. */
+  className?: string;
+  /** Button type. Defaults to "button". */
+  type?: "button" | "submit" | "reset";
+}
+
+/** Button that toggles the popover; place inside Popover. */
+export const PopoverTrigger = React.forwardRef<HTMLButtonElement, PopoverTriggerProps>(
   ({ onClick, type = "button", ...props }, ref) => {
     const { open, setOpen, contentId } = usePopover("PopoverTrigger");
     return (
@@ -89,10 +100,18 @@ PopoverTrigger.displayName = "PopoverTrigger";
 export interface PopoverContentProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Horizontal alignment relative to the trigger. */
   align?: "start" | "end";
+  /**
+   * Alias of `align` (CSS flex vocabulary). Deprecated — use `align`.
+   * @deprecated Use `align` instead. Alias kept so agents reaching for the
+   *   CSS property name are caught; it maps 1:1.
+   */
+  alignItems?: "start" | "end";
 }
 
 export const PopoverContent = React.forwardRef<HTMLDivElement, PopoverContentProps>(
-  ({ align = "start", className, ...props }, ref) => {
+  ({ align, alignItems, className, ...props }, ref) => {
+    // `alignItems` is a deprecated alias of `align` (CSS flex vocabulary).
+    if (align == null && alignItems != null) align = alignItems;
     const { open, contentId } = usePopover("PopoverContent");
     if (!open) return null;
     return (
@@ -101,7 +120,7 @@ export const PopoverContent = React.forwardRef<HTMLDivElement, PopoverContentPro
         id={contentId}
         className={cn(
           "absolute top-full z-50 mt-2 min-w-[12rem] rounded-lg border border-border bg-background p-4 text-foreground shadow-md outline-none animate-nx-fade-in",
-          align === "end" ? "right-0" : "left-0",
+          (align ?? "start") === "end" ? "right-0" : "left-0",
           className,
         )}
         {...props}

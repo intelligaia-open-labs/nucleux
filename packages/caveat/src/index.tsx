@@ -1,0 +1,100 @@
+import * as React from "react";
+import { Info } from "lucide-react";
+import { cn } from "@nucleux/utils";
+import { Tooltip, type TooltipSide } from "@nucleux/tooltip";
+
+/**
+ * Where the caveat sits.
+ * - `below-input` — a quiet caption under the composer, seen before anything is sent (default).
+ * - `output-footer` — a filled note under output that will be acted on (sent, published,
+ *   deployed); can carry next steps in `actions`.
+ * For the third spec variant, `info-tooltip`, wrap the generate control in `CaveatTooltip`.
+ */
+export type CaveatVariant = "below-input" | "output-footer";
+
+export interface CaveatProps extends React.HTMLAttributes<HTMLParagraphElement> {
+  /** Placement style. Default `below-input`. */
+  variant?: CaveatVariant;
+  /** Leading icon. Defaults to an info glyph. Pass `null` to omit. */
+  icon?: React.ReactNode;
+  /**
+   * Next steps that remove the reason for the caveat — "Review sources",
+   * "Reconnect". Shown after the text; use small Buttons or links.
+   */
+  actions?: React.ReactNode;
+}
+
+const DEFAULT_TEXT = "AI can make mistakes. Verify important information.";
+
+/**
+ * A short, calm reminder that AI output can be wrong and should be checked —
+ * or, better, the specific limitation of this result ("2 of 8 interviews
+ * could not be opened"). Caption-size and muted, never alarming or
+ * apologetic, once per surface. `below-input` sits under the composer;
+ * `output-footer` sits under output that will be acted on and can offer
+ * next steps. Rendered as a `note`.
+ */
+export const Caveat = React.forwardRef<HTMLParagraphElement, CaveatProps>(
+  ({ variant = "below-input", icon, actions, className, children, ...props }, ref) => (
+    <p
+      ref={ref}
+      role="note"
+      data-variant={variant}
+      className={cn(
+        "items-center gap-1.5 text-xs text-muted-foreground [&_svg]:size-3.5 [&_svg]:shrink-0",
+        variant === "output-footer"
+          ? "mt-2.5 flex w-full flex-wrap rounded-md border border-border bg-muted/60 px-2.5 py-2 text-foreground/80"
+          : "inline-flex",
+        className,
+      )}
+      {...props}
+    >
+      {icon === undefined ? <Info aria-hidden="true" /> : icon}
+      <span>{children ?? DEFAULT_TEXT}</span>
+      {actions && <span className="ml-auto inline-flex flex-wrap items-center gap-1.5">{actions}</span>}
+    </p>
+  ),
+);
+Caveat.displayName = "Caveat";
+
+export interface CaveatTooltipProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "content"> {
+  /** The caveat. Default "Output may be inaccurate". */
+  content?: React.ReactNode;
+  /** Side of the trigger. Default `top`. */
+  side?: TooltipSide;
+  /** Show the info glyph in the tooltip. Default `true`. */
+  showIcon?: boolean;
+  /** The AI action the caveat rides on — a single focusable element (e.g. an `Iconography` or Button). */
+  children: React.ReactElement;
+}
+
+/**
+ * The `info-tooltip` caveat: the reminder rides the generate control,
+ * shown on hover and keyboard focus without ever being in the way, and
+ * linked to the control with `aria-describedby` so screen readers hear it too.
+ */
+export const CaveatTooltip = React.forwardRef<HTMLSpanElement, CaveatTooltipProps>(
+  ({ content = "Output may be inaccurate", side = "top", showIcon = true, children, ...props }, ref) => {
+    const id = React.useId();
+    const childProps = children.props as { "aria-describedby"?: string };
+    const trigger = React.cloneElement(children, {
+      "aria-describedby": [childProps["aria-describedby"], id].filter(Boolean).join(" "),
+    } as Record<string, unknown>);
+    return (
+      <Tooltip
+        ref={ref}
+        side={side}
+        content={
+          <span id={id} className="inline-flex items-center gap-1.5 [&_svg]:size-3">
+            {showIcon && <Info aria-hidden="true" />}
+            {content}
+          </span>
+        }
+        {...props}
+      >
+        {trigger}
+      </Tooltip>
+    );
+  },
+);
+CaveatTooltip.displayName = "CaveatTooltip";

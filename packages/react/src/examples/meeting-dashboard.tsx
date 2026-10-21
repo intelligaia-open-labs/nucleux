@@ -1,6 +1,5 @@
-import { CheckCircle2, CloudUpload, Link2, Mic, Play } from "lucide-react";
+import { Check, CheckCircle2, CloudUpload, Link2, Mic, Play } from "lucide-react";
 import {
-  ActionTile,
   Avatar,
   Badge,
   Button,
@@ -11,8 +10,13 @@ import {
   CardDivider,
   CardHeader,
   CardTitle,
-  Checklist,
-  ChecklistItem,
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
 } from "../index";
 
 /**
@@ -60,23 +64,25 @@ export function CaptureAnotherMeeting() {
   return (
     <section className="rounded-2xl bg-brand-muted p-6">
       <h2 className="text-base font-semibold text-foreground">Capture another meeting</h2>
-      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <ActionTile
-          icon={<Mic className="size-5" />}
-          title="Record a meeting"
-          description="Capture live from your browser."
-        />
-        <ActionTile
-          icon={<CloudUpload className="size-6" />}
-          title="Upload a recording"
-          description="From your desktop or Google Drive — audio or video file."
-        />
-        <ActionTile
-          icon={<Link2 className="size-6" />}
-          title="Paste a link"
-          description="A Zoom/Meet recording URL, a Drive file, or a YouTube link."
-        />
-      </div>
+      <ItemGroup className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {[
+          { icon: <Mic />, title: "Record a meeting", description: "Capture live from your browser." },
+          { icon: <CloudUpload />, title: "Upload a recording", description: "From your desktop or Google Drive — audio or video file." },
+          { icon: <Link2 />, title: "Paste a link", description: "A Zoom/Meet recording URL, a Drive file, or a YouTube link." },
+        ].map((tile) => (
+          <Item key={tile.title} asChild variant="outline" className="h-full flex-col items-start bg-background">
+            <button type="button">
+              <ItemMedia variant="icon" className="bg-brand-muted text-brand">
+                {tile.icon}
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>{tile.title}</ItemTitle>
+                <ItemDescription className="line-clamp-none">{tile.description}</ItemDescription>
+              </ItemContent>
+            </button>
+          </Item>
+        ))}
+      </ItemGroup>
     </section>
   );
 }
@@ -99,31 +105,28 @@ export function FirstWinCard() {
         </div>
       </div>
       <CardDivider />
-      <Checklist>
-        <ChecklistItem
-          done
-          title="Capture your first meeting"
-          description="Upload or record — your first AI summary in under a minute."
-        />
-        <ChecklistItem
-          title="Connect Google Calendar"
-          description="Let AI discover, join, and summarize meetings."
-          action={
-            <Button variant="cta" size="sm">
-              Connect
-            </Button>
-          }
-        />
-        <ChecklistItem
-          title="Invite a teammate"
-          description="Keep everyone aligned on decisions and next steps."
-          action={
-            <Button variant="secondary" size="sm">
-              Invite
-            </Button>
-          }
-        />
-      </Checklist>
+      <ItemGroup className="p-2">
+        {[
+          { done: true, title: "Capture your first meeting", description: "Upload or record — your first AI summary in under a minute." },
+          { title: "Connect Google Calendar", description: "Let AI discover, join, and summarize meetings.", action: <Button variant="cta" size="sm">Connect</Button> },
+          { title: "Invite a teammate", description: "Keep everyone aligned on decisions and next steps.", action: <Button variant="secondary" size="sm">Invite</Button> },
+        ].map((step) => (
+          <Item key={step.title} size="sm">
+            <ItemMedia
+              aria-label={step.done ? "Done" : "Not done"}
+              role="img"
+              className={step.done ? "size-5 rounded-full bg-success text-success-foreground" : "size-5 rounded-full border border-border"}
+            >
+              {step.done && <Check className="size-3" strokeWidth={3} />}
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle className={step.done ? "text-muted-foreground line-through" : undefined}>{step.title}</ItemTitle>
+              <ItemDescription>{step.description}</ItemDescription>
+            </ItemContent>
+            {step.action && <ItemActions>{step.action}</ItemActions>}
+          </Item>
+        ))}
+      </ItemGroup>
     </CardContainer>
   );
 }

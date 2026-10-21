@@ -1,0 +1,206 @@
+{
+  "id": "app-shell",
+  "name": "Application shell",
+  "status": "curated",
+  "since": "0.5.0",
+  "summary": "Collapsible sidebar navigation, a top bar with search and account, and a phone navigation sheet around the page content.",
+  "description": "The frame every page of a multi-page web app renders inside, built on the shadcn-style Sidebar. On desktop the Sidebar sits beside the page and collapses to icons (with tooltips) via SidebarTrigger or ⌘B / Ctrl+B; below md the same Sidebar opens as a sheet. Build it once and wrap every route in it.",
+  "useCases": [
+    "SaaS application layout",
+    "admin panel frame",
+    "project management app navigation",
+    "responsive sidebar navigation"
+  ],
+  "whenToUse": [
+    "The app has three or more top-level sections the user switches between.",
+    "Pages share global search, notifications or an account menu."
+  ],
+  "whenNotToUse": [
+    "Single-page tools or landing pages with no section navigation.",
+    "Chat-first agent UIs: use the agent-chat example (get_example) instead.",
+    "The project already has a working shell: reuse it and only swap inner components."
+  ],
+  "keywords": [
+    "layout",
+    "shell",
+    "sidebar",
+    "navigation",
+    "nav",
+    "top bar",
+    "header",
+    "responsive navigation",
+    "mobile menu",
+    "drawer",
+    "frame"
+  ],
+  "components": {
+    "required": [
+      "SidebarProvider",
+      "Sidebar",
+      "SidebarContent",
+      "SidebarGroup",
+      "SidebarGroupContent",
+      "SidebarMenu",
+      "SidebarMenuItem",
+      "SidebarMenuButton",
+      "SidebarInset",
+      "SidebarTrigger",
+      "useSidebar",
+      "Button"
+    ],
+    "optional": [
+      "SidebarHeader",
+      "SidebarFooter",
+      "SidebarGroupLabel",
+      "SidebarRail",
+      "SidebarMenuBadge",
+      "SidebarMenuSub",
+      "SidebarMenuSubItem",
+      "SidebarMenuSubButton",
+      "Input",
+      "Avatar",
+      "DropdownMenu",
+      "DropdownMenuItem"
+    ]
+  },
+  "composition": [
+    {
+      "component": "SidebarProvider",
+      "role": "Wraps the whole app layout; owns open state and the ⌘B shortcut",
+      "children": [
+        {
+          "component": "Sidebar",
+          "role": "collapsible=\"icon\"; a sheet below md",
+          "children": [
+            {
+              "component": "SidebarHeader",
+              "role": "App name (sr-only when collapsed to icons)"
+            },
+            {
+              "component": "SidebarContent",
+              "children": [
+                {
+                  "element": "nav",
+                  "role": "aria-label=\"Primary\"",
+                  "children": [
+                    {
+                      "component": "SidebarGroup",
+                      "children": [
+                        {
+                          "component": "SidebarGroupLabel"
+                        },
+                        {
+                          "component": "SidebarGroupContent",
+                          "children": [
+                            {
+                              "component": "SidebarMenu",
+                              "children": [
+                                {
+                                  "component": "SidebarMenuItem",
+                                  "children": [
+                                    {
+                                      "component": "SidebarMenuButton",
+                                      "role": "asChild around an <a href>; isActive for the current route; tooltip = label (shown when collapsed)"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "SidebarRail",
+              "role": "Edge hit area that toggles the sidebar"
+            }
+          ]
+        },
+        {
+          "component": "SidebarInset",
+          "role": "The page column (a <main>)",
+          "children": [
+            {
+              "element": "header",
+              "role": "Sticky top bar (h-14 border-b)",
+              "children": [
+                {
+                  "component": "SidebarTrigger",
+                  "role": "Toggles the sidebar (sheet on phones)"
+                },
+                {
+                  "component": "Input",
+                  "role": "type=\"search\" global search, hidden below sm"
+                },
+                {
+                  "component": "Button",
+                  "role": "variant=\"ghost\" size=\"icon\" Notifications"
+                },
+                {
+                  "component": "Avatar",
+                  "role": "Current user"
+                }
+              ]
+            },
+            {
+              "element": "div",
+              "role": "Page content; each route renders here"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "layout": [
+    "SidebarProvider wraps the whole layout once, around the routes; Sidebar and SidebarInset are its direct children.",
+    "SidebarInset is the page column: put the top bar and the routed page inside it. Pages own their padding and max width (see list-page, dashboard-overview).",
+    "Use collapsible=\"icon\" for apps people work in all day (icons + tooltips when collapsed); \"offcanvas\" for content sites.",
+    "Close the phone sheet after navigating: useSidebar().setOpenMobile(false) when isMobile."
+  ],
+  "responsive": [
+    "md and up: Sidebar beside the page; SidebarTrigger collapses it (to icons with collapsible=\"icon\").",
+    "Below md: Sidebar renders as a sheet that SidebarTrigger opens; close it after navigating.",
+    "Below sm: hide the header search Input (className=\"hidden sm:block\") or move search into the page."
+  ],
+  "tokens": [
+    "bg-background",
+    "text-foreground",
+    "border-border",
+    "bg-muted/40 (sidebar surface)",
+    "bg-accent (active SidebarMenuButton)"
+  ],
+  "accessibility": [
+    "Wrap the menu in <nav aria-label=\"Primary\">.",
+    "SidebarMenuButton isActive sets aria-current=\"page\"; drive it from the router, not local state.",
+    "SidebarTrigger has an accessible name (\"Toggle Sidebar\"); other icon-only Buttons need aria-label (\"Notifications\").",
+    "When collapsed to icons, every SidebarMenuButton needs tooltip so the label is still visible on hover and focus."
+  ],
+  "routing": "SidebarMenuButton asChild renders your link. With React Router or TanStack Router pass their <Link>; with a plain <a>, keep href for real URLs and call preventDefault + navigate in onClick. In Next.js pass next/link's <Link>.",
+  "antiPatterns": [
+    "Hand-rolling an <aside> with custom link styles instead of Sidebar/SidebarMenuButton.",
+    "Rendering the shell inside each page instead of once around the routes.",
+    "A second, separately maintained link list for phones (the Sidebar already becomes a sheet).",
+    "Icon-only collapsed items without tooltip."
+  ],
+  "related": [
+    "dashboard-overview",
+    "list-page",
+    "settings-page",
+    "page-states",
+    "detail-page",
+    "task-board"
+  ],
+  "dependencies": {
+    "npm": [
+      {
+        "name": "lucide-react",
+        "reason": "Icons in the example. Any icon set works."
+      }
+    ]
+  },
+  "example": "example.tsx"
+}

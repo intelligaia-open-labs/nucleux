@@ -1,0 +1,375 @@
+import * as React from "react";
+import { cn } from "@nucleux/utils";
+import { Badge } from "@nucleux/badge";
+import { Button } from "@nucleux/button";
+import { Spinner } from "@nucleux/spinner";
+import { AlertTriangle, Check, CircleAlert, FileText, Plus, RotateCw } from "lucide-react";
+
+/** Picker layout: a vertical list of rows, or a wrap of chips with document counts. */
+export type KnowledgeBaseVariant = "list" | "chips";
+
+/** Whether a source is usable yet, and whether it is still current. */
+export type KnowledgeSourceStatus = "ready" | "processing" | "stale" | "error";
+
+/** How well the knowledge base covers the question. */
+export type KnowledgeBaseCoverageLevel = "high" | "partial" | "low";
+
+export interface KnowledgeSource {
+  /** Stable id. */
+  id: string;
+  /** Source name, e.g. a filename. */
+  name: React.ReactNode;
+  /** Metadata line, e.g. `"PDF · 12 pages"`. */
+  meta?: React.ReactNode;
+  /** Leading icon. Defaults to a document glyph. */
+  icon?: React.ReactNode;
+  /** Readiness, shown as a word on the row. Omit for plain sources. */
+  status?: KnowledgeSourceStatus;
+  /** Number of documents in the base, shown on chips: `"Product docs · 412"`. */
+  count?: number;
+}
+
+export interface KnowledgeBaseProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+  /** The available knowledge sources. */
+  sources: KnowledgeSource[];
+  /** Selected source ids (controlled). */
+  value?: string[];
+  /** Initial selection (uncontrolled). */
+  defaultValue?: string[];
+  /** Called when the selection changes. */
+  onValueChange?: (ids: string[]) => void;
+  /** Heading above the list. Defaults to `"Knowledge sources"`. */
+  heading?: React.ReactNode;
+  /** Layout. Defaults to `"list"`; `"chips"` is the compact "Grounded in" picker. */
+  variant?: KnowledgeBaseVariant;
+  /** Adds an "Add a base" control. */
+  onAdd?: () => void;
+  /** Label for the add control. Defaults to `"Add a base"`. */
+  addLabel?: React.ReactNode;
+  /** Recovery for a stale or failed source; renders Refresh / Retry on that row. */
+  onRefresh?: (id: string) => void;
+}
+
+const statusWord: Record<KnowledgeSourceStatus, string> = {
+  ready: "Ready",
+  processing: "Processing",
+  stale: "Needs refresh",
+  error: "Couldn't process",
+};
+
+const statusTone: Record<KnowledgeSourceStatus, string> = {
+  ready: "text-success",
+  processing: "text-muted-foreground",
+  stale: "text-warning",
+  error: "text-destructive",
+};
+
+const nameText = (n: React.ReactNode, fallback: string) => (typeof n === "string" ? n : fallback);
+
+/**
+ * Lets people choose which knowledge bases the agent grounds in for this
+ * session — a list of checkable rows (default) or a compact wrap of chips with
+ * document counts (`variant="chips"`). Each source can carry its readiness as a
+ * word (Ready, Processing, Needs refresh, Couldn't process) with the recovery
+ * on the row that failed. Pair it with KnowledgeBaseSources (what an answer
+ * actually read) and KnowledgeBaseCoverage (how well the base covers it).
+ * Source: Figma "Context Expansion / Knowledge Bases".
+ */
+export const KnowledgeBase = React.forwardRef<HTMLDivElement, KnowledgeBaseProps>(
+  (
+    {
+      sources,
+      value,
+      defaultValue = [],
+      onValueChange,
+      heading = "Knowledge sources",
+      variant = "list",
+      onAdd,
+      addLabel = "Add a base",
+      onRefresh,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    const [internal, setInternal] = React.useState<string[]>(defaultValue);
+    const selected = value !== undefined ? value : internal;
+    const headingId = React.useId();
+    const toggle = (id: string) => {
+      const next = selected.includes(id) ? selected.filter((v) => v !== id) : [...selected, id];
+      if (value === undefined) setInternal(next);
+      onValueChange?.(next);
+    };
+
+    if (variant === "chips") {
+      return (
+        <div
+          ref={ref}
+          role="group"
+          aria-labelledby={heading ? headingId : undefined}
+          aria-label={heading ? undefined : "Knowledge sources"}
+          className={cn("flex flex-col gap-2 rounded-xl border border-border bg-background p-3", className)}
+          {...props}
+        >
+          {heading && (
+            <p id={headingId} className="text-xs font-semibold text-foreground">
+              {heading}
+            </p>
+          )}
+          <div className="flex flex-wrap gap-1.5">
+            {sources.map((source) => {
+              const active = selected.includes(source.id);
+              return (
+                <button
+                  key={source.id}
+                  type="button"
+                  role="checkbox"
+                  aria-checked={active}
+                  onClick={() => toggle(source.id)}
+                  className={cn(
+                    "inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&_svg]:size-3",
+                    active
+                      ? "border-brand bg-brand-muted/50 text-brand"
+                      : "border-border text-muted-foreground hover:bg-accent hover:text-foreground",
+                  )}
+                >
+                  {active && <Check aria-hidden="true" />}
+                  {source.name}
+                  {source.count != null && <span className="font-normal">· {source.count.toLocaleString()}</span>}
+                  {source.status && source.status !== "ready" && (
+                    <span className={cn("font-normal", statusTone[source.status])}>· {statusWord[source.status]}</span>
+                  )}
+                </button>
+              );
+            })}
+            {onAdd && (
+              <button
+                type="button"
+                onClick={onAdd}
+                className="inline-flex items-center gap-1 rounded-full border border-dashed border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&_svg]:size-3"
+              >
+                <Plus aria-hidden="true" />
+                {addLabel}
+              </button>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div
+        ref={ref}
+        className={cn("flex flex-col gap-2 rounded-xl border border-border bg-background p-3", className)}
+        {...props}
+      >
+        {heading && (
+          <div className="flex items-center justify-between px-1">
+            <p id={headingId} className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              {heading}
+            </p>
+            {selected.length > 0 && (
+              <span className="text-xs text-muted-foreground">{selected.length} selected</span>
+            )}
+          </div>
+        )}
+        <ul
+          aria-labelledby={heading ? headingId : undefined}
+          aria-label={heading ? undefined : "Knowledge sources"}
+          className="flex flex-col gap-1"
+        >
+          {sources.map((source) => {
+            const active = selected.includes(source.id);
+            const recover =
+              onRefresh && (source.status === "stale" || source.status === "error") ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onRefresh(source.id)}
+                  aria-label={`${source.status === "error" ? "Retry" : "Refresh"} ${nameText(source.name, source.id)}`}
+                  leftIcon={<RotateCw aria-hidden="true" className="size-3.5" />}
+                  className="h-7 shrink-0 px-2 text-xs"
+                >
+                  {source.status === "error" ? "Retry" : "Refresh"}
+                </Button>
+              ) : null;
+            return (
+              <li key={source.id} className="flex items-center gap-1" data-status={source.status}>
+                <button
+                  type="button"
+                  role="checkbox"
+                  aria-checked={active}
+                  onClick={() => toggle(source.id)}
+                  className={cn(
+                    "flex w-full min-w-0 flex-1 items-center gap-3 rounded-lg border px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    active ? "border-brand bg-brand-muted/40" : "border-transparent hover:bg-accent",
+                  )}
+                >
+                  <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground [&_svg]:size-4">
+                    {source.icon ?? <FileText aria-hidden="true" />}
+                  </span>
+                  <span className="flex min-w-0 flex-1 flex-col">
+                    <span className="truncate text-sm font-medium text-foreground">{source.name}</span>
+                    {(source.meta || source.status || source.count != null) && (
+                      <span className="truncate text-xs text-muted-foreground">
+                        {source.status && (
+                          <span className={cn("font-medium", statusTone[source.status])}>
+                            {statusWord[source.status]}
+                          </span>
+                        )}
+                        {source.status && (source.meta || source.count != null) && " · "}
+                        {source.count != null && `${source.count.toLocaleString()} docs`}
+                        {source.count != null && source.meta && " · "}
+                        {source.meta}
+                      </span>
+                    )}
+                  </span>
+                  <span
+                    className={cn(
+                      "inline-flex size-5 shrink-0 items-center justify-center rounded-md border transition-colors [&_svg]:size-3.5",
+                      active ? "border-brand bg-brand text-brand-foreground" : "border-border",
+                    )}
+                  >
+                    {active && <Check aria-hidden="true" />}
+                  </span>
+                </button>
+                {recover}
+              </li>
+            );
+          })}
+        </ul>
+        {onAdd && (
+          <Button variant="ghost" size="sm" onClick={onAdd} leftIcon={<Plus aria-hidden="true" className="size-4" />} className="self-start">
+            {addLabel}
+          </Button>
+        )}
+      </div>
+    );
+  },
+);
+KnowledgeBase.displayName = "KnowledgeBase";
+
+/** One document an answer drew on. */
+export interface KnowledgeBaseSourceRef {
+  /** Stable id. */
+  id: string;
+  /** Document title, e.g. `"Renewal Playbook v3"`. */
+  name: React.ReactNode;
+  /** Section the answer came from, e.g. `"§4.1"`. */
+  section?: React.ReactNode;
+  /** Link to open the document at that section. */
+  href?: string;
+}
+
+export interface KnowledgeBaseSourcesProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** The documents the answer read. */
+  sources: KnowledgeBaseSourceRef[];
+  /** The base they came from, for the heading: "Used 3 sources from Sales playbook". */
+  baseName?: React.ReactNode;
+  /** Heading override. Defaults to `"N sources"` (or the base sentence). */
+  heading?: React.ReactNode;
+  /** The agent is reading right now: shows "Reading…" and announces it. */
+  reading?: boolean;
+}
+
+/**
+ * The source list shown under an answer: exactly which knowledge-base
+ * documents (and sections) the agent read, so the answer can be checked.
+ * While `reading` it says so — politely announced — and swaps to provenance
+ * when the answer finishes.
+ */
+export const KnowledgeBaseSources = React.forwardRef<HTMLDivElement, KnowledgeBaseSourcesProps>(
+  ({ sources, baseName, heading, reading = false, className, ...props }, ref) => {
+    const headingId = React.useId();
+    const n = sources.length;
+    const count = `${n} ${n === 1 ? "source" : "sources"}`;
+    const title =
+      heading ??
+      (reading ? (
+        <>Reading{baseName ? <> {baseName}</> : null}…</>
+      ) : baseName ? (
+        <>
+          Used {count} from {baseName}
+        </>
+      ) : (
+        count
+      ));
+    return (
+      <div ref={ref} className={cn("flex flex-col gap-1.5", className)} {...props}>
+        <p
+          id={headingId}
+          role="status"
+          aria-live="polite"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+        >
+          {reading && <Spinner aria-hidden="true" role={undefined} className="size-3 motion-reduce:animate-none" />}
+          {title}
+        </p>
+        {n > 0 && (
+          <ul aria-labelledby={headingId} className="flex flex-col gap-1">
+            {sources.map((s) => {
+              const body = (
+                <>
+                  <FileText aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
+                  <span className="truncate">{s.name}</span>
+                  {s.section && <span className="shrink-0 text-muted-foreground">· {s.section}</span>}
+                </>
+              );
+              const cls =
+                "flex items-center gap-2 rounded-md bg-muted/60 px-2.5 py-1.5 text-xs text-foreground";
+              return (
+                <li key={s.id}>
+                  {s.href ? (
+                    <a
+                      href={s.href}
+                      className={cn(cls, "transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring")}
+                    >
+                      {body}
+                    </a>
+                  ) : (
+                    <span className={cls}>{body}</span>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
+    );
+  },
+);
+KnowledgeBaseSources.displayName = "KnowledgeBaseSources";
+
+export interface KnowledgeBaseCoverageProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /** How well the base covers the question. */
+  level: KnowledgeBaseCoverageLevel;
+  /** Number of matching passages, e.g. `14`. */
+  matches?: number;
+  /** Label override. Defaults to "Well-covered", "Partly covered" or "Thin coverage". */
+  label?: React.ReactNode;
+}
+
+const coverage: Record<KnowledgeBaseCoverageLevel, { word: string; icon: React.ReactNode; cls: string }> = {
+  high: { word: "Well-covered", icon: <Check aria-hidden="true" className="size-3" />, cls: "bg-success/15 text-success" },
+  partial: { word: "Partly covered", icon: <AlertTriangle aria-hidden="true" className="size-3" />, cls: "bg-warning/15 text-warning" },
+  low: { word: "Thin coverage", icon: <CircleAlert aria-hidden="true" className="size-3" />, cls: "bg-destructive/15 text-destructive" },
+};
+
+/**
+ * A small badge saying how well the knowledge base covers the question —
+ * "Well-covered · 14 matches", or a warning when context is thin. The word
+ * carries the meaning; colour only reinforces it.
+ */
+export const KnowledgeBaseCoverage = React.forwardRef<HTMLSpanElement, KnowledgeBaseCoverageProps>(
+  ({ level, matches, label, className, ...props }, ref) => {
+    const c = coverage[level];
+    return (
+      <Badge ref={ref} variant="outline" icon={c.icon} data-level={level} className={cn("border-transparent", c.cls, className)} {...props}>
+        {label ?? c.word}
+        {matches != null && <span className="font-normal">· {matches} {matches === 1 ? "match" : "matches"}</span>}
+      </Badge>
+    );
+  },
+);
+KnowledgeBaseCoverage.displayName = "KnowledgeBaseCoverage";

@@ -1,0 +1,39 @@
+{
+  "id": "analytics-charts",
+  "name": "Analytics with charts",
+  "status": "curated",
+  "since": "0.5.0",
+  "summary": "Range filter in the header and a responsive grid of chart cards built with ChartContainer (Recharts), token colors, tooltip, legend and a screen-reader summary.",
+  "description": "Trend and breakdown charts for an analytics page or a dashboard section. ChartContainer maps each series in a ChartConfig to a --color-<key> CSS variable, so series colors come from Nucleux tokens and switch with the theme.",
+  "useCases": ["analytics page", "charts", "trends over time", "reporting dashboard", "metrics charts", "usage analytics"],
+  "whenToUse": ["Showing change over time or comparisons across categories."],
+  "whenNotToUse": ["A few headline numbers: use MetricCard tiles from dashboard-overview.", "Exact values users need to read or export: use a table (list-page)."],
+  "keywords": ["chart", "charts", "graph", "analytics", "trend", "line chart", "bar chart", "reporting", "visualization", "recharts", "metrics"],
+  "components": {
+    "required": ["ChartContainer", "CardContainer", "CardContent", "CardHeader", "CardTitle"],
+    "optional": ["ChartTooltip", "ChartTooltipContent", "ChartLegend", "ChartLegendContent", "CardDescription", "NativeSelect"]
+  },
+  "composition": [
+    { "element": "div", "role": "Page container (max-w-6xl)", "children": [
+      { "element": "header", "role": "Page header: <h1> title + muted description, flex-col sm:flex-row; actions slot holds the range NativeSelect" },
+      { "element": "div", "role": "grid lg:grid-cols-2", "children": [
+        { "component": "CardContainer", "role": "One chart per card", "children": [
+          { "component": "CardHeader", "children": [ { "component": "CardTitle", "role": "what it measures" }, { "component": "CardDescription", "role": "unit and range" } ] },
+          { "component": "CardContent", "children": [
+            { "element": "p", "role": "sr-only text summary of the chart" },
+            { "component": "ChartContainer", "role": "config + one Recharts chart (LineChart, BarChart…), aria-hidden", "children": [ { "component": "ChartTooltip", "children": [ { "component": "ChartTooltipContent" } ] }, { "component": "ChartLegend", "children": [ { "component": "ChartLegendContent" } ] } ] }
+          ] }
+        ] }
+      ] }
+    ] }
+  ],
+  "layout": ["One chart per card with a title that says what it measures.", "Give ChartContainer an aspect ratio (aspect-[16/9] w-full) so it sizes responsively.", "Series fill/stroke use var(--color-<key>) from the ChartConfig."],
+  "responsive": ["Cards stack below lg, two columns from lg.", "Fewer x-axis ticks on narrow cards: keep labels short (\"Oct 5\")."],
+  "tokens": ["Series colors: hsl(var(--nx-info)), hsl(var(--nx-success)), hsl(var(--nx-brand)), hsl(var(--nx-warning)), hsl(var(--nx-destructive))", "No hex chart palettes"],
+  "accessibility": ["Charts are visual only: add an sr-only text summary and mark ChartContainer aria-hidden, or offer a table view.", "Don't rely on color alone: use the legend and distinct chart types or dash patterns when series are many."],
+  "states": "Loading: Skeleton at the chart's aspect ratio inside the card. No data: Empty inside the card.",
+  "antiPatterns": ["Hex or Tailwind palette colors for series.", "Charts without titles or units.", "Importing Recharts' Tooltip/Legend instead of ChartTooltip/ChartLegend with the Nucleux content components."],
+  "related": ["dashboard-overview", "page-states"],
+  "dependencies": { "npm": [ { "name": "recharts", "reason": "Chart primitives (LineChart, BarChart, XAxis…) rendered inside ChartContainer. Install the version @nucleux/chart depends on (^2.15)." } ] },
+  "example": "example.tsx"
+}

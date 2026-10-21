@@ -94,7 +94,13 @@ export function Sheet({
   );
 }
 
-export const SheetHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface SheetHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the sheet header. */
+  className?: string;
+}
+
+/** Sheet header slot: SheetTitle + SheetDescription, with a close button. */
+export const SheetHeader = React.forwardRef<HTMLDivElement, SheetHeaderProps>(
   ({ className, children, ...props }, ref) => {
     const ctx = React.useContext(SheetContext);
     return (
@@ -118,7 +124,13 @@ export const SheetHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes
 );
 SheetHeader.displayName = "SheetHeader";
 
-export const SheetTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
+export interface SheetTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  /** Additional classes merged onto the title. */
+  className?: string;
+}
+
+/** Sheet heading; auto-wired to aria-labelledby. */
+export const SheetTitle = React.forwardRef<HTMLHeadingElement, SheetTitleProps>(
   ({ className, ...props }, ref) => {
     const ctx = React.useContext(SheetContext);
     return (
@@ -133,10 +145,13 @@ export const SheetTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttribu
 );
 SheetTitle.displayName = "SheetTitle";
 
-export const SheetDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => {
+export interface SheetDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {
+  /** Additional classes merged onto the description. */
+  className?: string;
+}
+
+/** Muted supporting copy under the sheet title. */
+export const SheetDescription = React.forwardRef<HTMLParagraphElement, SheetDescriptionProps>(({ className, ...props }, ref) => {
   const ctx = React.useContext(SheetContext);
   return (
     <p ref={ref} id={ctx?.descriptionId} className={cn("text-sm text-muted-foreground", className)} {...props} />
@@ -144,14 +159,26 @@ export const SheetDescription = React.forwardRef<
 });
 SheetDescription.displayName = "SheetDescription";
 
-export const SheetBody = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface SheetBodyProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the sheet body. */
+  className?: string;
+}
+
+/** Scrollable sheet body region. */
+export const SheetBody = React.forwardRef<HTMLDivElement, SheetBodyProps>(
   ({ className, ...props }, ref) => (
     <div ref={ref} className={cn("min-h-0 flex-1 overflow-y-auto p-4", className)} {...props} />
   ),
 );
 SheetBody.displayName = "SheetBody";
 
-export const SheetFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface SheetFooterProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the sheet footer. */
+  className?: string;
+}
+
+/** Sheet footer slot, right-aligned (actions). */
+export const SheetFooter = React.forwardRef<HTMLDivElement, SheetFooterProps>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
@@ -163,7 +190,15 @@ export const SheetFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes
 SheetFooter.displayName = "SheetFooter";
 
 /** A button that closes the enclosing Sheet. */
-export const SheetClose = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
+export interface SheetCloseProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Additional classes merged onto the close button. */
+  className?: string;
+  /** Button type. Defaults to "button". */
+  type?: "button" | "submit" | "reset";
+}
+
+/** Button that closes the sheet from inside it. */
+export const SheetClose = React.forwardRef<HTMLButtonElement, SheetCloseProps>(
   ({ onClick, type = "button", ...props }, ref) => {
     const ctx = React.useContext(SheetContext);
     return (

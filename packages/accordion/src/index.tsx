@@ -58,6 +58,7 @@ export const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
 Accordion.displayName = "Accordion";
 
 export interface AccordionItemProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Unique key identifying the panel controlled by this item. */
   value: string;
 }
 
@@ -79,7 +80,13 @@ export const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps
 );
 AccordionItem.displayName = "AccordionItem";
 
-export const AccordionTrigger = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
+export interface AccordionTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Additional classes merged onto the full-width trigger row. */
+  className?: string;
+}
+
+/** Clickable header row that toggles its AccordionContent panel. */
+export const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTriggerProps>(
   ({ className, children, ...props }, ref) => {
     const acc = React.useContext(AccordionContext);
     const item = React.useContext(ItemContext);
@@ -108,7 +115,13 @@ export const AccordionTrigger = React.forwardRef<HTMLButtonElement, React.Button
 );
 AccordionTrigger.displayName = "AccordionTrigger";
 
-export const AccordionContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+export interface AccordionContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Additional classes merged onto the collapsible panel body. */
+  className?: string;
+}
+
+/** Collapsible body panel of an AccordionItem. */
+export const AccordionContent = React.forwardRef<HTMLDivElement, AccordionContentProps>(
   ({ className, ...props }, ref) => {
     const item = React.useContext(ItemContext);
     if (!item) throw new Error("<AccordionContent> must be used inside <AccordionItem>");

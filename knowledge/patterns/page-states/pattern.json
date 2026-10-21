@@ -1,0 +1,108 @@
+{
+  "id": "page-states",
+  "name": "Loading, empty and error states",
+  "status": "curated",
+  "since": "0.5.0",
+  "summary": "One AsyncContent wrapper that renders a skeleton, a recoverable error, an empty state with an action, or the content.",
+  "description": "Every page or card that loads data needs all four states. Skeleton mirrors the content's shape while loading; Empty covers both failures (role=alert, destructive media tint, with Retry) and empty collections (with the create action).",
+  "useCases": [
+    "loading state",
+    "empty state",
+    "error state",
+    "no results",
+    "first-run empty page",
+    "retry after failure"
+  ],
+  "whenToUse": [
+    "Any view backed by async data."
+  ],
+  "whenNotToUse": [
+    "Inline field validation (use Input invalid + Alert in forms).",
+    "Transient success/failure notices after an action (use Toast)."
+  ],
+  "keywords": [
+    "loading",
+    "skeleton",
+    "empty",
+    "error",
+    "no data",
+    "no results",
+    "retry",
+    "placeholder",
+    "state",
+    "spinner"
+  ],
+  "components": {
+    "required": [
+      "Empty",
+      "EmptyHeader",
+      "EmptyMedia",
+      "EmptyTitle",
+      "EmptyDescription",
+      "EmptyContent",
+      "Skeleton",
+      "Button"
+    ],
+    "optional": [
+      "Alert",
+      "Toast"
+    ]
+  },
+  "composition": [
+    {
+      "element": "AsyncContent",
+      "role": "App-level helper (in the example) switching on a LoadState union",
+      "children": [
+        {
+          "component": "Skeleton",
+          "role": "loading: role=status, mirrors content layout"
+        },
+        {
+          "component": "Empty",
+          "role": "error: role=alert, EmptyMedia with bg-destructive/10 text-destructive, Retry Button in EmptyContent"
+        },
+        {
+          "component": "Empty",
+          "role": "empty: EmptyMedia variant=icon, primary create Button in EmptyContent"
+        }
+      ]
+    }
+  ],
+  "layout": [
+    "Render states in the same box the content will occupy, so the page does not jump.",
+    "Distinguish \"no records yet\" (empty state + create action) from \"no matches\" (DataTable emptyMessage + clear filters)."
+  ],
+  "responsive": [
+    "Empty is centered and width-agnostic; Skeleton rows should use the same responsive grid as the content."
+  ],
+  "tokens": [
+    "bg-muted (Skeleton)",
+    "text-destructive (Empty error media tint)",
+    "text-muted-foreground"
+  ],
+  "accessibility": [
+    "Loading container: role=status aria-live=polite with a visually hidden \"Loading…\".",
+    "Error container: role=alert so the failure is announced.",
+    "Retry is a real Button that re-runs the request; keep the user's filters and input."
+  ],
+  "antiPatterns": [
+    "A full-page spinner for a partial reload.",
+    "Blank screens when a list is empty.",
+    "Error text with no recovery action."
+  ],
+  "related": [
+    "list-page",
+    "dashboard-overview",
+    "settings-page",
+    "detail-page"
+  ],
+  "dependencies": {
+    "npm": [
+      {
+        "name": "lucide-react",
+        "reason": "Icons in the example."
+      }
+    ]
+  },
+  "example": "example.tsx"
+}

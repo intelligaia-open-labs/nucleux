@@ -7,6 +7,9 @@ const meta = {
   component: Badge,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
+  // `icon` is a ReactNode — kept out of `args` (Storybook serializes args and
+  // would strip the element) and injected via `render`; hide its control.
+  argTypes: { icon: { control: false } },
   args: { children: "Badge", variant: "default" },
 } satisfies Meta<typeof Badge>;
 
@@ -16,11 +19,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = { args: { children: "1/3 Done" } };
 export const Outline: Story = { args: { variant: "outline", children: "5 action items" } };
 export const Success: Story = {
-  args: {
-    variant: "success",
-    children: "Summarized",
-    icon: <CheckCircle2 className="size-3.5" />,
-  },
+  args: { variant: "success", children: "Summarized" },
+  render: (args) => <Badge {...args} icon={<CheckCircle2 className="size-3.5" />} />,
 };
 
 export const AllVariants: Story = {

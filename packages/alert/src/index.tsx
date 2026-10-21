@@ -5,7 +5,7 @@ import { cn } from "@nucleux/utils";
 export type AlertVariant = "default" | "info" | "success" | "warning" | "destructive";
 
 const alertVariants: Record<AlertVariant, string> = {
-  default: "border-border bg-card text-foreground [&_[data-alert-icon]]:text-muted-foreground",
+  default: "border-border bg-background text-foreground [&_[data-alert-icon]]:text-muted-foreground",
   info: "border-info/30 bg-info/5 text-foreground [&_[data-alert-icon]]:text-info",
   success: "border-success/30 bg-success/5 text-foreground [&_[data-alert-icon]]:text-success",
   warning: "border-warning/40 bg-warning/10 text-foreground [&_[data-alert-icon]]:text-warning",
@@ -22,7 +22,14 @@ const defaultIcon: Record<AlertVariant, React.ComponentType<{ className?: string
 };
 
 export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+  /** Visual style: "info" (neutral, default), "success", "warning", or "destructive". */
   variant?: AlertVariant;
+  /**
+   * Alias of `variant` (MUI Alert vocabulary). Deprecated — use `variant`.
+   * @deprecated Use `variant` instead. Alias kept so MUI-trained agents and
+   *   users are caught; it maps 1:1 ("error" -> "destructive").
+   */
+  severity?: AlertVariant | "error";
   /** Optional bold title above the body. */
   title?: React.ReactNode;
   /** Custom icon; defaults to a variant-appropriate one. */
@@ -33,15 +40,19 @@ export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
 
 /** Contextual message banner — info, success, warning, or error. */
 export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  ({ variant = "default", title, icon, hideIcon = false, className, children, ...props }, ref) => {
-    const Icon = defaultIcon[variant];
+  ({ severity, variant, title, icon, hideIcon = false, className, children, ...props }, ref) => {
+    // `severity` is a deprecated alias of `variant` (MUI vocabulary); "error" maps to "destructive".
+    if (variant == null && severity != null) {
+      variant = severity === "error" ? "destructive" : severity;
+    }
+    const Icon = defaultIcon[variant ?? "default"];
     return (
       <div
         ref={ref}
         role="alert"
         className={cn(
           "flex items-start gap-3 rounded-lg border p-4 text-sm",
-          alertVariants[variant],
+          alertVariants[variant ?? "default"],
           className,
         )}
         {...props}

@@ -13,6 +13,7 @@ export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
   value?: number;
   /** Maximum value. */
   max?: number;
+  /** Thickness preset: "sm" or "md" (default). */
   size?: ProgressSize;
   /** Class applied to the filled indicator (e.g. "bg-success"). */
   indicatorClassName?: string;

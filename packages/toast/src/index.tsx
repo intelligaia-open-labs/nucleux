@@ -20,8 +20,11 @@ const iconColor: Record<ToastVariant, string> = {
 };
 
 export interface ToastProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+  /** Visual style: "info" (default), "success", "warning", or "destructive". */
   variant?: ToastVariant;
+  /** Bold title line of the toast. */
   title?: React.ReactNode;
+  /** Supporting body copy below the title. */
   description?: React.ReactNode;
   /** Renders a close button that calls this handler. */
   onClose?: () => void;

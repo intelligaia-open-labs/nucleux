@@ -1,0 +1,166 @@
+{
+  "id": "dashboard-overview",
+  "name": "Dashboard overview",
+  "status": "curated",
+  "since": "0.5.0",
+  "summary": "KPI metric cards, a progress panel and a recent-activity table in a responsive card grid.",
+  "description": "The home page of a SaaS or admin app: what matters right now at a glance. Every region is a CardContainer so regions can be added, removed or reordered without changing the grid.",
+  "useCases": [
+    "SaaS dashboard",
+    "admin dashboard",
+    "analytics overview",
+    "project status overview",
+    "monitor metrics",
+    "home page of an app"
+  ],
+  "whenToUse": [
+    "Users need a summary of several metrics and recent changes before drilling in."
+  ],
+  "whenNotToUse": [
+    "Charting-heavy analytics: Nucleux ships @nucleux/chart (ChartContainer, ChartTooltip, ChartLegend over Recharts) — check get_component chart and add chart cards to this grid rather than a separate layout.",
+    "A page with one dominant task (use list-page or a form)."
+  ],
+  "keywords": [
+    "dashboard",
+    "overview",
+    "kpi",
+    "metrics",
+    "stats",
+    "analytics",
+    "cards",
+    "activity",
+    "progress",
+    "home",
+    "monitor"
+  ],
+  "components": {
+    "required": [
+      "CardContainer",
+      "CardContent"
+    ],
+    "optional": [
+      "CardHeader",
+      "CardTitle",
+      "CardDescription",
+      "Progress",
+      "Table",
+      "TableHeader",
+      "TableBody",
+      "TableRow",
+      "TableHead",
+      "TableCell",
+      "Badge",
+      "Skeleton"
+    ]
+  },
+  "composition": [
+    {
+      "element": "div",
+      "role": "Page container (mx-auto max-w-6xl, responsive padding)",
+      "children": [
+        {
+          "element": "header",
+          "role": "Page header: <h1> title + muted description, flex-col sm:flex-row"
+        },
+        {
+          "element": "section",
+          "role": "KPI row: grid sm:grid-cols-2 xl:grid-cols-4",
+          "children": [
+            {
+              "component": "CardContainer",
+              "role": "MetricCard: label, large tabular value, change line",
+              "children": [
+                {
+                  "component": "CardContent"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "element": "div",
+          "role": "Detail grid: lg:grid-cols-3",
+          "children": [
+            {
+              "component": "CardContainer",
+              "role": "Progress panel (1 column)",
+              "children": [
+                {
+                  "component": "CardHeader"
+                },
+                {
+                  "component": "CardContent",
+                  "children": [
+                    {
+                      "component": "Progress"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "CardContainer",
+              "role": "Activity table (2 columns)",
+              "children": [
+                {
+                  "component": "CardHeader"
+                },
+                {
+                  "component": "CardContent",
+                  "children": [
+                    {
+                      "component": "Table"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "layout": [
+    "4 KPIs maximum in the top row; more belong on an analytics page.",
+    "Use tabular-nums for metric values so digits align.",
+    "Every region is a card with a CardTitle; no free-floating content between cards."
+  ],
+  "responsive": [
+    "KPI row: 1 column, sm:grid-cols-2, xl:grid-cols-4.",
+    "Detail grid: stacked below lg, lg:grid-cols-3 with the table spanning 2.",
+    "Hide low-priority table columns below sm (hidden sm:table-cell) and wrap tables in overflow-x-auto."
+  ],
+  "tokens": [
+    "text-foreground",
+    "text-muted-foreground",
+    "bg-background",
+    "border-border",
+    "Badge destructive/secondary for status"
+  ],
+  "accessibility": [
+    "CardTitle renders an <h3>. Directly under the page's <h1> pass aria-level={2} so the heading order does not skip a level.",
+    "Label the KPI section (aria-label=\"Key metrics\").",
+    "Decorative metric icons get aria-hidden.",
+    "Every Progress needs an aria-label naming what it measures."
+  ],
+  "states": "While data loads render Skeleton blocks in each card at the same size; on failure show Empty inside the affected card only, so the rest of the dashboard stays usable.",
+  "antiPatterns": [
+    "Raw hex colors for trend arrows: use text-success / text-destructive tokens.",
+    "Hand-built progress bars with divs instead of Progress."
+  ],
+  "related": [
+    "app-shell",
+    "list-page",
+    "page-states",
+    "analytics-charts"
+  ],
+  "dependencies": {
+    "npm": [
+      {
+        "name": "lucide-react",
+        "reason": "Icons in the example."
+      }
+    ]
+  },
+  "example": "example.tsx"
+}
