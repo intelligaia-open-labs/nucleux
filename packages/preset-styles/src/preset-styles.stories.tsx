@@ -168,3 +168,9 @@ export const WithCustomStyle: Story = {
   },
   decorators: [composerFrame],
 };
+
+/** Request settings: no Style control up front — the tune control carries a dot and “Style Concise” in its accessible name; its menu lists Style with the value, and that row opens Use style (with a close ×). */
+export const RequestSettings: Story = {
+  args: { ...menuArgs, trigger: "settings", defaultValue: "concise" },
+  decorators: [composerFrame],
+};

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Check, ChevronDown, Info, RefreshCw, Send, X } from "lucide-react";
+import { Check, ChevronDown, Info, RefreshCw, Send, SlidersHorizontal, X } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import {
@@ -8,6 +8,7 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@nucleux/input-group";
+import { RequestSettings, mergeRequestSettingsItems, type RequestSettingsItem } from "@nucleux/open-input";
 
 /* ────────────────────────────────────────────────────────────
    Data + shared, non-visual logic (also used by @nucleux/md3-modes)
@@ -42,6 +43,14 @@ export type ModesNotice = { type: "changed"; from: string } | { type: "unavailab
  * each mode is for and its expected speed. "chip": only the chip and its picker.
  */
 export type ModesVariant = "composer" | "segmented" | "list" | "chip";
+
+/**
+ * Where the mode is set from in the composer. "chip" (default): the Mode chip
+ * up front. "settings": no chip; a Request settings control (the tune icon,
+ * right after the leading actions) lists Mode with its value, and its row
+ * opens the mode picker.
+ */
+export type ModesTrigger = "chip" | "settings";
 
 export interface UseModesOptions {
   modes: ModeOption[];
@@ -221,7 +230,19 @@ export const modesLabels = {
   changed: (mode: ModeOption) => `Mode changed to ${mode.name}. Your text is unchanged.`,
   clear: "No mode",
   undo: "Undo",
+  close: "Close",
+  /** The value on the Mode row of the Request settings menu when no mode is set. */
+  none: "None",
 };
+
+/** The Mode row of the Request settings menu, in both families. */
+export const modesSettingsItem = (label: string, mode: ModeOption | null, icon?: React.ReactNode): RequestSettingsItem => ({
+  id: "mode",
+  label,
+  icon,
+  value: mode ? mode.name : modesLabels.none,
+  set: !!mode,
+});
 
 /** Joins `meta` and `description` into the one supporting line ("~3 seconds · most tasks"). */
 export const modeSupportingText = (m: ModeOption, showDescriptions = true) =>
@@ -476,6 +497,8 @@ export interface ModesPickerProps
   showDescriptions?: boolean;
   /** Move focus to the active (or first) mode when it mounts. */
   autoFocus?: boolean;
+  /** Show a close × ("Close") in the header, for a picker opened from Request settings with no chip beside it. Calls `onClose`. */
+  showClose?: boolean;
 }
 
 /**
@@ -496,6 +519,7 @@ export const ModesPicker = React.forwardRef<HTMLDivElement, ModesPickerProps>(
       rejected,
       showDescriptions = true,
       autoFocus = false,
+      showClose = false,
       className,
       onKeyDown,
       ...props
@@ -530,11 +554,23 @@ export const ModesPicker = React.forwardRef<HTMLDivElement, ModesPickerProps>(
         }}
         {...props}
       >
-        <div className="flex flex-col gap-0.5 px-2.5 pb-2 pt-1.5">
+        <div className={cn("relative flex flex-col gap-0.5 px-2.5 pb-2 pt-1.5", showClose && "pr-10")}>
           <p id={titleId} className="text-sm font-semibold">
             {label}
           </p>
           {description != null && <p className="text-xs text-muted-foreground">{description}</p>}
+          {showClose && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              aria-label={modesLabels.close}
+              onClick={onClose}
+              className="absolute right-0 top-0 text-muted-foreground"
+            >
+              <X aria-hidden="true" className="size-4" />
+            </Button>
+          )}
         </div>
         <ModesList
           ref={listRef}
@@ -645,6 +681,16 @@ export interface ModesProps
   composerActions?: React.ReactNode;
   /** Accessible name of the send button. Defaults to "Send". */
   sendLabel?: string;
+  /**
+   * "chip" (default): the Mode chip sits in the composer. "settings": no chip;
+   * a Request settings control right after `composerLeading` lists Mode (with
+   * its value) and opens the mode picker from that row.
+   */
+  trigger?: ModesTrigger;
+  /** With `trigger="settings"`: the app's other request settings for the same menu (Tone, Style, Improve prompt…), merged in the site's order. */
+  settingsItems?: RequestSettingsItem[];
+  /** With `trigger="settings"`: called when one of `settingsItems` is chosen. */
+  onSettingsSelect?: (id: string) => void;
 }
 
 /**
@@ -682,6 +728,9 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
       composerLeading,
       composerActions,
       sendLabel = "Send",
+      trigger = "chip",
+      settingsItems,
+      onSettingsSelect,
       className,
       ...props
     },
@@ -749,7 +798,7 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
       ) : null;
 
     const chip = (
-      <div ref={anchorRef} className="relative">
+      <div ref={trigger === "settings" ? undefined : anchorRef} className="relative">
         <ModesChip
           ref={chipRef}
           mode={s.mode}
@@ -778,6 +827,43 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
         )}
       </div>
     );
+
+    const settings = (
+      <div ref={trigger === "settings" ? anchorRef : undefined} className="relative">
+        <RequestSettings
+          ref={chipRef}
+          items={mergeRequestSettingsItems(
+            modesSettingsItem(label, s.mode, <SlidersHorizontal />),
+            settingsItems,
+          )}
+          onSelect={(id) => {
+            if (id !== "mode") return onSettingsSelect?.(id);
+            setUserOpened(true);
+            s.setOpen(true);
+          }}
+          onOpenChange={(o) => {
+            if (o && s.open) s.setOpen(false);
+          }}
+        />
+        {s.open && (
+          <ModesPicker
+            modes={modes}
+            value={s.value}
+            onSelect={choose}
+            onClear={clearable ? clearMode : undefined}
+            onClose={closePicker}
+            label={label}
+            description={pickerDescription}
+            rejected={rejected}
+            showDescriptions={showDescriptions}
+            autoFocus={userOpened}
+            showClose
+            className="absolute bottom-full left-0 z-50 mb-2"
+          />
+        )}
+      </div>
+    );
+    const control = trigger === "settings" ? settings : chip;
 
     const live = (
       <span role="status" aria-live="polite" className="sr-only">
@@ -818,7 +904,7 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
     if (variant === "chip") {
       return (
         <div ref={ref} className={cn("inline-flex flex-col gap-2", className)} {...props}>
-          {chip}
+          {control}
           {note}
           {live}
         </div>
@@ -832,7 +918,12 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
         {inlineAlert}
         {note}
         <InputGroup className="h-10 rounded-[10px] bg-background pl-0.5 pr-1 shadow-sm">
-          {composerLeading != null && <InputGroupAddon align="inline-start">{composerLeading}</InputGroupAddon>}
+          {(composerLeading != null || trigger === "settings") && (
+            <InputGroupAddon align="inline-start" className="gap-1">
+              {composerLeading}
+              {trigger === "settings" && settings}
+            </InputGroupAddon>
+          )}
           <InputGroupInput
             value={draft}
             placeholder={placeholder}
@@ -847,7 +938,7 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
             className="h-full px-2 text-[13px]"
           />
           <InputGroupAddon align="inline-end" className="gap-1 text-muted-foreground">
-            {chip}
+            {trigger === "chip" && chip}
             {composerActions}
             <InputGroupButton
               size="icon-sm"

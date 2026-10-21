@@ -4,6 +4,8 @@ import { cn } from "@nucleux/utils";
 import {
   PROMPT_ENHANCER_TEXT,
   describePromptEnhancerChange,
+  promptEnhancerSettingsItems,
+  selectPromptEnhancerSetting,
   splitPromptEnhancerProps,
   usePromptEnhancer,
   type PromptEnhancerChange,
@@ -13,8 +15,10 @@ import {
   type PromptEnhancerSegment,
   type PromptEnhancerState,
   type PromptEnhancerSuggestion,
+  type PromptEnhancerTrigger,
   type PromptEnhancerVariant,
 } from "@nucleux/prompt-enhancer";
+import { Md3RequestSettings } from "@nucleux/md3-open-input";
 import { Md3AgentComposer } from "@nucleux/md3-agent-composer";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3Card } from "@nucleux/md3-card";
@@ -25,6 +29,8 @@ import { Md3Switch } from "@nucleux/md3-switch";
 export type Md3PromptEnhancerProps = PromptEnhancerProps;
 /** "preview-diff", "wand-button" or "auto-enhance-toggle". */
 export type Md3PromptEnhancerVariant = PromptEnhancerVariant;
+/** "chip" or "settings". */
+export type Md3PromptEnhancerTrigger = PromptEnhancerTrigger;
 /** "original", "enhancing", "enhanced", "editing", "accepted", "reverted" or "failed". */
 export type Md3PromptEnhancerState = PromptEnhancerState;
 /** "split" or "inline". */
@@ -73,10 +79,15 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
     placeholder = PROMPT_ENHANCER_TEXT.placeholder,
     failureMessage = PROMPT_ENHANCER_TEXT.failure,
     composerActions,
+    composerLeading,
+    trigger = "chip",
+    settingsItems,
+    onSettingsSelect,
     onSubmit,
   } = props;
   const { className, ...rest } = splitPromptEnhancerProps(props);
   const pe = usePromptEnhancer(props);
+  const settingsControl = trigger === "settings";
   const uid = React.useId();
   const busy = pe.state === "enhancing";
   const listed = showChanges && pe.changes.length > 0;
@@ -336,15 +347,29 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
         onValueChange={pe.setValue}
         onSubmit={pe.submit}
         placeholder={placeholder}
-        leftActions={hint != null ? <span className="px-1 text-xs text-md-on-surface-variant">{hint}</span> : undefined}
+        leftActions={
+          composerLeading != null || settingsControl || hint != null ? (
+            <>
+              {composerLeading}
+              {settingsControl && (
+                <Md3RequestSettings
+                  items={promptEnhancerSettingsItems(pe, <Sparkles />, settingsItems)}
+                  onSelect={(id) => selectPromptEnhancerSetting(pe, id, onSettingsSelect)}
+                  className="static [&>[role=menu]]:left-10"
+                />
+              )}
+              {hint != null && <span className="px-1 text-xs text-md-on-surface-variant">{hint}</span>}
+            </>
+          ) : undefined
+        }
         rightActions={
           <>
-            {tool}
+            {!settingsControl && tool}
             {composerActions}
           </>
         }
         className={cn(
-          "rounded-md-xl border border-md-outline-variant bg-md-surface px-4 pb-2 pt-3.5 shadow-md-1 [&>textarea]:text-base",
+          "relative rounded-md-xl border border-md-outline-variant bg-md-surface px-4 pb-2 pt-3.5 shadow-md-1 [&>textarea]:text-base",
           !onSubmit && "[&_button[aria-label=Send]]:hidden",
         )}
       />

@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-modes",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Modes \u2014 choose how the agent approaches a request (Brainstorm, Draft, Review, Plan), shown as a chip in the composer and switchable before sending \u2014 Nucleux agentic UI for React.",
@@ -46,6 +46,7 @@
     "@nucleux/md3-chip": "workspace:*",
     "@nucleux/md3-icon-button": "workspace:*",
     "@nucleux/md3-menu": "workspace:*",
+    "@nucleux/md3-open-input": "workspace:*",
     "@nucleux/md3-segmented-button": "workspace:*",
     "@nucleux/modes": "workspace:*",
     "@nucleux/utils": "workspace:*",

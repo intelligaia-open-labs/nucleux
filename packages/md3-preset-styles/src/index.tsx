@@ -26,10 +26,12 @@ import {
   type PresetStylesNotice,
   type PresetStylesProps,
   type PresetStylesState,
+  type PresetStylesTrigger,
   type PresetStylesVariant,
   type PresetStylesView,
 } from "@nucleux/preset-styles";
 import { Md3AgentComposer } from "@nucleux/md3-agent-composer";
+import { Md3RequestSettings } from "@nucleux/md3-open-input";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3Card } from "@nucleux/md3-card";
 import { Md3IconButton } from "@nucleux/md3-icon-button";
@@ -41,6 +43,8 @@ import { Md3TextField } from "@nucleux/md3-text-field";
 export type Md3PresetStylesProps = PresetStylesProps;
 /** "grid", "list" or "menu". */
 export type Md3PresetStylesVariant = PresetStylesVariant;
+/** "chip" or "settings". */
+export type Md3PresetStylesTrigger = PresetStylesTrigger;
 /** "closed", "menu", "create" or "review". */
 export type Md3PresetStylesView = PresetStylesView;
 /** "applied" or "reset". */
@@ -246,12 +250,14 @@ function Trigger({ s }: { s: PresetStylesState }) {
   );
 }
 
-function Menu({ s, label, description, showPreview, previewPrompt }: {
+function Menu({ s, label, description, showPreview, previewPrompt, showClose }: {
   s: PresetStylesState;
   label: string;
   description: string;
   showPreview: boolean;
   previewPrompt?: string;
+  /** A close × in the header, when the menu opened from Request settings. */
+  showClose?: boolean;
 }) {
   const titleId = `${s.ids}-menu-title`;
   const descId = `${s.ids}-menu-desc`;
@@ -307,7 +313,12 @@ function Menu({ s, label, description, showPreview, previewPrompt }: {
       aria-describedby={descId}
       className="absolute bottom-full left-0 z-50 mb-2 flex w-full min-w-[min(36rem,calc(100vw-2rem))] flex-col rounded-md-lg border border-md-outline-variant bg-md-surface p-2 text-md-on-surface shadow-md-2 animate-nx-fade-in motion-reduce:animate-none"
     >
-      <div className="flex flex-col gap-0.5 px-3 pb-2 pt-2.5">
+      <div className={cn("relative flex flex-col gap-0.5 px-3 pb-2 pt-2.5", showClose && "pr-12")}>
+        {showClose && (
+          <Md3IconButton aria-label="Close" onClick={() => s.closeMenu()} className="absolute right-0 top-0">
+            <X aria-hidden="true" />
+          </Md3IconButton>
+        )}
         <p id={titleId} className="text-base font-medium leading-6 text-md-on-surface">
           {label}
         </p>
@@ -592,6 +603,11 @@ export const Md3PresetStyles = React.forwardRef<HTMLDivElement, Md3PresetStylesP
     onMessageChange: _onMessageChange,
     onSubmit: _onSubmit,
     placeholder = presetStylesCopy.placeholder,
+    composerLeading,
+    composerActions,
+    trigger: triggerMode = "chip",
+    settingsItems: _settingsItems,
+    onSettingsSelect: _onSettingsSelect,
     className,
     ...rest
   } = props;
@@ -601,7 +617,18 @@ export const Md3PresetStyles = React.forwardRef<HTMLDivElement, Md3PresetStylesP
 
   if (variant === "menu") {
     const description = descriptionProp ?? presetStylesCopy.menuDescription(s.agentName);
-    const trigger = <Trigger s={s} />;
+    const settingsControl = triggerMode === "settings";
+    const trigger = settingsControl ? (
+      <Md3RequestSettings
+        ref={s.triggerRef}
+        items={s.settingsItems(<PenLine />)}
+        onSelect={s.onSettingsSelect}
+        onOpenChange={s.onSettingsOpenChange}
+        className={withComposer ? "static [&>[role=menu]]:left-10" : undefined}
+      />
+    ) : (
+      <Trigger s={s} />
+    );
     return (
       <div
         ref={ref}
@@ -609,7 +636,14 @@ export const Md3PresetStyles = React.forwardRef<HTMLDivElement, Md3PresetStylesP
         {...rest}
       >
         {s.open && (
-          <Menu s={s} label={label} description={description} showPreview={showPreview} previewPrompt={previewPrompt} />
+          <Menu
+            s={s}
+            label={label}
+            description={description}
+            showPreview={showPreview}
+            previewPrompt={previewPrompt}
+            showClose={triggerMode === "settings"}
+          />
         )}
         {s.view === "create" && <CreateCard s={s} />}
         {s.view === "review" && <ReviewCard s={s} previewPrompt={previewPrompt} />}
@@ -643,7 +677,21 @@ export const Md3PresetStyles = React.forwardRef<HTMLDivElement, Md3PresetStylesP
             value={s.message}
             onValueChange={s.setMessage}
             onSubmit={s.submit}
-            rightActions={trigger}
+            leftActions={
+              composerLeading != null || settingsControl ? (
+                <>
+                  {composerLeading}
+                  {settingsControl && trigger}
+                </>
+              ) : undefined
+            }
+            rightActions={
+              <>
+                {!settingsControl && trigger}
+                {composerActions}
+              </>
+            }
+            className={settingsControl ? "relative" : undefined}
           />
         ) : (
           trigger

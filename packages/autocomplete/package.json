@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/autocomplete",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "module",
   "sideEffects": false,
   "description": "Autocomplete — ghost text that anticipates and completes user actions — Nucleux agentic UI for React.",

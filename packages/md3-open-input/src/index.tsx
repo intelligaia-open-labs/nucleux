@@ -1,6 +1,7 @@
 import * as React from "react";
-import { ArrowUp, RotateCw, Square } from "lucide-react";
+import { ArrowUp, Maximize2, Minimize2, RotateCw, Square } from "lucide-react";
 import { cn } from "@nucleux/utils";
+import { useComposerHeight } from "@nucleux/open-input";
 import type { OpenInputProps, OpenInputSendKey, OpenInputVariant } from "@nucleux/open-input";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3IconButton } from "@nucleux/md3-icon-button";
@@ -12,9 +13,6 @@ export type Md3OpenInputProps = OpenInputProps;
 export type Md3OpenInputVariant = OpenInputVariant;
 /** Which key sends: "enter" or "mod-enter". */
 export type Md3OpenInputSendKey = OpenInputSendKey;
-
-// useLayoutEffect warns when rendered on the server; fall back to useEffect there.
-const useIsomorphicLayoutEffect = typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 // Copied from @nucleux/open-input (internal there): the default failure message and a promise check.
 const DEFAULT_ERROR = "Couldn't send your message. It's still here — edit it or try again.";
@@ -29,7 +27,9 @@ const EMPHASIZED = "ease-[cubic-bezier(0.2,0,0,1)]";
  * API and behaviour as `OpenInput`, drawn as an M3 composer: a tonal surface
  * with a hairline outline whose focus is a shape change (the outline takes the
  * primary colour and the corner squares up a step), a field that eases taller
- * line by line to `maxHeight` and then scrolls, and a filled send icon button
+ * line by line to eight lines (`maxLines`) and then scrolls — past that an
+ * Expand icon button in the field's corner gives the request most of the
+ * available height, and sending collapses it again — and a filled send icon button
  * that is disabled only while there is nothing to send and carries the send key
  * as `aria-keyshortcuts`. A failed send keeps the text, takes the error colour
  * on the edge and shows one error-container row with Retry; while `loading` the
@@ -44,7 +44,9 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
       onSubmit,
       loading = false,
       onStop,
-      maxHeight = 200,
+      maxLines = 8,
+      maxHeight,
+      expandable = true,
       variant = "expanding-area",
       label,
       sendKey = "enter",
@@ -91,13 +93,15 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
       onValueChange?.(next);
     };
 
-    // Auto-grow the textarea to fit its content, capped at maxHeight.
-    useIsomorphicLayoutEffect(() => {
-      const el = innerRef.current;
-      if (!el || variant === "single-line") return;
-      el.style.height = "auto";
-      el.style.height = `${Math.min(el.scrollHeight, maxHeight)}px`;
-    }, [value, maxHeight, variant]);
+    // Grow with the text up to maxLines (or maxHeight), then scroll; Expand past that.
+    const { expanded, showToggle, toggle } = useComposerHeight(innerRef, {
+      value,
+      maxLines,
+      maxHeight,
+      enabled: variant !== "single-line",
+      expandable,
+      fallbackLineHeight: 24,
+    });
 
     const canSend = value.trim().length > 0 && !disabled && !sending;
 
@@ -146,7 +150,8 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
     const errorContent = error ?? (failed ? DEFAULT_ERROR : null);
     const showError = errorContent != null && errorContent !== false;
 
-    const showCounter = maxLength != null && maxLength > 0 && value.length >= maxLength * counterThreshold;
+    const showCounter =
+      maxLength != null && maxLength > 0 && value.length >= maxLength * counterThreshold;
     const atLimit = maxLength != null && value.length >= maxLength;
     const counter = showCounter ? (
       <span
@@ -160,7 +165,8 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
       </span>
     ) : null;
 
-    const sendShortcut = variant === "single-line" || sendKey === "enter" ? "Enter" : "Meta+Enter Control+Enter";
+    const sendShortcut =
+      variant === "single-line" || sendKey === "enter" ? "Enter" : "Meta+Enter Control+Enter";
     const big = variant === "input-with-send";
     const sendShape = big ? "size-12 rounded-md-lg" : "size-10 rounded-full";
     const sendButton = loading ? (
@@ -199,7 +205,7 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
       <div
         id={errorId}
         role="alert"
-        className="flex items-center gap-2 rounded-md-md bg-md-error-container py-1 pl-3 pr-1 text-sm text-md-on-error-container animate-nx-fade-in motion-reduce:animate-none"
+        className="flex animate-nx-fade-in items-center gap-2 rounded-md-md bg-md-error-container py-1 pl-3 pr-1 text-sm text-md-on-error-container motion-reduce:animate-none"
       >
         <span className="min-w-0 flex-1">{errorContent}</span>
         <Md3Button
@@ -225,7 +231,9 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
         placeholder={placeholder}
         wrap={variant === "single-line" ? "off" : undefined}
         aria-invalid={showError || undefined}
-        aria-describedby={[ariaDescribedBy, showError ? errorId : null].filter(Boolean).join(" ") || undefined}
+        aria-describedby={
+          [ariaDescribedBy, showError ? errorId : null].filter(Boolean).join(" ") || undefined
+        }
         {...props}
         onChange={(e) => {
           if (failed && error == null) setFailed(false);
@@ -236,11 +244,42 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
           "min-w-0 flex-1 resize-none bg-transparent px-2 py-2 text-base leading-6 tracking-[0.5px] text-md-on-surface caret-md-primary outline-none placeholder:text-md-on-surface-variant disabled:opacity-[0.38]",
           variant === "single-line"
             ? "h-10 overflow-hidden"
-            : cn("max-h-[inherit] transition-[height] duration-150 motion-reduce:transition-none", EMPHASIZED),
+            : cn("transition-[height] duration-150 motion-reduce:transition-none", EMPHASIZED),
           variant === "expanding-area" && "w-full",
+          showToggle && "pr-10",
         )}
       />
     );
+
+    // Expand / Collapse: a 32px standard icon button in the field's top-right corner.
+    const expandButton = showToggle ? (
+      <Md3IconButton
+        aria-label={expanded ? "Collapse" : "Expand"}
+        aria-expanded={expanded}
+        aria-controls={fieldId}
+        onClick={toggle}
+        className="absolute right-0 top-0 size-8 shrink-0 [&_svg]:size-5"
+      >
+        {expanded ? <Minimize2 aria-hidden="true" /> : <Maximize2 aria-hidden="true" />}
+      </Md3IconButton>
+    ) : null;
+
+    // The field and its Expand control; expanded, it takes its own full-width row first.
+    const fieldArea =
+      variant === "single-line" ? (
+        field
+      ) : (
+        <div
+          className={cn(
+            "relative flex min-w-0 flex-1",
+            (variant === "expanding-area" || expanded) && "w-full basis-full",
+            expanded && "order-first",
+          )}
+        >
+          {field}
+          {expandButton}
+        </div>
+      );
 
     const boxBase = cn(
       "border bg-md-surface-container-high text-md-on-surface transition-[border-radius,border-color] duration-200 motion-reduce:transition-none",
@@ -251,7 +290,13 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
     let composer: React.ReactNode;
     if (variant === "single-line") {
       composer = (
-        <div className={cn(boxBase, "flex min-h-12 items-center gap-1 rounded-full py-1 pl-3 pr-1", className)}>
+        <div
+          className={cn(
+            boxBase,
+            "flex min-h-12 items-center gap-1 rounded-full py-1 pl-3 pr-1",
+            className,
+          )}
+        >
           {field}
           {actions}
           {counter}
@@ -265,10 +310,12 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
             className={cn(
               boxBase,
               "flex min-h-12 min-w-0 flex-1 items-end gap-1 rounded-md-lg p-1 focus-within:rounded-md-md",
+              expanded && "flex-wrap",
               className,
             )}
+            data-expanded={expanded || undefined}
           >
-            {field}
+            {fieldArea}
             {actions}
             {counter && <span className="self-center pr-2">{counter}</span>}
           </div>
@@ -278,6 +325,7 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
     } else {
       composer = (
         <div
+          data-expanded={expanded || undefined}
           className={cn(
             boxBase,
             "flex flex-col gap-2 rounded-md-xl p-3 focus-within:rounded-md-lg",
@@ -285,7 +333,7 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
           )}
         >
           {errorRow}
-          {field}
+          {fieldArea}
           <div className="flex items-center gap-1">
             {actions}
             <span className="flex-1" />
@@ -299,7 +347,10 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
     return (
       <div className={cn("flex flex-col gap-1.5", containerClassName)}>
         {label != null && (
-          <label htmlFor={fieldId} className="px-1 text-sm font-medium tracking-[0.1px] text-md-on-surface-variant">
+          <label
+            htmlFor={fieldId}
+            className="px-1 text-sm font-medium tracking-[0.1px] text-md-on-surface-variant"
+          >
             {label}
           </label>
         )}
@@ -310,3 +361,4 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
   },
 );
 Md3OpenInput.displayName = "Md3OpenInput";
+export * from "./request-settings";

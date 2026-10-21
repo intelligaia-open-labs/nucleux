@@ -1,11 +1,12 @@
 import * as React from "react";
-import { ArrowUp, RotateCw, Square } from "lucide-react";
+import { ArrowUp, Maximize2, Minimize2, RotateCw, Square } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import { Spinner } from "@nucleux/spinner";
+import { useComposerHeight } from "./use-composer-height";
 
-// useLayoutEffect warns when rendered on the server; fall back to useEffect there.
-const useIsomorphicLayoutEffect = typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+export { useComposerHeight } from "./use-composer-height";
+export type { ComposerHeightOptions, ComposerHeightState } from "./use-composer-height";
 
 /** Layout of the composer, from the spec's variants. */
 export type OpenInputVariant = "expanding-area" | "single-line" | "input-with-send";
@@ -13,11 +14,10 @@ export type OpenInputVariant = "expanding-area" | "single-line" | "input-with-se
 /** Which key sends: plain Enter (Shift+Enter is a newline), or ⌘/Ctrl+Enter (Enter is a newline). */
 export type OpenInputSendKey = "enter" | "mod-enter";
 
-export interface OpenInputProps
-  extends Omit<
-    React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-    "onSubmit" | "value" | "defaultValue" | "onChange"
-  > {
+export interface OpenInputProps extends Omit<
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+  "onSubmit" | "value" | "defaultValue" | "onChange"
+> {
   /** Controlled value of the input. Omit (and use `defaultValue`) for an uncontrolled composer. */
   value?: string;
   /** Initial value when uncontrolled. */
@@ -35,8 +35,23 @@ export interface OpenInputProps
   loading?: boolean;
   /** Called when the stop button is pressed while `loading`. */
   onStop?: () => void;
-  /** Max auto-grow height in px before scrolling (about six lines by default). */
+  /**
+   * Lines the field grows to before it scrolls. Defaults to 8. Ignored by the
+   * "single-line" variant.
+   */
+  maxLines?: number;
+  /**
+   * An explicit ceiling in px before the field scrolls. When set it replaces
+   * the `maxLines` ceiling.
+   */
   maxHeight?: number;
+  /**
+   * Once the text overflows the ceiling, show an Expand icon button in the
+   * field's top-right corner; expanded, the field takes its own full-width row
+   * and most of the available height, and Collapse (or sending, which empties
+   * the field) brings it back. Defaults to true. Never shown for "single-line".
+   */
+  expandable?: boolean;
   /**
    * "expanding-area" (default): grows with the prompt, controls in a footer row.
    * "single-line": a compact one-row pill for dense layouts.
@@ -73,7 +88,8 @@ const isPromise = (v: unknown): v is Promise<unknown> =>
 
 /**
  * The persistent free-form composer for any natural-language ask. It grows
- * with the prompt up to a ceiling and then scrolls, always pairs the field
+ * with the prompt up to eight lines (`maxLines`) and then scrolls; past that an
+ * Expand control gives the request most of the available height, always pairs the field
  * with a visible send button (Enter, or ⌘/Ctrl+Enter with
  * `sendKey="mod-enter"`), keeps Send disabled only while there is nothing to
  * send, shows a character counter only near `maxLength`, and never loses the
@@ -90,7 +106,9 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
       onSubmit,
       loading = false,
       onStop,
-      maxHeight = 200,
+      maxLines = 8,
+      maxHeight,
+      expandable = true,
       variant = "expanding-area",
       label,
       sendKey = "enter",
@@ -137,13 +155,15 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
       onValueChange?.(next);
     };
 
-    // Auto-grow the textarea to fit its content, capped at maxHeight.
-    useIsomorphicLayoutEffect(() => {
-      const el = innerRef.current;
-      if (!el || variant === "single-line") return;
-      el.style.height = "auto";
-      el.style.height = `${Math.min(el.scrollHeight, maxHeight)}px`;
-    }, [value, maxHeight, variant]);
+    // Grow with the text up to maxLines (or maxHeight), then scroll; Expand past that.
+    const { expanded, showToggle, toggle } = useComposerHeight(innerRef, {
+      value,
+      maxLines,
+      maxHeight,
+      enabled: variant !== "single-line",
+      expandable,
+      fallbackLineHeight: 20,
+    });
 
     const canSend = value.trim().length > 0 && !disabled && !sending;
 
@@ -182,8 +202,7 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
       props.onKeyDown?.(e);
       if (e.defaultPrevented || e.key !== "Enter" || e.nativeEvent.isComposing) return;
       const mod = e.metaKey || e.ctrlKey;
-      const sends =
-        variant === "single-line" || (sendKey === "enter" ? !e.shiftKey : mod);
+      const sends = variant === "single-line" || (sendKey === "enter" ? !e.shiftKey : mod);
       if (sends) {
         e.preventDefault();
         submit();
@@ -199,13 +218,17 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
     const counter = showCounter ? (
       <span
         aria-live="polite"
-        className={cn("shrink-0 text-xs tabular-nums text-muted-foreground", atLimit && "text-destructive")}
+        className={cn(
+          "shrink-0 text-xs tabular-nums text-muted-foreground",
+          atLimit && "text-destructive",
+        )}
       >
         {value.length} / {maxLength}
       </span>
     ) : null;
 
-    const sendShortcut = variant === "single-line" || sendKey === "enter" ? "Enter" : "Meta+Enter Control+Enter";
+    const sendShortcut =
+      variant === "single-line" || sendKey === "enter" ? "Enter" : "Meta+Enter Control+Enter";
     const iconSize = variant === "input-with-send" ? "icon-lg" : "icon-sm";
     const roundClass = variant === "input-with-send" ? "rounded-xl" : "rounded-full";
     const sendButton = loading ? (
@@ -230,7 +253,12 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
         className={cn("shrink-0 disabled:opacity-40", roundClass)}
       >
         {sending ? (
-          <Spinner aria-hidden="true" role={undefined} aria-label={undefined} className="motion-reduce:animate-none" />
+          <Spinner
+            aria-hidden="true"
+            role={undefined}
+            aria-label={undefined}
+            className="motion-reduce:animate-none"
+          />
         ) : (
           <ArrowUp className="size-4" />
         )}
@@ -268,7 +296,9 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
         placeholder={placeholder}
         wrap={variant === "single-line" ? "off" : undefined}
         aria-invalid={showError || undefined}
-        aria-describedby={[ariaDescribedBy, showError ? errorId : null].filter(Boolean).join(" ") || undefined}
+        aria-describedby={
+          [ariaDescribedBy, showError ? errorId : null].filter(Boolean).join(" ") || undefined
+        }
         {...props}
         onChange={(e) => {
           if (failed && error == null) setFailed(false);
@@ -277,11 +307,48 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
         onKeyDown={handleKeyDown}
         className={cn(
           "min-w-0 flex-1 resize-none bg-transparent px-2 py-1.5 text-sm text-foreground outline-none placeholder:text-muted-foreground disabled:opacity-50",
-          variant === "single-line" ? "h-8 overflow-hidden leading-5" : "max-h-[inherit]",
+          variant === "single-line" && "h-8 overflow-hidden leading-5",
           variant === "expanding-area" && "w-full",
+          showToggle && "pr-10",
         )}
       />
     );
+
+    const expandButton = showToggle ? (
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon-sm"
+        aria-label={expanded ? "Collapse" : "Expand"}
+        aria-expanded={expanded}
+        aria-controls={fieldId}
+        onClick={toggle}
+        className="absolute right-0 top-0 rounded-full text-muted-foreground hover:text-foreground"
+      >
+        {expanded ? (
+          <Minimize2 aria-hidden="true" className="size-4" />
+        ) : (
+          <Maximize2 aria-hidden="true" className="size-4" />
+        )}
+      </Button>
+    ) : null;
+
+    // The field and its Expand control; expanded, it takes its own full-width row first.
+    const fieldArea =
+      variant === "single-line" ? (
+        field
+      ) : (
+        <div
+          className={cn(
+            "relative flex min-w-0 flex-1",
+            (variant === "expanding-area" || expanded) && "w-full basis-full",
+            expanded && "order-first",
+          )}
+        >
+          {field}
+          {expandButton}
+        </div>
+      );
 
     const boxBase = cn(
       "border border-input bg-background shadow-sm transition-[border-radius,box-shadow] focus-within:ring-2 focus-within:ring-ring",
@@ -291,7 +358,13 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
     let composer: React.ReactNode;
     if (variant === "single-line") {
       composer = (
-        <div className={cn(boxBase, "flex min-h-10 items-center gap-1.5 rounded-full py-1 pl-2 pr-1", className)}>
+        <div
+          className={cn(
+            boxBase,
+            "flex min-h-10 items-center gap-1.5 rounded-full py-1 pl-2 pr-1",
+            className,
+          )}
+        >
           {field}
           {actions}
           {counter}
@@ -301,8 +374,16 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
     } else if (variant === "input-with-send") {
       composer = (
         <div className="flex items-end gap-2">
-          <div className={cn(boxBase, "flex min-w-0 flex-1 items-end gap-1.5 rounded-xl p-1.5", className)}>
-            {field}
+          <div
+            data-expanded={expanded || undefined}
+            className={cn(
+              boxBase,
+              "flex min-w-0 flex-1 items-end gap-1.5 rounded-xl p-1.5",
+              expanded && "flex-wrap",
+              className,
+            )}
+          >
+            {fieldArea}
             {actions}
             {counter && <span className="self-center">{counter}</span>}
           </div>
@@ -312,6 +393,7 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
     } else {
       composer = (
         <div
+          data-expanded={expanded || undefined}
           className={cn(
             boxBase,
             "flex flex-col gap-2 rounded-2xl p-2 focus-within:rounded-xl motion-reduce:transition-none",
@@ -319,7 +401,7 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
           )}
         >
           {errorRow}
-          {field}
+          {fieldArea}
           <div className="flex items-center gap-1.5">
             {actions}
             <span className="flex-1" />
@@ -344,3 +426,4 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
   },
 );
 OpenInput.displayName = "OpenInput";
+export * from "./request-settings";

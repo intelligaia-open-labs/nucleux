@@ -206,7 +206,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **model-selection** (`@nucleux/model-selection`) — Model Selection — choose which model handles the request.
   Exports: `ModelSelection, ModelSelectionVariant, ModelOption, ModelSelectionProps`
 - **modes** (`@nucleux/modes`) — Modes — choose how the agent works on a request (Fast, Balanced, Deep research), shown in the composer and switchable before sending.
-  Exports: `useModes, useModesRoving, useModesDismiss, modesLabels, modeSupportingText, ModesSegmented, ModesList, ModesChip, …`
+  Exports: `useModes, useModesRoving, useModesDismiss, modesLabels, modesSettingsItem, modeSupportingText, ModesSegmented, ModesList, …`
 - **name** (`@nucleux/name`) — Name — a consistent name and role for the AI so it can be referred to and remembered.
   Exports: `AgentName, AgentNameVariant, AgentNameProps`
 - **native-select** (`@nucleux/native-select`) — Styled native <select>.
@@ -216,7 +216,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **nudges** (`@nucleux/nudges`) — Nudges — tiny contextual hints that surface features the user hasn't discovered yet.
   Exports: `NudgeAction, Nudge, NudgeVariant, NudgeSide, NudgePersist, NudgeActionProps, NudgeProps`
 - **open-input** (`@nucleux/open-input`) — Open Input — free-form text box for any natural-language ask.
-  Exports: `OpenInput, OpenInputVariant, OpenInputSendKey, OpenInputProps`
+  Exports: `useComposerHeight, OpenInput, REQUEST_SETTINGS_ORDER, mergeRequestSettingsItems, requestSettingsLabel, useRequestSettings, RequestSettings, ComposerHeightOptions, …`
 - **pagination** (`@nucleux/pagination`) — Page navigation controls.
   Exports: `Pagination, PaginationProps`
 - **personality** (`@nucleux/personality`) — Personality — the voice and tone the assistant speaks in.
@@ -230,7 +230,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **progress** (`@nucleux/progress`) — Determinate/indeterminate progress bar.
   Exports: `Progress, ProgressSize, ProgressProps`
 - **prompt-enhancer** (`@nucleux/prompt-enhancer`) — Prompt Enhancer — a magic-wand action that rewrites a short ask into a precise one, shown as a reviewable diff.
-  Exports: `PROMPT_ENHANCER_TEXT, buildEnhancedPrompt, resolveEnhancedPrompt, getPromptEnhancerSegments, describePromptEnhancerChange, usePromptEnhancer, splitPromptEnhancerProps, PromptEnhancer, …`
+  Exports: `PROMPT_ENHANCER_TEXT, promptEnhancerSettingsItems, selectPromptEnhancerSetting, buildEnhancedPrompt, resolveEnhancedPrompt, getPromptEnhancerSegments, describePromptEnhancerChange, usePromptEnhancer, …`
 - **questionnaire** (`@nucleux/questionnaire`) — Multi-step questionnaire with single, multiple, freeform and skippable answers.
   Exports: `Questionnaire, QuestionnaireProgress, QuestionnaireItem, QuestionnaireTitle, QuestionnaireDescription, QuestionnaireChoices, QuestionnaireChoice, QuestionnaireChoiceDescription, …`
 - **radio-group** (`@nucleux/radio-group`) — Single-select radio group.
@@ -385,17 +385,17 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **md3-nudges** (`@nucleux/md3-nudges`) — Material 3 Nudges — a quiet, dismissible tip about a capability that would help right now.
   Exports: `Md3NudgeAction, Md3Nudge, Md3NudgeProps, Md3NudgeActionProps, Md3NudgeVariant, Md3NudgeSide, Md3NudgePersist`
 - **md3-open-input** (`@nucleux/md3-open-input`) — Material 3 Open Input — the persistent free-form composer for any natural-language ask.
-  Exports: `Md3OpenInput, Md3OpenInputProps, Md3OpenInputVariant, Md3OpenInputSendKey`
+  Exports: `Md3OpenInput, Md3RequestSettings, Md3OpenInputProps, Md3OpenInputVariant, Md3OpenInputSendKey, Md3RequestSettingsItem, Md3RequestSettingsProps`
 - **md3-personality** (`@nucleux/md3-personality`) — Material 3 Personality — choose how the agent writes while the trust language stays fixed.
   Exports: `Md3Personality, Md3PersonalityVoiceCard, Md3PersonalitySampleDialog, Md3PersonalityProps, Md3PersonalityVoiceCardProps, Md3PersonalitySampleDialogProps`
 - **md3-preset-styles** (`@nucleux/md3-preset-styles`) — Material 3 Preset Styles — named styles for how replies are written, previewed and switchable mid-conversation.
-  Exports: `Md3PresetStyles, Md3PresetStylesProps, Md3PresetStylesVariant, Md3PresetStylesView, Md3PresetStylesNotice, Md3PresetStyle, Md3PresetStyleSwatch, Md3PresetStyleReference, …`
+  Exports: `Md3PresetStyles, Md3PresetStylesProps, Md3PresetStylesVariant, Md3PresetStylesTrigger, Md3PresetStylesView, Md3PresetStylesNotice, Md3PresetStyle, Md3PresetStyleSwatch, …`
 - **md3-proactive** (`@nucleux/md3-proactive`) — Material 3 Proactive Suggestions — the agent notices something and offers one reviewable next step.
   Exports: `Md3ProactiveSuggestion, Md3ProactiveSuggestionProps, Md3ProactiveSuggestionVariant, Md3ProactiveSuggestionPersist`
 - **md3-progress** (`@nucleux/md3-progress`) — Material 3 progress indicators (linear, circular).
   Exports: `Md3LinearProgress, Md3CircularProgress, Md3LinearProgressProps, Md3CircularProgressProps`
 - **md3-prompt-enhancer** (`@nucleux/md3-prompt-enhancer`) — Material 3 Prompt Enhancer — proposes a clearer version of the request you wrote, every addition marked and explained.
-  Exports: `Md3PromptEnhancer, Md3PromptEnhancerProps, Md3PromptEnhancerVariant, Md3PromptEnhancerState, Md3PromptEnhancerDiffStyle, Md3PromptEnhancerChange, Md3PromptEnhancerSuggestion, Md3PromptEnhancerSegment, …`
+  Exports: `Md3PromptEnhancer, Md3PromptEnhancerProps, Md3PromptEnhancerVariant, Md3PromptEnhancerTrigger, Md3PromptEnhancerState, Md3PromptEnhancerDiffStyle, Md3PromptEnhancerChange, Md3PromptEnhancerSuggestion, …`
 - **md3-radio** (`@nucleux/md3-radio`) — Material 3 radio group.
   Exports: `Md3RadioGroup, Md3Radio, Md3RadioGroupProps, Md3RadioProps`
 - **md3-randomize** (`@nucleux/md3-randomize`) — Material 3 Randomize — a surprise-me control that places a random, editable starter in the composer.

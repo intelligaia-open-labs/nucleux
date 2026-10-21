@@ -12,6 +12,7 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@nucleux/input-group";
+import { RequestSettings, mergeRequestSettingsItems, type RequestSettingsItem } from "@nucleux/open-input";
 
 /* ─────────────────────────────── Types ─────────────────────────────── */
 
@@ -41,6 +42,13 @@ export type PromptEnhancerState =
 
 /** How the suggestion is presented: "split" (You wrote / Enhanced columns) or "inline" (one sentence with the additions marked). */
 export type PromptEnhancerDiffStyle = "split" | "inline";
+
+/**
+ * Where enhancing starts from. "chip" (default): the Enhance tool in the composer. "settings": no
+ * tool up front; a Request settings control (the tune icon) lists "Improve prompt", which starts
+ * the enhance flow and shows the review.
+ */
+export type PromptEnhancerTrigger = "chip" | "settings";
 
 /** One addition the enhancer proposes. */
 export interface PromptEnhancerChange {
@@ -144,6 +152,18 @@ export interface PromptEnhancerProps
   failureMessage?: string;
   /** Extra composer tools (model chip, attach…), placed beside the enhance action. */
   composerActions?: React.ReactNode;
+  /** Composer controls placed first in the toolbar, before Request settings (attach, +…). */
+  composerLeading?: React.ReactNode;
+  /**
+   * "chip" (default): the Enhance tool sits in the composer. "settings": no tool up front; a Request
+   * settings control right after `composerLeading` lists "Improve prompt", which starts enhancing
+   * (or cancels it while it runs) and shows the review.
+   */
+  trigger?: PromptEnhancerTrigger;
+  /** With `trigger="settings"`: the app's other request settings for the same menu (Mode, Tone, Style…), merged in the site's order. */
+  settingsItems?: RequestSettingsItem[];
+  /** With `trigger="settings"`: called when one of `settingsItems` is chosen. */
+  onSettingsSelect?: (id: string) => void;
 }
 
 /* ─────────────────────────── Shared logic ─────────────────────────── */
@@ -178,7 +198,42 @@ export const PROMPT_ENHANCER_TEXT = {
   autoDescription: "Short prompts are expanded before they’re sent.",
   added: "added: ",
   removed: "removed: ",
+  settingsLabel: "Improve prompt",
+  settingsBusy: "Improving…",
 } as const;
+
+/**
+ * The Request settings rows for a prompt enhancer: its "Improve prompt" row ("Improving…" while it
+ * runs; unavailable while there is nothing to improve) merged with the app's other settings.
+ */
+export function promptEnhancerSettingsItems(
+  pe: PromptEnhancerController,
+  icon?: React.ReactNode,
+  others?: RequestSettingsItem[],
+): RequestSettingsItem[] {
+  const busy = pe.state === "enhancing";
+  return mergeRequestSettingsItems(
+    {
+      id: "improve",
+      label: PROMPT_ENHANCER_TEXT.settingsLabel,
+      icon,
+      value: busy ? PROMPT_ENHANCER_TEXT.settingsBusy : undefined,
+      disabled: !busy && !pe.canEnhance,
+    },
+    others,
+  );
+}
+
+/** Handles a Request settings row for a prompt enhancer: "improve" enhances (or cancels a run); others go to `onSettingsSelect`. */
+export function selectPromptEnhancerSetting(
+  pe: PromptEnhancerController,
+  id: string,
+  onSettingsSelect?: (id: string) => void,
+) {
+  if (id !== "improve") return onSettingsSelect?.(id);
+  if (pe.state === "enhancing") pe.cancel();
+  else pe.enhance();
+}
 
 const splitEnd = (original: string) => {
   const m = /^([\s\S]*?)([.!?]*)\s*$/.exec(original);
@@ -527,6 +582,10 @@ export function splitPromptEnhancerProps(props: PromptEnhancerProps) {
     placeholder: _p,
     failureMessage: _fm,
     composerActions: _ca,
+    composerLeading: _cl,
+    trigger: _tr,
+    settingsItems: _si,
+    onSettingsSelect: _oss,
     ...rest
   } = props;
   return rest;
@@ -565,10 +624,15 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
     placeholder = PROMPT_ENHANCER_TEXT.placeholder,
     failureMessage = PROMPT_ENHANCER_TEXT.failure,
     composerActions,
+    composerLeading,
+    trigger = "chip",
+    settingsItems,
+    onSettingsSelect,
     onSubmit,
   } = props;
   const { className, ...rest } = splitPromptEnhancerProps(props);
   const pe = usePromptEnhancer(props);
+  const settingsControl = trigger === "settings";
   const uid = React.useId();
   const busy = pe.state === "enhancing";
   const listed = showChanges && pe.changes.length > 0;
@@ -788,24 +852,41 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
         className="min-h-0 w-full flex-none px-3.5 py-3 text-sm leading-5"
       />
       <InputGroupAddon align="block-end" className="cursor-default justify-between border-t border-border px-3.5 py-2 [&.border-t]:pt-2">
-        {hint != null ? <InputGroupText className="text-xs font-normal">{hint}</InputGroupText> : <span />}
+        {composerLeading != null || settingsControl ? (
+          <span className="flex items-center gap-1.5">
+            {composerLeading}
+            {settingsControl && (
+              <RequestSettings
+                items={promptEnhancerSettingsItems(pe, <Sparkles />, settingsItems)}
+                onSelect={(id) => selectPromptEnhancerSetting(pe, id, onSettingsSelect)}
+              />
+            )}
+            {hint != null && <InputGroupText className="text-xs font-normal">{hint}</InputGroupText>}
+          </span>
+        ) : hint != null ? (
+          <InputGroupText className="text-xs font-normal">{hint}</InputGroupText>
+        ) : (
+          <span />
+        )}
         <span className="ml-auto flex items-center gap-1.5">
           {composerActions}
-          <InputGroupButton
-            size="sm"
-            variant={busy ? "secondary" : "primary"}
-            onClick={busy ? pe.cancel : pe.enhance}
-            disabled={!busy && !pe.canEnhance}
-            aria-label={busy ? PROMPT_ENHANCER_TEXT.cancel : `${actionLabel} this prompt with AI`}
-            className="h-8 px-3 text-sm font-medium"
-          >
-            {busy ? (
-              <Spinner aria-hidden role={undefined} aria-label={undefined} className="size-3.5 motion-reduce:animate-none" />
-            ) : (
-              <Sparkles aria-hidden className="size-3.5 text-warning" />
-            )}
-            {busy ? PROMPT_ENHANCER_TEXT.busy : actionLabel}
-          </InputGroupButton>
+          {!settingsControl && (
+            <InputGroupButton
+              size="sm"
+              variant={busy ? "secondary" : "primary"}
+              onClick={busy ? pe.cancel : pe.enhance}
+              disabled={!busy && !pe.canEnhance}
+              aria-label={busy ? PROMPT_ENHANCER_TEXT.cancel : `${actionLabel} this prompt with AI`}
+              className="h-8 px-3 text-sm font-medium"
+            >
+              {busy ? (
+                <Spinner aria-hidden role={undefined} aria-label={undefined} className="size-3.5 motion-reduce:animate-none" />
+              ) : (
+                <Sparkles aria-hidden className="size-3.5 text-warning" />
+              )}
+              {busy ? PROMPT_ENHANCER_TEXT.busy : actionLabel}
+            </InputGroupButton>
+          )}
           {onSubmit && (
             <InputGroupButton
               size="icon-sm"

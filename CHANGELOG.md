@@ -8,6 +8,32 @@ The format is machine-readable: each version heading starts with `## ` followed
 by a version tag and date, and entries are grouped under `### Added`, `### Changed`,
 `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings.
 
+## [0.8.0] — 2026-10-21
+
+Follows nucleux.in's 21 Oct changes to its Material 3 composer.
+
+### Added
+- `RequestSettings` (`@nucleux/open-input`) / `Md3RequestSettings`
+  (`@nucleux/md3-open-input`) — the "Request settings" tune control that sits right
+  after the composer's +: one icon button (a dot when something is set) whose menu
+  lists Mode, Tone, Style and Improve prompt with their current values.
+- `trigger="settings"` on `Modes`, `VoiceTone`, `PresetStyles` and `PromptEnhancer`
+  (both families): no chip or tool up front — the pattern's own row in
+  `RequestSettings` opens its picker, which then has a Close button. Add the other
+  rows with `settingsItems` / `onSettingsSelect`. The default stays `"chip"`.
+- `composerLeading` on `VoiceTone`, `PresetStyles`, `PromptEnhancer` and
+  `composerActions` on `PresetStyles`, for the composer's + and model/mic slots.
+- `maxLines` (default 8) and `expandable` (default `true`) on `OpenInput`,
+  `Md3OpenInput` and `Md3AgentComposer`: the field grows to 8 lines, then scrolls;
+  past that an Expand / Collapse button gives the request most of the height.
+  Sending collapses it. Also `useComposerHeight` from `@nucleux/open-input`.
+
+### Changed
+- `OpenInput`, `Md3OpenInput` and `Md3AgentComposer` no longer default `maxHeight`
+  to 200px; the ceiling is now `maxLines` (8). An explicit `maxHeight` still wins.
+- The Material 3 live-preview stories of Modes, VoiceTone, PresetStyles and
+  PromptEnhancer use `trigger="settings"`, as nucleux.in now does.
+
 ## [0.7.0] — 2026-10-21
 
 nucleux.in marked six more patterns *Available* (Initially → Prompt Scaffolds).

@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/prompt-enhancer",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "module",
   "sideEffects": false,
   "description": "Prompt Enhancer — a magic-wand action that rewrites a short ask into a precise one, shown as a reviewable diff — Nucleux agentic UI for React.",
@@ -42,6 +42,7 @@
     "@nucleux/button": "workspace:*",
     "@nucleux/checkbox": "workspace:*",
     "@nucleux/input-group": "workspace:*",
+    "@nucleux/open-input": "workspace:*",
     "@nucleux/spinner": "workspace:*",
     "@nucleux/switch": "workspace:*",
     "@nucleux/utils": "workspace:*",

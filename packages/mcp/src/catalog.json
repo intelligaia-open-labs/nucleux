@@ -1,6 +1,6 @@
 {
   "library": "@nucleux/react",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "generatedFrom": "packages/* (do not edit — run scripts/gen-mcp-catalog.mjs)",
   "setup": {
     "installFull": "pnpm add @nucleux/react @nucleux/tokens",
@@ -7043,7 +7043,7 @@
       "name": "md3-agent-composer",
       "package": "@nucleux/md3-agent-composer",
       "kind": "component",
-      "description": "A Material Design 3 agent task composer — a tonal surface with an auto-growing\nprompt field, a toolbar, and a filled send/stop button with a state layer.\nEnter submits, Shift+Enter newlines.",
+      "description": "A Material Design 3 agent task composer — a tonal surface with an auto-growing\nprompt field, a toolbar, and a filled send/stop button with a state layer.\nThe field grows to eight lines (`maxLines`) and then scrolls; past that an\nExpand icon button gives the request most of the available height, and\nsending collapses it again. Enter submits, Shift+Enter newlines.",
       "summary": "Material 3 agent task composer — Nucleux agentic UI for React.",
       "keywords": [
         "nucleux",
@@ -7067,9 +7067,9 @@
       "props": [
         {
           "name": "Md3AgentComposerProps",
-          "source": "export interface Md3AgentComposerProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSubmit\"> {\n  value: string;\n  onValueChange: (value: string) => void;\n  onSubmit: (value: string) => void;\n  placeholder?: string;\n  leftActions?: React.ReactNode;\n  rightActions?: React.ReactNode;\n  loading?: boolean;\n  onStop?: () => void;\n  maxHeight?: number;\n  disabled?: boolean;\n}",
+          "source": "export interface Md3AgentComposerProps extends Omit<\n  React.HTMLAttributes<HTMLDivElement>,\n  \"onSubmit\"\n> {\n  value: string;\n  onValueChange: (value: string) => void;\n  onSubmit: (value: string) => void;\n  placeholder?: string;\n  leftActions?: React.ReactNode;\n  rightActions?: React.ReactNode;\n  loading?: boolean;\n  onStop?: () => void;\n  /** Lines the field grows to before it scrolls. Defaults to 8. */\n  maxLines?: number;\n  /** An explicit ceiling in px before the field scrolls; when set it replaces the `maxLines` ceiling. */\n  maxHeight?: number;\n  /**\n   * Once the text overflows the ceiling, show an Expand icon button in the\n   * field's top-right corner; expanded, the field grows to most of the\n   * available height, and Collapse (or sending, which empties the field)\n   * brings it back. Defaults to true.\n   */\n  expandable?: boolean;\n  disabled?: boolean;\n}",
           "extends": [
-            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onSubmit\">"
+            "Omit< React.HTMLAttributes<HTMLDivElement>, \"onSubmit\" >"
           ],
           "members": [
             {
@@ -7115,10 +7115,24 @@
               "required": false
             },
             {
+              "name": "maxLines",
+              "type": "number",
+              "required": false,
+              "description": "Lines the field grows to before it scrolls. Defaults to 8.",
+              "default": "8"
+            },
+            {
               "name": "maxHeight",
               "type": "number",
               "required": false,
-              "default": "200"
+              "description": "An explicit ceiling in px before the field scrolls; when set it replaces the `maxLines` ceiling."
+            },
+            {
+              "name": "expandable",
+              "type": "boolean",
+              "required": false,
+              "description": "Once the text overflows the ceiling, show an Expand icon button in the field's top-right corner; expanded, the field grows to most of the available height, and Collapse (or sending, which empties the field) brings it back. Defaults to true.",
+              "default": "true"
             },
             {
               "name": "disabled",
@@ -9615,6 +9629,7 @@
         "Md3ModeOption",
         "Md3ModesNotice",
         "Md3ModesVariant",
+        "Md3ModesTrigger",
         "Md3ModesSubmitDetails",
         "Md3ModesProps",
         "Md3ModesSegmentedProps",
@@ -10021,7 +10036,7 @@
       "name": "md3-open-input",
       "package": "@nucleux/md3-open-input",
       "kind": "component",
-      "description": "The Material 3 persistent composer for any natural-language ask — the same\nAPI and behaviour as `OpenInput`, drawn as an M3 composer: a tonal surface\nwith a hairline outline whose focus is a shape change (the outline takes the\nprimary colour and the corner squares up a step), a field that eases taller\nline by line to `maxHeight` and then scrolls, and a filled send icon button\nthat is disabled only while there is nothing to send and carries the send key\nas `aria-keyshortcuts`. A failed send keeps the text, takes the error colour\non the edge and shows one error-container row with Retry; while `loading` the\nsend button becomes a tonal Stop. Motion is dropped under reduced motion.",
+      "description": "The Material 3 persistent composer for any natural-language ask — the same\nAPI and behaviour as `OpenInput`, drawn as an M3 composer: a tonal surface\nwith a hairline outline whose focus is a shape change (the outline takes the\nprimary colour and the corner squares up a step), a field that eases taller\nline by line to eight lines (`maxLines`) and then scrolls — past that an\nExpand icon button in the field's corner gives the request most of the\navailable height, and sending collapses it again — and a filled send icon button\nthat is disabled only while there is nothing to send and carries the send key\nas `aria-keyshortcuts`. A failed send keeps the text, takes the error colour\non the edge and shows one error-container row with Retry; while `loading` the\nsend button becomes a tonal Stop. Motion is dropped under reduced motion.",
       "summary": "Material 3 Open Input — the persistent free-form composer for any natural-language ask — Nucleux agentic UI for React.",
       "keywords": [
         "nucleux",
@@ -10040,14 +10055,18 @@
       ],
       "exports": [
         "Md3OpenInput",
+        "Md3RequestSettings",
         "Md3OpenInputProps",
         "Md3OpenInputVariant",
-        "Md3OpenInputSendKey"
+        "Md3OpenInputSendKey",
+        "Md3RequestSettingsItem",
+        "Md3RequestSettingsProps"
       ],
       "components": [
-        "Md3OpenInput"
+        "Md3OpenInput",
+        "Md3RequestSettings"
       ],
-      "import": "import { Md3OpenInput } from \"@nucleux/md3-open-input\";",
+      "import": "import { Md3OpenInput, Md3RequestSettings } from \"@nucleux/md3-open-input\";",
       "installSingle": "pnpm add @nucleux/md3-open-input @nucleux/tokens",
       "props": [],
       "readme": "# @nucleux/md3-open-input\n\nMaterial 3 Open Input — the persistent free-form composer for any natural-language ask — Nucleux agentic UI for React.\n\nPart of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).\n\n**Same API as the shadcn twin.** The props, callbacks, keyboard model and accessible names are those of [`@nucleux/open-input`](https://www.npmjs.com/package/@nucleux/open-input) (`OpenInput`) — the props types are re-exported from it — so you switch families by changing only the import. Only the look differs: Material 3 colour roles, shape, elevation, state layers and motion (reduced under `prefers-reduced-motion`).\n\n## Exports\n\n- **`Md3OpenInput`** — the persistent composer: auto-grows to `maxHeight`, Enter or ⌘/Ctrl+Enter sends (`sendKey`), counter near `maxLength`, keeps the text and offers Retry when `onSubmit` rejects, Stop while `loading`; variants expanding-area / single-line / input-with-send\n- Types: `Md3OpenInputProps`, `Md3OpenInputVariant`, `Md3OpenInputSendKey`\n\n## Install\n\n```bash\npnpm add @nucleux/md3-open-input @nucleux/tokens\n```\n\n`react` / `react-dom` are peer dependencies.\n\n## Usage\n\n```tsx\nimport { Md3OpenInput } from \"@nucleux/md3-open-input\";\n\n<Md3OpenInput label=\"Ask Aria\" placeholder=\"Ask about this project…\" onSubmit={send} />\n```\n\nRequires the theme once in your app: `import \"@nucleux/tokens/styles.css\";`\nand the Tailwind preset from `@nucleux/tokens/preset`.\n\n## License\n\nMIT © Nucleux",
@@ -10135,6 +10154,7 @@
         "Md3PresetStyles",
         "Md3PresetStylesProps",
         "Md3PresetStylesVariant",
+        "Md3PresetStylesTrigger",
         "Md3PresetStylesView",
         "Md3PresetStylesNotice",
         "Md3PresetStyle",
@@ -10328,6 +10348,7 @@
         "Md3PromptEnhancer",
         "Md3PromptEnhancerProps",
         "Md3PromptEnhancerVariant",
+        "Md3PromptEnhancerTrigger",
         "Md3PromptEnhancerState",
         "Md3PromptEnhancerDiffStyle",
         "Md3PromptEnhancerChange",
@@ -12392,6 +12413,7 @@
         "useModesRoving",
         "useModesDismiss",
         "modesLabels",
+        "modesSettingsItem",
         "modeSupportingText",
         "ModesSegmented",
         "ModesList",
@@ -12402,6 +12424,7 @@
         "ModeOption",
         "ModesNotice",
         "ModesVariant",
+        "ModesTrigger",
         "UseModesOptions",
         "ModesState",
         "ModesSegmentedProps",
@@ -12493,7 +12516,7 @@
         },
         {
           "name": "ModesPickerProps",
-          "source": "export interface ModesPickerProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\" | \"defaultValue\" | \"title\"> {\n  modes: ModeOption[];\n  value: string | null;\n  onSelect: (id: string) => void;\n  /** Shows \"No mode\" while a mode is active. */\n  onClear?: () => void;\n  /** Called on Escape. */\n  onClose?: () => void;\n  /** The setting's name, used for the heading and accessible names. Defaults to \"Mode\". */\n  label?: string;\n  /** One line under the heading. */\n  description?: React.ReactNode;\n  /** The unavailable mode the person just tried, if any; its reason shows as an alert. */\n  rejected?: ModeOption | null;\n  showDescriptions?: boolean;\n  /** Move focus to the active (or first) mode when it mounts. */\n  autoFocus?: boolean;\n}",
+          "source": "export interface ModesPickerProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\" | \"defaultValue\" | \"title\"> {\n  modes: ModeOption[];\n  value: string | null;\n  onSelect: (id: string) => void;\n  /** Shows \"No mode\" while a mode is active. */\n  onClear?: () => void;\n  /** Called on Escape. */\n  onClose?: () => void;\n  /** The setting's name, used for the heading and accessible names. Defaults to \"Mode\". */\n  label?: string;\n  /** One line under the heading. */\n  description?: React.ReactNode;\n  /** The unavailable mode the person just tried, if any; its reason shows as an alert. */\n  rejected?: ModeOption | null;\n  showDescriptions?: boolean;\n  /** Move focus to the active (or first) mode when it mounts. */\n  autoFocus?: boolean;\n  /** Show a close × (\"Close\") in the header, for a picker opened from Request settings with no chip beside it. Calls `onClose`. */\n  showClose?: boolean;\n}",
           "extends": [
             "Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\" | \"defaultValue\" | \"title\">"
           ],
@@ -12557,6 +12580,13 @@
               "required": false,
               "description": "Move focus to the active (or first) mode when it mounts.",
               "default": "false"
+            },
+            {
+              "name": "showClose",
+              "type": "boolean",
+              "required": false,
+              "description": "Show a close × (\"Close\") in the header, for a picker opened from Request settings with no chip beside it. Calls `onClose`.",
+              "default": "false"
             }
           ]
         },
@@ -12577,7 +12607,7 @@
         },
         {
           "name": "ModesProps",
-          "source": "export interface ModesProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"defaultValue\" | \"onSubmit\" | \"onChange\"> {\n  /** The modes the product supports, in order. */\n  modes: ModeOption[];\n  /** Active mode id (controlled); null for none. */\n  value?: string | null;\n  /** Initial mode id when uncontrolled. Defaults to none. */\n  defaultValue?: string | null;\n  /** Called with the new mode id (null when cleared). */\n  onValueChange?: (id: string | null, mode: ModeOption | null) => void;\n  /** Presentation. Defaults to \"composer\" (the site's live preview). */\n  variant?: ModesVariant;\n  /** Whether the chip's picker is open (controlled). */\n  open?: boolean;\n  /** Initial picker state when uncontrolled. */\n  defaultOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  /** Allow clearing the mode (chip ×, \"No mode\"). Defaults to true. */\n  clearable?: boolean;\n  /** Show each mode's one-line description. Defaults to true. */\n  showDescriptions?: boolean;\n  /** The setting's name. Defaults to \"Mode\". */\n  label?: string;\n  /** Line under the picker heading. */\n  pickerDescription?: string;\n  /** Initial notice, e.g. to show a just-changed or refused state. */\n  defaultNotice?: ModesNotice;\n  /** Called when someone chooses a mode that can't be applied here. */\n  onUnavailable?: (mode: ModeOption) => void;\n  /** Composer text (controlled). The mode never changes it. */\n  draft?: string;\n  /** Initial composer text when uncontrolled. */\n  defaultDraft?: string;\n  onDraftChange?: (text: string) => void;\n  /** Called when the person sends from the composer, with the active mode. Modes never sends on its own. */\n  onSubmit?: (text: string, details: ModesSubmitDetails) => void;\n  /** Composer placeholder. */\n  placeholder?: string;\n  /** Composer controls before the field (attach…). */\n  composerLeading?: React.ReactNode;\n  /** Composer controls after the mode chip (model chip, voice…). */\n  composerActions?: React.ReactNode;\n  /** Accessible name of the send button. Defaults to \"Send\". */\n  sendLabel?: string;\n}",
+          "source": "export interface ModesProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"defaultValue\" | \"onSubmit\" | \"onChange\"> {\n  /** The modes the product supports, in order. */\n  modes: ModeOption[];\n  /** Active mode id (controlled); null for none. */\n  value?: string | null;\n  /** Initial mode id when uncontrolled. Defaults to none. */\n  defaultValue?: string | null;\n  /** Called with the new mode id (null when cleared). */\n  onValueChange?: (id: string | null, mode: ModeOption | null) => void;\n  /** Presentation. Defaults to \"composer\" (the site's live preview). */\n  variant?: ModesVariant;\n  /** Whether the chip's picker is open (controlled). */\n  open?: boolean;\n  /** Initial picker state when uncontrolled. */\n  defaultOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  /** Allow clearing the mode (chip ×, \"No mode\"). Defaults to true. */\n  clearable?: boolean;\n  /** Show each mode's one-line description. Defaults to true. */\n  showDescriptions?: boolean;\n  /** The setting's name. Defaults to \"Mode\". */\n  label?: string;\n  /** Line under the picker heading. */\n  pickerDescription?: string;\n  /** Initial notice, e.g. to show a just-changed or refused state. */\n  defaultNotice?: ModesNotice;\n  /** Called when someone chooses a mode that can't be applied here. */\n  onUnavailable?: (mode: ModeOption) => void;\n  /** Composer text (controlled). The mode never changes it. */\n  draft?: string;\n  /** Initial composer text when uncontrolled. */\n  defaultDraft?: string;\n  onDraftChange?: (text: string) => void;\n  /** Called when the person sends from the composer, with the active mode. Modes never sends on its own. */\n  onSubmit?: (text: string, details: ModesSubmitDetails) => void;\n  /** Composer placeholder. */\n  placeholder?: string;\n  /** Composer controls before the field (attach…). */\n  composerLeading?: React.ReactNode;\n  /** Composer controls after the mode chip (model chip, voice…). */\n  composerActions?: React.ReactNode;\n  /** Accessible name of the send button. Defaults to \"Send\". */\n  sendLabel?: string;\n  /**\n   * \"chip\" (default): the Mode chip sits in the composer. \"settings\": no chip;\n   * a Request settings control right after `composerLeading` lists Mode (with\n   * its value) and opens the mode picker from that row.\n   */\n  trigger?: ModesTrigger;\n  /** With `trigger=\"settings\"`: the app's other request settings for the same menu (Tone, Style, Improve prompt…), merged in the site's order. */\n  settingsItems?: RequestSettingsItem[];\n  /** With `trigger=\"settings\"`: called when one of `settingsItems` is chosen. */\n  onSettingsSelect?: (id: string) => void;\n}",
           "extends": [
             "Omit<React.HTMLAttributes<HTMLDivElement>, \"defaultValue\" | \"onSubmit\" | \"onChange\">"
           ],
@@ -12724,6 +12754,29 @@
               "required": false,
               "description": "Accessible name of the send button. Defaults to \"Send\".",
               "default": "\"Send\""
+            },
+            {
+              "name": "trigger",
+              "type": "ModesTrigger",
+              "required": false,
+              "description": "\"chip\" (default): the Mode chip sits in the composer. \"settings\": no chip; a Request settings control right after `composerLeading` lists Mode (with its value) and opens the mode picker from that row.",
+              "values": [
+                "chip",
+                "settings"
+              ],
+              "default": "\"chip\""
+            },
+            {
+              "name": "settingsItems",
+              "type": "RequestSettingsItem[]",
+              "required": false,
+              "description": "With `trigger=\"settings\"`: the app's other request settings for the same menu (Tone, Style, Improve prompt…), merged in the site's order."
+            },
+            {
+              "name": "onSettingsSelect",
+              "type": "(id: string) => void",
+              "required": false,
+              "description": "With `trigger=\"settings\"`: called when one of `settingsItems` is chosen."
             }
           ]
         }
@@ -13175,7 +13228,7 @@
       "name": "open-input",
       "package": "@nucleux/open-input",
       "kind": "component",
-      "description": "The persistent free-form composer for any natural-language ask. It grows\nwith the prompt up to a ceiling and then scrolls, always pairs the field\nwith a visible send button (Enter, or ⌘/Ctrl+Enter with\n`sendKey=\"mod-enter\"`), keeps Send disabled only while there is nothing to\nsend, shows a character counter only near `maxLength`, and never loses the\ntext: an uncontrolled composer clears only after `onSubmit` succeeds, and a\nfailed send keeps the text and offers Retry. While `loading`, the send\nbutton becomes a stop button wired to `onStop`.",
+      "description": "The persistent free-form composer for any natural-language ask. It grows\nwith the prompt up to eight lines (`maxLines`) and then scrolls; past that an\nExpand control gives the request most of the available height, always pairs the field\nwith a visible send button (Enter, or ⌘/Ctrl+Enter with\n`sendKey=\"mod-enter\"`), keeps Send disabled only while there is nothing to\nsend, shows a character counter only near `maxLength`, and never loses the\ntext: an uncontrolled composer clears only after `onSubmit` succeeds, and a\nfailed send keeps the text and offers Retry. While `loading`, the send\nbutton becomes a stop button wired to `onStop`.",
       "summary": "Open Input — free-form text box for any natural-language ask — Nucleux agentic UI for React.",
       "keywords": [
         "nucleux",
@@ -13188,20 +13241,32 @@
         "open-input"
       ],
       "exports": [
+        "useComposerHeight",
         "OpenInput",
+        "REQUEST_SETTINGS_ORDER",
+        "mergeRequestSettingsItems",
+        "requestSettingsLabel",
+        "useRequestSettings",
+        "RequestSettings",
+        "ComposerHeightOptions",
+        "ComposerHeightState",
         "OpenInputVariant",
         "OpenInputSendKey",
-        "OpenInputProps"
+        "OpenInputProps",
+        "RequestSettingsItem",
+        "RequestSettingsProps"
       ],
       "components": [
-        "OpenInput"
+        "OpenInput",
+        "REQUEST_SETTINGS_ORDER",
+        "RequestSettings"
       ],
-      "import": "import { OpenInput } from \"@nucleux/open-input\";",
+      "import": "import { OpenInput, REQUEST_SETTINGS_ORDER, RequestSettings } from \"@nucleux/open-input\";",
       "installSingle": "pnpm add @nucleux/open-input @nucleux/tokens",
       "props": [
         {
           "name": "OpenInputProps",
-          "source": "export interface OpenInputProps\n  extends Omit<\n    React.TextareaHTMLAttributes<HTMLTextAreaElement>,\n    \"onSubmit\" | \"value\" | \"defaultValue\" | \"onChange\"\n  > {\n  /** Controlled value of the input. Omit (and use `defaultValue`) for an uncontrolled composer. */\n  value?: string;\n  /** Initial value when uncontrolled. */\n  defaultValue?: string;\n  /** Called when the value changes. */\n  onValueChange?: (value: string) => void;\n  /**\n   * Called with the trimmed value on submit (send key or button). May return a\n   * promise: while it is pending the send button shows a spinner; if it\n   * rejects, the text is kept and an error row with Retry appears. An\n   * uncontrolled composer clears itself only after a successful send.\n   */\n  onSubmit: (value: string) => void | Promise<unknown>;\n  /** Show the agent as busy — swaps the send button for a stop button. */\n  loading?: boolean;\n  /** Called when the stop button is pressed while `loading`. */\n  onStop?: () => void;\n  /** Max auto-grow height in px before scrolling (about six lines by default). */\n  maxHeight?: number;\n  /**\n   * \"expanding-area\" (default): grows with the prompt, controls in a footer row.\n   * \"single-line\": a compact one-row pill for dense layouts.\n   * \"input-with-send\": the field and a separate, explicit send button.\n   */\n  variant?: OpenInputVariant;\n  /** Visible label above the composer. Without it, pass `aria-label`. */\n  label?: React.ReactNode;\n  /** Send key. Defaults to \"enter\". The send button carries it as `aria-keyshortcuts`. */\n  sendKey?: OpenInputSendKey;\n  /** Accessible name of the send button. Defaults to \"Send message\". */\n  sendLabel?: string;\n  /** Accessible name of the stop button. Defaults to \"Stop generating\". */\n  stopLabel?: string;\n  /** Secondary controls (add context, voice, model…) placed beside the send button. They never touch the text. */\n  actions?: React.ReactNode;\n  /**\n   * With `maxLength`, the character counter appears once the text reaches this\n   * fraction of the limit. Defaults to 0.8. Set 0 to always show it.\n   */\n  counterThreshold?: number;\n  /** A send error to show (controlled). Overrides the built-in message shown when `onSubmit` rejects. */\n  error?: React.ReactNode;\n  /** Called by the error row's Retry button. Defaults to submitting the current text again. */\n  onRetry?: () => void;\n  /** Classes for the outer wrapper (label, composer and error). `className` styles the composer box itself. */\n  containerClassName?: string;\n}",
+          "source": "export interface OpenInputProps extends Omit<\n  React.TextareaHTMLAttributes<HTMLTextAreaElement>,\n  \"onSubmit\" | \"value\" | \"defaultValue\" | \"onChange\"\n> {\n  /** Controlled value of the input. Omit (and use `defaultValue`) for an uncontrolled composer. */\n  value?: string;\n  /** Initial value when uncontrolled. */\n  defaultValue?: string;\n  /** Called when the value changes. */\n  onValueChange?: (value: string) => void;\n  /**\n   * Called with the trimmed value on submit (send key or button). May return a\n   * promise: while it is pending the send button shows a spinner; if it\n   * rejects, the text is kept and an error row with Retry appears. An\n   * uncontrolled composer clears itself only after a successful send.\n   */\n  onSubmit: (value: string) => void | Promise<unknown>;\n  /** Show the agent as busy — swaps the send button for a stop button. */\n  loading?: boolean;\n  /** Called when the stop button is pressed while `loading`. */\n  onStop?: () => void;\n  /**\n   * Lines the field grows to before it scrolls. Defaults to 8. Ignored by the\n   * \"single-line\" variant.\n   */\n  maxLines?: number;\n  /**\n   * An explicit ceiling in px before the field scrolls. When set it replaces\n   * the `maxLines` ceiling.\n   */\n  maxHeight?: number;\n  /**\n   * Once the text overflows the ceiling, show an Expand icon button in the\n   * field's top-right corner; expanded, the field takes its own full-width row\n   * and most of the available height, and Collapse (or sending, which empties\n   * the field) brings it back. Defaults to true. Never shown for \"single-line\".\n   */\n  expandable?: boolean;\n  /**\n   * \"expanding-area\" (default): grows with the prompt, controls in a footer row.\n   * \"single-line\": a compact one-row pill for dense layouts.\n   * \"input-with-send\": the field and a separate, explicit send button.\n   */\n  variant?: OpenInputVariant;\n  /** Visible label above the composer. Without it, pass `aria-label`. */\n  label?: React.ReactNode;\n  /** Send key. Defaults to \"enter\". The send button carries it as `aria-keyshortcuts`. */\n  sendKey?: OpenInputSendKey;\n  /** Accessible name of the send button. Defaults to \"Send message\". */\n  sendLabel?: string;\n  /** Accessible name of the stop button. Defaults to \"Stop generating\". */\n  stopLabel?: string;\n  /** Secondary controls (add context, voice, model…) placed beside the send button. They never touch the text. */\n  actions?: React.ReactNode;\n  /**\n   * With `maxLength`, the character counter appears once the text reaches this\n   * fraction of the limit. Defaults to 0.8. Set 0 to always show it.\n   */\n  counterThreshold?: number;\n  /** A send error to show (controlled). Overrides the built-in message shown when `onSubmit` rejects. */\n  error?: React.ReactNode;\n  /** Called by the error row's Retry button. Defaults to submitting the current text again. */\n  onRetry?: () => void;\n  /** Classes for the outer wrapper (label, composer and error). `className` styles the composer box itself. */\n  containerClassName?: string;\n}",
           "extends": [
             "Omit< React.TextareaHTMLAttributes<HTMLTextAreaElement>, \"onSubmit\" | \"value\" | \"defaultValue\" | \"onChange\" >"
           ],
@@ -13245,11 +13310,24 @@
               "description": "Called when the stop button is pressed while `loading`."
             },
             {
+              "name": "maxLines",
+              "type": "number",
+              "required": false,
+              "description": "Lines the field grows to before it scrolls. Defaults to 8. Ignored by the \"single-line\" variant.",
+              "default": "8"
+            },
+            {
               "name": "maxHeight",
               "type": "number",
               "required": false,
-              "description": "Max auto-grow height in px before scrolling (about six lines by default).",
-              "default": "200"
+              "description": "An explicit ceiling in px before the field scrolls. When set it replaces the `maxLines` ceiling."
+            },
+            {
+              "name": "expandable",
+              "type": "boolean",
+              "required": false,
+              "description": "Once the text overflows the ceiling, show an Expand icon button in the field's top-right corner; expanded, the field takes its own full-width row and most of the available height, and Collapse (or sending, which empties the field) brings it back. Defaults to true. Never shown for \"single-line\".",
+              "default": "true"
             },
             {
               "name": "variant",
@@ -13324,6 +13402,58 @@
               "type": "string",
               "required": false,
               "description": "Classes for the outer wrapper (label, composer and error). `className` styles the composer box itself."
+            }
+          ]
+        },
+        {
+          "name": "RequestSettingsProps",
+          "source": "export interface RequestSettingsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\"> {\n  /** The rows, in order (the site's order is Mode, Tone, Style, Improve prompt). */\n  items: RequestSettingsItem[];\n  /** Called with a row's id when it is chosen. The menu closes and focus returns to the control first. */\n  onSelect?: (id: string) => void;\n  /** Whether the menu is open (controlled). */\n  open?: boolean;\n  /** Initial menu state when uncontrolled. */\n  defaultOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  /** Accessible name of the control and its menu. Defaults to \"Request settings\". */\n  label?: string;\n  /** Disables the control (e.g. while the agent works). */\n  disabled?: boolean;\n}",
+          "extends": [
+            "Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\">"
+          ],
+          "members": [
+            {
+              "name": "items",
+              "type": "RequestSettingsItem[]",
+              "required": true,
+              "description": "The rows, in order (the site's order is Mode, Tone, Style, Improve prompt)."
+            },
+            {
+              "name": "onSelect",
+              "type": "(id: string) => void",
+              "required": false,
+              "description": "Called with a row's id when it is chosen. The menu closes and focus returns to the control first."
+            },
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": false,
+              "description": "Whether the menu is open (controlled)."
+            },
+            {
+              "name": "defaultOpen",
+              "type": "boolean",
+              "required": false,
+              "description": "Initial menu state when uncontrolled.",
+              "default": "false"
+            },
+            {
+              "name": "onOpenChange",
+              "type": "(open: boolean) => void",
+              "required": false
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name of the control and its menu. Defaults to \"Request settings\".",
+              "default": "\"Request settings\""
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": "Disables the control (e.g. while the agent works)."
             }
           ]
         }
@@ -13708,6 +13838,7 @@
         "PresetStyleSwatch",
         "PresetStylesView",
         "PresetStylesNotice",
+        "PresetStylesTrigger",
         "PresetStyleSource",
         "PresetStyle",
         "PresetStyleReference",
@@ -13724,7 +13855,7 @@
       "props": [
         {
           "name": "PresetStylesProps",
-          "source": "export interface PresetStylesProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"defaultValue\" | \"onSubmit\"> {\n  /** The presets, in order. In `\"menu\"`, the first one is the base style (Normal) unless `baseStyle` says otherwise. */\n  styles: PresetStyle[];\n  /** Chosen style id (controlled). */\n  value?: string;\n  /** Initial style id (uncontrolled). Defaults to the base style. */\n  defaultValue?: string;\n  /** Called when a style is chosen (or × returns to the base style). Never touches the request text. */\n  onValueChange?: (id: string) => void;\n  /** Layout. Defaults to `\"grid\"`. */\n  variant?: PresetStylesVariant;\n  /** Heading. Defaults to `\"Output style\"` (grid, list) or `\"Use style\"` (menu). Also the group's accessible name. */\n  label?: string;\n  /** Menu sub-heading. Defaults to `\"How {agentName} writes its replies — not what it knows or does.\"`. */\n  description?: string;\n  /** The plain style × goes back to. Defaults to the first style. */\n  baseStyle?: string;\n  /** Who writes, for the copy. Defaults to `\"Aria\"`. */\n  agentName?: string;\n\n  /** Grid / list: show the per-project lock line. */\n  lockable?: boolean;\n  /** Locked (controlled). */\n  locked?: boolean;\n  /** Initially locked (uncontrolled). */\n  defaultLocked?: boolean;\n  /** Called when the lock is switched. */\n  onLockedChange?: (locked: boolean) => void;\n  /** What the lock covers. Defaults to `\"this project\"`. */\n  lockScope?: string;\n\n  /** Grid / list: show the \"Match a style\" reference-image drop. */\n  allowReference?: boolean;\n  /** The attached reference (controlled; `null` for none). */\n  reference?: PresetStyleReference | null;\n  /** Initially attached reference (uncontrolled). */\n  defaultReference?: PresetStyleReference | null;\n  /** Called with the dropped or picked image, or `null` when removed. */\n  onReferenceChange?: (file: File | null) => void;\n\n  /** Menu: what is showing at first. Defaults to `\"closed\"`. */\n  defaultView?: PresetStylesView;\n  /** Menu: called when the menu or a card opens or closes. */\n  onViewChange?: (view: PresetStylesView) => void;\n  /** Menu: show a sample reply for the style under the pointer or focus. Defaults to `true`. */\n  showPreview?: boolean;\n  /** Menu: the style previewed when the menu opens. Defaults to the chosen one. */\n  defaultPreview?: string;\n  /** Menu: the familiar request the preview answers, e.g. `\"Summarize the October release.\"`. */\n  previewPrompt?: string;\n  /** Menu: what a style applies to. Defaults to `\"new messages, edits and retries\"`. */\n  scope?: string;\n  /** Menu: the conversation already has replies — switching says earlier ones keep their style. */\n  earlierReplies?: boolean;\n  /** Menu: the confirmation line shown at first (restoring UI). */\n  defaultNotice?: PresetStylesNotice | null;\n\n  /** Menu: makes a custom style from an example or a description. Enables \"Create & edit styles\". */\n  onGenerateStyle?: (request: PresetStyleRequest) => Promise<PresetStyleDraft>;\n  /** Menu: called when a custom style is saved (`use` = Save and use). It is also kept locally. */\n  onSaveStyle?: (style: PresetStyle, use: boolean) => void;\n  /** Menu: the generated draft to review when `defaultView=\"review\"`. */\n  defaultGenerated?: PresetStyleDraft;\n\n  /** Menu: render the family's composer with the Style control in its toolbar. Defaults to `true`; `false` renders only the control. */\n  withComposer?: boolean;\n  /** Composer text (controlled). */\n  message?: string;\n  /** Composer text at first (uncontrolled). */\n  defaultMessage?: string;\n  /** Called as the composer text changes. */\n  onMessageChange?: (text: string) => void;\n  /** Called on send with the request and the chosen style id. The style is a setting; the text is never edited. */\n  onSubmit?: (text: string, styleId: string) => void;\n  /** Composer placeholder. Defaults to `\"Describe what you need…\"`. */\n  placeholder?: string;\n}",
+          "source": "export interface PresetStylesProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"defaultValue\" | \"onSubmit\"> {\n  /** The presets, in order. In `\"menu\"`, the first one is the base style (Normal) unless `baseStyle` says otherwise. */\n  styles: PresetStyle[];\n  /** Chosen style id (controlled). */\n  value?: string;\n  /** Initial style id (uncontrolled). Defaults to the base style. */\n  defaultValue?: string;\n  /** Called when a style is chosen (or × returns to the base style). Never touches the request text. */\n  onValueChange?: (id: string) => void;\n  /** Layout. Defaults to `\"grid\"`. */\n  variant?: PresetStylesVariant;\n  /** Heading. Defaults to `\"Output style\"` (grid, list) or `\"Use style\"` (menu). Also the group's accessible name. */\n  label?: string;\n  /** Menu sub-heading. Defaults to `\"How {agentName} writes its replies — not what it knows or does.\"`. */\n  description?: string;\n  /** The plain style × goes back to. Defaults to the first style. */\n  baseStyle?: string;\n  /** Who writes, for the copy. Defaults to `\"Aria\"`. */\n  agentName?: string;\n\n  /** Grid / list: show the per-project lock line. */\n  lockable?: boolean;\n  /** Locked (controlled). */\n  locked?: boolean;\n  /** Initially locked (uncontrolled). */\n  defaultLocked?: boolean;\n  /** Called when the lock is switched. */\n  onLockedChange?: (locked: boolean) => void;\n  /** What the lock covers. Defaults to `\"this project\"`. */\n  lockScope?: string;\n\n  /** Grid / list: show the \"Match a style\" reference-image drop. */\n  allowReference?: boolean;\n  /** The attached reference (controlled; `null` for none). */\n  reference?: PresetStyleReference | null;\n  /** Initially attached reference (uncontrolled). */\n  defaultReference?: PresetStyleReference | null;\n  /** Called with the dropped or picked image, or `null` when removed. */\n  onReferenceChange?: (file: File | null) => void;\n\n  /** Menu: what is showing at first. Defaults to `\"closed\"`. */\n  defaultView?: PresetStylesView;\n  /** Menu: called when the menu or a card opens or closes. */\n  onViewChange?: (view: PresetStylesView) => void;\n  /** Menu: show a sample reply for the style under the pointer or focus. Defaults to `true`. */\n  showPreview?: boolean;\n  /** Menu: the style previewed when the menu opens. Defaults to the chosen one. */\n  defaultPreview?: string;\n  /** Menu: the familiar request the preview answers, e.g. `\"Summarize the October release.\"`. */\n  previewPrompt?: string;\n  /** Menu: what a style applies to. Defaults to `\"new messages, edits and retries\"`. */\n  scope?: string;\n  /** Menu: the conversation already has replies — switching says earlier ones keep their style. */\n  earlierReplies?: boolean;\n  /** Menu: the confirmation line shown at first (restoring UI). */\n  defaultNotice?: PresetStylesNotice | null;\n\n  /** Menu: makes a custom style from an example or a description. Enables \"Create & edit styles\". */\n  onGenerateStyle?: (request: PresetStyleRequest) => Promise<PresetStyleDraft>;\n  /** Menu: called when a custom style is saved (`use` = Save and use). It is also kept locally. */\n  onSaveStyle?: (style: PresetStyle, use: boolean) => void;\n  /** Menu: the generated draft to review when `defaultView=\"review\"`. */\n  defaultGenerated?: PresetStyleDraft;\n\n  /** Menu: render the family's composer with the Style control in its toolbar. Defaults to `true`; `false` renders only the control. */\n  withComposer?: boolean;\n  /** Composer text (controlled). */\n  message?: string;\n  /** Composer text at first (uncontrolled). */\n  defaultMessage?: string;\n  /** Called as the composer text changes. */\n  onMessageChange?: (text: string) => void;\n  /** Called on send with the request and the chosen style id. The style is a setting; the text is never edited. */\n  onSubmit?: (text: string, styleId: string) => void;\n  /** Composer placeholder. Defaults to `\"Describe what you need…\"`. */\n  placeholder?: string;\n  /** Menu: composer controls placed first in the toolbar, before the Style control or Request settings (attach, +…). */\n  composerLeading?: React.ReactNode;\n  /** Menu: more composer tools, placed after the Style control (model, voice…). */\n  composerActions?: React.ReactNode;\n  /**\n   * Menu: \"chip\" (default) puts the Style control in the composer. \"settings\": no Style control; a\n   * Request settings control right after `composerLeading` lists Style (with its value) and opens\n   * \"Use style\" from that row.\n   */\n  trigger?: PresetStylesTrigger;\n  /** With `trigger=\"settings\"`: the app's other request settings for the same menu (Mode, Tone, Improve prompt…), merged in the site's order. */\n  settingsItems?: RequestSettingsItem[];\n  /** With `trigger=\"settings\"`: called when one of `settingsItems` is chosen. */\n  onSettingsSelect?: (id: string) => void;\n}",
           "extends": [
             "Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"defaultValue\" | \"onSubmit\">"
           ],
@@ -13949,6 +14080,40 @@
               "type": "string",
               "required": false,
               "description": "Composer placeholder. Defaults to `\"Describe what you need…\"`."
+            },
+            {
+              "name": "composerLeading",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Menu: composer controls placed first in the toolbar, before the Style control or Request settings (attach, +…)."
+            },
+            {
+              "name": "composerActions",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Menu: more composer tools, placed after the Style control (model, voice…)."
+            },
+            {
+              "name": "trigger",
+              "type": "PresetStylesTrigger",
+              "required": false,
+              "description": "Menu: \"chip\" (default) puts the Style control in the composer. \"settings\": no Style control; a Request settings control right after `composerLeading` lists Style (with its value) and opens \"Use style\" from that row.",
+              "values": [
+                "chip",
+                "settings"
+              ]
+            },
+            {
+              "name": "settingsItems",
+              "type": "RequestSettingsItem[]",
+              "required": false,
+              "description": "With `trigger=\"settings\"`: the app's other request settings for the same menu (Mode, Tone, Improve prompt…), merged in the site's order."
+            },
+            {
+              "name": "onSettingsSelect",
+              "type": "(id: string) => void",
+              "required": false,
+              "description": "With `trigger=\"settings\"`: called when one of `settingsItems` is chosen."
             }
           ]
         }
@@ -14247,6 +14412,8 @@
       ],
       "exports": [
         "PROMPT_ENHANCER_TEXT",
+        "promptEnhancerSettingsItems",
+        "selectPromptEnhancerSetting",
         "buildEnhancedPrompt",
         "resolveEnhancedPrompt",
         "getPromptEnhancerSegments",
@@ -14257,6 +14424,7 @@
         "PromptEnhancerVariant",
         "PromptEnhancerState",
         "PromptEnhancerDiffStyle",
+        "PromptEnhancerTrigger",
         "PromptEnhancerChange",
         "PromptEnhancerSuggestion",
         "PromptEnhancerSegment",
@@ -14272,7 +14440,7 @@
       "props": [
         {
           "name": "PromptEnhancerProps",
-          "source": "export interface PromptEnhancerProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSubmit\" | \"defaultValue\" | \"onChange\"> {\n  /** The composer text (controlled). Omit and use `defaultValue` for an uncontrolled composer. */\n  value?: string;\n  /** Initial composer text when uncontrolled. */\n  defaultValue?: string;\n  /** Called whenever the composer text changes — typing, Use, Undo. */\n  onValueChange?: (value: string) => void;\n  /**\n   * Produces the suggestion for a prompt. No model is called by the component:\n   * the app supplies this. May be async; a rejection shows the failed state and\n   * leaves the original untouched. `signal` aborts when the person cancels.\n   */\n  onEnhance?: (\n    prompt: string,\n    options: { signal: AbortSignal },\n  ) => PromptEnhancerSuggestion | Promise<PromptEnhancerSuggestion>;\n  /** Called with the trimmed text when the person sends. Without it the composer shows no send button. The enhancer never sends on its own. */\n  onSubmit?: (value: string) => void;\n  /** Called when the person uses the suggestion — the composer now holds `enhanced`. */\n  onUse?: (enhanced: string, original: string) => void;\n  /** Called when the person dismisses the suggestion and keeps their prompt. */\n  onKeepOriginal?: () => void;\n  /** Called when the person undoes Use — the composer holds `original` again. */\n  onUndo?: (original: string) => void;\n  /** Called on every state change. */\n  onStateChange?: (state: PromptEnhancerState) => void;\n  /** \"preview-diff\" (default), \"wand-button\" or \"auto-enhance-toggle\". */\n  variant?: PromptEnhancerVariant;\n  /** \"split\" (default) or \"inline\". */\n  diffStyle?: PromptEnhancerDiffStyle;\n  /** Mark each addition and list the changes with a checkbox each. Defaults to true. */\n  showChanges?: boolean;\n  /** Show the reason under each change. Defaults to true. */\n  explain?: boolean;\n  /** Offer Edit, which opens the suggestion in a text field. Defaults to true. */\n  allowEdit?: boolean;\n  /** Offer Keep original. Defaults to true. */\n  allowKeepOriginal?: boolean;\n  /** Offer Undo after Use. Defaults to true. */\n  undo?: boolean;\n  /** Auto-enhance switch (controlled), for the \"auto-enhance-toggle\" variant. */\n  autoEnhance?: boolean;\n  /** Initial auto-enhance switch state when uncontrolled. Defaults to false. */\n  defaultAutoEnhance?: boolean;\n  /** Called when the auto-enhance switch changes. */\n  onAutoEnhanceChange?: (on: boolean) => void;\n  /** State to start in (stories, restored sessions). Defaults to \"original\". States after a suggestion need `defaultSuggestion`. */\n  defaultState?: PromptEnhancerState;\n  /** Suggestion to start with, for `defaultState` \"enhanced\" / \"editing\". */\n  defaultSuggestion?: PromptEnhancerSuggestion;\n  /** Ids of changes that start removed. */\n  defaultRemoved?: string[];\n  /** The prompt as written before Use, for `defaultState` \"accepted\" (what Undo restores). */\n  defaultOriginal?: string;\n  /** Label of the enhance action. Defaults to \"Enhance\". */\n  actionLabel?: string;\n  /** Heading of the review. Defaults to \"Suggested improvements\". */\n  heading?: string;\n  /** Quiet line in the composer footer, e.g. \"Aria will expand this prompt\". */\n  hint?: React.ReactNode;\n  /** Composer placeholder, also its accessible name. Defaults to \"Describe what you need…\". */\n  placeholder?: string;\n  /** Copy for the failed state. Say the original is unchanged. */\n  failureMessage?: string;\n  /** Extra composer tools (model chip, attach…), placed beside the enhance action. */\n  composerActions?: React.ReactNode;\n}",
+          "source": "export interface PromptEnhancerProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSubmit\" | \"defaultValue\" | \"onChange\"> {\n  /** The composer text (controlled). Omit and use `defaultValue` for an uncontrolled composer. */\n  value?: string;\n  /** Initial composer text when uncontrolled. */\n  defaultValue?: string;\n  /** Called whenever the composer text changes — typing, Use, Undo. */\n  onValueChange?: (value: string) => void;\n  /**\n   * Produces the suggestion for a prompt. No model is called by the component:\n   * the app supplies this. May be async; a rejection shows the failed state and\n   * leaves the original untouched. `signal` aborts when the person cancels.\n   */\n  onEnhance?: (\n    prompt: string,\n    options: { signal: AbortSignal },\n  ) => PromptEnhancerSuggestion | Promise<PromptEnhancerSuggestion>;\n  /** Called with the trimmed text when the person sends. Without it the composer shows no send button. The enhancer never sends on its own. */\n  onSubmit?: (value: string) => void;\n  /** Called when the person uses the suggestion — the composer now holds `enhanced`. */\n  onUse?: (enhanced: string, original: string) => void;\n  /** Called when the person dismisses the suggestion and keeps their prompt. */\n  onKeepOriginal?: () => void;\n  /** Called when the person undoes Use — the composer holds `original` again. */\n  onUndo?: (original: string) => void;\n  /** Called on every state change. */\n  onStateChange?: (state: PromptEnhancerState) => void;\n  /** \"preview-diff\" (default), \"wand-button\" or \"auto-enhance-toggle\". */\n  variant?: PromptEnhancerVariant;\n  /** \"split\" (default) or \"inline\". */\n  diffStyle?: PromptEnhancerDiffStyle;\n  /** Mark each addition and list the changes with a checkbox each. Defaults to true. */\n  showChanges?: boolean;\n  /** Show the reason under each change. Defaults to true. */\n  explain?: boolean;\n  /** Offer Edit, which opens the suggestion in a text field. Defaults to true. */\n  allowEdit?: boolean;\n  /** Offer Keep original. Defaults to true. */\n  allowKeepOriginal?: boolean;\n  /** Offer Undo after Use. Defaults to true. */\n  undo?: boolean;\n  /** Auto-enhance switch (controlled), for the \"auto-enhance-toggle\" variant. */\n  autoEnhance?: boolean;\n  /** Initial auto-enhance switch state when uncontrolled. Defaults to false. */\n  defaultAutoEnhance?: boolean;\n  /** Called when the auto-enhance switch changes. */\n  onAutoEnhanceChange?: (on: boolean) => void;\n  /** State to start in (stories, restored sessions). Defaults to \"original\". States after a suggestion need `defaultSuggestion`. */\n  defaultState?: PromptEnhancerState;\n  /** Suggestion to start with, for `defaultState` \"enhanced\" / \"editing\". */\n  defaultSuggestion?: PromptEnhancerSuggestion;\n  /** Ids of changes that start removed. */\n  defaultRemoved?: string[];\n  /** The prompt as written before Use, for `defaultState` \"accepted\" (what Undo restores). */\n  defaultOriginal?: string;\n  /** Label of the enhance action. Defaults to \"Enhance\". */\n  actionLabel?: string;\n  /** Heading of the review. Defaults to \"Suggested improvements\". */\n  heading?: string;\n  /** Quiet line in the composer footer, e.g. \"Aria will expand this prompt\". */\n  hint?: React.ReactNode;\n  /** Composer placeholder, also its accessible name. Defaults to \"Describe what you need…\". */\n  placeholder?: string;\n  /** Copy for the failed state. Say the original is unchanged. */\n  failureMessage?: string;\n  /** Extra composer tools (model chip, attach…), placed beside the enhance action. */\n  composerActions?: React.ReactNode;\n  /** Composer controls placed first in the toolbar, before Request settings (attach, +…). */\n  composerLeading?: React.ReactNode;\n  /**\n   * \"chip\" (default): the Enhance tool sits in the composer. \"settings\": no tool up front; a Request\n   * settings control right after `composerLeading` lists \"Improve prompt\", which starts enhancing\n   * (or cancels it while it runs) and shows the review.\n   */\n  trigger?: PromptEnhancerTrigger;\n  /** With `trigger=\"settings\"`: the app's other request settings for the same menu (Mode, Tone, Style…), merged in the site's order. */\n  settingsItems?: RequestSettingsItem[];\n  /** With `trigger=\"settings\"`: called when one of `settingsItems` is chosen. */\n  onSettingsSelect?: (id: string) => void;\n}",
           "extends": [
             "Omit<React.HTMLAttributes<HTMLDivElement>, \"onSubmit\" | \"defaultValue\" | \"onChange\">"
           ],
@@ -14468,6 +14636,34 @@
               "type": "React.ReactNode",
               "required": false,
               "description": "Extra composer tools (model chip, attach…), placed beside the enhance action."
+            },
+            {
+              "name": "composerLeading",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Composer controls placed first in the toolbar, before Request settings (attach, +…)."
+            },
+            {
+              "name": "trigger",
+              "type": "PromptEnhancerTrigger",
+              "required": false,
+              "description": "\"chip\" (default): the Enhance tool sits in the composer. \"settings\": no tool up front; a Request settings control right after `composerLeading` lists \"Improve prompt\", which starts enhancing (or cancels it while it runs) and shows the review.",
+              "values": [
+                "chip",
+                "settings"
+              ]
+            },
+            {
+              "name": "settingsItems",
+              "type": "RequestSettingsItem[]",
+              "required": false,
+              "description": "With `trigger=\"settings\"`: the app's other request settings for the same menu (Mode, Tone, Style…), merged in the site's order."
+            },
+            {
+              "name": "onSettingsSelect",
+              "type": "(id: string) => void",
+              "required": false,
+              "description": "With `trigger=\"settings\"`: called when one of `settingsItems` is chosen."
             }
           ]
         }
@@ -18502,6 +18698,7 @@
         "VoiceToneVariant",
         "VoiceToneLayout",
         "VoiceToneNotice",
+        "VoiceToneTrigger",
         "VoiceToneProps",
         "VoiceToneState"
       ],
@@ -18514,7 +18711,7 @@
       "props": [
         {
           "name": "VoiceToneProps",
-          "source": "export interface VoiceToneProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"onSubmit\" | \"defaultValue\"> {\n  /** Where the scaffold sits. Defaults to `\"settings\"`. */\n  variant?: VoiceToneVariant;\n  /** How tones are chosen. Defaults to `\"cards\"`. */\n  layout?: VoiceToneLayout;\n  /** The tones on offer — three or four familiar ones. Defaults to {@link defaultVoiceTones}. Pass `[]` for a rules-only panel. */\n  tones?: VoiceToneOption[];\n  /** Chosen tone id (controlled). `null` is the agent's default voice; `\"custom\"` a described tone. */\n  value?: string | null;\n  /** Initial tone id (uncontrolled). Defaults to `null`. */\n  defaultValue?: string | null;\n  /** Called when the tone is chosen, switched, removed or restored. */\n  onValueChange?: (value: string | null) => void;\n  /** Offer “Or describe a tone”. Defaults to `true` in the composer and chip, `false` in settings. */\n  allowCustom?: boolean;\n  /** The described tone (controlled). */\n  customTone?: string;\n  /** Initial described tone (uncontrolled). */\n  defaultCustomTone?: string;\n  /** Called when a described tone is applied. */\n  onCustomToneChange?: (text: string) => void;\n  /** The rules list (settings panel). The composer variants send the rules that are on with each request. */\n  rules?: VoiceToneRule[];\n  /** Ids of the rules that are on (controlled). */\n  ruleValues?: string[];\n  /** Ids of the rules that are on initially (uncontrolled). */\n  defaultRuleValues?: string[];\n  /** Called with the ids of the rules that are on. */\n  onRulesChange?: (ids: string[]) => void;\n  /** Show the sample sentence for the tone in focus or chosen. Defaults to `true`. */\n  showSample?: boolean;\n  /** Let people remove the tone from the composer (with Undo). Defaults to `true`. */\n  removable?: boolean;\n  /** Picker open (controlled), for the composer and chip variants. */\n  open?: boolean;\n  /** Picker open initially (uncontrolled). */\n  defaultOpen?: boolean;\n  /** Called when the picker opens or closes. */\n  onOpenChange?: (open: boolean) => void;\n  /**\n   * Seed the quiet line, e.g. to show a state in docs. A seeded `\"removed\"` line's Undo restores the\n   * recommended (or first) tone.\n   */\n  defaultNotice?: VoiceToneNotice | null;\n  /** Name of the setting — the chip, picker and group label. Defaults to `\"Tone\"`. */\n  label?: string;\n  /** Who writes, for the notices. Defaults to `\"Aria\"`. */\n  agentName?: string;\n  /** Composer text (controlled). The tone never edits it. */\n  draft?: string;\n  /** Initial composer text (uncontrolled). Cleared after a send. */\n  defaultDraft?: string;\n  /** Called when the composer text changes. */\n  onDraftChange?: (text: string) => void;\n  /** Called on send with the trimmed text and the tone setting, sent beside the prompt. */\n  onSubmit?: (text: string, setting: VoiceToneSetting) => void;\n  /** Composer placeholder, also its accessible name. Defaults to `\"Describe what to write…\"`. */\n  placeholder?: string;\n  /** Show the agent as busy — the send button becomes a stop button. */\n  loading?: boolean;\n  /** Called by the stop button while `loading`. */\n  onStop?: () => void;\n  /** More composer tools, placed after the Tone chip. */\n  actions?: React.ReactNode;\n}",
+          "source": "export interface VoiceToneProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"onSubmit\" | \"defaultValue\"> {\n  /** Where the scaffold sits. Defaults to `\"settings\"`. */\n  variant?: VoiceToneVariant;\n  /** How tones are chosen. Defaults to `\"cards\"`. */\n  layout?: VoiceToneLayout;\n  /** The tones on offer — three or four familiar ones. Defaults to {@link defaultVoiceTones}. Pass `[]` for a rules-only panel. */\n  tones?: VoiceToneOption[];\n  /** Chosen tone id (controlled). `null` is the agent's default voice; `\"custom\"` a described tone. */\n  value?: string | null;\n  /** Initial tone id (uncontrolled). Defaults to `null`. */\n  defaultValue?: string | null;\n  /** Called when the tone is chosen, switched, removed or restored. */\n  onValueChange?: (value: string | null) => void;\n  /** Offer “Or describe a tone”. Defaults to `true` in the composer and chip, `false` in settings. */\n  allowCustom?: boolean;\n  /** The described tone (controlled). */\n  customTone?: string;\n  /** Initial described tone (uncontrolled). */\n  defaultCustomTone?: string;\n  /** Called when a described tone is applied. */\n  onCustomToneChange?: (text: string) => void;\n  /** The rules list (settings panel). The composer variants send the rules that are on with each request. */\n  rules?: VoiceToneRule[];\n  /** Ids of the rules that are on (controlled). */\n  ruleValues?: string[];\n  /** Ids of the rules that are on initially (uncontrolled). */\n  defaultRuleValues?: string[];\n  /** Called with the ids of the rules that are on. */\n  onRulesChange?: (ids: string[]) => void;\n  /** Show the sample sentence for the tone in focus or chosen. Defaults to `true`. */\n  showSample?: boolean;\n  /** Let people remove the tone from the composer (with Undo). Defaults to `true`. */\n  removable?: boolean;\n  /** Picker open (controlled), for the composer and chip variants. */\n  open?: boolean;\n  /** Picker open initially (uncontrolled). */\n  defaultOpen?: boolean;\n  /** Called when the picker opens or closes. */\n  onOpenChange?: (open: boolean) => void;\n  /**\n   * Seed the quiet line, e.g. to show a state in docs. A seeded `\"removed\"` line's Undo restores the\n   * recommended (or first) tone.\n   */\n  defaultNotice?: VoiceToneNotice | null;\n  /** Name of the setting — the chip, picker and group label. Defaults to `\"Tone\"`. */\n  label?: string;\n  /** Who writes, for the notices. Defaults to `\"Aria\"`. */\n  agentName?: string;\n  /** Composer text (controlled). The tone never edits it. */\n  draft?: string;\n  /** Initial composer text (uncontrolled). Cleared after a send. */\n  defaultDraft?: string;\n  /** Called when the composer text changes. */\n  onDraftChange?: (text: string) => void;\n  /** Called on send with the trimmed text and the tone setting, sent beside the prompt. */\n  onSubmit?: (text: string, setting: VoiceToneSetting) => void;\n  /** Composer placeholder, also its accessible name. Defaults to `\"Describe what to write…\"`. */\n  placeholder?: string;\n  /** Show the agent as busy — the send button becomes a stop button. */\n  loading?: boolean;\n  /** Called by the stop button while `loading`. */\n  onStop?: () => void;\n  /** More composer tools, placed after the Tone chip. */\n  actions?: React.ReactNode;\n  /** Composer controls placed first in the toolbar, before the Tone chip or Request settings (attach, +…). */\n  composerLeading?: React.ReactNode;\n  /**\n   * \"chip\" (default): the Tone chip sits in the composer. \"settings\": no chip; a Request settings\n   * control right after `composerLeading` lists Tone (with its value) and opens the tone picker.\n   */\n  trigger?: VoiceToneTrigger;\n  /** With `trigger=\"settings\"`: the app's other request settings for the same menu (Mode, Style, Improve prompt…), merged in the site's order. */\n  settingsItems?: RequestSettingsItem[];\n  /** With `trigger=\"settings\"`: called when one of `settingsItems` is chosen. */\n  onSettingsSelect?: (id: string) => void;\n}",
           "extends": [
             "Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\" | \"onSubmit\" | \"defaultValue\">"
           ],
@@ -18709,6 +18906,34 @@
               "type": "React.ReactNode",
               "required": false,
               "description": "More composer tools, placed after the Tone chip."
+            },
+            {
+              "name": "composerLeading",
+              "type": "React.ReactNode",
+              "required": false,
+              "description": "Composer controls placed first in the toolbar, before the Tone chip or Request settings (attach, +…)."
+            },
+            {
+              "name": "trigger",
+              "type": "VoiceToneTrigger",
+              "required": false,
+              "description": "\"chip\" (default): the Tone chip sits in the composer. \"settings\": no chip; a Request settings control right after `composerLeading` lists Tone (with its value) and opens the tone picker.",
+              "values": [
+                "chip",
+                "settings"
+              ]
+            },
+            {
+              "name": "settingsItems",
+              "type": "RequestSettingsItem[]",
+              "required": false,
+              "description": "With `trigger=\"settings\"`: the app's other request settings for the same menu (Mode, Style, Improve prompt…), merged in the site's order."
+            },
+            {
+              "name": "onSettingsSelect",
+              "type": "(id: string) => void",
+              "required": false,
+              "description": "With `trigger=\"settings\"`: called when one of `settingsItems` is chosen."
             }
           ]
         }

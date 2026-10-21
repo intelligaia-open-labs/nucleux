@@ -144,3 +144,9 @@ export const PickerSegmented: Story = {
 export const ChipOnly: Story = {
   args: { variant: "chip", tones: updateTones, defaultValue: "professional" },
 };
+
+/** Request settings: no Tone chip up front — the tune control carries a dot and “Tone Professional” in its accessible name; its menu lists Tone with the value, and that row opens the tone picker (with a close ×). */
+export const RequestSettings: Story = {
+  args: { variant: "composer", trigger: "settings", tones: updateTones, defaultDraft: draft, defaultValue: "professional" },
+  render: Composer,
+};
