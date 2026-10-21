@@ -2,6 +2,28 @@ import type { ReactElement } from "react";
 import { Home, Mic } from "lucide-react";
 
 import {
+  AiIcons,
+  AiIcon,
+  AiColor,
+  AiColorHighlight,
+  Iconography,
+  AgentAvatar,
+  AgentName,
+  ExampleGallery,
+  Nudge,
+  Disclaimer,
+  InitialCta,
+  ProactiveSuggestion,
+  Randomize,
+  Autocomplete,
+  Attachments,
+  AttachmentsTray,
+  AttachmentsTrigger,
+  McpConnection,
+  McpConnectionTools,
+  VisualInput,
+  HandwritingInput,
+  GestureInput,
   Md3ButtonGroup,
   Md3ButtonGroupItem,
   Md3SplitButton,
@@ -513,6 +535,91 @@ export const cases: { name: string; ui: ReactElement }[] = [
     ),
   },
   { name: "Sonner", ui: <Toaster /> },
+  {
+    name: "AiIcons",
+    ui: (
+      <div>
+        <AiIcons variant="sparkle" label="AI" />
+        <AiIcons variant="thinking-orb" />
+        <AiIcon role="ai-action" label="Rewrite" />
+        <AiIcon role="agent-working" label="Rewriting release note…" />
+      </div>
+    ),
+  },
+  {
+    name: "AiColor",
+    ui: (
+      <AiColor variant="background-tint" label="Aria suggests">
+        Follow up with <AiColorHighlight>Acme Corp</AiColorHighlight>.
+      </AiColor>
+    ),
+  },
+  { name: "Iconography", ui: <Iconography label="Generate" agentName="Aria" iconOnly /> },
+  { name: "AgentAvatar", ui: <AgentAvatar name="Aria" status="online" statusLabel="Online · ready" /> },
+  { name: "AgentName", ui: <AgentName name="Aria" variant="name-status" status="drafting" /> },
+  {
+    name: "ExampleGallery",
+    ui: (
+      <ExampleGallery
+        examples={[
+          { title: "Summarise renewal risks", description: "Which accounts need attention this week", prompt: "Summarise the renewal risks across my accounts this week." },
+          { title: "Draft outreach email", prompt: "Draft a follow-up email to Acme Corp about their renewal." },
+        ]}
+      />
+    ),
+  },
+  { name: "Nudge", ui: <Nudge message="Try uploading a PDF — Aria can summarise it in seconds." onTry={() => {}} persist="none" /> },
+  {
+    name: "Disclaimer",
+    ui: <Disclaimer agentName="Aria" items={["Summarise documents and threads", "Draft replies and emails", "Pull from connected sources"]} cutoff="Apr 2026" />,
+  },
+  {
+    name: "InitialCta",
+    ui: <InitialCta aria-label="Message Aria" suggestions={["Summarise renewal risks", "Draft a follow-up"]} onSubmit={() => {}} />,
+  },
+  {
+    name: "ProactiveSuggestion",
+    ui: <ProactiveSuggestion agentName="Aria" title="Three renewals expire this week" description="Want Aria to draft outreach for each?" actionLabel="Draft emails" persist="none" />,
+  },
+  { name: "Randomize", ui: <Randomize variant="random-card" prompts={["Draft a one-paragraph product brief."]} onSelect={() => {}} /> },
+  {
+    name: "Autocomplete",
+    ui: <Autocomplete label="Prompt" defaultValue="Thanks for the quick turnaround on the deck." suggestion=" I've shared it with the team." />,
+  },
+  {
+    name: "Attachments",
+    ui: (
+      <Attachments
+        onRemove={() => {}}
+        onRetry={() => {}}
+        items={[
+          { id: "1", name: "Q2-renewals.csv", size: 49152, type: "text/csv", status: "ready" },
+          { id: "2", name: "deck.pdf", size: 4200000, type: "application/pdf", status: "uploading", progress: 40 },
+        ]}
+      >
+        <AttachmentsTray />
+        <AttachmentsTrigger />
+      </Attachments>
+    ),
+  },
+  {
+    name: "McpConnection",
+    ui: (
+      <McpConnection name="Linear MCP" address="https://mcp.linear.app/sse" status="connected" scopes={["Read issues"]} onDisconnect={() => {}}>
+        <McpConnectionTools tools={[{ id: "read_issue", title: "Read issue", risk: "read" }]} onToolEnabledChange={() => {}} />
+      </McpConnection>
+    ),
+  },
+  { name: "VisualInput", ui: <VisualInput variant="drag-drop" /> },
+  { name: "HandwritingInput", ui: <HandwritingInput defaultMode="type" /> },
+  {
+    name: "GestureInput",
+    ui: (
+      <GestureInput variant="swipe-action" actions={[{ gesture: "swipe-left", label: "Summarise" }]}>
+        <div>Slack thread: #renewals</div>
+      </GestureInput>
+    ),
+  },
   {
     name: "Md3ButtonGroup",
     ui: (

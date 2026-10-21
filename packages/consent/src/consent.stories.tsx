@@ -1,18 +1,22 @@
+import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Consent } from "./index";
+import { Button } from "@nucleux/button";
+import { Consent, ConsentDialog, ConsentToggle } from "./index";
 
 const meta = {
   title: "Agent/Consent",
   component: Consent,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
   args: {
     title: "Allow workspace access?",
     description: "Choose what the assistant can read or change during onboarding.",
     secondaryLabel: "Always Allow",
     allowLabel: "Allow selected",
+    policyHref: "#privacy",
     permissions: [
-      { id: "read", label: "Read selected files", description: "Use only files attached to this setup.", defaultChecked: true },
-      { id: "draft", label: "Draft edits", description: "Create suggestions without applying them.", defaultChecked: true },
+      { id: "read", label: "Read selected files", description: "Use only files attached to this setup." },
+      { id: "draft", label: "Draft edits", description: "Create suggestions without applying them." },
       { id: "actions", label: "Run external actions", description: "Ask before connecting tools or sending data." },
     ],
   },
@@ -21,4 +25,55 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+/** Embedded in the flow at the moment access is needed; each permission granted separately. */
+export const InlineCard: Story = {};
+
+/** A single just-in-time ask: no checklist, two equal answers. */
+export const InlineJustInTime: Story = {
+  args: {
+    title: "Use my recent uploads to personalise replies?",
+    description: "Files stay private to your workspace.",
+    permissions: [],
+    secondaryLabel: undefined,
+    allowLabel: "Allow",
+    denyLabel: "Skip",
+  },
+};
+
+function BlockingModalDemo() {
+  const [open, setOpen] = React.useState(true);
+  return (
+    <>
+      <Button variant="secondary" onClick={() => setOpen(true)}>
+        Send first message
+      </Button>
+      <ConsentDialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Allow data to improve Aria?"
+        description="Inputs never leave your tenant. You can change this anytime in Settings."
+        policyHref="#privacy"
+        onAllow={() => {}}
+        onDeny={() => {}}
+      />
+    </>
+  );
+}
+
+/** A centred dialog the person must answer before data first leaves the device. */
+export const BlockingModal: Story = {
+  render: () => <BlockingModalDemo />,
+};
+
+/** The standing control in privacy settings, once consent is no longer novel. */
+export const SettingsToggle: Story = {
+  render: () => (
+    <div className="w-80">
+      <ConsentToggle
+        title="Help improve Aria with my data"
+        description="Anonymised. Opt out anytime."
+        defaultChecked
+      />
+    </div>
+  ),
+};

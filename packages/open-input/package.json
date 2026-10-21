@@ -25,6 +25,8 @@
     "react-dom": ">=18"
   },
   "dependencies": {
+    "@nucleux/button": "workspace:*",
+    "@nucleux/spinner": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0"
   },
@@ -44,7 +46,7 @@
     "directory": "packages/open-input"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Open Input — free-form natural-language input — Nucleux agentic UI for React.",
+  "description": "Open Input — free-form text box for any natural-language ask — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",

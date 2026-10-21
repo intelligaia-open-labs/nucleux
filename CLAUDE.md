@@ -48,9 +48,12 @@ and restyle it onto Nucleux tokens — do not hand-roll it.
 - **Content:** Avatar, Badge, CodeBlock, ChartContainer, Collapsible, Accordion,
   Message, MessageScroller, Bubble, Marker, Trace, Questionnaire, Attachment
   (+AttachmentGroup)
-- **Agentic:** Disclosure, Caveat, Consent, Personality, Templates,
-  SuggestedPrompts, OpenInput, ModelSelection, KnowledgeBase, Connector,
-  VoiceInput, StructuredInput
+- **Agentic** (nucleux.in's Available patterns): Disclosure, Caveat, Consent
+  (+Dialog/Toggle), AgentAvatar, AgentName, Personality, Iconography, AiColor,
+  AiIcons, AiIcon, ExampleGallery, Templates (+List/Browser), Nudge, Disclaimer,
+  InitialCta, OpenInput, SuggestedPrompts, Autocomplete, ProactiveSuggestion,
+  Randomize, ModelSelection, KnowledgeBase, McpConnection, Connector, Attachments,
+  VoiceInput, VisualInput, HandwritingInput, GestureInput, StructuredInput
 - **Material 3:** Md3Button, Md3ButtonGroup, Md3SplitButton, Md3Fab, Md3FabMenu,
   Md3IconButton, Md3SegmentedButton, Md3Toolbar, Md3LoadingIndicator, Md3SideSheet,
   Md3Carousel,

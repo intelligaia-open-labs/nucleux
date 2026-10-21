@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Templates — fill-in-the-blank prompt scaffolds — Nucleux agentic UI for React.",
+  "description": "Templates — fill-in-the-blank prompt scaffolds that turn vague intent into a good question — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -36,6 +36,8 @@
     "react-dom": ">=18"
   },
   "dependencies": {
+    "@nucleux/button": "workspace:*",
+    "@nucleux/tabs": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0"
   },

@@ -119,5 +119,22 @@
   "@nucleux/md3-loading-indicator": "packages/md3-loading-indicator/src/index.tsx",
   "@nucleux/md3-side-sheet": "packages/md3-side-sheet/src/index.tsx",
   "@nucleux/md3-split-button": "packages/md3-split-button/src/index.tsx",
-  "@nucleux/md3-toolbar": "packages/md3-toolbar/src/index.tsx"
+  "@nucleux/md3-toolbar": "packages/md3-toolbar/src/index.tsx",
+  "@nucleux/agent-avatar": "packages/agent-avatar/src/index.tsx",
+  "@nucleux/ai-icons": "packages/ai-icons/src/index.tsx",
+  "@nucleux/attachments": "packages/attachments/src/index.tsx",
+  "@nucleux/autocomplete": "packages/autocomplete/src/index.tsx",
+  "@nucleux/color": "packages/color/src/index.tsx",
+  "@nucleux/disclaimer": "packages/disclaimer/src/index.tsx",
+  "@nucleux/example-gallery": "packages/example-gallery/src/index.tsx",
+  "@nucleux/gesture": "packages/gesture/src/index.tsx",
+  "@nucleux/handwriting": "packages/handwriting/src/index.tsx",
+  "@nucleux/iconography": "packages/iconography/src/index.tsx",
+  "@nucleux/initial-cta": "packages/initial-cta/src/index.tsx",
+  "@nucleux/mcp-connection": "packages/mcp-connection/src/index.tsx",
+  "@nucleux/name": "packages/name/src/index.tsx",
+  "@nucleux/nudges": "packages/nudges/src/index.tsx",
+  "@nucleux/proactive": "packages/proactive/src/index.tsx",
+  "@nucleux/randomize": "packages/randomize/src/index.tsx",
+  "@nucleux/visual-input": "packages/visual-input/src/index.tsx"
 }

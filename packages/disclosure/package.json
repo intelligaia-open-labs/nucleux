@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "type": "module",
   "sideEffects": false,
-  "description": "Disclosure — marks where AI is involved: an AI action, AI at work, or AI-generated content — Nucleux agentic UI for React.",
+  "description": "Disclosure \u2014 marks where AI is involved: an AI action, AI at work, or AI-generated content \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -36,6 +36,9 @@
     "react-dom": ">=18"
   },
   "dependencies": {
+    "@nucleux/ai-icons": "workspace:*",
+    "@nucleux/button": "workspace:*",
+    "@nucleux/color": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0"
   },
