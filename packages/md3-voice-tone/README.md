@@ -1,6 +1,6 @@
 # @nucleux/md3-voice-tone
 
-Material 3 Voice & Tone — say how the reply should sound (tone cards, a rules list, a sample line), shown as a Tone chip in the composer and never editing the prompt — Nucleux agentic UI for React.
+Material 3 Voice & Tone — say how the reply should sound (tone cards, a rules list, a sample line), as a Tone chip or a Tone row in Request settings, never editing the prompt — Nucleux agentic UI for React.
 
 Part of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).
 

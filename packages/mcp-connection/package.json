@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/mcp-connection",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
   "description": "MCP Server Connection — standardised tool access so the AI can act, not just answer — Nucleux agentic UI for React.",

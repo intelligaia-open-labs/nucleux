@@ -1,6 +1,6 @@
 # @nucleux/open-input
 
-Open Input — free-form text box for any natural-language ask — Nucleux agentic UI for React.
+Open Input — free-form composer for any natural-language ask: grows to eight lines then Expand, with a Request settings menu (Mode, Tone, Style, Improve prompt) — Nucleux agentic UI for React.
 
 Part of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).
 

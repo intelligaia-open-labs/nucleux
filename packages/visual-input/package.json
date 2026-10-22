@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/visual-input",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
   "description": "Visual Input — attach images, screenshots, or videos as part of the ask — Nucleux agentic UI for React.",

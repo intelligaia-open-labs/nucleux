@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/md3-voice-tone",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
-  "description": "Material 3 Voice & Tone — say how the reply should sound (tone cards, a rules list, a sample line), shown as a Tone chip in the composer and never editing the prompt — Nucleux agentic UI for React.",
+  "description": "Material 3 Voice & Tone — say how the reply should sound (tone cards, a rules list, a sample line), as a Tone chip or a Tone row in Request settings, never editing the prompt — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -17,7 +17,8 @@
     "md3-voice-tone",
     "voice-tone",
     "tone",
-    "prompt-scaffold"
+    "prompt-scaffold",
+    "request-settings"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/prompt-enhancer",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
-  "description": "Prompt Enhancer — a magic-wand action that rewrites a short ask into a precise one, shown as a reviewable diff — Nucleux agentic UI for React.",
+  "description": "Prompt Enhancer — a magic-wand action that rewrites a short ask into a precise one, shown as a reviewable diff; starts from the wand or the Improve prompt row in Request settings — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -15,7 +15,8 @@
     "prompt-enhancer",
     "prompt",
     "enhance",
-    "prompt-scaffold"
+    "prompt-scaffold",
+    "request-settings"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

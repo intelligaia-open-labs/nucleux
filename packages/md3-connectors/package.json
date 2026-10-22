@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-connectors",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Connectors — grant the agent standing access to a service it needs — Nucleux agentic UI for React.",

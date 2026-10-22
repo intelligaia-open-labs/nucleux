@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/md3-open-input",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
-  "description": "Material 3 Open Input — the persistent free-form composer for any natural-language ask — Nucleux agentic UI for React.",
+  "description": "Material 3 Open Input — the persistent free-form composer for any natural-language ask: grows to eight lines then Expand, with a Request settings menu (Mode, Tone, Style, Improve prompt) — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -17,7 +17,12 @@
     "md3-open-input",
     "open-input",
     "composer",
-    "prompt"
+    "prompt",
+    "request-settings",
+    "settings",
+    "tune",
+    "menu",
+    "expand"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-initial-cta",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Initial CTA — the large, inviting composer that anchors an empty workspace — Nucleux agentic UI for React.",

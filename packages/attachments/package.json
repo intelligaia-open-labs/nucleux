@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/attachments",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
   "description": "Attachments — upload files, photos, docs for the AI to read — Nucleux agentic UI for React.",

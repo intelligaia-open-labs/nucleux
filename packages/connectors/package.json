@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/connectors",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
   "description": "Connectors — connect an external tool or data source — Nucleux agentic UI for React.",

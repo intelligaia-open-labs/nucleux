@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/open-input",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -46,7 +46,7 @@
     "directory": "packages/open-input"
   },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",
-  "description": "Open Input — free-form text box for any natural-language ask — Nucleux agentic UI for React.",
+  "description": "Open Input — free-form composer for any natural-language ask: grows to eight lines then Expand, with a Request settings menu (Mode, Tone, Style, Improve prompt) — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -55,6 +55,13 @@
     "agentic",
     "ai",
     "tailwind",
-    "open-input"
+    "open-input",
+    "composer",
+    "prompt",
+    "request-settings",
+    "settings",
+    "tune",
+    "menu",
+    "expand"
   ]
 }
