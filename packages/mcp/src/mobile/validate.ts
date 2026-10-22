@@ -188,6 +188,20 @@ export const USAGE_RULES: Rule[] = [
     },
   },
   {
+    code: "removed-api",
+    severity: "error",
+    patterns: {
+      all: [/\bwillNot\s*[:=]/, /\bcannotSee\s*[:=]/, /\bDisclaimerRowKind\.(?:WillNot|CannotSee|willNot|cannotSee)\b/, /\.(?:willNot|cannotSee)\b/],
+    },
+    message: "The three-row Disclaimer (Can / Will not / Cannot see) was replaced on 22 Oct 2026 by Agent Limits' four groups: can, cannot, needsApproval, mayGetWrong. The kit also has a compact statement, a note before an action that needs something missing, and a banner when the limit is reached.",
+    fix: {
+      swiftui: "NucleuxDisclaimerScope(can: …, cannot: …, needsApproval: …, mayGetWrong: …); NucleuxAgentLimits(agent:summary:scope:); NucleuxLimitNote / NucleuxLimitBanner(NucleuxLimitControl(limit, onConnect: { … }, onFinish: { … }))",
+      compose: "NucleuxDisclaimerScope(can, cannot, needsApproval, mayGetWrong); NucleuxAgentLimits(agent, summary, scope); NucleuxLimitNote / NucleuxLimitBanner(rememberLimitControl(limit, onConnect = { … }, onFinish = { … }))",
+      flutter: "NucleuxDisclaimerScope(can: …, cannot: …, needsApproval: …, mayGetWrong: …); NucleuxAgentLimits(…); NucleuxLimitNote / NucleuxLimitBanner(control: NucleuxLimitControl(limit, onConnect: …, onFinish: …))",
+      "react-native": "scope={{ can, cannot, needsApproval, mayGetWrong }}; <AgentLimits …/>; const limit = useLimit(content, { onConnect, onFinish }); <LimitNote limit={limit} /> <LimitBanner limit={limit} />",
+    },
+  },
+  {
     code: "ai-glyph-by-name",
     severity: "warning",
     patterns: {
