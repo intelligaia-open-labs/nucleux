@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/gesture",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "module",
   "sideEffects": false,
   "description": "Gesture Input — swipes, pinches, circles as expressive signals — Nucleux agentic UI for React.",

@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-disclosure",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Disclosure — a clear label that says where AI is involved, at the point it matters — Nucleux agentic UI for React.",

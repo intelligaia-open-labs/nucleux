@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-color",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 AI Color — the reserved AI accent and working treatment in M3 colour roles — Nucleux agentic UI for React.",
