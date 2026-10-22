@@ -111,6 +111,16 @@ generated from the sources, verified setup) and the `nucleux-design` skill
 and the agent picks patterns, reads the real props and builds with them,
 instead of guessing.
 
+From your app's folder, one command connects every coding agent on your machine
+(Claude Code, Cursor, VS Code Copilot, Codex, Windsurf, Claude Desktop, Gemini CLI)
+and adds the guidance to the project. It is safe to run again; `--dry-run` previews.
+
+```bash
+npx -y @nucleux/mcp add
+```
+
+Or set up one agent by hand:
+
 ```bash
 # Claude Code: MCP server + skill as one plugin
 claude plugin marketplace add intelligaia-open-labs/nucleux

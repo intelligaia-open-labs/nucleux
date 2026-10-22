@@ -1,6 +1,7 @@
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import catalog from "./catalog.json";
 import { patterns } from "./patterns.js";
+import { runAdd } from "./add.js";
 import { runInit } from "./init.js";
 import { createServer } from "./server.js";
 
@@ -15,6 +16,9 @@ async function main() {
 
 if (process.argv[2] === "init") {
   process.exit(runInit(process.argv.slice(3)));
+}
+if (process.argv[2] === "add") {
+  process.exit(runAdd(process.argv.slice(3)));
 }
 
 main().catch((err) => {

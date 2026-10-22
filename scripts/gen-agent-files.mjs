@@ -27,6 +27,7 @@ The steps below call the \`nucleux\` MCP tools (\`search_patterns\`, \`get_patte
 \`get_component\`, \`get_setup\`). If they are not available, stop and tell the
 user to add the server, then continue once it is connected:
 
+- Any agent, from the project root: \`npx -y @nucleux/mcp add\`
 - Claude Code: \`claude mcp add nucleux -- npx -y @nucleux/mcp\`
 - Codex: \`codex mcp add nucleux -- npx -y @nucleux/mcp\`
 

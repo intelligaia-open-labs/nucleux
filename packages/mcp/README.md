@@ -13,12 +13,48 @@ It ships three things:
   from the TypeScript sources), setup instructions and example screens.
 - **The `nucleux-design` skill**: a design-first workflow (inspect → analyse →
   discover → plan → implement → validate → report) for Claude Code and Codex.
-- **`init`**: one command that installs the skill into your project.
+- **`add`**: one command that connects every coding agent on your machine and
+  adds the skill to your project. (`init` adds only the skill.)
 
 ## Quick start
 
 Needs [Node.js](https://nodejs.org) ≥ 18. Nothing to install by hand: the
 client runs the server on demand through `npx`.
+
+### One command, every agent
+
+From your app's root:
+
+```bash
+npx -y @nucleux/mcp add
+```
+
+```
+Found: Claude Code, Cursor, Codex
+  ✓ Claude Code  Nucleux connected — claude mcp (user scope)
+  ✓ Cursor       Nucleux connected — ~/.cursor/mcp.json
+  ✓ Codex        Nucleux connected — ~/.codex/config.toml
+  ✓ project      wrote  .claude/skills/nucleux-design/SKILL.md
+  ✓ project      wrote  .agents/skills/nucleux-design/SKILL.md
+  ✓ project      wrote  AGENTS.md
+
+Done. Restart Cursor. Then ask your agent: "Build a settings page with Nucleux".
+```
+
+It finds Claude Code, Cursor, VS Code (Copilot), Codex, Windsurf, Claude Desktop
+and Gemini CLI, adds the `nucleux` server to each one's user config (keeping
+everything else in it) and writes the `nucleux-design` skill and an AGENTS.md
+section into the project. Anything already set up is left alone, and a config
+it can't parse (JSON with comments) is never rewritten: it prints the line to
+add instead.
+
+| Option | |
+| --- | --- |
+| `--dry-run` | Show what would change; change nothing. |
+| `--only cursor,codex` | Just these agents (`claude-code`, `cursor`, `vscode`, `codex`, `windsurf`, `claude-desktop`, `gemini`), even if not detected. |
+| `--no-project` | Connect the agents only; write nothing into the current folder. |
+
+Or set up each agent yourself:
 
 ### Claude Code
 
