@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-attachments",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Attachments — hand the agent the files this request depends on — Nucleux agentic UI for React.",
@@ -41,6 +41,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
+    "@nucleux/md3-open-input": "workspace:*",
     "@nucleux/attachments": "workspace:*",
     "@nucleux/md3-button": "workspace:*",
     "@nucleux/md3-icon-button": "workspace:*",

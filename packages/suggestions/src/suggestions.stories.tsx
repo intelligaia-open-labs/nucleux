@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { OpenInput } from "@nucleux/open-input";
 import { Suggestions, SuggestionsComposer, type SuggestionItem } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const RELEASE: SuggestionItem[] = [
   { id: "blockers", label: "Include unresolved blockers" },
@@ -37,6 +38,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /**
  * The site's live preview: follow-up chips (↳) under an answer, quick-edit

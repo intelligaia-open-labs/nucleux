@@ -4,7 +4,7 @@ import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import { Spinner } from "@nucleux/spinner";
 import { AiGeneratedIcon } from "@nucleux/ai-icons";
-import { OpenInput } from "@nucleux/open-input";
+import { OpenInput, type OpenInputProps } from "@nucleux/open-input";
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Types
@@ -404,7 +404,9 @@ Suggestions.displayName = "Suggestions";
  * ──────────────────────────────────────────────────────────────────────────── */
 
 export interface SuggestionsComposerProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSubmit" | "onSelect" | "defaultValue" | "onChange"> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSubmit" | "onSelect" | "defaultValue" | "onChange">,
+    /** The composer's own chrome, passed straight to it: `onAdd` (the + button), `model` (the model chip), `onVoice` (the mic). */
+    Pick<OpenInputProps, "onAdd" | "addLabel" | "add" | "model" | "onVoice" | "voiceLabel"> {
   /** Controlled draft. Omit (and use `defaultValue`) for an uncontrolled composer. */
   value?: string;
   /** Initial draft when uncontrolled. */
@@ -692,6 +694,12 @@ export const SuggestionsComposer = React.forwardRef<HTMLDivElement, SuggestionsC
     loading,
     onStop,
     messages,
+    onAdd,
+    addLabel,
+    add,
+    model,
+    onVoice,
+    voiceLabel,
     className,
     ...rest
   } = props;
@@ -723,6 +731,12 @@ export const SuggestionsComposer = React.forwardRef<HTMLDivElement, SuggestionsC
         actions={composerActions}
         loading={loading}
         onStop={onStop}
+        onAdd={onAdd}
+        addLabel={addLabel}
+        add={add}
+        model={model}
+        onVoice={onVoice}
+        voiceLabel={voiceLabel}
       />
     </div>
   );

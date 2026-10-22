@@ -177,6 +177,18 @@ describe("MCP server", () => {
     }
   });
 
+  it("get_component gives agentic components their nucleux.in code, in the family asked for", async () => {
+    for (const [name, pkg] of [["InitialCta", "@nucleux/initial-cta"], ["Md3InitialCta", "@nucleux/md3-initial-cta"], ["Md3Consent", "@nucleux/md3-consent"]]) {
+      const { text } = await call("get_component", { name });
+      const code = text.split("## As on nucleux.in")[1] ?? "";
+      expect(code).toMatch(/export function SitePreview\(/);
+      expect(code).toContain(`from "${pkg}"`);
+      expect(code).not.toContain('from "./index"');
+    }
+    const withPreview = catalog.packages.filter((p) => "sitePreview" in p).length;
+    expect(withPreview).toBeGreaterThanOrEqual(70);
+  });
+
   it("get_component still answers a near-miss with suggestions", async () => {
     const { text } = await call("get_component", { name: "Buttons" });
     expect(text).toMatch(/Did you mean: .*Button/);
@@ -256,5 +268,16 @@ describe("MCP server", () => {
 
   it("server instructions point agents at patterns first", () => {
     expect(client.getInstructions()).toMatch(/search_patterns first/);
+  });
+
+  it("server instructions and the skill make the agent ask Material 3 or shadcn first", async () => {
+    const instr = client.getInstructions() ?? "";
+    expect(instr.indexOf("Material 3 (Md3*) or shadcn")).toBeLessThan(instr.indexOf("search_patterns first"));
+    expect(instr).toMatch(/Nucleux family: Material 3/);
+    const { readFileSync } = await import("node:fs");
+    const { resolve } = await import("node:path");
+    const skill = readFileSync(resolve(__dirname, "../skills/nucleux-design/SKILL.md"), "utf8");
+    expect(skill).toMatch(/Ask which family first/);
+    expect(skill).toMatch(/\*\*B\. Choose the family\.\*\*/);
   });
 });

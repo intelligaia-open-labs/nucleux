@@ -2,7 +2,8 @@ import * as React from "react";
 import { cn } from "@nucleux/utils";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3Chip } from "@nucleux/md3-chip";
-import { AlertTriangle, Check, CircleAlert, FileText, Plus, RotateCw } from "lucide-react";
+import { AlertTriangle, Check, CircleAlert, FileText, Info, Plus, RotateCw } from "lucide-react";
+import { knowledgeBaseInitials } from "@nucleux/knowledge-base";
 import type {
   KnowledgeBaseProps,
   KnowledgeBaseSourcesProps,
@@ -10,6 +11,8 @@ import type {
   KnowledgeBaseVariant,
   KnowledgeBaseCoverageLevel,
   KnowledgeSourceStatus,
+  KnowledgeBaseCardProps,
+  KnowledgeBaseCardStatus,
 } from "@nucleux/knowledge-base";
 
 // Same API as @nucleux/knowledge-base: props and data shapes come from the twin.
@@ -19,6 +22,8 @@ export type Md3KnowledgeBaseCoverageProps = KnowledgeBaseCoverageProps;
 export type Md3KnowledgeBaseVariant = KnowledgeBaseVariant;
 export type Md3KnowledgeBaseCoverageLevel = KnowledgeBaseCoverageLevel;
 export type Md3KnowledgeSourceStatus = KnowledgeSourceStatus;
+export type Md3KnowledgeBaseCardProps = KnowledgeBaseCardProps;
+export type Md3KnowledgeBaseCardStatus = KnowledgeBaseCardStatus;
 export type { KnowledgeSource, KnowledgeBaseSourceRef } from "@nucleux/knowledge-base";
 
 const statusWord: Record<KnowledgeSourceStatus, string> = {
@@ -390,3 +395,108 @@ export const Md3KnowledgeBaseCoverage = React.forwardRef<HTMLSpanElement, Md3Kno
   },
 );
 Md3KnowledgeBaseCoverage.displayName = "Md3KnowledgeBaseCoverage";
+
+const baseStatusWord: Record<KnowledgeBaseCardStatus, string> = {
+  active: "Active",
+  available: "Available",
+  inactive: "Inactive",
+};
+
+/**
+ * Material 3 twin of `KnowledgeBaseCard`: one knowledge base as an outlined
+ * card — a tonal monogram tile, the name (title medium) and source count, an
+ * assist-style status chip that says Active, Available or Inactive (a ring and
+ * a word, never only a colour), the line saying where it applies, and an
+ * outlined "Manage sources" with text buttons "Add sources" and "Stop using
+ * here" (which deletes nothing). Shares the API of `@nucleux/knowledge-base`.
+ */
+export const Md3KnowledgeBaseCard = React.forwardRef<HTMLElement, Md3KnowledgeBaseCardProps>(
+  (
+    {
+      name,
+      monogram,
+      sourceCount,
+      status = "active",
+      scope,
+      onManage,
+      onAdd,
+      onActiveChange,
+      manageLabel = "Manage sources",
+      addLabel = "Add sources",
+      deactivateLabel = "Stop using here",
+      activateLabel = "Use in this project",
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    const titleId = React.useId();
+    const active = status === "active";
+    return (
+      <section
+        ref={ref}
+        aria-labelledby={titleId}
+        data-status={status}
+        className={cn(
+          "flex flex-col gap-4 rounded-md-lg border border-md-outline-variant bg-md-surface-container-lowest p-4 text-md-on-surface",
+          className,
+        )}
+        {...props}
+      >
+        <div className="flex items-start gap-3">
+          <span
+            aria-hidden="true"
+            className="inline-flex size-[34px] shrink-0 items-center justify-center rounded-md-md bg-md-primary-container text-xs font-semibold tracking-[0.5px] text-md-on-surface-variant"
+          >
+            {monogram ?? knowledgeBaseInitials(name)}
+          </span>
+          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+            <h3 id={titleId} className="truncate text-base font-semibold leading-6 tracking-[0.15px]">
+              {name}
+            </h3>
+            {sourceCount != null && (
+              <p className="text-sm leading-5 tracking-[0.25px] text-md-on-surface-variant">
+                {sourceCount.toLocaleString()} {sourceCount === 1 ? "source" : "sources"}
+              </p>
+            )}
+          </div>
+          <span
+            className={cn(
+              "inline-flex h-6 shrink-0 items-center gap-1.5 rounded-full px-2.5 text-sm font-medium tracking-[0.1px]",
+              active ? "bg-md-surface-container-high text-md-on-surface" : "border border-md-outline-variant text-md-on-surface-variant",
+            )}
+          >
+            <span aria-hidden="true" className="size-2 rounded-full border-2 border-current" />
+            {baseStatusWord[status]}
+          </span>
+        </div>
+        {scope && (
+          <p className="inline-flex items-center gap-2 text-sm font-medium leading-5 tracking-[0.1px] text-md-on-surface">
+            <Info aria-hidden="true" className="size-[18px] shrink-0" />
+            {scope}
+          </p>
+        )}
+        {(onManage || onAdd || onActiveChange) && (
+          <div className="flex flex-wrap items-center gap-2">
+            {onManage && (
+              <Md3Button variant="outlined" onClick={onManage}>
+                {manageLabel}
+              </Md3Button>
+            )}
+            {onAdd && (
+              <Md3Button variant="text" onClick={onAdd}>
+                {addLabel}
+              </Md3Button>
+            )}
+            {onActiveChange && (
+              <Md3Button variant="text" onClick={() => onActiveChange(!active)}>
+                {active ? deactivateLabel : activateLabel}
+              </Md3Button>
+            )}
+          </div>
+        )}
+      </section>
+    );
+  },
+);
+Md3KnowledgeBaseCard.displayName = "Md3KnowledgeBaseCard";

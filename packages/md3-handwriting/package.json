@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-handwriting",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Handwriting Input — write the request by hand, settle uncertain words, add it yourself — Nucleux agentic UI for React.",
@@ -42,6 +42,8 @@
     "react-dom": ">=18"
   },
   "dependencies": {
+    "@nucleux/md3-open-input": "workspace:*",
+    "@nucleux/md3-icon-button": "workspace:*",
     "@nucleux/handwriting": "workspace:*",
     "@nucleux/md3-button": "workspace:*",
     "@nucleux/md3-chip": "workspace:*",

@@ -45,7 +45,21 @@ export interface VoiceInputProps extends React.HTMLAttributes<HTMLDivElement> {
   listeningLabel?: React.ReactNode;
   /** Message shown in the error state. Defaults to `"Couldn’t make out all of that."`. */
   errorText?: React.ReactNode;
+  /**
+   * `"transcript-stream"`: the small heading over the words. Defaults to
+   * `"Live transcript"` in `VoiceInput` (none in `Md3VoiceInput`); `null` hides it.
+   */
+  transcriptLabel?: React.ReactNode;
+  /**
+   * `"transcript-stream"`: how to stop, after the listening label in the status
+   * line ("Aria is listening · tap to stop"). Defaults to `"tap to stop"` in
+   * `VoiceInput` (none in `Md3VoiceInput`); `null` hides it.
+   */
+  stopHint?: React.ReactNode;
 }
+
+/** Bar heights (px) of the transcript panel's level meter, as on nucleux.in. */
+export const VOICE_INPUT_LEVELS = [18, 28, 14, 34, 22, 30, 12, 26, 32, 16, 24, 20, 28, 14, 30, 18, 22];
 
 const BAR_COUNT = 24;
 
@@ -81,7 +95,9 @@ const textOf = (node: React.ReactNode, fallback: string) =>
  * words), Pause/Resume, Cancel and Stop, then a transcribing state. Stop never
  * sends: the transcript goes to the field for the person to review. State is
  * announced through a polite live region and every animation stops under
- * reduced motion. Variants: waveform, mic-button, transcript-stream.
+ * reduced motion. Variants: waveform, mic-button, transcript-stream (a panel:
+ * "Live transcript" over the words, a level meter with the clock and a lit
+ * mic that stops, and a status line, "Aria is listening · tap to stop").
  * Source: Figma "Expressive Input / Voice Input".
  */
 export const VoiceInput = React.forwardRef<HTMLDivElement, VoiceInputProps>(
@@ -101,6 +117,8 @@ export const VoiceInput = React.forwardRef<HTMLDivElement, VoiceInputProps>(
       idleLabel = "Tap to speak",
       listeningLabel = "Listening",
       errorText = "Couldn’t make out all of that.",
+      transcriptLabel = "Live transcript",
+      stopHint = "tap to stop",
       className,
       ...props
     },
@@ -188,10 +206,15 @@ export const VoiceInput = React.forwardRef<HTMLDivElement, VoiceInputProps>(
     );
 
     if (variant === "transcript-stream") {
+      const paused = state === "paused";
       return (
         <div
           ref={ref}
-          className={cn("flex flex-col gap-2 rounded-xl border border-border bg-background px-4 py-3", className)}
+          className={cn(
+            "flex flex-col overflow-hidden rounded-xl border border-border bg-background",
+            (state === "idle" || state === "error") && "px-4 py-3",
+            className,
+          )}
           role="group"
           aria-label="Voice input"
           data-state={state}
@@ -207,22 +230,29 @@ export const VoiceInput = React.forwardRef<HTMLDivElement, VoiceInputProps>(
             <div className="flex items-center gap-2">{error}</div>
           ) : (
             <>
-              <p className="min-h-5 text-sm leading-5 text-foreground">
-                {transcript}
-                {interimTranscript && (
-                  <>
-                    {transcript ? " " : null}
-                    <span className="italic text-muted-foreground">{interimTranscript}</span>
-                  </>
+              <div className="px-[1.125rem] pb-3 pt-4">
+                {transcriptLabel != null && (
+                  <p className="mb-2 text-[0.625rem] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                    {transcriptLabel}
+                  </p>
                 )}
-                {capturing && (
-                  <span
-                    aria-hidden="true"
-                    className="ml-px inline-block h-3.5 w-0.5 translate-y-0.5 bg-brand animate-nx-caret-blink motion-reduce:animate-none"
-                  />
-                )}
-              </p>
-              <div className="flex items-center gap-2">
+                <p className="min-h-5 text-sm leading-6 text-foreground">
+                  {transcript}
+                  {interimTranscript && (
+                    <>
+                      {transcript ? " " : null}
+                      <span className="italic text-muted-foreground">{interimTranscript}</span>
+                    </>
+                  )}
+                  {capturing && (
+                    <span
+                      aria-hidden="true"
+                      className="ml-px inline-block h-3.5 w-0.5 translate-y-0.5 rounded-full bg-brand animate-nx-caret-blink motion-reduce:animate-none"
+                    />
+                  )}
+                </p>
+              </div>
+              <div className="flex items-center gap-3 border-t border-border px-[1.125rem] py-3">
                 {state === "transcribing" ? (
                   <>
                     <Loader2
@@ -233,19 +263,47 @@ export const VoiceInput = React.forwardRef<HTMLDivElement, VoiceInputProps>(
                   </>
                 ) : (
                   <>
-                    <Mic className={cn("size-3.5 shrink-0", state === "paused" ? "text-muted-foreground" : "text-destructive")} aria-hidden="true" />
-                    <span className="flex-1 text-xs text-muted-foreground">
-                      {state === "paused" ? "Paused" : listeningLabel}
-                      {duration && <span className="tabular-nums"> · {duration}</span>}
-                    </span>
+                    <div className="flex h-9 flex-1 items-center gap-[3px]" aria-hidden="true">
+                      {VOICE_INPUT_LEVELS.map((h, i) => (
+                        <span
+                          key={i}
+                          className={cn(
+                            "w-[3px] rounded-full bg-brand motion-reduce:animate-none",
+                            paused ? "opacity-40" : "animate-nx-typing",
+                          )}
+                          style={{ height: h, animationDelay: `${i * 60}ms` }}
+                        />
+                      ))}
+                    </div>
+                    {duration && <span className="shrink-0 text-xs tabular-nums text-muted-foreground">{duration}</span>}
                     {pauseButton}
                     {onCancel && cancelButton}
-                    <Button variant="cta" size="sm" onClick={onConfirm} leftIcon={<Check className="size-4" aria-hidden="true" />}>
-                      Stop
-                    </Button>
+                    <button
+                      type="button"
+                      aria-label="Stop and use recording"
+                      onClick={onConfirm}
+                      className={cn(
+                        "inline-flex size-10 shrink-0 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&_svg]:size-4",
+                        paused
+                          ? "bg-muted text-foreground hover:bg-accent"
+                          : "bg-destructive text-destructive-foreground ring-4 ring-destructive/20 hover:bg-destructive/90",
+                      )}
+                    >
+                      <Mic aria-hidden="true" />
+                    </button>
                   </>
                 )}
               </div>
+              {state !== "transcribing" && (
+                <p className="flex items-center gap-1.5 border-t border-border bg-muted/40 px-[1.125rem] py-2 text-xs text-muted-foreground">
+                  <span
+                    aria-hidden="true"
+                    className={cn("size-2 shrink-0 rounded-full", paused ? "bg-muted-foreground/40" : "bg-destructive")}
+                  />
+                  {paused ? "Paused" : listeningLabel}
+                  {stopHint != null && !paused && <> · {stopHint}</>}
+                </p>
+              )}
             </>
           )}
           {liveRegion}

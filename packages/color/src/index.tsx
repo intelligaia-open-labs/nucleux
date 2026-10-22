@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Bot, CircleAlert, CircleCheck, CircleHelp, LoaderCircle, TriangleAlert } from "lucide-react";
 import { cn, Slot } from "@nucleux/utils";
 
 /**
@@ -29,7 +30,7 @@ export type AiColorVariant = "accent-border" | "soft-glow" | "background-tint";
 
 const variantClasses: Record<AiColorVariant, string> = {
   "accent-border":
-    "rounded-r-md border-l-[3px] border-brand bg-gradient-to-r from-brand-muted to-transparent px-4 py-3",
+    "rounded-r-md border-l-[3px] border-brand bg-gradient-to-r from-brand-muted to-transparent p-4",
   "soft-glow": "rounded-lg bg-background px-4 py-3 shadow-lg shadow-brand/20 ring-[3px] ring-brand/15",
   "background-tint": "rounded-lg bg-brand-muted px-4 py-3",
 };
@@ -43,8 +44,8 @@ export interface AiColorProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: AiColorVariant;
   /**
    * The AI is working in this region right now: adds the working treatment
-   * (a pulsing accent ring, plus a streaming caret on `accent-border`) and
-   * sets `aria-busy`. Holds still under reduced motion.
+   * (a streaming caret on `accent-border`, a pulsing accent ring on the
+   * other surfaces) and sets `aria-busy`. Holds still under reduced motion.
    */
   working?: boolean;
   /**
@@ -74,11 +75,11 @@ export const AiColor = React.forwardRef<HTMLDivElement, AiColorProps>(
         <span
           role="status"
           className={cn(
-            "flex items-center gap-1.5 text-xs font-semibold tracking-wide text-foreground",
-            variant === "accent-border" ? "mt-1.5" : "mb-1.5",
+            "flex items-center gap-1.5 font-semibold",
+            variant === "accent-border" ? "mt-2 text-[11px] text-brand" : "mb-1.5 text-xs tracking-wide text-foreground",
           )}
         >
-          <AiColorDot pulse={working} />
+          {variant !== "accent-border" && <AiColorDot pulse={working} />}
           {label}
         </span>
       ) : null;
@@ -89,8 +90,9 @@ export const AiColor = React.forwardRef<HTMLDivElement, AiColorProps>(
       className,
     );
 
-    const ring = working ? (
-      <AiColorWorkingRing className={variant === "accent-border" ? "rounded-l-none" : undefined} />
+    // On the accent border the streaming caret is the moving treatment; the other surfaces pulse a ring.
+    const ring = working && variant !== "accent-border" ? (
+      <AiColorWorkingRing />
     ) : null;
 
     if (asChild) {
@@ -110,8 +112,10 @@ export const AiColor = React.forwardRef<HTMLDivElement, AiColorProps>(
           {working && variant === "accent-border" && (
             <span
               aria-hidden="true"
-              className="ml-0.5 inline-block h-4 w-[2px] translate-y-0.5 bg-brand animate-nx-caret-blink motion-reduce:animate-none"
-            />
+              className="font-semibold text-brand animate-nx-caret-blink motion-reduce:animate-none"
+            >
+              _
+            </span>
           )}
         </div>
         {variant === "accent-border" && labelNode}
@@ -183,3 +187,76 @@ export const AiColorWorkingRing = React.forwardRef<HTMLSpanElement, AiColorWorki
   ),
 );
 AiColorWorkingRing.displayName = "AiColorWorkingRing";
+
+/**
+ * The agent states a status chip can name: `available` (idle, neutral),
+ * `assigned` and `working` (the agent role), `attention` (needs a person),
+ * `success`, `warning` and `error`.
+ */
+export type AiColorStatusTone = "available" | "assigned" | "working" | "attention" | "success" | "warning" | "error";
+
+export interface AiColorStatusProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /** Which state the colour names. Default `available`. */
+  status?: AiColorStatusTone;
+  /** The words — "Available", "Assigned to Aria", "Working…". Required: colour never travels alone. */
+  label: React.ReactNode;
+  /** Leading icon. Defaults to the state's own icon; pass `null` to omit. */
+  icon?: React.ReactNode;
+}
+
+/** The default icon for each state, shared with the Material 3 twin. */
+export function aiColorStatusIcon(status: AiColorStatusTone): React.ReactNode {
+  switch (status) {
+    case "available":
+    case "assigned":
+      return <Bot aria-hidden="true" />;
+    case "working":
+      return <LoaderCircle aria-hidden="true" className="animate-spin motion-reduce:animate-none" />;
+    case "attention":
+      return <CircleHelp aria-hidden="true" />;
+    case "success":
+      return <CircleCheck aria-hidden="true" />;
+    case "warning":
+      return <TriangleAlert aria-hidden="true" />;
+    case "error":
+      return <CircleAlert aria-hidden="true" />;
+  }
+}
+
+const statusClasses: Record<AiColorStatusTone, string> = {
+  available: "border-border bg-muted text-foreground",
+  assigned: "border-brand/30 bg-brand-muted text-foreground [&_svg]:text-brand",
+  working: "border-brand/30 bg-brand-muted text-foreground [&_svg]:text-brand",
+  attention: "border-info/30 bg-info/10 text-foreground [&_svg]:text-info",
+  success: "border-border bg-background text-foreground [&_svg]:text-success",
+  warning: "border-warning/40 bg-warning text-warning-foreground",
+  error: "border-destructive/30 bg-destructive/10 text-destructive",
+};
+
+/**
+ * A status chip that says what state the agent's work is in, in its
+ * semantic colour plus an icon and words — so the state still reads with
+ * the colour removed. The agent's own states (`assigned`, `working`) take
+ * the reserved AI accent; the rest use the neutral and status roles.
+ * `working` turns its icon (still under reduced motion) and is a polite
+ * live region.
+ */
+export const AiColorStatus = React.forwardRef<HTMLSpanElement, AiColorStatusProps>(
+  ({ status = "available", label, icon, className, ...props }, ref) => (
+    <span
+      ref={ref}
+      data-status={status}
+      role={status === "working" ? "status" : undefined}
+      className={cn(
+        "inline-flex w-fit items-center gap-1.5 rounded-md border px-2 py-1 text-sm font-medium [&_svg]:size-4 [&_svg]:shrink-0",
+        statusClasses[status],
+        className,
+      )}
+      {...props}
+    >
+      {icon === undefined ? aiColorStatusIcon(status) : icon}
+      <span>{label}</span>
+    </span>
+  ),
+);
+AiColorStatus.displayName = "AiColorStatus";

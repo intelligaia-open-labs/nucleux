@@ -4,7 +4,13 @@ import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import { Checkbox } from "@nucleux/checkbox";
 import { Input } from "@nucleux/input";
-import { OpenInput, RequestSettings, mergeRequestSettingsItems, type RequestSettingsItem } from "@nucleux/open-input";
+import {
+  OpenInput,
+  RequestSettings,
+  mergeRequestSettingsItems,
+  type OpenInputProps,
+  type RequestSettingsItem,
+} from "@nucleux/open-input";
 import { Popover, PopoverContent, PopoverTrigger } from "@nucleux/popover";
 import { Slider } from "@nucleux/slider";
 
@@ -68,7 +74,9 @@ export type VoiceToneNotice = "changed" | "custom" | "removed";
 export type VoiceToneTrigger = "chip" | "settings";
 
 export interface VoiceToneProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "onSubmit" | "defaultValue"> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "onSubmit" | "defaultValue">,
+    /** The composer's own chrome, passed straight to it: `onAdd` (the + button), `model` (the model chip), `onVoice` (the mic). */
+    Pick<OpenInputProps, "onAdd" | "addLabel" | "add" | "model" | "onVoice" | "voiceLabel"> {
   /** Where the scaffold sits. Defaults to `"settings"`. */
   variant?: VoiceToneVariant;
   /** How tones are chosen. Defaults to `"cards"`. */
@@ -883,6 +891,12 @@ export const VoiceTone = React.forwardRef<HTMLDivElement, VoiceToneProps>((props
     trigger = "chip",
     settingsItems: _si,
     onSettingsSelect: _oss,
+    onAdd,
+    addLabel,
+    add,
+    model,
+    onVoice,
+    voiceLabel,
     className,
     ...rest
   } = props;
@@ -927,7 +941,12 @@ export const VoiceTone = React.forwardRef<HTMLDivElement, VoiceToneProps>((props
         sendLabel="Send"
         loading={loading}
         onStop={onStop}
-        className="rounded-3xl p-3 shadow-md focus-within:rounded-3xl"
+        onAdd={onAdd}
+        addLabel={addLabel}
+        add={add}
+        model={model}
+        onVoice={onVoice}
+        voiceLabel={voiceLabel}
         actions={
           <>
             {composerLeading}

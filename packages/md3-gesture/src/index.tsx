@@ -141,6 +141,8 @@ export const Md3GestureInput = React.forwardRef<HTMLDivElement, Md3GestureInputP
       onDismiss,
       label,
       hint,
+      defaultCaptured,
+      feedbackPlacement = "below",
       threshold = 40,
       showActions = true,
       contentClassName,
@@ -161,7 +163,19 @@ export const Md3GestureInput = React.forwardRef<HTMLDivElement, Md3GestureInputP
     const [offsetX, setOffsetX] = React.useState(0);
     const [scale, setScale] = React.useState(1);
     const [origin, setOrigin] = React.useState<{ x: number; y: number } | null>(null);
-    const [feedback, setFeedback] = React.useState<Feedback>(null);
+    const [feedback, setFeedback] = React.useState<Feedback>(() => {
+      const action = defaultCaptured && actions.find((a) => a.gesture === defaultCaptured.gesture);
+      if (!defaultCaptured || !action) return null;
+      const event: GestureInputEvent = {
+        gesture: action.gesture,
+        action,
+        bounds: defaultCaptured.bounds ?? null,
+        strokes: [],
+        source: "pointer",
+      };
+      return { kind: confirm ? "pending" : "done", event };
+    });
+    const overlay = feedbackPlacement === "overlay";
     const [announcement, setAnnouncement] = React.useState("");
     const hintId = React.useId();
     const scaleRef = React.useRef(scale);
@@ -428,7 +442,7 @@ export const Md3GestureInput = React.forwardRef<HTMLDivElement, Md3GestureInputP
               }}
             />
           )}
-          {pending && (
+          {pending && !overlay && (
             <span
               aria-hidden="true"
               className="pointer-events-none absolute left-2 top-2 max-w-[calc(100%-1rem)] truncate rounded-md-sm bg-md-primary px-2.5 py-1 text-xs font-medium tracking-[0.1px] text-md-on-primary shadow-md-1"
@@ -436,14 +450,49 @@ export const Md3GestureInput = React.forwardRef<HTMLDivElement, Md3GestureInputP
               {describe(pending)}
             </span>
           )}
+          {overlay && feedback && (
+            <span
+              data-slot="gesture-feedback"
+              className="absolute left-2 top-2 inline-flex max-w-[calc(100%-1rem)] items-center gap-0.5 rounded-md-sm bg-md-primary py-0.5 pl-1 pr-0.5 text-xs font-medium tracking-[0.1px] text-md-on-primary shadow-md-1"
+            >
+              {feedback.kind === "missed" ? (
+                <span className="px-2">Not recognised — try again</span>
+              ) : (
+                <button
+                  ref={confirmRef}
+                  type="button"
+                  onClick={feedback.kind === "pending" ? confirmPending : onUndo ? undo : dismiss}
+                  aria-label={
+                    feedback.kind === "pending"
+                      ? `${describe(feedback.event)} — confirm`
+                      : onUndo
+                        ? `${describe(feedback.event)} — undo`
+                        : describe(feedback.event)
+                  }
+                  className="relative inline-flex items-center gap-1.5 truncate rounded-md-xs px-2 py-0.5 outline-none before:absolute before:inset-0 before:rounded-[inherit] before:bg-current before:opacity-0 before:content-[''] hover:before:opacity-[0.08] focus-visible:ring-2 focus-visible:ring-md-on-primary"
+                >
+                  {feedback.kind === "done" && onUndo ? <Undo2 className="size-3.5" aria-hidden="true" /> : <Check className="size-3.5" aria-hidden="true" />}
+                  {describe(feedback.event)}
+                </button>
+              )}
+              <button
+                type="button"
+                aria-label={feedback.kind === "done" ? "Close" : "Dismiss"}
+                onClick={dismiss}
+                className="inline-flex size-5 shrink-0 items-center justify-center rounded-full outline-none hover:bg-md-on-primary/10 focus-visible:ring-2 focus-visible:ring-md-on-primary"
+              >
+                <X className="size-3" aria-hidden="true" />
+              </button>
+            </span>
+          )}
         </div>
 
-        <p id={hintId} className="text-xs text-md-on-surface-variant">
-          {hint ?? DEFAULT_HINTS[variant]}
+        <p id={hintId} className={cn("text-xs text-md-on-surface-variant", hint === null && "sr-only")}>
+          {hint === null ? "" : (hint ?? DEFAULT_HINTS[variant])}
           {keyHint && <span className="sr-only">. Keyboard: {keyHint}.</span>}
         </p>
 
-        {feedback && (
+        {feedback && !overlay && (
           <div
             className="flex flex-wrap items-center gap-2 rounded-md-lg border border-md-outline-variant bg-md-surface-container-low py-2 pl-4 pr-2 text-sm animate-nx-fade-in motion-reduce:animate-none"
             data-slot="gesture-feedback"
@@ -471,7 +520,7 @@ export const Md3GestureInput = React.forwardRef<HTMLDivElement, Md3GestureInputP
 
         {showActions && actions.length > 0 && (
           <div role="group" aria-label="Gesture actions" className="flex flex-wrap items-center gap-2">
-            {actions.map((action) => {
+            {actions.filter((a) => a.showButton !== false).map((action) => {
               const k = keyFor(action);
               return (
                 <Md3Chip
@@ -480,6 +529,7 @@ export const Md3GestureInput = React.forwardRef<HTMLDivElement, Md3GestureInputP
                   disabled={disabled}
                   aria-keyshortcuts={k && /^[A-Za-z0-9]|^Arrow|^Enter$/.test(k) ? k : undefined}
                   onClick={() => runAction(action, "keyboard", true)}
+                  icon={action.icon}
                 >
                   {action.label}
                   {k && <KeyHint>{KEY_GLYPHS[k] ?? k}</KeyHint>}

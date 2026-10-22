@@ -1,9 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import type { Md3PresetStyle as PresetStyle, Md3PresetStyleDraft as PresetStyleDraft } from "./index";
-import { MessagesSquare, Mic, Plus, SlidersHorizontal, Sparkles } from "lucide-react";
-import { Md3Button } from "@nucleux/md3-button";
-import { Md3IconButton } from "@nucleux/md3-icon-button";
+import type {
+  Md3PresetStyle as PresetStyle,
+  Md3PresetStyleDraft as PresetStyleDraft,
+  Md3PresetStylesProps,
+} from "./index";
+import { MessagesSquare, SlidersHorizontal, Sparkles } from "lucide-react";
+import { Md3OpenInputModelChip } from "@nucleux/md3-open-input";
 import { Md3PresetStyles } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 /** Image-output presets (the Style grid): token tones, no raw colours. */
 const outputStyles: PresetStyle[] = [
@@ -72,6 +76,24 @@ const composerFrame = (Story: () => JSX.Element) => (
   </div>
 );
 
+/** The Use style menu story's composition — a component, so Storybook's source printer never walks the icon elements in `settingsItems`. */
+function UseStyleMenuDemo(args: Md3PresetStylesProps) {
+  return (
+    <Md3PresetStyles
+      {...args}
+      trigger="settings"
+      settingsItems={[
+        { id: "mode", label: "Mode", icon: <SlidersHorizontal />, value: "None" },
+        { id: "tone", label: "Tone", icon: <MessagesSquare />, value: "Default" },
+        { id: "improve", label: "Improve prompt", icon: <Sparkles /> },
+      ]}
+      onAdd={() => {}}
+      model={<Md3OpenInputModelChip name="Balanced" detail="High" />}
+      onVoice={() => {}}
+    />
+  );
+}
+
 const meta = {
   title: "Material 3 Agent/Md3PresetStyles",
   component: Md3PresetStyles,
@@ -83,32 +105,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
+
 /** Chat: "Use style" open from the Request settings control (no Style chip up front), previewing Concise, with a close × — nothing changes until they choose. */
 export const UseStyleMenu: Story = {
   args: { ...menuArgs, defaultView: "menu", defaultPreview: "concise" },
   decorators: [composerFrame],
-  render: (args) => (
-    <Md3PresetStyles
-      {...args}
-      trigger="settings"
-      settingsItems={[{ id: "mode", label: "Mode", icon: <SlidersHorizontal />, value: "None" }, { id: "tone", label: "Tone", icon: <MessagesSquare />, value: "Default" }, { id: "improve", label: "Improve prompt", icon: <Sparkles /> }]}
-      composerLeading={
-        <Md3IconButton aria-label="Add context">
-          <Plus />
-        </Md3IconButton>
-      }
-      composerActions={
-        <>
-          <Md3Button variant="text" aria-label="Model Balanced, effort High" className="px-3">
-            <span className="font-semibold">Balanced</span> <span className="font-normal">High</span>
-          </Md3Button>
-          <Md3IconButton aria-label="Voice input">
-            <Mic />
-          </Md3IconButton>
-        </>
-      }
-    />
-  ),
+  render: (args) => <UseStyleMenuDemo {...args} />,
 };
 
 /** Creative canvas: pick the look before generating — swatches, a reference-image drop, and the style locked for the project. */

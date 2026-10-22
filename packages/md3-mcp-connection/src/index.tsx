@@ -17,7 +17,9 @@ import type {
   McpConnectionToolProps,
   McpConnectionToolRisk,
   McpConnectionToolsProps,
+  McpConnectionToolsVariant,
 } from "@nucleux/mcp-connection";
+import { mcpCallParts } from "@nucleux/mcp-connection";
 
 // Types come from the shadcn twin so the two families stay call-compatible.
 export type Md3McpConnectionProps = McpConnectionProps;
@@ -31,6 +33,8 @@ export type Md3McpConnectionToolRisk = McpConnectionToolRisk;
 export type Md3McpConnectionToolAvailability = McpConnectionToolAvailability;
 export type Md3McpConnectionPermissionValue = McpConnectionPermissionValue;
 export type Md3McpConnectionActionStatus = McpConnectionActionStatus;
+/** "grouped" or "compact". */
+export type Md3McpConnectionToolsVariant = McpConnectionToolsVariant;
 export type { McpConnectionToolInfo } from "@nucleux/mcp-connection";
 
 // Wording copied from @nucleux/mcp-connection (internal there) so both families say the same words.
@@ -78,7 +82,9 @@ const McpContext = React.createContext<{ name?: React.ReactNode; status?: McpCon
  * a failure names the step that broke, the signed-in account and its scopes as
  * small outlined chips, and Connect / Disconnect / Try again as M3 buttons. It
  * takes exactly the props of `McpConnection`; the app owns all networking and
- * moves `status` and `stage`.
+ * moves `status` and `stage`. With `emptyTitle` / `emptyDescription` the
+ * disconnected card is the empty state, with a filled Connect button
+ * (`connectLabel`) under the text.
  */
 export const Md3McpConnection = React.forwardRef<HTMLElement, Md3McpConnectionProps>(
   (
@@ -96,6 +102,9 @@ export const Md3McpConnection = React.forwardRef<HTMLElement, Md3McpConnectionPr
       onDisconnect,
       onRetry,
       onAuthenticate,
+      connectLabel = "Connect",
+      emptyTitle,
+      emptyDescription,
       className,
       children,
       ...props
@@ -104,6 +113,12 @@ export const Md3McpConnection = React.forwardRef<HTMLElement, Md3McpConnectionPr
   ) => {
     const titleId = React.useId();
     const usable = status === "connected";
+    const empty = status === "disconnected" && (emptyTitle != null || emptyDescription != null);
+    const footer =
+      (status === "disconnected" && !!onConnect && !empty) ||
+      (status === "connecting" && !!onDisconnect) ||
+      (status === "error" && !!(onRetry || onAuthenticate || onDisconnect)) ||
+      (status === "connected" && !!onDisconnect);
     const showSteps = status === "connecting" || status === "error";
     const current = stageOrder.indexOf(stage ?? "reach");
 
@@ -114,17 +129,17 @@ export const Md3McpConnection = React.forwardRef<HTMLElement, Md3McpConnectionPr
           aria-labelledby={titleId}
           data-status={status}
           className={cn(
-            "flex flex-col overflow-hidden rounded-md-md border border-md-outline-variant bg-md-surface text-md-on-surface",
+            "flex flex-col overflow-hidden rounded-md-lg border border-md-outline-variant bg-md-surface text-md-on-surface",
             className,
           )}
           {...props}
         >
-          <div className="flex items-center gap-4 px-4 py-3">
-            <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-md-md bg-md-secondary-container text-md-on-secondary-container [&_svg]:size-6">
+          <div className="flex items-center gap-3 px-4 py-4">
+            <span className="inline-flex size-[34px] shrink-0 items-center justify-center rounded-md-md bg-md-surface-container-high text-xs font-semibold text-md-on-surface-variant [&_svg]:size-5">
               {icon ?? <Server aria-hidden="true" />}
             </span>
             <div className="flex min-w-0 flex-1 flex-col">
-              <h3 id={titleId} className="truncate text-base font-medium tracking-[0.15px]">
+              <h3 id={titleId} className="truncate text-base font-semibold tracking-[0.15px]">
                 {name}
               </h3>
               {(address || meta) && (
@@ -139,11 +154,10 @@ export const Md3McpConnection = React.forwardRef<HTMLElement, Md3McpConnectionPr
               role="status"
               aria-live="polite"
               className={cn(
-                "inline-flex h-6 shrink-0 items-center gap-1.5 rounded-md-sm border px-2 text-xs font-medium tracking-[0.5px]",
-                usable && "border-md-primary text-md-primary",
-                status === "error" && "border-md-error text-md-error",
-                (status === "disconnected" || status === "connecting") &&
-                  "border-md-outline-variant text-md-on-surface-variant",
+                "inline-flex h-6 shrink-0 items-center gap-1.5 rounded-full bg-md-surface-container-high px-2.5 text-sm font-medium tracking-[0.1px]",
+                usable && "text-md-primary",
+                status === "error" && "text-md-error",
+                (status === "disconnected" || status === "connecting") && "text-md-on-surface",
               )}
             >
               <span
@@ -201,6 +215,20 @@ export const Md3McpConnection = React.forwardRef<HTMLElement, Md3McpConnectionPr
             </ol>
           )}
 
+          {empty && (
+            <div className="flex flex-col items-start gap-1.5 px-4 pb-4">
+              {emptyTitle != null && <p className="text-base font-semibold leading-6 tracking-[0.15px]">{emptyTitle}</p>}
+              {emptyDescription != null && (
+                <p className="text-sm leading-5 tracking-[0.25px] text-md-on-surface-variant">{emptyDescription}</p>
+              )}
+              {onConnect && (
+                <Md3Button onClick={onConnect} className="mt-2.5">
+                  {connectLabel}
+                </Md3Button>
+              )}
+            </div>
+          )}
+
           {status === "error" && error && (
             <p className="mx-4 mb-3 rounded-md-sm bg-md-surface-container-high px-3 py-2 text-sm tracking-[0.25px] text-md-error">
               {error}
@@ -229,9 +257,9 @@ export const Md3McpConnection = React.forwardRef<HTMLElement, Md3McpConnectionPr
 
           {children && <div className="flex flex-col gap-3 border-t border-md-outline-variant p-4">{children}</div>}
 
-          {(onConnect || onDisconnect || onRetry || onAuthenticate) && (
+          {footer && (
             <div className="flex justify-end gap-2 border-t border-md-outline-variant px-4 py-3">
-              {status === "disconnected" && onConnect && <Md3Button onClick={onConnect}>Connect</Md3Button>}
+              {status === "disconnected" && onConnect && <Md3Button onClick={onConnect}>{connectLabel}</Md3Button>}
               {status === "connecting" && onDisconnect && (
                 <Md3Button variant="text" onClick={onDisconnect}>
                   Cancel
@@ -373,7 +401,7 @@ Md3McpConnectionTool.displayName = "Md3McpConnectionTool";
  * names and descriptions come from the server, not from this product.
  */
 export const Md3McpConnectionTools = React.forwardRef<HTMLDivElement, Md3McpConnectionToolsProps>(
-  ({ tools, title, onToolEnabledChange, trustNote, className, ...props }, ref) => {
+  ({ tools, title, onToolEnabledChange, trustNote, variant = "grouped", className, ...props }, ref) => {
     const { name } = React.useContext(McpContext);
     const headingId = React.useId();
     const count = `${tools.length} ${tools.length === 1 ? "action" : "actions"}`;
@@ -391,7 +419,33 @@ export const Md3McpConnectionTools = React.forwardRef<HTMLDivElement, Md3McpConn
         <p id={headingId} className="px-4 pb-1 pt-3 text-sm font-medium tracking-[0.1px] text-md-on-surface">
           {title ?? (name ? <>{name} · {count}</> : `Tools · ${count}`)}
         </p>
-        {bands.map(({ risk, items }) => (
+        {variant === "compact" && (
+          <ul aria-labelledby={headingId} className="flex flex-col pb-2">
+            {tools.map((tool) => {
+              const enabled = tool.enabled ?? true;
+              const titleText = typeof tool.title === "string" ? tool.title : tool.id;
+              return (
+                <li key={tool.id} data-risk={tool.risk ?? "read"} className={cn("flex items-center gap-3 px-4 py-2", !enabled && "opacity-[0.72]")}>
+                  <code className="shrink-0 rounded-md-xs bg-md-secondary-container px-1.5 py-0.5 font-mono text-xs text-md-on-secondary-container">
+                    {tool.id}
+                  </code>
+                  {tool.description && (
+                    <span className="min-w-0 flex-1 text-sm tracking-[0.25px] text-md-on-surface-variant">{tool.description}</span>
+                  )}
+                  {onToolEnabledChange && (
+                    <Md3Switch
+                      checked={enabled}
+                      onCheckedChange={(on) => onToolEnabledChange(tool.id, on)}
+                      aria-label={`${titleText} — ${riskLabel[tool.risk ?? "read"]}`}
+                      className="ml-auto"
+                    />
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        )}
+        {variant === "grouped" && bands.map(({ risk, items }) => (
           <div key={risk} data-risk={risk} className="border-b border-md-outline-variant py-1 last:border-b-0">
             <p
               id={`${headingId}-${risk}`}
@@ -493,11 +547,34 @@ export const Md3McpConnectionPermission = React.forwardRef<HTMLDivElement, Md3Mc
 );
 Md3McpConnectionPermission.displayName = "Md3McpConnectionPermission";
 
-/** Formats a call as `tool({ key: "value", … })` (copied from @nucleux/mcp-connection). */
-function formatCall(tool: string, args?: Record<string, unknown>): string {
-  if (!args || Object.keys(args).length === 0) return `${tool}()`;
-  const parts = Object.entries(args).map(([k, v]) => `${k}: ${JSON.stringify(v)}`);
-  return `${tool}({ ${parts.join(", ")} })`;
+/** The call as code, one argument per line: the server in primary, keys in tertiary. */
+function CallCode({ tool, args }: { tool: string; args?: Record<string, unknown> }) {
+  const call = mcpCallParts(tool, args);
+  return (
+    <>
+      {call.server && (
+        <>
+          <span className="text-md-primary">{call.server}</span>.
+        </>
+      )}
+      {call.method}
+      {call.args.length === 0 ? (
+        "()"
+      ) : (
+        <>
+          {"({"}
+          {call.args.map(([k, v], i) => (
+            <React.Fragment key={k}>
+              {"\n  "}
+              <span className="text-md-tertiary">{k}</span>: <span className="text-md-on-surface-variant">{v}</span>
+              {i < call.args.length - 1 ? "," : ""}
+            </React.Fragment>
+          ))}
+          {"\n})"}
+        </>
+      )}
+    </>
+  );
 }
 
 /**
@@ -553,7 +630,7 @@ export const Md3McpConnectionActionPreview = React.forwardRef<HTMLElement, Md3Mc
           {title ?? (destructive ? "Destructive action" : "Proposed action")}
         </h4>
         <code className="block whitespace-pre-wrap break-words rounded-md-sm bg-md-surface p-3 font-mono text-xs text-md-on-surface">
-          {formatCall(tool, args)}
+          <CallCode tool={tool} args={args} />
         </code>
         {effect && <p className="text-sm tracking-[0.25px]">{effect}</p>}
         <div role="status" aria-live="polite" className="text-sm tracking-[0.25px] empty:hidden">

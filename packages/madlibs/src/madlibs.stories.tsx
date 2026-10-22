@@ -2,6 +2,7 @@ import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { OpenInput } from "@nucleux/open-input";
 import { Madlibs, assembleMadlibsPrompt, parseMadlibsTemplate, type MadlibsProps } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const TEMPLATE = "Summarize {document} for {audience}[, focusing on {topic}].";
 const BLANKS = [
@@ -53,6 +54,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** nucleux.in's live preview: a flowing sentence whose blanks are inline dropdowns, the assembled prompt, then Generate. */
 export const LivePreview: Story = {

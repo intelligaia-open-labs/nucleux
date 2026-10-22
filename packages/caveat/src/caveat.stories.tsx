@@ -2,17 +2,23 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@nucleux/button";
 import { Iconography } from "@nucleux/iconography";
 import { Caveat, CaveatTooltip } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Agent/Caveat",
   component: Caveat,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[26rem]"><Story /></div>],
+  decorators: [
+    (Story, { name }) => (name === "Site Preview" ? <Story /> : <div className="w-[26rem]"><Story /></div>),
+  ],
 } satisfies Meta<typeof Caveat>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** A quiet caption under the composer, seen before anything is sent. */
 export const BelowInput: Story = {

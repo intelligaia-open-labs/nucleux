@@ -7,6 +7,7 @@ import type {
   SuggestedPromptsAfterSelect,
   SuggestedPromptsProps,
   SuggestedPromptsVariant,
+  SuggestedPromptTone,
 } from "@nucleux/suggested-prompts";
 import { Md3Chip } from "@nucleux/md3-chip";
 import { Md3IconButton } from "@nucleux/md3-icon-button";
@@ -15,13 +16,31 @@ import { Md3IconButton } from "@nucleux/md3-icon-button";
 export type Md3SuggestedPromptsProps = SuggestedPromptsProps;
 /** Props of {@link Md3SuggestedPrompt} — identical to `SuggestedPromptProps`. */
 export type Md3SuggestedPromptProps = SuggestedPromptProps;
-/** "chip-row", "card-list" or "contextual-tooltip". */
+/** "chip-row", "card-list", "contextual-tooltip" or "card-grid". */
 export type Md3SuggestedPromptsVariant = SuggestedPromptsVariant;
+/** Colour of a card-grid prompt's icon tile and tag. */
+export type Md3SuggestedPromptTone = SuggestedPromptTone;
 /** "keep", "mark" or "remove". */
 export type Md3SuggestedPromptsAfterSelect = SuggestedPromptsAfterSelect;
 export type { SuggestedPromptItem };
 
 const VariantContext = React.createContext<SuggestedPromptsVariant>("chip-row");
+
+// M3 has no warning/success roles: tones map onto the container roles.
+const toneTile: Record<SuggestedPromptTone, string> = {
+  brand: "bg-md-primary-container text-md-on-primary-container",
+  info: "bg-md-secondary-container text-md-on-secondary-container",
+  success: "bg-md-tertiary-container text-md-on-tertiary-container",
+  warning: "bg-md-tertiary-container text-md-on-tertiary-container",
+  destructive: "bg-md-error-container text-md-on-error-container",
+};
+const toneText: Record<SuggestedPromptTone, string> = {
+  brand: "text-md-primary",
+  info: "text-md-secondary",
+  success: "text-md-tertiary",
+  warning: "text-md-tertiary",
+  destructive: "text-md-error",
+};
 
 const stateLayer =
   "before:absolute before:inset-0 before:rounded-[inherit] before:bg-current before:opacity-0 before:transition-opacity before:content-[''] hover:before:opacity-[0.08] focus-visible:before:opacity-[0.10] active:before:opacity-[0.10] motion-reduce:before:transition-none";
@@ -36,7 +55,7 @@ const focusRing = "outline-none focus-visible:ring-2 focus-visible:ring-md-secon
  * chosen prompt (`selected`) takes the secondary container and `aria-pressed`.
  */
 export const Md3SuggestedPrompt = React.forwardRef<HTMLButtonElement, Md3SuggestedPromptProps>(
-  ({ type = "button", icon, description, selected, className, children, ...props }, ref) => {
+  ({ type = "button", icon, description, selected, tag, tone = "brand", className, children, ...props }, ref) => {
     const variant = React.useContext(VariantContext);
     // Md3Chip omits the DOM `onSelect` handler (it has no meaning on a button), so it is not forwarded to the chip.
     const { onSelect: _onSelect, ...chipProps } = props;
@@ -65,6 +84,45 @@ export const Md3SuggestedPrompt = React.forwardRef<HTMLButtonElement, Md3Suggest
         >
           {children}
         </Md3Chip>
+      );
+    }
+
+    if (variant === "card-grid") {
+      return (
+        <button
+          ref={ref}
+          type={type}
+          aria-pressed={pressed}
+          data-state={state}
+          className={cn(
+            "relative flex h-full w-full items-start gap-3 overflow-hidden rounded-md-md border p-3 text-left transition-colors duration-200 motion-reduce:transition-none",
+            stateLayer,
+            focusRing,
+            selected
+              ? "border-transparent bg-md-secondary-container text-md-on-secondary-container"
+              : "border-md-outline-variant bg-md-surface text-md-on-surface",
+            className,
+          )}
+          {...props}
+        >
+          {icon && (
+            <span
+              aria-hidden="true"
+              className={cn("relative grid size-8 shrink-0 place-items-center rounded-md-sm [&_svg]:size-[18px]", toneTile[tone])}
+            >
+              {icon}
+            </span>
+          )}
+          <span className="relative flex min-w-0 flex-col">
+            <span className="text-sm font-medium leading-5 tracking-[0.1px]">{children}</span>
+            {description != null && <span className="text-sm text-md-on-surface-variant">{description}</span>}
+            {tag != null && (
+              <span className={cn("mt-1 text-[11px] font-medium uppercase leading-4 tracking-[0.5px]", toneText[tone])}>
+                {tag}
+              </span>
+            )}
+          </span>
+        </button>
       );
     }
 
@@ -148,6 +206,7 @@ export const Md3SuggestedPrompts = React.forwardRef<HTMLDivElement, Md3Suggested
       afterSelect = "keep",
       selectedId: selectedIdProp,
       onDismiss,
+      aside,
       className,
       children,
       onKeyDown,
@@ -173,18 +232,32 @@ export const Md3SuggestedPrompts = React.forwardRef<HTMLDivElement, Md3Suggested
     };
 
     const isTooltip = variant === "contextual-tooltip";
-    const labelNode =
+    const isGrid = variant === "card-grid";
+    const labelText =
       label != null ? (
         <span
           id={labelId}
           className={cn(
-            isTooltip ? "sr-only" : "text-sm tracking-[0.25px] text-md-on-surface-variant",
+            isTooltip
+              ? "sr-only"
+              : isGrid
+                ? "text-[11px] font-medium uppercase tracking-[0.5px] text-md-on-surface-variant"
+                : "text-sm tracking-[0.25px] text-md-on-surface-variant",
             variant === "chip-row" && "self-center",
           )}
         >
           {label}
         </span>
       ) : null;
+    const labelNode =
+      aside != null && !isTooltip ? (
+        <div className="flex w-full items-center justify-between gap-2">
+          {labelText ?? <span />}
+          {aside}
+        </div>
+      ) : (
+        labelText
+      );
 
     const content = list ? (
       <ul
@@ -195,6 +268,7 @@ export const Md3SuggestedPrompts = React.forwardRef<HTMLDivElement, Md3Suggested
           "m-0 list-none p-0",
           variant === "chip-row" && "flex flex-wrap gap-2",
           variant === "card-list" && "flex flex-col gap-2",
+          isGrid && "grid grid-cols-1 gap-2 sm:grid-cols-2",
           isTooltip && "flex flex-wrap items-center gap-0.5",
         )}
       >
@@ -205,6 +279,8 @@ export const Md3SuggestedPrompts = React.forwardRef<HTMLDivElement, Md3Suggested
               <Md3SuggestedPrompt
                 icon={item.icon ?? (isTooltip ? <Sparkles aria-hidden="true" /> : undefined)}
                 description={item.description}
+                tag={item.tag}
+                tone={item.tone}
                 selected={afterSelect === "mark" ? selectedId === id : undefined}
                 onClick={() => choose(item)}
               >
@@ -232,6 +308,7 @@ export const Md3SuggestedPrompts = React.forwardRef<HTMLDivElement, Md3Suggested
           className={cn(
             variant === "chip-row" && "flex flex-wrap items-center gap-2",
             variant === "card-list" && "flex flex-col gap-2",
+            isGrid && "flex flex-col gap-3",
             isTooltip &&
               "relative inline-flex items-center gap-1 rounded-md-md bg-md-surface-container px-1.5 py-1 text-md-on-surface-variant shadow-md-2 animate-nx-fade-in motion-reduce:animate-none",
             className,

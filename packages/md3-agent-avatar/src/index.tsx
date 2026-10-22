@@ -10,19 +10,21 @@ export type Md3AgentAvatarSize = AgentAvatarSize;
 export type Md3AgentAvatarShape = AgentAvatarShape;
 export type Md3AgentAvatarStatus = AgentAvatarStatus;
 
-// Same three sizes as the twin (24 / 32 / 40): one drawing at every size.
+// Same sizes as the twin (24 / 32 / 40 / 44): one drawing at every size.
 const sizeClasses: Record<AgentAvatarSize, string> = {
   sm: "size-6 text-[11px] [&_svg]:size-3.5",
   md: "size-8 text-xs [&_svg]:size-4",
   lg: "size-10 text-base [&_svg]:size-5",
+  xl: "size-11 text-base [&_svg]:size-5",
 };
 
-const ringSize: Record<AgentAvatarSize, number> = { sm: 32, md: 40, lg: 48 };
+const ringSize: Record<AgentAvatarSize, number> = { sm: 32, md: 40, lg: 48, xl: 52 };
 
 const dotSizes: Record<AgentAvatarSize, string> = {
   sm: "size-2 border",
   md: "size-2.5 border-2",
   lg: "size-3 border-2",
+  xl: "size-3 border-2",
 };
 
 const dotColors: Record<AgentAvatarStatus, string> = {

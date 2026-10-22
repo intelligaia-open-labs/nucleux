@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Randomize } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const prompts = [
   "Draft a one-paragraph product brief for an idea you haven't shipped.",
@@ -15,12 +16,17 @@ const meta = {
   component: Randomize,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[30rem]"><Story /></div>],
+  decorators: [
+    (Story, { name }) => (name === "Site Preview" ? <Story /> : <div className="w-[30rem]"><Story /></div>),
+  ],
   args: { prompts, onSelect: () => {} },
 } satisfies Meta<typeof Randomize>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 function WithComposer(props: Partial<React.ComponentProps<typeof Randomize>>) {
   const [draft, setDraft] = useState("");

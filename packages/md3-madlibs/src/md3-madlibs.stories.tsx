@@ -5,6 +5,7 @@ import { Plus } from "lucide-react";
 import { Md3AgentComposer } from "@nucleux/md3-agent-composer";
 import { Md3IconButton } from "@nucleux/md3-icon-button";
 import { Md3Madlibs, type Md3MadlibsProps } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const TEMPLATE = "Summarize {document} for {audience}[, focusing on {topic}].";
 const BLANKS = [
@@ -60,6 +61,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** nucleux.in's live preview: the document chosen, audience and the optional topic still to fill, above the composer. */
 export const LivePreview: Story = {

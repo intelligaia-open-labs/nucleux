@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Check, ChevronDown, Info, RefreshCw, Send, SlidersHorizontal, X } from "lucide-react";
+import { Check, ChevronDown, Info, Mic, Plus, RefreshCw, Send, SlidersHorizontal, X } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import {
@@ -8,7 +8,12 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@nucleux/input-group";
-import { RequestSettings, mergeRequestSettingsItems, type RequestSettingsItem } from "@nucleux/open-input";
+import {
+  RequestSettings,
+  mergeRequestSettingsItems,
+  type OpenInputProps,
+  type RequestSettingsItem,
+} from "@nucleux/open-input";
 
 /* ────────────────────────────────────────────────────────────
    Data + shared, non-visual logic (also used by @nucleux/md3-modes)
@@ -638,7 +643,9 @@ export interface ModesSubmitDetails {
 }
 
 export interface ModesProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "defaultValue" | "onSubmit" | "onChange"> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "defaultValue" | "onSubmit" | "onChange">,
+    /** The composer's own chrome, as on `OpenInput`: `onAdd` (the + button), `model` (the model chip), `onVoice` (the mic). */
+    Pick<OpenInputProps, "onAdd" | "addLabel" | "add" | "model" | "onVoice" | "voiceLabel"> {
   /** The modes the product supports, in order. */
   modes: ModeOption[];
   /** Active mode id (controlled); null for none. */
@@ -731,11 +738,24 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
       trigger = "chip",
       settingsItems,
       onSettingsSelect,
+      onAdd,
+      addLabel = "Add files and more",
+      add,
+      model,
+      onVoice,
+      voiceLabel = "Speak instead of typing",
       className,
       ...props
     },
     ref,
   ) => {
+    const addControl =
+      add ??
+      (onAdd ? (
+        <InputGroupButton size="icon-sm" aria-label={addLabel} onClick={onAdd}>
+          <Plus className="size-4" />
+        </InputGroupButton>
+      ) : null);
     const s = useModes({
       modes,
       value,
@@ -918,8 +938,9 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
         {inlineAlert}
         {note}
         <InputGroup className="h-10 rounded-[10px] bg-background pl-0.5 pr-1 shadow-sm">
-          {(composerLeading != null || trigger === "settings") && (
+          {(addControl != null || composerLeading != null || trigger === "settings") && (
             <InputGroupAddon align="inline-start" className="gap-1">
+              {addControl}
               {composerLeading}
               {trigger === "settings" && settings}
             </InputGroupAddon>
@@ -940,6 +961,12 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
           <InputGroupAddon align="inline-end" className="gap-1 text-muted-foreground">
             {trigger === "chip" && chip}
             {composerActions}
+            {model}
+            {onVoice && (
+              <InputGroupButton size="icon-sm" aria-label={voiceLabel} onClick={onVoice} className="text-muted-foreground">
+                <Mic className="size-3.5" />
+              </InputGroupButton>
+            )}
             <InputGroupButton
               size="icon-sm"
               aria-label={sendLabel}

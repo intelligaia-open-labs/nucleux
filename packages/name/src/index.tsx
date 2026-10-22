@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@nucleux/utils";
 import { AgentAvatar } from "@nucleux/agent-avatar";
 
-export type AgentNameVariant = "wordmark" | "name-status" | "name-avatar-lockup";
+export type AgentNameVariant = "wordmark" | "name-status" | "name-avatar-lockup" | "introduction";
 
 export interface AgentNameProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The agent's proper name — short (≤ 12 characters), pronounceable, capitalised the same everywhere. Not a real person's name. */
@@ -11,6 +11,9 @@ export interface AgentNameProps extends React.HTMLAttributes<HTMLDivElement> {
    * `wordmark` (the name in product type, for headers and brand contexts),
    * `name-status` (the name with what the agent is doing now) or
    * `name-avatar-lockup` (mark + name, for attribution rows and signatures).
+   * `introduction` is the first appearance: the mark, the name with an
+   * "AI agent" label, the role (`descriptor`), then one sentence (`children`)
+   * saying who runs it, what it does and that it is not a person.
    * Default `name-avatar-lockup`.
    */
   variant?: AgentNameVariant;
@@ -22,7 +25,7 @@ export interface AgentNameProps extends React.HTMLAttributes<HTMLDivElement> {
    * Omit for an idle agent ("Aria").
    */
   status?: string;
-  /** `name-status`: show the working dots (and the working ring on the mark). Defaults to `true` when `status` is set. */
+  /** `name-status`: show the working dots after the words. Defaults to `true` when `status` is set. */
   working?: boolean;
   /** Previous name after a rename, shown as "formerly Aria" for a while. */
   formerName?: string;
@@ -30,6 +33,8 @@ export interface AgentNameProps extends React.HTMLAttributes<HTMLDivElement> {
   avatarSrc?: string;
   /** Glyph for the agent mark when there is no image. Defaults to the reserved AI sparkle. */
   avatarGlyph?: React.ReactNode;
+  /** `introduction`: the label beside the name that says what kind of thing this is. Default "AI agent". */
+  aiLabel?: string;
 }
 
 function WorkingDots() {
@@ -49,8 +54,10 @@ function WorkingDots() {
 /**
  * The agent's name, presented consistently so it can be referred to,
  * talked to and remembered ("Ask Aria to summarise this"). Three variants:
- * `wordmark`, `name-status` ("Aria is drafting", announced politely) and
- * `name-avatar-lockup` (the AgentAvatar mark with name and descriptor).
+ * `wordmark`, `name-status` (a raised pill reading "Aria is drafting" with
+ * working dots, announced politely) and
+ * `name-avatar-lockup` (the AgentAvatar mark with name and descriptor), plus
+ * `introduction`, the first-appearance card that says it is an AI agent.
  * The descriptor keeps the name honest by saying what the agent is.
  */
 export const AgentName = React.forwardRef<HTMLDivElement, AgentNameProps>(
@@ -64,7 +71,9 @@ export const AgentName = React.forwardRef<HTMLDivElement, AgentNameProps>(
       formerName,
       avatarSrc,
       avatarGlyph,
+      aiLabel = "AI agent",
       className,
+      children,
       ...props
     },
     ref,
@@ -85,6 +94,32 @@ export const AgentName = React.forwardRef<HTMLDivElement, AgentNameProps>(
       );
     }
 
+    if (variant === "introduction") {
+      return (
+        <div
+          ref={ref}
+          data-variant={variant}
+          className={cn("rounded-xl border border-border bg-background p-5 text-foreground shadow-sm", className)}
+          {...props}
+        >
+          <div className="flex items-center gap-3">
+            <AgentAvatar name={name} src={avatarSrc} glyph={avatarGlyph} size="lg" shape="rounded" decorative />
+            <div className="flex flex-col gap-0.5">
+              <span className="flex items-center gap-2">
+                <span className="text-base font-semibold">{name}</span>
+                <span className="rounded-full border border-border px-2 py-0.5 text-xs font-medium text-muted-foreground">
+                  {aiLabel}
+                </span>
+                {former}
+              </span>
+              <span className="text-sm text-muted-foreground">{descriptor}</span>
+            </div>
+          </div>
+          {children != null && <p className="mb-0 mt-4 text-sm leading-6">{children}</p>}
+        </div>
+      );
+    }
+
     if (variant === "name-status") {
       const isWorking = working ?? status != null;
       return (
@@ -92,12 +127,12 @@ export const AgentName = React.forwardRef<HTMLDivElement, AgentNameProps>(
           ref={ref}
           data-variant={variant}
           className={cn(
-            "inline-flex w-max items-center gap-2.5 rounded-full bg-muted py-2 pl-2 pr-3.5 text-sm text-foreground",
+            "inline-flex w-max items-center gap-2.5 rounded-full border border-border bg-background py-2.5 pl-3 pr-4 text-[13px] text-foreground shadow-sm",
             className,
           )}
           {...props}
         >
-          <AgentAvatar name={name} src={avatarSrc} glyph={avatarGlyph} size="sm" working={isWorking} decorative />
+          <AgentAvatar name={name} src={avatarSrc} glyph={avatarGlyph} size="sm" decorative />
           <span role="status" aria-live="polite">
             {status ? `${name} is ${status}` : name}
             <span className="sr-only">, {descriptor}</span>

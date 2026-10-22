@@ -27,9 +27,11 @@ function WorkingDots() {
  * API. Typography does the work: `wordmark` sets the name in headline type
  * with its role in body-small on-surface-variant; `name-status` is a
  * surface-container pill that reads "Aria is drafting" in a polite live
- * region, with the working ring on the mark; `name-avatar-lockup` puts the
+ * region, followed by the working dots; `name-avatar-lockup` puts the
  * Md3AgentAvatar beside the name (title-small) and its role, on an outlined
- * container. The descriptor keeps the name honest by saying what it is.
+ * container; `introduction` is the first appearance on a surface-container-low
+ * card — mark, name, an outlined "AI agent" label, the role, then one
+ * sentence. The descriptor keeps the name honest by saying what it is.
  */
 export const Md3AgentName = React.forwardRef<HTMLDivElement, Md3AgentNameProps>(
   (
@@ -42,7 +44,9 @@ export const Md3AgentName = React.forwardRef<HTMLDivElement, Md3AgentNameProps>(
       formerName,
       avatarSrc,
       avatarGlyph,
+      aiLabel = "AI agent",
       className,
+      children,
       ...props
     },
     ref,
@@ -63,6 +67,32 @@ export const Md3AgentName = React.forwardRef<HTMLDivElement, Md3AgentNameProps>(
       );
     }
 
+    if (variant === "introduction") {
+      return (
+        <div
+          ref={ref}
+          data-variant={variant}
+          className={cn("rounded-md-lg bg-md-surface-container-low p-5 text-md-on-surface", className)}
+          {...props}
+        >
+          <div className="flex items-center gap-3">
+            <Md3AgentAvatar name={name} src={avatarSrc} glyph={avatarGlyph} size="lg" shape="rounded" decorative />
+            <div className="flex flex-col gap-0.5">
+              <span className="flex items-center gap-2">
+                <span className="text-base font-medium tracking-[0.15px]">{name}</span>
+                <span className="inline-flex h-6 items-center rounded-full border border-md-outline-variant px-2.5 text-sm font-medium tracking-[0.1px] text-md-tertiary">
+                  {aiLabel}
+                </span>
+                {former}
+              </span>
+              <span className="text-sm tracking-[0.25px] text-md-on-surface-variant">{descriptor}</span>
+            </div>
+          </div>
+          {children != null && <p className="mb-0 mt-4 text-base leading-6 tracking-[0.15px]">{children}</p>}
+        </div>
+      );
+    }
+
     if (variant === "name-status") {
       const isWorking = working ?? status != null;
       return (
@@ -75,7 +105,7 @@ export const Md3AgentName = React.forwardRef<HTMLDivElement, Md3AgentNameProps>(
           )}
           {...props}
         >
-          <Md3AgentAvatar name={name} src={avatarSrc} glyph={avatarGlyph} size="sm" working={isWorking} decorative />
+          <Md3AgentAvatar name={name} src={avatarSrc} glyph={avatarGlyph} size="sm" decorative />
           <span role="status" aria-live="polite">
             {status ? `${name} is ${status}` : name}
             <span className="sr-only">, {descriptor}</span>

@@ -1,5 +1,5 @@
 {
   "mcpServers": {
-    "nucleux": { "command": "npx", "args": ["-y", "@nucleux/mcp@0.9"] }
+    "nucleux": { "command": "npx", "args": ["-y", "@nucleux/mcp@0.10"] }
   }
 }

@@ -4,7 +4,7 @@ import { Avatar } from "@nucleux/avatar";
 import { AiColorWorkingRing, aiColorClasses } from "@nucleux/color";
 import { useAiGlyph } from "@nucleux/ai-icons";
 
-export type AgentAvatarSize = "sm" | "md" | "lg";
+export type AgentAvatarSize = "sm" | "md" | "lg" | "xl";
 export type AgentAvatarShape = "circle" | "rounded";
 export type AgentAvatarStatus = "online" | "offline" | "working";
 
@@ -12,12 +12,14 @@ const sizeClasses: Record<AgentAvatarSize, string> = {
   sm: "size-6 text-[10px] [&_svg]:size-3.5",
   md: "size-8 text-xs [&_svg]:size-4",
   lg: "size-10 text-base [&_svg]:size-5",
+  xl: "size-11 text-base [&_svg]:size-5",
 };
 
 const dotSizes: Record<AgentAvatarSize, string> = {
   sm: "size-2 border",
   md: "size-2.5 border-2",
   lg: "size-3 border-2",
+  xl: "size-3 border-2",
 };
 
 const dotColors: Record<AgentAvatarStatus, string> = {
@@ -39,7 +41,7 @@ export interface AgentAvatarProps extends React.HTMLAttributes<HTMLSpanElement> 
   src?: string;
   /** What to draw inside the mark when there is no `src`: the reserved AI sparkle by default, or a letter ("A"). */
   glyph?: React.ReactNode;
-  /** 24 / 32 / 40 px — the same drawing at every size. */
+  /** 24 / 32 / 40 / 44 px — the same drawing at every size. `xl` is the header-chip size. */
   size?: AgentAvatarSize;
   /** `circle` (default) or `rounded` square — use `rounded` when people in the same list are circles. */
   shape?: AgentAvatarShape;

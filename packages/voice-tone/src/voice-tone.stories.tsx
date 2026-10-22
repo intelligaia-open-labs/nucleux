@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { VoiceTone } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Agent/VoiceTone",
@@ -10,6 +11,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** The three presets of the site's live preview. */
 const presets = [

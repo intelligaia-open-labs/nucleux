@@ -41,6 +41,10 @@ export interface RandomizeProps extends Omit<React.HTMLAttributes<HTMLDivElement
   loadingLabel?: string;
   /** Shown when `generate` fails. Defaults to "Couldn't find a new direction." */
   errorLabel?: string;
+  /** The control's icon. Defaults to dice; pass an AI sparkle when a model generates the directions. */
+  icon?: React.ReactNode;
+  /** Dice button with its label: one supporting line beside the control ("A random starting point for the launch — edit it before you use it."). */
+  supportingText?: React.ReactNode;
 }
 
 const pickFrom = (pool: string[], exclude: string[]) => {
@@ -58,7 +62,8 @@ const pickFrom = (pool: string[], exclude: string[]) => {
  * already holds the person's words (`draft`), it asks first — Replace, Add
  * below or Cancel. Directions come from a `prompts` pool (no repeats this
  * round) or an async `generate`, with working and error states. Shown as a
- * dice button for a composer toolbar, a shuffle bar that previews the pick,
+ * labelled button with an optional supporting line (a dice icon button in a
+ * composer toolbar with `showLabel={false}`), a shuffle bar that previews the pick,
  * or a random card with Pick another and a way back to the previous one.
  */
 export const Randomize = React.forwardRef<HTMLDivElement, RandomizeProps>(
@@ -75,6 +80,8 @@ export const Randomize = React.forwardRef<HTMLDivElement, RandomizeProps>(
       cardLabel = "Surprise prompt",
       loadingLabel = "Finding a different direction…",
       errorLabel = "Couldn't find a new direction.",
+      icon,
+      supportingText,
       className,
       ...props
     },
@@ -172,7 +179,7 @@ export const Randomize = React.forwardRef<HTMLDivElement, RandomizeProps>(
     }, [confirming]);
 
     const busyIcon = <Spinner aria-hidden="true" role={undefined} aria-label={undefined} className="motion-reduce:animate-none" />;
-    const diceIcon = <Dices aria-hidden="true" className="size-4" />;
+    const diceIcon = icon ?? <Dices aria-hidden="true" className="size-4" />;
     const disabled = loading || (!generate && prompts.length === 0);
 
     const confirmPanel = confirming != null && (
@@ -233,21 +240,33 @@ export const Randomize = React.forwardRef<HTMLDivElement, RandomizeProps>(
 
     if (variant === "dice-button") {
       return (
-        <div ref={ref} className={cn("relative inline-flex items-center gap-2", className)} {...props}>
-          <Button
-            variant={showLabel ? "secondary" : "ghost"}
-            size={showLabel ? "icon" : "icon-sm"}
-            aria-label={label}
-            aria-busy={loading || undefined}
-            disabled={disabled}
-            onClick={() => next(true)}
-          >
-            {loading ? busyIcon : diceIcon}
-          </Button>
-          {showLabel && (
-            <span aria-hidden="true" className="text-xs text-muted-foreground">
-              {loading ? loadingLabel : label}
-            </span>
+        <div ref={ref} className={cn("relative inline-flex flex-wrap items-center gap-x-3 gap-y-1.5", className)} {...props}>
+          {showLabel ? (
+            <Button
+              variant="secondary"
+              aria-busy={loading || undefined}
+              disabled={disabled}
+              leftIcon={loading ? busyIcon : diceIcon}
+              onClick={() => next(true)}
+              className="[&_svg]:size-4"
+            >
+              {label}
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              aria-label={label}
+              aria-busy={loading || undefined}
+              disabled={disabled}
+              onClick={() => next(true)}
+              className="[&_svg]:size-4"
+            >
+              {loading ? busyIcon : diceIcon}
+            </Button>
+          )}
+          {showLabel && (loading || supportingText != null) && (
+            <span className="text-sm text-muted-foreground">{loading ? loadingLabel : supportingText}</span>
           )}
           {errorRow}
           {confirmPanel}
@@ -303,26 +322,30 @@ export const Randomize = React.forwardRef<HTMLDivElement, RandomizeProps>(
         role="group"
         aria-labelledby={`${baseId}-card`}
         className={cn(
-          "flex flex-col gap-2 rounded-xl border border-dashed border-brand/60 bg-gradient-to-br from-brand-muted to-transparent p-3.5",
+          "flex flex-col gap-2.5 rounded-xl border-[1.5px] border-dashed border-border bg-gradient-to-br from-muted to-muted/40 p-4",
           className,
         )}
         {...props}
       >
-        <p id={`${baseId}-card`} className="text-xs font-semibold tracking-wide text-brand">
+        <p
+          id={`${baseId}-card`}
+          className="flex items-center gap-2 text-[0.625rem] font-bold uppercase tracking-[0.08em] text-muted-foreground [&_svg]:size-4 [&_svg]:text-foreground"
+        >
+          {diceIcon}
           {cardLabel}
         </p>
         {loading ? (
           <p className="text-sm text-muted-foreground">{loadingLabel}</p>
         ) : current ? (
-          <p className="text-sm italic text-foreground">“{current}”</p>
+          <p className="text-sm italic leading-relaxed text-foreground">“{current}”</p>
         ) : null}
         {errorRow}
-        <div className="flex flex-wrap items-center gap-1.5">
+        <div className="mt-1 flex flex-wrap items-center gap-2">
           {backButton}
           <Button
             size="sm"
             variant="secondary"
-            className="rounded-full"
+            className="bg-muted/60 text-muted-foreground hover:text-foreground"
             aria-busy={loading || undefined}
             disabled={disabled}
             leftIcon={loading ? busyIcon : diceIcon}

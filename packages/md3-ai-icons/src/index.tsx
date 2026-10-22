@@ -3,6 +3,7 @@ import { cn } from "@nucleux/utils";
 import {
   AiGeneratedIcon,
   AiIconProvider,
+  defaultAiIconLegendTerms,
   AiRegenerateIcon,
   AiSparkleIcon,
   AiToolIcon,
@@ -12,6 +13,7 @@ import {
 } from "@nucleux/ai-icons";
 import type {
   AiGlyphProps,
+  AiIconLegendProps,
   AiIconProps,
   AiIconProviderProps,
   AiIconRole,
@@ -42,6 +44,9 @@ export type Md3AiIconsProps = AiIconsProps;
 export type Md3AiIconsVariant = AiIconsVariant;
 export type Md3AiIconsSize = AiIconsSize;
 export type Md3AiIconsTone = AiIconsTone;
+export type Md3AiIconLegendProps = AiIconLegendProps;
+export type { AiIconLegendTerm } from "@nucleux/ai-icons";
+export { defaultAiIconLegendTerms } from "@nucleux/ai-icons";
 
 function md3Glyph<P extends Md3AiGlyphProps>(
   Glyph: React.ComponentType<P & React.RefAttributes<SVGSVGElement>>,
@@ -206,3 +211,61 @@ export const Md3AiIcons = React.forwardRef<HTMLSpanElement, Md3AiIconsProps>(
   },
 );
 Md3AiIcons.displayName = "Md3AiIcons";
+
+/* -------------------------------------------------------------------------- */
+/* Md3AiIconLegend — the icon language, written down                            */
+/* -------------------------------------------------------------------------- */
+
+// Copied from @nucleux/ai-icons (internal there): the approved glyph for a
+// role, drawn still — the legend never animates.
+function AiLegendGlyph({ role, className }: { role: AiIconRole; className?: string }) {
+  const Glyph = useAiGlyph(role);
+  return role === "agent-working" ? <AiWorkingIcon still className={className} /> : <Glyph className={className} />;
+}
+
+/**
+ * The product's icon language in Material 3 — the twin of `AiIconLegend`.
+ * An overline heading, then one row per AI meaning: its mark in md-primary
+ * at 24, 20 and 16 px, the name in body-large and what it tells people in
+ * on-surface-variant, between outline-variant rules. The meaning in use
+ * (`current`) sits on surface-container with a primary leading edge.
+ */
+export const Md3AiIconLegend = React.forwardRef<HTMLElement, Md3AiIconLegendProps>(
+  ({ heading = "Icon language", terms = defaultAiIconLegendTerms, current, className, ...props }, ref) => {
+    const headingId = React.useId();
+    return (
+      <section ref={ref} aria-labelledby={headingId} className={cn("text-md-on-surface", className)} {...props}>
+        <h3
+          id={headingId}
+          className="mb-3 mt-0 text-xs font-medium uppercase tracking-[1.5px] text-md-on-surface-variant"
+        >
+          {heading}
+        </h3>
+        <ul className="m-0 list-none border-t border-md-outline-variant p-0">
+          {terms.map((term) => {
+            const here = term.role === current;
+            return (
+              <li
+                key={term.role}
+                aria-current={here || undefined}
+                className={cn(
+                  "flex items-center gap-3 border-b border-l-4 border-b-md-outline-variant py-3 pl-3 pr-2",
+                  here ? "border-l-md-primary bg-md-surface-container" : "border-l-transparent",
+                )}
+              >
+                <span aria-hidden="true" className="flex w-[5rem] shrink-0 items-center gap-2 text-md-primary">
+                  <AiLegendGlyph role={term.role} className="size-6" />
+                  <AiLegendGlyph role={term.role} className="size-5" />
+                  <AiLegendGlyph role={term.role} className="size-4" />
+                </span>
+                <span className="w-44 shrink-0 text-base tracking-[0.15px]">{term.name}</span>
+                <span className="text-sm tracking-[0.25px] text-md-on-surface-variant">{term.meaning}</span>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    );
+  },
+);
+Md3AiIconLegend.displayName = "Md3AiIconLegend";

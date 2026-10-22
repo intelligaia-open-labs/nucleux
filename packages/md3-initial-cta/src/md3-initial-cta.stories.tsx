@@ -2,18 +2,26 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Md3Randomize } from "@nucleux/md3-randomize";
 import { Md3InitialCta } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Material 3 Agent/Md3InitialCta",
   component: Md3InitialCta,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[36rem]"><Story /></div>],
+  // The site preview sizes itself; the other stories sit in a 36rem column.
+  decorators: [
+    (Story, ctx) =>
+      ctx.id.endsWith("--site-preview") ? <div className="w-[40rem]"><Story /></div> : <div className="w-[36rem]"><Story /></div>,
+  ],
   args: { onSubmit: () => {}, "aria-label": "Message Aria" },
 } satisfies Meta<typeof Md3InitialCta>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** A wide composer dominating the empty thread, with suggestions beneath. */
 export const CenteredHero: Story = {

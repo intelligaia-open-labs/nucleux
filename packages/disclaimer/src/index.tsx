@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Clock, Info } from "lucide-react";
+import { ChevronDown, ChevronRight, Clock } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 
@@ -19,8 +19,16 @@ export interface DisclaimerProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   variant?: DisclaimerVariant;
   /** The agent's name, used in the default title and label. Defaults to "the assistant". */
   agentName?: string;
-  /** Heading. Defaults to "What {agent} can do" or "{Agent} won't". */
+  /**
+   * Heading. Defaults to "What {agent} can do" or "{Agent} won't". Pass
+   * `null` for a heading-less summary: the icon then sits beside `children`.
+   */
   title?: React.ReactNode;
+  /**
+   * Leading mark. The shadcn family shows none by default; the Material 3
+   * twin shows an info icon. Pass `null` to omit it in either family.
+   */
+  icon?: React.ReactNode;
   /** Bulleted points (what it can do, or what it won't). */
   items?: React.ReactNode[];
   /** Labelled rows for the full statement (can / can't / needs approval / may get wrong). */
@@ -33,6 +41,13 @@ export interface DisclaimerProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   learnMoreHref?: string;
   /** Label of the link. Defaults to "Learn more". */
   learnMoreLabel?: string;
+  /**
+   * Put `groups` behind a toggle with this label ("See what Aria can and
+   * can't do") instead of showing them. Closed by default.
+   */
+  detailsLabel?: string;
+  /** Label of the toggle while the groups are open. Defaults to "Hide details". */
+  detailsCloseLabel?: string;
 }
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -58,6 +73,9 @@ export const Disclaimer = React.forwardRef<HTMLDivElement, DisclaimerProps>(
       maxItems = 3,
       learnMoreHref,
       learnMoreLabel = "Learn more",
+      icon,
+      detailsLabel,
+      detailsCloseLabel = "Hide details",
       className,
       children,
       ...props
@@ -67,6 +85,7 @@ export const Disclaimer = React.forwardRef<HTMLDivElement, DisclaimerProps>(
     const baseId = React.useId();
     const listId = `${baseId}-list`;
     const [expanded, setExpanded] = React.useState(false);
+    const [detailsOpen, setDetailsOpen] = React.useState(false);
     const Agent = capitalize(agentName);
 
     if (variant === "cutoff-note") {
@@ -93,32 +112,53 @@ export const Disclaimer = React.forwardRef<HTMLDivElement, DisclaimerProps>(
     }
 
     const limitations = variant === "limitations-card";
-    const heading = title ?? (limitations ? `${Agent} won't` : `What ${agentName} can do`);
+    const heading =
+      title === null ? null : (title ?? (limitations ? `${Agent} won't` : `What ${agentName} can do`));
     const visibleItems = items && !expanded ? items.slice(0, Math.max(0, maxItems)) : items;
+    const mark = icon ? (
+      <span aria-hidden="true" className="mt-px flex shrink-0 text-muted-foreground [&_svg]:size-4">
+        {icon}
+      </span>
+    ) : null;
+    const groupsId = `${baseId}-groups`;
+    const groupsHidden = detailsLabel != null && !detailsOpen;
 
     return (
       <div
         ref={ref}
         role="note"
-        aria-labelledby={`${baseId}-title`}
+        aria-labelledby={heading != null ? `${baseId}-title` : undefined}
+        aria-label={heading == null ? `About ${agentName}` : undefined}
         className={cn(
-          "flex flex-col gap-2 text-sm",
+          "flex flex-col gap-2 text-xs leading-[18px]",
           limitations
-            ? "rounded-r-lg border border-l-4 border-border border-l-warning bg-background px-4 py-3"
-            : "rounded-lg border border-border bg-background p-4",
+            ? "rounded-r-lg border border-l-[3px] border-border border-l-warning bg-background px-3.5 py-3"
+            : "rounded-lg border border-border bg-background p-4 shadow-sm",
           className,
         )}
         {...props}
       >
-        <p id={`${baseId}-title`} className="flex items-center gap-1.5 font-semibold text-foreground">
-          {!limitations && <Info aria-hidden="true" className="size-4 text-brand" />}
-          {heading}
-        </p>
-        {children != null && <div className="text-muted-foreground">{children}</div>}
+        {heading != null ? (
+          <p id={`${baseId}-title`} className="flex items-center gap-1.5 text-[13px] font-semibold leading-5 text-foreground">
+            {mark}
+            {heading}
+          </p>
+        ) : null}
+        {children != null &&
+          (heading == null ? (
+            <div className="flex items-start gap-2 text-[13px] leading-5 text-foreground">
+              {mark}
+              <div className="min-w-0">{children}</div>
+            </div>
+          ) : (
+            <div className="text-muted-foreground">{children}</div>
+          ))}
         {visibleItems && visibleItems.length > 0 && (
-          <ul id={listId} className="m-0 flex list-disc flex-col gap-0.5 pl-5 text-muted-foreground marker:text-muted-foreground/60">
+          <ul id={listId} className="m-0 flex list-none flex-col p-0 text-muted-foreground">
             {visibleItems.map((item, i) => (
-              <li key={i}>{item}</li>
+              <li key={i} className="before:mr-1.5 before:content-['•']">
+                {item}
+              </li>
             ))}
           </ul>
         )}
@@ -129,16 +169,29 @@ export const Disclaimer = React.forwardRef<HTMLDivElement, DisclaimerProps>(
             aria-expanded={expanded}
             aria-controls={listId}
             onClick={() => setExpanded((e) => !e)}
-            className="self-start text-xs"
+            className="h-auto self-start px-0 text-xs"
           >
             {expanded ? "Show less" : `Show all (${items.length})`}
           </Button>
         )}
+        {groups && groups.length > 0 && detailsLabel != null && (
+          <Button
+            variant="ghost"
+            size="sm"
+            aria-expanded={detailsOpen}
+            aria-controls={groupsId}
+            onClick={() => setDetailsOpen((o) => !o)}
+            leftIcon={detailsOpen ? <ChevronDown aria-hidden="true" /> : <ChevronRight aria-hidden="true" />}
+            className="h-7 self-start px-2 text-xs font-medium"
+          >
+            {detailsOpen ? detailsCloseLabel : detailsLabel}
+          </Button>
+        )}
         {groups && groups.length > 0 && (
-          <dl className="m-0 flex flex-col gap-2">
+          <dl id={groupsId} hidden={groupsHidden} className={cn("m-0 flex flex-col gap-2", groupsHidden && "hidden")}>
             {groups.map((g) => (
               <div key={g.label} className="flex flex-col gap-0.5">
-                <dt className="text-xs font-semibold text-foreground">{g.label}</dt>
+                <dt className="font-semibold text-foreground">{g.label}</dt>
                 {g.items.map((item, i) => (
                   <dd key={i} className="m-0 text-muted-foreground">
                     {item}
@@ -149,7 +202,7 @@ export const Disclaimer = React.forwardRef<HTMLDivElement, DisclaimerProps>(
           </dl>
         )}
         {(cutoff || learnMoreHref) && (
-          <div className="mt-1 flex items-center gap-3 border-t border-border pt-2 text-xs text-muted-foreground">
+          <div className="mt-1 flex items-center gap-3 text-[11px] text-muted-foreground">
             {cutoff && <span>Knowledge cutoff · {cutoff}</span>}
             {learnMoreHref && (
               <a

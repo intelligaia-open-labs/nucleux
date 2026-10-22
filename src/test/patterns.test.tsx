@@ -40,11 +40,13 @@ describe("curated patterns", () => {
 
   it("the shared workflow covers every stage and the core rules", () => {
     const w = knowledge.workflow;
-    for (const stage of ["A. Inspect", "B. Analyse", "C. Discover", "D. Plan", "E. Implement", "F. Validate", "G. Report"]) {
+    for (const stage of ["A. Inspect", "B. Choose the family", "C. Analyse", "D. Discover", "E. Plan", "F. Implement", "G. Validate", "H. Report"]) {
       expect(w).toContain(stage);
     }
     for (const tool of ["search_patterns", "get_pattern", "get_component", "get_setup"]) expect(w).toContain(tool);
     expect(w).toMatch(/Never guess a Nucleux export/);
     expect(w).toMatch(/report the gap/);
+    expect(w).toMatch(/Material 3\n?\s*or shadcn\?/);
+    expect(w).toMatch(/As on nucleux\.in/);
   });
 });

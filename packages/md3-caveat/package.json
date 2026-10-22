@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-caveat",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Caveat — a calm, specific note on what to check about an AI result — Nucleux agentic UI for React.",
@@ -41,7 +41,8 @@
   "dependencies": {
     "@nucleux/caveat": "workspace:*",
     "@nucleux/utils": "workspace:*",
-    "lucide-react": "^0.469.0"
+    "lucide-react": "^0.469.0",
+    "@nucleux/md3-button": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

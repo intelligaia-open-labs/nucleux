@@ -51,6 +51,7 @@ interface AttachmentsContextValue {
   items: AttachmentsFile[];
   variant: AttachmentsVariant;
   disabled: boolean;
+  showReadyStatus: boolean;
   accept?: string;
   maxFiles?: number;
   maxSize?: number;
@@ -132,6 +133,13 @@ export interface AttachmentsProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   disabled?: boolean;
   /** Accessible name of the region. Defaults to `"Attached to this message"`. */
   label?: string;
+  /**
+   * Show the word "Ready" on files the agent can read. Defaults to `true`.
+   * Set `false` for the quieter nucleux.in look: a ready chip reads as one line
+   * (name and size) and a ready card as "1.2 MB · Loaded into context"; files
+   * still uploading, reading or failed always say so.
+   */
+  showReadyStatus?: boolean;
 }
 
 /**
@@ -159,6 +167,7 @@ export const Attachments = React.forwardRef<HTMLDivElement, AttachmentsProps>(
       maxSize,
       disabled = false,
       label = "Attached to this message",
+      showReadyStatus = true,
       className,
       children,
       ...props
@@ -219,7 +228,7 @@ export const Attachments = React.forwardRef<HTMLDivElement, AttachmentsProps>(
 
     return (
       <AttachmentsContext.Provider
-        value={{ items, variant, disabled, accept, maxFiles, maxSize, addFiles, openPicker, onRemove, onRetry }}
+        value={{ items, variant, disabled, showReadyStatus, accept, maxFiles, maxSize, addFiles, openPicker, onRemove, onRetry }}
       >
         <div
           ref={ref}
@@ -278,6 +287,8 @@ export interface AttachmentsItemProps extends Omit<React.HTMLAttributes<HTMLDivE
   onRemove?: (id: string) => void;
   /** Retry handler for a failed file; defaults to the parent's `onRetry`. */
   onRetry?: (id: string) => void;
+  /** Show "Ready" on a readable file; defaults to the parent's `showReadyStatus`, else `true`. */
+  showReadyStatus?: boolean;
 }
 
 /**
@@ -288,7 +299,18 @@ export interface AttachmentsItemProps extends Omit<React.HTMLAttributes<HTMLDivE
  * Retry. The remove control is always named for the file.
  */
 export const AttachmentsItem = React.forwardRef<HTMLDivElement, AttachmentsItemProps>(
-  ({ file, variant: variantProp, onRemove: onRemoveProp, onRetry: onRetryProp, className, ...props }, ref) => {
+  (
+    {
+      file,
+      variant: variantProp,
+      onRemove: onRemoveProp,
+      onRetry: onRetryProp,
+      showReadyStatus: showReadyProp,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
     const ctx = useAttachments();
     const variant = variantProp ?? ctx?.variant ?? "file-chip";
     const onRemove = onRemoveProp ?? ctx?.onRemove;
@@ -296,13 +318,21 @@ export const AttachmentsItem = React.forwardRef<HTMLDivElement, AttachmentsItemP
     const status = file.status ?? "ready";
     const isCard = variant === "preview-card";
     const busy = status === "uploading" || status === "processing";
+    const quietReady = status === "ready" && !(showReadyProp ?? ctx?.showReadyStatus ?? true);
 
     const detail = [
       file.size != null ? formatFileSize(file.size) : null,
       status === "ready" && isCard ? "Loaded into context" : null,
     ].filter(Boolean);
 
-    const meta = (
+    const meta = quietReady ? (
+      [...detail, file.meta].filter(Boolean).length ? (
+        <>
+          {detail.join(" · ")}
+          {file.meta ? <>{detail.length ? " · " : ""}{file.meta}</> : null}
+        </>
+      ) : null
+    ) : (
       <>
         <span
           className={cn(
@@ -355,7 +385,12 @@ export const AttachmentsItem = React.forwardRef<HTMLDivElement, AttachmentsItemP
           onRemove={onRemove ? () => onRemove(file.id) : undefined}
           aria-busy={busy || undefined}
           className={cn(
-            !isCard && "rounded-full py-1 pl-1 pr-2 [&>span:first-child]:size-6 [&>span:first-child]:rounded-full",
+            !isCard &&
+              "gap-2 rounded-full bg-muted/50 py-1 pl-1 pr-2 [&>span:first-child]:size-6 [&>span:first-child]:rounded-md [&>span:first-child]:border [&>span:first-child]:border-border [&>span:first-child]:bg-background [&>span:first-child>svg]:size-3.5",
+            !isCard &&
+              quietReady &&
+              "max-w-80 gap-1.5 [&>span:nth-child(2)>span:first-child]:text-xs [&>span:nth-child(2)>span:last-child]:text-[0.6875rem] [&>span:nth-child(2)]:flex-row [&>span:nth-child(2)]:items-baseline [&>span:nth-child(2)]:gap-1.5",
+            isCard && "[&>span:nth-child(2)>span:first-child]:font-semibold [&>span:nth-child(2)]:flex-1",
             isCard && "w-full max-w-none gap-3 rounded-xl p-2.5 [&>span:first-child]:size-12 [&>span:first-child]:overflow-hidden [&>span:first-child>svg]:size-5",
             status === "error" && "border-destructive/40 bg-destructive/5",
           )}
@@ -428,10 +463,12 @@ export type AttachmentsTriggerProps = ButtonProps;
 
 /**
  * The add control that opens the file picker. Icon-only by default ("Attach
- * file", for the composer); pass children for a labelled button.
+ * file", for the composer); pass children for a labelled button. `leftIcon`
+ * replaces the glyph (a paperclip when icon-only, a plus when labelled), e.g.
+ * a plus for the composer's "+" slot.
  */
 export const AttachmentsTrigger = React.forwardRef<HTMLButtonElement, AttachmentsTriggerProps>(
-  ({ children, variant = "ghost", size, onClick, disabled, ...props }, ref) => {
+  ({ children, variant = "ghost", size, onClick, disabled, leftIcon, ...props }, ref) => {
     const ctx = useAttachments();
     const iconOnly = children == null;
     return (
@@ -445,10 +482,10 @@ export const AttachmentsTrigger = React.forwardRef<HTMLButtonElement, Attachment
           onClick?.(e);
           if (!e.defaultPrevented) ctx?.openPicker();
         }}
-        leftIcon={iconOnly ? undefined : <Plus aria-hidden="true" className="size-4" />}
+        leftIcon={iconOnly ? undefined : (leftIcon ?? <Plus aria-hidden="true" className="size-4" />)}
         {...props}
       >
-        {iconOnly ? <Paperclip aria-hidden="true" className="size-4" /> : children}
+        {iconOnly ? (leftIcon ?? <Paperclip aria-hidden="true" className="size-4" />) : children}
       </Button>
     );
   },
@@ -462,13 +499,14 @@ export interface AttachmentsDropZoneProps extends Omit<React.HTMLAttributes<HTML
   title?: React.ReactNode;
   /** Line under the headline, e.g. `"PDF, image, CSV, doc"`. Defaults to the limits in words. */
   description?: React.ReactNode;
-  /** Label of the browse button in the idle box. Defaults to `"Choose files"`. */
+  /** The link-style browse button in the idle box ("Drop files or browse"). Defaults to `"browse"`. */
   browseLabel?: React.ReactNode;
 }
 
 /**
  * A drag-and-drop target that lights up as a file is dragged in. Without
- * children it is a dashed box with a "Choose files" button (keyboard path).
+ * children it is a dashed box reading "Drop files or browse" (the underlined
+ * browse button is the keyboard path).
  * With children it wraps them — a composer, a canvas — and covers them with
  * the drop overlay only while dragging. Dropped files go through the same
  * limits as the picker.
@@ -479,7 +517,7 @@ export const AttachmentsDropZone = React.forwardRef<HTMLDivElement, AttachmentsD
       active,
       title = "Drop to attach",
       description,
-      browseLabel = "Choose files",
+      browseLabel = "browse",
       className,
       children,
       onDragEnter,
@@ -509,21 +547,32 @@ export const AttachmentsDropZone = React.forwardRef<HTMLDivElement, AttachmentsD
     const overlay = (
       <div
         className={cn(
-          "flex flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed p-6 text-center",
+          "flex flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed p-6 text-center",
           lit ? "border-brand bg-brand-muted/60" : "border-border bg-muted/40",
           children && "pointer-events-none absolute inset-0 z-10 bg-brand-muted/90",
         )}
       >
         <Paperclip aria-hidden="true" className={cn("mb-1 size-6", lit ? "text-brand" : "text-muted-foreground")} />
         <p className={cn("text-sm font-semibold", lit ? "text-brand" : "text-foreground")}>
-          {lit ? title : "Drag files here"}
+          {lit ? (
+            title
+          ) : children ? (
+            "Drag files here"
+          ) : (
+            <>
+              Drop files or{" "}
+              <button
+                type="button"
+                disabled={ctx?.disabled}
+                onClick={() => ctx?.openPicker()}
+                className="rounded-sm text-brand underline underline-offset-2 hover:text-brand/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              >
+                {browseLabel}
+              </button>
+            </>
+          )}
         </p>
         <p className="text-xs text-muted-foreground">{hint}</p>
-        {!lit && !children && (
-          <Button variant="secondary" size="sm" className="mt-2" disabled={ctx?.disabled} onClick={() => ctx?.openPicker()}>
-            {browseLabel}
-          </Button>
-        )}
       </div>
     );
 

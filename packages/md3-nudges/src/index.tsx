@@ -1,8 +1,15 @@
 import * as React from "react";
-import { Lightbulb, Sparkles, X } from "lucide-react";
+import { ChevronDown, ChevronRight, Lightbulb, Sparkles, X } from "lucide-react";
 import { cn, Slot } from "@nucleux/utils";
 import type { ButtonSize, ButtonVariant } from "@nucleux/button";
-import type { NudgeActionProps, NudgePersist, NudgeProps, NudgeSide, NudgeVariant } from "@nucleux/nudges";
+import type {
+  NudgeActionProps,
+  NudgeAppearance,
+  NudgePersist,
+  NudgeProps,
+  NudgeSide,
+  NudgeVariant,
+} from "@nucleux/nudges";
 import { Md3Badge } from "@nucleux/md3-badge";
 import { Md3IconButton } from "@nucleux/md3-icon-button";
 
@@ -16,6 +23,8 @@ export type Md3NudgeVariant = NudgeVariant;
 export type Md3NudgeSide = NudgeSide;
 /** "none", "session" or "local". */
 export type Md3NudgePersist = NudgePersist;
+/** "card" or "inline". */
+export type Md3NudgeAppearance = NudgeAppearance;
 
 /** Where the action sits: on a neutral card (`surface`) or on the anchored primary-container bubble. */
 const NudgeContext = React.createContext<{ onContainer: boolean }>({ onContainer: false });
@@ -143,6 +152,8 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
       tryLabel = "Try it",
       onDismiss,
       dismissLabel = "Dismiss tip",
+      dismissible = true,
+      appearance = "card",
       onSnooze,
       snoozeLabel = "Not now",
       onImpression,
@@ -242,17 +253,29 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
         : children;
 
     const onContainer = variant === "tooltip-nudge";
+    const quiet = variant === "inline-tip-card" && appearance === "inline";
     const actionRow = (onTry || onSnooze || reason || actions) && (
-      <div className="flex flex-wrap items-center gap-1">
+      <div className={cn("flex flex-wrap items-center", quiet ? "-ml-3 gap-0" : "gap-1")}>
         {onTry && (
-          <Md3NudgeAction variant="primary" onClick={tryIt}>
+          <Md3NudgeAction variant={quiet ? "ghost" : "primary"} size={quiet ? "md" : "sm"} onClick={tryIt}>
             {tryLabel}
           </Md3NudgeAction>
         )}
-        {onSnooze && <Md3NudgeAction onClick={snooze}>{snoozeLabel}</Md3NudgeAction>}
+        {onSnooze && (
+          <Md3NudgeAction size={quiet ? "md" : "sm"} onClick={snooze}>
+            {snoozeLabel}
+          </Md3NudgeAction>
+        )}
         {actions}
         {reason && (
-          <Md3NudgeAction aria-expanded={whyOpen} aria-controls={reasonId} onClick={() => setWhyOpen((w) => !w)}>
+          <Md3NudgeAction
+            size={quiet ? "md" : "sm"}
+            aria-expanded={whyOpen}
+            aria-controls={reasonId}
+            onClick={() => setWhyOpen((w) => !w)}
+            leftIcon={whyOpen ? <ChevronDown aria-hidden="true" /> : <ChevronRight aria-hidden="true" />}
+            className={quiet ? "pl-3 pr-4" : undefined}
+          >
             Why this tip?
           </Md3NudgeAction>
         )}
@@ -269,7 +292,7 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
         {reason}
       </p>
     );
-    const dismissButton = (
+    const dismissButton = dismissible && (
       <Md3IconButton
         aria-label={dismissLabel}
         onClick={dismiss}
@@ -362,19 +385,29 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
           role="note"
           aria-label="Tip"
           onKeyDown={handleKeyDown}
+          data-appearance={appearance}
           className={cn(
-            "flex items-start gap-3 rounded-md-md bg-md-surface-container-high p-4 text-sm text-md-on-surface animate-nx-fade-in motion-reduce:animate-none",
+            "flex items-start text-sm text-md-on-surface animate-nx-fade-in motion-reduce:animate-none",
+            quiet
+              ? "gap-2.5 border-l-[3px] border-md-outline-variant py-1 pl-3 pr-2"
+              : "gap-3 rounded-md-md bg-md-surface-container-high p-4",
             className,
           )}
           {...props}
         >
-          <span aria-hidden="true" className="mt-0.5 flex shrink-0 text-md-primary [&_svg]:size-5">
+          <span
+            aria-hidden="true"
+            className={cn("mt-0.5 flex shrink-0 [&_svg]:size-5", quiet ? "text-md-on-surface-variant" : "text-md-primary")}
+          >
             {title ? <Sparkles /> : <Lightbulb />}
           </span>
-          <div className="flex min-w-0 flex-1 flex-col gap-3">
+          <div className={cn("flex min-w-0 flex-1 flex-col", quiet ? "gap-1.5" : "gap-3")}>
             <div className="flex flex-col gap-1">
               {title && <p className="text-base font-medium leading-6 tracking-[0.15px] text-md-on-surface">{title}</p>}
-              <p id={messageId} className="tracking-[0.25px] text-md-on-surface-variant">
+              <p
+                id={messageId}
+                className={cn("pt-px tracking-[0.25px]", quiet ? "text-md-on-surface" : "text-md-on-surface-variant")}
+              >
                 {message}
               </p>
             </div>

@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import { Kbd } from "@nucleux/kbd";
-import { Check, Undo2, X } from "lucide-react";
+import { Check, Hand, Undo2, X } from "lucide-react";
 
 export type GestureInputVariant = "circle-to-select" | "swipe-action" | "pinch-context";
 
@@ -43,7 +43,22 @@ export interface GestureInputAction {
   label: string;
   /** Keyboard equivalent (a `KeyboardEvent.key`). Defaults per built-in gesture; required for custom gestures. */
   key?: string;
+  /** A glyph for the action's button, e.g. an arrow for a swipe. */
+  icon?: React.ReactNode;
+  /** `false` hides this action's button; the gesture and its key still work. Defaults to `true`. */
+  showButton?: boolean;
 }
+
+/** A gesture to show as already captured when the component mounts. */
+export interface GestureInputCaptured {
+  /** The gesture; its action is looked up in `actions`. */
+  gesture: GestureInputGesture;
+  /** The area it covered, in CSS pixels of the target (drawn as the circled mark). */
+  bounds?: GestureInputBounds | null;
+}
+
+/** Where the captured gesture is confirmed: a row under the target, or on the target's own label. */
+export type GestureInputFeedbackPlacement = "below" | "overlay";
 
 export interface GestureInputEvent {
   gesture: GestureInputGesture;
@@ -86,8 +101,17 @@ export interface GestureInputProps extends React.HTMLAttributes<HTMLDivElement> 
   onDismiss?: (event: GestureInputEvent) => void;
   /** Accessible name of the gesture target. */
   label?: string;
-  /** Hint shown under the target (and read as its description). */
+  /** Hint shown under the target (and read as its description). `null` keeps it for screen readers only. */
   hint?: React.ReactNode;
+  /** Start with this gesture captured (restored state, or a demo). With `confirm`, it waits for confirmation. */
+  defaultCaptured?: GestureInputCaptured;
+  /**
+   * `"below"` (default): a feedback row under the target with the confirm /
+   * Undo / dismiss buttons. `"overlay"`: the label on the target ("Circled ·
+   * What spiked here?") is itself the confirm button, with dismiss beside it —
+   * the nucleux.in look.
+   */
+  feedbackPlacement?: GestureInputFeedbackPlacement;
   /** Minimum travel in px before a movement counts. Defaults to 40. */
   threshold?: number;
   /** Show the action buttons — the visible keyboard/switch equivalent. Defaults to `true`. */
@@ -223,6 +247,8 @@ export const GestureInput = React.forwardRef<HTMLDivElement, GestureInputProps>(
       onDismiss,
       label,
       hint,
+      defaultCaptured,
+      feedbackPlacement = "below",
       threshold = 40,
       showActions = true,
       contentClassName,
@@ -243,7 +269,19 @@ export const GestureInput = React.forwardRef<HTMLDivElement, GestureInputProps>(
     const [offsetX, setOffsetX] = React.useState(0);
     const [scale, setScale] = React.useState(1);
     const [origin, setOrigin] = React.useState<{ x: number; y: number } | null>(null);
-    const [feedback, setFeedback] = React.useState<Feedback>(null);
+    const [feedback, setFeedback] = React.useState<Feedback>(() => {
+      const action = defaultCaptured && actions.find((a) => a.gesture === defaultCaptured.gesture);
+      if (!defaultCaptured || !action) return null;
+      const event: GestureInputEvent = {
+        gesture: action.gesture,
+        action,
+        bounds: defaultCaptured.bounds ?? null,
+        strokes: [],
+        source: "pointer",
+      };
+      return { kind: confirm ? "pending" : "done", event };
+    });
+    const overlay = feedbackPlacement === "overlay";
     const [announcement, setAnnouncement] = React.useState("");
     const hintId = React.useId();
     const scaleRef = React.useRef(scale);
@@ -498,7 +536,7 @@ export const GestureInput = React.forwardRef<HTMLDivElement, GestureInputProps>(
           {pending?.bounds && (
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute rounded-[50%] border-2 border-dashed border-brand bg-brand/10 animate-nx-fade-in motion-reduce:animate-none"
+              className="pointer-events-none absolute rounded-[50%] border-[2.5px] border-destructive bg-destructive/10 animate-nx-fade-in motion-reduce:animate-none"
               style={{
                 left: pending.bounds.x,
                 top: pending.bounds.y,
@@ -507,22 +545,62 @@ export const GestureInput = React.forwardRef<HTMLDivElement, GestureInputProps>(
               }}
             />
           )}
-          {pending && (
+          {pending && !overlay && (
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute bottom-2 right-2 rounded-full bg-background px-2 py-0.5 text-xs font-semibold text-foreground shadow-sm"
+              className="pointer-events-none absolute bottom-2.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-background/95 px-3 py-1 text-xs font-semibold text-foreground shadow-md"
             >
+              <Hand className="size-3.5 text-warning" aria-hidden="true" />
               {describe(pending)}
+            </span>
+          )}
+          {overlay && feedback && (
+            <span
+              data-slot="gesture-feedback"
+              className="absolute bottom-2.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-0.5 whitespace-nowrap rounded-full bg-background/95 py-0.5 pl-1 pr-0.5 text-xs font-semibold text-foreground shadow-md"
+            >
+              {feedback.kind === "missed" ? (
+                <span className="px-2">Not recognised — try again</span>
+              ) : (
+                <button
+                  ref={confirmRef}
+                  type="button"
+                  onClick={feedback.kind === "pending" ? confirmPending : onUndo ? undo : dismiss}
+                  aria-label={
+                    feedback.kind === "pending"
+                      ? `${describe(feedback.event)} — confirm`
+                      : onUndo
+                        ? `${describe(feedback.event)} — undo`
+                        : describe(feedback.event)
+                  }
+                  className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  {feedback.kind === "done" && onUndo ? (
+                    <Undo2 className="size-3.5" aria-hidden="true" />
+                  ) : (
+                    <Hand className="size-3.5 text-warning" aria-hidden="true" />
+                  )}
+                  {describe(feedback.event)}
+                </button>
+              )}
+              <button
+                type="button"
+                aria-label={feedback.kind === "done" ? "Close" : "Dismiss"}
+                onClick={dismiss}
+                className="inline-flex size-5 items-center justify-center rounded-full text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <X className="size-3" aria-hidden="true" />
+              </button>
             </span>
           )}
         </div>
 
-        <p id={hintId} className="text-xs text-muted-foreground">
-          {hint ?? DEFAULT_HINTS[variant]}
+        <p id={hintId} className={cn("text-xs text-muted-foreground", hint === null && "sr-only")}>
+          {hint === null ? "" : (hint ?? DEFAULT_HINTS[variant])}
           {keyHint && <span className="sr-only">. Keyboard: {keyHint}.</span>}
         </p>
 
-        {feedback && (
+        {feedback && !overlay && (
           <div
             className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-muted/50 px-3 py-2 text-sm"
             data-slot="gesture-feedback"
@@ -565,20 +643,29 @@ export const GestureInput = React.forwardRef<HTMLDivElement, GestureInputProps>(
         )}
 
         {showActions && actions.length > 0 && (
-          <div role="group" aria-label="Gesture actions" className="flex flex-wrap items-center gap-2">
-            {actions.map((action) => {
+          <div role="group" aria-label="Gesture actions" className="flex flex-wrap items-center gap-1.5">
+            {actions.filter((a) => a.showButton !== false).map((action) => {
               const k = keyFor(action);
               return (
                 <Button
                   key={action.gesture}
                   variant="secondary"
-                  size="sm"
                   disabled={disabled}
+                  className="h-auto min-w-0 flex-1 basis-40 justify-start gap-2.5 rounded-lg bg-muted/50 px-3 py-2.5 font-normal shadow-none"
                   aria-keyshortcuts={k && /^[A-Za-z0-9]|^Arrow|^Enter$/.test(k) ? k : undefined}
                   onClick={() => runAction(action, "keyboard", true)}
                 >
-                  {action.label}
-                  {k && <Kbd aria-hidden="true">{KEY_GLYPHS[k] ?? k}</Kbd>}
+                  {action.icon != null && (
+                    <span aria-hidden="true" className="inline-flex shrink-0 [&_svg]:size-4">
+                      {action.icon}
+                    </span>
+                  )}
+                  <span className="truncate">{action.label}</span>
+                  {k && (
+                    <Kbd aria-hidden="true" className="ml-auto">
+                      {KEY_GLYPHS[k] ?? k}
+                    </Kbd>
+                  )}
                 </Button>
               );
             })}

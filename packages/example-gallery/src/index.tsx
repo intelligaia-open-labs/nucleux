@@ -1,11 +1,18 @@
 import * as React from "react";
 import { cn } from "@nucleux/utils";
+import { Info } from "lucide-react";
 import { Button } from "@nucleux/button";
 import { Dialog, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@nucleux/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@nucleux/tabs";
 
-/** Layout of the gallery, from the spec's variants. */
-export type ExampleGalleryVariant = "card-grid" | "horizontal-strip" | "categorized-tabs";
+/**
+ * Layout of the gallery, from the spec's variants. "tiles" is a compact
+ * two-column grid of tinted tiles that name the task (nucleux.in's shadcn
+ * preview); "grouped-list" lists the examples under their category, one row
+ * each with the icon, the task, a line on what it does and what it needs
+ * (nucleux.in's Material 3 preview).
+ */
+export type ExampleGalleryVariant = "card-grid" | "horizontal-strip" | "categorized-tabs" | "tiles" | "grouped-list";
 
 /** What choosing an example does: place its prompt straight away, or open the prompt and output first. */
 export type ExampleGallerySelectBehavior = "fill" | "preview";
@@ -42,6 +49,14 @@ const tints = [
   "from-warning/20 to-warning/5",
 ];
 
+// Compact tiles: four distinct hues, so each tile reads as a different task at a glance.
+const tileTints = [
+  "from-destructive/10 to-destructive/15 text-destructive",
+  "from-info/15 to-info/25 text-info",
+  "from-success/15 to-success/25 text-success",
+  "from-warning/25 to-warning/45 text-warning-foreground",
+];
+
 export interface ExampleGalleryItemProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "title"> {
   /** The task name. */
   title: React.ReactNode;
@@ -68,6 +83,56 @@ export const ExampleGalleryItem = React.forwardRef<HTMLButtonElement, ExampleGal
   ({ title, description, needs, icon, preview, tint = 0, selected, type = "button", className, ...props }, ref) => {
     const { variant } = React.useContext(GalleryContext);
     const strip = variant === "horizontal-strip";
+    if (variant === "tiles") {
+      return (
+        <button
+          ref={ref}
+          type={type}
+          aria-pressed={selected === undefined ? undefined : selected}
+          className={cn(
+            "grid h-11 w-full place-items-center rounded-md bg-gradient-to-br px-3 text-center text-xs font-semibold transition-[filter,box-shadow] hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            !preview && tileTints[tint % tileTints.length],
+            selected && "ring-2 ring-brand",
+            className,
+          )}
+          {...props}
+        >
+          {preview ?? title}
+          {preview && <span className="sr-only">{title}</span>}
+        </button>
+      );
+    }
+    if (variant === "grouped-list") {
+      return (
+        <button
+          ref={ref}
+          type={type}
+          aria-pressed={selected === undefined ? undefined : selected}
+          className={cn(
+            "flex w-full items-center gap-4 px-4 py-3 text-left transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
+            selected && "bg-brand-muted",
+            className,
+          )}
+          {...props}
+        >
+          {icon && (
+            <span aria-hidden="true" className="shrink-0 text-muted-foreground [&_svg]:size-5">
+              {icon}
+            </span>
+          )}
+          <span className="flex min-w-0 flex-col gap-0.5">
+            <span className="text-sm font-medium text-foreground">{title}</span>
+            {description && <span className="text-sm text-muted-foreground">{description}</span>}
+            {needs && (
+              <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                <Info aria-hidden="true" className="size-3.5 shrink-0" />
+                {needs}
+              </span>
+            )}
+          </span>
+        </button>
+      );
+    }
     return (
       <button
         ref={ref}
@@ -104,7 +169,7 @@ ExampleGalleryItem.displayName = "ExampleGalleryItem";
 export interface ExampleGalleryProps extends Omit<React.HTMLAttributes<HTMLElement>, "onSelect"> {
   /** The curated examples (6–12 is the sweet spot). */
   examples: ExampleGalleryExample[];
-  /** "card-grid" (default), "horizontal-strip" or "categorized-tabs". */
+  /** "card-grid" (default), "horizontal-strip", "categorized-tabs", "tiles" or "grouped-list". */
   variant?: ExampleGalleryVariant;
   /** Called with the example's prompt and the example. Place it in the composer — never send it. */
   onSelect?: (prompt: string, example: ExampleGalleryExample) => void;
@@ -187,15 +252,20 @@ export const ExampleGallery = React.forwardRef<HTMLElement, ExampleGalleryProps>
         });
     };
 
-    const renderList = (list: ExampleGalleryExample[], listLabel?: string) => (
+    const renderList = (list: ExampleGalleryExample[], listLabel?: string, labelledBy?: string) => (
       <ul
         role="list"
         aria-label={listLabel}
+        aria-labelledby={labelledBy}
         className={cn(
           "m-0 list-none p-0",
           variant === "horizontal-strip"
             ? "flex snap-x gap-2 overflow-x-auto pb-2"
-            : "grid grid-cols-2 gap-2 sm:grid-cols-3",
+            : variant === "tiles"
+              ? "grid grid-cols-2 gap-2"
+              : variant === "grouped-list"
+                ? "overflow-hidden rounded-xl border border-border bg-background py-1"
+                : "grid grid-cols-2 gap-2 sm:grid-cols-3",
         )}
       >
         {list.map((example) => (
@@ -230,7 +300,21 @@ export const ExampleGallery = React.forwardRef<HTMLElement, ExampleGalleryProps>
     }
 
     let body: React.ReactNode;
-    if (variant === "categorized-tabs") {
+    if (variant === "grouped-list") {
+      const groups = shown.reduce<string[]>((acc, e) => {
+        const c = e.category ?? "Other";
+        return acc.includes(c) ? acc : [...acc, c];
+      }, []);
+      const order = categoriesProp ? [...categoriesProp.filter((c) => groups.includes(c)), ...groups.filter((c) => !categoriesProp.includes(c))] : groups;
+      body = order.map((c, i) => (
+        <div key={c} className="flex flex-col gap-1.5">
+          <h3 id={`${headingId}-g${i}`} className="text-xs font-medium text-muted-foreground">
+            {c}
+          </h3>
+          {renderList(shown.filter((e) => (e.category ?? "Other") === c), undefined, `${headingId}-g${i}`)}
+        </div>
+      ));
+    } else if (variant === "categorized-tabs") {
       const categories =
         categoriesProp ??
         shown.reduce<string[]>((acc, e) => {
@@ -263,11 +347,16 @@ export const ExampleGallery = React.forwardRef<HTMLElement, ExampleGalleryProps>
           ref={ref}
           aria-labelledby={label != null ? headingId : undefined}
           aria-label={label != null ? undefined : "Examples"}
-          className={cn("flex flex-col gap-2.5", className)}
+          className={cn("flex flex-col", variant === "grouped-list" ? "gap-3" : "gap-2.5", className)}
           {...props}
         >
           {label != null && (
-            <h2 id={headingId} className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            <h2
+              id={headingId}
+              className={cn(
+                variant === "grouped-list" ? "text-lg font-semibold text-foreground" : "text-xs font-semibold text-muted-foreground",
+              )}
+            >
               {label}
             </h2>
           )}

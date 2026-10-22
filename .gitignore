@@ -44,3 +44,5 @@ examples/e2e/login-shadcn-mcp.artifact.html
 examples/e2e/mcp-demo.artifact.html
 examples/e2e/mcp-guide.artifact.html
 examples/e2e/login-mui3.artifact.html
+.claude/worktrees/
+

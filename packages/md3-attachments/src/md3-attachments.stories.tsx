@@ -11,6 +11,7 @@ import {
   type AttachmentsFile,
   type Md3AttachmentsProps,
 } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const MB = 1024 * 1024;
 
@@ -19,7 +20,16 @@ const meta = {
   component: Md3Attachments,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[32rem] bg-md-surface p-4"><Story /></div>],
+  decorators: [
+    (Story, { id }) =>
+      id.endsWith("--site-preview") ? (
+        <div className="flex w-[44rem] max-w-full justify-center">
+          <Story />
+        </div>
+      ) : (
+        <div className="w-[32rem] bg-md-surface p-4"><Story /></div>
+      ),
+  ],
   args: {
     accept: ".pdf,.csv,.docx,.xlsx,image/*",
     maxSize: 20 * MB,
@@ -33,6 +43,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** A Material 3 composer row so the tray reads in context. */
 function Composer({ children, placeholder }: { children?: React.ReactNode; placeholder: string }) {

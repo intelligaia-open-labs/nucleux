@@ -1,9 +1,12 @@
 import * as React from "react";
 import { cn, Slot } from "@nucleux/utils";
+import { aiColorStatusIcon } from "@nucleux/color";
 import type {
   AiColorDotProps,
   AiColorHighlightProps,
   AiColorProps,
+  AiColorStatusProps,
+  AiColorStatusTone,
   AiColorToken,
   AiColorVariant,
   AiColorWorkingRingProps,
@@ -15,6 +18,8 @@ export type Md3AiColorDotProps = AiColorDotProps;
 export type Md3AiColorWorkingRingProps = AiColorWorkingRingProps;
 export type Md3AiColorToken = AiColorToken;
 export type Md3AiColorVariant = AiColorVariant;
+export type Md3AiColorStatusProps = AiColorStatusProps;
+export type Md3AiColorStatusTone = AiColorStatusTone;
 
 /**
  * The reserved AI accent in Material 3 colour roles — the same keys as
@@ -183,3 +188,44 @@ export const Md3AiColorWorkingRing = React.forwardRef<HTMLSpanElement, Md3AiColo
   ),
 );
 Md3AiColorWorkingRing.displayName = "Md3AiColorWorkingRing";
+
+// The site's status roles: neutral-high for idle, the agent's primary-container
+// ground for its own states, tertiary for attention, error-container for errors.
+const statusClasses: Record<AiColorStatusTone, string> = {
+  available: "border-md-outline-variant bg-md-surface-container-high text-md-on-surface",
+  assigned: "border-transparent bg-md-primary-container text-md-on-primary-container",
+  working: "border-transparent bg-md-primary-container text-md-on-primary-container",
+  attention: "border-transparent bg-md-tertiary-container text-md-on-tertiary-container",
+  success: "border-md-outline-variant bg-md-surface text-md-on-surface [&_svg]:text-success",
+  warning: "border-transparent bg-warning text-warning-foreground",
+  error: "border-transparent bg-md-error-container text-md-on-error-container",
+};
+
+/**
+ * A status chip for the agent's work in Material 3 colour roles — the twin
+ * of `AiColorStatus`, with the same API. Idle sits on surface-container-high
+ * with an outline-variant edge; the agent's own states take its
+ * primary-container ground; attention is tertiary-container and errors
+ * error-container. Every colour carries an icon and words, so the state
+ * still reads with the colour removed; `working` turns its icon (still
+ * under reduced motion) in a polite live region.
+ */
+export const Md3AiColorStatus = React.forwardRef<HTMLSpanElement, Md3AiColorStatusProps>(
+  ({ status = "available", label, icon, className, ...props }, ref) => (
+    <span
+      ref={ref}
+      data-status={status}
+      role={status === "working" ? "status" : undefined}
+      className={cn(
+        "inline-flex h-8 w-fit items-center gap-2 rounded-md-sm border px-2.5 text-sm font-medium tracking-[0.1px] [&_svg]:size-5 [&_svg]:shrink-0",
+        statusClasses[status],
+        className,
+      )}
+      {...props}
+    >
+      {icon === undefined ? aiColorStatusIcon(status) : icon}
+      <span>{label}</span>
+    </span>
+  ),
+);
+Md3AiColorStatus.displayName = "Md3AiColorStatus";

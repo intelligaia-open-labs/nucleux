@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { BarChart3, Code2, Mail, Megaphone, NotebookPen, Search } from "lucide-react";
 import { Md3ExampleGallery, type ExampleGalleryExample } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const examples: ExampleGalleryExample[] = [
   {
@@ -59,6 +60,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 function Demo(props: Partial<React.ComponentProps<typeof Md3ExampleGallery>>) {
   const [draft, setDraft] = useState("");

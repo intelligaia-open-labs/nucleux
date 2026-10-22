@@ -27,6 +27,13 @@ export interface ComposerHeightState {
   showToggle: boolean;
   /** Expand or collapse, then return focus to the field. */
   toggle: () => void;
+  /**
+   * The text has wrapped past one line at some point since the field was last
+   * empty. Composers use it to move the field onto its own row above the
+   * controls; it only resets when the field is emptied, so the layout never
+   * flips back and forth while someone types.
+   */
+  wrapped: boolean;
 }
 
 /**
@@ -44,9 +51,11 @@ export function useComposerHeight(
   const [expandedState, setExpanded] = React.useState(false);
   const [overflows, setOverflows] = React.useState(false);
   const [viewport, setViewport] = React.useState(0);
+  const [wrappedState, setWrapped] = React.useState(false);
 
   const empty = value.trim().length === 0;
   const expanded = expandedState && enabled && expandable && !empty;
+  const wrapped = wrappedState && enabled && !empty;
 
   // Sending empties the field, and an empty request has nothing to expand.
   React.useEffect(() => {
@@ -74,6 +83,8 @@ export function useComposerHeight(
     const natural = el.scrollHeight;
     const over = natural ? natural > cap + 1 : value.split("\n").length > lines;
     setOverflows(over);
+    const wraps = value.includes("\n") || (natural > 0 && natural > lh * 1.5 + pad);
+    setWrapped((w) => (value.trim().length === 0 ? false : w || wraps));
 
     if (expanded) {
       const vh = typeof window !== "undefined" ? window.innerHeight : 0;
@@ -90,5 +101,10 @@ export function useComposerHeight(
     ref.current?.focus({ preventScroll: true });
   }, [ref]);
 
-  return { expanded, showToggle: enabled && expandable && !empty && (expanded || overflows), toggle };
+  return {
+    expanded,
+    showToggle: enabled && expandable && !empty && (expanded || overflows),
+    toggle,
+    wrapped,
+  };
 }

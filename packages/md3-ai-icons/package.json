@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-ai-icons",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 AI Icons — one reserved mark per AI meaning, always with words — Nucleux agentic UI for React.",
@@ -41,8 +41,12 @@
   },
   "dependencies": {
     "@nucleux/ai-icons": "workspace:*",
+    "@nucleux/md3-button": "workspace:*",
+    "@nucleux/md3-card": "workspace:*",
     "@nucleux/md3-color": "workspace:*",
-    "@nucleux/utils": "workspace:*"
+    "@nucleux/md3-icon-button": "workspace:*",
+    "@nucleux/utils": "workspace:*",
+    "lucide-react": "^0.469.0"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

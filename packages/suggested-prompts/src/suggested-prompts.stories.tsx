@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { BarChart3, PenLine, Search } from "lucide-react";
 import { SuggestedPrompts } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Agent/SuggestedPrompts",
@@ -9,16 +10,22 @@ const meta = {
   tags: ["autodocs"],
   parameters: { layout: "centered" },
   decorators: [
-    (Story) => (
-      <div className="w-[32rem]">
+    (Story, { name }) =>
+      name === "Site Preview" ? (
         <Story />
-      </div>
-    ),
+      ) : (
+        <div className="w-[32rem]">
+          <Story />
+        </div>
+      ),
   ],
 } satisfies Meta<typeof SuggestedPrompts>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** A horizontal row of pills above the composer — one tap places the prompt. */
 export const ChipRow: Story = {

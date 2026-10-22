@@ -3,18 +3,26 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Paperclip } from "lucide-react";
 import { Md3IconButton } from "@nucleux/md3-icon-button";
 import { Md3OpenInput } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Material 3 Agent/Md3OpenInput",
   component: Md3OpenInput,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[30rem]"><Story /></div>],
+  // The site preview sizes itself; the other stories sit in a 30rem column.
+  decorators: [
+    (Story, ctx) =>
+      ctx.id.endsWith("--site-preview") ? <div className="w-[40rem]"><Story /></div> : <div className="w-[30rem]"><Story /></div>,
+  ],
   args: { onSubmit: () => {}, "aria-label": "Message Aria" },
 } satisfies Meta<typeof Md3OpenInput>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** The default composer: starts as one line, grows with the prompt, counter only near the limit. */
 export const ExpandingArea: Story = {

@@ -10,9 +10,14 @@ export interface ToneOption {
   label: React.ReactNode;
   /** Optional leading icon. */
   icon?: React.ReactNode;
-  /** One-line description of the writing style, used as the option's accessible description. */
+  /** One-line description of the writing style, used as the option's accessible description (shown under the label in the `list` variant). */
   description?: string;
+  /** A short tag beside the label — "Recommended". */
+  badge?: React.ReactNode;
 }
+
+/** `chips` (a row of pills, default) or `list` (radio rows with each description visible). */
+export type PersonalityVariant = "chips" | "list";
 
 /** The default set of output tones. */
 export const defaultTones: ToneOption[] = [
@@ -32,8 +37,12 @@ export interface PersonalityProps
   defaultValue?: string;
   /** Called when a tone is chosen. */
   onValueChange?: (value: string) => void;
-  /** Group label. Defaults to `"Tone"`. */
+  /** Group label. Defaults to `"Tone"`. In the `list` variant it is the setting's heading. */
   label?: React.ReactNode;
+  /** `chips` (default) or `list`: a settings-page picker, one radio row per option with its description. */
+  variant?: PersonalityVariant;
+  /** A line under the label, marked with a lock: what the setting never changes ("Permissions, facts and safety stay the same."). */
+  note?: React.ReactNode;
 }
 
 /**
@@ -41,11 +50,17 @@ export interface PersonalityProps
  * into for a session — more formal, more casual. A radio group with
  * roving focus (arrow keys move and select, Home / End jump). Tone changes
  * how the agent writes, never what it may do: keep permission, caveat and
- * refusal strings outside it. Pair with `PersonalityVoiceCard` and
+ * refusal strings outside it. `variant="list"` makes it the settings-page
+ * picker: radio rows with each description, a "Recommended" `badge` and a
+ * locked `note`. Pair with `PersonalityVoiceCard` and
  * `PersonalitySampleDialog` to preview a voice.
  */
 export const Personality = React.forwardRef<HTMLDivElement, PersonalityProps>(
-  ({ options = defaultTones, value, defaultValue, onValueChange, label = "Tone", className, ...props }, ref) => {
+  (
+    { options = defaultTones, value, defaultValue, onValueChange, label = "Tone", variant = "chips", note, className, ...props },
+    ref,
+  ) => {
+    const list = variant === "list";
     const [internal, setInternal] = React.useState<string | undefined>(defaultValue);
     const current = value !== undefined ? value : internal;
     const refs = React.useRef<(HTMLButtonElement | null)[]>([]);
@@ -71,11 +86,75 @@ export const Personality = React.forwardRef<HTMLDivElement, PersonalityProps>(
     };
 
     return (
-      <div ref={ref} data-variant="tone-matrix" className={cn("flex flex-col gap-2", className)} {...props}>
-        {label && <span className="text-xs font-medium text-muted-foreground">{label}</span>}
-        <div role="radiogroup" aria-label={typeof label === "string" ? label : "Tone"} className="flex flex-wrap gap-1.5">
+      <div
+        ref={ref}
+        data-variant="tone-matrix"
+        data-layout={variant}
+        className={cn("flex flex-col gap-2", className)}
+        {...props}
+      >
+        {label && (
+          <span className={list ? "text-base font-semibold text-foreground" : "text-xs font-medium text-muted-foreground"}>
+            {label}
+          </span>
+        )}
+        {note && (
+          <p className="m-0 flex items-center gap-1.5 text-xs text-muted-foreground">
+            <Lock aria-hidden="true" className="size-3.5 shrink-0" />
+            {note}
+          </p>
+        )}
+        <div
+          role="radiogroup"
+          aria-label={typeof label === "string" ? label : "Tone"}
+          className={list ? "flex flex-col gap-1" : "flex flex-wrap gap-1.5"}
+        >
           {options.map((option, index) => {
             const active = current === option.value;
+            if (list) {
+              return (
+                <button
+                  key={option.value}
+                  ref={(el) => {
+                    refs.current[index] = el;
+                  }}
+                  type="button"
+                  role="radio"
+                  aria-checked={active}
+                  aria-describedby={option.description ? `${descId}-${index}` : undefined}
+                  tabIndex={index === tabStop ? 0 : -1}
+                  onClick={() => select(option.value)}
+                  onKeyDown={(e) => onKeyDown(e, index)}
+                  className="flex items-start gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "mt-0.5 grid size-4 shrink-0 place-items-center rounded-full border",
+                      active ? "border-primary" : "border-input",
+                    )}
+                  >
+                    {active && <span className="size-2 rounded-full bg-primary" />}
+                  </span>
+                  <span className="flex flex-col gap-0.5">
+                    <span className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      {option.icon}
+                      {option.label}
+                      {option.badge != null && (
+                        <span className="rounded-md bg-brand-muted px-1.5 py-0.5 text-[11px] font-semibold text-foreground">
+                          {option.badge}
+                        </span>
+                      )}
+                    </span>
+                    {option.description && (
+                      <span id={`${descId}-${index}`} className="text-xs text-muted-foreground">
+                        {option.description}
+                      </span>
+                    )}
+                  </span>
+                </button>
+              );
+            }
             return (
               <button
                 key={option.value}
@@ -123,8 +202,9 @@ export interface PersonalityVoiceCardProps extends React.HTMLAttributes<HTMLElem
 }
 
 /**
- * The `voice-card`: one sample utterance plus voice tags, showing the
- * agent's tone at a glance — for greetings and onboarding.
+ * The `voice-card`: one sample utterance with its voice written beneath it
+ * ("Voice · calm · proactive"), showing the agent's tone at a glance — for
+ * greetings and onboarding.
  */
 export const PersonalityVoiceCard = React.forwardRef<HTMLElement, PersonalityVoiceCardProps>(
   ({ quote, tags = [], label = "Voice", className, ...props }, ref) => (
@@ -132,23 +212,13 @@ export const PersonalityVoiceCard = React.forwardRef<HTMLElement, PersonalityVoi
       ref={ref}
       aria-label={label}
       data-variant="voice-card"
-      className={cn("m-0 rounded-xl border border-border bg-background p-4", className)}
+      className={cn("m-0 rounded-xl border border-border bg-background p-4 shadow-sm", className)}
       {...props}
     >
-      <blockquote className="m-0 text-sm italic leading-5 text-foreground/80">“{quote}”</blockquote>
+      <blockquote className="m-0 text-[13px] leading-5 text-foreground/80">“{quote}”</blockquote>
       {tags.length > 0 && (
-        <figcaption className="mt-3">
-          <span className="sr-only">Voice: </span>
-          <ul className="flex flex-wrap gap-1.5">
-            {tags.map((tag) => (
-              <li
-                key={tag}
-                className="rounded-full border border-border bg-muted px-2.5 py-0.5 text-[11px] text-muted-foreground"
-              >
-                {tag}
-              </li>
-            ))}
-          </ul>
+        <figcaption className="mt-2.5 text-[11px] font-medium text-muted-foreground">
+          {[label, ...tags].join(" · ")}
         </figcaption>
       )}
     </figure>

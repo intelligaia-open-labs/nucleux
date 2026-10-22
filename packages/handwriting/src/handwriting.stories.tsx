@@ -1,17 +1,30 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { HandwritingInput, type HandwritingRecognition, type HandwritingStroke } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Agent/HandwritingInput",
   component: HandwritingInput,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[26rem]"><Story /></div>],
+  decorators: [
+    (Story, { id }) =>
+      id.endsWith("--site-preview") ? (
+        <div className="flex w-[44rem] max-w-full justify-center">
+          <Story />
+        </div>
+      ) : (
+        <div className="w-[26rem]"><Story /></div>
+      ),
+  ],
   args: { onAccept: () => {} },
 } satisfies Meta<typeof HandwritingInput>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** A wavy line of "writing" — stands in for real ink in the static stories. */
 const scribble = (y: number, from = 20, to = 330): HandwritingStroke => ({

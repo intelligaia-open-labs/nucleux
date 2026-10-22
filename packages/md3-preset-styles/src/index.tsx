@@ -311,7 +311,7 @@ function Menu({ s, label, description, showPreview, previewPrompt, showClose }: 
       role="dialog"
       aria-labelledby={titleId}
       aria-describedby={descId}
-      className="absolute bottom-full left-0 z-50 mb-2 flex w-full min-w-[min(36rem,calc(100vw-2rem))] flex-col rounded-md-lg border border-md-outline-variant bg-md-surface p-2 text-md-on-surface shadow-md-2 animate-nx-fade-in motion-reduce:animate-none"
+      className="absolute bottom-full left-0 z-50 mb-2 flex w-full min-w-[min(36rem,calc(100vw-2rem))] flex-col rounded-md-lg border border-md-outline-variant bg-md-surface-container-lowest p-2 text-md-on-surface shadow-md-2 animate-nx-fade-in motion-reduce:animate-none"
     >
       <div className={cn("relative flex flex-col gap-0.5 px-3 pb-2 pt-2.5", showClose && "pr-12")}>
         {showClose && (
@@ -608,6 +608,12 @@ export const Md3PresetStyles = React.forwardRef<HTMLDivElement, Md3PresetStylesP
     trigger: triggerMode = "chip",
     settingsItems: _settingsItems,
     onSettingsSelect: _onSettingsSelect,
+    onAdd,
+    addLabel,
+    add,
+    model,
+    onVoice,
+    voiceLabel,
     className,
     ...rest
   } = props;
@@ -691,6 +697,12 @@ export const Md3PresetStyles = React.forwardRef<HTMLDivElement, Md3PresetStylesP
                 {composerActions}
               </>
             }
+            onAdd={onAdd}
+            addLabel={addLabel}
+            add={add}
+            model={model}
+            onVoice={onVoice}
+            voiceLabel={voiceLabel}
             className={settingsControl ? "relative" : undefined}
           />
         ) : (

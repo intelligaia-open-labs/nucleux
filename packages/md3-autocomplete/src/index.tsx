@@ -1,7 +1,9 @@
 import * as React from "react";
 import { cn } from "@nucleux/utils";
+import { AutocompleteOverlay } from "@nucleux/autocomplete";
 import type {
   AutocompleteAcceptKey,
+  AutocompleteOverlayProps,
   AutocompleteProps,
   AutocompleteRequest,
   AutocompleteState,
@@ -99,6 +101,9 @@ export const Md3Autocomplete = React.forwardRef<HTMLTextAreaElement, Md3Autocomp
       className,
       fieldClassName,
       hideHints = false,
+      heading,
+      badge,
+      footerEnd,
       id: idProp,
       rows,
       onKeyDown,
@@ -280,6 +285,8 @@ export const Md3Autocomplete = React.forwardRef<HTMLTextAreaElement, Md3Autocomp
     const isBlock = variant === "block-completion";
     const isInvalid = ariaInvalid ?? (invalid || undefined);
     const showHints = shown && !hideHints && variant !== "ghost-suffix";
+    const shell = heading != null || badge != null;
+    const headingId = `${autoId}-heading`;
     // Shared box metrics so the overlay lines up with the field's text exactly
     // (body-large for prose, a 14px monospace for code).
     const metrics = cn(
@@ -289,10 +296,28 @@ export const Md3Autocomplete = React.forwardRef<HTMLTextAreaElement, Md3Autocomp
 
     return (
       <div
-        className={cn("flex w-full flex-col gap-1", className)}
+        className={cn(
+          "flex w-full flex-col",
+          shell
+            ? "overflow-hidden rounded-md-md border border-md-outline-variant bg-md-surface transition-colors duration-150 focus-within:border-md-primary motion-reduce:transition-none"
+            : "gap-1",
+          className,
+        )}
         data-variant={variant}
         data-state={state}
       >
+        {shell && (
+          <div className="flex items-center justify-between gap-2 border-b border-md-outline-variant bg-md-surface-container-low px-4 py-2">
+            <span id={headingId} className="text-sm font-medium tracking-[0.1px] text-md-on-surface-variant">
+              {heading}
+            </span>
+            {badge != null && (
+              <span className="rounded-md-sm bg-md-secondary-container px-2 py-0.5 text-[11px] font-medium tracking-[0.5px] text-md-on-secondary-container">
+                {badge}
+              </span>
+            )}
+          </div>
+        )}
         {label && (
           <label
             htmlFor={id}
@@ -316,6 +341,7 @@ export const Md3Autocomplete = React.forwardRef<HTMLTextAreaElement, Md3Autocomp
             spellCheck={isBlock ? false : spellCheck}
             aria-invalid={isInvalid}
             aria-autocomplete="inline"
+            aria-labelledby={shell && !label && heading != null ? headingId : props["aria-labelledby"]}
             aria-describedby={[ariaDescribedBy, showHints ? hintId : ""].filter(Boolean).join(" ") || undefined}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
@@ -329,9 +355,10 @@ export const Md3Autocomplete = React.forwardRef<HTMLTextAreaElement, Md3Autocomp
             }}
             className={cn(
               metrics,
-              "block min-h-14 w-full resize-y rounded-md-lg bg-md-surface-container-high text-md-on-surface caret-md-primary outline-none transition-colors duration-150 motion-reduce:transition-none",
+              "block min-h-14 w-full text-md-on-surface caret-md-primary outline-none transition-colors duration-150 motion-reduce:transition-none",
+              shell ? "resize-none rounded-none bg-transparent" : "resize-y rounded-md-lg bg-md-surface-container-high",
               "placeholder:text-md-on-surface-variant",
-              "focus-visible:border-md-primary",
+              !shell && "focus-visible:border-md-primary",
               isInvalid && "border-md-error focus-visible:border-md-error caret-md-error",
               "disabled:cursor-not-allowed disabled:opacity-[0.38]",
               fieldClassName,
@@ -340,7 +367,7 @@ export const Md3Autocomplete = React.forwardRef<HTMLTextAreaElement, Md3Autocomp
           <div
             ref={mirrorRef}
             aria-hidden="true"
-            className={cn(metrics, "pointer-events-none absolute inset-0 overflow-hidden rounded-md-lg text-transparent")}
+            className={cn(metrics, "pointer-events-none absolute inset-0 overflow-hidden text-transparent", !shell && "rounded-md-lg")}
           >
             {value}
             {shown && (
@@ -360,28 +387,42 @@ export const Md3Autocomplete = React.forwardRef<HTMLTextAreaElement, Md3Autocomp
             )}
           </div>
         </div>
-        {showHints && (
-          <div id={hintId} className="flex flex-wrap items-center gap-2 px-4 pt-1">
-            <button
-              type="button"
-              tabIndex={-1}
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => accept(shown)}
-              className={hintChip}
-            >
-              <KeyCap className="relative">{keyLabel(acceptKey)}</KeyCap>
-              <span className="relative">to accept</span>
-            </button>
-            <button
-              type="button"
-              tabIndex={-1}
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={dismiss}
-              className={hintChip}
-            >
-              <KeyCap className="relative">Esc</KeyCap>
-              <span className="relative">to dismiss</span>
-            </button>
+        {(showHints || (shell && footerEnd != null)) && (
+          <div
+            className={cn(
+              "flex items-center justify-between gap-2",
+              shell ? "min-h-11 border-t border-md-outline-variant px-4 py-2" : "px-4 pt-1",
+            )}
+          >
+            {showHints ? (
+              <div id={hintId} className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => accept(shown)}
+                  className={hintChip}
+                >
+                  <KeyCap className="relative">{keyLabel(acceptKey)}</KeyCap>
+                  <span className="relative">to accept</span>
+                </button>
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={dismiss}
+                  className={hintChip}
+                >
+                  <KeyCap className="relative">Esc</KeyCap>
+                  <span className="relative">dismiss</span>
+                </button>
+              </div>
+            ) : (
+              <span />
+            )}
+            {shell && footerEnd != null && (
+              <span className="shrink-0 text-xs tabular-nums tracking-[0.4px] text-md-on-surface-variant">{footerEnd}</span>
+            )}
           </div>
         )}
         <span role="status" aria-live="polite" aria-atomic="true" className="sr-only">
@@ -392,3 +433,28 @@ export const Md3Autocomplete = React.forwardRef<HTMLTextAreaElement, Md3Autocomp
   },
 );
 Md3Autocomplete.displayName = "Md3Autocomplete";
+
+/** Same props as `AutocompleteOverlay` from `@nucleux/autocomplete`. */
+export type Md3AutocompleteOverlayProps = AutocompleteOverlayProps;
+
+/**
+ * The Material 3 twin of `AutocompleteOverlay`: inline autocomplete for a
+ * composer you already have (`Md3OpenInput`, `Md3AgentComposer`). Render it
+ * beside the composer in a `relative` wrapper with the composer's field ref;
+ * the likely rest of the request shows after the caret in on-surface-variant
+ * with an outlined key cap, and Tab / ⌘·Ctrl + → / Escape behave as in
+ * `Md3Autocomplete`, without re-drawing the composer.
+ */
+export function Md3AutocompleteOverlay({ ghostClassName, keyClassName, ...props }: Md3AutocompleteOverlayProps) {
+  return (
+    <AutocompleteOverlay
+      {...props}
+      ghostClassName={cn("text-md-on-surface-variant/80", ghostClassName)}
+      keyClassName={cn(
+        "h-5 min-w-5 rounded-md-xs border border-md-outline bg-transparent px-1 font-sans text-[11px] font-medium leading-none text-md-on-surface-variant",
+        keyClassName,
+      )}
+    />
+  );
+}
+Md3AutocompleteOverlay.displayName = "Md3AutocompleteOverlay";

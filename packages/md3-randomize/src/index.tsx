@@ -32,7 +32,8 @@ const rise = "animate-nx-fade-in [animation-duration:400ms] [animation-timing-fu
  * nothing: the chosen prompt goes to `onSelect` to be placed in the composer,
  * editable, and if the composer already holds the person's words it asks
  * first (Replace, Add below, Cancel) in a level-2 surface. Drawn as a tonal
- * dice icon button for a composer toolbar, an outlined shuffle bar that
+ * labelled button with an optional supporting line (or a dice icon button in a
+ * composer toolbar with `showLabel={false}`), an outlined shuffle bar that
  * previews the pick, or a random card whose ground is tinted while a
  * direction is still being found and resolves to an outlined edge once it
  * lands. Working uses the M3 loading indicator; no dice animation.
@@ -51,6 +52,8 @@ export const Md3Randomize = React.forwardRef<HTMLDivElement, Md3RandomizeProps>(
       cardLabel = "Surprise prompt",
       loadingLabel = "Finding a different direction…",
       errorLabel = "Couldn't find a new direction.",
+      icon,
+      supportingText,
       className,
       ...props
     },
@@ -148,7 +151,7 @@ export const Md3Randomize = React.forwardRef<HTMLDivElement, Md3RandomizeProps>(
     }, [confirming]);
 
     const busyIcon = <Md3LoadingIndicator aria-hidden="true" size={20} className="text-current" />;
-    const diceIcon = <Dices aria-hidden="true" />;
+    const diceIcon = icon ?? <Dices aria-hidden="true" />;
     const disabled = loading || (!generate && prompts.length === 0);
 
     const confirmPanel = confirming != null && (
@@ -208,21 +211,32 @@ export const Md3Randomize = React.forwardRef<HTMLDivElement, Md3RandomizeProps>(
 
     if (variant === "dice-button") {
       return (
-        <div ref={ref} className={cn("relative inline-flex items-center gap-2", className)} {...props}>
-          <Md3IconButton
-            variant={showLabel ? "tonal" : "standard"}
-            aria-label={label}
-            aria-busy={loading || undefined}
-            disabled={disabled}
-            onClick={() => next(true)}
-            className={showLabel ? undefined : "size-10"}
-          >
-            {loading ? busyIcon : diceIcon}
-          </Md3IconButton>
-          {showLabel && (
-            <span aria-hidden="true" className="text-sm font-medium tracking-[0.1px] text-md-on-surface-variant">
-              {loading ? loadingLabel : label}
-            </span>
+        <div ref={ref} className={cn("relative inline-flex flex-wrap items-center gap-x-4 gap-y-2", className)} {...props}>
+          {showLabel ? (
+            <Md3Button
+              variant="tonal"
+              aria-busy={loading || undefined}
+              disabled={disabled}
+              icon={loading ? busyIcon : diceIcon}
+              onClick={() => next(true)}
+              className="[&_svg]:size-[18px]"
+            >
+              {label}
+            </Md3Button>
+          ) : (
+            <Md3IconButton
+              variant="standard"
+              aria-label={label}
+              aria-busy={loading || undefined}
+              disabled={disabled}
+              onClick={() => next(true)}
+              className="size-10"
+            >
+              {loading ? busyIcon : diceIcon}
+            </Md3IconButton>
+          )}
+          {showLabel && (loading || supportingText != null) && (
+            <span className="text-sm tracking-[0.25px] text-md-on-surface-variant">{loading ? loadingLabel : supportingText}</span>
           )}
           {errorRow}
           {confirmPanel}

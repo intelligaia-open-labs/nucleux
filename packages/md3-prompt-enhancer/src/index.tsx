@@ -75,6 +75,8 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
     undo = true,
     actionLabel = PROMPT_ENHANCER_TEXT.actionLabel,
     heading = PROMPT_ENHANCER_TEXT.heading,
+    enhancedLabel = PROMPT_ENHANCER_TEXT.enhanced,
+    useLabel = PROMPT_ENHANCER_TEXT.use,
     hint,
     placeholder = PROMPT_ENHANCER_TEXT.placeholder,
     failureMessage = PROMPT_ENHANCER_TEXT.failure,
@@ -84,6 +86,12 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
     settingsItems,
     onSettingsSelect,
     onSubmit,
+    onAdd,
+    addLabel,
+    add,
+    model,
+    onVoice,
+    voiceLabel,
   } = props;
   const { className, ...rest } = splitPromptEnhancerProps(props);
   const pe = usePromptEnhancer(props);
@@ -99,7 +107,7 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
       return (
         <ins
           key={i}
-          className="rounded-md-xs bg-md-primary-container/75 px-0.5 text-md-on-primary-container underline decoration-md-primary/50 decoration-dotted underline-offset-4 [box-decoration-break:clone]"
+          className="rounded-md-xs bg-md-primary/[0.08] px-0.5 text-md-primary underline decoration-md-primary/50 decoration-dotted underline-offset-4 [box-decoration-break:clone]"
         >
           <span className="sr-only">{PROMPT_ENHANCER_TEXT.added}</span>
           {s.text}
@@ -116,7 +124,7 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
   const improvedOverline = (
     <p className={cn(overline, "text-md-primary")}>
       <MessageSquareText aria-hidden className="size-4" />
-      {PROMPT_ENHANCER_TEXT.enhanced}
+      {enhancedLabel}
     </p>
   );
 
@@ -126,7 +134,7 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
       role="region"
       aria-label={PROMPT_ENHANCER_TEXT.regionLabel}
       onKeyDown={pe.onReviewKeyDown}
-      className="flex flex-col gap-3.5 rounded-md-lg bg-md-surface px-5 py-[18px] animate-nx-fade-in motion-reduce:animate-none"
+      className="flex flex-col gap-3.5 rounded-md-lg bg-md-surface-container-lowest px-5 py-[18px] animate-nx-fade-in motion-reduce:animate-none"
     >
       {listed && (
         <div className="flex flex-wrap items-baseline justify-between gap-3">
@@ -238,7 +246,7 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
             )
           )}
           <Md3Button variant="filled" onClick={pe.use}>
-            {pe.state === "editing" ? PROMPT_ENHANCER_TEXT.useEdited : PROMPT_ENHANCER_TEXT.use}
+            {pe.state === "editing" ? PROMPT_ENHANCER_TEXT.useEdited : useLabel}
           </Md3Button>
         </span>
       </div>
@@ -368,10 +376,13 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
             {composerActions}
           </>
         }
-        className={cn(
-          "relative rounded-md-xl border border-md-outline-variant bg-md-surface px-4 pb-2 pt-3.5 shadow-md-1 [&>textarea]:text-base",
-          !onSubmit && "[&_button[aria-label=Send]]:hidden",
-        )}
+        onAdd={onAdd}
+        addLabel={addLabel}
+        add={add}
+        model={model}
+        onVoice={onVoice}
+        voiceLabel={voiceLabel}
+        className={cn("relative", !onSubmit && "[&_button[aria-label=Send]]:hidden")}
       />
     </div>
   );

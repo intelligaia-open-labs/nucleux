@@ -2,6 +2,7 @@ import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@nucleux/button";
 import { Consent, ConsentDialog, ConsentToggle } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Agent/Consent",
@@ -24,6 +25,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** Embedded in the flow at the moment access is needed; each permission granted separately. */
 export const InlineCard: Story = {};

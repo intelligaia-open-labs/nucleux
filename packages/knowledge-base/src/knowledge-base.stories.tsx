@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { KnowledgeBase, KnowledgeBaseCoverage, KnowledgeBaseSources } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Agent/KnowledgeBase",
   component: KnowledgeBase,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[26rem]"><Story /></div>],
+  decorators: [(Story, { id }) => <div className={id.endsWith("--site-preview") ? "w-[30rem]" : "w-[26rem]"}><Story /></div>],
   args: {
     defaultValue: ["claude"],
     onValueChange: () => {},
@@ -20,6 +21,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 export const Default: Story = {};
 

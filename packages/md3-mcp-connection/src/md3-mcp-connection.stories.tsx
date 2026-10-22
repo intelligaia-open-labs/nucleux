@@ -7,6 +7,7 @@ import {
   Md3McpConnectionTools,
   type McpConnectionToolInfo,
 } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const linearTools: McpConnectionToolInfo[] = [
   {
@@ -50,6 +51,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** Right rail: what the server exposes, grouped by risk; each row inspectable and switchable. */
 export const ToolList: Story = {

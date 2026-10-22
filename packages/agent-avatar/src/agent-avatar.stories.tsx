@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 import { Avatar } from "@nucleux/avatar";
 import { AgentAvatar } from "./index";
 
@@ -12,6 +13,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** The default: a round mark with the reserved glyph (or a letter), at 24 / 32 / 40. */
 export const CircularMark: Story = {

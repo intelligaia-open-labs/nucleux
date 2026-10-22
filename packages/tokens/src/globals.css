@@ -68,9 +68,9 @@
     --nx-info-foreground: var(--nx-slate-50);
 
     /* Brand accent used for feature icons  violet-500 #8b5cf6 / violet-50 bg */
-    --nx-brand: var(--nx-violet-500);
+    --nx-brand: 32 95% 44%; /* nucleux.in's AI accent #d97706 */
     --nx-brand-foreground: 0 0% 100%;
-    --nx-brand-muted: var(--nx-violet-50); /* violet-50  #f5f3ff */
+    --nx-brand-muted: 48 96% 89%; /* #fef3c7 */
 
     --nx-destructive: var(--nx-red-600);
     --nx-destructive-foreground: var(--nx-slate-50);
@@ -106,9 +106,9 @@
     --nx-info: var(--nx-blue-500); /* blue-500 */
     --nx-info-foreground: var(--nx-slate-50);
 
-    --nx-brand: var(--nx-violet-500);
-    --nx-brand-foreground: 0 0% 100%;
-    --nx-brand-muted: 259 46% 16%;
+    --nx-brand: 38 92% 50%; /* #f59e0b: the accent, lifted for dark surfaces */
+    --nx-brand-foreground: 48 96% 9%;
+    --nx-brand-muted: 32 60% 14%;
 
     --nx-destructive: var(--nx-red-700);
     --nx-destructive-foreground: var(--nx-slate-50);
@@ -160,9 +160,11 @@
     --nx-md-on-surface: 257 8% 12%;
     --nx-md-surface-variant: 268 21% 90%;
     --nx-md-on-surface-variant: 265 7% 29%;
+    --nx-md-surface-container-lowest: 0 0% 100%;
     --nx-md-surface-container-low: 278 43% 96%;
     --nx-md-surface-container: 276 36% 95%;
     --nx-md-surface-container-high: 276 24% 92%;
+    --nx-md-surface-container-highest: 280 17% 90%;
 
     --nx-md-outline: 260 4% 47%;
     --nx-md-outline-variant: 262 12% 79%;
@@ -197,9 +199,11 @@
     --nx-md-on-surface: 267 16% 90%;
     --nx-md-surface-variant: 265 7% 29%;
     --nx-md-on-surface-variant: 262 12% 79%;
+    --nx-md-surface-container-lowest: 260 19% 6%;
     --nx-md-surface-container-low: 257 8% 12%;
     --nx-md-surface-container: 257 10% 14%;
     --nx-md-surface-container-high: 257 8% 17%;
+    --nx-md-surface-container-highest: 255 6% 22%;
 
     --nx-md-outline: 264 4% 58%;
     --nx-md-outline-variant: 265 7% 29%;

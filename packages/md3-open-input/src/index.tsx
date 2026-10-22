@@ -1,8 +1,15 @@
 import * as React from "react";
-import { ArrowUp, Maximize2, Minimize2, RotateCw, Square } from "lucide-react";
+import { ArrowUp, ChevronDown, Maximize2, Mic, Minimize2, Plus, RotateCw, Send, Square } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { useComposerHeight } from "@nucleux/open-input";
-import type { OpenInputProps, OpenInputSendKey, OpenInputVariant } from "@nucleux/open-input";
+import type {
+  OpenInputLayout,
+  OpenInputModelChipProps,
+  OpenInputProps,
+  OpenInputSendKey,
+  OpenInputSendVariant,
+  OpenInputVariant,
+} from "@nucleux/open-input";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3IconButton } from "@nucleux/md3-icon-button";
 import { Md3LoadingIndicator } from "@nucleux/md3-loading-indicator";
@@ -13,6 +20,38 @@ export type Md3OpenInputProps = OpenInputProps;
 export type Md3OpenInputVariant = OpenInputVariant;
 /** Which key sends: "enter" or "mod-enter". */
 export type Md3OpenInputSendKey = OpenInputSendKey;
+/** Send button style: "filled" (default here) or "ghost". */
+export type Md3OpenInputSendVariant = OpenInputSendVariant;
+/** "auto", "inline" or "stacked" arrangement of the expanding-area composer. */
+export type Md3OpenInputLayout = OpenInputLayout;
+/** Props of {@link Md3OpenInputModelChip} — identical to `OpenInputModelChipProps`. */
+export type Md3OpenInputModelChipProps = OpenInputModelChipProps;
+
+/**
+ * The Material 3 composer's model chip — the model and its effort as a text
+ * button in the primary colour ("Balanced High"), the model in semibold and
+ * the effort in regular weight, as in the nucleux.in composer. Pass it to
+ * `Md3OpenInput`'s `model` slot and wire `onClick` / `aria-haspopup` /
+ * `aria-expanded` to the menu that changes them. `chevron` defaults to false.
+ */
+export const Md3OpenInputModelChip = React.forwardRef<HTMLButtonElement, Md3OpenInputModelChipProps>(
+  ({ name, detail, chevron = false, type = "button", className, ...props }, ref) => (
+    <button
+      ref={ref}
+      type={type}
+      className={cn(
+        "relative inline-flex h-10 shrink-0 items-center gap-1.5 overflow-hidden rounded-full px-3 text-sm tracking-[0.1px] text-md-primary outline-none focus-visible:ring-2 focus-visible:ring-md-primary before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-[''] hover:before:opacity-[0.08] active:before:opacity-[0.12] disabled:opacity-[0.38] disabled:before:opacity-0 motion-reduce:before:transition-none",
+        className,
+      )}
+      {...props}
+    >
+      <span className="relative font-semibold">{name}</span>
+      {detail != null && <span className="relative font-normal">{detail}</span>}
+      {chevron && <ChevronDown aria-hidden="true" className="relative size-4" />}
+    </button>
+  ),
+);
+Md3OpenInputModelChip.displayName = "Md3OpenInputModelChip";
 
 // Copied from @nucleux/open-input (internal there): the default failure message and a promise check.
 const DEFAULT_ERROR = "Couldn't send your message. It's still here — edit it or try again.";
@@ -24,8 +63,11 @@ const EMPHASIZED = "ease-[cubic-bezier(0.2,0,0,1)]";
 
 /**
  * The Material 3 persistent composer for any natural-language ask — the same
- * API and behaviour as `OpenInput`, drawn as an M3 composer: a tonal surface
- * with a hairline outline whose focus is a shape change (the outline takes the
+ * API and behaviour as `OpenInput`, drawn as the nucleux.in M3 composer: one
+ * rounded bar on the surface with a hairline outline — an optional "+"
+ * (`onAdd`), the field, the `model` chip ("Balanced High"), a mic (`onVoice`)
+ * and a round send — whose field takes its own row once the request wraps.
+ * Its focus is a shape change (the outline takes the
  * primary colour and the corner squares up a step), a field that eases taller
  * line by line to eight lines (`maxLines`) and then scrolls — past that an
  * Expand icon button in the field's corner gives the request most of the
@@ -57,6 +99,14 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
       error,
       onRetry,
       containerClassName,
+      onAdd,
+      addLabel = "Add files and more",
+      add,
+      model,
+      onVoice,
+      voiceLabel = "Speak instead of typing",
+      sendVariant = "filled",
+      layout = "auto",
       placeholder = "Message the agent…",
       className,
       disabled,
@@ -94,7 +144,7 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
     };
 
     // Grow with the text up to maxLines (or maxHeight), then scroll; Expand past that.
-    const { expanded, showToggle, toggle } = useComposerHeight(innerRef, {
+    const { expanded, showToggle, toggle, wrapped } = useComposerHeight(innerRef, {
       value,
       maxLines,
       maxHeight,
@@ -169,6 +219,7 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
       variant === "single-line" || sendKey === "enter" ? "Enter" : "Meta+Enter Control+Enter";
     const big = variant === "input-with-send";
     const sendShape = big ? "size-12 rounded-md-lg" : "size-10 rounded-full";
+    const ghost = sendVariant === "ghost";
     const sendButton = loading ? (
       <Md3IconButton
         variant="tonal"
@@ -180,7 +231,7 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
       </Md3IconButton>
     ) : (
       <Md3IconButton
-        variant="filled"
+        variant={ghost ? "standard" : "filled"}
         onClick={submit}
         disabled={!canSend}
         aria-label={sendLabel}
@@ -189,16 +240,46 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
         className={cn(
           "shrink-0 transition-[transform,background-color] duration-200 active:scale-95 motion-reduce:transition-none motion-reduce:active:scale-100 [&_svg]:size-5",
           // Nothing to send: an empty, quiet container rather than a disabled primary blob.
-          !canSend && !sending && "bg-md-on-surface/10 text-md-on-surface disabled:opacity-[0.38]",
+          !ghost && !canSend && !sending && "bg-md-on-surface/10 text-md-on-surface disabled:opacity-[0.38]",
+          ghost && "disabled:opacity-[0.38]",
           sendShape,
         )}
       >
         {sending ? (
-          <Md3LoadingIndicator aria-hidden="true" size={24} className="text-md-on-primary" />
+          <Md3LoadingIndicator
+            aria-hidden="true"
+            size={24}
+            className={ghost ? "text-md-primary" : "text-md-on-primary"}
+          />
+        ) : ghost ? (
+          <Send aria-hidden="true" />
         ) : (
           <ArrowUp aria-hidden="true" />
         )}
       </Md3IconButton>
+    );
+
+    const addControl =
+      add ??
+      (onAdd ? (
+        <Md3IconButton aria-label={addLabel} onClick={onAdd} disabled={disabled} className="shrink-0">
+          <Plus aria-hidden="true" />
+        </Md3IconButton>
+      ) : null);
+
+    const voiceButton = onVoice ? (
+      <Md3IconButton aria-label={voiceLabel} onClick={onVoice} disabled={disabled} className="shrink-0">
+        <Mic aria-hidden="true" />
+      </Md3IconButton>
+    ) : null;
+
+    // Model chip, mic, send: the right end of every arrangement.
+    const trailing = (
+      <>
+        {model}
+        {voiceButton}
+        {sendButton}
+      </>
     );
 
     const errorRow = showError ? (
@@ -219,6 +300,10 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
         </Md3Button>
       </div>
     ) : null;
+
+    const stacked =
+      variant === "expanding-area" &&
+      (layout === "stacked" || (layout === "auto" && (wrapped || expanded || showError)));
 
     const field = (
       <textarea
@@ -241,11 +326,13 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
         }}
         onKeyDown={handleKeyDown}
         className={cn(
-          "min-w-0 flex-1 resize-none bg-transparent px-2 py-2 text-base leading-6 tracking-[0.5px] text-md-on-surface caret-md-primary outline-none placeholder:text-md-on-surface-variant disabled:opacity-[0.38]",
+          "min-w-0 flex-1 resize-none bg-transparent px-2 py-2 text-[0.9375rem] leading-6 tracking-[0.25px] text-md-on-surface caret-md-primary outline-none placeholder:truncate placeholder:text-md-on-surface-variant disabled:opacity-[0.38]",
           variant === "single-line"
             ? "h-10 overflow-hidden"
             : cn("transition-[height] duration-150 motion-reduce:transition-none", EMPHASIZED),
           variant === "expanding-area" && "w-full",
+          // Stacked field: 6px 8px 2px, a 22px line (the site's 1.45 × 15px).
+          stacked && "pb-0.5 pt-1.5 leading-[1.375rem]",
           showToggle && "pr-10",
         )}
       />
@@ -272,7 +359,8 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
         <div
           className={cn(
             "relative flex min-w-0 flex-1",
-            (variant === "expanding-area" || expanded) && "w-full basis-full",
+            (stacked || expanded) && "w-full basis-full",
+            stacked && variant === "expanding-area" && "-order-1",
             expanded && "order-first",
           )}
         >
@@ -282,7 +370,7 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
       );
 
     const boxBase = cn(
-      "border bg-md-surface-container-high text-md-on-surface transition-[border-radius,border-color] duration-200 motion-reduce:transition-none",
+      "border bg-md-surface-container-lowest text-md-on-surface shadow-sm transition-[border-radius,border-color] duration-200 motion-reduce:transition-none",
       EMPHASIZED,
       showError ? "border-md-error" : "border-md-outline-variant focus-within:border-md-primary",
     );
@@ -294,13 +382,15 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
           className={cn(
             boxBase,
             "flex min-h-12 items-center gap-1 rounded-full py-1 pl-3 pr-1",
+            addControl && "pl-1",
             className,
           )}
         >
+          {addControl}
           {field}
           {actions}
           {counter}
-          {sendButton}
+          {trailing}
         </div>
       );
     } else if (variant === "input-with-send") {
@@ -315,31 +405,40 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
             )}
             data-expanded={expanded || undefined}
           >
+            {addControl}
             {fieldArea}
             {actions}
             {counter && <span className="self-center pr-2">{counter}</span>}
+            {model}
+            {voiceButton}
           </div>
           {sendButton}
         </div>
       );
     } else {
+      // One element tree for both arrangements (so the field never remounts and
+      // keeps focus); `order` moves the field above the toolbar once stacked.
+      // Inline: one bar — +, the field, the controls, send. Stacked: the request
+      // on its own row; + and actions left, model, mic and send right.
       composer = (
         <div
           data-expanded={expanded || undefined}
+          data-layout={stacked ? "stacked" : "inline"}
           className={cn(
             boxBase,
-            "flex flex-col gap-2 rounded-md-xl p-3 focus-within:rounded-md-lg",
+            "flex flex-wrap items-center gap-x-1 rounded-md-xl focus-within:rounded-md-lg",
+            // Stacked, as on nucleux.in: 8px 8px 7px around, 2px between the text and the toolbar.
+            stacked ? "gap-y-0.5 px-2 pb-[7px] pt-2" : "min-h-14 p-2",
             className,
           )}
         >
-          {errorRow}
+          {errorRow && <div className="order-first basis-full">{errorRow}</div>}
+          {addControl}
           {fieldArea}
-          <div className="flex items-center gap-1">
-            {actions}
-            <span className="flex-1" />
-            {counter}
-            {sendButton}
-          </div>
+          {actions}
+          {stacked && <span className="flex-1" />}
+          {counter}
+          {trailing}
         </div>
       );
     }

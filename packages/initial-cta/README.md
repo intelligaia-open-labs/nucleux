@@ -26,7 +26,8 @@ any other entry point — a `Randomize` dice, say — through `actions`.
 
 - Takes every `OpenInput` prop (`value`/`onValueChange` or `defaultValue`, `onSubmit`, `sendKey`, `maxLength`, `actions`, `loading`…). Uncontrolled, it clears only after a successful send.
 - `suggestions` show while the field is empty; choosing one places its prompt, focuses the field with the caret at the end, marks the choice and announces it. They step aside once the person edits, and come back if the field is cleared.
-- `headline` (default "What can I help with?") names the section; `headingLevel` sets its level.
+- `headline` (default "What can I help with?") names the section; `headingLevel` sets its level. `headline={null}` drops the heading and the `description` names the section instead.
+- The composer is `OpenInput` with all its props: `onAdd` (the `+`), `model` (e.g. `<OpenInputModelChip name="5.5" detail="Instant" />`) and `onVoice` (the mic, in every variant) give the nucleux.in composer.
 
 ## Usage
 

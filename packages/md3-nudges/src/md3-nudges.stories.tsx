@@ -3,6 +3,7 @@ import { Paperclip, Sparkles } from "lucide-react";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3IconButton } from "@nucleux/md3-icon-button";
 import { Md3Nudge, Md3NudgeAction } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Material 3 Agent/Md3Nudge",
@@ -14,6 +15,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** A bubble pointing at the upload button after three text-only sends. Closes on outside click or Escape. */
 export const TooltipNudge: Story = {

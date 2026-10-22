@@ -3,10 +3,22 @@ import { cn } from "@nucleux/utils";
 import { Badge } from "@nucleux/badge";
 import { Radio, RadioGroup } from "@nucleux/radio-group";
 import { Switch } from "@nucleux/switch";
+import { OpenInputModelChip } from "@nucleux/open-input";
 import { Check, ChevronDown, Sparkles } from "lucide-react";
 
 /** Layout from the spec: a compact dropdown, tradeoff cards, or an auto-route toggle that reveals the picker. */
 export type ModelSelectionVariant = "dropdown" | "tradeoff" | "auto-route";
+
+/**
+ * How the dropdown's trigger is drawn. "button": a bordered button with a
+ * sparkle, the model and a chevron. "chip": the composer's own model chip
+ * (`OpenInputModelChip` / `Md3OpenInputModelChip`, "Sonnet ▾", "Balanced High")
+ * — pass the whole `ModelSelection` to the composer's `model` slot.
+ */
+export type ModelSelectionTrigger = "button" | "chip";
+
+/** Which picker accompanies the auto-route switch: a dropdown revealed when it is off, or the tradeoff list, always shown. */
+export type ModelSelectionPicker = "dropdown" | "list";
 
 export interface ModelOption {
   /** Stable value passed to `onValueChange`. */
@@ -51,10 +63,22 @@ export interface ModelSelectionProps
   defaultAutoRoute?: boolean;
   /** Called when auto-route is switched. */
   onAutoRouteChange?: (on: boolean) => void;
-  /** The model auto-route is using now, shown as "currently: …". */
+  /** The model auto-route is using now, shown as "currently …". */
   routedModel?: React.ReactNode;
   /** Who routes, for the description. Defaults to `"Aria"`. */
   agentName?: React.ReactNode;
+  /** Trigger of the dropdown ("dropdown" and "auto-route" variants). Defaults to `"button"`. */
+  trigger?: ModelSelectionTrigger;
+  /** With `trigger="chip"`: the chip's quieter second value after the model, e.g. `"Instant"` or the effort `"High"`. */
+  triggerDetail?: React.ReactNode;
+  /** Which side of the trigger the menu opens on. Defaults to `"bottom"`; use `"top"` in a composer docked at the bottom. */
+  menuSide?: "top" | "bottom";
+  /**
+   * `variant="auto-route"` only: `"dropdown"` (default) reveals a dropdown when
+   * auto-route is switched off; `"list"` always shows the tradeoff list under
+   * the switch, marking the model in use, and picking a row switches auto-route off.
+   */
+  picker?: ModelSelectionPicker;
 }
 
 /** "Fastest · Best quality · $$" from whichever tradeoff facts are given. */
@@ -81,10 +105,13 @@ interface PickerProps {
   select: (value: string) => void;
   label: string;
   className?: string;
+  trigger?: ModelSelectionTrigger;
+  triggerDetail?: React.ReactNode;
+  menuSide?: "top" | "bottom";
 }
 
 /** The composer-anchored dropdown (listbox) used by the "dropdown" and "auto-route" variants. */
-function ModelDropdown({ models, current, select, label, className }: PickerProps) {
+function ModelDropdown({ models, current, select, label, className, trigger = "button", triggerDetail, menuSide = "bottom" }: PickerProps) {
   const [open, setOpen] = React.useState(false);
   const rootRef = React.useRef<HTMLDivElement>(null);
   const triggerRef = React.useRef<HTMLButtonElement>(null);
@@ -132,29 +159,42 @@ function ModelDropdown({ models, current, select, label, className }: PickerProp
   };
 
   const selected = models.find((m) => m.value === current);
+  const triggerProps = {
+    // The chip shows the model, so its name carries it too ("Model: Sonnet").
+    "aria-label": trigger === "chip" && typeof selected?.label === "string" ? `${label}: ${selected.label}` : label,
+    "aria-haspopup": "listbox" as const,
+    "aria-expanded": open,
+    "aria-controls": open ? listId : undefined,
+    onClick: () => setOpen((o) => !o),
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if ((e.key === "ArrowDown" || e.key === "ArrowUp") && !open) {
+        e.preventDefault();
+        setOpen(true);
+      }
+    },
+  };
 
   return (
     <div ref={rootRef} className={cn("relative inline-block", className)}>
-      <button
-        ref={triggerRef}
-        type="button"
-        aria-label={label}
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-controls={open ? listId : undefined}
-        onClick={() => setOpen((o) => !o)}
-        onKeyDown={(e) => {
-          if ((e.key === "ArrowDown" || e.key === "ArrowUp") && !open) {
-            e.preventDefault();
-            setOpen(true);
-          }
-        }}
-        className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&>svg]:size-4"
-      >
-        <Sparkles className="text-brand" aria-hidden="true" />
-        <span>{selected?.label ?? "Select model"}</span>
-        <ChevronDown className={cn("text-muted-foreground transition-transform", open && "rotate-180")} aria-hidden="true" />
-      </button>
+      {trigger === "chip" ? (
+        <OpenInputModelChip
+          ref={triggerRef}
+          name={selected?.label ?? "Select model"}
+          detail={triggerDetail}
+          {...triggerProps}
+        />
+      ) : (
+        <button
+          ref={triggerRef}
+          type="button"
+          {...triggerProps}
+          className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&>svg]:size-4"
+        >
+          <Sparkles className="text-brand" aria-hidden="true" />
+          <span>{selected?.label ?? "Select model"}</span>
+          <ChevronDown className={cn("text-muted-foreground transition-transform", open && "rotate-180")} aria-hidden="true" />
+        </button>
+      )}
       {open && (
         <div
           ref={listRef}
@@ -162,7 +202,11 @@ function ModelDropdown({ models, current, select, label, className }: PickerProp
           role="listbox"
           aria-label={label}
           onKeyDown={onListKeyDown}
-          className="absolute z-50 mt-1 flex min-w-64 flex-col gap-0.5 rounded-xl border border-border bg-background p-1.5 shadow-md animate-nx-fade-in motion-reduce:animate-none"
+          className={cn(
+            "absolute z-50 flex min-w-64 flex-col gap-0.5 rounded-xl border border-border bg-background p-1.5 shadow-md animate-nx-fade-in motion-reduce:animate-none",
+            menuSide === "top" ? "bottom-full mb-1" : "top-full mt-1",
+            trigger === "chip" && "right-0 w-80",
+          )}
         >
           {models.map((model) => {
             const active = model.value === current;
@@ -210,6 +254,79 @@ function ModelDropdown({ models, current, select, label, className }: PickerProp
   );
 }
 
+interface ModelListProps extends PickerProps {
+  headingId: string;
+}
+
+/**
+ * The tradeoff list: one bordered card of radio rows — a dot, the model and
+ * what it is for, and speed over cost at the right. The chosen row is tinted
+ * and its dot and cost take the warm accent (`warning`), as on nucleux.in.
+ */
+function ModelList({ models, current, select, label, headingId }: ModelListProps) {
+  return (
+    <>
+      <p id={headingId} className="sr-only">
+        {label}
+      </p>
+      <RadioGroup
+        aria-labelledby={headingId}
+        value={current}
+        onValueChange={select}
+        className="gap-0 overflow-hidden rounded-xl border border-border bg-background"
+      >
+        {models.map((model) => {
+          const id = `${headingId}-${model.value}`;
+          const active = model.value === current;
+          const sub = model.description ?? model.quality;
+          return (
+            <label
+              key={model.value}
+              className={cn(
+                "flex cursor-pointer items-center gap-3 border-b border-border px-3.5 py-2.5 transition-colors last:border-b-0 hover:bg-accent/60",
+                active && "bg-accent/60",
+                model.disabled && "cursor-not-allowed opacity-60 hover:bg-transparent",
+              )}
+            >
+              <Radio
+                value={model.value}
+                disabled={model.disabled}
+                aria-labelledby={id}
+                className={cn("size-2 border-0 shadow-none [&>span]:hidden", active ? "bg-warning" : "bg-border")}
+              />
+              <span id={id} className="flex min-w-0 flex-1 flex-col gap-0.5">
+                <span
+                  className={cn(
+                    "flex items-center gap-2 text-sm",
+                    active ? "font-semibold text-foreground" : "text-foreground/80",
+                  )}
+                >
+                  {model.label}
+                  {model.recommended && <RecommendedBadge />}
+                </span>
+                {sub && <span className="text-xs text-muted-foreground">{sub}</span>}
+                {model.disabled && model.unavailableReason && (
+                  <span className="text-xs text-foreground">{model.unavailableReason}</span>
+                )}
+              </span>
+              {(model.speed || model.cost) && (
+                <span className="flex shrink-0 flex-col items-end gap-0.5 text-xs">
+                  {model.speed && <span className="text-muted-foreground">{model.speed}</span>}
+                  {model.cost && (
+                    <span className={cn("font-semibold", active ? "text-warning" : "text-muted-foreground")}>
+                      {model.cost}
+                    </span>
+                  )}
+                </span>
+              )}
+            </label>
+          );
+        })}
+      </RadioGroup>
+    </>
+  );
+}
+
 /**
  * Lets the user pick the model for the task. `variant="dropdown"` (default) is
  * a composer-anchored listbox (arrow keys, Home/End, Escape returns focus);
@@ -217,7 +334,9 @@ function ModelDropdown({ models, current, select, label, className }: PickerProp
  * human terms; `"auto-route"` defaults to letting the agent route per task,
  * shows which model it is using, and reveals the picker when switched off.
  * Recommended and unavailable models are marked in words; an unavailable model
- * keeps its row and says what answers instead.
+ * keeps its row and says what answers instead. With `trigger="chip"` the
+ * dropdown's trigger is the composer's model chip ("Sonnet ▾"), so the whole
+ * component goes in `OpenInput`'s `model` slot (`menuSide="top"` there).
  * Source: Figma "Context Expansion / Model Selection".
  */
 export const ModelSelection = React.forwardRef<HTMLDivElement, ModelSelectionProps>(
@@ -234,6 +353,10 @@ export const ModelSelection = React.forwardRef<HTMLDivElement, ModelSelectionPro
       onAutoRouteChange,
       routedModel,
       agentName = "Aria",
+      trigger = "button",
+      triggerDetail,
+      menuSide = "bottom",
+      picker = "dropdown",
       className,
       ...props
     },
@@ -255,81 +378,70 @@ export const ModelSelection = React.forwardRef<HTMLDivElement, ModelSelectionPro
     const autoLabelId = React.useId();
     const headingId = React.useId();
 
+    const list = (
+      <ModelList models={models} current={current} select={select} label={label} headingId={headingId} />
+    );
+    const dropdown = (
+      <ModelDropdown
+        models={models}
+        current={current}
+        select={select}
+        label={label}
+        trigger={trigger}
+        triggerDetail={triggerDetail}
+        menuSide={menuSide}
+      />
+    );
+
     if (variant === "tradeoff") {
       return (
         <div ref={ref} className={cn("flex flex-col gap-2", className)} {...props}>
-          <p id={headingId} className="sr-only">
-            {label}
-          </p>
-          <RadioGroup
-            aria-labelledby={headingId}
-            value={current}
-            onValueChange={select}
-            className="gap-1.5"
-          >
-            {models.map((model) => {
-              const id = `${headingId}-${model.value}`;
-              const line = tradeoffLine(model);
-              return (
-                <label
-                  key={model.value}
-                  className={cn(
-                    "flex cursor-pointer items-center gap-3 rounded-lg border border-border bg-background px-3 py-2 transition-colors hover:bg-accent",
-                    "has-[[aria-checked=true]]:border-brand has-[[aria-checked=true]]:bg-brand-muted/40",
-                    model.disabled && "cursor-not-allowed opacity-60 hover:bg-background",
-                  )}
-                >
-                  <Radio value={model.value} disabled={model.disabled} aria-labelledby={id} />
-                  <span id={id} className="flex min-w-0 flex-1 flex-col">
-                    <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                      {model.label}
-                      {model.recommended && <RecommendedBadge />}
-                    </span>
-                    {(line ?? model.description) && (
-                      <span className="text-xs text-muted-foreground">{line ?? model.description}</span>
-                    )}
-                    {model.disabled && model.unavailableReason && (
-                      <span className="text-xs text-foreground">{model.unavailableReason}</span>
-                    )}
-                  </span>
-                  {model.cost && (
-                    <span className="shrink-0 text-xs font-semibold text-muted-foreground">{model.cost}</span>
-                  )}
-                </label>
-              );
-            })}
-          </RadioGroup>
+          {list}
         </div>
       );
     }
 
     if (variant === "auto-route") {
       return (
-        <div ref={ref} className={cn("flex flex-col gap-2", className)} {...props}>
+        <div ref={ref} className={cn("flex flex-col gap-2.5", className)} {...props}>
           <div className="flex items-center justify-between gap-3 rounded-lg border border-border bg-background px-3.5 py-2.5">
-            <div className="flex min-w-0 flex-col">
+            <div className="flex min-w-0 flex-col gap-0.5">
               <span id={autoLabelId} className="text-sm font-semibold text-foreground">
                 Auto-route
               </span>
-              <span className="text-xs text-muted-foreground">{agentName} picks the model per task</span>
+              <span className="text-xs text-muted-foreground">
+                {agentName} picks the model per task
+                {auto && routedModel && (
+                  <>
+                    {" · "}
+                    <span aria-live="polite">currently {routedModel}</span>
+                  </>
+                )}
+              </span>
             </div>
-            <div className="flex shrink-0 items-center gap-2">
-              {auto && routedModel && (
-                <span className="text-xs text-muted-foreground" aria-live="polite">
-                  currently: {routedModel}
-                </span>
-              )}
-              <Switch checked={auto} onCheckedChange={setAuto} aria-labelledby={autoLabelId} />
-            </div>
+            <Switch checked={auto} onCheckedChange={setAuto} aria-labelledby={autoLabelId} className="shrink-0" />
           </div>
-          {!auto && <ModelDropdown models={models} current={current} select={select} label={label} />}
+          {picker === "list" ? (
+            <ModelList
+              models={models}
+              current={current}
+              select={(next) => {
+                select(next);
+                if (auto) setAuto(false);
+              }}
+              label={label}
+              headingId={headingId}
+            />
+          ) : (
+            !auto && dropdown
+          )}
         </div>
       );
     }
 
     return (
       <div ref={ref} className={cn("relative inline-block", className)} {...props}>
-        <ModelDropdown models={models} current={current} select={select} label={label} />
+        {dropdown}
       </div>
     );
   },

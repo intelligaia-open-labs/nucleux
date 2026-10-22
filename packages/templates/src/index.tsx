@@ -34,6 +34,12 @@ export interface TemplatesProps extends Omit<React.FormHTMLAttributes<HTMLFormEl
   onComplete?: (prompt: string, values: Record<string, string>) => void;
   /** Submit button label. Defaults to `"Use this prompt"`. */
   submitLabel?: React.ReactNode;
+  /**
+   * Show the footer with the blanks count and the submit button. Defaults to
+   * true; set false when the sentence sits inside a composer that sends it
+   * (as on nucleux.in's preview); `onValuesChange` then carries the values.
+   */
+  showSubmit?: boolean;
 }
 
 /**
@@ -54,6 +60,7 @@ export const Templates = React.forwardRef<HTMLFormElement, TemplatesProps>(
       onValuesChange,
       onComplete,
       submitLabel = "Use this prompt",
+      showSubmit = true,
       className,
       ...props
     },
@@ -86,10 +93,10 @@ export const Templates = React.forwardRef<HTMLFormElement, TemplatesProps>(
           if (missing > 0) return;
           onComplete?.(interpolate(), current);
         }}
-        className={cn("flex flex-col gap-4 rounded-xl border border-border bg-background p-5", className)}
+        className={cn("flex flex-col gap-4 rounded-xl border border-border bg-background p-4 shadow-sm", className)}
         {...props}
       >
-        <p className="text-base leading-loose text-foreground">
+        <p className="text-sm leading-8 text-foreground">
           {segments.map((segment, i) => {
             if (typeof segment === "string") return <React.Fragment key={i}>{segment}</React.Fragment>;
             const val = current[segment.slot] ?? "";
@@ -106,8 +113,10 @@ export const Templates = React.forwardRef<HTMLFormElement, TemplatesProps>(
                   list={listId}
                   autoComplete="off"
                   size={Math.max((val || segment.placeholder).length, 4)}
+                  // Fit the field to its text (`size` alone under-measures once padding is added).
+                  style={{ width: `calc(${Math.max((val || segment.placeholder).length, 4) * 0.8}ch + ${listId ? 2.25 : 1.125}rem)` }}
                   className={cn(
-                    "mx-0.5 inline-block rounded-md border-b-2 border-dashed border-brand/50 bg-brand-muted/40 px-1 text-center text-brand placeholder:text-brand/60 focus:border-solid focus:border-brand focus:outline-none",
+                    "mx-0.5 inline-block rounded-sm border border-dashed [&::-webkit-calendar-picker-indicator]:hidden border-brand bg-brand/5 px-2 py-0.5 text-center text-xs font-medium leading-5 text-brand placeholder:text-brand focus:border-solid focus:outline-none focus:ring-1 focus:ring-brand",
                     val && "border-solid bg-brand-muted",
                   )}
                 />
@@ -122,21 +131,23 @@ export const Templates = React.forwardRef<HTMLFormElement, TemplatesProps>(
             );
           })}
         </p>
-        <div className="flex items-center justify-end gap-3">
-          {required.length > 0 && (
-            <span id={statusId} aria-live="polite" className="mr-auto text-sm text-muted-foreground">
-              {missing === 0 ? "Ready to use" : `${missing} ${missing === 1 ? "blank" : "blanks"} left`}
-            </span>
-          )}
-          <Button
-            type="submit"
-            variant="cta"
-            disabled={missing > 0}
-            aria-describedby={required.length > 0 ? statusId : undefined}
-          >
-            {submitLabel}
-          </Button>
-        </div>
+        {showSubmit && (
+          <div className="flex items-center justify-end gap-3">
+            {required.length > 0 && (
+              <span id={statusId} aria-live="polite" className="mr-auto text-sm text-muted-foreground">
+                {missing === 0 ? "Ready to use" : `${missing} ${missing === 1 ? "blank" : "blanks"} left`}
+              </span>
+            )}
+            <Button
+              type="submit"
+              variant="cta"
+              disabled={missing > 0}
+              aria-describedby={required.length > 0 ? statusId : undefined}
+            >
+              {submitLabel}
+            </Button>
+          </div>
+        )}
       </form>
     );
   },
@@ -153,13 +164,22 @@ export interface TemplatesListItem {
   prompt?: string;
   /** One supporting line. */
   description?: string;
+  /** Leading icon; replaces the default arrow. */
+  icon?: React.ReactNode;
+  /** A quiet line on what it takes ("3 inputs · Meeting knowledge, Google Drive"). */
+  meta?: string;
 }
+
+/** "cards" (default): each template its own bordered row. "grouped": the rows share one container, like a list. */
+export type TemplatesListVariant = "cards" | "grouped";
 
 export interface TemplatesListProps extends Omit<React.HTMLAttributes<HTMLUListElement>, "onSelect"> {
   /** The templates, as strings or {@link TemplatesListItem}s. */
   items: Array<string | TemplatesListItem>;
   /** Called with the prompt and the item when one is picked. Place it in the composer — never send it. */
   onSelect?: (prompt: string, item: TemplatesListItem) => void;
+  /** "cards" (default) or "grouped" (one container, rows divided by space; nucleux.in's Material 3 preview). */
+  variant?: TemplatesListVariant;
 }
 
 const toListItem = (item: string | TemplatesListItem): TemplatesListItem =>
@@ -171,30 +191,49 @@ const toListItem = (item: string | TemplatesListItem): TemplatesListItem =>
  * lowest-friction template surface; pass `aria-label` to name the list.
  */
 export const TemplatesList = React.forwardRef<HTMLUListElement, TemplatesListProps>(
-  ({ items, onSelect, className, ...props }, ref) => (
-    <ul
-      ref={ref}
-      role="list"
-      className={cn("m-0 flex list-none flex-col gap-1 p-0", className)}
-      {...props}
-    >
-      {items.map(toListItem).map((item) => (
-        <li key={item.id ?? item.title}>
-          <button
-            type="button"
-            onClick={() => onSelect?.(item.prompt ?? item.title, item)}
-            className="flex w-full items-start gap-2 rounded-md border border-border bg-muted/40 px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <ArrowRight aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
-            <span className="flex min-w-0 flex-col gap-0.5">
-              <span>{item.title}</span>
-              {item.description && <span className="text-xs text-muted-foreground">{item.description}</span>}
-            </span>
-          </button>
-        </li>
-      ))}
-    </ul>
-  ),
+  ({ items, onSelect, variant = "cards", className, ...props }, ref) => {
+    const grouped = variant === "grouped";
+    return (
+      <ul
+        ref={ref}
+        role="list"
+        className={cn(
+          "m-0 flex list-none flex-col p-0",
+          grouped ? "overflow-hidden rounded-xl border border-border bg-background py-1" : "gap-1",
+          className,
+        )}
+        {...props}
+      >
+        {items.map(toListItem).map((item) => (
+          <li key={item.id ?? item.title}>
+            <button
+              type="button"
+              onClick={() => onSelect?.(item.prompt ?? item.title, item)}
+              className={cn(
+                "flex w-full gap-2 text-left text-sm text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                grouped
+                  ? "items-center gap-4 px-4 py-3 focus-visible:ring-inset"
+                  : "items-start rounded-md border border-border bg-muted/40 px-3 py-2",
+              )}
+            >
+              {item.icon ? (
+                <span aria-hidden="true" className="shrink-0 text-muted-foreground [&_svg]:size-5">
+                  {item.icon}
+                </span>
+              ) : (
+                <ArrowRight aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
+              )}
+              <span className="flex min-w-0 flex-col gap-0.5">
+                <span className={cn(grouped && "font-medium")}>{item.title}</span>
+                {item.description && <span className="text-xs text-muted-foreground">{item.description}</span>}
+                {item.meta && <span className="text-xs text-muted-foreground">{item.meta}</span>}
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    );
+  },
 );
 TemplatesList.displayName = "TemplatesList";
 

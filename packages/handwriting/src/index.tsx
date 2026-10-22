@@ -5,7 +5,7 @@ import { Input } from "@nucleux/input";
 import { Textarea } from "@nucleux/textarea";
 import { Spinner } from "@nucleux/spinner";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@nucleux/dropdown-menu";
-import { AlertCircle, Eraser, Keyboard, PenLine, RotateCcw, ScanText, Undo2 } from "lucide-react";
+import { AlertCircle, ArrowRight, Eraser, Keyboard, PenLine, RotateCcw, ScanText, Undo2, X } from "lucide-react";
 
 // useLayoutEffect warns when rendered on the server; fall back to useEffect there.
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
@@ -108,6 +108,23 @@ export interface HandwritingInputProps
   /** Label for the typing fallback field. */
   typingLabel?: string;
   disabled?: boolean;
+  /**
+   * A heading for the pad, e.g. `"Draw or write"` (`HandwritingInput` shows it as a
+   * small caps label inside the pad; `Md3HandwritingInput` as the panel's title
+   * row, with a pen icon).
+   */
+  padLabel?: React.ReactNode;
+  /**
+   * The quick-capture look from nucleux.in. The pad's own controls move onto
+   * it (shadcn: Clear inside the pad; Material 3: Undo and Clear as icon
+   * buttons in the title row), and a settled reading becomes one line —
+   * → Recognised: “…” — with the accept button beside it. The full toolbar
+   * (Undo stroke, Type instead, Recognise) shows only while there is no reading.
+   * Uncertain words still stop for a look. Defaults to `false`.
+   */
+  compact?: boolean;
+  /** Shows a close control on the pad (in `compact`), e.g. to put the pen away. */
+  onClose?: () => void;
   /** Content the ink is drawn over (`"annotation-stroke"`). */
   children?: React.ReactNode;
 }
@@ -144,6 +161,9 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
       acceptLabel = "Add to message",
       typingLabel = "Type your request",
       disabled = false,
+      padLabel,
+      compact = false,
+      onClose,
       className,
       children,
       ...props
@@ -409,6 +429,10 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
     };
 
     const undoStroke = () => setStrokes(strokes.slice(0, -1));
+    // Compact: once there is a reading, the one-line result carries the accept button.
+    const banner =
+      compact && inputMode === "draw" && status === "recognized" && !!recognition && !unsettled && editedText === null;
+    const showToolbar = !banner;
 
     const setRef = (node: HTMLDivElement | null) => {
       if (typeof ref === "function") ref(node);
@@ -462,13 +486,20 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
               "relative overflow-hidden rounded-xl",
               isAnnotation
                 ? "min-h-40 border border-border"
-                : "h-44 border border-dashed border-border bg-background",
+                : compact
+                  ? "h-[7.75rem] border border-border bg-background"
+                  : "h-44 border border-dashed border-border bg-background",
               variant === "live-ocr" && "h-36 border-solid",
               disabled && "opacity-50",
             )}
             aria-busy={status === "recognizing" || undefined}
           >
             {isAnnotation && children}
+            {padLabel != null && (
+              <p className="pointer-events-none absolute left-[1.125rem] top-[1.125rem] text-[0.625rem] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                {padLabel}
+              </p>
+            )}
             <canvas
               ref={canvasRef}
               role="img"
@@ -510,6 +541,28 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
                 className="pointer-events-none absolute inset-0 animate-pulse bg-brand-muted/30 motion-reduce:animate-none"
               />
             )}
+            {compact && onClose && (
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                aria-label="Close handwriting"
+                onClick={onClose}
+                className="absolute right-2 top-2"
+              >
+                <X className="size-4" aria-hidden="true" />
+              </Button>
+            )}
+            {compact && strokes.length > 0 && (
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={reset}
+                disabled={disabled}
+                className="absolute bottom-3 right-3.5 h-7 rounded-md bg-muted/50 px-2.5 text-xs font-normal text-muted-foreground shadow-none"
+              >
+                Clear
+              </Button>
+            )}
           </div>
         )}
 
@@ -543,7 +596,28 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
           </div>
         )}
 
-        {inputMode === "draw" && status === "recognized" && recognition && (
+        {banner && (
+          <div
+            id={resultId}
+            data-slot="handwriting-result"
+            className="flex items-center gap-2.5 rounded-lg border border-brand bg-brand-muted/40 py-2 pl-3.5 pr-2"
+          >
+            <ArrowRight className="size-3.5 shrink-0 text-brand" aria-hidden="true" />
+            <p className="min-w-0 flex-1 text-sm font-medium text-brand">
+              {isAnnotation ? "Read as" : "Recognised"}: “{resultText}”
+            </p>
+            <Button
+              size="sm"
+              onClick={accept}
+              disabled={disabled || !resultText.trim()}
+              className="h-7 border-transparent bg-brand px-2.5 text-xs font-semibold text-brand-foreground hover:bg-brand/90"
+            >
+              {acceptLabel}
+            </Button>
+          </div>
+        )}
+
+        {inputMode === "draw" && status === "recognized" && recognition && !banner && (
           <div
             id={resultId}
             className="flex flex-col gap-2 rounded-lg bg-brand-muted/40 px-3 py-2"
@@ -622,6 +696,7 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
           </div>
         )}
 
+        {showToolbar && (
         <div className="flex flex-wrap items-center gap-2">
           {inputMode === "draw" && (
             <>
@@ -634,15 +709,17 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
               >
                 Undo stroke
               </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                leftIcon={<Eraser className="size-4" aria-hidden="true" />}
-                onClick={reset}
-                disabled={disabled || strokes.length === 0}
-              >
-                Clear
-              </Button>
+              {!compact && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  leftIcon={<Eraser className="size-4" aria-hidden="true" />}
+                  onClick={reset}
+                  disabled={disabled || strokes.length === 0}
+                >
+                  Clear
+                </Button>
+              )}
             </>
           )}
           {typeToggle}
@@ -658,6 +735,7 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
               Recognise
             </Button>
           )}
+          {!(compact && inputMode === "draw" && status !== "recognized") && (
           <Button
             variant="cta"
             size="sm"
@@ -670,7 +748,9 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
           >
             {acceptLabel}
           </Button>
+          )}
         </div>
+        )}
 
         <p role="status" aria-live="polite" className="sr-only">
           {announcement}

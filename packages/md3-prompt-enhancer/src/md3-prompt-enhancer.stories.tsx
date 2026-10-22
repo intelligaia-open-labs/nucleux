@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { buildEnhancedPrompt, type PromptEnhancerSuggestion } from "@nucleux/prompt-enhancer";
-import { MessagesSquare, Mic, PenLine, Plus, SlidersHorizontal } from "lucide-react";
-import { Md3Button } from "@nucleux/md3-button";
-import { Md3IconButton } from "@nucleux/md3-icon-button";
-import { Md3PromptEnhancer } from "./index";
+import { MessagesSquare, PenLine, SlidersHorizontal } from "lucide-react";
+import { Md3PromptEnhancer, type Md3PromptEnhancerProps } from "./index";
+import { Md3OpenInputModelChip } from "@nucleux/md3-open-input";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const ORIGINAL = "summarise yesterday's standup";
 const SUGGESTION: PromptEnhancerSuggestion = {
@@ -22,6 +22,29 @@ const ENHANCED = buildEnhancedPrompt(ORIGINAL, SUGGESTION.changes ?? []);
 // The app supplies the suggestion; no model is called by the component.
 const fakeEnhance = () => new Promise<PromptEnhancerSuggestion>((r) => setTimeout(() => r(SUGGESTION), 900));
 
+/** The Enhanced story's composition — a component, so Storybook's source printer never walks the icon elements. */
+function EnhancedDemo(args: Md3PromptEnhancerProps) {
+  return (
+    <div className="w-[36rem] max-w-full">
+      <Md3PromptEnhancer
+        {...args}
+        hint={undefined}
+        trigger="settings"
+        settingsItems={[
+          { id: "mode", label: "Mode", icon: <SlidersHorizontal />, value: "None" },
+          { id: "tone", label: "Tone", icon: <MessagesSquare />, value: "Default" },
+          { id: "style", label: "Style", icon: <PenLine />, value: "Normal" },
+        ]}
+        onEnhance={fakeEnhance}
+        onSubmit={() => {}}
+        onAdd={() => {}}
+        model={<Md3OpenInputModelChip name="Balanced" detail="High" />}
+        onVoice={() => {}}
+      />
+    </div>
+  );
+}
+
 const meta = {
   title: "Material 3 Agent/Md3PromptEnhancer",
   component: Md3PromptEnhancer,
@@ -38,36 +61,13 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
+
 /** The site's live preview: the review card above the composer, each addition highlighted, explained and removable; Improve prompt lives in the tune control right after +. */
 export const Enhanced: Story = {
   args: { defaultState: "enhanced", defaultSuggestion: SUGGESTION },
-  render: (args) => (
-    <div className="w-[36rem] max-w-full">
-      <Md3PromptEnhancer
-        {...args}
-        hint={undefined}
-        trigger="settings"
-        settingsItems={[{ id: "mode", label: "Mode", icon: <SlidersHorizontal />, value: "None" }, { id: "tone", label: "Tone", icon: <MessagesSquare />, value: "Default" }, { id: "style", label: "Style", icon: <PenLine />, value: "Normal" }]}
-        onEnhance={fakeEnhance}
-        onSubmit={() => {}}
-        composerLeading={
-          <Md3IconButton aria-label="Add context">
-            <Plus />
-          </Md3IconButton>
-        }
-        composerActions={
-          <>
-            <Md3Button variant="text" aria-label="Model Balanced, effort High" className="px-3">
-              <span className="font-semibold">Balanced</span> <span className="font-normal">High</span>
-            </Md3Button>
-            <Md3IconButton aria-label="Voice input">
-              <Mic />
-            </Md3IconButton>
-          </>
-        }
-      />
-    </div>
-  ),
+  render: (args) => <EnhancedDemo {...args} />,
 };
 
 /** A short prompt in the composer with the Enhance tool beside it. */

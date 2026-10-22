@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AlertCircle, ArrowUp, Check, CircleHelp, Pencil, Sparkles, Undo2 } from "lucide-react";
+import { AlertCircle, ArrowUp, Check, CircleHelp, Mic, Pencil, Plus, Sparkles, Undo2 } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import { Checkbox } from "@nucleux/checkbox";
@@ -12,7 +12,12 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@nucleux/input-group";
-import { RequestSettings, mergeRequestSettingsItems, type RequestSettingsItem } from "@nucleux/open-input";
+import {
+  RequestSettings,
+  mergeRequestSettingsItems,
+  type OpenInputProps,
+  type RequestSettingsItem,
+} from "@nucleux/open-input";
 
 /* ─────────────────────────────── Types ─────────────────────────────── */
 
@@ -86,7 +91,9 @@ export interface PromptEnhancerSegment {
 }
 
 export interface PromptEnhancerProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSubmit" | "defaultValue" | "onChange"> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSubmit" | "defaultValue" | "onChange">,
+    /** The composer's own chrome, as on `OpenInput`: `onAdd` (the + button), `model` (the model chip), `onVoice` (the mic). */
+    Pick<OpenInputProps, "onAdd" | "addLabel" | "add" | "model" | "onVoice" | "voiceLabel"> {
   /** The composer text (controlled). Omit and use `defaultValue` for an uncontrolled composer. */
   value?: string;
   /** Initial composer text when uncontrolled. */
@@ -144,6 +151,10 @@ export interface PromptEnhancerProps
   actionLabel?: string;
   /** Heading of the review. Defaults to "Suggested improvements". */
   heading?: string;
+  /** Overline of the suggestion column. Defaults to "Enhanced" (nucleux.in's Material 3 preview says "Improved"). */
+  enhancedLabel?: string;
+  /** Label of the button that uses the suggestion. Defaults to "Use enhanced" ("Use improved" on the Material 3 preview). */
+  useLabel?: string;
   /** Quiet line in the composer footer, e.g. "Aria will expand this prompt". */
   hint?: React.ReactNode;
   /** Composer placeholder, also its accessible name. Defaults to "Describe what you need…". */
@@ -578,6 +589,8 @@ export function splitPromptEnhancerProps(props: PromptEnhancerProps) {
     defaultOriginal: _do,
     actionLabel: _al,
     heading: _h,
+    enhancedLabel: _el,
+    useLabel: _ul,
     hint: _hi,
     placeholder: _p,
     failureMessage: _fm,
@@ -586,6 +599,12 @@ export function splitPromptEnhancerProps(props: PromptEnhancerProps) {
     trigger: _tr,
     settingsItems: _si,
     onSettingsSelect: _oss,
+    onAdd: _oa,
+    addLabel: _alb,
+    add: _ad,
+    model: _mo,
+    onVoice: _ov,
+    voiceLabel: _vl,
     ...rest
   } = props;
   return rest;
@@ -620,6 +639,8 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
     undo = true,
     actionLabel = PROMPT_ENHANCER_TEXT.actionLabel,
     heading = PROMPT_ENHANCER_TEXT.heading,
+    enhancedLabel = PROMPT_ENHANCER_TEXT.enhanced,
+    useLabel = PROMPT_ENHANCER_TEXT.use,
     hint,
     placeholder = PROMPT_ENHANCER_TEXT.placeholder,
     failureMessage = PROMPT_ENHANCER_TEXT.failure,
@@ -629,8 +650,21 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
     settingsItems,
     onSettingsSelect,
     onSubmit,
+    onAdd,
+    addLabel = "Add files and more",
+    add,
+    model,
+    onVoice,
+    voiceLabel = "Speak instead of typing",
   } = props;
   const { className, ...rest } = splitPromptEnhancerProps(props);
+  const addControl =
+    add ??
+    (onAdd ? (
+      <InputGroupButton size="icon-sm" variant="ghost" aria-label={addLabel} onClick={onAdd}>
+        <Plus aria-hidden className="size-4" />
+      </InputGroupButton>
+    ) : null);
   const pe = usePromptEnhancer(props);
   const settingsControl = trigger === "settings";
   const uid = React.useId();
@@ -674,7 +708,7 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
   const enhancedOverline = (
     <p className={cn(overline, "text-warning-foreground")}>
       <Sparkles aria-hidden className="size-3.5 text-warning" />
-      {PROMPT_ENHANCER_TEXT.enhanced}
+      {enhancedLabel}
     </p>
   );
 
@@ -773,7 +807,7 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
 
       <div className="flex flex-wrap gap-2">
         <Button size="lg" onClick={pe.use} className="min-w-[10rem] flex-1">
-          {pe.state === "editing" ? PROMPT_ENHANCER_TEXT.useEdited : PROMPT_ENHANCER_TEXT.use}
+          {pe.state === "editing" ? PROMPT_ENHANCER_TEXT.useEdited : useLabel}
         </Button>
         {pe.state !== "editing" && allowEdit && (
           <Button size="lg" variant="ghost" leftIcon={<Pencil aria-hidden className="size-3.5" />} onClick={pe.edit}>
@@ -852,8 +886,9 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
         className="min-h-0 w-full flex-none px-3.5 py-3 text-sm leading-5"
       />
       <InputGroupAddon align="block-end" className="cursor-default justify-between border-t border-border px-3.5 py-2 [&.border-t]:pt-2">
-        {composerLeading != null || settingsControl ? (
+        {addControl != null || composerLeading != null || settingsControl ? (
           <span className="flex items-center gap-1.5">
+            {addControl}
             {composerLeading}
             {settingsControl && (
               <RequestSettings
@@ -870,6 +905,7 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
         )}
         <span className="ml-auto flex items-center gap-1.5">
           {composerActions}
+          {model}
           {!settingsControl && (
             <InputGroupButton
               size="sm"
@@ -885,6 +921,11 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
                 <Sparkles aria-hidden className="size-3.5 text-warning" />
               )}
               {busy ? PROMPT_ENHANCER_TEXT.busy : actionLabel}
+            </InputGroupButton>
+          )}
+          {onVoice && (
+            <InputGroupButton size="icon-sm" variant="ghost" aria-label={voiceLabel} onClick={onVoice}>
+              <Mic aria-hidden className="size-4" />
             </InputGroupButton>
           )}
           {onSubmit && (

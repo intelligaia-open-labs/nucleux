@@ -7,6 +7,9 @@ import { Spinner } from "@nucleux/spinner";
 /** Form of the suggestion, from the spec's variants. */
 export type ProactiveSuggestionVariant = "contextual-banner" | "inline-suggestion" | "side-toast";
 
+/** How dismiss is offered: an × icon button, or a labelled button beside the action. */
+export type ProactiveSuggestionDismissDisplay = "icon" | "button";
+
 /** Where dismissals are remembered when the suggestion has an `evidenceKey`. */
 export type ProactiveSuggestionPersist = "none" | "session" | "local";
 
@@ -37,8 +40,13 @@ export interface ProactiveSuggestionProps extends Omit<React.HTMLAttributes<HTML
   snoozeLabel?: string;
   /** Called when dismissed (× or Escape). One press; remembered for `evidenceKey`. */
   onDismiss?: () => void;
-  /** Accessible name of the dismiss button. Defaults to "Dismiss suggestion". */
+  /** Accessible name of the dismiss button (its visible text when `dismissDisplay="button"`). Defaults to "Dismiss suggestion". */
   dismissLabel?: string;
+  /**
+   * `icon` (default): an × in the corner. `button`: a labelled outline
+   * button after the action ("Dismiss"), as on nucleux.in's banner.
+   */
+  dismissDisplay?: ProactiveSuggestionDismissDisplay;
   /** Whether the suggestion is showing (controlled). */
   open?: boolean;
   /** Initial visibility when uncontrolled. Defaults to true. */
@@ -110,6 +118,7 @@ export const ProactiveSuggestion = React.forwardRef<HTMLElement, ProactiveSugges
       snoozeLabel = "Not now",
       onDismiss,
       dismissLabel = "Dismiss suggestion",
+      dismissDisplay = "icon",
       open: openProp,
       defaultOpen = true,
       onOpenChange,
@@ -248,6 +257,7 @@ export const ProactiveSuggestion = React.forwardRef<HTMLElement, ProactiveSugges
       );
     } else if (visible) {
       const toast = variant === "side-toast";
+      const dismissInline = dismissDisplay === "button";
       body = (
         <section
           ref={ref}
@@ -257,7 +267,7 @@ export const ProactiveSuggestion = React.forwardRef<HTMLElement, ProactiveSugges
             "flex items-start gap-3 text-sm animate-nx-fade-in motion-reduce:animate-none",
             toast
               ? "fixed bottom-4 right-4 z-50 w-80 max-w-[calc(100vw-2rem)] rounded-xl border border-border bg-background p-3.5 shadow-lg"
-              : "rounded-lg border border-brand/30 bg-brand-muted/60 p-3.5",
+              : "rounded-xl border border-border bg-muted/40 px-4 py-3.5",
             className,
           )}
           {...props}
@@ -265,23 +275,23 @@ export const ProactiveSuggestion = React.forwardRef<HTMLElement, ProactiveSugges
           {!toast && (
             <span
               aria-hidden="true"
-              className="grid size-6 shrink-0 place-items-center rounded-md bg-brand text-brand-foreground [&_svg]:size-3.5"
+              className="mt-px grid size-7 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground [&_svg]:size-3.5"
             >
               <Sparkles />
             </span>
           )}
-          <div className="flex min-w-0 flex-1 flex-col gap-1">
+          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
             {toast && (
               <p className="flex items-center gap-1.5 text-xs font-semibold text-brand">
                 <Sparkles aria-hidden="true" className="size-3.5" />
                 Worth a look
               </p>
             )}
-            <p id={titleId} className="font-semibold text-foreground">
+            <p id={titleId} className="text-[13px] font-semibold leading-snug text-foreground">
               <span className="sr-only">{label}: </span>
               {title}
             </p>
-            {description && <p className="text-muted-foreground">{description}</p>}
+            {description && <p className="text-xs leading-normal text-muted-foreground">{description}</p>}
             {reason && <p className="text-xs text-muted-foreground">{reason}</p>}
             {resolved ? (
               <p className="mt-1 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -289,19 +299,35 @@ export const ProactiveSuggestion = React.forwardRef<HTMLElement, ProactiveSugges
                 Resolved
               </p>
             ) : (
-              <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
-                <Button size="sm" onClick={act} aria-busy={pending || undefined} leftIcon={pending ? spinner : undefined}>
+              <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+                <Button
+                  size="sm"
+                  onClick={act}
+                  aria-busy={pending || undefined}
+                  leftIcon={pending ? spinner : undefined}
+                  className="px-3.5 text-xs font-medium"
+                >
                   {pending ? pendingLabel : actionLabel}
                 </Button>
                 {onSnooze && (
-                  <Button size="sm" variant="ghost" onClick={snooze}>
+                  <Button size="sm" variant="ghost" onClick={snooze} className="px-3.5 text-xs font-medium">
                     {snoozeLabel}
+                  </Button>
+                )}
+                {dismissInline && (
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={dismiss}
+                    className="bg-transparent px-3.5 text-xs font-medium text-muted-foreground shadow-none"
+                  >
+                    {dismissLabel}
                   </Button>
                 )}
               </div>
             )}
           </div>
-          {!resolved && dismissButton}
+          {!resolved && !dismissInline && dismissButton}
         </section>
       );
     }

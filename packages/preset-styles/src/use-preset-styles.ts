@@ -1,5 +1,5 @@
 import * as React from "react";
-import { mergeRequestSettingsItems, type RequestSettingsItem } from "@nucleux/open-input";
+import { mergeRequestSettingsItems, type OpenInputProps, type RequestSettingsItem } from "@nucleux/open-input";
 
 /**
  * Layout, from the two specs: `"grid"` — a swatch grid picked before generating
@@ -77,7 +77,9 @@ export interface PresetStyleDraft {
 }
 
 export interface PresetStylesProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue" | "onSubmit"> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue" | "onSubmit">,
+    /** The composer's own chrome (menu variant), passed straight to it: `onAdd` (the + button), `model` (the model chip), `onVoice` (the mic). */
+    Pick<OpenInputProps, "onAdd" | "addLabel" | "add" | "model" | "onVoice" | "voiceLabel"> {
   /** The presets, in order. In `"menu"`, the first one is the base style (Normal) unless `baseStyle` says otherwise. */
   styles: PresetStyle[];
   /** Chosen style id (controlled). */

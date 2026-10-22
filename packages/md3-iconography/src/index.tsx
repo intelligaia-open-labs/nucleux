@@ -59,7 +59,8 @@ const tipSides: Record<TipSide, string> = {
  * sparkle to generate, refresh to regenerate, wand to transform — as a
  * Material 3 Md3Button (or an Md3IconButton with an M3 plain tooltip when
  * `iconOnly`). The twin of `Iconography`, with the same API: the mark
- * carries `md-primary` on tonal, outlined and text buttons; hover, focus and
+ * takes the button's on-colour on filled and tonal buttons and `md-primary`
+ * on text buttons; hover, focus and
  * press are the buttons' own 8% / 12% state layers; while `working` the mark
  * swaps to the turning working mark, clicks are ignored and the words are
  * announced politely. Reserve it for actions that actually call a model.
@@ -94,7 +95,8 @@ export const Md3Iconography = React.forwardRef<HTMLButtonElement, Md3Iconography
           : ActionGlyph;
     const words = working ? (workingLabel ?? `${label}…`) : label;
     const fullName = `${words} with ${agentName}`;
-    const glyphClass = filledVariants.has(variant) ? undefined : "text-md-primary";
+    // Filled and tonal buttons draw the mark in their own on-colour; outlined and text ones in md-primary.
+    const glyphClass = filledVariants.has(variant) || variant === "secondary" ? undefined : "text-md-primary";
     const resolvedSize = size ?? (iconOnly ? "icon" : "md");
 
     const shared = {

@@ -3,7 +3,7 @@ import { cn } from "@nucleux/utils";
 import { Badge } from "@nucleux/badge";
 import { Button } from "@nucleux/button";
 import { Spinner } from "@nucleux/spinner";
-import { AlertTriangle, Check, CircleAlert, FileText, Plus, RotateCw } from "lucide-react";
+import { AlertTriangle, Check, CircleAlert, FileText, Info, Plus, RotateCw } from "lucide-react";
 
 /** Picker layout: a vertical list of rows, or a wrap of chips with document counts. */
 export type KnowledgeBaseVariant = "list" | "chips";
@@ -25,7 +25,7 @@ export interface KnowledgeSource {
   icon?: React.ReactNode;
   /** Readiness, shown as a word on the row. Omit for plain sources. */
   status?: KnowledgeSourceStatus;
-  /** Number of documents in the base, shown on chips: `"Product docs · 412"`. */
+  /** Number of documents in the base, shown on chips: `"Product docs · 412"`. Chips show `meta` instead when there is no count (`"Product docs · 412 pages"`). */
   count?: number;
 }
 
@@ -113,7 +113,7 @@ export const KnowledgeBase = React.forwardRef<HTMLDivElement, KnowledgeBaseProps
           {...props}
         >
           {heading && (
-            <p id={headingId} className="text-xs font-semibold text-foreground">
+            <p id={headingId} className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
               {heading}
             </p>
           )}
@@ -128,15 +128,18 @@ export const KnowledgeBase = React.forwardRef<HTMLDivElement, KnowledgeBaseProps
                   aria-checked={active}
                   onClick={() => toggle(source.id)}
                   className={cn(
-                    "inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&_svg]:size-3",
+                    "inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&_svg]:size-3",
                     active
-                      ? "border-brand bg-brand-muted/50 text-brand"
-                      : "border-border text-muted-foreground hover:bg-accent hover:text-foreground",
+                      ? "border-brand bg-brand/10 text-brand"
+                      : "border-border font-medium text-muted-foreground hover:bg-accent hover:text-foreground",
                   )}
                 >
-                  {active && <Check aria-hidden="true" />}
                   {source.name}
-                  {source.count != null && <span className="font-normal">· {source.count.toLocaleString()}</span>}
+                  {source.count != null ? (
+                    <span>· {source.count.toLocaleString()}</span>
+                  ) : (
+                    source.meta != null && <span>· {source.meta}</span>
+                  )}
                   {source.status && source.status !== "ready" && (
                     <span className={cn("font-normal", statusTone[source.status])}>· {statusWord[source.status]}</span>
                   )}
@@ -147,7 +150,7 @@ export const KnowledgeBase = React.forwardRef<HTMLDivElement, KnowledgeBaseProps
               <button
                 type="button"
                 onClick={onAdd}
-                className="inline-flex items-center gap-1 rounded-full border border-dashed border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&_svg]:size-3"
+                className="inline-flex items-center gap-1 rounded-lg border border-dashed border-border bg-muted/50 px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&_svg]:size-3"
               >
                 <Plus aria-hidden="true" />
                 {addLabel}
@@ -351,9 +354,9 @@ export interface KnowledgeBaseCoverageProps extends React.HTMLAttributes<HTMLSpa
 }
 
 const coverage: Record<KnowledgeBaseCoverageLevel, { word: string; icon: React.ReactNode; cls: string }> = {
-  high: { word: "Well-covered", icon: <Check aria-hidden="true" className="size-3" />, cls: "bg-success/15 text-success" },
-  partial: { word: "Partly covered", icon: <AlertTriangle aria-hidden="true" className="size-3" />, cls: "bg-warning/15 text-warning" },
-  low: { word: "Thin coverage", icon: <CircleAlert aria-hidden="true" className="size-3" />, cls: "bg-destructive/15 text-destructive" },
+  high: { word: "Well-covered", icon: <Check aria-hidden="true" className="size-2.5" />, cls: "bg-success text-success-foreground" },
+  partial: { word: "Partly covered", icon: <AlertTriangle aria-hidden="true" className="size-2.5" />, cls: "bg-warning text-warning-foreground" },
+  low: { word: "Thin coverage", icon: <CircleAlert aria-hidden="true" className="size-2.5" />, cls: "bg-destructive text-destructive-foreground" },
 };
 
 /**
@@ -365,11 +368,157 @@ export const KnowledgeBaseCoverage = React.forwardRef<HTMLSpanElement, Knowledge
   ({ level, matches, label, className, ...props }, ref) => {
     const c = coverage[level];
     return (
-      <Badge ref={ref} variant="outline" icon={c.icon} data-level={level} className={cn("border-transparent", c.cls, className)} {...props}>
+      <Badge
+        ref={ref}
+        variant="outline"
+        icon={<span className={cn("inline-flex size-[18px] items-center justify-center rounded-full", c.cls)}>{c.icon}</span>}
+        data-level={level}
+        className={cn("gap-1.5 bg-muted/50 py-1 pl-1.5 pr-3", className)}
+        {...props}
+      >
         {label ?? c.word}
-        {matches != null && <span className="font-normal">· {matches} {matches === 1 ? "match" : "matches"}</span>}
+        {matches != null && <span>· {matches} {matches === 1 ? "match" : "matches"}</span>}
       </Badge>
     );
   },
 );
 KnowledgeBaseCoverage.displayName = "KnowledgeBaseCoverage";
+
+/** Whether a knowledge base is in play in this project. */
+export type KnowledgeBaseCardStatus = "active" | "available" | "inactive";
+
+export interface KnowledgeBaseCardProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
+  /** The base's name, e.g. `"Product Research"`. */
+  name: React.ReactNode;
+  /** Short mark on the tile. Defaults to the name's initials ("PR"). */
+  monogram?: React.ReactNode;
+  /** How many sources it holds: "12 sources". */
+  sourceCount?: number;
+  /** Active (in play here), Available (healthy, not used here) or Inactive (switched off here). Defaults to `"active"`. */
+  status?: KnowledgeBaseCardStatus;
+  /** Where it applies, e.g. `"Active in this project"`. Say only what is true. */
+  scope?: React.ReactNode;
+  /** Open the source list. Renders "Manage sources". */
+  onManage?: () => void;
+  /** Add sources. Renders "Add sources". */
+  onAdd?: () => void;
+  /** Switch the base on or off here (never deletes it). Renders "Stop using here" / "Use in this project". */
+  onActiveChange?: (active: boolean) => void;
+  /** Label overrides. */
+  manageLabel?: React.ReactNode;
+  addLabel?: React.ReactNode;
+  deactivateLabel?: React.ReactNode;
+  activateLabel?: React.ReactNode;
+}
+
+const baseStatusWord: Record<KnowledgeBaseCardStatus, string> = {
+  active: "Active",
+  available: "Available",
+  inactive: "Inactive",
+};
+
+/** "Product Research" → "PR". */
+export const knowledgeBaseInitials = (name: React.ReactNode) =>
+  typeof name === "string"
+    ? name
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((w) => w[0]!.toUpperCase())
+        .join("")
+    : null;
+
+/**
+ * One knowledge base as a compact card: its monogram, name and source count,
+ * whether it is in play here (a word, never only a colour), where it applies,
+ * and the three things a person does with it — open the sources, add more,
+ * or stop using it here (which deletes nothing). Use it where a project shows
+ * the base it grounds in; KnowledgeBase picks between bases and sources.
+ */
+export const KnowledgeBaseCard = React.forwardRef<HTMLElement, KnowledgeBaseCardProps>(
+  (
+    {
+      name,
+      monogram,
+      sourceCount,
+      status = "active",
+      scope,
+      onManage,
+      onAdd,
+      onActiveChange,
+      manageLabel = "Manage sources",
+      addLabel = "Add sources",
+      deactivateLabel = "Stop using here",
+      activateLabel = "Use in this project",
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    const titleId = React.useId();
+    const active = status === "active";
+    return (
+      <section
+        ref={ref}
+        aria-labelledby={titleId}
+        data-status={status}
+        className={cn("flex flex-col gap-3 rounded-xl border border-border bg-background p-4 text-foreground", className)}
+        {...props}
+      >
+        <div className="flex items-start gap-3">
+          <span
+            aria-hidden="true"
+            className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-muted text-xs font-semibold text-brand"
+          >
+            {monogram ?? knowledgeBaseInitials(name)}
+          </span>
+          <div className="flex min-w-0 flex-1 flex-col">
+            <h3 id={titleId} className="truncate text-sm font-semibold">
+              {name}
+            </h3>
+            {sourceCount != null && (
+              <p className="text-xs text-muted-foreground">
+                {sourceCount.toLocaleString()} {sourceCount === 1 ? "source" : "sources"}
+              </p>
+            )}
+          </div>
+          <span
+            className={cn(
+              "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium",
+              active ? "border-transparent bg-muted text-foreground" : "border-border text-muted-foreground",
+            )}
+          >
+            <span aria-hidden="true" className="size-2 rounded-full border-2 border-current" />
+            {baseStatusWord[status]}
+          </span>
+        </div>
+        {scope && (
+          <p className="inline-flex items-center gap-1.5 text-xs font-medium text-foreground">
+            <Info aria-hidden="true" className="size-3.5 shrink-0" />
+            {scope}
+          </p>
+        )}
+        {(onManage || onAdd || onActiveChange) && (
+          <div className="flex flex-wrap items-center gap-1">
+            {onManage && (
+              <Button size="sm" variant="secondary" onClick={onManage}>
+                {manageLabel}
+              </Button>
+            )}
+            {onAdd && (
+              <Button size="sm" variant="ghost" onClick={onAdd}>
+                {addLabel}
+              </Button>
+            )}
+            {onActiveChange && (
+              <Button size="sm" variant="ghost" onClick={() => onActiveChange(!active)}>
+                {active ? deactivateLabel : activateLabel}
+              </Button>
+            )}
+          </div>
+        )}
+      </section>
+    );
+  },
+);
+KnowledgeBaseCard.displayName = "KnowledgeBaseCard";

@@ -38,7 +38,7 @@ const stateLayer =
   "before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-[''] hover:before:opacity-[0.08] focus-visible:before:opacity-[0.12] active:before:opacity-[0.12] motion-reduce:before:transition-none";
 
 const chipVariant: Record<Exclude<SuggestionsVariant, "selection">, string> = {
-  compose: "border-md-outline-variant bg-md-surface text-md-on-surface-variant",
+  compose: "border-md-outline-variant bg-transparent text-md-on-surface-variant",
   "follow-up": "border-md-outline-variant bg-md-surface-container-low text-md-on-surface-variant",
 };
 
@@ -288,6 +288,12 @@ export const Md3SuggestionsComposer = React.forwardRef<HTMLDivElement, Md3Sugges
     loading,
     onStop,
     messages,
+    onAdd,
+    addLabel,
+    add,
+    model,
+    onVoice,
+    voiceLabel,
     className,
     ...rest
   } = props;
@@ -320,7 +326,12 @@ export const Md3SuggestionsComposer = React.forwardRef<HTMLDivElement, Md3Sugges
         leftActions={composerActions}
         loading={loading}
         onStop={onStop}
-        className="rounded-md-xl border border-md-outline-variant bg-md-surface px-4 pb-2 pt-4 text-base shadow-md-1"
+        onAdd={onAdd}
+        addLabel={addLabel}
+        add={add}
+        model={model}
+        onVoice={onVoice}
+        voiceLabel={voiceLabel}
       />
     </div>
   );

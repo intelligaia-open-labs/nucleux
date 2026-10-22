@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Md3Autocomplete } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 // A stand-in for the app's model: completes a few familiar requests. Real apps
 // pass their own (async) `getSuggestion`.
@@ -19,12 +20,17 @@ const meta = {
   component: Md3Autocomplete,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[32rem] bg-md-surface p-4"><Story /></div>],
+  decorators: [
+    (Story, { name }) => (name === "Site Preview" ? <Story /> : <div className="w-[32rem] bg-md-surface p-4"><Story /></div>),
+  ],
   args: { label: "Prompt", placeholder: "Start typing…", getSuggestion: fromPhrases, onAccept: () => {}, onDismiss: () => {} },
 } satisfies Meta<typeof Md3Autocomplete>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** Chat composer: faded text after the caret. Tab accepts, keep typing to ignore, Esc dismisses. */
 export const GhostSuffix: Story = {

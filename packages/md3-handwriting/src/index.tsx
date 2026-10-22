@@ -2,6 +2,7 @@ import * as React from "react";
 import { cn } from "@nucleux/utils";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3Chip } from "@nucleux/md3-chip";
+import { Md3IconButton } from "@nucleux/md3-icon-button";
 import { Md3LoadingIndicator } from "@nucleux/md3-loading-indicator";
 import { Md3Menu, Md3MenuItem } from "@nucleux/md3-menu";
 import { Md3TextField } from "@nucleux/md3-text-field";
@@ -14,7 +15,7 @@ import type {
   HandwritingStroke,
   HandwritingWord,
 } from "@nucleux/handwriting";
-import { AlertCircle, Eraser, Keyboard, PenLine, RotateCcw, ScanText, Undo2 } from "lucide-react";
+import { AlertCircle, Eraser, Keyboard, PenLine, RotateCcw, ScanText, Undo2, X } from "lucide-react";
 
 // Same API as the shadcn twin: the props and data shapes are the twin's own types.
 export type Md3HandwritingInputProps = HandwritingInputProps;
@@ -174,6 +175,9 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
       acceptLabel = "Add to message",
       typingLabel = "Type your request",
       disabled = false,
+      padLabel,
+      compact = false,
+      onClose,
       className,
       children,
       ...props
@@ -439,6 +443,10 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
     };
 
     const undoStroke = () => setStrokes(strokes.slice(0, -1));
+    // Compact: once there is a reading, the one-line result carries the accept button.
+    const banner =
+      compact && inputMode === "draw" && status === "recognized" && !!recognition && !unsettled && editedText === null;
+    const showToolbar = !banner;
 
     const setRef = (node: HTMLDivElement | null) => {
       if (typeof ref === "function") ref(node);
@@ -458,6 +466,38 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
         className={cn("flex flex-col gap-3 text-md-on-surface", className)}
         {...props}
       >
+        {(padLabel != null || (compact && (inputMode === "draw" || onClose))) && (
+          <div className="-mb-1 flex items-center gap-2">
+            <PenLine aria-hidden="true" className="size-5 shrink-0 text-md-primary" />
+            <p className="flex-1 text-sm font-medium tracking-[0.1px] text-md-on-surface-variant">{padLabel}</p>
+            {compact && inputMode === "draw" && (
+              <>
+                <Md3IconButton
+                  aria-label="Undo stroke"
+                  onClick={undoStroke}
+                  disabled={disabled || strokes.length === 0 || status === "recognizing"}
+                  className="[&_svg]:size-5"
+                >
+                  <Undo2 aria-hidden="true" />
+                </Md3IconButton>
+                <Md3IconButton
+                  aria-label="Clear"
+                  onClick={reset}
+                  disabled={disabled || strokes.length === 0}
+                  className="[&_svg]:size-5"
+                >
+                  <Eraser aria-hidden="true" />
+                </Md3IconButton>
+              </>
+            )}
+            {compact && onClose && (
+              <Md3IconButton aria-label="Close handwriting" onClick={onClose} className="[&_svg]:size-5">
+                <X aria-hidden="true" />
+              </Md3IconButton>
+            )}
+          </div>
+        )}
+
         {inputMode === "type" ? (
           <textarea
             aria-label={typingLabel}
@@ -479,7 +519,9 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
               "relative overflow-hidden rounded-md-lg",
               isAnnotation
                 ? "min-h-40 border border-md-outline-variant"
-                : "h-44 border-[1.5px] border-dashed border-md-outline bg-md-surface-container-low",
+                : compact
+                  ? "h-28 rounded-b-md-xs border-b border-md-outline-variant bg-md-surface-container-low"
+                  : "h-44 border-[1.5px] border-dashed border-md-outline bg-md-surface-container-low",
               variant === "live-ocr" && "h-36 border border-solid border-md-outline-variant",
               disabled && "opacity-[0.38]",
             )}
@@ -500,14 +542,19 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
                 isAnnotation ? "text-md-error" : "text-md-on-surface",
               )}
             />
+            {compact && !isAnnotation && (
+              <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-[49%] border-t border-md-outline-variant" />
+            )}
             {strokes.length === 0 && (
               <p
                 aria-hidden="true"
                 className={cn(
-                  "pointer-events-none absolute text-xs text-md-on-surface-variant",
+                  "pointer-events-none absolute text-md-on-surface-variant",
                   isAnnotation
-                    ? "bottom-2 right-2 rounded-full bg-md-surface-container-high px-2.5 py-1 font-medium"
-                    : "inset-x-0 bottom-3 text-center",
+                    ? "bottom-2 right-2 rounded-full bg-md-surface-container-high px-2.5 py-1 text-xs font-medium"
+                    : compact
+                      ? "left-4 top-[23%] text-base"
+                      : "inset-x-0 bottom-3 text-center text-xs",
                 )}
               >
                 {emptyHint}
@@ -556,7 +603,22 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
           </div>
         )}
 
-        {inputMode === "draw" && status === "recognized" && recognition && (
+        {banner && (
+          <div
+            id={resultId}
+            data-slot="handwriting-result"
+            className="flex items-center gap-3 rounded-md-md bg-md-secondary-container py-2 pl-4 pr-2 text-md-on-secondary-container"
+          >
+            <p className="min-w-0 flex-1 text-sm font-medium">
+              {isAnnotation ? "Read as" : "Recognised"}: “{resultText}”
+            </p>
+            <Md3Button variant="filled" onClick={accept} disabled={disabled || !resultText.trim()}>
+              {acceptLabel}
+            </Md3Button>
+          </div>
+        )}
+
+        {inputMode === "draw" && status === "recognized" && recognition && !banner && (
           <div
             id={resultId}
             className="flex flex-col gap-2 border-t border-md-outline-variant pt-3"
@@ -611,8 +673,9 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
           </div>
         )}
 
+        {showToolbar && (
         <div className="flex flex-wrap items-center gap-1">
-          {inputMode === "draw" && (
+          {inputMode === "draw" && !compact && (
             <>
               <Md3Button
                 variant="text"
@@ -643,7 +706,7 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
           <span className="flex-1" />
           {inputMode === "draw" && onRecognize && (status !== "recognized" || mode === "review") && (
             <Md3Button
-              variant="tonal"
+              variant={compact ? "filled" : "tonal"}
               icon={<ScanText aria-hidden="true" />}
               onClick={() => void recognize()}
               disabled={disabled || strokes.length === 0 || status === "recognizing"}
@@ -651,18 +714,21 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
               Recognise
             </Md3Button>
           )}
-          <Md3Button
-            variant="filled"
-            onClick={accept}
-            disabled={
-              disabled ||
-              (inputMode === "type" ? !typed.trim() : status !== "recognized" || unsettled || !resultText.trim())
-            }
-            aria-describedby={inputMode === "draw" && status === "recognized" ? resultId : undefined}
-          >
-            {acceptLabel}
-          </Md3Button>
+          {!(compact && inputMode === "draw" && status !== "recognized") && (
+            <Md3Button
+              variant="filled"
+              onClick={accept}
+              disabled={
+                disabled ||
+                (inputMode === "type" ? !typed.trim() : status !== "recognized" || unsettled || !resultText.trim())
+              }
+              aria-describedby={inputMode === "draw" && status === "recognized" ? resultId : undefined}
+            >
+              {acceptLabel}
+            </Md3Button>
+          )}
         </div>
+        )}
 
         <p role="status" aria-live="polite" className="sr-only">
           {announcement}

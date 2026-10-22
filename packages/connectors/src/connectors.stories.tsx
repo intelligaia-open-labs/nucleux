@@ -2,6 +2,7 @@ import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { BookOpen, Github, HardDrive, MessageSquare } from "lucide-react";
 import { Connector, ConnectorList, ConnectorLivePill, ConnectorScopePicker } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Agent/Connector",
@@ -12,11 +13,14 @@ const meta = {
   // would strip the element) and injected via `render`; hide its control.
   argTypes: { icon: { control: false } },
   render: (args) => <Connector {...args} icon={<Github />} />,
-  decorators: [(Story) => <div className="w-[26rem]"><Story /></div>],
+  decorators: [(Story, { id }) => <div className={id.endsWith("--site-preview") ? "w-[30rem]" : "w-[26rem]"}><Story /></div>],
 } satisfies Meta<typeof Connector>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { args: { name: "Connectors" }, render: () => <SitePreviewDemo /> };
 
 export const Disconnected: Story = {
   args: {
