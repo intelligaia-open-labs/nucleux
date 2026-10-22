@@ -9,6 +9,12 @@ import { Plug, Check } from "lucide-react";
 /** Connection state. `expired` is the sign-in people meet most often: connected once, needs signing in again. */
 export type ConnectorStatus = "disconnected" | "connecting" | "connected" | "expired" | "error";
 
+/** "card" (default): the full connector card. "row": one compact line — logo, name, and the status or Connect as text — for a list inside a panel. */
+export type ConnectorVariant = "card" | "row";
+
+/** "card" (default): the scope picker in its own card. "plain": no card, the title as a small label — for a section inside a panel. */
+export type ConnectorScopePickerVariant = "card" | "plain";
+
 export interface ConnectorProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
   /** Connector name, e.g. `"GitHub"`. */
@@ -37,6 +43,10 @@ export interface ConnectorProps
   account?: React.ReactNode;
   /** What went wrong, when `status` is `"error"`. */
   error?: React.ReactNode;
+  /** "card" (default) or "row". */
+  variant?: ConnectorVariant;
+  /** A short count shown with the status once connected, e.g. `"412 docs"` → "Connected · 412 docs". */
+  detail?: React.ReactNode;
 }
 
 const statusText: Record<Exclude<ConnectorStatus, "disconnected">, string> = {
@@ -53,7 +63,8 @@ const statusText: Record<Exclude<ConnectorStatus, "disconnected">, string> = {
  * sign-in is with and that access can be withdrawn. Status is a word, announced
  * politely: Connecting…, Connected, Sign-in expired (with Reconnect), Couldn't
  * connect. Group several in a ConnectorList; narrow access with
- * ConnectorScopePicker; show live reads with ConnectorLivePill.
+ * ConnectorScopePicker; show live reads with ConnectorLivePill. `variant="row"`
+ * is the compact one-line form for a list inside a panel.
  * Source: Figma "Context Expansion / Connector suggestion card".
  */
 export const Connector = React.forwardRef<HTMLDivElement, ConnectorProps>(
@@ -72,6 +83,8 @@ export const Connector = React.forwardRef<HTMLDivElement, ConnectorProps>(
       scopes,
       account,
       error,
+      variant = "card",
+      detail,
       className,
       ...props
     },
@@ -79,6 +92,64 @@ export const Connector = React.forwardRef<HTMLDivElement, ConnectorProps>(
   ) => {
     const status: ConnectorStatus = statusProp ?? (connected ? "connected" : "disconnected");
     const reconnect = onReconnect ?? onConnect;
+    if (variant === "row") {
+      const textBtn =
+        "shrink-0 rounded-md px-1 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+      return (
+        <div
+          ref={ref}
+          data-status={status}
+          className={cn(
+            "flex items-center gap-2.5 rounded-lg border bg-background px-3 py-2",
+            status === "connected" ? "border-success/60" : status === "expired" ? "border-warning/50" : status === "error" ? "border-destructive/50" : "border-border",
+            className,
+          )}
+          {...props}
+        >
+          <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-md border border-border bg-background text-foreground [&_svg]:size-4">
+            {icon ?? <Plug aria-hidden="true" />}
+          </span>
+          <span className="flex min-w-0 flex-1 flex-col">
+            <span className="truncate text-sm font-medium text-foreground">{name}</span>
+            {description && <span className="truncate text-xs text-muted-foreground">{description}</span>}
+          </span>
+          <span role="status" aria-live="polite" className="contents">
+            {status === "connected" && (
+              <span className="shrink-0 text-xs font-semibold text-success">
+                {statusText.connected}
+                {detail ? <> · {detail}</> : null}
+              </span>
+            )}
+            {status === "connecting" && (
+              <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground">
+                <Spinner aria-hidden="true" role={undefined} className="size-3.5 motion-reduce:animate-none" />
+                {statusText.connecting}
+              </span>
+            )}
+            {(status === "expired" || status === "error") && (
+              <span className={cn("shrink-0 text-xs font-medium", status === "expired" ? "text-warning" : "text-destructive")}>
+                {statusText[status]}
+              </span>
+            )}
+          </span>
+          {status === "connected" && onDisconnect && (
+            <button type="button" onClick={onDisconnect} className={cn(textBtn, "font-medium text-muted-foreground hover:text-foreground")}>
+              {disconnectLabel}
+            </button>
+          )}
+          {status === "disconnected" && (
+            <button type="button" onClick={onConnect} className={cn(textBtn, "text-brand hover:underline")}>
+              {connectLabel}
+            </button>
+          )}
+          {(status === "expired" || status === "error") && reconnect && (
+            <button type="button" onClick={reconnect} className={cn(textBtn, "text-brand hover:underline")}>
+              {status === "expired" ? "Reconnect" : "Try again"}
+            </button>
+          )}
+        </div>
+      );
+    }
     return (
       <div
         ref={ref}
@@ -180,20 +251,53 @@ Connector.displayName = "Connector";
 export interface ConnectorListProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Accessible name. Defaults to `"Connected services"`. */
   label?: string;
+  /** Show `label` above the list as a small heading (as nucleux.in's preview does). */
+  showLabel?: boolean;
+  /** Rows share one container, divided by hairlines (pair with `variant="row"` connectors). */
+  grouped?: boolean;
 }
 
 /**
  * The connector list: available services with their status and a connect
  * button, one per row. Wrap Connector cards; each child becomes a list item.
+ * `showLabel` shows the label as a small heading; `grouped` puts row
+ * connectors in one container divided by hairlines.
  */
 export const ConnectorList = React.forwardRef<HTMLDivElement, ConnectorListProps>(
-  ({ label = "Connected services", className, children, ...props }, ref) => (
-    <div ref={ref} role="list" aria-label={label} className={cn("flex flex-col gap-2", className)} {...props}>
-      {React.Children.map(children, (child) =>
-        child == null || child === false ? null : <div role="listitem">{child}</div>,
-      )}
-    </div>
-  ),
+  ({ label = "Connected services", showLabel = false, grouped = false, className, children, ...props }, ref) => {
+    const headingId = React.useId();
+    const list = (
+      <div
+        ref={showLabel ? undefined : ref}
+        role="list"
+        aria-label={showLabel ? undefined : label}
+        aria-labelledby={showLabel ? headingId : undefined}
+        className={cn(
+          "flex flex-col",
+          grouped
+            ? "divide-y divide-border overflow-hidden rounded-xl border border-border [&>[role=listitem]>*]:rounded-none [&>[role=listitem]>*]:border-0"
+            : showLabel
+              ? "gap-1.5"
+              : "gap-2",
+          !showLabel && className,
+        )}
+        {...(showLabel ? {} : props)}
+      >
+        {React.Children.map(children, (child) =>
+          child == null || child === false ? null : <div role="listitem">{child}</div>,
+        )}
+      </div>
+    );
+    if (!showLabel) return list;
+    return (
+      <div ref={ref} className={cn("flex flex-col gap-2.5", className)} {...props}>
+        <p id={headingId} className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+          {label}
+        </p>
+        {list}
+      </div>
+    );
+  },
 );
 ConnectorList.displayName = "ConnectorList";
 
@@ -227,6 +331,8 @@ export interface ConnectorScopePickerProps
   onAllowWriteChange?: (on: boolean) => void;
   /** Label for the write switch. Defaults to `"Also allow changes (create, edit, post)"`. */
   writeLabel?: React.ReactNode;
+  /** "card" (default) or "plain". */
+  variant?: ConnectorScopePickerVariant;
 }
 
 /**
@@ -246,6 +352,7 @@ export const ConnectorScopePicker = React.forwardRef<HTMLDivElement, ConnectorSc
       allowWrite,
       onAllowWriteChange,
       writeLabel = "Also allow changes (create, edit, post)",
+      variant = "card",
       className,
       ...props
     },
@@ -264,10 +371,15 @@ export const ConnectorScopePicker = React.forwardRef<HTMLDivElement, ConnectorSc
         ref={ref}
         role="group"
         aria-labelledby={headingId}
-        className={cn("flex flex-col gap-2 rounded-xl border border-border bg-background p-3", className)}
+        className={cn("flex flex-col gap-2", variant === "card" && "rounded-xl border border-border bg-background p-3", className)}
         {...props}
       >
-        <p id={headingId} className="text-sm font-semibold text-foreground">
+        <p
+          id={headingId}
+          className={cn(
+            variant === "plain" ? "text-[10px] font-semibold uppercase tracking-widest text-muted-foreground" : "text-sm font-semibold text-foreground",
+          )}
+        >
           {title ?? <>{agentName} can read from:</>}
         </p>
         <ul className="flex flex-col gap-1.5">

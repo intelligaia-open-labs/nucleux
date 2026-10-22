@@ -2,17 +2,23 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3Iconography } from "@nucleux/md3-iconography";
 import { Md3Caveat, Md3CaveatTooltip } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Material 3 Agent/Md3Caveat",
   component: Md3Caveat,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[26rem]"><Story /></div>],
+  decorators: [
+    (Story, { name }) => (name === "Site Preview" ? <Story /> : <div className="w-[26rem]"><Story /></div>),
+  ],
 } satisfies Meta<typeof Md3Caveat>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** A quiet caption under the composer, seen before anything is sent. */
 export const BelowInput: Story = {

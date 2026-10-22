@@ -8,6 +8,41 @@ The format is machine-readable: each version heading starts with `## ` followed
 by a version tag and date, and entries are grouped under `### Added`, `### Changed`,
 `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings.
 
+## [0.10.0] — 2026-10-22
+
+Every agentic component now looks like nucleux.in out of the box, and coding
+agents are told to ask which family to use.
+
+### Added
+- **"As on nucleux.in" code.** All 35 agentic patterns, in both families, ship
+  `src/site-preview.tsx`: the exact state the site's live preview shows (same
+  copy, state and layout). It is each package's first story (`SitePreview`), and
+  the MCP's `get_component` returns it as copyable code, so agents start from
+  the site's composition instead of inventing one.
+- **The site composer.** `OpenInput` / `Md3OpenInput` render nucleux.in's
+  composer by default: `onAdd` (+), `model` (`OpenInputModelChip` /
+  `Md3OpenInputModelChip`: "5.5 Instant ▾" / "Balanced High"), `onVoice` (mic),
+  `sendVariant`, `layout`. `Md3AgentComposer` now renders `Md3OpenInput`;
+  `ModelSelection` can be the composer's model chip (`trigger="chip"`).
+- New pieces the site previews needed, in both families: `AiColorStatus`,
+  `AiIconLegend`, `KnowledgeBaseCard`, `AutocompleteOverlay`, Consent `scope` /
+  `details`, Disclaimer summary layout, Nudge `appearance="inline"`,
+  ExampleGallery `tiles` / `grouped-list`, Templates `grouped` list,
+  SuggestedPrompts `card-grid`, StructuredInput form fields, Gesture overlay
+  feedback, Handwriting `compact`, Personality `list`, AgentName
+  `introduction`, Caveat `detail`, and more (see each package's props).
+- Tokens: `md-surface-container-lowest` and `md-surface-container-highest`.
+
+### Changed
+- **`brand` is now nucleux.in's orange AI accent** (#d97706; #f59e0b in dark
+  mode), replacing violet. Material 3 is unaffected.
+- Default looks of many agentic components follow the site (see the props'
+  JSDoc); every existing prop keeps working.
+- Agents ask "Material 3 or shadcn?" before building and record the answer in
+  the project (`Nucleux family: …`); the workflow gains step B.
+- `OpenInput`'s default send button is the site's ghost paper plane
+  (`sendVariant="filled"` for the round arrow).
+
 ## [0.9.0] — 2026-10-22
 
 ### Added

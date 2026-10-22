@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Templates, TemplatesBrowser, TemplatesList } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Agent/Templates",
@@ -12,6 +13,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** Fill-in-the-blank: a sentence with slots that reads like a real prompt once filled. */
 export const FillBlanks: Story = {

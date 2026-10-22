@@ -4,6 +4,7 @@ import { cn } from "@nucleux/utils";
 import { defaultTones } from "@nucleux/personality";
 import type {
   PersonalityProps,
+  PersonalityVariant,
   PersonalitySampleDialogProps,
   PersonalityVoiceCardProps,
 } from "@nucleux/personality";
@@ -11,6 +12,7 @@ import type {
 export type { ToneOption, PersonalitySampleTurn } from "@nucleux/personality";
 export { defaultTones } from "@nucleux/personality";
 export type Md3PersonalityProps = PersonalityProps;
+export type Md3PersonalityVariant = PersonalityVariant;
 export type Md3PersonalityVoiceCardProps = PersonalityVoiceCardProps;
 export type Md3PersonalitySampleDialogProps = PersonalitySampleDialogProps;
 
@@ -24,10 +26,16 @@ const stateLayer =
  * hover, focus and press are the chip's 8% / 12% state layer. It is a radio
  * group with roving focus (arrow keys move and select, Home / End jump).
  * Tone changes how the agent writes, never what it may do — keep
- * permission, caveat and refusal strings outside it.
+ * permission, caveat and refusal strings outside it. `variant="list"` is
+ * the settings-page picker: M3 radio rows with each description visible, a
+ * primary-container "Recommended" `badge` and a locked `note`.
  */
 export const Md3Personality = React.forwardRef<HTMLDivElement, Md3PersonalityProps>(
-  ({ options = defaultTones, value, defaultValue, onValueChange, label = "Tone", className, ...props }, ref) => {
+  (
+    { options = defaultTones, value, defaultValue, onValueChange, label = "Tone", variant = "chips", note, className, ...props },
+    ref,
+  ) => {
+    const list = variant === "list";
     // Selection and roving-focus logic copied from @nucleux/personality (internal there).
     const [internal, setInternal] = React.useState<string | undefined>(defaultValue);
     const current = value !== undefined ? value : internal;
@@ -54,17 +62,84 @@ export const Md3Personality = React.forwardRef<HTMLDivElement, Md3PersonalityPro
     };
 
     return (
-      <div ref={ref} data-variant="tone-matrix" className={cn("flex flex-col gap-2", className)} {...props}>
+      <div
+        ref={ref}
+        data-variant="tone-matrix"
+        data-layout={variant}
+        className={cn("flex flex-col gap-2", className)}
+        {...props}
+      >
         {label && (
-          <span className="text-xs font-medium tracking-[0.5px] text-md-on-surface-variant">{label}</span>
+          <span
+            className={
+              list
+                ? "text-lg font-semibold text-md-on-surface"
+                : "text-xs font-medium tracking-[0.5px] text-md-on-surface-variant"
+            }
+          >
+            {label}
+          </span>
+        )}
+        {note && (
+          <p className="m-0 mt-2 flex items-center gap-1.5 text-sm tracking-[0.25px] text-md-on-surface-variant">
+            <Lock aria-hidden="true" className="size-4 shrink-0" />
+            {note}
+          </p>
         )}
         <div
           role="radiogroup"
           aria-label={typeof label === "string" ? label : "Tone"}
-          className="flex flex-wrap gap-2"
+          className={list ? "mt-2 flex flex-col" : "flex flex-wrap gap-2"}
         >
           {options.map((option, index) => {
             const active = current === option.value;
+            if (list) {
+              return (
+                <button
+                  key={option.value}
+                  ref={(el) => {
+                    refs.current[index] = el;
+                  }}
+                  type="button"
+                  role="radio"
+                  aria-checked={active}
+                  aria-describedby={option.description ? `${descId}-${index}` : undefined}
+                  tabIndex={index === tabStop ? 0 : -1}
+                  onClick={() => select(option.value)}
+                  onKeyDown={(e) => onKeyDown(e, index)}
+                  className={cn(
+                    "flex items-start gap-4 rounded-md-md py-2 pl-2.5 pr-3 text-left outline-none focus-visible:ring-2 focus-visible:ring-md-primary",
+                    stateLayer,
+                  )}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "relative mt-0.5 grid size-5 shrink-0 place-items-center rounded-full border-2 transition-colors motion-reduce:transition-none",
+                      active ? "border-md-primary" : "border-md-on-surface-variant",
+                    )}
+                  >
+                    {active && <span className="size-2.5 rounded-full bg-md-primary" />}
+                  </span>
+                  <span className="relative flex flex-col gap-1">
+                    <span className="flex items-center gap-2 text-base text-md-on-surface">
+                      {option.icon}
+                      {option.label}
+                      {option.badge != null && (
+                        <span className="rounded-md-sm bg-md-primary-container px-1.5 py-0.5 text-xs font-semibold tracking-[0.5px] text-md-on-primary-container">
+                          {option.badge}
+                        </span>
+                      )}
+                    </span>
+                    {option.description && (
+                      <span id={`${descId}-${index}`} className="text-sm tracking-[0.25px] text-md-on-surface-variant">
+                        {option.description}
+                      </span>
+                    )}
+                  </span>
+                </button>
+              );
+            }
             return (
               <button
                 key={option.value}

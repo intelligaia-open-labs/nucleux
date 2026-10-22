@@ -107,6 +107,18 @@ function renderComponent(p: Pkg): string {
     "",
     `**Exports:** ${p.exports.join(", ") || "—"}`,
   ];
+  const sitePreview = (p as Pkg & { sitePreview?: string }).sitePreview;
+  if (sitePreview)
+    lines.push(
+      "",
+      "## As on nucleux.in",
+      "",
+      "Start from this: it is exactly the state nucleux.in's live preview shows. Change the content (names, copy, data, handlers) to fit the app; keep the composition, variants and classes so it looks the same.",
+      "",
+      "```tsx",
+      sitePreview,
+      "```",
+    );
   if (p.props.length) {
     lines.push(
       "",
@@ -140,7 +152,7 @@ const INSTRUCTIONS = `Nucleux (@nucleux/react) is intelligaia's React component 
 
 First ask the user which family they want — Material 3 (Md3*) or shadcn — unless they already said or the project already uses or records one; record the answer in the project's AGENTS.md or CLAUDE.md (\"Nucleux family: Material 3\") and use only that family.
 
-Design-first workflow: for any page or app, call search_patterns first, then get_pattern for the curated composition (structure, responsive and accessibility rules, typechecked example). Then get_component for the exact contract of each component you use, and get_setup for install and Tailwind configuration. Use search_components for needs no pattern covers, and get_example (e.g. "agent-chat") for the larger reference screens. The build_with_nucleux prompt holds the full step-by-step workflow.
+Design-first workflow: for any page or app, call search_patterns first, then get_pattern for the curated composition (structure, responsive and accessibility rules, typechecked example). Then get_component for the exact contract of each component you use — for agentic components it also returns the \"As on nucleux.in\" code: start from it so the result looks like the site — and get_setup for install and Tailwind configuration. Use search_components for needs no pattern covers, and get_example (e.g. "agent-chat") for the larger reference screens. The build_with_nucleux prompt holds the full step-by-step workflow.
 
 Use these tools instead of guessing props: the catalog is generated from the package sources, so exports, prop names, types, variant values and defaults are exact. If a component, prop or pattern is not in the catalog it does not exist — report the gap instead of inventing it.
 

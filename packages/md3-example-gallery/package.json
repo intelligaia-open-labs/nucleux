@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-example-gallery",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Example Gallery — real, product-specific tasks that place an editable request in the composer — Nucleux agentic UI for React.",
@@ -42,8 +42,10 @@
   },
   "dependencies": {
     "@nucleux/example-gallery": "workspace:*",
+    "@nucleux/md3-agent-composer": "workspace:*",
     "@nucleux/md3-button": "workspace:*",
     "@nucleux/md3-dialog": "workspace:*",
+    "@nucleux/md3-icon-button": "workspace:*",
     "@nucleux/md3-tabs": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0"

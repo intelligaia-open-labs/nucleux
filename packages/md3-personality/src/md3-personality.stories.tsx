@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 import { Md3Personality, Md3PersonalitySampleDialog, Md3PersonalityVoiceCard } from "./index";
 
 const meta = {
@@ -6,12 +7,15 @@ const meta = {
   component: Md3Personality,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-80"><Story /></div>],
+  decorators: [(Story, ctx) => (ctx.id.endsWith("--site-preview") ? <Story /> : <div className="w-80"><Story /></div>)],
   args: { defaultValue: "professional", onValueChange: () => {} },
 } satisfies Meta<typeof Md3Personality>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 export const Default: Story = {};
 

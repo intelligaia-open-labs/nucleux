@@ -1,12 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ModelSelection } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Agent/ModelSelection",
   component: ModelSelection,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="flex min-h-[22rem] w-[24rem] items-start"><Story /></div>],
+  decorators: [
+    (Story, { name }) => (name === "Site Preview" ? <Story /> : <div className="flex min-h-[22rem] w-[24rem] items-start"><Story /></div>),
+  ],
   args: {
     onValueChange: () => {},
     defaultValue: "5.5-instant",
@@ -20,6 +23,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 export const Default: Story = {};
 

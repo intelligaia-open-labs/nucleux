@@ -97,7 +97,7 @@ function BlankField({ ctl, id, blankStyle, inline, labelled }: BlankFieldProps) 
                 "rounded-md-md",
                 set
                   ? "border border-transparent bg-md-secondary-container text-md-on-secondary-container"
-                  : "border border-dashed border-md-outline bg-md-surface",
+                  : "border border-dashed border-md-outline bg-transparent",
                 "focus:border-2 focus:border-solid focus:border-md-primary focus:pl-[11px] focus:pr-[29px]",
                 isSug && "border-dashed border-md-primary bg-md-primary/[0.06] italic text-md-primary",
                 bad && "border-2 border-solid border-md-error bg-transparent pl-[11px] pr-[29px]",
@@ -325,7 +325,7 @@ export const Md3Madlibs = React.forwardRef<HTMLDivElement, Md3MadlibsProps>((pro
       aria-labelledby={ctl.ids.heading}
       data-status={ctl.placed ? "placed" : ctl.status}
       className={cn(
-        "flex w-full max-w-[620px] flex-col overflow-visible rounded-md-lg",
+        "flex w-full max-w-[620px] flex-col overflow-visible rounded-md-lg bg-md-surface-container-lowest",
         "animate-nx-fade-in motion-reduce:animate-none",
         compact ? "gap-2.5 px-4 py-3.5" : "gap-3.5 px-5 py-[18px]",
         className,
@@ -400,7 +400,7 @@ export const Md3Madlibs = React.forwardRef<HTMLDivElement, Md3MadlibsProps>((pro
           )}
 
           {showPreview && (
-            <p className="flex items-baseline gap-2 rounded-md-md bg-md-surface-container-low px-3.5 py-2.5 text-[13px] leading-5 text-md-on-surface">
+            <p className="flex items-baseline gap-2 rounded-md-md bg-md-on-surface/[0.04] px-3.5 py-2.5 text-[13px] leading-5 text-md-on-surface">
               <span className="shrink-0 font-semibold text-md-on-surface-variant">{previewLabel}</span>
               <span data-madlibs-preview="">{ctl.prompt}</span>
             </p>

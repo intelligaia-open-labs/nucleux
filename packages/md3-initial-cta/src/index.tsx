@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ImagePlus, Mic, Paperclip } from "lucide-react";
+import { ImagePlus, Paperclip } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import type { InitialCtaHeadingLevel, InitialCtaProps, InitialCtaVariant } from "@nucleux/initial-cta";
 import { Md3IconButton } from "@nucleux/md3-icon-button";
@@ -21,8 +21,9 @@ const isPromise = (v: unknown): v is Promise<unknown> =>
  * The Material 3 empty-state composer — the same API and behaviour as
  * `InitialCta`, composed from {@link Md3OpenInput} and
  * {@link Md3SuggestedPrompts}, so the invitation is visibly the same object as
- * the working composer it becomes. An open headline (M3 headline type), at
- * most one supporting line, then the composer; optional `suggestions` sit
+ * the working composer it becomes (the nucleux.in M3 composer bar, with its
+ * "+", `model` chip and mic). An open headline (M3 headline type) — or none,
+ * with the supporting line as a centred lead — then the composer; optional `suggestions` sit
  * below as suggestion chips and place their prompt in the field — focused,
  * editable, never sent — and step aside once the person writes. Variants: a
  * centred hero, a tonal primary-container surface for brand moments, and a
@@ -39,7 +40,6 @@ export const Md3InitialCta = React.forwardRef<HTMLTextAreaElement, Md3InitialCta
       suggestions,
       suggestionsLabel,
       onSuggestionSelect,
-      onVoice,
       onAttachFile,
       onAddImage,
       composerClassName,
@@ -58,6 +58,8 @@ export const Md3InitialCta = React.forwardRef<HTMLTextAreaElement, Md3InitialCta
   ) => {
     const baseId = React.useId();
     const headingId = `${baseId}-headline`;
+    const descriptionId = `${baseId}-description`;
+    const hasHeadline = headline != null && headline !== false;
     const fieldRef = React.useRef<HTMLTextAreaElement>(null);
     React.useImperativeHandle(forwardedRef, () => fieldRef.current as HTMLTextAreaElement);
 
@@ -97,13 +99,8 @@ export const Md3InitialCta = React.forwardRef<HTMLTextAreaElement, Md3InitialCta
     const showSuggestions = !!suggestions?.length && untouched;
 
     const modalities =
-      variant === "multi-modal-row" && (onVoice || onAttachFile || onAddImage) ? (
+      variant === "multi-modal-row" && (onAttachFile || onAddImage) ? (
         <>
-          {onVoice && (
-            <Md3IconButton aria-label="Speak instead of typing" onClick={onVoice}>
-              <Mic aria-hidden="true" />
-            </Md3IconButton>
-          )}
           {onAttachFile && (
             <Md3IconButton aria-label="Attach a file" onClick={onAttachFile}>
               <Paperclip aria-hidden="true" />
@@ -123,7 +120,7 @@ export const Md3InitialCta = React.forwardRef<HTMLTextAreaElement, Md3InitialCta
 
     return (
       <section
-        aria-labelledby={headingId}
+        aria-labelledby={hasHeadline ? headingId : description ? descriptionId : undefined}
         className={cn(
           "flex w-full flex-col gap-3 text-md-on-surface",
           hero && "mx-auto max-w-2xl items-center gap-6 text-center",
@@ -133,29 +130,36 @@ export const Md3InitialCta = React.forwardRef<HTMLTextAreaElement, Md3InitialCta
         )}
       >
         {hero && avatar}
-        <div className={cn("flex flex-col gap-2", hero && "items-center")}>
-          <Heading
-            id={headingId}
-            className={cn(
-              "text-md-on-surface",
-              hero && "text-[2rem] font-normal leading-10",
-              gradient && "text-sm font-medium tracking-[0.1px] text-md-on-primary-container",
-              variant === "multi-modal-row" && "text-[1.375rem] font-normal leading-7",
+        {(hasHeadline || description) && (
+          <div className={cn("flex flex-col gap-2", hero && "items-center")}>
+            {hasHeadline && (
+              <Heading
+                id={headingId}
+                className={cn(
+                  "text-md-on-surface",
+                  hero && "text-[2rem] font-normal leading-10",
+                  gradient && "text-sm font-medium tracking-[0.1px] text-md-on-primary-container",
+                  variant === "multi-modal-row" && "text-[1.375rem] font-normal leading-7",
+                )}
+              >
+                {headline}
+              </Heading>
             )}
-          >
-            {headline}
-          </Heading>
-          {description && (
-            <p
-              className={cn(
-                "max-w-[42ch] text-sm tracking-[0.25px]",
-                gradient ? "text-md-on-primary-container" : "text-md-on-surface-variant",
-              )}
-            >
-              {description}
-            </p>
-          )}
-        </div>
+            {description && (
+              <p
+                id={descriptionId}
+                className={cn(
+                  "max-w-[42ch]",
+                  // Without a headline the supporting line is the lead (the site's two-line intro).
+                  hasHeadline ? "text-sm tracking-[0.25px]" : "text-base leading-6 tracking-[0.15px]",
+                  gradient ? "text-md-on-primary-container" : "text-md-on-surface-variant",
+                )}
+              >
+                {description}
+              </p>
+            )}
+          </div>
+        )}
         <Md3OpenInput
           ref={fieldRef}
           variant={gradient ? "single-line" : "expanding-area"}
@@ -182,7 +186,7 @@ export const Md3InitialCta = React.forwardRef<HTMLTextAreaElement, Md3InitialCta
             label={suggestionsLabel}
             afterSelect="mark"
             selectedId={placed && value === placed.prompt ? placed.id : null}
-            className={cn(hero && "justify-center")}
+            className={cn(hero && "justify-center [&_ul]:justify-center")}
             onSelect={(prompt, item) => {
               setFocusTick((t) => t + 1);
               setPlaced({ id: item.id ?? item.prompt ?? item.title, prompt });

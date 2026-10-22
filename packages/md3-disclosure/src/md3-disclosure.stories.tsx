@@ -1,17 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Md3AgentAvatar } from "@nucleux/md3-agent-avatar";
 import { Md3Disclosure } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Material 3 Agent/Md3Disclosure",
   component: Md3Disclosure,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[26rem]"><Story /></div>],
+  decorators: [(Story, { parameters }) => (parameters.bare ? <Story /> : <div className="w-[26rem]"><Story /></div>)],
 } satisfies Meta<typeof Md3Disclosure>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo />, parameters: { bare: true } };
 
 /** Lightest touch: a small "AI" chip beside the agent name in the message header. */
 export const HeaderBadge: Story = {

@@ -1,17 +1,21 @@
 import * as React from "react";
-import { ArrowUp, Maximize2, Minimize2, Square } from "lucide-react";
 import { cn } from "@nucleux/utils";
-import { useComposerHeight } from "./use-composer-height";
+import type { OpenInputProps } from "@nucleux/open-input";
+import { Md3OpenInput } from "@nucleux/md3-open-input";
 
-export interface Md3AgentComposerProps extends Omit<
-  React.HTMLAttributes<HTMLDivElement>,
-  "onSubmit"
-> {
+export interface Md3AgentComposerProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSubmit">,
+    Pick<
+      OpenInputProps,
+      "onAdd" | "addLabel" | "add" | "model" | "onVoice" | "voiceLabel" | "sendVariant" | "layout"
+    > {
   value: string;
   onValueChange: (value: string) => void;
   onSubmit: (value: string) => void;
   placeholder?: string;
+  /** Controls at the toolbar's left (after the + from `onAdd`), e.g. a Request settings button. */
   leftActions?: React.ReactNode;
+  /** Controls at the toolbar's right, before the mic and send (e.g. scaffold chips, a model chip). */
   rightActions?: React.ReactNode;
   loading?: boolean;
   onStop?: () => void;
@@ -29,17 +33,14 @@ export interface Md3AgentComposerProps extends Omit<
   disabled?: boolean;
 }
 
-// A 32px standard icon button with the M3 state layer.
-const expandBtn =
-  "absolute right-0 top-0 inline-flex size-8 items-center justify-center overflow-hidden rounded-full text-md-on-surface-variant outline-none focus-visible:ring-2 focus-visible:ring-md-primary focus-visible:ring-offset-2 focus-visible:ring-offset-md-surface before:absolute before:inset-0 before:bg-md-on-surface before:opacity-0 before:transition-opacity before:content-[''] hover:before:opacity-[0.08] active:before:opacity-[0.12] motion-reduce:before:transition-none";
-
-const sendBtn =
-  "relative inline-flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-md-primary text-md-on-primary outline-none focus-visible:ring-2 focus-visible:ring-md-primary focus-visible:ring-offset-2 focus-visible:ring-offset-md-surface before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-[''] hover:before:opacity-[0.08] active:before:opacity-[0.12] disabled:opacity-[0.38] disabled:before:opacity-0";
-
 /**
- * A Material Design 3 agent task composer — a tonal surface with an auto-growing
- * prompt field, a toolbar, and a filled send/stop button with a state layer.
- * The field grows to eight lines (`maxLines`) and then scrolls; past that an
+ * A Material Design 3 agent task composer — the nucleux.in M3 composer (it is
+ * `Md3OpenInput`, so the two always look the same): an outlined bar on the
+ * surface with the prompt field on top and a toolbar under it — `leftActions`
+ * (after an optional "+" from `onAdd`), then `rightActions`, the `model` chip,
+ * a mic from `onVoice` and a round filled send/stop button. Pass
+ * `layout="auto"` for the one-row bar that stacks once the request wraps. The
+ * field grows to eight lines (`maxLines`) and then scrolls; past that an
  * Expand icon button gives the request most of the available height, and
  * sending collapses it again. Enter submits, Shift+Enter newlines.
  */
@@ -58,106 +59,53 @@ export const Md3AgentComposer = React.forwardRef<HTMLTextAreaElement, Md3AgentCo
       maxHeight,
       expandable = true,
       disabled,
+      onAdd,
+      addLabel,
+      add,
+      model,
+      onVoice,
+      voiceLabel,
+      sendVariant,
+      layout = "stacked",
       className,
       ...props
     },
-    forwardedRef,
-  ) => {
-    const innerRef = React.useRef<HTMLTextAreaElement>(null);
-    React.useImperativeHandle(forwardedRef, () => innerRef.current as HTMLTextAreaElement);
-
-    const fieldId = React.useId();
-    const { expanded, showToggle, toggle } = useComposerHeight(innerRef, {
-      value,
-      maxLines,
-      maxHeight,
-      enabled: true,
-      expandable,
-      fallbackLineHeight: 20,
-    });
-
-    const canSend = value.trim().length > 0 && !disabled;
-    const submit = () => {
-      if (canSend) onSubmit(value.trim());
-    };
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
-        e.preventDefault();
-        submit();
-      }
-    };
-
-    return (
-      <div
-        className={cn(
-          "flex flex-col gap-3 rounded-md-xl bg-md-surface-container-high p-3 focus-within:ring-2 focus-within:ring-md-primary",
-          className,
-        )}
-        data-expanded={expanded || undefined}
-        {...props}
-      >
-        <div className="relative flex w-full">
-          <textarea
-            ref={innerRef}
-            id={fieldId}
-            rows={1}
-            value={value}
-            disabled={disabled}
-            placeholder={placeholder}
-            aria-label={typeof placeholder === "string" ? placeholder : "Message"}
-            onChange={(e) => onValueChange(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className={cn(
-              "w-full resize-none bg-transparent px-1 text-sm text-md-on-surface outline-none placeholder:text-md-on-surface-variant disabled:opacity-50",
-              showToggle && "pr-10",
-            )}
-          />
-          {showToggle && (
-            <button
-              type="button"
-              onClick={toggle}
-              aria-label={expanded ? "Collapse" : "Expand"}
-              aria-expanded={expanded}
-              aria-controls={fieldId}
-              className={expandBtn}
-            >
-              {expanded ? (
-                <Minimize2 aria-hidden="true" className="relative size-5" />
-              ) : (
-                <Maximize2 aria-hidden="true" className="relative size-5" />
-              )}
-            </button>
-          )}
-        </div>
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1">{leftActions}</div>
-          <div className="flex items-center gap-2">
-            {rightActions}
-            {loading ? (
-              <button
-                type="button"
-                onClick={onStop}
-                aria-label="Stop generating"
-                className={sendBtn}
-              >
-                <Square className="relative size-3.5 fill-current" />
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={submit}
-                disabled={!canSend}
-                aria-label="Send"
-                className={sendBtn}
-              >
-                <ArrowUp className="relative size-4" />
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  },
+    ref,
+  ) => (
+    <div {...props}>
+      <Md3OpenInput
+        ref={ref}
+        value={value}
+        onValueChange={onValueChange}
+        onSubmit={onSubmit}
+        placeholder={placeholder}
+        aria-label={typeof placeholder === "string" ? placeholder : "Message"}
+        sendLabel="Send"
+        loading={loading}
+        onStop={onStop}
+        maxLines={maxLines}
+        maxHeight={maxHeight}
+        expandable={expandable}
+        disabled={disabled}
+        onAdd={onAdd}
+        addLabel={addLabel}
+        add={add}
+        actions={leftActions}
+        model={
+          rightActions != null || model != null ? (
+            <>
+              {rightActions}
+              {model}
+            </>
+          ) : undefined
+        }
+        onVoice={onVoice}
+        voiceLabel={voiceLabel}
+        sendVariant={sendVariant}
+        layout={layout}
+        className={cn(className)}
+      />
+    </div>
+  ),
 );
 Md3AgentComposer.displayName = "Md3AgentComposer";

@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Mic, Plus } from "lucide-react";
-import { InputGroupButton } from "@nucleux/input-group";
 import { Modes, type ModeOption, type ModesProps } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 /** The site's live-preview modes: speed/depth presets with expected latency. */
 const MODES: ModeOption[] = [
@@ -41,16 +40,8 @@ const story = (name: string): Story["render"] =>
         {...args}
         modes={MODES}
         {...SAMPLE[name]}
-        composerLeading={
-          <InputGroupButton size="icon-sm" aria-label="Attach a file">
-            <Plus className="size-4" />
-          </InputGroupButton>
-        }
-        composerActions={
-          <InputGroupButton size="icon-sm" aria-label="Voice input" className="text-muted-foreground">
-            <Mic className="size-3.5" />
-          </InputGroupButton>
-        }
+        onAdd={() => {}}
+        onVoice={() => {}}
       />
     );
   };
@@ -72,6 +63,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** The site's live preview: segmented control, the rich mode list and the mode chip in the composer, Fast active. */
 export const LivePreview: Story = { args: { variant: "composer" }, render: story("LivePreview") };

@@ -102,7 +102,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **attachments** (`@nucleux/attachments`) — Attachments — upload files, photos, docs for the AI to read.
   Exports: `formatFileSize, Attachments, AttachmentsItem, AttachmentsTray, AttachmentsTrigger, AttachmentsDropZone, AttachmentsNote, AttachmentsVariant, …`
 - **autocomplete** (`@nucleux/autocomplete`) — Autocomplete — ghost text that anticipates and completes user actions.
-  Exports: `Autocomplete, AutocompleteVariant, AutocompleteAcceptKey, AutocompleteState, AutocompleteRequest, AutocompleteProps`
+  Exports: `Autocomplete, AutocompleteOverlay, AutocompleteVariant, AutocompleteAcceptKey, AutocompleteState, AutocompleteRequest, AutocompleteProps, AutocompleteOverlayProps`
 - **avatar** (`@nucleux/avatar`) — Avatar with image, initials, or role icon.
   Exports: `Avatar, AvatarProps`
 - **badge** (`@nucleux/badge`) — Compact status pill / label.
@@ -132,15 +132,15 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **collapsible** (`@nucleux/collapsible`) — Single collapsible disclosure region.
   Exports: `Collapsible, CollapsibleTrigger, CollapsibleContent, CollapsibleProps, CollapsibleTriggerProps, CollapsibleContentProps`
 - **color** (`@nucleux/color`) — Color — a reserved AI accent and working treatment that signals AI is active.
-  Exports: `aiColorClasses, AiColor, AiColorHighlight, AiColorDot, AiColorWorkingRing, AiColorToken, AiColorVariant, AiColorProps, …`
+  Exports: `aiColorClasses, AiColor, AiColorHighlight, AiColorDot, AiColorWorkingRing, aiColorStatusIcon, AiColorStatus, AiColorToken, …`
 - **combobox** (`@nucleux/combobox`) — Searchable single-select combobox.
   Exports: `Combobox, ComboboxOption, ComboboxProps`
 - **command** (`@nucleux/command`) — Searchable command palette.
   Exports: `Command, CommandInput, CommandList, CommandGroup, CommandItem, CommandEmpty, CommandProps, CommandInputProps, …`
 - **connectors** (`@nucleux/connectors`) — Connectors — connect an external tool or data source.
-  Exports: `Connector, ConnectorList, ConnectorScopePicker, ConnectorLivePill, ConnectorStatus, ConnectorProps, ConnectorListProps, ConnectorScope, …`
+  Exports: `Connector, ConnectorList, ConnectorScopePicker, ConnectorLivePill, ConnectorStatus, ConnectorVariant, ConnectorScopePickerVariant, ConnectorProps, …`
 - **consent** (`@nucleux/consent`) — Consent — asks before the agent accesses something sensitive or acts.
-  Exports: `Consent, ConsentDialog, ConsentToggle, ConsentPermission, ConsentRequestProps, ConsentProps, ConsentDialogProps, ConsentToggleProps`
+  Exports: `Consent, ConsentDialog, ConsentToggle, ConsentPermission, ConsentScopeItem, ConsentRequestProps, ConsentProps, ConsentDialogProps, …`
 - **context-menu** (`@nucleux/context-menu`) — Right-click context menu.
   Exports: `ContextMenu, ContextMenuItem, ContextMenuSeparator, ContextMenuLabel, ContextMenuProps, ContextMenuItemProps`
 - **data-table** (`@nucleux/data-table`) — Sortable, paginated data table.
@@ -188,7 +188,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **kbd** (`@nucleux/kbd`) — Keyboard key and shortcut display.
   Exports: `Kbd, KbdGroup, KbdProps, KbdGroupProps`
 - **knowledge-base** (`@nucleux/knowledge-base`) — Knowledge Base — choose the sources the agent may draw on.
-  Exports: `KnowledgeBase, KnowledgeBaseSources, KnowledgeBaseCoverage, KnowledgeBaseVariant, KnowledgeSourceStatus, KnowledgeBaseCoverageLevel, KnowledgeSource, KnowledgeBaseProps, …`
+  Exports: `KnowledgeBase, KnowledgeBaseSources, KnowledgeBaseCoverage, knowledgeBaseInitials, KnowledgeBaseCard, KnowledgeBaseVariant, KnowledgeSourceStatus, KnowledgeBaseCoverageLevel, …`
 - **label** (`@nucleux/label`) — Accessible form label.
   Exports: `Label, LabelProps`
 - **madlibs** (`@nucleux/madlibs`) — Madlibs — a request written as a sentence with a few labelled blanks, filled and reviewed before it goes to the composer.
@@ -196,7 +196,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **marker** (`@nucleux/marker`) — Inline note or divider marker for timelines and threads.
   Exports: `markerVariants, Marker, MarkerIcon, MarkerContent, MarkerVariant, MarkerProps, MarkerIconProps, MarkerContentProps`
 - **mcp-connection** (`@nucleux/mcp-connection`) — MCP Server Connection — standardised tool access so the AI can act, not just answer.
-  Exports: `McpConnection, McpConnectionTool, McpConnectionTools, McpConnectionPermission, McpConnectionActionPreview, McpConnectionStatus, McpConnectionStage, McpConnectionToolRisk, …`
+  Exports: `McpConnection, McpConnectionTool, McpConnectionTools, McpConnectionPermission, mcpCallParts, McpConnectionActionPreview, McpConnectionStatus, McpConnectionStage, …`
 - **menubar** (`@nucleux/menubar`) — Application menu bar.
   Exports: `Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem, MenubarSeparator, MenubarProps, MenubarMenuProps, …`
 - **message** (`@nucleux/message`) — Chat message row with avatar + bubble.
@@ -204,7 +204,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **message-scroller** (`@nucleux/message-scroller`) — Auto-scrolling message list container.
   Exports: `MessageScroller, MessageScrollerProps`
 - **model-selection** (`@nucleux/model-selection`) — Model Selection — choose which model handles the request.
-  Exports: `ModelSelection, ModelSelectionVariant, ModelOption, ModelSelectionProps`
+  Exports: `ModelSelection, ModelSelectionVariant, ModelSelectionTrigger, ModelSelectionPicker, ModelOption, ModelSelectionProps`
 - **modes** (`@nucleux/modes`) — Modes — choose how the agent works on a request (Fast, Balanced, Deep research), as a chip in the composer or a Mode row in Request settings, switchable before sending.
   Exports: `useModes, useModesRoving, useModesDismiss, modesLabels, modesSettingsItem, modeSupportingText, ModesSegmented, ModesList, …`
 - **name** (`@nucleux/name`) — Name — a consistent name and role for the AI so it can be referred to and remembered.
@@ -214,19 +214,19 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **navigation-menu** (`@nucleux/navigation-menu`) — Navigation menu with dropdown panels.
   Exports: `NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink, NavigationMenuProps, NavigationMenuListProps, …`
 - **nudges** (`@nucleux/nudges`) — Nudges — tiny contextual hints that surface features the user hasn't discovered yet.
-  Exports: `NudgeAction, Nudge, NudgeVariant, NudgeSide, NudgePersist, NudgeActionProps, NudgeProps`
+  Exports: `NudgeAction, Nudge, NudgeVariant, NudgeSide, NudgeAppearance, NudgePersist, NudgeActionProps, NudgeProps`
 - **open-input** (`@nucleux/open-input`) — Open Input — free-form composer for any natural-language ask: grows to eight lines then Expand, with a Request settings menu (Mode, Tone, Style, Improve prompt).
-  Exports: `useComposerHeight, OpenInput, REQUEST_SETTINGS_ORDER, mergeRequestSettingsItems, requestSettingsLabel, useRequestSettings, RequestSettings, ComposerHeightOptions, …`
+  Exports: `useComposerHeight, OpenInputModelChip, OpenInput, REQUEST_SETTINGS_ORDER, mergeRequestSettingsItems, requestSettingsLabel, useRequestSettings, RequestSettings, …`
 - **pagination** (`@nucleux/pagination`) — Page navigation controls.
   Exports: `Pagination, PaginationProps`
 - **personality** (`@nucleux/personality`) — Personality — the voice and tone the assistant speaks in.
-  Exports: `defaultTones, Personality, PersonalityVoiceCard, PersonalitySampleDialog, ToneOption, PersonalityProps, PersonalityVoiceCardProps, PersonalitySampleTurn, …`
+  Exports: `defaultTones, Personality, PersonalityVoiceCard, PersonalitySampleDialog, ToneOption, PersonalityVariant, PersonalityProps, PersonalityVoiceCardProps, …`
 - **popover** (`@nucleux/popover`) — Click popover with outside-click/Escape.
   Exports: `Popover, PopoverTrigger, PopoverContent, PopoverProps, PopoverTriggerProps, PopoverContentProps`
 - **preset-styles** (`@nucleux/preset-styles`) — Preset Styles — one-click named styles for how the agent's output looks or reads, as a chip or a Style row in Request settings.
   Exports: `presetStylesCopy, presetStylesNoticeText, presetStylesMoveFocus, usePresetStyles, PresetStyles, PresetStylesVariant, PresetStyleSwatch, PresetStylesView, …`
 - **proactive** (`@nucleux/proactive`) — Proactive Suggestions — invisible AI moments that arrive exactly when needed.
-  Exports: `ProactiveSuggestion, ProactiveSuggestionVariant, ProactiveSuggestionPersist, ProactiveSuggestionProps`
+  Exports: `ProactiveSuggestion, ProactiveSuggestionVariant, ProactiveSuggestionDismissDisplay, ProactiveSuggestionPersist, ProactiveSuggestionProps`
 - **progress** (`@nucleux/progress`) — Determinate/indeterminate progress bar.
   Exports: `Progress, ProgressSize, ProgressProps`
 - **prompt-enhancer** (`@nucleux/prompt-enhancer`) — Prompt Enhancer — a magic-wand action that rewrites a short ask into a precise one, shown as a reviewable diff; starts from the wand or the Improve prompt row in Request settings.
@@ -258,9 +258,9 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **spinner** (`@nucleux/spinner`) — Animated loading indicator.
   Exports: `Spinner, SpinnerProps`
 - **structured-input** (`@nucleux/structured-input`) — StructuredInput — an agent's structured clarifying question.
-  Exports: `StructuredInput, StructuredInputSlots, structuredPartsToText, StructuredInputTags, StructuredInputWizard, StructuredOption, StructuredInputProps, StructuredInputSlot, …`
+  Exports: `StructuredInput, splitStructuredTags, structuredSlotType, StructuredInputSlots, structuredPartsToText, StructuredInputTags, StructuredInputWizard, StructuredOption, …`
 - **suggested-prompts** (`@nucleux/suggested-prompts`) — Suggested Prompts — smart, context-aware preset actions to jumpstart engagement.
-  Exports: `SuggestedPrompt, SuggestedPrompts, SuggestedPromptsVariant, SuggestedPromptsAfterSelect, SuggestedPromptItem, SuggestedPromptProps, SuggestedPromptsProps`
+  Exports: `SuggestedPrompt, SuggestedPrompts, SuggestedPromptsVariant, SuggestedPromptTone, SuggestedPromptsAfterSelect, SuggestedPromptItem, SuggestedPromptProps, SuggestedPromptsProps`
 - **suggestions** (`@nucleux/suggestions`) — Suggestions — quick-action chips above the composer, under an answer or on a selection that add to the request, never send it.
   Exports: `suggestionsMessages, suggestionKey, appendSuggestion, handleSuggestionsKeyDown, useSuggestions, Suggestions, useSuggestionsComposer, SuggestionsComposer, …`
 - **switch** (`@nucleux/switch`) — Accessible on/off toggle.
@@ -270,7 +270,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **tabs** (`@nucleux/tabs`) — Accessible tabs (horizontal/vertical).
   Exports: `Tabs, TabsList, TabsTrigger, TabsContent, TabsProps, TabsListProps, TabsTriggerProps, TabsContentProps`
 - **templates** (`@nucleux/templates`) — Templates — fill-in-the-blank prompt scaffolds that turn vague intent into a good question.
-  Exports: `Templates, TemplatesList, TemplatesBrowser, PromptSlot, PromptSegment, TemplatesProps, TemplatesListItem, TemplatesListProps, …`
+  Exports: `Templates, TemplatesList, TemplatesBrowser, PromptSlot, PromptSegment, TemplatesProps, TemplatesListItem, TemplatesListVariant, …`
 - **textarea** (`@nucleux/textarea`) — Multi-line text input.
   Exports: `Textarea, TextareaProps`
 - **toast** (`@nucleux/toast`) — Toast notifications + ToastProvider/useToast.
@@ -286,7 +286,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **visual-input** (`@nucleux/visual-input`) — Visual Input — attach images, screenshots, or videos as part of the ask.
   Exports: `fileMatchesAccept, VisualInput, VisualInputVariant, VisualInputSource, VisualInputFileStatus, VisualInputFile, VisualInputRejectionReason, VisualInputRejection, …`
 - **voice-input** (`@nucleux/voice-input`) — VoiceInput — a live dictation bar with a waveform.
-  Exports: `VoiceInput, VoiceInputState, VoiceInputVariant, VoiceInputProps`
+  Exports: `VOICE_INPUT_LEVELS, VoiceInput, VoiceInputState, VoiceInputVariant, VoiceInputProps`
 - **voice-tone** (`@nucleux/voice-tone`) — Voice & Tone — say how the reply should sound (named presets, a rules list, a sample line), as a Tone chip or a Tone row in Request settings, never editing the prompt.
   Exports: `VOICE_TONE_CUSTOM, defaultVoiceTones, defaultVoiceToneRules, useVoiceTone, VoiceTone, VoiceToneOption, VoiceToneRule, VoiceToneSetting, …`
 
@@ -303,7 +303,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **md3-attachments** (`@nucleux/md3-attachments`) — Material 3 Attachments — hand the agent the files this request depends on.
   Exports: `Md3Attachments, Md3AttachmentsItem, Md3AttachmentsTray, Md3AttachmentsTrigger, Md3AttachmentsDropZone, Md3AttachmentsNote, Md3AttachmentsProps, Md3AttachmentsItemProps, …`
 - **md3-autocomplete** (`@nucleux/md3-autocomplete`) — Material 3 Autocomplete — ghost text that anticipates and completes user actions.
-  Exports: `Md3Autocomplete, Md3AutocompleteProps, Md3AutocompleteVariant, Md3AutocompleteAcceptKey, Md3AutocompleteState, Md3AutocompleteRequest`
+  Exports: `Md3Autocomplete, Md3AutocompleteOverlay, Md3AutocompleteProps, Md3AutocompleteVariant, Md3AutocompleteAcceptKey, Md3AutocompleteState, Md3AutocompleteRequest, Md3AutocompleteOverlayProps`
 - **md3-badge** (`@nucleux/md3-badge`) — Material 3 badge.
   Exports: `Md3Badge, Md3BadgeProps`
 - **md3-banner** (`@nucleux/md3-banner`) — Material 3 banner.
@@ -325,7 +325,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **md3-chip** (`@nucleux/md3-chip`) — Material 3 chip (assist, filter, input, suggestion).
   Exports: `Md3Chip, Md3ChipVariant, Md3ChipProps`
 - **md3-color** (`@nucleux/md3-color`) — Material 3 AI Color — the reserved AI accent and working treatment in M3 colour roles.
-  Exports: `md3AiColorClasses, Md3AiColor, Md3AiColorHighlight, Md3AiColorDot, Md3AiColorWorkingRing, Md3AiColorProps, Md3AiColorHighlightProps, Md3AiColorDotProps, …`
+  Exports: `md3AiColorClasses, Md3AiColor, Md3AiColorHighlight, Md3AiColorDot, Md3AiColorWorkingRing, Md3AiColorStatus, Md3AiColorProps, Md3AiColorHighlightProps, …`
 - **md3-connectors** (`@nucleux/md3-connectors`) — Material 3 Connectors — grant the agent standing access to a service it needs.
   Exports: `Md3Connector, Md3ConnectorList, Md3ConnectorScopePicker, Md3ConnectorLivePill, Md3ConnectorProps, Md3ConnectorListProps, Md3ConnectorScopePickerProps, Md3ConnectorLivePillProps, …`
 - **md3-consent** (`@nucleux/md3-consent`) — Material 3 Consent — asks before the agent accesses something sensitive, with two real choices.
@@ -357,7 +357,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **md3-initial-cta** (`@nucleux/md3-initial-cta`) — Material 3 Initial CTA — the large, inviting composer that anchors an empty workspace.
   Exports: `Md3InitialCta, Md3InitialCtaProps, Md3InitialCtaVariant, Md3InitialCtaHeadingLevel`
 - **md3-knowledge-base** (`@nucleux/md3-knowledge-base`) — Material 3 Knowledge Base — persistent, named sources the agent grounds in, with readiness and provenance.
-  Exports: `Md3KnowledgeBase, Md3KnowledgeBaseSources, Md3KnowledgeBaseCoverage, Md3KnowledgeBaseProps, Md3KnowledgeBaseSourcesProps, Md3KnowledgeBaseCoverageProps, Md3KnowledgeBaseVariant, Md3KnowledgeBaseCoverageLevel, …`
+  Exports: `Md3KnowledgeBase, Md3KnowledgeBaseSources, Md3KnowledgeBaseCoverage, Md3KnowledgeBaseCard, Md3KnowledgeBaseProps, Md3KnowledgeBaseSourcesProps, Md3KnowledgeBaseCoverageProps, Md3KnowledgeBaseVariant, …`
 - **md3-list** (`@nucleux/md3-list`) — Material 3 list.
   Exports: `Md3List, Md3ListItem, Md3ListItemProps`
 - **md3-loading-indicator** (`@nucleux/md3-loading-indicator`) — Material 3 loading indicator.
@@ -371,7 +371,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **md3-message** (`@nucleux/md3-message`) — Material 3 chat message row.
   Exports: `Md3Message, Md3MessageProps`
 - **md3-model-selection** (`@nucleux/md3-model-selection`) — Material 3 Model Selection — choose which model answers, and know what changes when you do.
-  Exports: `Md3ModelSelection, Md3ModelSelectionProps, Md3ModelSelectionVariant`
+  Exports: `Md3ModelSelection, Md3ModelSelectionProps, Md3ModelSelectionVariant, Md3ModelSelectionTrigger, Md3ModelSelectionPicker`
 - **md3-modes** (`@nucleux/md3-modes`) — Material 3 Modes — choose how the agent approaches a request (Brainstorm, Draft, Review, Plan), as a chip in the composer or a Mode row in Request settings, switchable before sending.
   Exports: `Md3ModesSegmented, Md3ModesList, Md3ModesChip, Md3ModesPicker, Md3ModesNote, Md3Modes, Md3ModeOption, Md3ModesNotice, …`
 - **md3-name** (`@nucleux/md3-name`) — Material 3 Agent Name — a short, consistent name and role for the agent on every surface.
@@ -383,15 +383,15 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **md3-navigation-rail** (`@nucleux/md3-navigation-rail`) — Material 3 navigation rail.
   Exports: `Md3NavigationRail, Md3NavigationRailItem, Md3NavigationRailProps, Md3NavigationRailItemProps`
 - **md3-nudges** (`@nucleux/md3-nudges`) — Material 3 Nudges — a quiet, dismissible tip about a capability that would help right now.
-  Exports: `Md3NudgeAction, Md3Nudge, Md3NudgeProps, Md3NudgeActionProps, Md3NudgeVariant, Md3NudgeSide, Md3NudgePersist`
+  Exports: `Md3NudgeAction, Md3Nudge, Md3NudgeProps, Md3NudgeActionProps, Md3NudgeVariant, Md3NudgeSide, Md3NudgePersist, Md3NudgeAppearance`
 - **md3-open-input** (`@nucleux/md3-open-input`) — Material 3 Open Input — the persistent free-form composer for any natural-language ask: grows to eight lines then Expand, with a Request settings menu (Mode, Tone, Style, Improve prompt).
-  Exports: `Md3OpenInput, Md3RequestSettings, Md3OpenInputProps, Md3OpenInputVariant, Md3OpenInputSendKey, Md3RequestSettingsItem, Md3RequestSettingsProps`
+  Exports: `Md3OpenInputModelChip, Md3OpenInput, Md3RequestSettings, Md3OpenInputProps, Md3OpenInputVariant, Md3OpenInputSendKey, Md3OpenInputSendVariant, Md3OpenInputLayout, …`
 - **md3-personality** (`@nucleux/md3-personality`) — Material 3 Personality — choose how the agent writes while the trust language stays fixed.
-  Exports: `Md3Personality, Md3PersonalityVoiceCard, Md3PersonalitySampleDialog, Md3PersonalityProps, Md3PersonalityVoiceCardProps, Md3PersonalitySampleDialogProps`
+  Exports: `Md3Personality, Md3PersonalityVoiceCard, Md3PersonalitySampleDialog, Md3PersonalityProps, Md3PersonalityVariant, Md3PersonalityVoiceCardProps, Md3PersonalitySampleDialogProps`
 - **md3-preset-styles** (`@nucleux/md3-preset-styles`) — Material 3 Preset Styles — named styles for how replies are written, previewed and switchable mid-conversation, as a chip or a Style row in Request settings.
   Exports: `Md3PresetStyles, Md3PresetStylesProps, Md3PresetStylesVariant, Md3PresetStylesTrigger, Md3PresetStylesView, Md3PresetStylesNotice, Md3PresetStyle, Md3PresetStyleSwatch, …`
 - **md3-proactive** (`@nucleux/md3-proactive`) — Material 3 Proactive Suggestions — the agent notices something and offers one reviewable next step.
-  Exports: `Md3ProactiveSuggestion, Md3ProactiveSuggestionProps, Md3ProactiveSuggestionVariant, Md3ProactiveSuggestionPersist`
+  Exports: `Md3ProactiveSuggestion, Md3ProactiveSuggestionProps, Md3ProactiveSuggestionVariant, Md3ProactiveSuggestionPersist, Md3ProactiveSuggestionDismissDisplay`
 - **md3-progress** (`@nucleux/md3-progress`) — Material 3 progress indicators (linear, circular).
   Exports: `Md3LinearProgress, Md3CircularProgress, Md3LinearProgressProps, Md3CircularProgressProps`
 - **md3-prompt-enhancer** (`@nucleux/md3-prompt-enhancer`) — Material 3 Prompt Enhancer — proposes a clearer version of the request you wrote, every addition marked and explained; starts from the wand or the Improve prompt row in Request settings.
@@ -415,7 +415,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **md3-structured-input** (`@nucleux/md3-structured-input`) — Material 3 Structured Input — a compact form for exact values, suggestions marked and every value yours.
   Exports: `Md3StructuredInput, Md3StructuredInputSlots, Md3StructuredInputTags, Md3StructuredInputWizard, Md3StructuredInputProps, Md3StructuredInputSlotsProps, Md3StructuredInputTagsProps, Md3StructuredInputWizardProps, …`
 - **md3-suggested-prompts** (`@nucleux/md3-suggested-prompts`) — Material 3 Suggested Prompts — a few ready-made requests that place editable text in the composer.
-  Exports: `Md3SuggestedPrompt, Md3SuggestedPrompts, Md3SuggestedPromptsProps, Md3SuggestedPromptProps, Md3SuggestedPromptsVariant, Md3SuggestedPromptsAfterSelect`
+  Exports: `Md3SuggestedPrompt, Md3SuggestedPrompts, Md3SuggestedPromptsProps, Md3SuggestedPromptProps, Md3SuggestedPromptsVariant, Md3SuggestedPromptTone, Md3SuggestedPromptsAfterSelect`
 - **md3-suggestions** (`@nucleux/md3-suggestions`) — Material 3 Suggestions — agent-marked suggestion chips above the composer that add to the request, never send it.
   Exports: `Md3Suggestions, Md3SuggestionsComposer, Md3SuggestionsProps, Md3SuggestionsComposerProps, Md3SuggestionItem, Md3SuggestionsVariant, Md3SuggestionsStatus, Md3SuggestionsMessages`
 - **md3-switch** (`@nucleux/md3-switch`) — Material 3 switch.
@@ -423,7 +423,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **md3-tabs** (`@nucleux/md3-tabs`) — Material 3 primary tabs.
   Exports: `Md3Tabs, Md3TabsList, Md3Tab, Md3TabPanel, Md3TabsProps, Md3TabProps, Md3TabPanelProps`
 - **md3-templates** (`@nucleux/md3-templates`) — Material 3 Templates — fill-in-the-blank prompts, prefilled lists and a categorised template browser.
-  Exports: `Md3Templates, Md3TemplatesList, Md3TemplatesBrowser, Md3TemplatesProps, Md3TemplatesListProps, Md3TemplatesBrowserProps`
+  Exports: `Md3Templates, Md3TemplatesList, Md3TemplatesBrowser, Md3TemplatesProps, Md3TemplatesListProps, Md3TemplatesBrowserProps, Md3TemplatesListVariant`
 - **md3-text-field** (`@nucleux/md3-text-field`) — Material 3 text field (filled, outlined).
   Exports: `Md3TextField, Md3TextFieldVariant, Md3TextFieldProps`
 - **md3-time-picker** (`@nucleux/md3-time-picker`) — Material 3 time picker (input).

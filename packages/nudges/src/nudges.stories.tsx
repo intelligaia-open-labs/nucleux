@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Paperclip, Sparkles } from "lucide-react";
 import { Button } from "@nucleux/button";
 import { Nudge, NudgeAction } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Agent/Nudge",
@@ -13,6 +14,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** A bubble pointing at the upload button after three text-only sends. Closes on outside click or Escape. */
 export const TooltipNudge: Story = {

@@ -46,7 +46,7 @@ describe("ModelSelection review", () => {
     const user = userEvent.setup();
     const onAutoRouteChange = vi.fn();
     render(<ModelSelection variant="auto-route" routedModel="Sonnet" models={models} onAutoRouteChange={onAutoRouteChange} />);
-    expect(screen.getByText("currently: Sonnet")).toBeInTheDocument();
+    expect(screen.getByText("currently Sonnet")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Model" })).toBeNull();
     await user.click(screen.getByRole("switch", { name: "Auto-route" }));
     expect(onAutoRouteChange).toHaveBeenCalledWith(false);

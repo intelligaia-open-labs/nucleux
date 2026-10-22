@@ -76,7 +76,7 @@ const chipClasses: Partial<Record<DisclosureVariant, string>> = {
   badge:
     "gap-1 rounded-full bg-background/90 px-2 py-1 text-xs font-medium text-foreground shadow-sm backdrop-blur [&_svg]:size-3.5 [&_svg]:text-brand",
   "header-badge":
-    "gap-1 rounded bg-primary px-1.5 py-0.5 text-[10px] font-semibold uppercase leading-none tracking-wider text-primary-foreground [&_svg]:size-2.5",
+    "gap-1 rounded-[5px] bg-primary px-2 py-1 text-[10px] font-semibold uppercase leading-none tracking-[0.06em] text-primary-foreground [&_svg]:size-2.5",
   "input-chip":
     "gap-1.5 rounded-full border border-brand/40 bg-brand-muted px-2.5 py-0.5 text-xs font-semibold text-foreground",
   "footer-attribution": "gap-1.5 text-xs text-muted-foreground [&_svg]:size-3",

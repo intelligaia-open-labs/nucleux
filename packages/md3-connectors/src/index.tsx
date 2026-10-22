@@ -13,6 +13,8 @@ import type {
   ConnectorLivePillProps,
   ConnectorStatus,
   ConnectorScope,
+  ConnectorVariant,
+  ConnectorScopePickerVariant,
 } from "@nucleux/connectors";
 
 // API parity: every props type comes from the shadcn twin, so switching
@@ -26,6 +28,10 @@ export type Md3ConnectorLivePillProps = ConnectorLivePillProps;
 export type Md3ConnectorStatus = ConnectorStatus;
 /** Alias of `ConnectorScope` under the family prefix. */
 export type Md3ConnectorScope = ConnectorScope;
+/** "card" or "row". */
+export type Md3ConnectorVariant = ConnectorVariant;
+/** "card" or "plain". */
+export type Md3ConnectorScopePickerVariant = ConnectorScopePickerVariant;
 
 type Status = Md3ConnectorStatus;
 
@@ -71,7 +77,8 @@ function StatusWord({ tone, children }: { tone: "primary" | "tertiary" | "error"
  * Sign-in expired with Reconnect, Couldn't connect). Built on an outlined
  * Md3Card that arrives with a short fade-and-rise (none under reduced motion);
  * state colour sits in a dot beside the word, and the outline takes the
- * tertiary or error role for expired and failed sign-ins.
+ * tertiary or error role for expired and failed sign-ins. `variant="row"` is
+ * the compact list row: logo, name and description, and a text-button Connect.
  */
 export const Md3Connector = React.forwardRef<HTMLDivElement, Md3ConnectorProps>(
   (
@@ -89,6 +96,8 @@ export const Md3Connector = React.forwardRef<HTMLDivElement, Md3ConnectorProps>(
       scopes,
       account,
       error,
+      variant = "card",
+      detail,
       className,
       ...props
     },
@@ -96,6 +105,59 @@ export const Md3Connector = React.forwardRef<HTMLDivElement, Md3ConnectorProps>(
   ) => {
     const status: Status = statusProp ?? (connected ? "connected" : "disconnected");
     const reconnect = onReconnect ?? onConnect;
+    if (variant === "row") {
+      return (
+        <div
+          ref={ref}
+          data-status={status}
+          className={cn(
+            "flex min-h-[72px] items-center gap-4 rounded-md-md border bg-md-surface-container-low py-2 pl-4 pr-2 text-md-on-surface",
+            status === "expired" ? "border-md-tertiary" : status === "error" ? "border-md-error" : "border-md-outline-variant",
+            className,
+          )}
+          {...props}
+        >
+          <span className="inline-flex size-10 shrink-0 items-center justify-center text-md-on-surface [&_svg]:size-7">
+            {icon ?? <Plug aria-hidden="true" />}
+          </span>
+          <div className="flex min-w-0 flex-1 flex-col">
+            <span className="truncate text-base leading-6 tracking-[0.009em]">{name}</span>
+            {description && <span className="truncate text-sm leading-5 text-md-on-surface-variant">{description}</span>}
+          </div>
+          <span role="status" aria-live="polite" className="contents">
+            {status === "connected" && (
+              <StatusWord tone="primary">
+                {statusText.connected}
+                {detail ? <> · {detail}</> : null}
+              </StatusWord>
+            )}
+            {status === "connecting" && (
+              <span className="inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-md-on-surface-variant">
+                <Md3CircularProgress aria-hidden="true" role={undefined} aria-label={undefined} size={16} strokeWidth={2} className="motion-reduce:animate-none" />
+                {statusText.connecting}
+              </span>
+            )}
+            {status === "expired" && <StatusWord tone="tertiary">{statusText.expired}</StatusWord>}
+            {status === "error" && <StatusWord tone="error">{statusText.error}</StatusWord>}
+          </span>
+          {status === "connected" && onDisconnect && (
+            <Md3Button variant="text" onClick={onDisconnect} className="shrink-0">
+              {disconnectLabel}
+            </Md3Button>
+          )}
+          {status === "disconnected" && (
+            <Md3Button variant="text" onClick={onConnect} className="shrink-0">
+              {connectLabel}
+            </Md3Button>
+          )}
+          {(status === "expired" || status === "error") && reconnect && (
+            <Md3Button variant="text" onClick={reconnect} className="shrink-0">
+              {status === "expired" ? "Reconnect" : "Try again"}
+            </Md3Button>
+          )}
+        </div>
+      );
+    }
     return (
       <Md3Card
         ref={ref}
@@ -186,16 +248,43 @@ Md3Connector.displayName = "Md3Connector";
  * Material 3 connector list: available services with their status and a
  * connect button, one per row. Same API as `ConnectorList` — wrap
  * Md3Connector cards; each child becomes a list item, with an 8dp gap between
- * the outlined cards.
+ * the outlined cards. `grouped` puts `variant="row"` connectors in one
+ * outlined container divided by hairlines, and `showLabel` shows the label
+ * above it ("Available sources").
  */
 export const Md3ConnectorList = React.forwardRef<HTMLDivElement, Md3ConnectorListProps>(
-  ({ label = "Connected services", className, children, ...props }, ref) => (
-    <div ref={ref} role="list" aria-label={label} className={cn("flex flex-col gap-2", className)} {...props}>
-      {React.Children.map(children, (child) =>
-        child == null || child === false ? null : <div role="listitem">{child}</div>,
-      )}
-    </div>
-  ),
+  ({ label = "Connected services", showLabel = false, grouped = false, className, children, ...props }, ref) => {
+    const headingId = React.useId();
+    const list = (
+      <div
+        ref={showLabel ? undefined : ref}
+        role="list"
+        aria-label={showLabel ? undefined : label}
+        aria-labelledby={showLabel ? headingId : undefined}
+        className={cn(
+          "flex flex-col",
+          grouped
+            ? "divide-y divide-md-outline-variant overflow-hidden rounded-md-lg border border-md-outline-variant bg-md-surface-container-low [&>[role=listitem]>*]:rounded-none [&>[role=listitem]>*]:border-0"
+            : "gap-2",
+          !showLabel && className,
+        )}
+        {...(showLabel ? {} : props)}
+      >
+        {React.Children.map(children, (child) =>
+          child == null || child === false ? null : <div role="listitem">{child}</div>,
+        )}
+      </div>
+    );
+    if (!showLabel) return list;
+    return (
+      <div ref={ref} className={cn("flex flex-col gap-2", className)} {...props}>
+        <p id={headingId} className="text-sm leading-5 tracking-[0.25px] text-md-on-surface-variant">
+          {label}
+        </p>
+        {list}
+      </div>
+    );
+  },
 );
 Md3ConnectorList.displayName = "Md3ConnectorList";
 
@@ -219,6 +308,7 @@ export const Md3ConnectorScopePicker = React.forwardRef<HTMLDivElement, Md3Conne
       allowWrite,
       onAllowWriteChange,
       writeLabel = "Also allow changes (create, edit, post)",
+      variant = "card",
       className,
       ...props
     },
@@ -238,12 +328,19 @@ export const Md3ConnectorScopePicker = React.forwardRef<HTMLDivElement, Md3Conne
         role="group"
         aria-labelledby={headingId}
         className={cn(
-          "flex flex-col gap-1 rounded-md-md border border-md-outline-variant bg-md-surface-container-low p-4 text-md-on-surface",
+          "flex flex-col gap-1 text-md-on-surface",
+          variant === "card" && "rounded-md-md border border-md-outline-variant bg-md-surface-container-low p-4",
           className,
         )}
         {...props}
       >
-        <p id={headingId} className="text-sm font-medium tracking-[0.006em] text-md-on-surface">
+        <p
+          id={headingId}
+          className={cn(
+            "text-sm tracking-[0.006em]",
+            variant === "plain" ? "text-md-on-surface-variant" : "font-medium text-md-on-surface",
+          )}
+        >
           {title ?? <>{agentName} can read from:</>}
         </p>
         <ul className="-mx-2 flex flex-col">

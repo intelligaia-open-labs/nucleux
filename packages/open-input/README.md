@@ -11,8 +11,26 @@ the text: a failed send keeps it and offers Retry.
 
 ## Exports
 
-- **`OpenInput`** — the composer (ref → the `<textarea>`)
-- Types: `OpenInputProps`, `OpenInputVariant`, `OpenInputSendKey`
+- **`OpenInput`** — the composer (ref → the `<textarea>`), drawn as the nucleux.in composer by default
+- **`OpenInputModelChip`** — the toolbar's model chip ("5.5 Instant ▾"), for the `model` slot
+- Types: `OpenInputProps`, `OpenInputVariant`, `OpenInputSendKey`, `OpenInputSendVariant`, `OpenInputLayout`, `OpenInputModelChipProps`
+
+## The nucleux.in composer
+
+A white card: the request on top, then a toolbar — a `+` (`onAdd`), and on the right the `model` chip, a mic (`onVoice`) and a ghost paper-plane send (`sendVariant="ghost"`, the default). With `layout="auto"` (default) it is one row while the request fits on a line, and the field moves above the toolbar once it wraps.
+
+```tsx
+import { OpenInput, OpenInputModelChip } from "@nucleux/open-input";
+
+<OpenInput
+  aria-label="Message Aria"
+  placeholder="Ask Aria anything…"
+  onSubmit={send}
+  onAdd={openAddMenu}
+  model={<OpenInputModelChip name="5.5" detail="Instant" aria-haspopup="menu" onClick={openModels} />}
+  onVoice={startDictation}
+/>
+```
 
 ## Variants
 

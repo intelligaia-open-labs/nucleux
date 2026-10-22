@@ -1,17 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Disclaimer } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Agent/Disclaimer",
   component: Disclaimer,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[26rem]"><Story /></div>],
+  decorators: [(Story, { parameters }) => (parameters.bare ? <Story /> : <div className="w-[26rem]"><Story /></div>)],
   args: { agentName: "Aria" },
 } satisfies Meta<typeof Disclaimer>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo />, parameters: { bare: true } };
 
 /** What Aria can do — on the welcome screen, so the first thing read is what to ask for. */
 export const CapabilitiesList: Story = {

@@ -2,6 +2,7 @@ import * as React from "react";
 import { CheckCircle2, Sparkles, X } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import type {
+  ProactiveSuggestionDismissDisplay,
   ProactiveSuggestionPersist,
   ProactiveSuggestionProps,
   ProactiveSuggestionVariant,
@@ -16,6 +17,8 @@ export type Md3ProactiveSuggestionProps = ProactiveSuggestionProps;
 export type Md3ProactiveSuggestionVariant = ProactiveSuggestionVariant;
 /** "none", "session" or "local". */
 export type Md3ProactiveSuggestionPersist = ProactiveSuggestionPersist;
+/** "icon" or "button". */
+export type Md3ProactiveSuggestionDismissDisplay = ProactiveSuggestionDismissDisplay;
 
 // Copied from @nucleux/proactive (internal there) — the same storage keys, so a
 // suggestion dismissed in one family stays dismissed in the other.
@@ -76,6 +79,7 @@ export const Md3ProactiveSuggestion = React.forwardRef<HTMLElement, Md3Proactive
       snoozeLabel = "Not now",
       onDismiss,
       dismissLabel = "Dismiss suggestion",
+      dismissDisplay = "icon",
       open: openProp,
       defaultOpen = true,
       onOpenChange,
@@ -213,6 +217,7 @@ export const Md3ProactiveSuggestion = React.forwardRef<HTMLElement, Md3Proactive
       );
     } else if (visible) {
       const toast = variant === "side-toast";
+      const dismissInline = dismissDisplay === "button";
       body = (
         <section
           ref={ref}
@@ -264,10 +269,15 @@ export const Md3ProactiveSuggestion = React.forwardRef<HTMLElement, Md3Proactive
                     {snoozeLabel}
                   </Md3Button>
                 )}
+                {dismissInline && (
+                  <Md3Button variant="text" onClick={dismiss} className={cn(small, "px-3", !toast && "text-current")}>
+                    {dismissLabel}
+                  </Md3Button>
+                )}
               </div>
             )}
           </div>
-          {!resolved && dismissButton}
+          {!resolved && !dismissInline && dismissButton}
         </section>
       );
     }

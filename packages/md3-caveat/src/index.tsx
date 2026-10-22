@@ -17,28 +17,59 @@ const DEFAULT_TEXT = "AI can make mistakes. Verify important information.";
  * mark in body-small on-surface-variant, never the error role. `below-input`
  * is a caption under the composer; `output-footer` gets a surface-container
  * ground so it separates from the output it qualifies, and can carry the
- * next steps that remove the reason for it. Rendered as a `note`.
+ * next steps that remove the reason for it; with a `detail` line it becomes
+ * nucleux.in's tonal card (surface-container-highest, the limitation over why
+ * it matters, then text-button next steps). Rendered as a `note`.
  */
 export const Md3Caveat = React.forwardRef<HTMLParagraphElement, Md3CaveatProps>(
-  ({ variant = "below-input", icon, actions, className, children, ...props }, ref) => (
-    <p
-      ref={ref}
-      role="note"
-      data-variant={variant}
-      className={cn(
-        "items-center gap-2 text-xs leading-4 tracking-[0.4px] text-md-on-surface-variant [&_svg]:size-3.5 [&_svg]:shrink-0",
-        variant === "output-footer"
-          ? "mt-3.5 flex w-full flex-wrap rounded-md-sm bg-md-surface-container px-3 py-2.5 animate-nx-fade-in motion-reduce:animate-none"
-          : "inline-flex",
-        className,
-      )}
-      {...props}
-    >
-      {icon === undefined ? <Info aria-hidden="true" /> : icon}
-      <span>{children ?? DEFAULT_TEXT}</span>
-      {actions && <span className="ml-auto inline-flex flex-wrap items-center gap-1">{actions}</span>}
-    </p>
-  ),
+  ({ variant = "below-input", icon, actions, detail, className, children, ...props }, ref) => {
+    const glyph = icon === undefined ? <Info aria-hidden="true" /> : icon;
+    if (detail != null) {
+      // The tonal card: limitation (body-large), why it matters (body-medium), then text-button next steps.
+      return (
+        <p
+          ref={ref}
+          role="note"
+          data-variant={variant}
+          className={cn(
+            "flex w-full flex-col gap-1.5 text-md-on-surface [&_svg]:shrink-0",
+            variant === "output-footer" &&
+              "mt-3.5 rounded-md-md bg-md-surface-container-highest px-4 pb-1.5 pt-3.5 animate-nx-fade-in motion-reduce:animate-none",
+            className,
+          )}
+          {...props}
+        >
+          <span className="flex items-start gap-2.5 [&>svg]:mt-0.5 [&>svg]:size-5 [&>svg]:text-md-on-surface-variant">
+            {glyph}
+            <span className="flex min-w-0 flex-col gap-0.5">
+              <span className="text-base leading-6 tracking-[0.15px]">{children ?? DEFAULT_TEXT}</span>
+              <span className="text-sm leading-5 tracking-[0.25px] text-md-on-surface-variant">{detail}</span>
+            </span>
+          </span>
+          {actions && <span className="ml-4 inline-flex flex-wrap items-center gap-1 [&_svg]:size-[1.125rem]">{actions}</span>}
+        </p>
+      );
+    }
+    return (
+      <p
+        ref={ref}
+        role="note"
+        data-variant={variant}
+        className={cn(
+          "items-center gap-2 text-xs leading-4 tracking-[0.4px] text-md-on-surface-variant [&_svg]:size-3.5 [&_svg]:shrink-0",
+          variant === "output-footer"
+            ? "mt-3.5 flex w-full flex-wrap rounded-md-sm bg-md-surface-container px-3 py-2.5 animate-nx-fade-in motion-reduce:animate-none"
+            : "inline-flex",
+          className,
+        )}
+        {...props}
+      >
+        {glyph}
+        <span>{children ?? DEFAULT_TEXT}</span>
+        {actions && <span className="ml-auto inline-flex flex-wrap items-center gap-1">{actions}</span>}
+      </p>
+    );
+  },
 );
 Md3Caveat.displayName = "Md3Caveat";
 

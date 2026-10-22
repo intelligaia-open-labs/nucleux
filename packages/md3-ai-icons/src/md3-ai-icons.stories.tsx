@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Md3AiIcon, Md3AiIconProvider, Md3AiIcons } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
+import { Md3AiIcon, Md3AiIconLegend, Md3AiIconProvider, Md3AiIcons } from "./index";
 
 const meta = {
   title: "Material 3 Agent/Md3AiIcons",
@@ -10,6 +11,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** The lingua franca for AI: a four-point sparkle, solid and outline. */
 export const Sparkle: Story = {
@@ -68,4 +72,9 @@ export const ProductGlyphs: Story = {
       </div>
     </Md3AiIconProvider>
   ),
+};
+
+/** The icon language written down: each meaning, its mark at 24 / 20 / 16 and what it tells people. */
+export const IconLanguage: Story = {
+  render: () => <Md3AiIconLegend current="ai-action" className="w-[37.5rem] max-w-full" />,
 };

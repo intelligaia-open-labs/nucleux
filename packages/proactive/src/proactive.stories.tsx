@@ -1,17 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ProactiveSuggestion } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Agent/ProactiveSuggestion",
   component: ProactiveSuggestion,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[30rem]"><Story /></div>],
+  decorators: [(Story, { parameters }) => (parameters.bare ? <Story /> : <div className="w-[30rem]"><Story /></div>)],
   args: { agentName: "Aria", title: "Three renewals expire this week", actionLabel: "Draft emails" },
 } satisfies Meta<typeof ProactiveSuggestion>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo />, parameters: { bare: true } };
 
 /** At the top of a surface: the finding, the evidence, one action, Not now and ×. */
 export const ContextualBanner: Story = {

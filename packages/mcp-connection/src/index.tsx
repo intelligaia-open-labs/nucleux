@@ -83,6 +83,12 @@ export interface McpConnectionProps extends Omit<React.HTMLAttributes<HTMLElemen
   onRetry?: () => void;
   /** Sign in again; offered instead of Try again when the sign-in step failed. */
   onAuthenticate?: () => void;
+  /** Label of the Connect button. Defaults to `"Connect"`. */
+  connectLabel?: React.ReactNode;
+  /** Before anything is connected: a heading for the empty state, e.g. `"No MCP servers connected"`. With it (or `emptyDescription`) the Connect button sits under the text. */
+  emptyTitle?: React.ReactNode;
+  /** Before anything is connected: what connecting gives the agent. */
+  emptyDescription?: React.ReactNode;
 }
 
 /**
@@ -93,7 +99,9 @@ export interface McpConnectionProps extends Omit<React.HTMLAttributes<HTMLElemen
  * and scopes it is signed in with, and Connect / Disconnect / Try again. All
  * networking is the app's: it moves `status` and `stage` and handles the
  * callbacks. Put McpConnectionTools, McpConnectionPermission and
- * McpConnectionActionPreview inside as children.
+ * McpConnectionActionPreview inside as children. Before anything is connected,
+ * `emptyTitle` / `emptyDescription` turn the card into its empty state with
+ * the Connect button (`connectLabel`) under the text.
  */
 export const McpConnection = React.forwardRef<HTMLElement, McpConnectionProps>(
   (
@@ -111,6 +119,9 @@ export const McpConnection = React.forwardRef<HTMLElement, McpConnectionProps>(
       onDisconnect,
       onRetry,
       onAuthenticate,
+      connectLabel = "Connect",
+      emptyTitle,
+      emptyDescription,
       className,
       children,
       ...props
@@ -119,6 +130,12 @@ export const McpConnection = React.forwardRef<HTMLElement, McpConnectionProps>(
   ) => {
     const titleId = React.useId();
     const usable = status === "connected";
+    const empty = status === "disconnected" && (emptyTitle != null || emptyDescription != null);
+    const footer =
+      (status === "disconnected" && !!onConnect && !empty) ||
+      (status === "connecting" && !!onDisconnect) ||
+      (status === "error" && !!(onRetry || onAuthenticate || onDisconnect)) ||
+      (status === "connected" && !!onDisconnect);
     const showSteps = status === "connecting" || status === "error";
     const current = stageOrder.indexOf(stage ?? "reach");
 
@@ -204,6 +221,18 @@ export const McpConnection = React.forwardRef<HTMLElement, McpConnectionProps>(
             </ol>
           )}
 
+          {empty && (
+            <div className="flex flex-col items-start gap-1 px-4 pb-4">
+              {emptyTitle != null && <p className="text-sm font-semibold text-foreground">{emptyTitle}</p>}
+              {emptyDescription != null && <p className="text-sm text-muted-foreground">{emptyDescription}</p>}
+              {onConnect && (
+                <Button size="sm" onClick={onConnect} className="mt-2">
+                  {connectLabel}
+                </Button>
+              )}
+            </div>
+          )}
+
           {status === "error" && error && (
             <p className="mx-4 mb-3 rounded-lg bg-destructive/10 px-3 py-2 text-xs text-destructive">{error}</p>
           )}
@@ -225,11 +254,11 @@ export const McpConnection = React.forwardRef<HTMLElement, McpConnectionProps>(
 
           {children && <div className="flex flex-col gap-3 border-t border-border p-4">{children}</div>}
 
-          {(onConnect || onDisconnect || onRetry || onAuthenticate) && (
+          {footer && (
             <div className="flex justify-end gap-2 border-t border-border px-4 py-3">
               {status === "disconnected" && onConnect && (
                 <Button size="sm" onClick={onConnect}>
-                  Connect
+                  {connectLabel}
                 </Button>
               )}
               {status === "connecting" && onDisconnect && (
@@ -369,6 +398,9 @@ export const McpConnectionTool = React.forwardRef<HTMLLIElement, McpConnectionTo
 );
 McpConnectionTool.displayName = "McpConnectionTool";
 
+/** "grouped" (default): tools in risk bands, each row with its name, availability and schema. "compact": one line per tool — its id and what it does. */
+export type McpConnectionToolsVariant = "grouped" | "compact";
+
 export interface McpConnectionToolsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
   /** The tools discovery turned up. */
   tools: McpConnectionToolInfo[];
@@ -378,6 +410,8 @@ export interface McpConnectionToolsProps extends Omit<React.HTMLAttributes<HTMLD
   onToolEnabledChange?: (id: string, enabled: boolean) => void;
   /** The sentence that keeps the list honest. Pass `null` to hide. */
   trustNote?: React.ReactNode;
+  /** "grouped" (default) or "compact". */
+  variant?: McpConnectionToolsVariant;
 }
 
 /**
@@ -385,9 +419,10 @@ export interface McpConnectionToolsProps extends Omit<React.HTMLAttributes<HTMLD
  * least dangerous first — Reads only, Changes things, Destructive — so reading
  * down the list is reading up a risk ladder. Ends with a reminder that names
  * and descriptions come from the server, not from this product.
+ * `variant="compact"` lists one line per tool: its id and what it does.
  */
 export const McpConnectionTools = React.forwardRef<HTMLDivElement, McpConnectionToolsProps>(
-  ({ tools, title, onToolEnabledChange, trustNote, className, ...props }, ref) => {
+  ({ tools, title, onToolEnabledChange, trustNote, variant = "grouped", className, ...props }, ref) => {
     const { name } = React.useContext(McpContext);
     const headingId = React.useId();
     const count = `${tools.length} ${tools.length === 1 ? "action" : "actions"}`;
@@ -405,7 +440,30 @@ export const McpConnectionTools = React.forwardRef<HTMLDivElement, McpConnection
         <p id={headingId} className="border-b border-border bg-muted/50 px-3 py-2 text-xs font-semibold text-foreground">
           {title ?? (name ? <>{name} · {count}</> : `Tools · ${count}`)}
         </p>
-        {bands.map(({ risk, items }) => (
+        {variant === "compact" && (
+          <ul aria-labelledby={headingId} className="py-1">
+            {tools.map((tool) => {
+              const enabled = tool.enabled ?? true;
+              const titleText = typeof tool.title === "string" ? tool.title : tool.id;
+              return (
+                <li key={tool.id} data-risk={tool.risk ?? "read"} className={cn("flex items-center gap-2 px-3 py-2", !enabled && "opacity-70")}>
+                  <code className="shrink-0 rounded bg-brand/10 px-1.5 py-0.5 font-mono text-xs text-brand">{tool.id}</code>
+                  {tool.description && <span className="min-w-0 flex-1 text-xs text-muted-foreground">{tool.description}</span>}
+                  {onToolEnabledChange && (
+                    <Switch
+                      size="sm"
+                      checked={enabled}
+                      onCheckedChange={(on) => onToolEnabledChange(tool.id, on)}
+                      aria-label={`${titleText} — ${riskLabel[tool.risk ?? "read"]}`}
+                      className="ml-auto"
+                    />
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        )}
+        {variant === "grouped" && bands.map(({ risk, items }) => (
           <div key={risk} data-risk={risk} className="border-b border-border last:border-b-0">
             <p
               id={`${headingId}-${risk}`}
@@ -522,10 +580,54 @@ export const McpConnectionPermission = React.forwardRef<HTMLDivElement, McpConne
 McpConnectionPermission.displayName = "McpConnectionPermission";
 
 /** Formats a call as `tool({ key: "value", … })`. */
-function formatCall(tool: string, args?: Record<string, unknown>): string {
-  if (!args || Object.keys(args).length === 0) return `${tool}()`;
-  const parts = Object.entries(args).map(([k, v]) => `${k}: ${JSON.stringify(v)}`);
-  return `${tool}({ ${parts.join(", ")} })`;
+/** A proposed call split for display: the server prefix, the tool, and each argument as JSON. */
+export interface McpCallParts {
+  /** `"linear"` in `"linear.create_issue"`; empty when the name has no prefix. */
+  server: string;
+  /** `"create_issue"`. */
+  method: string;
+  /** `[JSON key, JSON value]` pairs, e.g. `['"title"', '"Renewal flow broken"']`. */
+  args: Array<[string, string]>;
+}
+
+/** Splits `tool` and `args` for the action preview, so each family can colour them. */
+export function mcpCallParts(tool: string, args?: Record<string, unknown>): McpCallParts {
+  const dot = tool.indexOf(".");
+  return {
+    server: dot > 0 ? tool.slice(0, dot) : "",
+    method: dot > 0 ? tool.slice(dot + 1) : tool,
+    args: Object.entries(args ?? {}).map(([k, v]) => [JSON.stringify(k), JSON.stringify(v)]),
+  };
+}
+
+/** The call as code: `server.method({` / `  "key": value,` / `})`, the server in the accent, keys and values tinted. */
+function CallCode({ tool, args }: { tool: string; args?: Record<string, unknown> }) {
+  const call = mcpCallParts(tool, args);
+  return (
+    <>
+      {call.server && (
+        <>
+          <span className="text-brand">{call.server}</span>.
+        </>
+      )}
+      {call.method}
+      {call.args.length === 0 ? (
+        "()"
+      ) : (
+        <>
+          {"({"}
+          {call.args.map(([k, v], i) => (
+            <React.Fragment key={k}>
+              {"\n  "}
+              <span className="text-warning">{k}</span>: <span className="text-success">{v}</span>
+              {i < call.args.length - 1 ? "," : ""}
+            </React.Fragment>
+          ))}
+          {"\n})"}
+        </>
+      )}
+    </>
+  );
 }
 
 export interface McpConnectionActionPreviewProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
@@ -607,8 +709,8 @@ export const McpConnectionActionPreview = React.forwardRef<HTMLElement, McpConne
         >
           {title ?? (destructive ? "Destructive action" : "Proposed action")}
         </h4>
-        <code className="block whitespace-pre-wrap break-words rounded-md border border-border bg-background p-2 font-mono text-xs text-foreground">
-          {formatCall(tool, args)}
+        <code className="block whitespace-pre-wrap break-words rounded-md border border-border bg-background p-2.5 font-mono text-xs leading-[18px] text-foreground">
+          <CallCode tool={tool} args={args} />
         </code>
         {effect && <p className="text-xs text-muted-foreground">{effect}</p>}
         <div role="status" aria-live="polite" className="text-xs empty:hidden">
@@ -643,7 +745,7 @@ export const McpConnectionActionPreview = React.forwardRef<HTMLElement, McpConne
               </Button>
             )}
             {onDeny && (
-              <Button size="sm" variant="ghost" onClick={onDeny}>
+              <Button size="sm" variant="secondary" onClick={onDeny} className="text-muted-foreground">
                 {denyLabel}
               </Button>
             )}

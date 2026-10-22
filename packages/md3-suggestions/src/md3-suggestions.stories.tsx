@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Md3AgentComposer } from "@nucleux/md3-agent-composer";
 import { Md3Suggestions, Md3SuggestionsComposer, type Md3SuggestionItem } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const RELEASE: Md3SuggestionItem[] = [
   { id: "blockers", label: "Include unresolved blockers" },
@@ -38,8 +39,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const composerCard =
-  "rounded-md-xl border border-md-outline-variant bg-md-surface px-4 pb-2 pt-4 text-base shadow-md-1";
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
+
 
 /**
  * The site's live preview: after a pause on “Summarize the September
@@ -94,7 +96,7 @@ export const ComposeChips: Story = {
     return (
       <div className="flex w-[30rem] flex-col gap-3 bg-md-surface p-4">
         <Md3Suggestions {...args} onSelect={(item) => setDraft(`${item.label}.`)} />
-        <Md3AgentComposer value={draft} onValueChange={setDraft} onSubmit={() => setDraft("")} placeholder="Edit your draft…" className={composerCard} />
+        <Md3AgentComposer value={draft} onValueChange={setDraft} onSubmit={() => setDraft("")} placeholder="Edit your draft…" />
       </div>
     );
   },

@@ -1,17 +1,30 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Md3GestureInput } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Material 3 Agent/Md3GestureInput",
   component: Md3GestureInput,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[26rem]"><Story /></div>],
+  decorators: [
+    (Story, { id }) =>
+      id.endsWith("--site-preview") ? (
+        <div className="flex w-[44rem] max-w-full justify-center">
+          <Story />
+        </div>
+      ) : (
+        <div className="w-[26rem]"><Story /></div>
+      ),
+  ],
   args: { actions: [], onGesture: () => {}, onDismiss: () => {}, onUndo: () => {} },
 } satisfies Meta<typeof Md3GestureInput>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** Draw a loose circle around a region — the agent reads the circled area as the target. */
 export const CircleToSelect: Story = {

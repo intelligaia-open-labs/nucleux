@@ -8,6 +8,7 @@ import type {
   TemplatesCategory,
   TemplatesListItem,
   TemplatesListProps,
+  TemplatesListVariant,
   TemplatesProps,
 } from "@nucleux/templates";
 import { Md3Button } from "@nucleux/md3-button";
@@ -18,6 +19,8 @@ export type Md3TemplatesProps = TemplatesProps;
 export type Md3TemplatesListProps = TemplatesListProps;
 /** Props of {@link Md3TemplatesBrowser} — identical to `TemplatesBrowserProps`. */
 export type Md3TemplatesBrowserProps = TemplatesBrowserProps;
+/** "cards" or "grouped". */
+export type Md3TemplatesListVariant = TemplatesListVariant;
 export type { PromptSegment, PromptSlot, TemplatesCategory, TemplatesListItem };
 
 const stateLayer =
@@ -36,7 +39,7 @@ const focusRing =
  */
 export const Md3Templates = React.forwardRef<HTMLFormElement, Md3TemplatesProps>(
   (
-    { segments, values, defaultValues = {}, onValuesChange, onComplete, submitLabel = "Use this prompt", className, ...props },
+    { segments, values, defaultValues = {}, onValuesChange, onComplete, submitLabel = "Use this prompt", showSubmit = true, className, ...props },
     ref,
   ) => {
     const [internal, setInternal] = React.useState<Record<string, string>>(defaultValues);
@@ -107,16 +110,18 @@ export const Md3Templates = React.forwardRef<HTMLFormElement, Md3TemplatesProps>
             );
           })}
         </p>
-        <div className="flex items-center justify-end gap-3">
-          {required.length > 0 && (
-            <span id={statusId} aria-live="polite" className="mr-auto text-xs tracking-[0.4px] text-md-on-surface-variant">
-              {missing === 0 ? "Ready to use" : `${missing} ${missing === 1 ? "blank" : "blanks"} left`}
-            </span>
-          )}
-          <Md3Button type="submit" disabled={missing > 0} aria-describedby={required.length > 0 ? statusId : undefined}>
-            {submitLabel}
-          </Md3Button>
-        </div>
+        {showSubmit && (
+          <div className="flex items-center justify-end gap-3">
+            {required.length > 0 && (
+              <span id={statusId} aria-live="polite" className="mr-auto text-xs tracking-[0.4px] text-md-on-surface-variant">
+                {missing === 0 ? "Ready to use" : `${missing} ${missing === 1 ? "blank" : "blanks"} left`}
+              </span>
+            )}
+            <Md3Button type="submit" disabled={missing > 0} aria-describedby={required.length > 0 ? statusId : undefined}>
+              {submitLabel}
+            </Md3Button>
+          </div>
+        )}
       </form>
     );
   },
@@ -134,31 +139,73 @@ const toListItem = (item: string | TemplatesListItem): TemplatesListItem =>
  * a keyboard-reachable button in a labelled list; pass `aria-label`.
  */
 export const Md3TemplatesList = React.forwardRef<HTMLUListElement, Md3TemplatesListProps>(
-  ({ items, onSelect, className, ...props }, ref) => (
-    <ul ref={ref} role="list" className={cn("m-0 flex list-none flex-col gap-2 p-0", className)} {...props}>
-      {items.map(toListItem).map((item) => (
-        <li key={item.id ?? item.title}>
-          <button
-            type="button"
-            onClick={() => onSelect?.(item.prompt ?? item.title, item)}
-            className={cn(
-              "relative flex w-full items-center gap-4 overflow-hidden rounded-md-md border border-md-outline-variant bg-md-surface px-4 py-3 text-left text-md-on-surface",
-              stateLayer,
-              focusRing,
-            )}
-          >
-            <span className="relative flex min-w-0 flex-1 flex-col gap-0.5">
-              <span className="text-sm font-medium leading-5 tracking-[0.1px]">{item.title}</span>
-              {item.description && (
-                <span className="text-xs leading-4 tracking-[0.4px] text-md-on-surface-variant">{item.description}</span>
+  ({ items, onSelect, variant = "cards", className, ...props }, ref) => {
+    const grouped = variant === "grouped";
+    return (
+      <ul
+        ref={ref}
+        role="list"
+        className={cn(
+          "m-0 flex list-none flex-col p-0",
+          grouped
+            ? "overflow-hidden rounded-md-lg border border-md-outline-variant bg-md-surface py-2"
+            : "gap-2",
+          className,
+        )}
+        {...props}
+      >
+        {items.map(toListItem).map((item) => (
+          <li key={item.id ?? item.title}>
+            <button
+              type="button"
+              onClick={() => onSelect?.(item.prompt ?? item.title, item)}
+              className={cn(
+                "relative flex w-full items-center gap-4 overflow-hidden text-left text-md-on-surface",
+                stateLayer,
+                grouped
+                  ? "px-4 py-4 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-md-secondary"
+                  : ["rounded-md-md border border-md-outline-variant bg-md-surface px-4 py-3", focusRing],
               )}
-            </span>
-            <ArrowRight aria-hidden="true" className="relative size-[18px] shrink-0 text-md-on-surface-variant" />
-          </button>
-        </li>
-      ))}
-    </ul>
-  ),
+            >
+              {item.icon && (
+                <span aria-hidden="true" className={cn("relative shrink-0 text-md-on-surface-variant", grouped ? "[&_svg]:size-6" : "[&_svg]:size-5")}>
+                  {item.icon}
+                </span>
+              )}
+              <span className={cn("relative flex min-w-0 flex-1 flex-col", grouped ? "gap-1" : "gap-0.5")}>
+                <span className={cn(grouped ? "text-base leading-6 tracking-[0.15px]" : "text-sm font-medium leading-5 tracking-[0.1px]")}>
+                  {item.title}
+                </span>
+                {item.description && (
+                  <span
+                    className={cn(
+                      "text-md-on-surface-variant",
+                      grouped ? "text-sm leading-5 tracking-[0.25px]" : "text-xs leading-4 tracking-[0.4px]",
+                    )}
+                  >
+                    {item.description}
+                  </span>
+                )}
+                {item.meta && (
+                  <span
+                    className={cn(
+                      "text-md-on-surface-variant",
+                      grouped ? "text-sm leading-5 tracking-[0.25px]" : "text-xs leading-4 tracking-[0.4px]",
+                    )}
+                  >
+                    {item.meta}
+                  </span>
+                )}
+              </span>
+              {!grouped && !item.icon && (
+                <ArrowRight aria-hidden="true" className="relative size-[18px] shrink-0 text-md-on-surface-variant" />
+              )}
+            </button>
+          </li>
+        ))}
+      </ul>
+    );
+  },
 );
 Md3TemplatesList.displayName = "Md3TemplatesList";
 

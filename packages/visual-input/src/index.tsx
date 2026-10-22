@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import { Attachment, AttachmentGroup } from "@nucleux/attachment";
-import { AlertCircle, Camera, ImageIcon, ImageUp, Paperclip, RotateCcw, Trash2, X } from "lucide-react";
+import { AlertCircle, Camera, ImageIcon, Paperclip, RotateCcw, Trash2, X } from "lucide-react";
 
 export type VisualInputVariant = "drag-drop" | "paste-chip" | "camera-capture";
 
@@ -36,8 +36,10 @@ export interface VisualInputRejection {
   message: string;
 }
 
-export interface VisualInputProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
+export interface VisualInputProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "onChange" | "defaultValue"
+> {
   /** `"drag-drop"` (default) dashed drop zone, `"paste-chip"` chips above a composer, `"camera-capture"` viewfinder with a shutter. */
   variant?: VisualInputVariant;
   /** Sources offered. Defaults to upload + paste (+ camera for `"camera-capture"`). */
@@ -60,7 +62,11 @@ export interface VisualInputProps
   onFilesChange?: (files: VisualInputFile[]) => void;
   /** Called with files that were refused (wrong type, too large, too many). */
   onReject?: (rejections: VisualInputRejection[]) => void;
-  /** Main line of the drop zone. */
+  /**
+   * Main line of the drop zone (or of the paste-chip's attach row). In
+   * `"paste-chip"` with `sources={["paste"]}`, `null` drops the attach row
+   * entirely, for when the composer's own + is the way in.
+   */
   label?: React.ReactNode;
   /** Secondary line, e.g. `"PNG, JPG, PDF · up to 20 MB"`. Derived from `accept`/`maxSize` when omitted. */
   hint?: React.ReactNode;
@@ -117,7 +123,9 @@ const canPreview = () => typeof URL !== "undefined" && typeof URL.createObjectUR
  * (`<input capture>`). Each visual lands as a removable chip with a real preview,
  * type/size/count limits are checked with plain-language errors in a live region,
  * and nothing is ever sent: the app pairs the files with the text prompt and
- * sends on the person's command. Variants: drag-drop, paste-chip, camera-capture.
+ * sends on the person's command. Variants: drag-drop (the whole dashed zone is the
+ * browse control unless a camera is offered; visuals stack under it as full-width
+ * pills), paste-chip, camera-capture.
  */
 export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
   (
@@ -223,7 +231,13 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
           created.current.add(previewUrl);
         }
         fileCounter += 1;
-        accepted.push({ id: `nx-visual-${fileCounter}`, file, previewUrl, source, status: "ready" });
+        accepted.push({
+          id: `nx-visual-${fileCounter}`,
+          file,
+          previewUrl,
+          source,
+          status: "ready",
+        });
       }
       setErrors(rejected);
       if (rejected.length) onReject?.(rejected);
@@ -248,12 +262,14 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
     const openUpload = () => !disabled && uploadRef.current?.click();
     const openCamera = () => !disabled && cameraRef.current?.click();
 
-    const onInputChange = (source: VisualInputSource) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      addFiles(Array.from(e.target.files ?? []), source);
-      e.target.value = "";
-    };
+    const onInputChange =
+      (source: VisualInputSource) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        addFiles(Array.from(e.target.files ?? []), source);
+        e.target.value = "";
+      };
 
-    const hasFiles = (e: React.DragEvent) => Array.from(e.dataTransfer?.types ?? []).includes("Files");
+    const hasFiles = (e: React.DragEvent) =>
+      Array.from(e.dataTransfer?.types ?? []).includes("Files");
 
     const dropHandlers = canUpload
       ? {
@@ -296,10 +312,19 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
     };
 
     const hintText =
-      hint ?? `${accept === "image/*" ? "Images" : accept.replace(/,/g, ", ")} · up to ${formatFileSize(maxSize)}`;
+      hint ??
+      `${accept === "image/*" ? "Images" : accept.replace(/,/g, ", ")} · up to ${formatFileSize(maxSize)}`;
 
+    const isDrop = variant === "drag-drop";
+    // Without a camera the whole drop zone is the browse control (as on nucleux.in);
+    // with one, the zone keeps visible Browse and camera buttons.
+    const zoneIsButton = isDrop && canUpload && !canCamera;
     const chips = files.length > 0 && (
-      <AttachmentGroup role="list" aria-label="Attached visuals">
+      <AttachmentGroup
+        role="list"
+        aria-label="Attached visuals"
+        className={cn(isDrop && "flex-col flex-nowrap items-stretch gap-1.5")}
+      >
         {files.map((f) => (
           <div role="listitem" key={f.id}>
             <Attachment
@@ -324,6 +349,8 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
               data-status={f.status ?? "ready"}
               className={cn(
                 variant === "paste-chip" && "rounded-full py-1 pl-1",
+                isDrop &&
+                  "w-full max-w-none gap-3 rounded-full bg-muted/50 py-1.5 pl-1.5 pr-3 [&>span:first-child]:size-8 [&>span:first-child]:overflow-hidden [&>span:first-child]:bg-info/15 [&>span:first-child]:text-info [&>span:nth-child(2)>span:first-child]:font-normal [&>span:nth-child(2)]:flex-1 [&>span:nth-child(2)]:flex-row [&>span:nth-child(2)]:items-baseline [&>span:nth-child(2)]:justify-between [&>span:nth-child(2)]:gap-3",
                 f.status === "error" && "border-destructive/60",
                 f.status === "reading" && "animate-pulse motion-reduce:animate-none",
               )}
@@ -417,31 +444,46 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
         <div {...rootProps} className={cn("flex flex-col gap-2 outline-none", className)}>
           {chips}
           {children}
-          <div
-            className={cn(
-              "flex items-center gap-1 rounded-lg text-xs text-muted-foreground transition-colors",
-              dragging && "bg-brand-muted/50 text-foreground ring-2 ring-brand",
-            )}
-          >
-            {canUpload && (
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                aria-label="Attach image"
-                onClick={openUpload}
-                disabled={disabled}
-                data-visual-input-focus=""
-              >
-                <Paperclip className="size-4" aria-hidden="true" />
-              </Button>
-            )}
-            {canCamera && (
-              <Button variant="ghost" size="icon-sm" aria-label={cameraLabel} onClick={openCamera} disabled={disabled}>
-                <Camera className="size-4" aria-hidden="true" />
-              </Button>
-            )}
-            <span>{label ?? (dragging ? "Drop to attach" : canPaste ? "Paste or drop a screenshot" : "Attach an image")}</span>
-          </div>
+          {(canUpload || canCamera || label !== null || dragging) && (
+            <div
+              className={cn(
+                "flex items-center gap-1 rounded-lg text-xs text-muted-foreground transition-colors",
+                dragging && "bg-brand-muted/50 text-foreground ring-2 ring-brand",
+              )}
+            >
+              {canUpload && (
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  aria-label="Attach image"
+                  onClick={openUpload}
+                  disabled={disabled}
+                  data-visual-input-focus=""
+                >
+                  <Paperclip className="size-4" aria-hidden="true" />
+                </Button>
+              )}
+              {canCamera && (
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  aria-label={cameraLabel}
+                  onClick={openCamera}
+                  disabled={disabled}
+                >
+                  <Camera className="size-4" aria-hidden="true" />
+                </Button>
+              )}
+              <span>
+                {label ??
+                  (dragging
+                    ? "Drop to attach"
+                    : canPaste
+                      ? "Paste or drop a screenshot"
+                      : "Attach an image")}
+              </span>
+            </div>
+          )}
           {status}
           {hiddenInputs}
         </div>
@@ -471,7 +513,9 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
                   className="absolute inset-[22%] rounded-lg border-2 border-brand/80"
                 />
                 <p className="absolute inset-x-0 bottom-3 px-4 text-center text-xs text-muted-foreground">
-                  {photo ? photo.file.name : (label ?? "Point your camera at what you want to ask about")}
+                  {photo
+                    ? photo.file.name
+                    : (label ?? "Point your camera at what you want to ask about")}
                 </p>
               </>
             )}
@@ -523,9 +567,13 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
               </>
             )}
           </div>
-          {cameraText && !photo && <p className="text-center text-xs text-muted-foreground">{cameraText}</p>}
+          {cameraText && !photo && (
+            <p className="text-center text-xs text-muted-foreground">{cameraText}</p>
+          )}
           {photo?.status === "error" && (
-            <p className="text-center text-xs text-destructive">{photo.error ?? "Couldn’t use this photo."}</p>
+            <p className="text-center text-xs text-destructive">
+              {photo.error ?? "Couldn’t use this photo."}
+            </p>
           )}
           {children}
           {status}
@@ -541,21 +589,40 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
             if ((e.target as HTMLElement).closest("button")) return;
             if (canUpload) openUpload();
           }}
+          {...(zoneIsButton
+            ? {
+                role: "button",
+                tabIndex: disabled ? -1 : 0,
+                "aria-disabled": disabled || undefined,
+                "data-visual-input-focus": "",
+                onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    openUpload();
+                  }
+                },
+              }
+            : {})}
           className={cn(
-            "flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border bg-muted/40 px-6 py-6 text-center transition-colors",
+            "flex flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-border bg-muted/40 px-5 py-6 text-center transition-colors",
             canUpload && !disabled && "cursor-pointer hover:bg-muted/70",
+            zoneIsButton &&
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
             dragging && "border-brand bg-brand-muted/50",
             disabled && "opacity-50",
           )}
         >
-          <span className="inline-flex size-10 items-center justify-center rounded-full bg-background text-muted-foreground shadow-sm [&_svg]:size-5">
-            <ImageUp aria-hidden="true" />
+          <span className="mb-1.5 inline-flex size-10 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground [&_svg]:size-[1.125rem]">
+            <ImageIcon aria-hidden="true" />
           </span>
           <p className="text-sm font-semibold text-foreground">
-            {dragging ? "Drop to attach" : (label ?? (canPaste ? "Drop an image or paste a screenshot" : "Drop an image"))}
+            {dragging
+              ? "Drop to attach"
+              : (label ?? (canPaste ? "Drop an image or paste a screenshot" : "Drop an image"))}
           </p>
           <p className="text-xs text-muted-foreground">{hintText}</p>
-          {(canUpload || canCamera) && (
+          {zoneIsButton && <span className="sr-only">{browseLabel}</span>}
+          {canCamera && (
             <div className="mt-1 flex flex-wrap items-center justify-center gap-2">
               {canUpload && (
                 <Button

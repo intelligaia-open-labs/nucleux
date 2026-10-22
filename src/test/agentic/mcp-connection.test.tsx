@@ -80,7 +80,9 @@ describe("McpConnection", () => {
         <McpConnectionPermission subject="git push" risk="destructive" />
       </>,
     );
-    expect(screen.getByText('git.push({ force: true })')).toBeInTheDocument();
+    expect(
+      screen.getByText((_, el) => el?.tagName === "CODE" && el.textContent?.replace(/\s+/g, " ") === 'git.push({ "force": true })'),
+    ).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Approve" }));
     expect(onApprove).toHaveBeenCalled();
     expect(screen.getByRole("button", { name: "Never allow" })).toBeInTheDocument();

@@ -396,6 +396,12 @@ export const Md3Modes = React.forwardRef<HTMLDivElement, Md3ModesProps>(
       trigger = "chip",
       settingsItems,
       onSettingsSelect,
+      onAdd,
+      addLabel,
+      add,
+      model,
+      onVoice,
+      voiceLabel,
       className,
       ...props
     },
@@ -588,9 +594,13 @@ export const Md3Modes = React.forwardRef<HTMLDivElement, Md3ModesProps>(
               {composerActions}
             </>
           }
-          className={cn(
-            "relative gap-2 rounded-md-xl border border-md-outline-variant bg-md-surface px-4 pb-2.5 pt-4 shadow-md-1",
-          )}
+          onAdd={onAdd}
+          addLabel={addLabel}
+          add={add}
+          model={model}
+          onVoice={onVoice}
+          voiceLabel={voiceLabel}
+          className="relative"
         />
         {live}
       </div>

@@ -8,7 +8,7 @@ Part of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agen
 
 ## Exports
 
-- **`Md3InitialCta`** — the empty-state composer: an open headline, one supporting line and `Md3OpenInput`, with optional `suggestions` (`Md3SuggestedPrompts`) that place their prompt in the field; variants centered-hero / gradient-cta / multi-modal-row
+- **`Md3InitialCta`** — the empty-state composer: an open headline, one supporting line and `Md3OpenInput`, with optional `suggestions` (`Md3SuggestedPrompts`) that place their prompt in the field; variants centered-hero / gradient-cta / multi-modal-row. `headline={null}` with a two-line `description` gives the nucleux.in empty workspace; `onAdd`, `model` (`Md3OpenInputModelChip`) and `onVoice` fill the composer bar
 - Types: `Md3InitialCtaProps`, `Md3InitialCtaVariant`, `Md3InitialCtaHeadingLevel`
 
 ## Install

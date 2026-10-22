@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { CardContainer } from "@nucleux/card";
 import { PromptEnhancer, buildEnhancedPrompt, type PromptEnhancerSuggestion } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const ORIGINAL = "summarise yesterday's standup";
 const SUGGESTION: PromptEnhancerSuggestion = {
@@ -34,6 +35,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** The site's live preview: the original beside the enhanced prompt, each addition marked and removable. */
 export const Enhanced: Story = {

@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/model-selection",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "type": "module",
   "sideEffects": false,
   "description": "Model Selection — choose which model handles the request — Nucleux agentic UI for React.",
@@ -40,7 +40,8 @@
     "@nucleux/badge": "workspace:*",
     "@nucleux/radio-group": "workspace:*",
     "@nucleux/switch": "workspace:*",
-    "lucide-react": "^0.469.0"
+    "lucide-react": "^0.469.0",
+    "@nucleux/open-input": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

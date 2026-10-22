@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ImagePlus, Mic, Paperclip } from "lucide-react";
+import { ImagePlus, Paperclip } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import { OpenInput, type OpenInputProps } from "@nucleux/open-input";
@@ -14,7 +14,11 @@ export type InitialCtaHeadingLevel = 1 | 2 | 3;
 export interface InitialCtaProps extends Omit<OpenInputProps, "variant" | "label"> {
   /** "centered-hero" (default), "gradient-cta" or "multi-modal-row". */
   variant?: InitialCtaVariant;
-  /** The open headline. Defaults to "What can I help with?". */
+  /**
+   * The open headline. Defaults to "What can I help with?". Pass `null` for
+   * no heading (as the Material 3 site preview does): the section is then
+   * named by `description`.
+   */
   headline?: React.ReactNode;
   /** At most one short supporting line. */
   description?: React.ReactNode;
@@ -33,9 +37,7 @@ export interface InitialCtaProps extends Omit<OpenInputProps, "variant" | "label
   suggestionsLabel?: React.ReactNode;
   /** Called after a suggestion is placed in the field. */
   onSuggestionSelect?: (prompt: string, item: SuggestedPromptItem) => void;
-  /** Multi-modal row: shows a voice button. */
-  onVoice?: () => void;
-  /** Multi-modal row: shows an attach-file button. */
+  /** Multi-modal row: shows an attach-file button. (The mic comes from `onVoice`, in every variant.) */
   onAttachFile?: () => void;
   /** Multi-modal row: shows an add-image button. */
   onAddImage?: () => void;
@@ -52,7 +54,8 @@ const isPromise = (v: unknown): v is Promise<unknown> =>
  * The large, inviting composer that anchors an empty state: an open headline
  * ("What can I help with?"), at most one supporting line, and the same
  * OpenInput used once the conversation starts, so the person learns one
- * control. Optional `suggestions` (a SuggestedPrompts set) sit below and
+ * control — with its "+" (`onAdd`), `model` chip and mic (`onVoice`).
+ * Optional `suggestions` (a SuggestedPrompts set) sit below and
  * place their prompt in the field — never send it — then step aside once the
  * person writes. Variants: a centered hero, a gradient CTA for brand
  * moments, and a multi-modal row with voice, file and image buttons. The ref
@@ -70,7 +73,6 @@ export const InitialCta = React.forwardRef<HTMLTextAreaElement, InitialCtaProps>
       suggestions,
       suggestionsLabel,
       onSuggestionSelect,
-      onVoice,
       onAttachFile,
       onAddImage,
       composerClassName,
@@ -89,6 +91,8 @@ export const InitialCta = React.forwardRef<HTMLTextAreaElement, InitialCtaProps>
   ) => {
     const baseId = React.useId();
     const headingId = `${baseId}-headline`;
+    const descriptionId = `${baseId}-description`;
+    const hasHeadline = headline != null && headline !== false;
     const fieldRef = React.useRef<HTMLTextAreaElement>(null);
     React.useImperativeHandle(forwardedRef, () => fieldRef.current as HTMLTextAreaElement);
 
@@ -128,13 +132,8 @@ export const InitialCta = React.forwardRef<HTMLTextAreaElement, InitialCtaProps>
     const showSuggestions = !!suggestions?.length && untouched;
 
     const modalities =
-      variant === "multi-modal-row" && (onVoice || onAttachFile || onAddImage) ? (
+      variant === "multi-modal-row" && (onAttachFile || onAddImage) ? (
         <>
-          {onVoice && (
-            <Button variant="ghost" size="icon-sm" aria-label="Speak instead of typing" onClick={onVoice}>
-              <Mic aria-hidden="true" className="size-4" />
-            </Button>
-          )}
           {onAttachFile && (
             <Button variant="ghost" size="icon-sm" aria-label="Attach a file" onClick={onAttachFile}>
               <Paperclip aria-hidden="true" className="size-4" />
@@ -154,7 +153,7 @@ export const InitialCta = React.forwardRef<HTMLTextAreaElement, InitialCtaProps>
 
     return (
       <section
-        aria-labelledby={headingId}
+        aria-labelledby={hasHeadline ? headingId : description ? descriptionId : undefined}
         className={cn(
           "flex w-full flex-col gap-3",
           hero && "mx-auto max-w-2xl items-center gap-4 text-center",
@@ -164,20 +163,28 @@ export const InitialCta = React.forwardRef<HTMLTextAreaElement, InitialCtaProps>
         )}
       >
         {hero && avatar}
-        <div className={cn("flex flex-col gap-1", hero && "items-center")}>
-          <Heading
-            id={headingId}
-            className={cn(
-              "text-foreground",
-              hero && "text-2xl font-semibold tracking-tight",
-              gradient && "text-xs font-semibold uppercase tracking-wider text-brand",
-              variant === "multi-modal-row" && "text-lg font-semibold",
+        {(hasHeadline || description) && (
+          <div className={cn("flex flex-col gap-1", hero && "items-center")}>
+            {hasHeadline && (
+              <Heading
+                id={headingId}
+                className={cn(
+                  "text-foreground",
+                  hero && "text-xl font-bold tracking-tight",
+                  gradient && "text-xs font-semibold uppercase tracking-wider text-brand",
+                  variant === "multi-modal-row" && "text-lg font-semibold",
+                )}
+              >
+                {headline}
+              </Heading>
             )}
-          >
-            {headline}
-          </Heading>
-          {description && <p className="text-sm text-muted-foreground">{description}</p>}
-        </div>
+            {description && (
+              <p id={descriptionId} className="text-sm text-muted-foreground">
+                {description}
+              </p>
+            )}
+          </div>
+        )}
         <OpenInput
           ref={fieldRef}
           variant={gradient ? "single-line" : "expanding-area"}
@@ -195,7 +202,7 @@ export const InitialCta = React.forwardRef<HTMLTextAreaElement, InitialCtaProps>
             ) : undefined
           }
           containerClassName={cn("w-full", hero && "text-left")}
-          className={cn(hero && "rounded-3xl p-3 shadow-md", gradient && "bg-background", composerClassName)}
+          className={cn(gradient && "bg-background", composerClassName)}
           {...props}
         />
         {showSuggestions && (
@@ -204,7 +211,11 @@ export const InitialCta = React.forwardRef<HTMLTextAreaElement, InitialCtaProps>
             label={suggestionsLabel}
             afterSelect="mark"
             selectedId={placed && value === placed.prompt ? placed.id : null}
-            className={cn(hero && "justify-center")}
+            className={cn(
+              // The site's quiet suggestion chips: hairline, faint fill, regular weight; the chosen one inverts.
+              "gap-1.5 [&_button]:min-h-8 [&_button]:border [&_button]:border-border [&_button]:bg-muted/40 [&_button]:px-3 [&_button]:py-1 [&_button]:text-[0.8125rem] [&_button]:font-normal [&_button]:text-muted-foreground [&_button:hover]:bg-accent [&_button:hover]:text-foreground [&_button[aria-pressed=true]]:border-primary [&_button[aria-pressed=true]]:bg-primary [&_button[aria-pressed=true]]:text-primary-foreground [&_ul]:gap-1.5",
+              hero && "justify-center [&_ul]:justify-center",
+            )}
             onSelect={(prompt, item) => {
               setFocusTick((t) => t + 1);
               setPlaced({ id: item.id ?? item.prompt ?? item.title, prompt });

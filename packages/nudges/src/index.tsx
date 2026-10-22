@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Lightbulb, Sparkles, X } from "lucide-react";
+import { ChevronDown, ChevronRight, Lightbulb, Sparkles, X } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { Button, type ButtonProps } from "@nucleux/button";
 import { Badge } from "@nucleux/badge";
@@ -9,6 +9,9 @@ export type NudgeVariant = "tooltip-nudge" | "inline-tip-card" | "highlight-puls
 
 /** Side of the anchor the tooltip nudge sits on. */
 export type NudgeSide = "top" | "right" | "bottom" | "left";
+
+/** How the inline tip sits in the layout: a filled `card`, or a quiet `inline` rule with no fill. */
+export type NudgeAppearance = "card" | "inline";
 
 /** Where dismissals and uses are remembered when the nudge has an `id`. */
 export type NudgePersist = "none" | "session" | "local";
@@ -69,6 +72,16 @@ export interface NudgeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
   onDismiss?: () => void;
   /** Accessible name of the dismiss button. Defaults to "Dismiss tip". */
   dismissLabel?: string;
+  /**
+   * Show the × dismiss button. Defaults to true. Off, the nudge still closes
+   * with Escape (and, as a tooltip, on an outside click).
+   */
+  dismissible?: boolean;
+  /**
+   * `inline-tip-card` only: `card` (default) is a filled card; `inline` is a
+   * quiet left rule with no fill, and its actions are all text buttons.
+   */
+  appearance?: NudgeAppearance;
   /** Shows a "Not now" action that hides the nudge without remembering a dismissal. */
   onSnooze?: () => void;
   /** Label of the snooze action. Defaults to "Not now". */
@@ -147,6 +160,8 @@ export const Nudge = React.forwardRef<HTMLDivElement, NudgeProps>(
       tryLabel = "Try it",
       onDismiss,
       dismissLabel = "Dismiss tip",
+      dismissible = true,
+      appearance = "card",
       onSnooze,
       snoozeLabel = "Not now",
       onImpression,
@@ -246,11 +261,12 @@ export const Nudge = React.forwardRef<HTMLDivElement, NudgeProps>(
         : children;
 
     const inverted = variant === "tooltip-nudge";
+    const quiet = variant === "inline-tip-card" && appearance === "inline";
     const actionRow = (onTry || onSnooze || reason || actions) && (
       <div className="flex flex-wrap items-center gap-1">
         {onTry && (
           <NudgeAction
-            variant={inverted ? "secondary" : "primary"}
+            variant={quiet ? "ghost" : inverted ? "secondary" : "primary"}
             className={inverted ? "border-transparent" : undefined}
             onClick={tryIt}
           >
@@ -260,7 +276,12 @@ export const Nudge = React.forwardRef<HTMLDivElement, NudgeProps>(
         {onSnooze && <NudgeAction onClick={snooze}>{snoozeLabel}</NudgeAction>}
         {actions}
         {reason && (
-          <NudgeAction aria-expanded={whyOpen} aria-controls={reasonId} onClick={() => setWhyOpen((w) => !w)}>
+          <NudgeAction
+            aria-expanded={whyOpen}
+            aria-controls={reasonId}
+            onClick={() => setWhyOpen((w) => !w)}
+            leftIcon={quiet ? whyOpen ? <ChevronDown aria-hidden="true" /> : <ChevronRight aria-hidden="true" /> : undefined}
+          >
             Why this tip?
           </NudgeAction>
         )}
@@ -271,7 +292,7 @@ export const Nudge = React.forwardRef<HTMLDivElement, NudgeProps>(
         {reason}
       </p>
     );
-    const dismissButton = (
+    const dismissButton = dismissible && (
       <Button
         variant="ghost"
         size="icon-sm"
@@ -339,11 +360,11 @@ export const Nudge = React.forwardRef<HTMLDivElement, NudgeProps>(
                 <div
                   role="note"
                   aria-label="Tip"
-                  className="relative flex flex-col gap-2 rounded-lg bg-foreground px-3 py-2.5 text-xs leading-relaxed text-background shadow-md animate-nx-fade-in motion-reduce:animate-none"
+                  className="relative flex flex-col gap-2 rounded-[10px] bg-foreground px-3.5 py-2.5 text-xs leading-[17px] text-background shadow-lg animate-nx-fade-in motion-reduce:animate-none"
                 >
                   <div className="flex items-start gap-2">
                     <p id={messageId} className="min-w-0 flex-1">
-                      <span className="font-semibold text-background/70">Tip · </span>
+                      <span className="text-background/70">Tip</span> ·{" "}
                       {message}
                     </p>
                     {dismissButton}
@@ -367,22 +388,31 @@ export const Nudge = React.forwardRef<HTMLDivElement, NudgeProps>(
           role="note"
           aria-label="Tip"
           onKeyDown={handleKeyDown}
+          data-appearance={appearance}
           className={cn(
-            "flex items-start gap-3 rounded-lg border border-brand/30 bg-brand-muted/60 p-3 text-sm animate-nx-fade-in motion-reduce:animate-none",
+            "flex items-start gap-3 text-sm animate-nx-fade-in motion-reduce:animate-none",
+            quiet
+              ? "border-l-[3px] border-border py-1 pl-3 pr-2"
+              : "rounded-lg border border-brand/30 bg-brand-muted/60 p-3",
             className,
           )}
           {...props}
         >
           <span
             aria-hidden="true"
-            className="grid size-6 shrink-0 place-items-center rounded-md bg-brand text-brand-foreground [&_svg]:size-3.5"
+            className={cn(
+              "grid shrink-0 place-items-center",
+              quiet
+                ? "mt-0.5 text-muted-foreground [&_svg]:size-4"
+                : "size-6 rounded-md bg-brand text-brand-foreground [&_svg]:size-3.5",
+            )}
           >
             {title ? <Sparkles /> : <Lightbulb />}
           </span>
           <div className="flex min-w-0 flex-1 flex-col gap-1.5">
             <div className="flex flex-col gap-0.5">
               {title && <p className="font-semibold text-foreground">{title}</p>}
-              <p id={messageId} className="text-muted-foreground">
+              <p id={messageId} className={quiet ? "text-foreground" : "text-muted-foreground"}>
                 {message}
               </p>
             </div>

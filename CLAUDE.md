@@ -96,7 +96,7 @@ list is checked by `src/test/docs.test.ts`; never add a name the catalog lacks.
 - **Tailwind CSS v3** — tokens as CSS variables (`--nx-*`) in
   `packages/tokens/src/globals.css`, exposed via `@nucleux/tokens/preset`.
   Palette is the shadcn/Tailwind "slate" system; accents: `info` (blue CTA),
-  `brand` (violet), `success`, `warning`, `destructive`.
+  `brand` (orange, the AI accent as on nucleux.in), `success`, `warning`, `destructive`.
 - **tsup** builds each package → `dist/` (ESM + CJS + `.d.ts`). A post-build
   script adds a `"use client"` banner to every React (client) package.
 - **Storybook (react-vite)** for dev + docs; stories co-located in each package.

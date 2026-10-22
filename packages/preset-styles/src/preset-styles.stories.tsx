@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { PresetStyle, PresetStyleDraft } from "@nucleux/preset-styles";
 import { PresetStyles } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 /** Image-output presets (the Style grid): token tones, no raw colours. */
 const outputStyles: PresetStyle[] = [
@@ -79,6 +80,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** Creative canvas: pick the look before generating — swatches, a reference-image drop, and the style locked for the project. */
 export const StyleGrid: Story = {

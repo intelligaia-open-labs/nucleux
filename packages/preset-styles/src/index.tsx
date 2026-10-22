@@ -573,6 +573,12 @@ export const PresetStyles = React.forwardRef<HTMLDivElement, PresetStylesProps>(
     trigger: triggerMode = "chip",
     settingsItems: _settingsItems,
     onSettingsSelect: _onSettingsSelect,
+    onAdd,
+    addLabel,
+    add,
+    model,
+    onVoice,
+    voiceLabel,
     className,
     ...rest
   } = props;
@@ -638,6 +644,12 @@ export const PresetStyles = React.forwardRef<HTMLDivElement, PresetStylesProps>(
             value={s.message}
             onValueChange={s.setMessage}
             onSubmit={s.submit}
+            onAdd={onAdd}
+            addLabel={addLabel}
+            add={add}
+            model={model}
+            onVoice={onVoice}
+            voiceLabel={voiceLabel}
             actions={
               <>
                 {composerLeading}

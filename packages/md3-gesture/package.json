@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-gesture",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Gesture Input — swipes, circles and pinches as named, confirmable signals — Nucleux agentic UI for React.",
@@ -42,6 +42,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
+    "@nucleux/md3-open-input": "workspace:*",
     "@nucleux/gesture": "workspace:*",
     "@nucleux/md3-button": "workspace:*",
     "@nucleux/md3-chip": "workspace:*",

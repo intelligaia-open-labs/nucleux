@@ -280,7 +280,8 @@ export interface AiIconsProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 /**
  * The AI presence mark: one stable symbol that tells people the AI is here.
- * `sparkle` is the default; `thinking-orb` is the active state and pulses
+ * `sparkle` is the default; `thinking-orb` is the active state — a dark orb
+ * with a soft halo that pulses
  * (still under reduced motion — pair it with words such as an `AiIcon`
  * `agent-working` line); `branded-mark` carries your product's own shape.
  * Never a photo or a human face.
@@ -298,7 +299,7 @@ export const AiIcons = React.forwardRef<HTMLSpanElement, AiIconsProps>(
           data-variant={variant}
           className={cn(
             base,
-            "rounded-full bg-gradient-to-br from-brand to-primary shadow-sm",
+            "rounded-full bg-gradient-to-br from-primary/80 to-primary ring-4 ring-primary/10",
             aiColorClasses.working,
             sizeClasses[size],
             className,
@@ -349,3 +350,83 @@ export const AiIcons = React.forwardRef<HTMLSpanElement, AiIconsProps>(
   },
 );
 AiIcons.displayName = "AiIcons";
+
+/* -------------------------------------------------------------------------- */
+/* AiIconLegend — the icon language, written down                              */
+/* -------------------------------------------------------------------------- */
+
+export interface AiIconLegendTerm {
+  /** The AI meaning this row explains. */
+  role: AiIconRole;
+  /** Its name — "AI action". */
+  name: React.ReactNode;
+  /** What it tells people — "Pressing this runs AI on something specific." */
+  meaning: React.ReactNode;
+}
+
+/** The four meanings in the words nucleux.in uses. */
+export const defaultAiIconLegendTerms: AiIconLegendTerm[] = [
+  { role: "ai-action", name: "AI action", meaning: "Pressing this runs AI on something specific." },
+  { role: "generated-content", name: "AI-generated content", meaning: "This content was created or changed by AI." },
+  { role: "agent-working", name: "Agent working", meaning: "The agent is currently performing work." },
+  { role: "tool-use", name: "Tool use", meaning: "The agent used another tool or system." },
+];
+
+export interface AiIconLegendProps extends React.HTMLAttributes<HTMLElement> {
+  /** Heading. Default "Icon language". */
+  heading?: React.ReactNode;
+  /** The rows. Defaults to {@link defaultAiIconLegendTerms}. */
+  terms?: AiIconLegendTerm[];
+  /** The meaning in use on this screen; its row is highlighted and marked `aria-current`. */
+  current?: AiIconRole;
+}
+
+/** The approved glyph for a role, drawn still (the legend never animates). */
+function AiLegendGlyph({ role, className }: { role: AiIconRole; className?: string }) {
+  const Glyph = useAiGlyph(role);
+  return role === "agent-working" ? <AiWorkingIcon still className={className} /> : <Glyph className={className} />;
+}
+
+/**
+ * The product's icon language, written down: each AI meaning with its mark
+ * at 24, 20 and 16 px, its name and what it tells people. Put it in
+ * onboarding, help or settings so the marks are learned once. Highlight the
+ * meaning in use with `current`. Uses the glyphs the nearest
+ * `AiIconProvider` approved.
+ */
+export const AiIconLegend = React.forwardRef<HTMLElement, AiIconLegendProps>(
+  ({ heading = "Icon language", terms = defaultAiIconLegendTerms, current, className, ...props }, ref) => {
+    const headingId = React.useId();
+    return (
+      <section ref={ref} aria-labelledby={headingId} className={cn("text-foreground", className)} {...props}>
+        <h3 id={headingId} className="mb-3 mt-0 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          {heading}
+        </h3>
+        <ul className="m-0 list-none border-t border-border p-0">
+          {terms.map((term) => {
+            const here = term.role === current;
+            return (
+              <li
+                key={term.role}
+                aria-current={here || undefined}
+                className={cn(
+                  "flex items-center gap-4 border-b border-l-[3px] border-b-border px-3 py-2.5 text-sm",
+                  here ? "border-l-brand bg-muted" : "border-l-transparent",
+                )}
+              >
+                <span aria-hidden="true" className="flex w-[5.5rem] shrink-0 items-center gap-2.5 text-brand">
+                  <AiLegendGlyph role={term.role} className="size-6" />
+                  <AiLegendGlyph role={term.role} className="size-5" />
+                  <AiLegendGlyph role={term.role} className="size-4" />
+                </span>
+                <span className="w-40 shrink-0 font-medium">{term.name}</span>
+                <span className="text-muted-foreground">{term.meaning}</span>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    );
+  },
+);
+AiIconLegend.displayName = "AiIconLegend";

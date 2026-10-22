@@ -33,7 +33,11 @@ contracts, then write code.
    `PresetStyles`) for shaping a request beside the composer, `Attachments`,
    `VoiceInput` and friends for input, `ModelSelection`, `KnowledgeBase`,
    `Connector` and `McpConnection` for context. Search for them with
-   `search_components` instead of building your own.
+   `search_components` instead of building your own. **Build each one as
+   nucleux.in shows it:** `get_component` gives its "As on nucleux.in" code in
+   the chosen family; start from that, change the content (names, copy, data,
+   handlers) and keep the composition, variants and classes, so it looks like
+   the site.
 6. Do not rebuild something Nucleux already ships (navigation, tables, cards,
    dialogs, sheets, form controls, empty/error states). If you must, say why
    in your summary.
@@ -80,8 +84,8 @@ anything Nucleux does not cover. Check the plan with `validate_design` (pattern
 ids plus the components and props you intend to use) and fix every error.
 
 **F. Implement.** Build the shared shell once and wrap every route in it.
-Start each page from its pattern's example, replace the sample data with the
-app's data model, and keep app-specific components (a TaskCard bound to your
+Start each page from its pattern's example and each agentic component from its
+"As on nucleux.in" code, replace the sample data with the app's data model, and keep app-specific components (a TaskCard bound to your
 data) in the app, composed from Nucleux parts.
 
 **G. Validate.** Run the project's type check, lint, tests and production build;

@@ -207,12 +207,36 @@ export interface StructuredInputSlot {
   suggested?: string;
   /** Span the full row. */
   wide?: boolean;
+  /**
+   * The control. Defaults to `"select"` when `options` are given, else `"text"`.
+   * `"segmented"` shows `options` as a row of buttons; `"date"` a date field;
+   * `"tags"` a tag field whose value is a comma-separated list.
+   */
+  type?: StructuredInputSlotType;
+  /** The slot must be filled before submitting; its label carries “*”. */
+  required?: boolean;
+}
+
+/** Control used for a slot. */
+export type StructuredInputSlotType = "text" | "select" | "segmented" | "date" | "tags";
+
+/** Splits a `"tags"` slot's value into its tags. */
+export function splitStructuredTags(value: string | undefined): string[] {
+  return (value ?? "")
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
+}
+
+/** The control a slot uses, from its `type` and `options`. */
+export function structuredSlotType(slot: StructuredInputSlot): StructuredInputSlotType {
+  return slot.type ?? (slot.options ? "select" : "text");
 }
 
 export type StructuredInputValues = Record<string, string>;
 
 export interface StructuredInputSlotsProps
-  extends Omit<React.HTMLAttributes<HTMLFormElement>, "onSubmit" | "defaultValue"> {
+  extends Omit<React.HTMLAttributes<HTMLFormElement>, "onSubmit" | "defaultValue" | "title"> {
   /** The 2–4 slots the prompt template needs. */
   slots: StructuredInputSlot[];
   /** Values (controlled). */
@@ -229,6 +253,18 @@ export interface StructuredInputSlotsProps
   submitLabel?: React.ReactNode;
   /** Accessible name of the form. Defaults to `"Structured prompt builder"`. */
   label?: string;
+  /** Heading over the fields, e.g. `"Structured prompt"`; it also names the form. */
+  title?: React.ReactNode;
+  /** Icon beside the title. */
+  icon?: React.ReactNode;
+  /** Right side of the title row, e.g. a "Template" badge or what the form is for. */
+  aside?: React.ReactNode;
+  /** Shows “3 of 4 filled” beside the buttons. */
+  showProgress?: boolean;
+  /** Shows a Cancel button beside submit. */
+  onCancel?: () => void;
+  /** Label of the cancel button. Defaults to `"Cancel"`. */
+  cancelLabel?: React.ReactNode;
 }
 
 /**
@@ -249,6 +285,12 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
       onSubmit,
       submitLabel = "Generate",
       label = "Structured prompt builder",
+      title,
+      icon,
+      aside,
+      showProgress = false,
+      onCancel,
+      cancelLabel = "Cancel",
       className,
       ...props
     },
@@ -267,20 +309,42 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
       onValuesChange?.(next);
     };
 
+    const filled = (name: string) => !!values[name]?.trim();
+    const filledCount = slots.filter((slot) => filled(slot.name)).length;
+    const requiredMet = slots.every((slot) => !slot.required || filled(slot.name));
     const hasAny = Object.values(values).some((v) => v && v.trim()) || extra.trim().length > 0;
+    const canSubmit = hasAny && requiredMet;
     const freeformLabel = typeof freeform === "string" ? freeform : "Anything else?";
+    const titleId = `${baseId}-title`;
 
     return (
       <form
         ref={ref}
-        aria-label={label}
+        aria-label={title == null ? label : undefined}
+        aria-labelledby={title == null ? undefined : titleId}
         className={cn("grid grid-cols-1 gap-3 sm:grid-cols-2", className)}
         onSubmit={(e) => {
           e.preventDefault();
-          if (hasAny) onSubmit?.(values, extra);
+          if (canSubmit) onSubmit?.(values, extra);
         }}
         {...props}
       >
+        {(title != null || aside != null) && (
+          <div className="mb-1 flex items-center gap-3 border-b border-border pb-4 sm:col-span-2">
+            {icon != null && (
+              <span
+                aria-hidden="true"
+                className="inline-flex size-[1.625rem] shrink-0 items-center justify-center rounded-md bg-foreground text-background [&_svg]:size-3.5"
+              >
+                {icon}
+              </span>
+            )}
+            <h3 id={titleId} className="flex-1 text-base font-semibold text-foreground">
+              {title}
+            </h3>
+            {aside}
+          </div>
+        )}
         {slots.map((slot) => {
           const id = `${baseId}-${slot.name}`;
           const helperId = `${id}-helper`;
@@ -290,17 +354,29 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
               : { text: "Suggested", variant: "info" as const }
             : null;
           const describedBy = slot.helper || (mark && !edited[slot.name]) ? helperId : undefined;
+          const type = structuredSlotType(slot);
           return (
             <Field key={slot.name} className={cn("gap-1.5", slot.wide && "sm:col-span-2")}>
               <div className="flex items-center gap-2">
-                <FieldLabel id={`${id}-label`} htmlFor={id} className="text-xs font-semibold text-muted-foreground">
+                <FieldLabel
+                  id={`${id}-label`}
+                  htmlFor={id}
+                  className="text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground"
+                >
                   {slot.label}
+                  {slot.required && <span aria-hidden="true"> *</span>}
                 </FieldLabel>
                 {mark && <Badge variant={mark.variant}>{mark.text}</Badge>}
               </div>
-              {slot.options ? (
+              {type === "select" && slot.options ? (
                 <Select value={values[slot.name] || undefined} onValueChange={(v) => setValue(slot.name, v)}>
-                  <SelectTrigger id={id} aria-labelledby={`${id}-label ${id}`} aria-describedby={describedBy}>
+                  <SelectTrigger
+                    id={id}
+                    aria-labelledby={`${id}-label ${id}`}
+                    aria-describedby={describedBy}
+                    aria-required={slot.required || undefined}
+                    className="h-11 rounded-lg px-3.5"
+                  >
                     <SelectValue placeholder={slot.placeholder ?? "Choose…"} />
                   </SelectTrigger>
                   <SelectContent>
@@ -311,13 +387,51 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
                     ))}
                   </SelectContent>
                 </Select>
+              ) : type === "segmented" && slot.options ? (
+                <div
+                  id={id}
+                  role="group"
+                  aria-labelledby={`${id}-label`}
+                  aria-describedby={describedBy}
+                  className="inline-flex w-fit overflow-hidden rounded-lg border border-input"
+                >
+                  {slot.options.map((o, i) => {
+                    const on = values[slot.name] === o.value;
+                    return (
+                      <button
+                        key={o.value}
+                        type="button"
+                        aria-pressed={on}
+                        onClick={() => setValue(slot.name, o.value)}
+                        className={cn(
+                          "h-11 px-4 text-sm font-medium transition-colors focus-visible:relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
+                          i > 0 && "border-l border-input",
+                          on ? "bg-accent text-accent-foreground" : "bg-background text-foreground hover:bg-accent/50",
+                        )}
+                      >
+                        {o.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : type === "tags" ? (
+                <StructuredTagsField
+                  id={id}
+                  value={values[slot.name]}
+                  placeholder={slot.placeholder}
+                  describedBy={describedBy}
+                  onChange={(v) => setValue(slot.name, v)}
+                />
               ) : (
                 <Input
                   id={id}
+                  type={type === "date" ? "date" : "text"}
                   value={values[slot.name] ?? ""}
                   placeholder={slot.placeholder}
                   aria-describedby={describedBy}
+                  aria-required={slot.required || undefined}
                   onChange={(e) => setValue(slot.name, e.target.value)}
+                  className="h-11 rounded-lg px-3.5 text-base shadow-none"
                 />
               )}
               {describedBy && (
@@ -343,11 +457,24 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
             />
           </Field>
         )}
-        {onSubmit && (
-          <div className="flex justify-end sm:col-span-2">
-            <Button type="submit" variant="cta" size="sm" disabled={!hasAny}>
-              {submitLabel}
-            </Button>
+        {(onSubmit || onCancel || showProgress) && (
+          <div className="flex items-center gap-2 sm:col-span-2">
+            {showProgress && (
+              <span className="text-xs text-muted-foreground" aria-live="polite">
+                {filledCount} of {slots.length} filled
+              </span>
+            )}
+            <span className="flex-1" />
+            {onCancel && (
+              <Button type="button" variant="ghost" onClick={onCancel}>
+                {cancelLabel}
+              </Button>
+            )}
+            {onSubmit && (
+              <Button type="submit" variant="primary" disabled={!canSubmit} className="h-10 rounded-lg px-5 text-base">
+                {submitLabel}
+              </Button>
+            )}
           </div>
         )}
       </form>
@@ -355,6 +482,70 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
   },
 );
 StructuredInputSlots.displayName = "StructuredInputSlots";
+
+const SLOT_TAG_TONES = ["bg-destructive/10 text-destructive", "bg-info/10 text-info", "bg-success/10 text-success", "bg-warning/10 text-warning"];
+
+/** The `"tags"` slot: tinted tags (press one to remove it) and a field that adds on Enter or comma. */
+function StructuredTagsField({
+  id,
+  value,
+  placeholder,
+  describedBy,
+  onChange,
+}: {
+  id: string;
+  value?: string;
+  placeholder?: string;
+  describedBy?: string;
+  onChange: (value: string) => void;
+}) {
+  const tags = splitStructuredTags(value);
+  const [draft, setDraft] = React.useState("");
+  const add = (text = draft) => {
+    const t = text.trim();
+    if (t && !tags.includes(t)) onChange([...tags, t].join(", "));
+    setDraft("");
+  };
+  return (
+    <div className="flex min-h-11 flex-wrap items-center gap-1.5 rounded-lg border border-input bg-background px-2.5 py-1.5 focus-within:ring-2 focus-within:ring-ring">
+      {tags.map((t, i) => (
+        <button
+          key={t}
+          type="button"
+          aria-label={`Remove ${t}`}
+          onClick={() => onChange(tags.filter((x) => x !== t).join(", "))}
+          className={cn(
+            "rounded-md px-2 py-0.5 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            SLOT_TAG_TONES[i % SLOT_TAG_TONES.length],
+          )}
+        >
+          {t}
+        </button>
+      ))}
+      <input
+        id={id}
+        value={draft}
+        placeholder={placeholder ?? "+"}
+        aria-describedby={describedBy}
+        onChange={(e) => {
+          const next = e.target.value;
+          if (next.endsWith(",")) add(next.slice(0, -1));
+          else setDraft(next);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            add();
+          } else if (e.key === "Backspace" && !draft && tags.length) {
+            onChange(tags.slice(0, -1).join(", "));
+          }
+        }}
+        onBlur={() => add()}
+        className="min-w-16 flex-1 bg-transparent px-1 text-sm text-foreground outline-none placeholder:text-muted-foreground"
+      />
+    </div>
+  );
+}
 
 /* -------------------------------------------------------------------------- */
 /* Tagged input                                                                */

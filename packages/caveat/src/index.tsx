@@ -22,6 +22,12 @@ export interface CaveatProps extends React.HTMLAttributes<HTMLParagraphElement> 
    * "Reconnect". Shown after the text; use small Buttons or links.
    */
   actions?: React.ReactNode;
+  /**
+   * Why the limitation matters for this result ("Themes raised only in those
+   * two calls are missing"). When given, the note stacks: the limitation, this
+   * line under it, then the `actions` on their own row.
+   */
+  detail?: React.ReactNode;
 }
 
 const DEFAULT_TEXT = "AI can make mistakes. Verify important information.";
@@ -32,28 +38,56 @@ const DEFAULT_TEXT = "AI can make mistakes. Verify important information.";
  * could not be opened"). Caption-size and muted, never alarming or
  * apologetic, once per surface. `below-input` sits under the composer;
  * `output-footer` sits under output that will be acted on and can offer
- * next steps. Rendered as a `note`.
+ * next steps; with a `detail` line the note stacks (limitation, why it
+ * matters, then the next steps). Rendered as a `note`.
  */
 export const Caveat = React.forwardRef<HTMLParagraphElement, CaveatProps>(
-  ({ variant = "below-input", icon, actions, className, children, ...props }, ref) => (
-    <p
-      ref={ref}
-      role="note"
-      data-variant={variant}
-      className={cn(
-        "items-center gap-1.5 text-xs text-muted-foreground [&_svg]:size-3.5 [&_svg]:shrink-0",
-        variant === "output-footer"
-          ? "mt-2.5 flex w-full flex-wrap rounded-md border border-border bg-muted/60 px-2.5 py-2 text-foreground/80"
-          : "inline-flex",
-        className,
-      )}
-      {...props}
-    >
-      {icon === undefined ? <Info aria-hidden="true" /> : icon}
-      <span>{children ?? DEFAULT_TEXT}</span>
-      {actions && <span className="ml-auto inline-flex flex-wrap items-center gap-1.5">{actions}</span>}
-    </p>
-  ),
+  ({ variant = "below-input", icon, actions, detail, className, children, ...props }, ref) => {
+    const glyph = icon === undefined ? <Info aria-hidden="true" /> : icon;
+    if (detail != null) {
+      return (
+        <p
+          ref={ref}
+          role="note"
+          data-variant={variant}
+          className={cn(
+            "flex w-full flex-col gap-2 text-sm [&_svg]:shrink-0",
+            variant === "output-footer" && "mt-2.5 rounded-lg border border-border bg-muted/60 px-3.5 py-3",
+            className,
+          )}
+          {...props}
+        >
+          <span className="flex items-start gap-2.5 [&>svg]:mt-0.5 [&>svg]:size-4 [&>svg]:text-muted-foreground">
+            {glyph}
+            <span className="flex min-w-0 flex-col gap-0.5">
+              <span className="font-medium text-foreground">{children ?? DEFAULT_TEXT}</span>
+              <span className="text-muted-foreground">{detail}</span>
+            </span>
+          </span>
+          {actions && <span className="ml-5 inline-flex flex-wrap items-center gap-1.5 [&_svg]:size-3.5">{actions}</span>}
+        </p>
+      );
+    }
+    return (
+      <p
+        ref={ref}
+        role="note"
+        data-variant={variant}
+        className={cn(
+          "items-center gap-1.5 text-xs text-muted-foreground [&_svg]:size-3.5 [&_svg]:shrink-0",
+          variant === "output-footer"
+            ? "mt-2.5 flex w-full flex-wrap rounded-md border border-border bg-muted/60 px-2.5 py-2 text-foreground/80"
+            : "inline-flex",
+          className,
+        )}
+        {...props}
+      >
+        {glyph}
+        <span>{children ?? DEFAULT_TEXT}</span>
+        {actions && <span className="ml-auto inline-flex flex-wrap items-center gap-1.5">{actions}</span>}
+      </p>
+    );
+  },
 );
 Caveat.displayName = "Caveat";
 

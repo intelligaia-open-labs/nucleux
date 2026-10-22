@@ -1,17 +1,30 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Md3VoiceInput } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Material 3 Agent/Md3VoiceInput",
   component: Md3VoiceInput,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[28rem]"><Story /></div>],
+  decorators: [
+    (Story, { id }) =>
+      id.endsWith("--site-preview") ? (
+        <div className="flex w-[44rem] max-w-full justify-center">
+          <Story />
+        </div>
+      ) : (
+        <div className="w-[28rem]"><Story /></div>
+      ),
+  ],
   args: { onStart: () => {}, onCancel: () => {}, onConfirm: () => {} },
 } satisfies Meta<typeof Md3VoiceInput>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 export const Idle: Story = { args: { state: "idle" } };
 /** `waveform` variant (default): the live waveform confirms the mic is hot. */

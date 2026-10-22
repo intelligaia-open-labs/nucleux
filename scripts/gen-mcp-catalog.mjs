@@ -116,6 +116,12 @@ for (const name of readdirSync(pkgsDir)) {
     [...components].sort((x, y) => x.length - y.length).find((c) => components.every((o) => o === c || o.startsWith(c)));
   if (main) components.splice(components.indexOf(main), 1), components.unshift(main);
   const readme = existsSync(join(dir, "README.md")) ? readFileSync(join(dir, "README.md"), "utf8") : "";
+  // The composition nucleux.in's live preview shows, as copyable code: the
+  // package's own imports point at its published name.
+  const previewPath = join(dir, "src", "site-preview.tsx");
+  const sitePreview = existsSync(previewPath)
+    ? readFileSync(previewPath, "utf8").replace(/from "\.\/index"/g, `from "${pkg.name}"`).trim()
+    : undefined;
 
   packages.push({
     name,
@@ -135,6 +141,7 @@ for (const name of readdirSync(pkgsDir)) {
     props: extractProps(src),
     readme: readme.trim(),
     peerDependencies: pkg.peerDependencies ?? {},
+    ...(sitePreview ? { sitePreview } : {}),
   });
 }
 

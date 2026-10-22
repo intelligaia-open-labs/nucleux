@@ -85,6 +85,8 @@ export const Md3VoiceInput = React.forwardRef<HTMLDivElement, Md3VoiceInputProps
       idleLabel = "Tap to speak",
       listeningLabel = "Listening",
       errorText = "Couldn’t make out all of that.",
+      transcriptLabel,
+      stopHint,
       className,
       ...props
     },
@@ -184,6 +186,9 @@ export const Md3VoiceInput = React.forwardRef<HTMLDivElement, Md3VoiceInputProps
             <div className="relative flex items-center gap-2">{error}</div>
           ) : (
             <>
+              {transcriptLabel != null && (
+                <p className="relative text-xs font-medium tracking-[0.5px] text-md-on-surface-variant">{transcriptLabel}</p>
+              )}
               <p className="relative min-h-5 text-base leading-6 text-md-on-surface">
                 {transcript}
                 {interimTranscript && (
@@ -220,6 +225,7 @@ export const Md3VoiceInput = React.forwardRef<HTMLDivElement, Md3VoiceInputProps
                     <span className="ml-1 flex-1 text-xs text-md-on-surface-variant">
                       {state === "paused" ? "Paused" : listeningLabel}
                       {duration && <span className="tabular-nums"> · {duration}</span>}
+                      {stopHint != null && state !== "paused" && <> · {stopHint}</>}
                     </span>
                     {pauseButton}
                     {onCancel && cancelButton}

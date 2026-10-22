@@ -450,6 +450,12 @@ export const Md3VoiceTone = React.forwardRef<HTMLDivElement, Md3VoiceToneProps>(
     trigger = "chip",
     settingsItems: _si,
     onSettingsSelect: _oss,
+    onAdd,
+    addLabel,
+    add,
+    model,
+    onVoice,
+    voiceLabel,
     className,
     ...rest
   } = props;
@@ -490,10 +496,13 @@ export const Md3VoiceTone = React.forwardRef<HTMLDivElement, Md3VoiceToneProps>(
         placeholder={placeholder}
         loading={loading}
         onStop={onStop}
-        className={cn(
-          "rounded-md-xl border border-md-outline-variant bg-md-surface px-4 pb-2.5 pt-4 shadow-md-1 [&_textarea]:text-base",
-          settingsControl && "relative",
-        )}
+        onAdd={onAdd}
+        addLabel={addLabel}
+        add={add}
+        model={model}
+        onVoice={onVoice}
+        voiceLabel={voiceLabel}
+        className={cn(settingsControl && "relative")}
         leftActions={
           <>
             {composerLeading}

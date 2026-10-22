@@ -1,17 +1,30 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Md3VisualInput, type VisualInputFile } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Material 3 Agent/Md3VisualInput",
   component: Md3VisualInput,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[26rem]"><Story /></div>],
+  decorators: [
+    (Story, { id }) =>
+      id.endsWith("--site-preview") ? (
+        <div className="flex w-[44rem] max-w-full justify-center">
+          <Story />
+        </div>
+      ) : (
+        <div className="w-[26rem]"><Story /></div>
+      ),
+  ],
   args: { onFilesChange: () => {}, onReject: () => {} },
 } satisfies Meta<typeof Md3VisualInput>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** A dashed drop zone for the right rail or canvas: drag a screenshot in, paste one, or browse. */
 export const DragDrop: Story = {

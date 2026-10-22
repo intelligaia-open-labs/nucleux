@@ -10,7 +10,16 @@ import {
   type VisualInputSource,
   type VisualInputFile,
 } from "@nucleux/visual-input";
-import { AlertCircle, Camera, ImageIcon, ImageUp, Paperclip, RotateCcw, Trash2, X } from "lucide-react";
+import {
+  AlertCircle,
+  Camera,
+  ImageIcon,
+  ImageUp,
+  Paperclip,
+  RotateCcw,
+  Trash2,
+  X,
+} from "lucide-react";
 
 // Same API as the shadcn twin: the props and data shapes are the twin's own types.
 export type Md3VisualInputProps = VisualInputProps;
@@ -83,7 +92,8 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
     ref,
   ) => {
     const isCamera = variant === "camera-capture";
-    const allowed: VisualInputSource[] = sources ?? (isCamera ? ["camera", "upload"] : ["upload", "paste"]);
+    const allowed: VisualInputSource[] =
+      sources ?? (isCamera ? ["camera", "upload"] : ["upload", "paste"]);
     const canUpload = allowed.includes("upload");
     const canPaste = allowed.includes("paste");
     const canCamera = allowed.includes("camera");
@@ -151,7 +161,13 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
           created.current.add(previewUrl);
         }
         fileCounter += 1;
-        accepted.push({ id: `nx-md3-visual-${fileCounter}`, file, previewUrl, source, status: "ready" });
+        accepted.push({
+          id: `nx-md3-visual-${fileCounter}`,
+          file,
+          previewUrl,
+          source,
+          status: "ready",
+        });
       }
       setErrors(rejected);
       if (rejected.length) onReject?.(rejected);
@@ -176,12 +192,14 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
     const openUpload = () => !disabled && uploadRef.current?.click();
     const openCamera = () => !disabled && cameraRef.current?.click();
 
-    const onInputChange = (source: VisualInputSource) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      addFiles(Array.from(e.target.files ?? []), source);
-      e.target.value = "";
-    };
+    const onInputChange =
+      (source: VisualInputSource) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        addFiles(Array.from(e.target.files ?? []), source);
+        e.target.value = "";
+      };
 
-    const hasFiles = (e: React.DragEvent) => Array.from(e.dataTransfer?.types ?? []).includes("Files");
+    const hasFiles = (e: React.DragEvent) =>
+      Array.from(e.dataTransfer?.types ?? []).includes("Files");
 
     const dropHandlers = canUpload
       ? {
@@ -224,7 +242,8 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
     };
 
     const hintText =
-      hint ?? `${accept === "image/*" ? "Images" : accept.replace(/,/g, ", ")} · up to ${formatFileSize(maxSize)}`;
+      hint ??
+      `${accept === "image/*" ? "Images" : accept.replace(/,/g, ", ")} · up to ${formatFileSize(maxSize)}`;
 
     const isPill = variant === "paste-chip";
 
@@ -268,7 +287,9 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
               </span>
               <span className="flex min-w-0 flex-col">
                 <span className="truncate text-sm font-medium tracking-[0.1px]">{f.file.name}</span>
-                {(!isPill || (f.status && f.status !== "ready")) && <span className="truncate text-xs text-md-on-surface-variant">{meta}</span>}
+                {(!isPill || (f.status && f.status !== "ready")) && (
+                  <span className="truncate text-xs text-md-on-surface-variant">{meta}</span>
+                )}
               </span>
               <button
                 type="button"
@@ -298,7 +319,9 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
 
     const status = (
       <>
-        {files.length > 0 && seeText && <p className="text-xs text-md-on-surface-variant">{seeText}</p>}
+        {files.length > 0 && seeText && (
+          <p className="text-xs text-md-on-surface-variant">{seeText}</p>
+        )}
         {errors.length > 0 && (
           <div
             role="alert"
@@ -375,33 +398,50 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
 
     if (variant === "paste-chip") {
       return (
-        <div {...rootProps} className={cn("flex flex-col gap-2 text-md-on-surface outline-none", className)}>
+        <div
+          {...rootProps}
+          className={cn("flex flex-col gap-2 text-md-on-surface outline-none", className)}
+        >
           {chips}
           {children}
-          <div
-            className={cn(
-              "flex items-center gap-1 rounded-full text-xs text-md-on-surface-variant transition-colors duration-200 motion-reduce:transition-none",
-              dragging && "bg-md-primary/[0.08] text-md-on-surface ring-2 ring-md-primary",
-            )}
-          >
-            {canUpload && (
-              <Md3IconButton
-                aria-label="Attach image"
-                onClick={openUpload}
-                disabled={disabled}
-                data-visual-input-focus=""
-                className="[&_svg]:size-5"
-              >
-                <Paperclip aria-hidden="true" />
-              </Md3IconButton>
-            )}
-            {canCamera && (
-              <Md3IconButton aria-label={cameraLabel} onClick={openCamera} disabled={disabled} className="[&_svg]:size-5">
-                <Camera aria-hidden="true" />
-              </Md3IconButton>
-            )}
-            <span>{label ?? (dragging ? "Drop to attach" : canPaste ? "Paste or drop a screenshot" : "Attach an image")}</span>
-          </div>
+          {(canUpload || canCamera || label !== null || dragging) && (
+            <div
+              className={cn(
+                "flex items-center gap-1 rounded-full text-xs text-md-on-surface-variant transition-colors duration-200 motion-reduce:transition-none",
+                dragging && "bg-md-primary/[0.08] text-md-on-surface ring-2 ring-md-primary",
+              )}
+            >
+              {canUpload && (
+                <Md3IconButton
+                  aria-label="Attach image"
+                  onClick={openUpload}
+                  disabled={disabled}
+                  data-visual-input-focus=""
+                  className="[&_svg]:size-5"
+                >
+                  <Paperclip aria-hidden="true" />
+                </Md3IconButton>
+              )}
+              {canCamera && (
+                <Md3IconButton
+                  aria-label={cameraLabel}
+                  onClick={openCamera}
+                  disabled={disabled}
+                  className="[&_svg]:size-5"
+                >
+                  <Camera aria-hidden="true" />
+                </Md3IconButton>
+              )}
+              <span>
+                {label ??
+                  (dragging
+                    ? "Drop to attach"
+                    : canPaste
+                      ? "Paste or drop a screenshot"
+                      : "Attach an image")}
+              </span>
+            </div>
+          )}
           {status}
           {hiddenInputs}
         </div>
@@ -411,7 +451,10 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
     if (isCamera) {
       const photo = files[0];
       return (
-        <div {...rootProps} className={cn("flex flex-col gap-3 text-md-on-surface outline-none", className)}>
+        <div
+          {...rootProps}
+          className={cn("flex flex-col gap-3 text-md-on-surface outline-none", className)}
+        >
           <div
             className={cn(
               "relative aspect-[4/3] overflow-hidden rounded-md-lg bg-md-inverse-surface",
@@ -431,7 +474,9 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
                   className="absolute inset-[24%] rounded-md-sm border-2 border-md-inverse-primary"
                 />
                 <p className="absolute inset-x-0 bottom-3 px-4 text-center text-xs text-md-inverse-on-surface">
-                  {photo ? photo.file.name : (label ?? "Point your camera at what you want to ask about")}
+                  {photo
+                    ? photo.file.name
+                    : (label ?? "Point your camera at what you want to ask about")}
                 </p>
               </>
             )}
@@ -480,9 +525,13 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
               </>
             )}
           </div>
-          {cameraText && !photo && <p className="text-center text-xs text-md-on-surface-variant">{cameraText}</p>}
+          {cameraText && !photo && (
+            <p className="text-center text-xs text-md-on-surface-variant">{cameraText}</p>
+          )}
           {photo?.status === "error" && (
-            <p className="text-center text-xs text-md-error">{photo.error ?? "Couldn’t use this photo."}</p>
+            <p className="text-center text-xs text-md-error">
+              {photo.error ?? "Couldn’t use this photo."}
+            </p>
           )}
           {children}
           {status}
@@ -492,7 +541,10 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
     }
 
     return (
-      <div {...rootProps} className={cn("flex flex-col gap-3 text-md-on-surface outline-none", className)}>
+      <div
+        {...rootProps}
+        className={cn("flex flex-col gap-3 text-md-on-surface outline-none", className)}
+      >
         <div
           onClick={(e) => {
             if ((e.target as HTMLElement).closest("button")) return;
@@ -510,13 +562,20 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
             <ImageUp aria-hidden="true" />
           </span>
           <p className="text-base font-medium text-md-on-surface">
-            {dragging ? "Drop to attach" : (label ?? (canPaste ? "Drop an image or paste a screenshot" : "Drop an image"))}
+            {dragging
+              ? "Drop to attach"
+              : (label ?? (canPaste ? "Drop an image or paste a screenshot" : "Drop an image"))}
           </p>
           <p className="text-xs">{hintText}</p>
           {(canUpload || canCamera) && (
             <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
               {canUpload && (
-                <Md3Button variant="tonal" onClick={openUpload} disabled={disabled} data-visual-input-focus="">
+                <Md3Button
+                  variant="tonal"
+                  onClick={openUpload}
+                  disabled={disabled}
+                  data-visual-input-focus=""
+                >
                   {browseLabel}
                 </Md3Button>
               )}

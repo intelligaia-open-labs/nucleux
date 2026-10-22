@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 import { Md3AgentName } from "./index";
 
 const meta = {
@@ -11,6 +12,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** Just the name, in product type — for headers and brand contexts. */
 export const Wordmark: Story = {

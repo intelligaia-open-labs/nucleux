@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Mic, PenLine, Plus, SlidersHorizontal, Sparkles } from "lucide-react";
-import { Md3Button } from "@nucleux/md3-button";
-import { Md3IconButton } from "@nucleux/md3-icon-button";
-import { Md3VoiceTone } from "./index";
+import { PenLine, SlidersHorizontal, Sparkles } from "lucide-react";
+import { Md3OpenInputModelChip } from "@nucleux/md3-open-input";
+import { Md3VoiceTone, type Md3VoiceToneProps } from "./index";
+import { SitePreview as SitePreviewDemo } from "./site-preview";
 
 const meta = {
   title: "Material 3 Agent/Md3VoiceTone",
@@ -13,6 +13,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** As nucleux.in's live preview shows it. */
+export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
 
 /** The three presets of the site's live preview. */
 const presets = [
@@ -38,6 +41,29 @@ const rules = [
 
 const draft = "Draft a product update for stakeholders.";
 
+/** The live preview's composition — a component, so Storybook's source printer never walks the icon elements in `settingsItems`. */
+function LivePreviewDemo(args: Md3VoiceToneProps) {
+  return (
+    <div className="w-[40rem] max-w-[calc(100vw-2rem)]">
+      <Md3VoiceTone
+        {...args}
+        variant="composer"
+        trigger="settings"
+        settingsItems={[
+          { id: "mode", label: "Mode", icon: <SlidersHorizontal />, value: "None" },
+          { id: "style", label: "Style", icon: <PenLine />, value: "Normal" },
+          { id: "improve", label: "Improve prompt", icon: <Sparkles /> },
+        ]}
+        className="mx-auto"
+        onSubmit={() => {}}
+        onAdd={() => {}}
+        model={<Md3OpenInputModelChip name="Balanced" detail="High" />}
+        onVoice={() => {}}
+      />
+    </div>
+  );
+}
+
 const Composer = (args: Story["args"]) => (
   <div className="w-[40rem] max-w-[calc(100vw-2rem)]">
     <Md3VoiceTone {...args} onSubmit={() => {}} />
@@ -52,33 +78,7 @@ const WithPicker = (args: Story["args"]) => (
 /** The site's live preview: Professional chosen — no chip up front; a dot on the tune control right after + says a setting is on, and its menu lists Tone with the value. The prompt text is untouched. */
 export const LivePreview: Story = {
   args: { tones: presets, rules, defaultValue: "professional", defaultRuleValues: ["no-emojis", "uk-english"], defaultDraft: draft },
-  render: (args) => (
-    <div className="w-[40rem] max-w-[calc(100vw-2rem)]">
-      <Md3VoiceTone
-        {...args}
-        variant="composer"
-        trigger="settings"
-        settingsItems={[{ id: "mode", label: "Mode", icon: <SlidersHorizontal />, value: "None" }, { id: "style", label: "Style", icon: <PenLine />, value: "Normal" }, { id: "improve", label: "Improve prompt", icon: <Sparkles /> }]}
-        className="mx-auto"
-        onSubmit={() => {}}
-        composerLeading={
-          <Md3IconButton aria-label="Add context">
-            <Plus />
-          </Md3IconButton>
-        }
-        actions={
-          <>
-            <Md3Button variant="text" aria-label="Model Balanced, effort High" className="px-3">
-              <span className="font-semibold">Balanced</span> <span className="font-normal">High</span>
-            </Md3Button>
-            <Md3IconButton aria-label="Voice input">
-              <Mic />
-            </Md3IconButton>
-          </>
-        }
-      />
-    </div>
-  ),
+  render: (args) => <LivePreviewDemo {...args} />,
 };
 
 /** Tone presets: a row of named tone profiles in a preferences panel; the chosen one is outlined. */

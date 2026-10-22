@@ -38,6 +38,7 @@ interface Md3AttachmentsContextValue {
   items: AttachmentsFile[];
   variant: AttachmentsVariant;
   disabled: boolean;
+  showReadyStatus: boolean;
   accept?: string;
   maxFiles?: number;
   maxSize?: number;
@@ -111,6 +112,7 @@ export const Md3Attachments = React.forwardRef<HTMLDivElement, Md3AttachmentsPro
       maxSize,
       disabled = false,
       label = "Attached to this message",
+      showReadyStatus = true,
       className,
       children,
       ...props
@@ -163,7 +165,7 @@ export const Md3Attachments = React.forwardRef<HTMLDivElement, Md3AttachmentsPro
 
     return (
       <Md3AttachmentsContext.Provider
-        value={{ items, variant, disabled, accept, maxFiles, maxSize, addFiles, openPicker, onRemove, onRetry }}
+        value={{ items, variant, disabled, showReadyStatus, accept, maxFiles, maxSize, addFiles, openPicker, onRemove, onRetry }}
       >
         <div
           ref={ref}
@@ -226,7 +228,18 @@ Md3Attachments.displayName = "Md3Attachments";
  * stays listed with Retry. The remove control is named for the file.
  */
 export const Md3AttachmentsItem = React.forwardRef<HTMLDivElement, Md3AttachmentsItemProps>(
-  ({ file, variant: variantProp, onRemove: onRemoveProp, onRetry: onRetryProp, className, ...props }, ref) => {
+  (
+    {
+      file,
+      variant: variantProp,
+      onRemove: onRemoveProp,
+      onRetry: onRetryProp,
+      showReadyStatus: showReadyProp,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
     const ctx = useMd3Attachments();
     const variant = variantProp ?? ctx?.variant ?? "file-chip";
     const onRemove = onRemoveProp ?? ctx?.onRemove;
@@ -236,6 +249,7 @@ export const Md3AttachmentsItem = React.forwardRef<HTMLDivElement, Md3Attachment
     const busy = status === "uploading" || status === "processing";
     const isError = status === "error";
     const indeterminate = status === "processing" || file.progress == null;
+    const quietReady = status === "ready" && !(showReadyProp ?? ctx?.showReadyStatus ?? true);
 
     const detail = [
       file.size != null ? formatFileSize(file.size) : null,
@@ -288,13 +302,25 @@ export const Md3AttachmentsItem = React.forwardRef<HTMLDivElement, Md3Attachment
                 isError ? "text-md-on-error-container" : "text-md-on-surface-variant",
               )}
             >
-              <span className={cn("font-medium", status === "ready" && "text-md-primary")}>
-                {statusWord[status]}
-                {status === "uploading" && file.progress != null ? ` ${Math.round(file.progress)}%` : ""}
-              </span>
+              {!quietReady && (
+                <span className={cn("font-medium", status === "ready" && "text-md-primary")}>
+                  {statusWord[status]}
+                  {status === "uploading" && file.progress != null ? ` ${Math.round(file.progress)}%` : ""}
+                </span>
+              )}
               {isError && file.error ? <span className="truncate">· {file.error}</span> : null}
-              {!isError && detail.length > 0 ? <span className="truncate">· {detail.join(" · ")}</span> : null}
-              {status === "ready" && file.meta ? <span className="truncate">· {file.meta}</span> : null}
+              {!isError && detail.length > 0 ? (
+                <span className="truncate">
+                  {quietReady ? "" : "· "}
+                  {detail.join(" · ")}
+                </span>
+              ) : null}
+              {status === "ready" && file.meta ? (
+                <span className="truncate">
+                  {quietReady && !detail.length ? "" : "· "}
+                  {file.meta}
+                </span>
+              ) : null}
               {isError && onRetry && (
                 <>
                   <span aria-hidden="true">·</span>
@@ -470,7 +496,7 @@ export const Md3AttachmentsTrigger = React.forwardRef<HTMLButtonElement, Md3Atta
           )}
           {...props}
         >
-          <Paperclip aria-hidden="true" />
+          {leftIcon ?? <Paperclip aria-hidden="true" />}
         </Md3IconButton>
       );
     }

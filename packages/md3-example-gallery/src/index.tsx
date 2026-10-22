@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Info } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import type {
   ExampleGalleryExample,
@@ -15,7 +16,7 @@ import { Md3Tab, Md3TabPanel, Md3Tabs, Md3TabsList } from "@nucleux/md3-tabs";
 export type Md3ExampleGalleryProps = ExampleGalleryProps;
 /** Props of {@link Md3ExampleGalleryItem} — identical to `ExampleGalleryItemProps`. */
 export type Md3ExampleGalleryItemProps = ExampleGalleryItemProps;
-/** "card-grid", "horizontal-strip" or "categorized-tabs". */
+/** "card-grid", "horizontal-strip", "categorized-tabs", "tiles" or "grouped-list". */
 export type Md3ExampleGalleryVariant = ExampleGalleryVariant;
 /** "fill" or "preview". */
 export type Md3ExampleGallerySelectBehavior = ExampleGallerySelectBehavior;
@@ -31,6 +32,18 @@ const tints = [
   "bg-md-surface-container-high text-md-primary",
 ];
 
+// Compact tiles: four tonal containers so each tile reads as a different task.
+const tileTints = [
+  "bg-md-primary-container text-md-on-primary-container",
+  "bg-md-secondary-container text-md-on-secondary-container",
+  "bg-md-tertiary-container text-md-on-tertiary-container",
+  "bg-md-error-container text-md-on-error-container",
+];
+
+// The M3 on-surface state layer shared by the interactive rows and tiles.
+const stateLayer =
+  "before:absolute before:inset-0 before:bg-md-on-surface before:opacity-0 before:transition-opacity before:content-[''] hover:before:opacity-[0.08] focus-visible:before:opacity-[0.10] active:before:opacity-[0.10] motion-reduce:before:transition-none";
+
 /**
  * One Material 3 example card — the same API as `ExampleGalleryItem`. An
  * outlined, actionable M3 card (large corner, outline-variant hairline) with
@@ -43,6 +56,60 @@ export const Md3ExampleGalleryItem = React.forwardRef<HTMLButtonElement, Md3Exam
   ({ title, description, needs, icon, preview, tint = 0, selected, type = "button", className, ...props }, ref) => {
     const { variant } = React.useContext(GalleryContext);
     const strip = variant === "horizontal-strip";
+    if (variant === "tiles") {
+      return (
+        <button
+          ref={ref}
+          type={type}
+          aria-pressed={selected === undefined ? undefined : selected}
+          className={cn(
+            "relative grid h-12 w-full place-items-center overflow-hidden rounded-md-md px-3 text-center text-sm font-medium tracking-[0.1px]",
+            "outline-none focus-visible:ring-2 focus-visible:ring-md-primary focus-visible:ring-offset-2 focus-visible:ring-offset-md-surface",
+            stateLayer,
+            !preview && tileTints[tint % tileTints.length],
+            selected && "ring-2 ring-md-primary",
+            className,
+          )}
+          {...props}
+        >
+          <span className="relative">{preview ?? title}</span>
+          {preview && <span className="sr-only">{title}</span>}
+        </button>
+      );
+    }
+    if (variant === "grouped-list") {
+      return (
+        <button
+          ref={ref}
+          type={type}
+          aria-pressed={selected === undefined ? undefined : selected}
+          className={cn(
+            "relative flex w-full items-center gap-4 overflow-hidden px-4 py-4 text-left",
+            "outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-md-primary",
+            stateLayer,
+            selected && "bg-md-secondary-container/60 ring-2 ring-inset ring-md-primary",
+            className,
+          )}
+          {...props}
+        >
+          {icon && (
+            <span aria-hidden="true" className="relative shrink-0 text-md-on-surface-variant [&_svg]:size-6">
+              {icon}
+            </span>
+          )}
+          <span className="relative flex min-w-0 flex-col gap-1">
+            <span className="text-base leading-6 tracking-[0.15px] text-md-on-surface">{title}</span>
+            {description && <span className="text-sm leading-5 tracking-[0.25px] text-md-on-surface-variant">{description}</span>}
+            {needs && (
+              <span className="inline-flex items-center gap-1.5 text-[13px] leading-[18px] text-md-on-surface-variant">
+                <Info aria-hidden="true" className="size-4 shrink-0" />
+                {needs}
+              </span>
+            )}
+          </span>
+        </button>
+      );
+    }
     return (
       <button
         ref={ref}
@@ -177,14 +244,19 @@ export const Md3ExampleGallery = React.forwardRef<HTMLElement, Md3ExampleGallery
       tabs[next]?.click();
     };
 
-    const renderList = (list: ExampleGalleryExample[]) => (
+    const renderList = (list: ExampleGalleryExample[], labelledBy?: string) => (
       <ul
         role="list"
+        aria-labelledby={labelledBy}
         className={cn(
           "m-0 list-none p-0",
           variant === "horizontal-strip"
             ? "flex snap-x gap-3 overflow-x-auto pb-2"
-            : "grid grid-cols-2 gap-3 sm:grid-cols-3",
+            : variant === "tiles"
+              ? "grid grid-cols-2 gap-2"
+              : variant === "grouped-list"
+                ? "overflow-hidden rounded-md-lg border border-md-outline-variant bg-md-surface py-2"
+                : "grid grid-cols-2 gap-3 sm:grid-cols-3",
         )}
       >
         {list.map((example) => (
@@ -216,7 +288,21 @@ export const Md3ExampleGallery = React.forwardRef<HTMLElement, Md3ExampleGallery
     }
 
     let body: React.ReactNode;
-    if (variant === "categorized-tabs") {
+    if (variant === "grouped-list") {
+      const groups = shown.reduce<string[]>((acc, e) => {
+        const c = e.category ?? "Other";
+        return acc.includes(c) ? acc : [...acc, c];
+      }, []);
+      const order = categoriesProp ? [...categoriesProp.filter((c) => groups.includes(c)), ...groups.filter((c) => !categoriesProp.includes(c))] : groups;
+      body = order.map((c, i) => (
+        <div key={c} className="flex flex-col gap-1.5">
+          <h3 id={`${headingId}-g${i}`} className="text-xs font-medium leading-4 tracking-[0.5px] text-md-on-surface-variant">
+            {c}
+          </h3>
+          {renderList(shown.filter((e) => (e.category ?? "Other") === c), `${headingId}-g${i}`)}
+        </div>
+      ));
+    } else if (variant === "categorized-tabs") {
       body = (
         <Md3Tabs value={category} onValueChange={setCategory} className="flex flex-col gap-3">
           <Md3TabsList aria-label="Example categories" onKeyDown={onTabsKeyDown} className="overflow-x-auto bg-transparent">
@@ -247,7 +333,14 @@ export const Md3ExampleGallery = React.forwardRef<HTMLElement, Md3ExampleGallery
           {...props}
         >
           {label != null && (
-            <h2 id={headingId} className="text-sm font-medium tracking-[0.1px] text-md-on-surface-variant">
+            <h2
+              id={headingId}
+              className={cn(
+                variant === "grouped-list"
+                  ? "text-[22px] font-medium leading-7 text-md-on-surface"
+                  : "text-sm font-medium tracking-[0.1px] text-md-on-surface-variant",
+              )}
+            >
               {label}
             </h2>
           )}
