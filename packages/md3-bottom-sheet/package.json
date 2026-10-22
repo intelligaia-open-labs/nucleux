@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-bottom-sheet",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 modal bottom sheet — Nucleux agentic UI for React.",

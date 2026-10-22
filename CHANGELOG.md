@@ -8,6 +8,19 @@ The format is machine-readable: each version heading starts with `## ` followed
 by a version tag and date, and entries are grouped under `### Added`, `### Changed`,
 `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings.
 
+## [0.9.0] — 2026-10-22
+
+### Added
+- `npx -y @nucleux/mcp add`: one command that connects Nucleux to every coding
+  agent on the machine (Claude Code, Cursor, VS Code Copilot, Codex, Windsurf,
+  Claude Desktop, Gemini CLI) and writes the `nucleux-design` skill and AGENTS.md
+  section into the project. It keeps everything else in each config, leaves what
+  is already set up alone, never rewrites a config it can't parse, and has
+  `--dry-run`, `--only <agents>` and `--no-project`.
+
+### Changed
+- `init`'s file writing is shared with `add` (same output, same flags).
+
 ## [0.8.1] — 2026-10-22
 
 ### Fixed

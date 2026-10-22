@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-nudges",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Nudges — a quiet, dismissible tip about a capability that would help right now — Nucleux agentic UI for React.",

@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/preset-styles",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "type": "module",
   "sideEffects": false,
   "description": "Preset Styles — one-click named styles for how the agent's output looks or reads, as a chip or a Style row in Request settings — Nucleux agentic UI for React.",
