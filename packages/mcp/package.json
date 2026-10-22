@@ -45,7 +45,12 @@
     "components",
     "agentic",
     "ai",
-    "design-system"
+    "design-system",
+    "swiftui",
+    "jetpack-compose",
+    "flutter",
+    "react-native",
+    "mobile"
   ],
   "engines": {
     "node": ">=18"

@@ -11,6 +11,19 @@ import {
 } from "./shadcn.js";
 import htmlSnippets from "./html-snippets.json";
 import { validateDesign, type PlannedComponent } from "./validate.js";
+import mobileCatalogJson from "./mobile/mobile-catalog.json";
+import {
+  getMobileComponent,
+  getMobileExample,
+  getMobileSetup,
+  isMobileFramework,
+  listMobileComponents,
+  listMobileExamples,
+  MOBILE_HOST_INSTRUCTIONS,
+  registerMobileTools,
+  renderMobileSearch,
+  type MobileCatalog,
+} from "./mobile/mobile.js";
 import {
   patterns,
   patternsUsing,
@@ -20,6 +33,16 @@ import {
   searchPatterns,
   workflow,
 } from "./patterns.js";
+
+// Nucleux Mobile (SwiftUI, Compose, Flutter, React Native): vendored from intelligaia/nucleux-mobile by
+// scripts/vendor-mobile-mcp.mjs. The shared tools below route those frameworks to it.
+const mobileCatalog = mobileCatalogJson as unknown as MobileCatalog;
+const MOBILE_FRAMEWORK_VALUES = ["swiftui", "compose", "flutter", "react-native"] as const;
+const MOBILE_HINT = ` For native mobile apps pass framework 'swiftui', 'compose', 'flutter' or 'react-native' (Nucleux Mobile).`;
+const mobileFramework = z
+  .enum(MOBILE_FRAMEWORK_VALUES)
+  .optional()
+  .describe("Native mobile (Nucleux Mobile): 'swiftui', 'compose', 'flutter' or 'react-native'. Omit for the React kit.");
 
 const snippets = htmlSnippets.snippets as Record<
   string,
@@ -144,6 +167,8 @@ Use these tools instead of guessing props: the catalog is generated from the pac
 
 Component policy — when Nucleux does not ship what you need, take the ShadCN component as the base (${SHADCN_DOCS}) and restyle it onto Nucleux tokens. Do not hand-roll a primitive Nucleux and ShadCN both leave to ShadCN. The tools name the specific equivalent on a miss. Nucleux's Tailwind preset uses ShadCN's own token names, so pasted markup mostly resolves untouched — but it defines no card, popover or secondary tokens, and those classes render transparent with no build error.
 
+${MOBILE_HOST_INSTRUCTIONS}
+
 Note that the unrelated npm package "nucleux" (a state-management library) is not this library.`;
 
 /** Find a server-rendered HTML snippet entry for a package (by any component name). */
@@ -236,7 +261,8 @@ export function createServer(): McpServer {
   );
   server.tool(
     "list_components",
-    "List every Nucleux UI component with its package name and one-line description. Start here to see what the library offers, and to confirm whether a component exists before falling back to ShadCN.",
+    "List every Nucleux UI component with its package name and one-line description. Start here to see what the library offers, and to confirm whether a component exists before falling back to ShadCN." +
+      MOBILE_HINT,
     {
       kind: z
         .enum(["component", "infrastructure", "all"])
@@ -244,8 +270,10 @@ export function createServer(): McpServer {
         .describe(
           "Filter by kind. 'component' (default) = UI components; 'infrastructure' = utils/hooks/tokens/umbrella.",
         ),
+      framework: mobileFramework,
     },
-    async ({ kind = "component" }) => {
+    async ({ kind = "component", framework }) => {
+      if (isMobileFramework(framework)) return text(listMobileComponents(mobileCatalog, { framework }));
       const rows = catalog.packages
         .filter((p) => kind === "all" || p.kind === kind)
         .map(
@@ -259,16 +287,16 @@ export function createServer(): McpServer {
 
   server.tool(
     "get_component",
-    "Get full details for one component. framework:'react' (default) returns description, install/import, exports, and the verbatim TypeScript Props interface(s). framework:'html' returns a static HTML snippet with Tailwind classes for non-React projects. Accepts a component name (e.g. 'Badge') or package name (e.g. '@nucleux/badge'). If Nucleux does not ship it, returns the ShadCN component to use as the base instead.",
+    "Get full details for one component. framework:'react' (default) returns description, install/import, exports, and the verbatim TypeScript Props interface(s). framework:'html' returns a static HTML snippet with Tailwind classes for non-React projects. Accepts a component name (e.g. 'Badge') or package name (e.g. '@nucleux/badge'). If Nucleux does not ship it, returns the ShadCN component to use as the base instead. framework 'swiftui', 'compose', 'flutter' or 'react-native' returns the Nucleux Mobile component instead: import line, that framework's exact public API (Swift inits and modifiers, Kotlin @Composable functions with defaults, Dart named parameters, React Native Props), key words and a spec summary.",
     {
       name: z
         .string()
         .describe("Component or package name, e.g. 'Badge', 'badge', or '@nucleux/badge'."),
       framework: z
-        .enum(["react", "html"])
+        .enum(["react", "html", ...MOBILE_FRAMEWORK_VALUES])
         .optional()
         .describe(
-          "Output format. 'react' (default) = TSX API + Props; 'html' = static HTML markup with Tailwind classes.",
+          "Output format. 'react' (default) = TSX API + Props; 'html' = static HTML markup with Tailwind classes; 'swiftui', 'compose', 'flutter' or 'react-native' = the Nucleux Mobile component in that framework.",
         ),
       template: z
         .boolean()
@@ -278,6 +306,10 @@ export function createServer(): McpServer {
         ),
     },
     async ({ name, framework = "react", template = false }) => {
+      if (isMobileFramework(framework)) {
+        const r = getMobileComponent(mobileCatalog, name, framework);
+        return r.found ? text(r.text) : { isError: true, content: [{ type: "text" as const, text: r.text }] };
+      }
       const p = resolve(name);
       if (!p) {
         const suggestions = catalog.packages
@@ -309,11 +341,14 @@ export function createServer(): McpServer {
 
   server.tool(
     "search_components",
-    "Search components by keyword across names, descriptions, and keywords. Use when you know what you need ('chat input', 'toast', 'avatar') but not the exact component name. On no match, returns the ShadCN equivalent to use as the base.",
+    "Search components by keyword across names, descriptions, and keywords. Use when you know what you need ('chat input', 'toast', 'avatar') but not the exact component name. On no match, returns the ShadCN equivalent to use as the base." +
+      MOBILE_HINT,
     {
       query: z.string().describe("Free-text query, e.g. 'chat input', 'progress', 'file upload'."),
+      framework: mobileFramework,
     },
-    async ({ query }) => {
+    async ({ query, framework }) => {
+      if (isMobileFramework(framework)) return text(renderMobileSearch(mobileCatalog, query, framework));
       const q = query.trim().toLowerCase();
       const terms = q.split(/\s+/).filter(Boolean);
       const scored = catalog.packages
@@ -359,12 +394,14 @@ export function createServer(): McpServer {
 
   server.tool(
     "get_setup",
-    "Get install and theming setup for Nucleux. framework:'react' (default) covers the React packages: requirements, install commands, Tailwind v3 preset + content globs, PostCSS and the tokens CSS. framework:'html' covers using Nucleux styling in a plain HTML project. Pass the project's packageManager and whether its Tailwind config is ESM or CommonJS to get exact commands and files. Read this before writing code that uses @nucleux components.",
+    "Get install and theming setup for Nucleux. framework:'react' (default) covers the React packages: requirements, install commands, Tailwind v3 preset + content globs, PostCSS and the tokens CSS. framework:'html' covers using Nucleux styling in a plain HTML project. Pass the project's packageManager and whether its Tailwind config is ESM or CommonJS to get exact commands and files. Read this before writing code that uses @nucleux components. framework 'swiftui', 'compose', 'flutter' or 'react-native' covers Nucleux Mobile instead: the dependency (SwiftPM, the Gradle module, a Flutter git/path dependency, npm @intelligaia/nucleux), theming, the iOS menu host, the icon font, minimum versions and the conventions every mobile screen follows.",
     {
       framework: z
-        .enum(["react", "html"])
+        .enum(["react", "html", ...MOBILE_FRAMEWORK_VALUES])
         .optional()
-        .describe("Setup target: 'react' (default) or 'html' (plain HTML, no React)."),
+        .describe(
+          "Setup target: 'react' (default), 'html' (plain HTML, no React), or a Nucleux Mobile framework: 'swiftui', 'compose', 'flutter', 'react-native'.",
+        ),
       packageManager: z
         .enum(["npm", "pnpm", "yarn", "bun"])
         .optional()
@@ -377,6 +414,7 @@ export function createServer(): McpServer {
         ),
     },
     async ({ framework = "react", packageManager = "pnpm", configModule = "esm" }) => {
+      if (isMobileFramework(framework)) return text(getMobileSetup(mobileCatalog, framework));
       if (framework === "html") return text(htmlSetup);
       const s = catalog.setup;
       const add = { npm: "npm install", pnpm: "pnpm add", yarn: "yarn add", bun: "bun add" }[
@@ -442,9 +480,11 @@ export function createServer(): McpServer {
 
   server.tool(
     "list_examples",
-    "List runnable example compositions (agent chat, dashboards, card variations, settings…) that show how components combine into real screens.",
-    {},
-    async () => {
+    "List runnable example compositions (agent chat, dashboards, card variations, settings…) that show how components combine into real screens." +
+      MOBILE_HINT,
+    { framework: mobileFramework },
+    async ({ framework }) => {
+      if (isMobileFramework(framework)) return text(listMobileExamples(mobileCatalog, framework));
       return text(
         catalog.examples.map((e: Example) => `- ${e.name} — "${e.title}"`).join("\n") ||
           "No examples available.",
@@ -454,11 +494,16 @@ export function createServer(): McpServer {
 
   server.tool(
     "get_example",
-    "Get the full source of one example composition by name (see list_examples). Returns working TSX you can adapt.",
+    "Get the full source of one example composition by name (see list_examples). Returns working TSX you can adapt. With framework 'swiftui', 'compose', 'flutter' or 'react-native', returns the Nucleux Mobile example for a component (the iOS catalog screen, or the Compose/Flutter/React Native test host).",
     {
-      name: z.string().describe("Example name, e.g. 'agent-chat', 'card-variations', 'settings'."),
+      name: z.string().describe("Example name, e.g. 'agent-chat', 'card-variations', 'settings'; for mobile, a component such as 'caveat' or 'PromptComposer'."),
+      framework: mobileFramework,
     },
-    async ({ name }) => {
+    async ({ name, framework }) => {
+      if (isMobileFramework(framework)) {
+        const r = getMobileExample(mobileCatalog, name, framework);
+        return r.found ? text(r.text) : { isError: true, content: [{ type: "text" as const, text: r.text }] };
+      }
       const q = name.trim().toLowerCase();
       const ex = catalog.examples.find((e: Example) => e.name.toLowerCase() === q);
       if (!ex) {
@@ -573,6 +618,9 @@ export function createServer(): McpServer {
       return text(JSON.stringify(validateDesign({ patterns: ids, components }), null, 2));
     },
   );
+
+  // Mobile-only tools (get_mobile_spec, get_mobile_words, validate_mobile_usage). The shared names above are ours.
+  registerMobileTools(server, mobileCatalog, { shared: false });
 
   server.prompt(
     "build_with_nucleux",
