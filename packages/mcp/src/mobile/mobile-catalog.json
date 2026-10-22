@@ -60,10 +60,10 @@
  "counts": {
   "components": 37,
   "examples": 136,
-  "swiftui": 2002,
-  "compose": 1442,
-  "flutter": 2623,
-  "react-native": 1478
+  "swiftui": 2004,
+  "compose": 1444,
+  "flutter": 2627,
+  "react-native": 1479
  },
  "components": [
   {
@@ -1415,6 +1415,11 @@
          "signature": "case clock = \"\\u{E08B}\"",
          "doc": "",
          "name": "clock"
+        },
+        {
+         "signature": "case badgeInfo = \"\\u{E47C}\"",
+         "doc": "",
+         "name": "badgeInfo"
         }
        ]
       },
@@ -1455,7 +1460,7 @@
        "members": [
         {
          "name": "entries",
-         "signature": "Plus('\\uE140'), Maximize2('\\uE116'), Minimize2('\\uE11E'), Mic('\\uE11B'), ArrowUp('\\uE04E'), Square('\\uE16A'), Check('\\uE070'), X('\\uE1B1'), ChevronDown('\\uE071'), ChevronLeft('\\uE072'), ChevronRight('\\uE073'), FileText('\\uE0D0'), FileSpreadsheet('\\uE326'), Image('\\uE0F9'), RotateCw('\\uE14C'), Pause('\\uE131'), Play('\\uE13F'), MicOff('\\uE11C'), CircleAlert('\\uE07B'), Sparkles('\\uE416'), CircleCheck('\\uE225'), LoaderCircle('\\uE10D'), Info('\\uE0FE'), Lightbulb('\\uE1C1'), Wrench('\\uE1B0'), Link('\\uE107'), Search('\\uE154'), Ban('\\uE055'), TriangleAlert('\\uE192'), FileCode('\\uE0C7'), Lock('\\uE10E'), Key('\\uE102'), Shield('\\uE15B'), MessageSquare('\\uE11A'), ExternalLink('\\uE0BD'), Eye('\\uE0BE'), Flag('\\uE0D6'), SlidersHorizontal('\\uE299'), PenLine('\\uE133'), Clock('\\uE08B')"
+         "signature": "Plus('\\uE140'), Maximize2('\\uE116'), Minimize2('\\uE11E'), Mic('\\uE11B'), ArrowUp('\\uE04E'), Square('\\uE16A'), Check('\\uE070'), X('\\uE1B1'), ChevronDown('\\uE071'), ChevronLeft('\\uE072'), ChevronRight('\\uE073'), FileText('\\uE0D0'), FileSpreadsheet('\\uE326'), Image('\\uE0F9'), RotateCw('\\uE14C'), Pause('\\uE131'), Play('\\uE13F'), MicOff('\\uE11C'), CircleAlert('\\uE07B'), Sparkles('\\uE416'), CircleCheck('\\uE225'), LoaderCircle('\\uE10D'), Info('\\uE0FE'), Lightbulb('\\uE1C1'), Wrench('\\uE1B0'), Link('\\uE107'), Search('\\uE154'), Ban('\\uE055'), TriangleAlert('\\uE192'), FileCode('\\uE0C7'), Lock('\\uE10E'), Key('\\uE102'), Shield('\\uE15B'), MessageSquare('\\uE11A'), ExternalLink('\\uE0BD'), Eye('\\uE0BE'), Flag('\\uE0D6'), SlidersHorizontal('\\uE299'), PenLine('\\uE133'), Clock('\\uE08B'), BadgeInfo('\\uE47C')"
         }
        ]
       },
@@ -1728,6 +1733,12 @@
          "kind": "static",
          "signature": "static const IconData clock = IconData(0xE08B, fontFamily: 'lucide', fontPackage: 'nucleux')",
          "doc": ""
+        },
+        {
+         "name": "badgeInfo",
+         "kind": "static",
+         "signature": "static const IconData badgeInfo = IconData(0xE47C, fontFamily: 'lucide', fontPackage: 'nucleux')",
+         "doc": ""
         }
        ]
       }
@@ -1787,7 +1798,7 @@
        "file": "react-native/src/generated/icons.ts",
        "line": 2,
        "members": [],
-       "body": "export const icons = {\n  'plus': '\\uE140',\n  'maximize-2': '\\uE116',\n  'minimize-2': '\\uE11E',\n  'mic': '\\uE11B',\n  'arrow-up': '\\uE04E',\n  'square': '\\uE16A',\n  'check': '\\uE070',\n  'x': '\\uE1B1',\n  'chevron-down': '\\uE071',\n  'chevron-left': '\\uE072',\n  'chevron-right': '\\uE073',\n  'file-text': '\\uE0D0',\n  'file-spreadsheet': '\\uE326',\n  'image': '\\uE0F9',\n  'rotate-cw': '\\uE14C',\n  'pause': '\\uE131',\n  'play': '\\uE13F',\n  'mic-off': '\\uE11C',\n  'circle-alert': '\\uE07B',\n  'sparkles': '\\uE416',\n  'circle-check': '\\uE225',\n  'loader-circle': '\\uE10D',\n  'info': '\\uE0FE',\n  'lightbulb': '\\uE1C1',\n  'wrench': '\\uE1B0',\n  'link': '\\uE107',\n  'search': '\\uE154',\n  'ban': '\\uE055',\n  'triangle-alert': '\\uE192',\n  'file-code': '\\uE0C7',\n  'lock': '\\uE10E',\n  'key': '\\uE102',\n  'shield': '\\uE15B',\n  'message-square': '\\uE11A',\n  'external-link': '\\uE0BD',\n  'eye': '\\uE0BE',\n  'flag': '\\uE0D6',\n  'sliders-horizontal': '\\uE299',\n  'pen-line': '\\uE133',\n  'clock': '\\uE08B',\n} as const;"
+       "body": "export const icons = {\n  'plus': '\\uE140',\n  'maximize-2': '\\uE116',\n  'minimize-2': '\\uE11E',\n  'mic': '\\uE11B',\n  'arrow-up': '\\uE04E',\n  'square': '\\uE16A',\n  'check': '\\uE070',\n  'x': '\\uE1B1',\n  'chevron-down': '\\uE071',\n  'chevron-left': '\\uE072',\n  'chevron-right': '\\uE073',\n  'file-text': '\\uE0D0',\n  'file-spreadsheet': '\\uE326',\n  'image': '\\uE0F9',\n  'rotate-cw': '\\uE14C',\n  'pause': '\\uE131',\n  'play': '\\uE13F',\n  'mic-off': '\\uE11C',\n  'circle-alert': '\\uE07B',\n  'sparkles': '\\uE416',\n  'circle-check': '\\uE225',\n  'loader-circle': '\\uE10D',\n  'info': '\\uE0FE',\n  'lightbulb': '\\uE1C1',\n  'wrench': '\\uE1B0',\n  'link': '\\uE107',\n  'search': '\\uE154',\n  'ban': '\\uE055',\n  'triangle-alert': '\\uE192',\n  'file-code': '\\uE0C7',\n  'lock': '\\uE10E',\n  'key': '\\uE102',\n  'shield': '\\uE15B',\n  'message-square': '\\uE11A',\n  'external-link': '\\uE0BD',\n  'eye': '\\uE0BE',\n  'flag': '\\uE0D6',\n  'sliders-horizontal': '\\uE299',\n  'pen-line': '\\uE133',\n  'clock': '\\uE08B',\n  'badge-info': '\\uE47C',\n} as const;"
       },
       {
        "name": "NucleuxIconName",
@@ -1795,7 +1806,7 @@
        "signature": "export type NucleuxIconName = keyof typeof icons",
        "doc": "",
        "file": "react-native/src/generated/icons.ts",
-       "line": 45,
+       "line": 46,
        "members": [],
        "body": "export type NucleuxIconName = keyof typeof icons;"
       }
@@ -13738,7 +13749,7 @@
    ],
    "spec": "specs/proactive-suggestions.md",
    "specSummary": "The pattern library's **Proactive Suggestions** pattern (branch-2: `material-patterns.js` → `proactive`; the engine `proRender` / `proNotice` / `proResolve` / `proAct` and the release-readiness scenario in `material-sim.js`; CSS `.md-pro`). The agent **noticed something** during the work and offers **one** next step, with the reason. It is a recommendation, never an action taken.",
-   "specText": "# Proactive Suggestions\n\nThe pattern library's **Proactive Suggestions** pattern (branch-2: `material-patterns.js` → `proactive`; the engine `proRender` / `proNotice` / `proResolve` / `proAct` and the release-readiness scenario in `material-sim.js`; CSS `.md-pro`). The agent **noticed something** during the work and offers **one** next step, with the reason. It is a recommendation, never an action taken.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxProactiveController` (`@Observable`), `NucleuxProactiveSuggestion`, `NucleuxProactiveReview` |\n| Compose | `NucleuxProactiveController`, `rememberNucleuxProactiveController`, `NucleuxProactiveSuggestion`, `NucleuxProactiveReview` |\n| Flutter | `NucleuxProactiveController` (`ChangeNotifier`), `NucleuxProactiveSuggestion`, `NucleuxProactiveReview` |\n| React Native | `useProactiveSuggestion`, `ProactiveSuggestion`, `ProactiveReview` |\n\n## What the host supplies\n\n| | Notes |\n|---|---|\n| `agent` | \"Aria\" |\n| `reason` | The evidence, specifically: counts, names, dates. \"QA is signed off, but two high-priority blockers still have no owner.\" |\n| `action` | A recommendation, never past tense: \"Assign owners before the release?\" |\n| `primary` | Opens the review. Default \"Review\" |\n| `snoozeLabel` | With one, the card offers a snooze: \"Remind me tomorrow\" |\n| `dismissible` | Default true |\n| `resolved` | Said when the reason goes away. Default \"Resolved — nothing to do.\" |\n| **Observations** | `notice(evidence, now)` whenever what it watches changes: a key for the facts (\"ONB-112,EXP-210\"), or none when the reason is gone |\n| **Review** | The host's own workflow (the proposal, changeable) inside `ProactiveReview`, with one confirming action. On confirm: `confirmed(\"2 owners assigned\")` |\n\n## The state machine\n\n`react-native/src/proactive.ts` is the reference (a port of the pattern's engine); `npm run fixtures` writes `specs/proactive.fixtures.json` (12 event sequences, every step's state, view and announcement) and SwiftUI, Compose and Flutter are tested against it.\n\n| Phase | Shown | Announced (politely) |\n|---|---|---|\n| dormant | nothing | |\n| suggested | the card: \"Suggested by Aria\", reason, action · **Review** · *Remind me tomorrow* · *Dismiss* | \"Suggestion from Aria: {reason} {action} Nothing has changed.\" |\n| preparing | the card with \"Preparing a review — nothing has changed yet.\" | |\n| review | the card, and the host's review below it | \"Review opened. Nothing changes until you confirm.\" |\n| dismissed | status line \"Dismissed. Aria won’t suggest this again unless something changes.\" · Undo | the same |\n| snoozed | status line \"Snoozed until tomorrow, 9:00.\" · Undo | the same |\n| resolved | the card says the `resolved` line, then goes (2.4 s) | \"The suggestion no longer applies.\" |\n| after confirming | status line \"2 owners assigned — you confirmed Aria’s proposal.\" (· Undo if the host can) | the same |\n\nRules:\n\n- **Raised only on evidence.** It never appears on a timer.\n- **Dismiss is remembered for that evidence.** The same facts never bring it back, a day later included; only new facts do.\n- **Snooze** hides it until a time and brings it back only if it's still true.\n- **It withdraws when the reason goes away,** saying so. A snoozed or dismissed one whose reason has gone is quietly forgotten, and Undo can't revive it.\n- **Nothing changes until the person confirms** in the review. Cancel goes back to the suggestion.\n\nThe dismiss wording is generic (\"unless something changes\"); the pattern's demo says \"for these issues\".\n\n## Look\n\n- Card, placed by the host next to what it's about (inline), or at the bottom of the surface (floating). Never a dialog; it doesn't take focus.\n- `tonal` (default): `accent` fill. `outlined`: 1pt `border`. Corner 16, padding 14 (compact 10).\n- Provenance: the generated mark (Lucide `sparkles`, 16, `primary`) and \"Suggested by Aria\", 12 `mutedForeground`.\n- Reason 13 `mutedForeground`; action 15 semibold `foreground`.\n- Actions: the primary as a small primary Button; snooze and dismiss as small ghost Buttons.\n- Preparing: the working mark (`loader-circle`) and the line. Resolved: `circle-check` and the line.\n- Review: an outlined card under the suggestion: title 15 semibold, \"Proposed by Aria. Nothing changes until you confirm.\" with the generated mark, the host's content, then the confirming Button and Cancel.\n- No rise or fade yet (see below).\n\n## Accessibility\n\n- The card is a region named \"Suggestion from Aria\"; the review is a region named by its title.\n- Nothing steals focus when it appears; every change is announced politely.\n- Every action is a real button with a 44pt / 48dp target; Undo sits in the status line right after.\n\n## Not in scope (later)\n\n- The 400 ms rise and the 2 s fade; \"at the next pause\" timing (the host decides when to call `notice`).\n- Per-kind settings (turning a kind of suggestion off).\n",
+   "specText": "# Proactive Suggestions\n\nThe pattern library's **Proactive Suggestions** pattern (branch-2: `material-patterns.js` → `proactive`; the engine `proRender` / `proNotice` / `proResolve` / `proAct` and the release-readiness scenario in `material-sim.js`; CSS `.md-pro`). The agent **noticed something** during the work and offers **one** next step, with the reason. It is a recommendation, never an action taken.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxProactiveController` (`@Observable`), `NucleuxProactiveSuggestion`, `NucleuxProactiveReview` |\n| Compose | `NucleuxProactiveController`, `rememberNucleuxProactiveController`, `NucleuxProactiveSuggestion`, `NucleuxProactiveReview` |\n| Flutter | `NucleuxProactiveController` (`ChangeNotifier`), `NucleuxProactiveSuggestion`, `NucleuxProactiveReview` |\n| React Native | `useProactiveSuggestion`, `ProactiveSuggestion`, `ProactiveReview` |\n\n## What the host supplies\n\n| | Notes |\n|---|---|\n| `agent` | \"Aria\" |\n| `reason` | The evidence, specifically: counts, names, dates. \"QA is signed off, but two high-priority blockers still have no owner.\" |\n| `action` | A recommendation, never past tense: \"Assign owners before the release?\" |\n| `primary` | Opens the review. Default \"Review\" |\n| `snoozeLabel` | With one, the card offers a snooze: \"Remind me tomorrow\" |\n| `dismissible` | Default true |\n| `resolved` | Said when the reason goes away. Default \"Resolved — nothing to do.\" |\n| **Observations** | `notice(evidence, now)` whenever what it watches changes: a key for the facts (\"ONB-112,EXP-210\"), or none when the reason is gone |\n| **Review** | The host's own workflow (the proposal, changeable) inside `ProactiveReview`, with one confirming action. On confirm: `confirmed(\"2 owners assigned\")` |\n\n## The state machine\n\n`react-native/src/proactive.ts` is the reference (a port of the pattern's engine); `npm run fixtures` writes `specs/proactive.fixtures.json` (12 event sequences, every step's state, view and announcement) and SwiftUI, Compose and Flutter are tested against it.\n\n| Phase | Shown | Announced (politely) |\n|---|---|---|\n| dormant | nothing | |\n| suggested | the card: \"Suggested by Aria\", reason, action · **Review** · *Remind me tomorrow* · *Dismiss* | \"Suggestion from Aria: {reason} {action} Nothing has changed.\" |\n| preparing | the card with \"Preparing a review — nothing has changed yet.\" | |\n| review | the card, and the host's review below it | \"Review opened. Nothing changes until you confirm.\" |\n| dismissed | status line \"Dismissed. Aria won’t suggest this again unless something changes.\" · Undo | the same |\n| snoozed | status line \"Snoozed until tomorrow, 9:00.\" · Undo | the same |\n| resolved | the card says the `resolved` line, then goes (2.4 s) | \"The suggestion no longer applies.\" |\n| after confirming | status line \"2 owners assigned — you confirmed Aria’s proposal.\" (· Undo if the host can) | the same |\n\nRules:\n\n- **Raised only on evidence.** It never appears on a timer.\n- **Dismiss is remembered for that evidence.** The same facts never bring it back, a day later included; only new facts do.\n- **Snooze** hides it until a time and brings it back only if it's still true.\n- **It withdraws when the reason goes away,** saying so. A snoozed or dismissed one whose reason has gone is quietly forgotten, and Undo can't revive it.\n- **Nothing changes until the person confirms** in the review. Cancel goes back to the suggestion.\n\nThe dismiss wording is generic (\"unless something changes\"); the pattern's demo says \"for these issues\".\n\n## Look\n\n- Card, placed by the host next to what it's about (inline), or at the bottom of the surface (floating). Never a dialog; it doesn't take focus.\n- `tonal` (default): `accent` fill. `outlined`: 1pt `border`. Corner 16, padding 14 (compact 10).\n- Provenance: the generated mark (Lucide `badge-info`, 16, `mutedForeground`) and \"Suggested by Aria\", 12 `mutedForeground`. While it applies, the turning working mark beside the status line.\n- Reason 13 `mutedForeground`; action 15 semibold `foreground`.\n- Actions: the primary as a small primary Button; snooze and dismiss as small ghost Buttons.\n- Preparing: the working mark (`loader-circle`) and the line. Resolved: `circle-check` and the line.\n- Review: an outlined card under the suggestion: title 15 semibold, \"Proposed by Aria. Nothing changes until you confirm.\" with the generated mark, the host's content, then the confirming Button and Cancel.\n- No rise or fade yet (see below).\n\n## Accessibility\n\n- The card is a region named \"Suggestion from Aria\"; the review is a region named by its title.\n- Nothing steals focus when it appears; every change is announced politely.\n- Every action is a real button with a 44pt / 48dp target; Undo sits in the status line right after.\n\n## Not in scope (later)\n\n- The 400 ms rise and the 2 s fade; \"at the next pause\" timing (the host decides when to call `notice`).\n- Per-kind settings (turning a kind of suggestion off).\n",
    "fixtures": [
     "specs/proactive.fixtures.json"
    ],
@@ -14526,7 +14537,7 @@
        "signature": "class NucleuxProactiveContent",
        "doc": "What a proactive suggestion says. All from the host; see specs/proactive-suggestions.md.",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 11,
+       "line": 10,
        "members": [
         {
          "name": "NucleuxProactiveContent",
@@ -14634,7 +14645,7 @@
        "signature": "enum NucleuxProactivePhase",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 37,
+       "line": 36,
        "members": [
         {
          "name": "values",
@@ -14648,7 +14659,7 @@
        "signature": "enum NucleuxProactiveUndoTo",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 47,
+       "line": 46,
        "members": [
         {
          "name": "values",
@@ -14662,7 +14673,7 @@
        "signature": "enum NucleuxProactiveCardAction",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 49,
+       "line": 48,
        "members": [
         {
          "name": "values",
@@ -14676,7 +14687,7 @@
        "signature": "enum NucleuxProactiveCardKind",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 51,
+       "line": 50,
        "members": [
         {
          "name": "values",
@@ -14690,7 +14701,7 @@
        "signature": "class NucleuxProactiveNote",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 53,
+       "line": 52,
        "members": [
         {
          "name": "NucleuxProactiveNote",
@@ -14734,7 +14745,7 @@
        "signature": "sealed class NucleuxProactiveEvent",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 59,
+       "line": 58,
        "members": [
         {
          "name": "NucleuxProactiveEvent",
@@ -14751,7 +14762,7 @@
        "signature": "class ProactiveNotice extends NucleuxProactiveEvent",
        "doc": "The host's observation changed; null evidence means the reason is gone.",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 64,
+       "line": 63,
        "members": [
         {
          "name": "ProactiveNotice",
@@ -14795,7 +14806,7 @@
        "signature": "class ProactiveReview extends NucleuxProactiveEvent",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 70,
+       "line": 69,
        "members": [
         {
          "name": "ProactiveReview",
@@ -14812,7 +14823,7 @@
        "signature": "class ProactiveReady extends NucleuxProactiveEvent",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 74,
+       "line": 73,
        "members": [
         {
          "name": "ProactiveReady",
@@ -14829,7 +14840,7 @@
        "signature": "class ProactiveCancel extends NucleuxProactiveEvent",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 78,
+       "line": 77,
        "members": [
         {
          "name": "ProactiveCancel",
@@ -14846,7 +14857,7 @@
        "signature": "class ProactiveDismiss extends NucleuxProactiveEvent",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 82,
+       "line": 81,
        "members": [
         {
          "name": "ProactiveDismiss",
@@ -14863,7 +14874,7 @@
        "signature": "class ProactiveSnooze extends NucleuxProactiveEvent",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 86,
+       "line": 85,
        "members": [
         {
          "name": "ProactiveSnooze",
@@ -14907,7 +14918,7 @@
        "signature": "class ProactiveUndo extends NucleuxProactiveEvent",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 92,
+       "line": 91,
        "members": [
         {
          "name": "ProactiveUndo",
@@ -14924,7 +14935,7 @@
        "signature": "class ProactiveConfirmed extends NucleuxProactiveEvent",
        "doc": "The person confirmed; [done] says what happened (\"2 owners assigned\").",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 97,
+       "line": 96,
        "members": [
         {
          "name": "ProactiveConfirmed",
@@ -14968,7 +14979,7 @@
        "signature": "class ProactiveSettle extends NucleuxProactiveEvent",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 103,
+       "line": 102,
        "members": [
         {
          "name": "ProactiveSettle",
@@ -14985,7 +14996,7 @@
        "signature": "class NucleuxProactiveCard",
        "doc": "",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 107,
+       "line": 106,
        "members": [
         {
          "name": "NucleuxProactiveCard",
@@ -15088,7 +15099,7 @@
        "signature": "class NucleuxProactiveState",
        "doc": "The suggestion's state machine. Must reproduce specs/proactive.fixtures.json (reference: react-native/src/proactive.ts).",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 128,
+       "line": 127,
        "members": [
         {
          "name": "NucleuxProactiveState",
@@ -15229,7 +15240,7 @@
        "signature": "class NucleuxProactiveController extends ChangeNotifier",
        "doc": "Holds one proactive suggestion. Call [notice] whenever what it watches changes (null when the reason is\ngone). [prepare] builds the review; it runs when Review is pressed. See specs/proactive-suggestions.md.",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 382,
+       "line": 381,
        "members": [
         {
          "name": "NucleuxProactiveController",
@@ -15313,7 +15324,7 @@
        "signature": "class NucleuxProactiveSuggestion extends StatefulWidget",
        "doc": "The suggestion card, the host's [review] under it, and the status line. Never a dialog; takes no focus.",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 443,
+       "line": 442,
        "members": [
         {
          "name": "NucleuxProactiveSuggestion",
@@ -15408,7 +15419,7 @@
        "signature": "class NucleuxProactiveReview extends StatelessWidget",
        "doc": "The host's review of the proposal: nothing changes until Confirm.",
        "file": "flutter/lib/src/proactive.dart",
-       "line": 704,
+       "line": 702,
        "members": [
         {
          "name": "NucleuxProactiveReview",
@@ -15760,7 +15771,7 @@
        "signature": "export function useProactiveSuggestion(content: ProactiveContent, options: { prepare?: () => void | Promise<void> } = {})",
        "doc": "Holds one proactive suggestion. Call `notice(evidence, now)` whenever what it watches changes (null when\nthe reason is gone). `prepare` builds the review; it runs when Review is pressed. See specs/proactive-suggestions.md.",
        "file": "react-native/src/ProactiveSuggestion.tsx",
-       "line": 20,
+       "line": 22,
        "members": []
       },
       {
@@ -15769,7 +15780,7 @@
        "signature": "export type ProactiveSuggestionHandle = ReturnType<typeof useProactiveSuggestion>",
        "doc": "",
        "file": "react-native/src/ProactiveSuggestion.tsx",
-       "line": 48,
+       "line": 50,
        "members": [],
        "body": "export type ProactiveSuggestionHandle = ReturnType<typeof useProactiveSuggestion>;"
       },
@@ -15779,7 +15790,7 @@
        "signature": "export interface ProactiveSuggestionProps",
        "doc": "",
        "file": "react-native/src/ProactiveSuggestion.tsx",
-       "line": 50,
+       "line": 52,
        "members": [
         {
          "name": "suggestion",
@@ -15825,7 +15836,7 @@
        "signature": "export function ProactiveSuggestion({ suggestion, snoozeUntil = () => ({ until: Date.now() + 24 * 3600 * 1000, label: 'tomorrow' }), review, onUndoConfirmed, emphasis = 'tonal', density = 'comfortable', }: ProactiveSuggestionProps)",
        "doc": "The suggestion card, the host's review under it, and the status line. Never a dialog; takes no focus.",
        "file": "react-native/src/ProactiveSuggestion.tsx",
-       "line": 63,
+       "line": 65,
        "members": []
       },
       {
@@ -15834,7 +15845,7 @@
        "signature": "export interface ProactiveReviewProps",
        "doc": "",
        "file": "react-native/src/ProactiveSuggestion.tsx",
-       "line": 149,
+       "line": 151,
        "members": [
         {
          "name": "title",
@@ -15880,7 +15891,7 @@
        "signature": "export function ProactiveReview({ title, agent, confirmLabel, onConfirm, onCancel, children }: ProactiveReviewProps)",
        "doc": "The host's review of the proposal: nothing changes until Confirm.",
        "file": "react-native/src/ProactiveSuggestion.tsx",
-       "line": 161,
+       "line": 163,
        "members": []
       }
      ],
@@ -15915,7 +15926,7 @@
     "react-native": "Done"
    },
    "tracker": [
-    "Disclosure (chip, agent turn, drafted value, banner, first-run intro)"
+    "Disclosure (Generated with AI label and details, AI agent tag, action note, generated value, banner, first-run intro)"
    ],
    "spec": "specs/disclosure-and-caveat.md",
    "specSummary": "Two Trust & Disclosure patterns from the pattern library (branch-2: `material-patterns.js` → `disclosure` with examples `list-item-chip`, `basic-dialog`, `field-banner`, `banner`; `caveat` with `below-input`, `output-footer`, `on-action`, `specific`; simulators in `material-sim.js`). Both are words that **travel with generated content**. **Caveat is rebuilt (22 Oct) from the library's 16 Oct revision: see `specs/caveat.md`.** The Caveat section below is the old standing line, kept as history; the library now forbids it.\n\nThe wording lives in `react-native/src/trust.ts`; `npm run fixtures` writes `specs/trust.fixtures.json` and SwiftUI, Compose and Flutter are tested against it.",
@@ -16140,8 +16151,8 @@
        "line": 73,
        "members": [
         {
-         "signature": "public init(_ label: String = NucleuxTrust.chip)",
-         "doc": "",
+         "signature": "public init(_ label: String = NucleuxTrust.chip, mark: NucleuxIcon = NucleuxAIRun.marks[.generated]!)",
+         "doc": "`mark` is the generated mark; the identity card passes the agent's own.",
          "name": "init"
         }
        ]
@@ -16152,7 +16163,7 @@
        "signature": "public struct NucleuxAgentTag: View",
        "doc": "On agent turns and rows: who it is (\"AI agent\"), not what it made.",
        "file": "swiftui/Sources/Nucleux/NucleuxTrust.swift",
-       "line": 90,
+       "line": 92,
        "members": [
         {
          "signature": "public init()",
@@ -16167,7 +16178,7 @@
        "signature": "public struct NucleuxGeneratedLabel: View",
        "doc": "\"Generated with AI\" attached to the content it describes, opening in place to what the agent did, what it used,\nwhat nobody checked and that the original is kept. Never \"verified\". `onUndo` for the person who asked for it.",
        "file": "swiftui/Sources/Nucleux/NucleuxTrust.swift",
-       "line": 103,
+       "line": 105,
        "members": [
         {
          "signature": "public init(agent: String, noun: String, details: NucleuxTrust.Details, undoLabel: String = \"Undo\", onUndo: (() -> Void)? = nil)",
@@ -16182,7 +16193,7 @@
        "signature": "public struct NucleuxMessage<Content: View>: View",
        "doc": "A turn in a thread. Agent turns carry \"AI agent\" at their head, so it stays clear who wrote them wherever the\nthread is quoted; an agent's avatar is a rounded square, a person's a circle.",
        "file": "swiftui/Sources/Nucleux/NucleuxTrust.swift",
-       "line": 171,
+       "line": 173,
        "members": [
         {
          "signature": "public init(agent name: String, time: String? = nil, credit: NucleuxModelCredit? = nil, @ViewBuilder content: () -> Content)",
@@ -16205,7 +16216,7 @@
        "signature": "extension NucleuxMessage where Content == Text",
        "doc": "",
        "file": "swiftui/Sources/Nucleux/NucleuxTrust.swift",
-       "line": 212,
+       "line": 214,
        "members": [
         {
          "signature": "public init(agent name: String, time: String? = nil, credit: NucleuxModelCredit? = nil, text: String)",
@@ -16226,7 +16237,7 @@
        "signature": "public struct NucleuxGeneratedValue<Actions: View>: View",
        "doc": "A value the agent drafted inside a human surface; the marker sits inside it.",
        "file": "swiftui/Sources/Nucleux/NucleuxTrust.swift",
-       "line": 220,
+       "line": 222,
        "members": [
         {
          "signature": "public init(label: String, value: String, agent: String, details: NucleuxTrust.Details? = nil, @ViewBuilder actions: () -> Actions)",
@@ -16244,7 +16255,7 @@
        "signature": "public struct NucleuxDisclosureBanner: View",
        "doc": "A standing notice that an agent is working in this workspace.",
        "file": "swiftui/Sources/Nucleux/NucleuxTrust.swift",
-       "line": 257,
+       "line": 259,
        "members": [
         {
          "signature": "public init(_ text: String, actionLabel: String? = nil, action: (() -> Void)? = nil)",
@@ -16259,7 +16270,7 @@
        "signature": "public struct NucleuxDisclosureFact: Sendable, Hashable",
        "doc": "One line in the first-run introduction.",
        "file": "swiftui/Sources/Nucleux/NucleuxTrust.swift",
-       "line": 281,
+       "line": 283,
        "members": [
         {
          "signature": "public let kind: Kind",
@@ -16284,7 +16295,7 @@
        "signature": "public enum Kind: Sendable { case can, cannot, info }",
        "doc": "",
        "file": "swiftui/Sources/Nucleux/NucleuxTrust.swift",
-       "line": 282,
+       "line": 284,
        "members": []
       },
       {
@@ -16293,7 +16304,7 @@
        "signature": "public struct NucleuxDisclosureIntro: View",
        "doc": "The first-run introduction, shown once. Content only: the host presents it in a sheet or dialog.",
        "file": "swiftui/Sources/Nucleux/NucleuxTrust.swift",
-       "line": 289,
+       "line": 291,
        "members": [
         {
          "signature": "public init(agent: String, facts: [NucleuxDisclosureFact], primaryLabel: String = \"Got it\", onPrimary: @escaping () -> Void, secondaryLabel: String? = nil, onSecondary: (() -> Void)? = nil)",
@@ -16456,14 +16467,17 @@
       {
        "name": "NucleuxDisclosureChip",
        "kind": "composable",
-       "signature": "public fun NucleuxDisclosureChip(label: String = NucleuxTrust.CHIP, modifier: Modifier = Modifier)",
+       "signature": "public fun NucleuxDisclosureChip(label: String = NucleuxTrust.CHIP, modifier: Modifier = Modifier, mark: NucleuxIcons = NucleuxAIRun.MARKS.getValue(NucleuxAIRun.Role.Generated))",
        "doc": "The marker that travels with generated content. Not a button. See specs/disclosure-and-caveat.md.",
        "annotations": [
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxTrust.kt",
        "line": 101,
-       "members": []
+       "members": [],
+       "paramDocs": {
+        "mark": "The generated mark; the identity card passes the agent's own."
+       }
       },
       {
        "name": "NucleuxAgentTag",
@@ -16474,7 +16488,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxTrust.kt",
-       "line": 115,
+       "line": 120,
        "members": []
       },
       {
@@ -16486,7 +16500,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxTrust.kt",
-       "line": 127,
+       "line": 132,
        "members": []
       },
       {
@@ -16498,7 +16512,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxTrust.kt",
-       "line": 184,
+       "line": 189,
        "members": [],
        "paramDocs": {
         "credit": "Agent turns: which model produced it (Model Selection). Its own element, under the header."
@@ -16513,7 +16527,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxTrust.kt",
-       "line": 216,
+       "line": 221,
        "members": []
       },
       {
@@ -16525,7 +16539,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxTrust.kt",
-       "line": 227,
+       "line": 232,
        "members": []
       },
       {
@@ -16537,7 +16551,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxTrust.kt",
-       "line": 255,
+       "line": 260,
        "members": []
       },
       {
@@ -16547,7 +16561,7 @@
        "doc": "One line in the first-run introduction.",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxTrust.kt",
-       "line": 272,
+       "line": 277,
        "members": []
       },
       {
@@ -16557,7 +16571,7 @@
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxTrust.kt",
-       "line": 273,
+       "line": 278,
        "members": []
       },
       {
@@ -16569,7 +16583,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxTrust.kt",
-       "line": 278,
+       "line": 283,
        "members": []
       }
      ],
@@ -16813,7 +16827,7 @@
         {
          "name": "NucleuxDisclosureChip",
          "kind": "constructor",
-         "signature": "const NucleuxDisclosureChip({super.key, this.label = NucleuxTrust.chip})",
+         "signature": "const NucleuxDisclosureChip({ super.key, this.label = NucleuxTrust.chip, this.mark, })",
          "doc": "",
          "params": [
           {
@@ -16822,6 +16836,13 @@
            "named": true,
            "required": false,
            "default": "NucleuxTrust.chip"
+          },
+          {
+           "name": "mark",
+           "type": "IconData?",
+           "named": true,
+           "required": false,
+           "doc": "Defaults to the generated mark; the identity card passes the agent's own."
           }
          ]
         },
@@ -16830,6 +16851,12 @@
          "kind": "field",
          "signature": "final String label",
          "doc": ""
+        },
+        {
+         "name": "mark",
+         "kind": "field",
+         "signature": "final IconData? mark",
+         "doc": "Defaults to the generated mark; the identity card passes the agent's own."
         }
        ]
       },
@@ -16839,7 +16866,7 @@
        "signature": "class NucleuxMessage extends StatelessWidget",
        "doc": "A turn in a thread. With [agent] true it carries \"AI agent\" at its head, so it stays marked\nwherever the thread is quoted; an agent's avatar is a rounded square, a person's a circle.",
        "file": "flutter/lib/src/trust.dart",
-       "line": 141,
+       "line": 148,
        "members": [
         {
          "name": "NucleuxMessage",
@@ -16930,7 +16957,7 @@
        "signature": "class NucleuxGeneratedValue extends StatelessWidget",
        "doc": "A value the agent drafted inside a human surface; the marker sits inside it.",
        "file": "flutter/lib/src/trust.dart",
-       "line": 231,
+       "line": 238,
        "members": [
         {
          "name": "NucleuxGeneratedValue",
@@ -17011,7 +17038,7 @@
        "signature": "class NucleuxDisclosureBanner extends StatelessWidget",
        "doc": "A standing notice that an agent is working in this workspace.",
        "file": "flutter/lib/src/trust.dart",
-       "line": 312,
+       "line": 319,
        "members": [
         {
          "name": "NucleuxDisclosureBanner",
@@ -17065,7 +17092,7 @@
        "signature": "enum NucleuxDisclosureFactKind",
        "doc": "",
        "file": "flutter/lib/src/trust.dart",
-       "line": 359,
+       "line": 366,
        "members": [
         {
          "name": "values",
@@ -17079,7 +17106,7 @@
        "signature": "class NucleuxDisclosureFact",
        "doc": "One line in the first-run introduction.",
        "file": "flutter/lib/src/trust.dart",
-       "line": 362,
+       "line": 369,
        "members": [
         {
          "name": "NucleuxDisclosureFact",
@@ -17123,7 +17150,7 @@
        "signature": "class NucleuxDisclosureIntro extends StatelessWidget",
        "doc": "The first-run introduction, shown once. Content only: the host presents it in a sheet or dialog.",
        "file": "flutter/lib/src/trust.dart",
-       "line": 369,
+       "line": 376,
        "members": [
         {
          "name": "NucleuxDisclosureIntro",
@@ -17215,7 +17242,7 @@
        "signature": "class NucleuxAgentTag extends StatelessWidget",
        "doc": "On agent turns and rows: who it is (\"AI agent\"), not what it made.",
        "file": "flutter/lib/src/trust.dart",
-       "line": 489,
+       "line": 496,
        "members": [
         {
          "name": "NucleuxAgentTag",
@@ -17232,7 +17259,7 @@
        "signature": "class NucleuxGeneratedLabel extends StatefulWidget",
        "doc": "\"Generated with AI\" attached to the content it describes, opening in place to what the agent did, what it\nused, what nobody checked and that the original is kept. Never \"verified\". [onUndo] for the person who asked.",
        "file": "flutter/lib/src/trust.dart",
-       "line": 518,
+       "line": 525,
        "members": [
         {
          "name": "NucleuxGeneratedLabel",
@@ -17570,7 +17597,7 @@
        "signature": "export function DisclosureChip({ label = DISCLOSURE_CHIP }: { label?: string })",
        "doc": "\"Generated with AI\", on content AI wrote or changed and nowhere else. Not a button. See specs/disclosure-and-caveat.md.",
        "file": "react-native/src/Disclosure.tsx",
-       "line": 27,
+       "line": 26,
        "members": []
       },
       {
@@ -17579,7 +17606,7 @@
        "signature": "export function AgentTag()",
        "doc": "On agent turns and rows: who it is (\"AI agent\"), not what it made.",
        "file": "react-native/src/Disclosure.tsx",
-       "line": 38,
+       "line": 37,
        "members": []
       },
       {
@@ -17588,7 +17615,7 @@
        "signature": "export interface GeneratedLabelProps",
        "doc": "",
        "file": "react-native/src/Disclosure.tsx",
-       "line": 47,
+       "line": 46,
        "members": [
         {
          "name": "agent",
@@ -17628,7 +17655,7 @@
        "signature": "export function GeneratedLabel({ agent, noun, details, onUndo, undoLabel = 'Undo' }: GeneratedLabelProps)",
        "doc": "\"Generated with AI\" attached to the content it describes, opening in place to what the agent did, what it used,\nwhat nobody checked and that the original is kept. Never \"verified\". See specs/disclosure-and-caveat.md.",
        "file": "react-native/src/Disclosure.tsx",
-       "line": 61,
+       "line": 60,
        "members": []
       },
       {
@@ -17637,7 +17664,7 @@
        "signature": "export function AgentMessage(props: MessageProps)",
        "doc": "An agent's turn: \"AI agent\" at its head, so it stays clear who wrote it wherever the thread is quoted.",
        "file": "react-native/src/Disclosure.tsx",
-       "line": 142,
+       "line": 141,
        "members": []
       },
       {
@@ -17646,7 +17673,7 @@
        "signature": "export function PersonMessage(props: MessageProps)",
        "doc": "A person's turn, for the same thread.",
        "file": "react-native/src/Disclosure.tsx",
-       "line": 147,
+       "line": 146,
        "members": []
       },
       {
@@ -17655,7 +17682,7 @@
        "signature": "export function GeneratedValue({ label, value, agent, actions, details, }: { label: string; value: string; agent: string; actions?: React.ReactNode; details?: GeneratedDetails; })",
        "doc": "A value the agent drafted inside a human surface; \"Generated with AI\" sits inside it, opening to `details`.",
        "file": "react-native/src/Disclosure.tsx",
-       "line": 152,
+       "line": 151,
        "members": []
       },
       {
@@ -17664,7 +17691,7 @@
        "signature": "export function DisclosureBanner({ text, actionLabel, onAction }: { text: string; actionLabel?: string; onAction?: () => void })",
        "doc": "A standing notice that an agent is working in this workspace.",
        "file": "react-native/src/Disclosure.tsx",
-       "line": 183,
+       "line": 182,
        "members": []
       },
       {
@@ -17673,7 +17700,7 @@
        "signature": "export interface DisclosureFact",
        "doc": "",
        "file": "react-native/src/Disclosure.tsx",
-       "line": 194,
+       "line": 193,
        "members": [
         {
          "name": "kind",
@@ -17695,7 +17722,7 @@
        "signature": "export function DisclosureIntro({ agent, facts, primaryLabel = 'Got it', onPrimary, secondaryLabel, onSecondary, }: { agent: string; facts: DisclosureFact[]; primaryLabel?: string; onPrimary: () => void; secondaryLabel?: string; onSecondary?: () => void; })",
        "doc": "The first-run introduction, shown once. Content only: the host presents it in a sheet or dialog.",
        "file": "react-native/src/Disclosure.tsx",
-       "line": 200,
+       "line": 199,
        "members": []
       }
      ],
@@ -22402,7 +22429,7 @@
        "signature": "export function DisclaimerStatement({ agent, scope, onAcknowledge, acknowledgeLabel = DISCLAIMER_ACKNOWLEDGE, secondaryLabel, onSecondary, }: { agent: string; scope: DisclaimerScope; onAcknowledge: () => void; acknowledgeLabel?: string; secondaryLabel?: string; onSecondary?: () => void; })",
        "doc": "The full statement: what the agent can do, will not do and cannot see. Content only: the host presents it in a\nsheet or dialog, once before the first request and again from the composer's line. See specs/disclaimer.md.",
        "file": "react-native/src/DisclaimerStatement.tsx",
-       "line": 13,
+       "line": 14,
        "members": []
       }
      ],
@@ -22436,7 +22463,7 @@
    ],
    "spec": "specs/nudges.md",
    "specSummary": "The pattern library's **Nudges** pattern (branch-2: `material-patterns.js` → `nudges`, examples `nudge-anchored`, `nudge-quiet`; the expense-queue simulator in `material-sim.js`; CSS `.md-nudge`, `.md-hint`). A small hint offering a capability **at the moment it would have helped**, anchored to the control it is about, and **gone for good once refused**.\n\nThe ledger lives in `react-native/src/nudges.ts`; `npm run fixtures` writes `specs/nudges.fixtures.json` (9 event sequences, every step's state, reason held and announcement) and SwiftUI, Compose and Flutter are tested against it.",
-   "specText": "# Nudges\n\nThe pattern library's **Nudges** pattern (branch-2: `material-patterns.js` → `nudges`, examples `nudge-anchored`, `nudge-quiet`; the expense-queue simulator in `material-sim.js`; CSS `.md-nudge`, `.md-hint`). A small hint offering a capability **at the moment it would have helped**, anchored to the control it is about, and **gone for good once refused**.\n\nThe ledger lives in `react-native/src/nudges.ts`; `npm run fixtures` writes `specs/nudges.fixtures.json` (9 event sequences, every step's state, reason held and announcement) and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxNudgeController` (`@Observable`), `NucleuxNudge`, `NucleuxNudgeHint` |\n| Compose | `NucleuxNudgeController`, `rememberNucleuxNudgeController`, `NucleuxNudge`, `NucleuxNudgeHint` |\n| Flutter | `NucleuxNudgeController` (`ChangeNotifier`), `NucleuxNudge`, `NucleuxNudgeHint` |\n| React Native | `useNudges`, `Nudge`, `NudgeHint` |\n\n## What the host supplies\n\n| | Notes |\n|---|---|\n| The nudges | By id: `title` (what it does, one line: \"Aria can check these against the receipt first\"), `detail` (why now: \"You have approved 3 in a row without a change.\"), `action` (the inline action: \"Let it check them\") |\n| `retired` | Nudges already taken or refused, from storage. The host saves `retired` whenever it changes |\n| `cap` | How many one person sees in a session. Default **1** |\n| `earned(id, busy)` | Called when the person's behaviour is evidence the feature would help. `busy` while they are in an error, a payment or anything else they're concentrating on |\n| `withdraw()` | The anchor went away, or the evidence stopped holding |\n| `session()` | A new session: the cap starts again |\n| `onAccept` | Does the work **in place**. A nudge that leads to a settings page has wasted the moment it earned |\n\n## Rules\n\n- **Earned, never timed.** Nothing shows until the host calls `earned`. A nudge on a timer is an advertisement.\n- **Refusal is permanent.** \"No thanks\" and the close button retire the nudge: not on the next claim, not next session. Taking it retires it too.\n- **Never two at once.** While one shows, another earned nudge is held, not queued.\n- **A cap per session** (default 1). Withdrawn ones count: they were seen.\n- **Never while the person is busy** (an error, a payment).\n- **Withdrawn is not refused.** It can be earned again.\n- **Dismiss leaves at once,** with no confirmation.\n\nThe held reasons, for hosts and tests: `retired`, `busy`, `stacked`, `capped`.\n\n## Components\n\n| | |\n|---|---|\n| `Nudge` | The anchored card: hint icon, title, detail, close button; then the action and **No thanks**. Renders only while its id is showing. The host places it next to its anchor (directly above it by default) |\n| `NudgeHint` | The quiet form, for surfaces where a floating card is too much: a dot, the title, the action as a text button, and a close button, in one pill riding on the control |\n\n## Look\n\n- Card: `brandMuted` fill, `foreground` text, corner 16, padding 14 / 16 / 12, max width 340, a soft shadow.\n- **The tail** (12 square, rotated 45°, same fill) points at the anchor: `tail: bottom` (default; the card sits above its anchor) or `top`, and `tailInset` from the leading edge (default 20). The tail is what makes it a nudge rather than a notification.\n- Lucide `lightbulb`, 18, `brand`. Title 14 semibold; detail 13 at 86% opacity, 4 below.\n- Close: Lucide `x` in an icon button with a 44pt / 48dp target. Actions 12 below: the action as a small primary Button, **No thanks** as a small ghost Button.\n- Entry: rises 6pt with a small settle (from 97% scale), fading in, 320 ms. None with Reduce Motion. Leaves at once.\n- Quiet form: `muted` pill, a 6 `brand` dot, the title 13 `mutedForeground`, the action as a small ghost Button.\n\n## Accessibility\n\n- It appears without taking focus, and is announced politely: \"Hint: {title}. {detail}\"\n- The card is a group named \"Hint\"; its buttons stay separately reachable. The close button is \"Dismiss this hint\".\n- Dismissing announces \"Hint dismissed. It won’t come back.\"\n- Accepting announces nothing from the nudge: the host's work says what it did.\n- Every control has a 44pt / 48dp target.\n\n## Ours, not the pattern's\n\n- **\"No thanks\", not \"Not now\".** The pattern's static example offers \"Not now\", but its rules (and its simulator) make refusal permanent; \"Not now\" would promise a return.\n- **The quiet form gets a close button.** The pattern's quiet example has none, which would leave it no way to be refused for good.\n- **Default cap of 1 per session.** The pattern says to cap it but gives no number.\n- **Look:** Nucleux `brandMuted` and `brand` in place of Material's primary-container, and Lucide `lightbulb` rather than Material's spark, so a hint is not mistaken for the generated mark (Lucide `sparkles`).\n\n## Not in scope (later)\n\n- Deciding what counts as evidence; the host knows its own behaviour signals.\n- Measuring the anchor and placing the card automatically: the host places it, as with Proactive Suggestions.\n",
+   "specText": "# Nudges\n\nThe pattern library's **Nudges** pattern (branch-2: `material-patterns.js` → `nudges`, examples `nudge-anchored`, `nudge-quiet`; the expense-queue simulator in `material-sim.js`; CSS `.md-nudge`, `.md-hint`). A small hint offering a capability **at the moment it would have helped**, anchored to the control it is about, and **gone for good once refused**.\n\nThe ledger lives in `react-native/src/nudges.ts`; `npm run fixtures` writes `specs/nudges.fixtures.json` (9 event sequences, every step's state, reason held and announcement) and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxNudgeController` (`@Observable`), `NucleuxNudge`, `NucleuxNudgeHint` |\n| Compose | `NucleuxNudgeController`, `rememberNucleuxNudgeController`, `NucleuxNudge`, `NucleuxNudgeHint` |\n| Flutter | `NucleuxNudgeController` (`ChangeNotifier`), `NucleuxNudge`, `NucleuxNudgeHint` |\n| React Native | `useNudges`, `Nudge`, `NudgeHint` |\n\n## What the host supplies\n\n| | Notes |\n|---|---|\n| The nudges | By id: `title` (what it does, one line: \"Aria can check these against the receipt first\"), `detail` (why now: \"You have approved 3 in a row without a change.\"), `action` (the inline action: \"Let it check them\") |\n| `retired` | Nudges already taken or refused, from storage. The host saves `retired` whenever it changes |\n| `cap` | How many one person sees in a session. Default **1** |\n| `earned(id, busy)` | Called when the person's behaviour is evidence the feature would help. `busy` while they are in an error, a payment or anything else they're concentrating on |\n| `withdraw()` | The anchor went away, or the evidence stopped holding |\n| `session()` | A new session: the cap starts again |\n| `onAccept` | Does the work **in place**. A nudge that leads to a settings page has wasted the moment it earned |\n\n## Rules\n\n- **Earned, never timed.** Nothing shows until the host calls `earned`. A nudge on a timer is an advertisement.\n- **Refusal is permanent.** \"No thanks\" and the close button retire the nudge: not on the next claim, not next session. Taking it retires it too.\n- **Never two at once.** While one shows, another earned nudge is held, not queued.\n- **A cap per session** (default 1). Withdrawn ones count: they were seen.\n- **Never while the person is busy** (an error, a payment).\n- **Withdrawn is not refused.** It can be earned again.\n- **Dismiss leaves at once,** with no confirmation.\n\nThe held reasons, for hosts and tests: `retired`, `busy`, `stacked`, `capped`.\n\n## Components\n\n| | |\n|---|---|\n| `Nudge` | The anchored card: hint icon, title, detail, close button; then the action and **No thanks**. Renders only while its id is showing. The host places it next to its anchor (directly above it by default) |\n| `NudgeHint` | The quiet form, for surfaces where a floating card is too much: a dot, the title, the action as a text button, and a close button, in one pill riding on the control |\n\n## Look\n\n- Card: `brandMuted` fill, `foreground` text, corner 16, padding 14 / 16 / 12, max width 340, a soft shadow.\n- **The tail** (12 square, rotated 45°, same fill) points at the anchor: `tail: bottom` (default; the card sits above its anchor) or `top`, and `tailInset` from the leading edge (default 20). The tail is what makes it a nudge rather than a notification.\n- Lucide `lightbulb`, 18, `brand`. Title 14 semibold; detail 13 at 86% opacity, 4 below.\n- Close: Lucide `x` in an icon button with a 44pt / 48dp target. Actions 12 below: the action as a small primary Button, **No thanks** as a small ghost Button.\n- Entry: rises 6pt with a small settle (from 97% scale), fading in, 320 ms. None with Reduce Motion. Leaves at once.\n- Quiet form: `muted` pill, a 6 `brand` dot, the title 13 `mutedForeground`, the action as a small ghost Button.\n\n## Accessibility\n\n- It appears without taking focus, and is announced politely: \"Hint: {title}. {detail}\"\n- The card is a group named \"Hint\"; its buttons stay separately reachable. The close button is \"Dismiss this hint\".\n- Dismissing announces \"Hint dismissed. It won’t come back.\"\n- Accepting announces nothing from the nudge: the host's work says what it did.\n- Every control has a 44pt / 48dp target.\n\n## Ours, not the pattern's\n\n- **\"No thanks\", not \"Not now\".** The pattern's static example offers \"Not now\", but its rules (and its simulator) make refusal permanent; \"Not now\" would promise a return.\n- **The quiet form gets a close button.** The pattern's quiet example has none, which would leave it no way to be refused for good.\n- **Default cap of 1 per session.** The pattern says to cap it but gives no number.\n- **Look:** Nucleux `brandMuted` and `brand` in place of Material's primary-container, and Lucide `lightbulb` rather than Material's spark, so a hint is not mistaken for an AI mark.\n\n## Not in scope (later)\n\n- Deciding what counts as evidence; the host knows its own behaviour signals.\n- Measuring the anchor and placing the card automatically: the host places it, as with Proactive Suggestions.\n",
    "fixtures": [
     "specs/nudges.fixtures.json"
    ],
@@ -23826,7 +23853,7 @@
    ],
    "spec": "specs/identity.md",
    "specSummary": "The pattern library's **Avatar** and **Name** patterns (branch-2: `material-patterns.js` → `avatar` with examples `agent-vs-person`, `states`, `sizes`, and `name` with `identity-card`, `introduction`, `byline`; the simulators in `material-sim.js`; CSS `.md-agentav`, `.md-idrow`, `.md-idcard`). **One mark** and **one name** for the agent on every surface, and neither can be mistaken for a person's.\n\nThe wording and sizes live in `react-native/src/identity.ts`, with the shapes and initials in `trust.ts`. `npm run fixtures` writes `specs/identity.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.",
-   "specText": "# Identity: Avatar, Name, Iconography and Color\n\nThe pattern library's **Avatar** and **Name** patterns (branch-2: `material-patterns.js` → `avatar` with examples `agent-vs-person`, `states`, `sizes`, and `name` with `identity-card`, `introduction`, `byline`; the simulators in `material-sim.js`; CSS `.md-agentav`, `.md-idrow`, `.md-idcard`). **One mark** and **one name** for the agent on every surface, and neither can be mistaken for a person's.\n\nThe wording and sizes live in `react-native/src/identity.ts`, with the shapes and initials in `trust.ts`. `npm run fixtures` writes `specs/identity.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` (wording) |\n| Compose | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` |\n| Flutter | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` |\n| React Native | `AgentAvatar`, `PersonAvatar`, `IdentityRow`, `AgentIdentityCard`, `AgentByline`, `AgentGlyph`, `MessageBubble`, `AgentPresence` |\n\n## Avatar\n\n| | Agent | Person |\n|---|---|---|\n| Shape | Rounded square | Circle |\n| Fill | `brandMuted` | `muted` |\n| Content | The reserved glyph: Lucide `sparkles` in `brand`. **Never a face, never initials** | Initials (`initials(name)`: \"Dana Khoury\" → \"DK\") in `mutedForeground`, semibold |\n\n| Size | Box | Glyph | Initials | Corner (agent) | Use |\n|---|---|---|---|---|---|\n| `sm` | 28 | 15 | 11 | 8 | A turn in a thread, a dense list, a byline |\n| `md` | 40 | 20 | 15 | 11 | An identity row |\n| `lg` | 56 | 28 | 20 | 16 | The identity card |\n\nOne silhouette at every size; only the glyph scales.\n\n**State on the mark** (agent only), from the host:\n\n| State | Shown | Read aloud |\n|---|---|---|\n| `ready` | The mark | Hidden beside the name; standalone: \"Aria, AI agent\" |\n| `working` | A 2pt `brand` ring 4pt outside the mark, pulsing (scale 0.92 → 1.08, fading out, 1600 ms, repeating). With Reduce Motion: a still ring at 55% | A status: \"Aria is working\" |\n| `off` (stood down) | `muted` fill, glyph in `mutedForeground` | Standalone: \"Aria, AI agent, stood down\" |\n\nThe ring runs only while the agent is actually working, and goes the moment it stops. State belongs on the mark rather than in a spinner elsewhere.\n\n`AgentMessage` and `PersonMessage` (Disclosure) now use these avatars at `sm`.\n\n## Name\n\n- **`IdentityRow`:** an `md` avatar, the name (16 semibold `foreground`), the \"AI agent\" tag for an agent, and a line under it (14 `mutedForeground`): \"Assistant · answers from your pipeline\", or a person's team.\n- **`AgentIdentityCard`:** where the agent is introduced or looked up. An `lg` avatar, the name (17 semibold), the role line (14 `mutedForeground`): `agentRoleLine(\"Helpdesk\")` → \"Assistant in Helpdesk · not a person\". Then a divider, the \"AI agent\" chip and an optional action (\"What Aria can see\"). Card: 1pt `border`, corner 16, padding 20.\n- **`AgentByline`:** under a record the agent wrote, away from the conversation: an `sm` avatar, \"Written by Aria · 14 March, 10:24\" (13 `mutedForeground`), and an optional action (\"History\").\n\nThe host's rules, from the pattern: one name everywhere, including email, the audit log and support; no surname, pronouns or a person's job title; not renamed per surface. Say the role the first time the name is seen; after that, the bare name is enough.\n\n## Iconography\n\nThe pattern library's **Iconography** pattern (`iconography`: `glyph-containers`, `in-a-menu`, `inline-entry`). **One glyph reserved for generation**, Lucide `sparkles`, the same drawing as on the agent's mark and the \"Generated with AI\" label, and **spent nowhere else**: not on \"new\", not on \"featured\", not on a nudge (Nudges use `lightbulb`).\n\n`AgentGlyph` shows it in one of three containers; only the container changes:\n\n| Container | Fill | Glyph | Where |\n|---|---|---|---|\n| `quiet` | `muted` | `brand` | A menu row, a toolbar |\n| `tonal` | `brandMuted` | `brand` | A chip |\n| `filled` | `brand` | `brandForeground` | A primary action |\n\nIt is decorative (hidden from screen readers): the control's own label says what it does (\"Draft a reply\"). Nothing about it is animated. Pair it with a verb the first few times; don't use it on a control that doesn't generate.\n\n**Audited:** a React Native test lists every component that draws `sparkles` and fails if a new one appears: Disclosure, Disclaimer, Proactive Suggestions, the avatar and the identity components.\n\n## Color\n\nThe pattern library's **Color** pattern (`color`: `two-grounds`, `reserved-roles`, `presence`). Colour roles **held back for the agent**: `brandMuted` for its ground, `brand` for presence and working state. People stay on neutral surfaces (`muted`). Colour is never the only signal: every use has a glyph or words beside it.\n\n- **`MessageBubble`:** a turn as a bubble. The agent's: its `sm` mark beside it, `brandMuted`, corner 16 with the **bottom-left** corner sharp (4). The person's own: on the right, `muted`, the **bottom-right** corner sharp. At most 82% of the width; padding 12 / 16; text 15. The pair separates in greyscale by its corners. Read with the author first: \"Aria, Generated with AI: £4.1m, 6% ahead of plan.\" / \"You: Where did Q2 renewals land?\"\n- **`AgentPresence`:** the agent working inside a surface a person owns. While `active`: a 2pt `brand` outline around the surface (corner 16) and a status line, a `brand` dot with \"Aria is drafting in this document\" (14 semibold `brand`) and the host's line under it (\"Nothing is saved until you accept it.\"). When it stops, the outline and line go, and \"Aria has stopped.\" is announced. Starting announces the status line.\n\n## Personality\n\nThe pattern library's **Personality** pattern is the voice. It lives in `specs/voice.md`, with the checker in `react-native/src/voiceRules.ts`.\n\n## Accessibility\n\n- The identity card is one element: \"Aria, Assistant in Helpdesk, not a person\". Its action stays separately reachable.\n- The row reads like the message header: \"Aria, Generated with AI\" then its line.\n- The byline is one element: \"Written by Aria, AI agent, 14 March, 10:24\". Its action stays separately reachable.\n- Middle dots are read as commas, not \"dot\".\n- Every action has a 44pt / 48dp target.\n\n## Ours, not the pattern's\n\n- **The agent is a rounded square**, decided with Disclosure (12 Oct). The pattern keeps both marks round and separates them by colour role only; we keep its colour split and add the shape split, so the difference survives greyscale and colour-blindness.\n- **Look:** `brandMuted` and `brand` stand in for Material's primary-container and primary; `muted` for surface-container-highest. Nucleux has no secondary or tertiary container, so the tonal glyph uses `brandMuted` and the disclosure chip keeps `accent`.\n- **Bubbles are the person's own on the right.** The pattern's example doesn't say whose; in a two-party chat the person's own words go right, and a third person in a shared thread uses `PersonMessage` instead.\n- **Presence says when it ends** (\"Aria has stopped.\"), so the outline going isn't the only signal; the pattern only shows it starting.\n- **The spoken labels** (\"Aria, AI agent\", \"… stood down\", the byline's) are ours; the pattern gives only \"Aria is working\".\n- **The message avatar shrinks from 32 to 28** and shows the glyph rather than the agent's first letter, which the pattern rules out (\"initials are what people get\").\n\n## Not in scope (later)\n\n- The voice card (\"How Aria speaks\") and register switch from the Personality pattern: they're a settings surface for the host.\n- The agent's ground on a person's surface beyond presence (a whole document in `brandMuted`): the pattern warns against colour as decoration.\n- A notification or email template: the host renders those, using the same name and role line.\n",
+   "specText": "# Identity: Avatar, Name, Iconography and Color\n\nThe pattern library's **Avatar** and **Name** patterns (branch-2: `material-patterns.js` → `avatar` with examples `agent-vs-person`, `states`, `sizes`, and `name` with `identity-card`, `introduction`, `byline`; the simulators in `material-sim.js`; CSS `.md-agentav`, `.md-idrow`, `.md-idcard`). **One mark** and **one name** for the agent on every surface, and neither can be mistaken for a person's.\n\nThe wording and sizes live in `react-native/src/identity.ts`, with the shapes and initials in `trust.ts`. `npm run fixtures` writes `specs/identity.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` (wording) |\n| Compose | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` |\n| Flutter | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` |\n| React Native | `AgentAvatar`, `PersonAvatar`, `IdentityRow`, `AgentIdentityCard`, `AgentByline`, `AgentGlyph`, `MessageBubble`, `AgentPresence` |\n\n## Avatar\n\n| | Agent | Person |\n|---|---|---|\n| Shape | Rounded square | Circle |\n| Fill | `brandMuted` | `muted` |\n| Content | The reserved glyph: Lucide `sparkles` in `brand`. **Never a face, never initials** | Initials (`initials(name)`: \"Dana Khoury\" → \"DK\") in `mutedForeground`, semibold |\n\n| Size | Box | Glyph | Initials | Corner (agent) | Use |\n|---|---|---|---|---|---|\n| `sm` | 28 | 15 | 11 | 8 | A turn in a thread, a dense list, a byline |\n| `md` | 40 | 20 | 15 | 11 | An identity row |\n| `lg` | 56 | 28 | 20 | 16 | The identity card |\n\nOne silhouette at every size; only the glyph scales.\n\n**State on the mark** (agent only), from the host:\n\n| State | Shown | Read aloud |\n|---|---|---|\n| `ready` | The mark | Hidden beside the name; standalone: \"Aria, AI agent\" |\n| `working` | A 2pt `brand` ring 4pt outside the mark, pulsing (scale 0.92 → 1.08, fading out, 1600 ms, repeating). With Reduce Motion: a still ring at 55% | A status: \"Aria is working\" |\n| `off` (stood down) | `muted` fill, glyph in `mutedForeground` | Standalone: \"Aria, AI agent, stood down\" |\n\nThe ring runs only while the agent is actually working, and goes the moment it stops. State belongs on the mark rather than in a spinner elsewhere.\n\n`AgentMessage` and `PersonMessage` (Disclosure) now use these avatars at `sm`.\n\n## Name\n\n- **`IdentityRow`:** an `md` avatar, the name (16 semibold `foreground`), the \"AI agent\" tag for an agent, and a line under it (14 `mutedForeground`): \"Assistant · answers from your pipeline\", or a person's team.\n- **`AgentIdentityCard`:** where the agent is introduced or looked up. An `lg` avatar, the name (17 semibold), the role line (14 `mutedForeground`): `agentRoleLine(\"Helpdesk\")` → \"Assistant in Helpdesk · not a person\". Then a divider, the \"AI agent\" chip and an optional action (\"What Aria can see\"). Card: 1pt `border`, corner 16, padding 20.\n- **`AgentByline`:** under a record the agent wrote, away from the conversation: an `sm` avatar, \"Written by Aria · 14 March, 10:24\" (13 `mutedForeground`), and an optional action (\"History\").\n\nThe host's rules, from the pattern: one name everywhere, including email, the audit log and support; no surname, pronouns or a person's job title; not renamed per surface. Say the role the first time the name is seen; after that, the bare name is enough.\n\n## Iconography\n\nThe pattern library's **Iconography** pattern (`iconography`: `glyph-containers`, `in-a-menu`, `inline-entry`), revised 16 Oct: **one glyph per AI meaning, always with words**. The AI action is Lucide `sparkles` (the star, also the agent's own mark), generated content `badge-info`, working `loader-circle`, tool use `wrench` (`specs/ai-marks.md`). Each is **spent nowhere else**: not on \"new\", not on \"featured\", not on a nudge (Nudges use `lightbulb`).\n\n`AgentGlyph` shows the action mark in one of three containers; only the container changes:\n\n| Container | Fill | Glyph | Where |\n|---|---|---|---|\n| `quiet` | `muted` | `brand` | A menu row, a toolbar |\n| `tonal` | `brandMuted` | `brand` | A chip |\n| `filled` | `brand` | `brandForeground` | A primary action |\n\nIt is decorative (hidden from screen readers): the control's own label says what it does (\"Draft a reply\"). Nothing about it is animated. Pair it with a verb the first few times; don't use it on a control that doesn't generate.\n\n**Audited:** no component names an AI glyph itself (a React Native test fails if one does); each draws it from the role table, and the test lists each role's users, failing on a new one. Action: `AgentGlyph`, the AI action button and status, Improve prompt, Try a direction. Generated: the Disclosure label, \"Suggested by Aria\", a direction's header, Templates' suggested values, the recommended tone, a style Aria made. The agent's own mark: the avatar, the identity card, the Disclosure banner and introduction, the Disclaimer statement.\n\n## Color\n\nThe pattern library's **Color** pattern (`color`: `two-grounds`, `reserved-roles`, `presence`). Colour roles **held back for the agent**: `brandMuted` for its ground, `brand` for presence and working state. People stay on neutral surfaces (`muted`). Colour is never the only signal: every use has a glyph or words beside it.\n\n- **`MessageBubble`:** a turn as a bubble. The agent's: its `sm` mark beside it, `brandMuted`, corner 16 with the **bottom-left** corner sharp (4). The person's own: on the right, `muted`, the **bottom-right** corner sharp. At most 82% of the width; padding 12 / 16; text 15. The pair separates in greyscale by its corners. Read with the author first: \"Aria, Generated with AI: £4.1m, 6% ahead of plan.\" / \"You: Where did Q2 renewals land?\"\n- **`AgentPresence`:** the agent working inside a surface a person owns. While `active`: a 2pt `brand` outline around the surface (corner 16) and a status line, a `brand` dot with \"Aria is drafting in this document\" (14 semibold `brand`) and the host's line under it (\"Nothing is saved until you accept it.\"). When it stops, the outline and line go, and \"Aria has stopped.\" is announced. Starting announces the status line.\n\n## Personality\n\nThe pattern library's **Personality** pattern is the voice. It lives in `specs/voice.md`, with the checker in `react-native/src/voiceRules.ts`.\n\n## Accessibility\n\n- The identity card is one element: \"Aria, Assistant in Helpdesk, not a person\". Its action stays separately reachable.\n- The row reads like the message header: \"Aria, Generated with AI\" then its line.\n- The byline is one element: \"Written by Aria, AI agent, 14 March, 10:24\". Its action stays separately reachable.\n- Middle dots are read as commas, not \"dot\".\n- Every action has a 44pt / 48dp target.\n\n## Ours, not the pattern's\n\n- **The agent is a rounded square**, decided with Disclosure (12 Oct). The pattern keeps both marks round and separates them by colour role only; we keep its colour split and add the shape split, so the difference survives greyscale and colour-blindness.\n- **Look:** `brandMuted` and `brand` stand in for Material's primary-container and primary; `muted` for surface-container-highest. Nucleux has no secondary or tertiary container, so the tonal glyph uses `brandMuted` and the disclosure chip keeps `accent`.\n- **Bubbles are the person's own on the right.** The pattern's example doesn't say whose; in a two-party chat the person's own words go right, and a third person in a shared thread uses `PersonMessage` instead.\n- **Presence says when it ends** (\"Aria has stopped.\"), so the outline going isn't the only signal; the pattern only shows it starting.\n- **The spoken labels** (\"Aria, AI agent\", \"… stood down\", the byline's) are ours; the pattern gives only \"Aria is working\".\n- **The message avatar shrinks from 32 to 28** and shows the glyph rather than the agent's first letter, which the pattern rules out (\"initials are what people get\").\n\n## Not in scope (later)\n\n- The voice card (\"How Aria speaks\") and register switch from the Personality pattern: they're a settings surface for the host.\n- The agent's ground on a person's surface beyond presence (a whole document in `brandMuted`): the pattern warns against colour as decoration.\n- A notification or email template: the host renders those, using the same name and role line.\n",
    "fixtures": [
     "specs/identity.fixtures.json"
    ],
@@ -24432,7 +24459,7 @@
        "signature": "enum NucleuxAvatarSize",
        "doc": "28 in a turn or a dense list, 40 in a row, 56 on an identity card. Only the glyph scales.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 10,
+       "line": 9,
        "members": [
         {
          "name": "values",
@@ -24446,7 +24473,7 @@
        "signature": "enum NucleuxGlyphContainer",
        "doc": "The reserved glyph's containers: only the container changes, never the drawing. Token names for the fixtures.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 23,
+       "line": 22,
        "members": [
         {
          "name": "values",
@@ -24460,7 +24487,7 @@
        "signature": "enum NucleuxAgentState",
        "doc": "Carried on the mark: [working] is a ring that runs only while it works; [off] is muted everywhere at once.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 34,
+       "line": 33,
        "members": [
         {
          "name": "values",
@@ -24474,7 +24501,7 @@
        "signature": "abstract final class NucleuxIdentity",
        "doc": "Avatar and Name wording. Must reproduce specs/identity.fixtures.json (reference: react-native/src/identity.ts).",
        "file": "flutter/lib/src/identity.dart",
-       "line": 37,
+       "line": 36,
        "members": [
         {
          "name": "ring",
@@ -24568,7 +24595,7 @@
        "signature": "class NucleuxAgentAvatar extends StatelessWidget",
        "doc": "The agent's mark: the reserved glyph on a rounded square, never a face or initials. Carries working state as a\nring on the mark itself. [standalone]: the mark stands alone (a toolbar, a notification), so it is named; beside\nthe name it is hidden. See specs/identity.md.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 95,
+       "line": 94,
        "members": [
         {
          "name": "NucleuxAgentAvatar",
@@ -24637,7 +24664,7 @@
        "signature": "class NucleuxPersonAvatar extends StatelessWidget",
        "doc": "A person's mark: initials on a circle. Hidden from screen readers; the name beside it is read.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 220,
+       "line": 219,
        "members": [
         {
          "name": "NucleuxPersonAvatar",
@@ -24680,7 +24707,7 @@
        "signature": "class NucleuxIdentityRow extends StatelessWidget",
        "doc": "A name with its line: an agent (with \"AI agent\") or a person.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 257,
+       "line": 256,
        "members": [
         {
          "name": "NucleuxIdentityRow",
@@ -24748,7 +24775,7 @@
        "signature": "class NucleuxAgentIdentityCard extends StatelessWidget",
        "doc": "Where the agent is introduced or looked up: the name with its role line, and the \"AI agent\" chip.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 324,
+       "line": 323,
        "members": [
         {
          "name": "NucleuxAgentIdentityCard",
@@ -24829,7 +24856,7 @@
        "signature": "class NucleuxAgentByline extends StatelessWidget",
        "doc": "Under a record the agent wrote, away from the conversation: the same mark and name.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 424,
+       "line": 426,
        "members": [
         {
          "name": "NucleuxAgentByline",
@@ -24895,7 +24922,7 @@
        "signature": "class NucleuxAgentGlyph extends StatelessWidget",
        "doc": "The reserved glyph in one of its three containers, for controls that trigger generation and nothing else.\nDecorative: the control's own label says what it does.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 477,
+       "line": 479,
        "members": [
         {
          "name": "NucleuxAgentGlyph",
@@ -24952,7 +24979,7 @@
        "signature": "class NucleuxMessageBubble extends StatelessWidget",
        "doc": "One turn as a bubble. With [agent], the agent's: its mark beside it, `brandMuted`, sharp corner bottom-left.\nWithout, the person's own: `muted`, on the right, sharp corner bottom-right. Read with the author first.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 515,
+       "line": 521,
        "members": [
         {
          "name": "NucleuxMessageBubble",
@@ -24995,7 +25022,7 @@
        "signature": "class NucleuxAgentPresence extends StatefulWidget",
        "doc": "The agent working inside a surface a person owns: while [active], a 2pt `brand` outline around it and a status\nline (\"Aria is drafting in this document\"). Both go when the work does, and that is said too.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 573,
+       "line": 579,
        "members": [
         {
          "name": "NucleuxAgentPresence",
@@ -25277,7 +25304,7 @@
        "signature": "export interface AgentAvatarProps",
        "doc": "",
        "file": "react-native/src/Avatar.tsx",
-       "line": 8,
+       "line": 9,
        "members": [
         {
          "name": "agent",
@@ -25317,7 +25344,7 @@
        "signature": "export function AgentAvatar({ agent, size = 'md', state = 'ready', standalone = false, testID = 'avatar-agent' }: AgentAvatarProps)",
        "doc": "The agent's mark: the reserved glyph on a rounded square, never a face or initials. Carries working state\nas a ring on the mark itself. See specs/identity.md.",
        "file": "react-native/src/Avatar.tsx",
-       "line": 21,
+       "line": 22,
        "members": []
       },
       {
@@ -25326,7 +25353,7 @@
        "signature": "export function PersonAvatar({ name, size = 'md', testID = 'avatar-person' }: { name: string; size?: AvatarSize; testID?: string })",
        "doc": "A person's mark: initials on a circle. Hidden from screen readers; the name beside it is read.",
        "file": "react-native/src/Avatar.tsx",
-       "line": 83,
+       "line": 84,
        "members": []
       },
       {
@@ -25335,7 +25362,7 @@
        "signature": "export function IdentityRow({ name, detail, agent = false, state }: { name: string; detail: string; agent?: boolean; state?: AgentState })",
        "doc": "A name with its line: an agent (with \"AI agent\") or a person. See specs/identity.md.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 25,
+       "line": 26,
        "members": []
       },
       {
@@ -25344,7 +25371,7 @@
        "signature": "export interface AgentIdentityCardProps",
        "doc": "",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 41,
+       "line": 42,
        "members": [
         {
          "name": "agent",
@@ -25384,7 +25411,7 @@
        "signature": "export function AgentIdentityCard({ agent, role, state, actionLabel, onAction }: AgentIdentityCardProps)",
        "doc": "Where the agent is introduced or looked up: the name with its role line, and the \"AI agent\" chip.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 52,
+       "line": 53,
        "members": []
       },
       {
@@ -25393,7 +25420,7 @@
        "signature": "export function AgentByline({ agent, when, actionLabel, onAction }: { agent: string; when?: string; actionLabel?: string; onAction?: () => void })",
        "doc": "Under a record the agent wrote, away from the conversation: the same mark and name.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 76,
+       "line": 77,
        "members": []
       },
       {
@@ -25402,7 +25429,7 @@
        "signature": "export function AgentGlyph({ container = 'quiet', size = 32, glyph = 18 }: { container?: AgentGlyphContainer; size?: number; glyph?: number })",
        "doc": "The reserved glyph in one of its three containers, for controls that trigger generation (a menu row, a chip, a\nprimary action) and nothing else. Decorative: the control's own label says what it does.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 93,
+       "line": 94,
        "members": []
       },
       {
@@ -25411,7 +25438,7 @@
        "signature": "export function MessageBubble({ agent, children }: { agent?: string; children: string })",
        "doc": "One turn as a bubble. With `agent`, the agent's: its mark beside it, `brandMuted`, sharp corner bottom-left.\nWithout, the person's own: `muted`, on the right, sharp corner bottom-right. Read with the author first.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 111,
+       "line": 112,
        "members": []
       },
       {
@@ -25420,7 +25447,7 @@
        "signature": "export function AgentPresence({ agent, activity, detail, active, children, }: { agent: string; activity: string; detail?: string; active: boolean; children: React.ReactNode; })",
        "doc": "The agent working inside a surface a person owns: while `active`, a 2pt `brand` outline around it and a status\nline (\"Aria is drafting in this document\"). Both go when the work does, and that is said too.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 148,
+       "line": 149,
        "members": []
       }
      ],
@@ -26675,7 +26702,7 @@
    ],
    "spec": "specs/templates.md",
    "specSummary": "The pattern library's **Templates** pattern as revised on 16 Oct 2026 (branch-2: `material-patterns.js` → `templates`; the Scout simulator in `material-sim.js`). **A reusable setup for a repeatable workflow** (\"Competitive analysis\", \"Weekly product update\"): previewed first, applied as editable fields, and never run on its own.\n\nFor workflows people repeat with the same shape: weekly updates, analyses, reviews. Not for one-off prompts (Suggested Prompts or the Example Gallery). **Replaced (22 Oct):** the kit's earlier Templates, a sentence with slots to fill, is now **Madlibs** (`specs/madlibs.md`), as the library renamed it.\n\nThe rules and wording live in `react-native/src/templates.ts`. `npm run fixtures` writes `specs/templates.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.",
-   "specText": "# Templates\n\nThe pattern library's **Templates** pattern as revised on 16 Oct 2026 (branch-2: `material-patterns.js` → `templates`; the Scout simulator in `material-sim.js`). **A reusable setup for a repeatable workflow** (\"Competitive analysis\", \"Weekly product update\"): previewed first, applied as editable fields, and never run on its own.\n\nFor workflows people repeat with the same shape: weekly updates, analyses, reviews. Not for one-off prompts (Suggested Prompts or the Example Gallery). **Replaced (22 Oct):** the kit's earlier Templates, a sentence with slots to fill, is now **Madlibs** (`specs/madlibs.md`), as the library renamed it.\n\nThe rules and wording live in `react-native/src/templates.ts`. `npm run fixtures` writes `specs/templates.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.\n\n## What the host supplies\n\n| | | |\n|---|---|---|\n| `name`, `description` | Named after the job; what it produces in one sentence | \"Competitive analysis\", \"Compare competitors on the criteria you choose, from their public pages.\" |\n| `sections` | The preview: inputs, output and tools | Sources: \"Competitors’ public pages\", \"Your workspace files\"; Competitors: \"You list them\"; Evaluation criteria: \"Suggested from your last analysis\"; Output format: \"Comparison table\", \"One-page summary\" |\n| `produces` | For the chip line | \"comparison table and summary\" → \"Produces: comparison table and summary\" |\n| `uses` (optional) | What it uses, a line each | \"Uses web access to read competitors’ public pages.\" |\n| `fields` | The inputs: `id`, `label`, `required`, `requiredHint` | Competitors (required, \"Required — add at least two\"), Evaluation criteria, Output format |\n| `requirements` (optional) | What it needs that may be missing: `name`, `why`, `connect`, `fallback`, `fallbackNote` | web access; \"It reads each competitor’s pricing and docs pages.\"; \"Turn on web access\"; \"Use workspace files only\"; \"Using workspace files only — public pages won’t be read.\" |\n| `suggest(template)` | The agent's suggested values when applied, each with where it came from | Evaluation criteria: \"Pricing, onboarding, integrations\", \"from your last analysis\" |\n\nThe host provides a requirement (the kit asks with `request.kind: 'connect'` and gets `connected`) and runs the workflow (`request.kind: 'run'` with the values; it answers `finished`).\n\n## States\n\n| State | Shown | Announced |\n|---|---|---|\n| List | \"Templates\", at most six rows: name, description, a chevron | — |\n| Preview | A card: the name and description; the sections; each `uses` line; \"Applying fills in the setup. Nothing runs until you press Run.\"; **Use template** and **Back** | — |\n| Applied | An input chip with the template's name and × (\"Remove Competitive analysis template\"), \"Produces: comparison table and summary\"; the banner for each unresolved requirement; the fields; **Run**, **Keep suggested evaluation criteria** while a suggestion stands, and \"Nothing runs until you press Run.\" | \"Template applied. It needs web access. Nothing has run.\" |\n| Requirement missing | A banner, never the error colour: \"This template needs web access. It reads each competitor’s pricing and docs pages. Your values are kept.\" with **Turn on web access** and **Use workspace files only** | — |\n| Requirement met | The banner goes; the values are still there. With the fallback, its note stays | \"Web access on. Your values are kept.\" / \"Using workspace files only — public pages won’t be read.\" |\n| Suggested value | Under the field: \"Suggested by Aria from your last analysis\", with the generated mark. Keeping it: \"Confirmed by you\"; changing it makes it the person's own | \"Kept: Pricing, onboarding, integrations.\" |\n| Run blocked | Run is unavailable; pressing it says what's in the way | \"Add competitors and resolve web access first.\" |\n| Removed | Back to the list, with \"Template removed.\" and **Undo** (the template and every value come back) | \"Template removed.\" / \"Template back, with your values.\" |\n| Replacing with edits | \"Replace Competitive analysis? Your edits will be lost.\" with **Replace** and **Keep editing**; without edits it just replaces | the question |\n| Running / done | The host's working line and result: the template was the setup, the result is the work | \"Running Competitive analysis.\" / \"Competitive analysis ready.\" |\n\n## Look\n\n| | |\n|---|---|\n| List row | Min height 56, padding 12, radius 12, 1 `border`; name 15 semibold, description 13 `mutedForeground`, `chevron-right` 18 |\n| Preview card | `background`, 1 `border`, radius 16, padding 16; name 17 semibold; sections in a two-column grid when wide, one when narrow: heading 12 semibold `mutedForeground`, items 14; `uses` and the apply note 13 with an `info` / `link` 14 |\n| Chip | Outlined, radius 8, 13 medium, × in a 44 / 48 target; \"Produces: …\" 12 `mutedForeground` |\n| Banner | `muted`, radius 12, padding 12, `link` 16; text 13; two ghost buttons |\n| Fields | The kit's text field; the supporting line 12 `mutedForeground`, the suggested one with the generated mark |\n| Removed line | 13 `mutedForeground` with a ghost **Undo** |\n\n## Accessibility\n\n- The preview is a group named by the template; Run says why it can't go when pressed (it stays focusable, not hidden).\n- The chip's × has its own name. Each field's supporting line is its hint. Every change is announced politely; nothing takes focus.\n\n## Ours, not the pattern's\n\n- The replace confirmation's wording, the removal Undo's announcement, the run-blocked sentence built from what's missing, and \"Nothing has run.\" in the applied announcement.\n- The suggested mark uses the kit's generated mark (the library's update gives generated content its own glyph; until then, the one the kit has).\n\n## Not in scope (later)\n\n- Creating or editing templates.\n- More than one requirement banner at a time is supported; ordering them is the host's.\n",
+   "specText": "# Templates\n\nThe pattern library's **Templates** pattern as revised on 16 Oct 2026 (branch-2: `material-patterns.js` → `templates`; the Scout simulator in `material-sim.js`). **A reusable setup for a repeatable workflow** (\"Competitive analysis\", \"Weekly product update\"): previewed first, applied as editable fields, and never run on its own.\n\nFor workflows people repeat with the same shape: weekly updates, analyses, reviews. Not for one-off prompts (Suggested Prompts or the Example Gallery). **Replaced (22 Oct):** the kit's earlier Templates, a sentence with slots to fill, is now **Madlibs** (`specs/madlibs.md`), as the library renamed it.\n\nThe rules and wording live in `react-native/src/templates.ts`. `npm run fixtures` writes `specs/templates.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.\n\n## What the host supplies\n\n| | | |\n|---|---|---|\n| `name`, `description` | Named after the job; what it produces in one sentence | \"Competitive analysis\", \"Compare competitors on the criteria you choose, from their public pages.\" |\n| `sections` | The preview: inputs, output and tools | Sources: \"Competitors’ public pages\", \"Your workspace files\"; Competitors: \"You list them\"; Evaluation criteria: \"Suggested from your last analysis\"; Output format: \"Comparison table\", \"One-page summary\" |\n| `produces` | For the chip line | \"comparison table and summary\" → \"Produces: comparison table and summary\" |\n| `uses` (optional) | What it uses, a line each | \"Uses web access to read competitors’ public pages.\" |\n| `fields` | The inputs: `id`, `label`, `required`, `requiredHint` | Competitors (required, \"Required — add at least two\"), Evaluation criteria, Output format |\n| `requirements` (optional) | What it needs that may be missing: `name`, `why`, `connect`, `fallback`, `fallbackNote` | web access; \"It reads each competitor’s pricing and docs pages.\"; \"Turn on web access\"; \"Use workspace files only\"; \"Using workspace files only — public pages won’t be read.\" |\n| `suggest(template)` | The agent's suggested values when applied, each with where it came from | Evaluation criteria: \"Pricing, onboarding, integrations\", \"from your last analysis\" |\n\nThe host provides a requirement (the kit asks with `request.kind: 'connect'` and gets `connected`) and runs the workflow (`request.kind: 'run'` with the values; it answers `finished`).\n\n## States\n\n| State | Shown | Announced |\n|---|---|---|\n| List | \"Templates\", at most six rows: name, description, a chevron | — |\n| Preview | A card: the name and description; the sections; each `uses` line; \"Applying fills in the setup. Nothing runs until you press Run.\"; **Use template** and **Back** | — |\n| Applied | An input chip with the template's name and × (\"Remove Competitive analysis template\"), \"Produces: comparison table and summary\"; the banner for each unresolved requirement; the fields; **Run**, **Keep suggested evaluation criteria** while a suggestion stands, and \"Nothing runs until you press Run.\" | \"Template applied. It needs web access. Nothing has run.\" |\n| Requirement missing | A banner, never the error colour: \"This template needs web access. It reads each competitor’s pricing and docs pages. Your values are kept.\" with **Turn on web access** and **Use workspace files only** | — |\n| Requirement met | The banner goes; the values are still there. With the fallback, its note stays | \"Web access on. Your values are kept.\" / \"Using workspace files only — public pages won’t be read.\" |\n| Suggested value | Under the field: \"Suggested by Aria from your last analysis\", with the generated mark. Keeping it: \"Confirmed by you\"; changing it makes it the person's own | \"Kept: Pricing, onboarding, integrations.\" |\n| Run blocked | Run is unavailable; pressing it says what's in the way | \"Add competitors and resolve web access first.\" |\n| Removed | Back to the list, with \"Template removed.\" and **Undo** (the template and every value come back) | \"Template removed.\" / \"Template back, with your values.\" |\n| Replacing with edits | \"Replace Competitive analysis? Your edits will be lost.\" with **Replace** and **Keep editing**; without edits it just replaces | the question |\n| Running / done | The host's working line and result: the template was the setup, the result is the work | \"Running Competitive analysis.\" / \"Competitive analysis ready.\" |\n\n## Look\n\n| | |\n|---|---|\n| List row | Min height 56, padding 12, radius 12, 1 `border`; name 15 semibold, description 13 `mutedForeground`, `chevron-right` 18 |\n| Preview card | `background`, 1 `border`, radius 16, padding 16; name 17 semibold; sections in a two-column grid when wide, one when narrow: heading 12 semibold `mutedForeground`, items 14; `uses` and the apply note 13 with an `info` / `link` 14 |\n| Chip | Outlined, radius 8, 13 medium, × in a 44 / 48 target; \"Produces: …\" 12 `mutedForeground` |\n| Banner | `muted`, radius 12, padding 12, `link` 16; text 13; two ghost buttons |\n| Fields | The kit's text field; the supporting line 12 `mutedForeground`, the suggested one with the generated mark |\n| Removed line | 13 `mutedForeground` with a ghost **Undo** |\n\n## Accessibility\n\n- The preview is a group named by the template; Run says why it can't go when pressed (it stays focusable, not hidden).\n- The chip's × has its own name. Each field's supporting line is its hint. Every change is announced politely; nothing takes focus.\n\n## Ours, not the pattern's\n\n- The replace confirmation's wording, the removal Undo's announcement, the run-blocked sentence built from what's missing, and \"Nothing has run.\" in the applied announcement.\n- The suggested mark is the kit's generated mark (`badge-info`, since 22 Oct its own glyph).\n\n## Not in scope (later)\n\n- Creating or editing templates.\n- More than one requirement banner at a time is supported; ordering them is the host's.\n",
    "fixtures": [
     "specs/templates.fixtures.json"
    ],
@@ -29701,7 +29728,7 @@
        "signature": "export interface TemplateFlowProps",
        "doc": "",
        "file": "react-native/src/TemplateFlow.tsx",
-       "line": 38,
+       "line": 37,
        "members": [
         {
          "name": "templates",
@@ -29741,7 +29768,7 @@
        "signature": "export function TemplateFlow({ templates, agent = 'Aria', suggest, onConnect, onRun }: TemplateFlowProps)",
        "doc": "Templates for repeatable workflows: a list, a preview of what each asks for, produces and uses, then the template\napplied as an input chip and editable fields. Nothing runs until Run; a missing requirement keeps the values;\nremoving has Undo; replacing asks first when there are edits. See specs/templates.md.",
        "file": "react-native/src/TemplateFlow.tsx",
-       "line": 54,
+       "line": 53,
        "members": []
       }
      ],
@@ -29786,7 +29813,7 @@
    ],
    "spec": "specs/randomize.md",
    "specSummary": "The pattern library's **Randomize** pattern (branch-2: `material-patterns.js` → `randomize`; the simulator and controller in `material-sim.js` (`rndRender`, `rndAct`); CSS `.md-rnd` in `material-pattern.html`). **A different starting direction on demand**, for exploratory work, editable before it is used and never run on its own. One optional control above the composer; one generated direction at a time; **Use this** puts an editable prompt in the composer and sends nothing.\n\nA composer option, like Suggested Prompts: the composer owns the controller, because placing a direction writes its field and moves focus there. The rules and wording live in `react-native/src/randomize.ts`. `npm run fixtures` writes `specs/randomize.fixtures.json` (12 step-by-step sequences), and SwiftUI, Compose and Flutter are tested against it.",
-   "specText": "# Randomize\n\nThe pattern library's **Randomize** pattern (branch-2: `material-patterns.js` → `randomize`; the simulator and controller in `material-sim.js` (`rndRender`, `rndAct`); CSS `.md-rnd` in `material-pattern.html`). **A different starting direction on demand**, for exploratory work, editable before it is used and never run on its own. One optional control above the composer; one generated direction at a time; **Use this** puts an editable prompt in the composer and sends nothing.\n\nA composer option, like Suggested Prompts: the composer owns the controller, because placing a direction writes its field and moves focus there. The rules and wording live in `react-native/src/randomize.ts`. `npm run fixtures` writes `specs/randomize.fixtures.json` (12 step-by-step sequences), and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `.nucleuxRandomize(…)` on `NucleuxPromptComposer`; `NucleuxRandomize` (controller and wording); `NucleuxDirection` |\n| Compose | `randomize =` on `NucleuxPromptComposer`; `NucleuxRandomizeOptions`; `NucleuxRandomize`; `NucleuxDirection` |\n| Flutter | `randomize:` on `NucleuxPromptComposer`; `NucleuxRandomizeOptions`; `NucleuxRandomize`; `NucleuxDirection` |\n| React Native | `randomize` on `PromptComposer`; `randomizeReduce`, `nextFromList` |\n\n## What the host supplies\n\n- **`generate(seen)`**: an asynchronous provider that returns one direction `{ title, line }`, not one of `seen`. For a fixed list, `nextFromList(items, seen)` does this: random, never a repeat this round, and when all have been seen a new round starts without the one on the card. Constrain the generator so every direction is usable.\n- **`prompt(direction)`**: the request a direction stands for, placed in the composer: \"Draft launch messaging for Planboard 3.0 around this direction: Launch through customer stories. Lead with…\".\n- Optionally **the label** (\"Try a direction\"; say what you get, never \"Random\" or \"Surprise me\" alone) and **the supporting line**.\n- **Where:** creative and exploratory work where variety is the point and nothing is at stake (campaign directions, names, ideas, styles). **Not** in finance, legal, medical, safety, destructive or deterministic workflows.\n\n## The controller\n\n`randomizeReduce(state, event, prompt)` returns the next state, a polite announcement, whether to call `generate`, and text to place.\n\n| Phase | Shown | Events |\n|---|---|---|\n| `ready` | The control and its line | `generate` → `generating` |\n| `generating` | \"Finding a different direction…\" with the working mark; the control is dimmed | `received` → `suggestion`; `failed` → back; `generate` is ignored |\n| `suggestion` | The card: \"Generated direction · 2 of 3\", Previous (from the second), the title and line, **Use this**, **Generate another** | `use`, `previous`, `generate` |\n| `confirm` | The same card with \"Replace your draft with this direction?\": **Replace draft**, **Add below my draft**, **Cancel** | `replace`, `append`, `cancel`, `previous` |\n| `applied` | The control only; the prompt is in the composer, focused, caret at the end | `generate` (a new card, the round continues); `sent` starts a new round |\n\n- **Never a repeat this round.** A direction whose title matches one already seen (ignoring case and spacing) is dropped and asked for again; after **three** repeats in a row it counts as failed.\n- **Never over the person's words.** Use this asks first when the composer holds text, unless that text is exactly what it placed last.\n- **Add below** keeps the draft, trims its trailing space, and adds a blank line and the prompt.\n- **Nothing is sent**, ever. Out-of-turn events change nothing.\n\n## Wording\n\n| | |\n|---|---|\n| Announced on generate | \"Finding a different direction…\" |\n| On a new direction | \"New direction: Launch through customer stories. Lead with three teams…\" |\n| Previous | \"Previous direction: Launch through customer stories\" |\n| Asking | \"Your draft has text. Replace it, add the direction below, or cancel.\" |\n| Placed | \"Direction placed in the message field. Edit it, then send when you are ready.\" / \"Direction added below your draft. …\" |\n| Cancel | \"Kept your draft.\" |\n| Failed | \"No direction came back. Try again.\" |\n\n## Look\n\n| | |\n|---|---|\n| Control | A secondary small button with the reserved glyph (sparkles, `brand`), \"Try a direction\"; beside it the supporting line, 13 `mutedForeground`, wrapping under it on a narrow screen |\n| Card | `muted`, 1pt `border`, corner 12, padding 12 / 16. Header 12 medium `mutedForeground` with a 14pt sparkles in `brand`; Previous a 44 / 48 icon button (`chevron-left`) at its end. Title 16 semibold `foreground`; line 14 `mutedForeground`. Actions: Use this (primary, small), Generate another (secondary, small, with the glyph) |\n| Working | The card with a turning `loader-circle` in `brand` and \"Finding a different direction…\" 14 `mutedForeground` |\n| Asking | A 1pt `border` rule inside the card, the question 14 semibold, then Replace draft (primary), Add below my draft (secondary), Cancel (ghost) |\n| Motion | The card rises 6 and settles from 0.98 over 400 ms. With Reduce Motion it appears, and the loader is still |\n\n## Accessibility\n\n- The control is a button, its hint the supporting line. The card is a group named \"Suggested direction\"; the header reads \"Generated direction, 2 of 3\".\n- Each new direction is announced politely, title and line; focus is not moved to it.\n- Placing moves focus to the composer with the caret at the end: the person asked for it.\n- The question is announced; its three buttons follow it in the card.\n\n## Ours, not the pattern's\n\n- **A composer option**, not a separate component: the convention for anything that writes the composer.\n- **The repeat rule:** matched by title, ignoring case and spacing, and three repeats count as a failure, so a provider that keeps repeating can't hang the card.\n- **The failure wording** and the announcement on generate. The pattern has no failure state.\n- **The control's glyph is the reserved sparkles**, as the pattern's default (\"it runs a model\"), so `DirectionCard` joins the glyph audit's list. The pattern's separate \"generated\" mark on the card is the same sparkles here: our Iconography uses one glyph for both (see the open question on the Icons pattern).\n- **Look:** `muted` stands in for surface-container-low, a secondary button for Material's tonal one.\n- The \"place automatically\" variant isn't built: Use this is the one way in.\n\n## Not in scope (later)\n\n- Directions with images (styles, presets): a title and a line only.\n- Keeping directions between sessions.\n",
+   "specText": "# Randomize\n\nThe pattern library's **Randomize** pattern (branch-2: `material-patterns.js` → `randomize`; the simulator and controller in `material-sim.js` (`rndRender`, `rndAct`); CSS `.md-rnd` in `material-pattern.html`). **A different starting direction on demand**, for exploratory work, editable before it is used and never run on its own. One optional control above the composer; one generated direction at a time; **Use this** puts an editable prompt in the composer and sends nothing.\n\nA composer option, like Suggested Prompts: the composer owns the controller, because placing a direction writes its field and moves focus there. The rules and wording live in `react-native/src/randomize.ts`. `npm run fixtures` writes `specs/randomize.fixtures.json` (12 step-by-step sequences), and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `.nucleuxRandomize(…)` on `NucleuxPromptComposer`; `NucleuxRandomize` (controller and wording); `NucleuxDirection` |\n| Compose | `randomize =` on `NucleuxPromptComposer`; `NucleuxRandomizeOptions`; `NucleuxRandomize`; `NucleuxDirection` |\n| Flutter | `randomize:` on `NucleuxPromptComposer`; `NucleuxRandomizeOptions`; `NucleuxRandomize`; `NucleuxDirection` |\n| React Native | `randomize` on `PromptComposer`; `randomizeReduce`, `nextFromList` |\n\n## What the host supplies\n\n- **`generate(seen)`**: an asynchronous provider that returns one direction `{ title, line }`, not one of `seen`. For a fixed list, `nextFromList(items, seen)` does this: random, never a repeat this round, and when all have been seen a new round starts without the one on the card. Constrain the generator so every direction is usable.\n- **`prompt(direction)`**: the request a direction stands for, placed in the composer: \"Draft launch messaging for Planboard 3.0 around this direction: Launch through customer stories. Lead with…\".\n- Optionally **the label** (\"Try a direction\"; say what you get, never \"Random\" or \"Surprise me\" alone) and **the supporting line**.\n- **Where:** creative and exploratory work where variety is the point and nothing is at stake (campaign directions, names, ideas, styles). **Not** in finance, legal, medical, safety, destructive or deterministic workflows.\n\n## The controller\n\n`randomizeReduce(state, event, prompt)` returns the next state, a polite announcement, whether to call `generate`, and text to place.\n\n| Phase | Shown | Events |\n|---|---|---|\n| `ready` | The control and its line | `generate` → `generating` |\n| `generating` | \"Finding a different direction…\" with the working mark; the control is dimmed | `received` → `suggestion`; `failed` → back; `generate` is ignored |\n| `suggestion` | The card: \"Generated direction · 2 of 3\", Previous (from the second), the title and line, **Use this**, **Generate another** | `use`, `previous`, `generate` |\n| `confirm` | The same card with \"Replace your draft with this direction?\": **Replace draft**, **Add below my draft**, **Cancel** | `replace`, `append`, `cancel`, `previous` |\n| `applied` | The control only; the prompt is in the composer, focused, caret at the end | `generate` (a new card, the round continues); `sent` starts a new round |\n\n- **Never a repeat this round.** A direction whose title matches one already seen (ignoring case and spacing) is dropped and asked for again; after **three** repeats in a row it counts as failed.\n- **Never over the person's words.** Use this asks first when the composer holds text, unless that text is exactly what it placed last.\n- **Add below** keeps the draft, trims its trailing space, and adds a blank line and the prompt.\n- **Nothing is sent**, ever. Out-of-turn events change nothing.\n\n## Wording\n\n| | |\n|---|---|\n| Announced on generate | \"Finding a different direction…\" |\n| On a new direction | \"New direction: Launch through customer stories. Lead with three teams…\" |\n| Previous | \"Previous direction: Launch through customer stories\" |\n| Asking | \"Your draft has text. Replace it, add the direction below, or cancel.\" |\n| Placed | \"Direction placed in the message field. Edit it, then send when you are ready.\" / \"Direction added below your draft. …\" |\n| Cancel | \"Kept your draft.\" |\n| Failed | \"No direction came back. Try again.\" |\n\n## Look\n\n| | |\n|---|---|\n| Control | A secondary small button with the reserved glyph (sparkles, `brand`), \"Try a direction\"; beside it the supporting line, 13 `mutedForeground`, wrapping under it on a narrow screen |\n| Card | `muted`, 1pt `border`, corner 12, padding 12 / 16. Header 12 medium `mutedForeground` with the generated mark (`badge-info`) 14 in `mutedForeground`; Previous a 44 / 48 icon button (`chevron-left`) at its end. Title 16 semibold `foreground`; line 14 `mutedForeground`. Actions: Use this (primary, small), Generate another (secondary, small, with the glyph) |\n| Working | The card with a turning `loader-circle` in `brand` and \"Finding a different direction…\" 14 `mutedForeground` |\n| Asking | A 1pt `border` rule inside the card, the question 14 semibold, then Replace draft (primary), Add below my draft (secondary), Cancel (ghost) |\n| Motion | The card rises 6 and settles from 0.98 over 400 ms. With Reduce Motion it appears, and the loader is still |\n\n## Accessibility\n\n- The control is a button, its hint the supporting line. The card is a group named \"Suggested direction\"; the header reads \"Generated direction, 2 of 3\".\n- Each new direction is announced politely, title and line; focus is not moved to it.\n- Placing moves focus to the composer with the caret at the end: the person asked for it.\n- The question is announced; its three buttons follow it in the card.\n\n## Ours, not the pattern's\n\n- **A composer option**, not a separate component: the convention for anything that writes the composer.\n- **The repeat rule:** matched by title, ignoring case and spacing, and three repeats count as a failure, so a provider that keeps repeating can't hang the card.\n- **The failure wording** and the announcement on generate. The pattern has no failure state.\n- **The control's glyph is the AI action mark** (sparkles), as the pattern's default (\"it runs a model\"); the card's header carries the generated mark, its own glyph since 22 Oct (backlog item 7).\n- **Look:** `muted` stands in for surface-container-low, a secondary button for Material's tonal one.\n- The \"place automatically\" variant isn't built: Use this is the one way in.\n\n## Not in scope (later)\n\n- Directions with images (styles, presets): a title and a line only.\n- Keeping directions between sessions.\n",
    "fixtures": [
     "specs/randomize.fixtures.json"
    ],
@@ -31455,7 +31482,7 @@
        "signature": "export type DirectionCardEvent = Exclude<RandomizeEvent, { type: 'use' } | { type: 'append' }> | { type: 'use' } | { type: 'append' }",
        "doc": "The controller's events, with the draft left for the composer to fill in.",
        "file": "react-native/src/DirectionCard.tsx",
-       "line": 29,
+       "line": 30,
        "members": [],
        "body": "export type DirectionCardEvent = Exclude<RandomizeEvent, { type: 'use' } | { type: 'append' }> | { type: 'use' } | { type: 'append' };"
       },
@@ -31465,7 +31492,7 @@
        "signature": "export function DirectionCard({ state, label = RANDOMIZE_LABEL, support = RANDOMIZE_SUPPORT, onEvent, }: { state: RandomizeState; label?: string; support?: string; onEvent: (e: DirectionCardEvent) => void; })",
        "doc": "Randomize, above the composer: the control and, once pressed, one direction at a time. The composer draws it\n(`randomize` on PromptComposer) and supplies the draft for `use` and `append`. See specs/randomize.md.",
        "file": "react-native/src/DirectionCard.tsx",
-       "line": 45,
+       "line": 46,
        "members": []
       }
      ],
@@ -31512,8 +31539,8 @@
     "Icons (AI action, working, tool use, generated with Undo)"
    ],
    "spec": "specs/ai-marks.md",
-   "specSummary": "The pattern library's **Icons** pattern (branch-2: `material-patterns.js` → `ai-icons`; the simulator in `material-sim.js`, a release-note editor in Orbit). **One mark per AI meaning**, each kept for that meaning everywhere: the action that runs AI, the content AI made, the agent working, and a tool the agent used. Every mark travels with words.\n\n**Built on our default for an open question.** The pattern wants separate glyphs for *AI action* and *Generated with AI*; our Iconography (`specs/identity.md`) keeps one reserved glyph, sparkles, for both. Until that is decided, this adds the two marks that were missing (**working** and **tool**) and the life of one AI action around them. The roles and the glyph each uses are in one table (`AI_MARKS`), so changing the generated mark later is one line per framework.\n\nThe rules and wording live in `react-native/src/aiMarks.ts`. `npm run fixtures` writes `specs/ai-marks.fixtures.json` (7 step-by-step runs), and SwiftUI, Compose and Flutter are tested against it.",
-   "specText": "# Icons (AI marks)\n\nThe pattern library's **Icons** pattern (branch-2: `material-patterns.js` → `ai-icons`; the simulator in `material-sim.js`, a release-note editor in Orbit). **One mark per AI meaning**, each kept for that meaning everywhere: the action that runs AI, the content AI made, the agent working, and a tool the agent used. Every mark travels with words.\n\n**Built on our default for an open question.** The pattern wants separate glyphs for *AI action* and *Generated with AI*; our Iconography (`specs/identity.md`) keeps one reserved glyph, sparkles, for both. Until that is decided, this adds the two marks that were missing (**working** and **tool**) and the life of one AI action around them. The roles and the glyph each uses are in one table (`AI_MARKS`), so changing the generated mark later is one line per framework.\n\nThe rules and wording live in `react-native/src/aiMarks.ts`. `npm run fixtures` writes `specs/ai-marks.fixtures.json` (7 step-by-step runs), and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxAIActionButton`, `NucleuxAIWorkingStatus`, `NucleuxToolUseLine`, `NucleuxGeneratedResult`, `NucleuxAIRun` (controller and wording) |\n| Compose | `NucleuxAIActionButton`, `NucleuxAIWorkingStatus`, `NucleuxToolUseLine`, `NucleuxGeneratedResult`, `NucleuxAIRun` |\n| Flutter | `NucleuxAIActionButton`, `NucleuxAIWorkingStatus`, `NucleuxToolUseLine`, `NucleuxGeneratedResult`, `NucleuxAIRun` |\n| React Native | `AiActionButton`, `AiWorkingStatus`, `ToolUseLine`, `GeneratedResult`; `aiRunReduce` |\n\n## The marks\n\n| Role | Means | Glyph (Lucide) | Where |\n|---|---|---|---|\n| AI action | Pressing it runs AI on something specific | `sparkles`, in `brand` | Beside the verb on the control |\n| Generated with AI | This content was written or changed by AI | `sparkles` (the \"Generated with AI\" label) | Once, under what it describes |\n| Agent working | The agent is doing something right now | `loader-circle`, turning, in `brand` | Beside the status line, and in place of the action's mark while it runs |\n| Tool use | The agent used a tool or another system | `wrench`, in `mutedForeground` | Leading the line that names the tool |\n\nOnly the working mark moves, and only while working; under Reduce Motion it is still. \"New\" features get the word **New**, never a mark.\n\n## What the host supplies\n\n- **The words of the action:** `verb` (\"Rewrite\"; never \"AI\", \"Magic\" or \"Ask AI\"), `doing` (\"Rewriting\"), `status` (\"Rewriting release note\"), `done` (\"Release note rewritten.\").\n- **Events** as the work happens: `start` (the person pressed it), `toolStarted` / `toolDone` (naming the system and the act: \"Checking the style guide…\", \"Style guide checked\", with an optional detail of what it found), `finish`, `fail`, `stop` (the person pressed Stop), `undo`.\n- **A reason** when the action can't run now (\"Write something first\").\n\n## The run\n\n`aiRunReduce(state, event, words)`:\n\n| From | Event | To | Said |\n|---|---|---|---|\n| idle, done | start | working, no tools | \"Agent working: rewriting release note.\" |\n| working | toolStarted | adds a running line | (nothing) |\n| working | toolDone | the running line becomes done, with its detail | \"Style guide checked.\" |\n| working | finish | done; lines still running are dropped | \"Release note rewritten. Generated with AI; Undo is available.\" |\n| working | fail | idle | \"Didn’t finish rewriting release note. Nothing was changed.\" |\n| working | stop | idle | \"Stopped. Nothing was changed.\" |\n| done | undo | idle | \"Your original is back.\" |\n\nAnything else changes nothing; start is ignored while working.\n\n## Components\n\n- **`AiActionButton`:** secondary, small; the sparkles in `brand` and the verb. Working: the turning mark and \"Rewriting…\", unavailable but still focusable. Disabled: dimmed, still focusable, and its reason is its hint. **Icon-only** (dense toolbars): a 44 / 48 icon button named \"Rewrite with AI\" (or \"with Aria\"); while working, \"Agent working: rewriting\".\n- **`AiWorkingStatus`:** the turning mark, the status (\"Rewriting release note…\", 14 `mutedForeground`), and **Stop** (ghost, small). One line; the host shows it only while working.\n- **`ToolUseLine`:** the wrench (16) and the line (13 `mutedForeground`). With a detail it is a button that opens it below, in a `muted` box (corner 8, padding 8 / 12, 13 `foreground`); read as the line, with \"in progress\" while running, and its expanded state.\n- **`GeneratedResult`:** under the result, the \"Generated with AI\" label and **Undo** (ghost, small).\n\n## Accessibility\n\n- Marks are decorative; the meaning is in the label, the name or the status.\n- Disabled AI actions stay focusable and say why. Every icon-only AI action is named \"… with AI\".\n- Starting, each finished tool, finishing, failing, stopping and undoing are announced politely; focus doesn't move.\n- Each role has its own shape, so nothing rests on colour.\n\n## Ours, not the pattern's\n\n- **Action and generated share the sparkles** (the open question). The pattern's Generated mark is a pressable chip with an explanation (\"About this text\") and the original back; ours stays the existing non-pressable chip with **Undo** beside it.\n- **No tooltips:** a phone has no hover. An icon-only action carries its full name for screen readers, and the pattern's tooltip text becomes the disabled hint.\n- **The failure wording** and the running tool's \"in progress\"; the pattern has neither.\n- **Lucide glyphs** in place of Material Symbols: `loader-circle` for `progress_activity`, `wrench` for `build`.\n\n## Not in scope (later)\n\n- A second glyph for generated content, if the open question goes that way.\n- The generated chip's explanation and \"show the original\".\n",
+   "specSummary": "The pattern library's **Icons** pattern (branch-2: `material-patterns.js` → `ai-icons`; the simulator in `material-sim.js`, a release-note editor in Orbit). **One mark per AI meaning**, each kept for that meaning everywhere: the action that runs AI, the content AI made, the agent working, and a tool the agent used. Every mark travels with words.\n\n**Four glyphs, since 22 Oct.** The library's 16 Oct revision of Iconography settles the old open question: one glyph per meaning, and AI-generated content carries \"Generated with AI\" \"with its own mark — not the star that started it\". Until then the kit used sparkles for both action and generated (backlog item 7). The roles and glyphs are one table (`AI_MARKS`, plus `AGENT_GLYPH` for the agent's own mark); no component names an AI glyph itself, and a test lists each role's users.\n\nThe rules and wording live in `react-native/src/aiMarks.ts`. `npm run fixtures` writes `specs/ai-marks.fixtures.json` (7 step-by-step runs), and SwiftUI, Compose and Flutter are tested against it.",
+   "specText": "# Icons (AI marks)\n\nThe pattern library's **Icons** pattern (branch-2: `material-patterns.js` → `ai-icons`; the simulator in `material-sim.js`, a release-note editor in Orbit). **One mark per AI meaning**, each kept for that meaning everywhere: the action that runs AI, the content AI made, the agent working, and a tool the agent used. Every mark travels with words.\n\n**Four glyphs, since 22 Oct.** The library's 16 Oct revision of Iconography settles the old open question: one glyph per meaning, and AI-generated content carries \"Generated with AI\" \"with its own mark — not the star that started it\". Until then the kit used sparkles for both action and generated (backlog item 7). The roles and glyphs are one table (`AI_MARKS`, plus `AGENT_GLYPH` for the agent's own mark); no component names an AI glyph itself, and a test lists each role's users.\n\nThe rules and wording live in `react-native/src/aiMarks.ts`. `npm run fixtures` writes `specs/ai-marks.fixtures.json` (7 step-by-step runs), and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxAIActionButton`, `NucleuxAIWorkingStatus`, `NucleuxToolUseLine`, `NucleuxGeneratedResult`, `NucleuxAIRun` (controller and wording) |\n| Compose | `NucleuxAIActionButton`, `NucleuxAIWorkingStatus`, `NucleuxToolUseLine`, `NucleuxGeneratedResult`, `NucleuxAIRun` |\n| Flutter | `NucleuxAIActionButton`, `NucleuxAIWorkingStatus`, `NucleuxToolUseLine`, `NucleuxGeneratedResult`, `NucleuxAIRun` |\n| React Native | `AiActionButton`, `AiWorkingStatus`, `ToolUseLine`, `GeneratedResult`; `aiRunReduce` |\n\n## The marks\n\n| Role | Means | Glyph (Lucide) | Where |\n|---|---|---|---|\n| AI action | Pressing it runs AI on something specific | `sparkles`, in `brand` | Beside the verb on the control |\n| Generated with AI | This content was written or changed by AI, or is the agent's suggestion | `badge-info`, in `primary` on the label, `mutedForeground` on a provenance line or tag | Once, on what it describes: the \"Generated with AI\" label, \"Suggested by Aria\", a direction's header, a recommended tone, a style Aria made |\n| Agent working | The agent is doing something right now | `loader-circle`, turning, in `brand` | Beside the status line, and in place of the action's mark while it runs |\n| Tool use | The agent used a tool or another system | `wrench`, in `mutedForeground` | Leading the line that names the tool |\n\nThe agent's own mark (`AGENT_GLYPH`, inside its rounded-square avatar, on the identity card, the workspace banner, the introduction and the Disclaimer statement) is the star too, as the library's Avatar draws it; it says *who*, the action mark says *what pressing does*.\n\nOnly the working mark moves, and only while working; under Reduce Motion it is still. \"New\" features get the word **New**, never a mark.\n\n## What the host supplies\n\n- **The words of the action:** `verb` (\"Rewrite\"; never \"AI\", \"Magic\" or \"Ask AI\"), `doing` (\"Rewriting\"), `status` (\"Rewriting release note\"), `done` (\"Release note rewritten.\").\n- **Events** as the work happens: `start` (the person pressed it), `toolStarted` / `toolDone` (naming the system and the act: \"Checking the style guide…\", \"Style guide checked\", with an optional detail of what it found), `finish`, `fail`, `stop` (the person pressed Stop), `undo`.\n- **A reason** when the action can't run now (\"Write something first\").\n\n## The run\n\n`aiRunReduce(state, event, words)`:\n\n| From | Event | To | Said |\n|---|---|---|---|\n| idle, done | start | working, no tools | \"Agent working: rewriting release note.\" |\n| working | toolStarted | adds a running line | (nothing) |\n| working | toolDone | the running line becomes done, with its detail | \"Style guide checked.\" |\n| working | finish | done; lines still running are dropped | \"Release note rewritten. Generated with AI; Undo is available.\" |\n| working | fail | idle | \"Didn’t finish rewriting release note. Nothing was changed.\" |\n| working | stop | idle | \"Stopped. Nothing was changed.\" |\n| done | undo | idle | \"Your original is back.\" |\n\nAnything else changes nothing; start is ignored while working.\n\n## Components\n\n- **`AiActionButton`:** secondary, small; the sparkles in `brand` and the verb. Working: the turning mark and \"Rewriting…\", unavailable but still focusable. Disabled: dimmed, still focusable, and its reason is its hint. **Icon-only** (dense toolbars): a 44 / 48 icon button named \"Rewrite with AI\" (or \"with Aria\"); while working, \"Agent working: rewriting\".\n- **`AiWorkingStatus`:** the turning mark, the status (\"Rewriting release note…\", 14 `mutedForeground`), and **Stop** (ghost, small). One line; the host shows it only while working.\n- **`ToolUseLine`:** the wrench (16) and the line (13 `mutedForeground`). With a detail it is a button that opens it below, in a `muted` box (corner 8, padding 8 / 12, 13 `foreground`); read as the line, with \"in progress\" while running, and its expanded state.\n- **`GeneratedResult`:** under the result, the \"Generated with AI\" label and **Undo** (ghost, small).\n\n## Accessibility\n\n- Marks are decorative; the meaning is in the label, the name or the status.\n- Disabled AI actions stay focusable and say why. Every icon-only AI action is named \"… with AI\".\n- Starting, each finished tool, finishing, failing, stopping and undoing are announced politely; focus doesn't move.\n- Each role has its own shape, so nothing rests on colour.\n\n## Ours, not the pattern's\n\n- **`badge-info` for the generated mark.** The library's Material `chat_info` is an info bubble; Lucide has none, and a speech bubble would read as Tone's `message-square`. The pressable label with its explanation is Disclosure's `GeneratedLabel` (`specs/disclosure-and-caveat.md`).\n- **No tooltips:** a phone has no hover. An icon-only action carries its full name for screen readers, and the pattern's tooltip text becomes the disabled hint.\n- **The failure wording** and the running tool's \"in progress\"; the pattern has neither.\n- **Lucide glyphs** in place of Material Symbols: `sparkles` for `star_shine`, `badge-info` for `chat_info`, `loader-circle` for `progress_activity`, `wrench` for `build`. The library's approved alternatives (wand, inserted, tools) are not offered.\n\n## Not in scope (later)\n\n- A second glyph for generated content, if the open question goes that way.\n- The generated chip's explanation and \"show the original\".\n",
    "fixtures": [
     "specs/ai-marks.fixtures.json"
    ],
@@ -31674,9 +31701,14 @@
        "line": 42,
        "members": [
         {
-         "signature": "public static let marks: [Role: NucleuxIcon] = [.action: .sparkles, .generated: .sparkles, .working: .loaderCircle, .tool: .wrench]",
-         "doc": "The glyph for each role. Action and generated share the reserved glyph (an open question).",
+         "signature": "public static let marks: [Role: NucleuxIcon] = [.action: .sparkles, .generated: .badgeInfo, .working: .loaderCircle, .tool: .wrench]",
+         "doc": "The glyph for each role (Iconography, 16 Oct): the star for an AI action, the info badge for generated content\n(\"not the star that started it\"), a turning mark while working, a wrench for tool use.",
          "name": "marks"
+        },
+        {
+         "signature": "public static let agentGlyph: NucleuxIcon = .sparkles",
+         "doc": "The agent's own mark, in its avatar and on its identity surfaces; the library draws it with the action's star.",
+         "name": "agentGlyph"
         },
         {
          "signature": "public static let meanings: [Role: String] = [ .action: \"Pressing it runs AI on something specific.\", .generated: \"This content was written or changed by AI.\", .working: \"The agent is doing something right now.\", .tool: \"The agent used a tool or another system.\", ]",
@@ -31829,10 +31861,10 @@
        "signature": "public struct NucleuxWorkingMark: View",
        "doc": "The working mark: turns steadily while the agent works; still under Reduce Motion. Decorative.",
        "file": "swiftui/Sources/Nucleux/NucleuxAIMarks.swift",
-       "line": 127,
+       "line": 130,
        "members": [
         {
-         "signature": "public init(size: CGFloat = 18)",
+         "signature": "public init(size: CGFloat = 18, color: Color = NucleuxColor.brand)",
          "doc": "",
          "name": "init"
         }
@@ -31844,7 +31876,7 @@
        "signature": "public struct NucleuxAIActionButton: View",
        "doc": "A control that runs AI: the reserved glyph beside its verb; while it runs, the turning mark and \"Rewriting…\".\nDisabled with a reason, it stays focusable and says why.",
        "file": "swiftui/Sources/Nucleux/NucleuxAIMarks.swift",
-       "line": 148,
+       "line": 152,
        "members": [
         {
          "signature": "public init(_ words: NucleuxAIActionWords, working: Bool = false, disabledReason: String? = nil, iconOnly: Bool = false, agent: String? = nil, action: @escaping () -> Void)",
@@ -31859,7 +31891,7 @@
        "signature": "public struct NucleuxAIWorkingStatus: View",
        "doc": "While the agent works: the turning mark, what it is doing now, and Stop.",
        "file": "swiftui/Sources/Nucleux/NucleuxAIMarks.swift",
-       "line": 192,
+       "line": 196,
        "members": [
         {
          "signature": "public init(_ words: NucleuxAIActionWords, onStop: (() -> Void)? = nil)",
@@ -31874,7 +31906,7 @@
        "signature": "public struct NucleuxToolUseLine: View",
        "doc": "A tool the agent used, led by the wrench; with a detail it opens to show what the tool found.",
        "file": "swiftui/Sources/Nucleux/NucleuxAIMarks.swift",
-       "line": 219,
+       "line": 223,
        "members": [
         {
          "signature": "public init(_ tool: NucleuxToolUse)",
@@ -31889,7 +31921,7 @@
        "signature": "public struct NucleuxGeneratedResult: View",
        "doc": "Under content the agent just wrote: \"Generated with AI\" and the way back. With `details` the label opens to what\nthe agent did, what it used, what nobody checked and that the original is kept.",
        "file": "swiftui/Sources/Nucleux/NucleuxAIMarks.swift",
-       "line": 266,
+       "line": 270,
        "members": [
         {
          "signature": "public init(details: NucleuxTrust.Details? = nil, agent: String = \"Aria\", noun: String = \"text\", onUndo: @escaping () -> Void)",
@@ -31904,7 +31936,7 @@
        "signature": "public struct NucleuxAIActionNote: View",
        "doc": "The one line an AI action shows once it applies to something, before it runs: \"Rewrite with AI. Aria rewrites the\nHighlights paragraph. You review the result before it replaces your text.\"",
        "file": "swiftui/Sources/Nucleux/NucleuxAIMarks.swift",
-       "line": 295,
+       "line": 299,
        "members": [
         {
          "signature": "public init(verb: String, sentence: String)",
@@ -31930,7 +31962,7 @@
        "doc": "The words of one AI action: verb \"Rewrite\", doing \"Rewriting\", status \"Rewriting release note\", done \"Release note rewritten.\"",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 49,
+       "line": 50,
        "members": []
       },
       {
@@ -31940,7 +31972,7 @@
        "doc": "A tool the agent used: \"Style guide checked\", with what it found.",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 52,
+       "line": 53,
        "members": []
       },
       {
@@ -31950,7 +31982,7 @@
        "doc": "The marks and the life of one AI action. Must reproduce specs/ai-marks.fixtures.json (reference: react-native/src/aiMarks.ts).",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 58,
+       "line": 59,
        "members": [
         {
          "name": "reduce",
@@ -31958,9 +31990,14 @@
          "doc": "Out-of-turn events change nothing."
         },
         {
+         "name": "AGENT_GLYPH",
+         "signature": "public val AGENT_GLYPH: NucleuxIcons = NucleuxIcons.Sparkles",
+         "doc": "The agent's own mark, in its avatar and on its identity surfaces; the library draws it with the action's star."
+        },
+        {
          "name": "MARKS",
-         "signature": "public val MARKS: Map<Role, NucleuxIcons> = mapOf(Role.Action to NucleuxIcons.Sparkles, Role.Generated to NucleuxIcons.Sparkles, Role.Working to NucleuxIcons.LoaderCircle, Role.Tool to NucleuxIcons.Wrench)",
-         "doc": "The glyph for each role. Action and generated share the reserved glyph (an open question)."
+         "signature": "public val MARKS: Map<Role, NucleuxIcons> = mapOf(Role.Action to NucleuxIcons.Sparkles, Role.Generated to NucleuxIcons.BadgeInfo, Role.Working to NucleuxIcons.LoaderCircle, Role.Tool to NucleuxIcons.Wrench)",
+         "doc": ""
         },
         {
          "name": "MEANINGS",
@@ -32031,7 +32068,7 @@
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 59,
+       "line": 60,
        "members": []
       },
       {
@@ -32041,7 +32078,7 @@
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 60,
+       "line": 61,
        "members": []
       },
       {
@@ -32051,7 +32088,7 @@
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 62,
+       "line": 63,
        "members": []
       },
       {
@@ -32061,7 +32098,7 @@
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 63,
+       "line": 64,
        "members": []
       },
       {
@@ -32071,7 +32108,7 @@
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 64,
+       "line": 65,
        "members": []
       },
       {
@@ -32081,7 +32118,7 @@
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 65,
+       "line": 66,
        "members": []
       },
       {
@@ -32091,7 +32128,7 @@
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 66,
+       "line": 67,
        "members": []
       },
       {
@@ -32101,7 +32138,7 @@
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 67,
+       "line": 68,
        "members": []
       },
       {
@@ -32111,7 +32148,7 @@
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 68,
+       "line": 69,
        "members": []
       },
       {
@@ -32121,7 +32158,7 @@
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 69,
+       "line": 70,
        "members": []
       },
       {
@@ -32131,19 +32168,19 @@
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 72,
+       "line": 73,
        "members": []
       },
       {
        "name": "NucleuxWorkingMark",
        "kind": "composable",
-       "signature": "public fun NucleuxWorkingMark(modifier: Modifier = Modifier, size: Dp = 18.dp)",
+       "signature": "public fun NucleuxWorkingMark(modifier: Modifier = Modifier, size: Dp = 18.dp, tint: Color? = null)",
        "doc": "The working mark: turns steadily while the agent works; still under Reduce Motion. Decorative.",
        "annotations": [
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 124,
+       "line": 127,
        "members": []
       },
       {
@@ -32155,7 +32192,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 143,
+       "line": 146,
        "members": []
       },
       {
@@ -32167,7 +32204,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 174,
+       "line": 177,
        "members": []
       },
       {
@@ -32179,7 +32216,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 187,
+       "line": 190,
        "members": []
       },
       {
@@ -32191,7 +32228,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 223,
+       "line": 226,
        "members": []
       },
       {
@@ -32203,7 +32240,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxAIMarks.kt",
-       "line": 239,
+       "line": 242,
        "members": []
       }
      ],
@@ -32595,8 +32632,14 @@
         {
          "name": "marks",
          "kind": "static",
-         "signature": "static const marks = { NucleuxAIRole.action: NucleuxIcons.sparkles, NucleuxAIRole.generated: NucleuxIcons.sparkles, NucleuxAIRole.working: NucleuxIcons.loaderCircle, NucleuxAIRole.tool: NucleuxIcons.wrench, }",
-         "doc": "The glyph for each role. Action and generated share the reserved glyph (an open question)."
+         "signature": "static const marks = { NucleuxAIRole.action: NucleuxIcons.sparkles, NucleuxAIRole.generated: NucleuxIcons.badgeInfo, NucleuxAIRole.working: NucleuxIcons.loaderCircle, NucleuxAIRole.tool: NucleuxIcons.wrench, }",
+         "doc": "The glyph for each role (Iconography, 16 Oct): the star for an AI action, the info badge for generated\ncontent (\"not the star that started it\"), a turning mark while working, a wrench for tool use."
+        },
+        {
+         "name": "agentGlyph",
+         "kind": "static",
+         "signature": "static const agentGlyph = NucleuxIcons.sparkles",
+         "doc": "The agent's own mark, in its avatar and on its identity surfaces; the library draws it with the action's star."
         },
         {
          "name": "meanings",
@@ -32684,12 +32727,12 @@
        "signature": "class NucleuxWorkingMark extends StatefulWidget",
        "doc": "The working mark: turns steadily while the agent works; still under Reduce Motion. Decorative.",
        "file": "flutter/lib/src/ai_marks.dart",
-       "line": 205,
+       "line": 209,
        "members": [
         {
          "name": "NucleuxWorkingMark",
          "kind": "constructor",
-         "signature": "const NucleuxWorkingMark({super.key, this.size = 18})",
+         "signature": "const NucleuxWorkingMark({super.key, this.size = 18, this.color})",
          "doc": "",
          "params": [
           {
@@ -32698,6 +32741,13 @@
            "named": true,
            "required": false,
            "default": "18"
+          },
+          {
+           "name": "color",
+           "type": "Color?",
+           "named": true,
+           "required": false,
+           "doc": "Defaults to `brand`."
           }
          ]
         },
@@ -32706,6 +32756,12 @@
          "kind": "field",
          "signature": "final double size",
          "doc": ""
+        },
+        {
+         "name": "color",
+         "kind": "field",
+         "signature": "final Color? color",
+         "doc": "Defaults to `brand`."
         }
        ]
       },
@@ -32715,7 +32771,7 @@
        "signature": "class NucleuxAIActionButton extends StatelessWidget",
        "doc": "A control that runs AI: the reserved glyph beside its verb; while it runs, the turning mark and \"Rewriting…\".\nDisabled with a reason, it stays in the tree and says why. See specs/ai-marks.md.",
        "file": "flutter/lib/src/ai_marks.dart",
-       "line": 256,
+       "line": 263,
        "members": [
         {
          "name": "NucleuxAIActionButton",
@@ -32807,7 +32863,7 @@
        "signature": "class NucleuxAIWorkingStatus extends StatelessWidget",
        "doc": "While the agent works: the turning mark, what it is doing now, and Stop.",
        "file": "flutter/lib/src/ai_marks.dart",
-       "line": 307,
+       "line": 318,
        "members": [
         {
          "name": "NucleuxAIWorkingStatus",
@@ -32849,7 +32905,7 @@
        "signature": "class NucleuxToolUseLine extends StatefulWidget",
        "doc": "A tool the agent used, led by the wrench; with a detail it opens to show what the tool found.",
        "file": "flutter/lib/src/ai_marks.dart",
-       "line": 345,
+       "line": 356,
        "members": [
         {
          "name": "NucleuxToolUseLine",
@@ -32879,7 +32935,7 @@
        "signature": "class NucleuxGeneratedResult extends StatelessWidget",
        "doc": "Under content the agent just wrote: \"Generated with AI\" and the way back. With [details] the label opens to\nwhat the agent did, what it used, what nobody checked and that the original is kept.",
        "file": "flutter/lib/src/ai_marks.dart",
-       "line": 434,
+       "line": 449,
        "members": [
         {
          "name": "NucleuxGeneratedResult",
@@ -32947,7 +33003,7 @@
        "signature": "class NucleuxAIActionNote extends StatelessWidget",
        "doc": "The one line an AI action shows once it applies to something, before it runs: \"Rewrite with AI. Aria rewrites\nthe Highlights paragraph. You review the result before it replaces your text.\"",
        "file": "flutter/lib/src/ai_marks.dart",
-       "line": 482,
+       "line": 497,
        "members": [
         {
          "name": "NucleuxAIActionNote",
@@ -33000,17 +33056,26 @@
        "signature": "export type AiRole = 'action' | 'generated' | 'working' | 'tool'",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 9,
+       "line": 11,
        "members": [],
        "body": "export type AiRole = 'action' | 'generated' | 'working' | 'tool';"
       },
       {
        "name": "AI_MARKS",
        "kind": "const",
-       "signature": "export const AI_MARKS: Record<AiRole, string> = {\n  action: 'sparkles',\n  generated: 'sparkles',\n  working: 'loader-circle',\n  tool: 'wrench',\n}",
-       "doc": "Lucide glyph per role. Action and generated share the reserved glyph (an open question; see the build log).",
+       "signature": "export const AI_MARKS: Record<AiRole, NucleuxIconName> = {\n  action: 'sparkles',\n  generated: 'badge-info',\n  working: 'loader-circle',\n  tool: 'wrench',\n}",
+       "doc": "Lucide glyph per role. The library's Material Symbols are star_shine, chat_info, progress_activity and build;\nLucide has no info bubble, so generated content is the info badge (ours): a speech bubble would read as Tone's icon.",
        "file": "react-native/src/aiMarks.ts",
-       "line": 12,
+       "line": 17,
+       "members": []
+      },
+      {
+       "name": "AGENT_GLYPH",
+       "kind": "const",
+       "signature": "export const AGENT_GLYPH: NucleuxIconName = 'sparkles'",
+       "doc": "The agent's own mark, inside its rounded-square avatar and on its identity surfaces. The library draws it with the action's star.",
+       "file": "react-native/src/aiMarks.ts",
+       "line": 25,
        "members": []
       },
       {
@@ -33019,7 +33084,7 @@
        "signature": "export const AI_ROLE_MEANING: Record<AiRole, string> = {\n  action: 'Pressing it runs AI on something specific.',\n  generated: 'This content was written or changed by AI.',\n  working: 'The agent is doing something right now.',\n  tool: 'The agent used a tool or another system.',\n}",
        "doc": "What a role means, for the spec and for anyone choosing a mark.",
        "file": "react-native/src/aiMarks.ts",
-       "line": 20,
+       "line": 28,
        "members": []
       },
       {
@@ -33028,7 +33093,7 @@
        "signature": "export interface AiActionWords",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 27,
+       "line": 35,
        "members": [
         {
          "name": "verb",
@@ -33062,7 +33127,7 @@
        "signature": "export interface ToolUse",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 38,
+       "line": 46,
        "members": [
         {
          "name": "text",
@@ -33090,7 +33155,7 @@
        "signature": "export type AiRunPhase = 'idle' | 'working' | 'done'",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 46,
+       "line": 54,
        "members": [],
        "body": "export type AiRunPhase = 'idle' | 'working' | 'done';"
       },
@@ -33100,7 +33165,7 @@
        "signature": "export interface AiRunState",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 48,
+       "line": 56,
        "members": [
         {
          "name": "phase",
@@ -33122,7 +33187,7 @@
        "signature": "export type AiRunEvent =\n  | { type: 'start' }\n  | { type: 'toolStarted'; text: string }\n  | { type: 'toolDone'; text: string; detail?: string }\n  | { type: 'finish' }\n  | { type: 'fail' }\n  | { type: 'stop' }\n  | { type: 'undo' }",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 53,
+       "line": 61,
        "members": [],
        "body": "export type AiRunEvent =\n  | { type: 'start' }\n  | { type: 'toolStarted'; text: string }\n  | { type: 'toolDone'; text: string; detail?: string }\n  | { type: 'finish' }\n  | { type: 'fail' }\n  | { type: 'stop' }\n  | { type: 'undo' };"
       },
@@ -33132,7 +33197,7 @@
        "signature": "export interface AiRunResult",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 62,
+       "line": 70,
        "members": [
         {
          "name": "state",
@@ -33154,7 +33219,7 @@
        "signature": "export const AI_STOP = 'Stop'",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 68,
+       "line": 76,
        "members": []
       },
       {
@@ -33163,7 +33228,7 @@
        "signature": "export const AI_UNDO = 'Undo'",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 69,
+       "line": 77,
        "members": []
       },
       {
@@ -33172,7 +33237,7 @@
        "signature": "export const AI_STOPPED = 'Stopped. Nothing was changed.'",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 70,
+       "line": 78,
        "members": []
       },
       {
@@ -33181,7 +33246,7 @@
        "signature": "export const AI_UNDONE = 'Your original is back.'",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 71,
+       "line": 79,
        "members": []
       },
       {
@@ -33190,7 +33255,7 @@
        "signature": "export function initialAiRun(): AiRunState",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 73,
+       "line": 81,
        "members": []
       },
       {
@@ -33199,7 +33264,7 @@
        "signature": "export function aiActionName(verb: string, agent?: string): string",
        "doc": "An icon-only AI action's name: \"Rewrite with AI\", or with the agent's name.",
        "file": "react-native/src/aiMarks.ts",
-       "line": 78,
+       "line": 86,
        "members": []
       },
       {
@@ -33208,7 +33273,7 @@
        "signature": "export function aiWorkingLabel(w: Pick<AiActionWords, 'doing'>): string",
        "doc": "The control's label while it runs: \"Rewriting…\".",
        "file": "react-native/src/aiMarks.ts",
-       "line": 83,
+       "line": 91,
        "members": []
       },
       {
@@ -33217,7 +33282,7 @@
        "signature": "export function aiWorkingName(w: Pick<AiActionWords, 'doing'>): string",
        "doc": "An icon-only control's name while it runs: \"Agent working: rewriting\".",
        "file": "react-native/src/aiMarks.ts",
-       "line": 88,
+       "line": 96,
        "members": []
       },
       {
@@ -33226,7 +33291,7 @@
        "signature": "export function aiStatusText(w: Pick<AiActionWords, 'status'>): string",
        "doc": "The status line, shown: \"Rewriting release note…\".",
        "file": "react-native/src/aiMarks.ts",
-       "line": 93,
+       "line": 101,
        "members": []
       },
       {
@@ -33235,7 +33300,7 @@
        "signature": "export function aiStartAnnouncement(w: Pick<AiActionWords, 'status'>): string",
        "doc": "Said when it starts: \"Agent working: rewriting release note.\"",
        "file": "react-native/src/aiMarks.ts",
-       "line": 98,
+       "line": 106,
        "members": []
       },
       {
@@ -33244,7 +33309,7 @@
        "signature": "export function aiDoneAnnouncement(w: Pick<AiActionWords, 'done'>): string",
        "doc": "Said when it finishes: what happened, that it is generated, and the way back.",
        "file": "react-native/src/aiMarks.ts",
-       "line": 103,
+       "line": 111,
        "members": []
       },
       {
@@ -33253,7 +33318,7 @@
        "signature": "export function aiFailedAnnouncement(w: Pick<AiActionWords, 'status'>): string",
        "doc": "",
        "file": "react-native/src/aiMarks.ts",
-       "line": 107,
+       "line": 115,
        "members": []
       },
       {
@@ -33262,7 +33327,7 @@
        "signature": "export function toolLineLabel(t: ToolUse): string",
        "doc": "A tool line read aloud, with whether it is still running.",
        "file": "react-native/src/aiMarks.ts",
-       "line": 112,
+       "line": 120,
        "members": []
       },
       {
@@ -33271,7 +33336,7 @@
        "signature": "export function aiRunReduce(s: AiRunState, e: AiRunEvent, w: AiActionWords): AiRunResult",
        "doc": "The life of one AI action. Out-of-turn events change nothing.",
        "file": "react-native/src/aiMarks.ts",
-       "line": 117,
+       "line": 125,
        "members": []
       },
       {
@@ -33280,7 +33345,7 @@
        "signature": "export function WorkingMark({ size = 18, color, testID = 'working-mark' }: { size?: number; color?: string; testID?: string })",
        "doc": "The working mark: turns steadily while the agent works; still under Reduce Motion. Decorative.",
        "file": "react-native/src/AiActivity.tsx",
-       "line": 34,
+       "line": 33,
        "members": []
       },
       {
@@ -33289,7 +33354,7 @@
        "signature": "export interface AiActionButtonProps",
        "doc": "",
        "file": "react-native/src/AiActivity.tsx",
-       "line": 52,
+       "line": 51,
        "members": [
         {
          "name": "words",
@@ -33341,7 +33406,7 @@
        "signature": "export function AiActionButton({ words, onPress, working = false, disabledReason, iconOnly = false, agent, testID = 'ai-action' }: AiActionButtonProps)",
        "doc": "A control that runs AI: the reserved glyph beside its verb. While it runs, the turning mark and \"Rewriting…\".\nSee specs/ai-marks.md.",
        "file": "react-native/src/AiActivity.tsx",
-       "line": 70,
+       "line": 69,
        "members": []
       },
       {
@@ -33350,7 +33415,7 @@
        "signature": "export function AiWorkingStatus({ words, onStop }: { words: Pick<AiActionWords, 'status'>; onStop?: () => void })",
        "doc": "While the agent works: the turning mark, what it is doing now, and Stop. Show it only while working.",
        "file": "react-native/src/AiActivity.tsx",
-       "line": 99,
+       "line": 98,
        "members": []
       },
       {
@@ -33359,7 +33424,7 @@
        "signature": "export function ToolUseLine({ tool, testID = 'tool-use' }: { tool: ToolUse; testID?: string })",
        "doc": "A tool the agent used, led by the wrench. With a detail it opens to show what the tool found.",
        "file": "react-native/src/AiActivity.tsx",
-       "line": 111,
+       "line": 110,
        "members": []
       },
       {
@@ -33368,7 +33433,7 @@
        "signature": "export function GeneratedResult({ onUndo, details, agent = 'Aria', noun = 'text' }: { onUndo: () => void; details?: GeneratedDetails; agent?: string; noun?: string })",
        "doc": "Under content the agent just wrote: \"Generated with AI\" and the way back. With `details` the label opens to what\nthe agent did, what it used, what nobody checked and that the original is kept.",
        "file": "react-native/src/AiActivity.tsx",
-       "line": 151,
+       "line": 150,
        "members": []
       },
       {
@@ -33377,11 +33442,12 @@
        "signature": "export function AiActionNote({ verb, sentence }: { verb: string; sentence: string })",
        "doc": "The one line an AI action shows once it applies to something, before it runs: \"Rewrite with AI. Aria rewrites the\nHighlights paragraph. You review the result before it replaces your text.\"",
        "file": "react-native/src/AiActivity.tsx",
-       "line": 171,
+       "line": 170,
        "members": []
       }
      ],
      "constants": {
+      "AGENT_GLYPH": "sparkles",
       "AI_STOP": "Stop",
       "AI_UNDO": "Undo",
       "AI_STOPPED": "Stopped. Nothing was changed.",
@@ -45626,7 +45692,7 @@
        "signature": "export function useToneSetting(opts: { tones: ComposerTone[]; value: ToneChoice; onChange: (c: ToneChoice) => void; recommended?: ToneRecommendation | null; }):",
        "doc": "The Tone control as a composer setting. Controlled: `value` ({ tone, custom }) and `onChange` are the host's; the\npicker's open state, the note and Undo are the hook's. Call `sent()` when the request goes.",
        "file": "react-native/src/ComposerSettings.tsx",
-       "line": 385,
+       "line": 386,
        "members": []
       },
       {
@@ -45635,7 +45701,7 @@
        "signature": "export function StylePicker({ styles: list, previews, value, peek, agent = 'Aria', onEvent, onCreate, onClose, }: { styles: ComposerStyle[]; previews: StylePreviews; value: string; peek: string | null; agent?: string; onEvent: (e: StyleEvent) => void; onCreate?: () => void; onClose?: () => void; })",
        "doc": "The style list: a radio group, the person's own styles below, a preview of the same answer in each, Create & edit.",
        "file": "react-native/src/ComposerSettings.tsx",
-       "line": 428,
+       "line": 429,
        "members": []
       },
       {
@@ -45644,7 +45710,7 @@
        "signature": "export function useStyleSetting(opts: { styles: ComposerStyle[]; previews: StylePreviews; value: string; onChange: (id: string) => void; agent?: string; replies?: boolean; onCreate?: () => void; }):",
        "doc": "The Style control as a composer setting. Controlled: `value` and `onChange` are the host's; the picker's open state,\nthe preview, the note and Undo are the hook's. `replies`: whether the conversation has replies yet (they keep their\nstyle). `onCreate` opens the Create a style card. Call `sent()` when the request goes; `pick(id)` chooses a style\n(after Save and use).",
        "file": "react-native/src/ComposerSettings.tsx",
-       "line": 522,
+       "line": 528,
        "members": []
       }
      ],
@@ -45686,7 +45752,7 @@
    ],
    "spec": "specs/voice-tone.md",
    "specSummary": "The pattern library's **Voice & Tone** pattern (branch-2, the Prompt Scaffolds group added 19 Oct 2026: `material-patterns.js` → `voice-tone`; the Planboard simulator in `material-sim.js`). **Say how the reply should sound**: Professional, Friendly, Conversational, Formal, or your own words. It shows in the composer and is sent with the request as a setting.\n\nTone changes wording, never facts. The same update reads differently to leadership and to customers, and keeping tone apart from content means changing it can't quietly change what is said. **Choosing a tone never edits the prompt.** It is for writing tasks where the audience changes the voice: updates, replies, announcements. It isn't for analysis or lookups, and it isn't the agent's standing personality (that is Personality).\n\nThe rules and wording live in `react-native/src/tone.ts`. `npm run fixtures` writes `specs/voice-tone.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.",
-   "specText": "# Voice & Tone\n\nThe pattern library's **Voice & Tone** pattern (branch-2, the Prompt Scaffolds group added 19 Oct 2026: `material-patterns.js` → `voice-tone`; the Planboard simulator in `material-sim.js`). **Say how the reply should sound**: Professional, Friendly, Conversational, Formal, or your own words. It shows in the composer and is sent with the request as a setting.\n\nTone changes wording, never facts. The same update reads differently to leadership and to customers, and keeping tone apart from content means changing it can't quietly change what is said. **Choosing a tone never edits the prompt.** It is for writing tasks where the audience changes the voice: updates, replies, announcements. It isn't for analysis or lookups, and it isn't the agent's standing personality (that is Personality).\n\nThe rules and wording live in `react-native/src/tone.ts`. `npm run fixtures` writes `specs/voice-tone.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.\n\n## In the tune control\n\nTone is a row of the composer's tune control (`specs/modes.md`, Request settings): \"Tone · Default\" until chosen, then \"Tone · Professional\"; the picker has a close × and, once a tone is chosen, **Default voice**, which removes it (with Undo). The chip table below is kept for the wording the setting still uses.\n\n### The chip (before 21 Oct)\n\nTone uses the composer's setting chip from Modes (`specs/modes.md`), with the `message-square` icon.\n\n| | Text | Read aloud |\n|---|---|---|\n| Nothing chosen | \"Tone\" | \"Tone\", hint \"Choose how the reply should sound\" |\n| Chosen | \"Tone · Professional\" and × | \"Tone: Professional. Change\", and × \"Remove tone Professional\" |\n| Described | \"Tone · Custom\" and × | \"Tone: Custom. Change\" |\n\n## The picker\n\n- **Title** \"Tone\", and \"How the reply should sound. What it says stays the same.\"\n- One row per tone, a radio group: the name, how it sounds, and a check on the chosen one. Read aloud with its sample: \"Professional. Clear and measured. Sample: “Onboarding now takes one step instead of three.”\"\n- **A recommended tone** (the host's, optional) carries a quiet tag with its reason, \"Recommended for stakeholders\", and the reason is read with it. It is **never chosen for them**.\n- **The sample** under the list: \"Sample · Professional\" and the quoted sentence. It shows the chosen tone's sample, else the recommended one's, else the first. The pattern previews the tone in focus; a phone has no pointer, so each option says its sample aloud and the visible sample follows the choice. A described tone has no sample.\n- **Or describe a tone**: a field (placeholder \"For example: warm but brief\") with **Use this tone**, and \"Best effort: the wording follows your description as closely as it can.\" An empty description does nothing.\n\n## What happens\n\n| Event | Result | Announced |\n|---|---|---|\n| Choose | Picker closes, chip names the tone | \"Tone: Professional. Clear and measured. What the reply says stays the same.\" |\n| Switch to another | The same, plus a line under the composer with **Undo**: \"Tone changed to Conversational. What the reply says stays the same.\" | as above |\n| Describe | Chip reads \"Tone · Custom\" | \"Tone: your own, “warm but brief”. Best effort. What the reply says stays the same.\" |\n| Remove (×) | Chip goes back to \"Tone\"; a line with **Undo**: \"Tone removed. Replies use the default voice.\" | \"Tone removed. Replies use the default voice.\" |\n| Undo | The previous tone (or the default voice) comes back; the line goes | \"Tone back to Professional.\" / \"Back to the default voice.\" |\n| Send | The tone stays until changed; the line and Undo go | \"Sent with Professional tone. It stays until you change it.\" |\n\nAfter sending, the request carries a small tag with the tone (\"Professional\", or \"Custom\"), and the agent's header reads \"Aria · Professional\", or \"Aria · Default voice\" with none.\n\n## What the host supplies\n\nThe tones it supports (`{ id, name, description, sample }`; `DEFAULT_TONES` is the pattern's four), an optional recommendation `{ id, reason }`, and the current choice (controlled: `{ tone, custom }`). The host sends the tone, and a described tone's words, with the request as a setting; the kit never edits the text.\n\n## Look\n\n| | |\n|---|---|\n| Rows | At least 56, name 14 medium, description 13 `mutedForeground`, the recommendation tag 11 semibold on `muted`; chosen row `accent` with `check`. No colour per tone, no icons per tone |\n| Sample | 11 semibold `mutedForeground` head, then the quoted sentence 14 `foreground`, on `muted`, radius 10 |\n| Describe | The kit's text field, the help line 12 `mutedForeground`, **Use this tone** a secondary small button |\n| Note with Undo | Under the composer, 12 `mutedForeground`; Undo a text button with a 44 / 48 target |\n\n## Accessibility\n\n- The picker is a radio group; each option says how it sounds and its sample, and the recommendation is read as part of the option, never as a selection.\n- Every change is announced politely and says the content stays the same; nothing takes focus away from the person.\n- Undo is a real button with its own name, beside the line it undoes.\n\n## Ours, not the pattern's\n\n- **The sample follows the choice**, not the focus (no pointer on a phone); every option reads its sample aloud.\n- **The recommendation tag has no AI glyph** (the pattern uses the generated mark). The library's update gives each AI meaning its own glyph; until that lands (the revision backlog), the tag is words only.\n- **Undo on a note under the composer**, for switches and removal (the pattern asks for Undo without drawing it). The note's Undo is available to every composer setting.\n- **\"Custom\"** as the chip's value for a described tone, and the spoken labels.\n- **Icon:** `message-square` (Lucide's nearest to the pattern's Material `forum`).\n\n## Not in scope (later)\n\n- Asking for \"another version\" in a new tone (the host's request; the simulator's button is a prompt the host writes).\n- Saving a described tone for next time (that is Preset Styles).\n",
+   "specText": "# Voice & Tone\n\nThe pattern library's **Voice & Tone** pattern (branch-2, the Prompt Scaffolds group added 19 Oct 2026: `material-patterns.js` → `voice-tone`; the Planboard simulator in `material-sim.js`). **Say how the reply should sound**: Professional, Friendly, Conversational, Formal, or your own words. It shows in the composer and is sent with the request as a setting.\n\nTone changes wording, never facts. The same update reads differently to leadership and to customers, and keeping tone apart from content means changing it can't quietly change what is said. **Choosing a tone never edits the prompt.** It is for writing tasks where the audience changes the voice: updates, replies, announcements. It isn't for analysis or lookups, and it isn't the agent's standing personality (that is Personality).\n\nThe rules and wording live in `react-native/src/tone.ts`. `npm run fixtures` writes `specs/voice-tone.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.\n\n## In the tune control\n\nTone is a row of the composer's tune control (`specs/modes.md`, Request settings): \"Tone · Default\" until chosen, then \"Tone · Professional\"; the picker has a close × and, once a tone is chosen, **Default voice**, which removes it (with Undo). The chip table below is kept for the wording the setting still uses.\n\n### The chip (before 21 Oct)\n\nTone uses the composer's setting chip from Modes (`specs/modes.md`), with the `message-square` icon.\n\n| | Text | Read aloud |\n|---|---|---|\n| Nothing chosen | \"Tone\" | \"Tone\", hint \"Choose how the reply should sound\" |\n| Chosen | \"Tone · Professional\" and × | \"Tone: Professional. Change\", and × \"Remove tone Professional\" |\n| Described | \"Tone · Custom\" and × | \"Tone: Custom. Change\" |\n\n## The picker\n\n- **Title** \"Tone\", and \"How the reply should sound. What it says stays the same.\"\n- One row per tone, a radio group: the name, how it sounds, and a check on the chosen one. Read aloud with its sample: \"Professional. Clear and measured. Sample: “Onboarding now takes one step instead of three.”\"\n- **A recommended tone** (the host's, optional) carries a quiet tag with its reason, \"Recommended for stakeholders\", and the reason is read with it. It is **never chosen for them**.\n- **The sample** under the list: \"Sample · Professional\" and the quoted sentence. It shows the chosen tone's sample, else the recommended one's, else the first. The pattern previews the tone in focus; a phone has no pointer, so each option says its sample aloud and the visible sample follows the choice. A described tone has no sample.\n- **Or describe a tone**: a field (placeholder \"For example: warm but brief\") with **Use this tone**, and \"Best effort: the wording follows your description as closely as it can.\" An empty description does nothing.\n\n## What happens\n\n| Event | Result | Announced |\n|---|---|---|\n| Choose | Picker closes, chip names the tone | \"Tone: Professional. Clear and measured. What the reply says stays the same.\" |\n| Switch to another | The same, plus a line under the composer with **Undo**: \"Tone changed to Conversational. What the reply says stays the same.\" | as above |\n| Describe | Chip reads \"Tone · Custom\" | \"Tone: your own, “warm but brief”. Best effort. What the reply says stays the same.\" |\n| Remove (×) | Chip goes back to \"Tone\"; a line with **Undo**: \"Tone removed. Replies use the default voice.\" | \"Tone removed. Replies use the default voice.\" |\n| Undo | The previous tone (or the default voice) comes back; the line goes | \"Tone back to Professional.\" / \"Back to the default voice.\" |\n| Send | The tone stays until changed; the line and Undo go | \"Sent with Professional tone. It stays until you change it.\" |\n\nAfter sending, the request carries a small tag with the tone (\"Professional\", or \"Custom\"), and the agent's header reads \"Aria · Professional\", or \"Aria · Default voice\" with none.\n\n## What the host supplies\n\nThe tones it supports (`{ id, name, description, sample }`; `DEFAULT_TONES` is the pattern's four), an optional recommendation `{ id, reason }`, and the current choice (controlled: `{ tone, custom }`). The host sends the tone, and a described tone's words, with the request as a setting; the kit never edits the text.\n\n## Look\n\n| | |\n|---|---|\n| Rows | At least 56, name 14 medium, description 13 `mutedForeground`, the recommendation tag 11 semibold on `muted`, led by the generated mark 11; chosen row `accent` with `check`. No colour per tone, no icons per tone |\n| Sample | 11 semibold `mutedForeground` head, then the quoted sentence 14 `foreground`, on `muted`, radius 10 |\n| Describe | The kit's text field, the help line 12 `mutedForeground`, **Use this tone** a secondary small button |\n| Note with Undo | Under the composer, 12 `mutedForeground`; Undo a text button with a 44 / 48 target |\n\n## Accessibility\n\n- The picker is a radio group; each option says how it sounds and its sample, and the recommendation is read as part of the option, never as a selection.\n- Every change is announced politely and says the content stays the same; nothing takes focus away from the person.\n- Undo is a real button with its own name, beside the line it undoes.\n\n## Ours, not the pattern's\n\n- **The sample follows the choice**, not the focus (no pointer on a phone); every option reads its sample aloud.\n- **The recommendation tag carries the generated mark** (`badge-info` 11, since 22 Oct when generated content got its own glyph), with its words.\n- **Undo on a note under the composer**, for switches and removal (the pattern asks for Undo without drawing it). The note's Undo is available to every composer setting.\n- **\"Custom\"** as the chip's value for a described tone, and the spoken labels.\n- **Icon:** `message-square` (Lucide's nearest to the pattern's Material `forum`).\n\n## Not in scope (later)\n\n- Asking for \"another version\" in a new tone (the host's request; the simulator's button is a prompt the host writes).\n- Saving a described tone for next time (that is Preset Styles).\n",
    "fixtures": [
     "specs/voice-tone.fixtures.json"
    ],
@@ -47593,7 +47659,7 @@
        "signature": "export function useToneSetting(opts: { tones: ComposerTone[]; value: ToneChoice; onChange: (c: ToneChoice) => void; recommended?: ToneRecommendation | null; }):",
        "doc": "The Tone control as a composer setting. Controlled: `value` ({ tone, custom }) and `onChange` are the host's; the\npicker's open state, the note and Undo are the hook's. Call `sent()` when the request goes.",
        "file": "react-native/src/ComposerSettings.tsx",
-       "line": 385,
+       "line": 386,
        "members": []
       },
       {
@@ -47602,7 +47668,7 @@
        "signature": "export function StylePicker({ styles: list, previews, value, peek, agent = 'Aria', onEvent, onCreate, onClose, }: { styles: ComposerStyle[]; previews: StylePreviews; value: string; peek: string | null; agent?: string; onEvent: (e: StyleEvent) => void; onCreate?: () => void; onClose?: () => void; })",
        "doc": "The style list: a radio group, the person's own styles below, a preview of the same answer in each, Create & edit.",
        "file": "react-native/src/ComposerSettings.tsx",
-       "line": 428,
+       "line": 429,
        "members": []
       },
       {
@@ -47611,7 +47677,7 @@
        "signature": "export function useStyleSetting(opts: { styles: ComposerStyle[]; previews: StylePreviews; value: string; onChange: (id: string) => void; agent?: string; replies?: boolean; onCreate?: () => void; }):",
        "doc": "The Style control as a composer setting. Controlled: `value` and `onChange` are the host's; the picker's open state,\nthe preview, the note and Undo are the hook's. `replies`: whether the conversation has replies yet (they keep their\nstyle). `onCreate` opens the Create a style card. Call `sent()` when the request goes; `pick(id)` chooses a style\n(after Save and use).",
        "file": "react-native/src/ComposerSettings.tsx",
-       "line": 522,
+       "line": 528,
        "members": []
       }
      ],
@@ -47656,7 +47722,7 @@
    ],
    "spec": "specs/preset-styles.md",
    "specSummary": "The pattern library's **Preset Styles** pattern (branch-2, the Prompt Scaffolds group added 19 Oct 2026: `material-patterns.js` → `preset-styles`; the Planboard simulator in `material-sim.js`). Modelled on Claude's styles: **named styles for how replies are written** (Normal, Concise, Formal, Explanatory, or one made from the person's own writing), previewed, and switchable mid-conversation.\n\nA style is about how the agent writes, not what it knows or which model answers. It applies to new messages, edits and retries; **earlier replies keep the style they were written in**, and **the request text is never edited**. It is for people who return to the same kind of reply (summaries, customer emails, explanations for newcomers), not for one-off instructions.\n\nThe rules and wording live in `react-native/src/presetStyles.ts`. `npm run fixtures` writes `specs/preset-styles.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.",
-   "specText": "# Preset Styles\n\nThe pattern library's **Preset Styles** pattern (branch-2, the Prompt Scaffolds group added 19 Oct 2026: `material-patterns.js` → `preset-styles`; the Planboard simulator in `material-sim.js`). Modelled on Claude's styles: **named styles for how replies are written** (Normal, Concise, Formal, Explanatory, or one made from the person's own writing), previewed, and switchable mid-conversation.\n\nA style is about how the agent writes, not what it knows or which model answers. It applies to new messages, edits and retries; **earlier replies keep the style they were written in**, and **the request text is never edited**. It is for people who return to the same kind of reply (summaries, customer emails, explanations for newcomers), not for one-off instructions.\n\nThe rules and wording live in `react-native/src/presetStyles.ts`. `npm run fixtures` writes `specs/preset-styles.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.\n\n## In the tune control\n\nStyle is a row of the composer's tune control (`specs/modes.md`, Request settings): \"Style · Normal\" until another is chosen; choosing Normal in the picker goes back, with Undo. The picker has a close ×.\n\n### The chip (before 21 Oct)\n\nStyle uses the composer's setting chip from Modes (`specs/modes.md`), with the `pen-line` icon. **Normal is always there and one tap away**: with Normal the chip reads \"Style\" with no ×.\n\n| | Text | Read aloud |\n|---|---|---|\n| Normal | \"Style\" | \"Style\", hint \"Choose how replies are written\" |\n| Another style | \"Style · Concise\" and × (back to Normal) | \"Style: Concise. Change\", and × \"Remove style Concise\" |\n\n## The picker (\"Use style\")\n\n- **Title** \"Use style\", and \"How Aria writes its replies — not what it knows or does.\"\n- Normal, Concise, Formal and Explanatory as a radio group, each with one line on what changes and a check on the chosen one. **Your styles** below, each tagged \"From your writing\".\n- **The preview**: \"Preview · Concise\", the familiar request (\"Summarize the October release.\") and the same answer written in that style. It shows the chosen style; each other row has a small **Preview** button (\"Preview Formal\", a 44 / 48 target) that shows its preview without applying it. The pattern previews on hover or focus; a phone has neither, and tapping a row applies it.\n- **Create & edit styles** at the foot opens the card below (the host's `onCreate`).\n- Choosing applies the style at once and closes the picker. Nothing is sent.\n\n## What happens\n\n| Event | Result | Announced |\n|---|---|---|\n| Choose a style | Chip names it; a line under the composer: \"Concise applies to new messages, edits and retries — earlier replies keep their style.\" (without the second half when there are no replies yet) | \"Style: Concise. Shorter, more direct replies. Your text is unchanged.\" |\n| Back to Normal (× or choosing Normal) | Chip reads \"Style\"; \"Back to Normal.\" with **Undo** | \"Back to Normal. Your text is unchanged.\" |\n| Undo | The style comes back | \"Style: Concise.\" |\n| Send | The style stays; the line goes | \"Sent with the Concise style. It stays until you change it.\" |\n\nEach reply carries the style it was written in: \"Aria · Concise style\".\n\n## Create a style\n\nA card in the conversation (the pattern's), not inside the composer.\n\n1. **Source**: \"Create a style\", \"Aria learns how you want replies to read — from writing you like, or from a description.\" **Start from**: An example / A description (a two-segment control). An example: \"Paste writing you like\" with \"Used only to make this style.\" A description: \"Describe the style\". **Generate style** (the only AI step) is enabled once there are words; **Cancel**.\n2. **Busy**: \"Generating…\" on the button with the working mark, and a progress line \"Generating a style\". The host generates and answers `generated` or `failed`. A late answer after Cancel or Back is ignored.\n3. **Review**: \"Style made by Aria from your example\", then **Style name** (a field), **What it changes** (a field), **Instructions behind it** (a disclosure opening the instructions field), the preview of the new style (the host's, when it has one), then **Back**, **Save** and **Save and use**. Save needs a name and instructions.\n4. **Failed**: \"Aria couldn’t make a style from that. Try again, or start from a description instead.\" (or \"…or describe it differently.\" from a description) with **Try again**.\n\nSaving adds the style under Your styles (\"Saved: Release notes voice. It’s in Your styles.\"); Save and use also chooses it.\n\n## What the host supplies\n\nThe styles (`{ id, name, description, mine?, instructions? }`; `DEFAULT_STYLES` is the pattern's four), the previews (`{ question, answers }`; `DEFAULT_STYLE_PREVIEWS`), whether the conversation has replies yet, the current style (controlled), and for creating: the generation itself and where saved styles are kept. The host sends the style (and a custom style's instructions) with the request as a setting.\n\n## Look\n\n| | |\n|---|---|\n| Rows | As Modes' rows without icons; the \"From your writing\" tag 11 semibold on `muted`; Preview a 32 eye icon button in a 44 / 48 target |\n| Preview | `muted`, radius 10: head 11 semibold `mutedForeground`, the request 12 `mutedForeground` italic, the answer 13 `foreground` |\n| Section head | \"Your styles\", 11 semibold `mutedForeground` |\n| Card | The kit's card: border, radius 16, padding 16; title 16 semibold; fields as the describe field in Voice & Tone; the segmented control two equal buttons in a `muted` track, the chosen one `background` |\n\n## Accessibility\n\n- The picker is a radio group; each option says what it changes, and a style of their own says so. Preview buttons have their own names and never apply anything.\n- Every change is announced politely and says the text is unchanged; Undo is a real button beside the line it undoes.\n- The card's steps are announced: generating, ready (\"Style ready: Release notes voice. Review it, then save.\"), failed, saved. The fields have labels; the instructions disclosure says whether it is open.\n\n## Ours, not the pattern's\n\n- **A Preview button on each row** (no hover or focus preview on a phone); the preview sits under the list, not beside it.\n- **No AI glyph on \"From your writing\" or \"Style made by Aria\"** (the pattern uses the generated mark): as in Voice & Tone, until the library's one-glyph-per-meaning update lands.\n- **The failure state** and its wording (the pattern draws only success).\n- **The id for a saved style**, from its name.\n- **Icon:** `pen-line` (Lucide's nearest to the pattern's Material `edit_note`).\n\n## Not in scope (later)\n\n- Uploading a file as the example (the host can fill the example field from one).\n- Editing or deleting a saved style (Create & edit opens the card for a new one).\n",
+   "specText": "# Preset Styles\n\nThe pattern library's **Preset Styles** pattern (branch-2, the Prompt Scaffolds group added 19 Oct 2026: `material-patterns.js` → `preset-styles`; the Planboard simulator in `material-sim.js`). Modelled on Claude's styles: **named styles for how replies are written** (Normal, Concise, Formal, Explanatory, or one made from the person's own writing), previewed, and switchable mid-conversation.\n\nA style is about how the agent writes, not what it knows or which model answers. It applies to new messages, edits and retries; **earlier replies keep the style they were written in**, and **the request text is never edited**. It is for people who return to the same kind of reply (summaries, customer emails, explanations for newcomers), not for one-off instructions.\n\nThe rules and wording live in `react-native/src/presetStyles.ts`. `npm run fixtures` writes `specs/preset-styles.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.\n\n## In the tune control\n\nStyle is a row of the composer's tune control (`specs/modes.md`, Request settings): \"Style · Normal\" until another is chosen; choosing Normal in the picker goes back, with Undo. The picker has a close ×.\n\n### The chip (before 21 Oct)\n\nStyle uses the composer's setting chip from Modes (`specs/modes.md`), with the `pen-line` icon. **Normal is always there and one tap away**: with Normal the chip reads \"Style\" with no ×.\n\n| | Text | Read aloud |\n|---|---|---|\n| Normal | \"Style\" | \"Style\", hint \"Choose how replies are written\" |\n| Another style | \"Style · Concise\" and × (back to Normal) | \"Style: Concise. Change\", and × \"Remove style Concise\" |\n\n## The picker (\"Use style\")\n\n- **Title** \"Use style\", and \"How Aria writes its replies — not what it knows or does.\"\n- Normal, Concise, Formal and Explanatory as a radio group, each with one line on what changes and a check on the chosen one. **Your styles** below, each tagged \"From your writing\".\n- **The preview**: \"Preview · Concise\", the familiar request (\"Summarize the October release.\") and the same answer written in that style. It shows the chosen style; each other row has a small **Preview** button (\"Preview Formal\", a 44 / 48 target) that shows its preview without applying it. The pattern previews on hover or focus; a phone has neither, and tapping a row applies it.\n- **Create & edit styles** at the foot opens the card below (the host's `onCreate`).\n- Choosing applies the style at once and closes the picker. Nothing is sent.\n\n## What happens\n\n| Event | Result | Announced |\n|---|---|---|\n| Choose a style | Chip names it; a line under the composer: \"Concise applies to new messages, edits and retries — earlier replies keep their style.\" (without the second half when there are no replies yet) | \"Style: Concise. Shorter, more direct replies. Your text is unchanged.\" |\n| Back to Normal (× or choosing Normal) | Chip reads \"Style\"; \"Back to Normal.\" with **Undo** | \"Back to Normal. Your text is unchanged.\" |\n| Undo | The style comes back | \"Style: Concise.\" |\n| Send | The style stays; the line goes | \"Sent with the Concise style. It stays until you change it.\" |\n\nEach reply carries the style it was written in: \"Aria · Concise style\".\n\n## Create a style\n\nA card in the conversation (the pattern's), not inside the composer.\n\n1. **Source**: \"Create a style\", \"Aria learns how you want replies to read — from writing you like, or from a description.\" **Start from**: An example / A description (a two-segment control). An example: \"Paste writing you like\" with \"Used only to make this style.\" A description: \"Describe the style\". **Generate style** (the only AI step) is enabled once there are words; **Cancel**.\n2. **Busy**: \"Generating…\" on the button with the working mark, and a progress line \"Generating a style\". The host generates and answers `generated` or `failed`. A late answer after Cancel or Back is ignored.\n3. **Review**: \"Style made by Aria from your example\", then **Style name** (a field), **What it changes** (a field), **Instructions behind it** (a disclosure opening the instructions field), the preview of the new style (the host's, when it has one), then **Back**, **Save** and **Save and use**. Save needs a name and instructions.\n4. **Failed**: \"Aria couldn’t make a style from that. Try again, or start from a description instead.\" (or \"…or describe it differently.\" from a description) with **Try again**.\n\nSaving adds the style under Your styles (\"Saved: Release notes voice. It’s in Your styles.\"); Save and use also chooses it.\n\n## What the host supplies\n\nThe styles (`{ id, name, description, mine?, instructions? }`; `DEFAULT_STYLES` is the pattern's four), the previews (`{ question, answers }`; `DEFAULT_STYLE_PREVIEWS`), whether the conversation has replies yet, the current style (controlled), and for creating: the generation itself and where saved styles are kept. The host sends the style (and a custom style's instructions) with the request as a setting.\n\n## Look\n\n| | |\n|---|---|\n| Rows | As Modes' rows without icons; the \"From your writing\" tag 11 semibold on `muted`, led by the generated mark 11; Preview a 32 eye icon button in a 44 / 48 target |\n| Preview | `muted`, radius 10: head 11 semibold `mutedForeground`, the request 12 `mutedForeground` italic, the answer 13 `foreground` |\n| Section head | \"Your styles\", 11 semibold `mutedForeground` |\n| Card | The kit's card: border, radius 16, padding 16; title 16 semibold; fields as the describe field in Voice & Tone; the segmented control two equal buttons in a `muted` track, the chosen one `background` |\n\n## Accessibility\n\n- The picker is a radio group; each option says what it changes, and a style of their own says so. Preview buttons have their own names and never apply anything.\n- Every change is announced politely and says the text is unchanged; Undo is a real button beside the line it undoes.\n- The card's steps are announced: generating, ready (\"Style ready: Release notes voice. Review it, then save.\"), failed, saved. The fields have labels; the instructions disclosure says whether it is open.\n\n## Ours, not the pattern's\n\n- **A Preview button on each row** (no hover or focus preview on a phone); the preview sits under the list, not beside it.\n- **\"From your writing\" and \"Style made by Aria\" carry the generated mark** (`badge-info`), as the pattern asks, since 22 Oct when generated content got its own glyph.\n- **The failure state** and its wording (the pattern draws only success).\n- **The id for a saved style**, from its name.\n- **Icon:** `pen-line` (Lucide's nearest to the pattern's Material `edit_note`).\n\n## Not in scope (later)\n\n- Uploading a file as the example (the host can fill the example field from one).\n- Editing or deleting a saved style (Create & edit opens the card for a new one).\n",
    "fixtures": [
     "specs/preset-styles.fixtures.json"
    ],
@@ -48347,7 +48413,7 @@
        "signature": "public final class NucleuxStyleCreateControl",
        "doc": "The Create a style card's state. The host passes `generate` (its AI step: the source and the words, returning a draft or\nnil when it couldn't) and `onSave`; a late answer after Cancel or Back is ignored.",
        "file": "swiftui/Sources/Nucleux/NucleuxPresetStyles.swift",
-       "line": 417,
+       "line": 421,
        "members": [
         {
          "signature": "public private(set) var state: NucleuxStyles.CreateState?",
@@ -48387,7 +48453,7 @@
        "signature": "public struct NucleuxStyleCreator: View",
        "doc": "Create a style: from writing they like or a description, the agent proposes a name, a line on what it changes and the\ninstructions behind it, all editable, with a preview, before Save. See specs/preset-styles.md.",
        "file": "swiftui/Sources/Nucleux/NucleuxPresetStyles.swift",
-       "line": 451,
+       "line": 455,
        "members": [
         {
          "signature": "public init(control: NucleuxStyleCreateControl, preview: NucleuxStylePreviews? = nil)",
@@ -49043,7 +49109,7 @@
         "@Stable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxPresetStyles.kt",
-       "line": 414,
+       "line": 420,
        "members": [
         {
          "name": "state",
@@ -49071,7 +49137,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxPresetStyles.kt",
-       "line": 445,
+       "line": 451,
        "members": []
       },
       {
@@ -49084,7 +49150,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxPresetStyles.kt",
-       "line": 461,
+       "line": 467,
        "members": []
       }
      ],
@@ -50360,7 +50426,7 @@
        "signature": "class NucleuxStyleCreateControl extends ChangeNotifier",
        "doc": "The Create a style card's state. The host passes [generate] (its AI step: the source and the words, returning a draft\nor null when it couldn't) and [onSave]; a late answer after Cancel or Back is ignored.",
        "file": "flutter/lib/src/preset_styles.dart",
-       "line": 908,
+       "line": 920,
        "members": [
         {
          "name": "NucleuxStyleCreateControl",
@@ -50451,7 +50517,7 @@
        "signature": "class NucleuxStyleCreator extends StatefulWidget",
        "doc": "Create a style: from writing they like or a description, the agent proposes a name, a line on what it changes and\nthe instructions behind it, all editable, with a preview, before Save. [preview]: the host's preview of the proposed\nstyle. See specs/preset-styles.md.",
        "file": "flutter/lib/src/preset_styles.dart",
-       "line": 966,
+       "line": 978,
        "members": [
         {
          "name": "NucleuxStyleCreator",
@@ -51136,7 +51202,7 @@
        "signature": "export function StyleCreator({ state, onEvent, agent = 'Aria', preview, }: { state: StyleCreateState; onEvent: (e: StyleCreateEvent) => void; agent?: string; preview?: { question: string; answer: string } | null; })",
        "doc": "Create a style: from writing they like or a description, the agent proposes a name, a line on what it changes and the\ninstructions behind it, all editable, with a preview, before Save. Controlled: the host keeps `state` with\nstyleCreateReduce, runs the generation when it sees `generate`, and answers `generated` or `failed`.\nSee specs/preset-styles.md.",
        "file": "react-native/src/StyleCreator.tsx",
-       "line": 44,
+       "line": 45,
        "members": []
       },
       {
@@ -51272,7 +51338,7 @@
        "signature": "export function useToneSetting(opts: { tones: ComposerTone[]; value: ToneChoice; onChange: (c: ToneChoice) => void; recommended?: ToneRecommendation | null; }):",
        "doc": "The Tone control as a composer setting. Controlled: `value` ({ tone, custom }) and `onChange` are the host's; the\npicker's open state, the note and Undo are the hook's. Call `sent()` when the request goes.",
        "file": "react-native/src/ComposerSettings.tsx",
-       "line": 385,
+       "line": 386,
        "members": []
       },
       {
@@ -51281,7 +51347,7 @@
        "signature": "export function StylePicker({ styles: list, previews, value, peek, agent = 'Aria', onEvent, onCreate, onClose, }: { styles: ComposerStyle[]; previews: StylePreviews; value: string; peek: string | null; agent?: string; onEvent: (e: StyleEvent) => void; onCreate?: () => void; onClose?: () => void; })",
        "doc": "The style list: a radio group, the person's own styles below, a preview of the same answer in each, Create & edit.",
        "file": "react-native/src/ComposerSettings.tsx",
-       "line": 428,
+       "line": 429,
        "members": []
       },
       {
@@ -51290,7 +51356,7 @@
        "signature": "export function useStyleSetting(opts: { styles: ComposerStyle[]; previews: StylePreviews; value: string; onChange: (id: string) => void; agent?: string; replies?: boolean; onCreate?: () => void; }):",
        "doc": "The Style control as a composer setting. Controlled: `value` and `onChange` are the host's; the picker's open state,\nthe preview, the note and Undo are the hook's. `replies`: whether the conversation has replies yet (they keep their\nstyle). `onCreate` opens the Create a style card. Call `sent()` when the request goes; `pick(id)` chooses a style\n(after Save and use).",
        "file": "react-native/src/ComposerSettings.tsx",
-       "line": 522,
+       "line": 528,
        "members": []
       }
      ],
@@ -57663,7 +57729,7 @@
    "component": "ai-marks",
    "framework": "flutter",
    "title": "Test host from ai_marks_test.dart",
-   "source": "flutter/test/ai_marks_test.dart:103",
+   "source": "flutter/test/ai_marks_test.dart:104",
    "code": "import 'package:flutter/material.dart';\nimport 'package:flutter/semantics.dart';\nimport 'package:flutter_test/flutter_test.dart';\nimport 'package:nucleux/nucleux.dart';\n\nfinal f =\njsonDecode(File('../specs/ai-marks.fixtures.json').readAsStringSync())\nfinal rw = words(objects(f['words'])[0]);\n\nFuture<void> editor(\n  WidgetTester tester, {\n  String draft = 'We fixed a bunch of stuff.',\n  bool iconOnly = false,\n}) async {\n  tester.view.physicalSize = const Size(402, 874);\n  tester.view.devicePixelRatio = 1;\n  addTearDown(tester.view.reset);\n  var run = const NucleuxAIRun();\n  var text = draft;\n  await tester.pumpWidget(\n    MaterialApp(\n      home: Scaffold(\n        body: Padding(\n          padding: const EdgeInsets.all(16),\n          child: StatefulBuilder(\n            builder: (context, set) {\n              void send(NucleuxAIRunEvent e) {\n                final (next, said) = run.reduce(e, rw);\n                set(() => run = next);\n                if (said != null) {\n                  SemanticsService.sendAnnouncement(\n                    View.of(context),\n                    said,\n                    TextDirection.ltr,\n                  );\n                }\n              }\n\n              return Column(\n                crossAxisAlignment: CrossAxisAlignment.start,\n                spacing: 16,\n                children: [\n                  NucleuxAIActionButton(\n                    words: rw,\n                    working: run.phase == NucleuxAIRunPhase.working,\n                    disabledReason: text.trim().isEmpty\n                        ? 'Write something first'\n                        : null,\n                    iconOnly: iconOnly,\n                    onPressed: () => send(const AIRunStart()),\n                  ),\n                  Text(text, key: const Key('doc')),\n                  if (run.phase == NucleuxAIRunPhase.done)\n                    NucleuxGeneratedResult(\n                      onUndo: () => send(const AIRunUndo()),\n                    ),\n                  if (run.phase == NucleuxAIRunPhase.working)\n                    NucleuxAIWorkingStatus(\n                      words: rw,\n                      onStop: () => send(const AIRunStop()),\n                    ),\n                  for (final t in run.tools) NucleuxToolUseLine(tool: t),\n                  TextButton(\n                    key: const Key('agent-tool'),\n                    onPressed: () => send(\n                      const AIRunToolStarted('Checking the style guide…'),\n                    ),\n                    child: const Text('t'),\n                  ),\n                  TextButton(\n                    key: const Key('agent-tool-done'),\n                    onPressed: () => send(\n                      const AIRunToolDone(\n                        'Style guide checked',\n                        detail: 'Checked 14 terms.',\n                      ),\n                    ),\n                    child: const Text('d'),\n                  ),\n                  TextButton(\n                    key: const Key('agent-finish'),\n                    onPressed: () => send(const AIRunFinish()),\n                    child: const Text('f'),\n                  ),\n                ],\n              );\n            },\n          ),\n        ),\n      ),\n    ),\n  );\n}",
    "lines": 93
   },
@@ -58087,6 +58153,7 @@
    "NucleuxAIRun.Role.tool",
    "NucleuxAIRun.Role.working",
    "NucleuxAIRun.actionName",
+   "NucleuxAIRun.agentGlyph",
    "NucleuxAIRun.doneAnnouncement",
    "NucleuxAIRun.failedAnnouncement",
    "NucleuxAIRun.init",
@@ -58769,6 +58836,7 @@
    "NucleuxGrantedList.init",
    "NucleuxIcon",
    "NucleuxIcon.arrowUp",
+   "NucleuxIcon.badgeInfo",
    "NucleuxIcon.ban",
    "NucleuxIcon.check",
    "NucleuxIcon.chevronDown",
@@ -60064,6 +60132,7 @@
    "NucleuxAIActionNote",
    "NucleuxAIActionWords",
    "NucleuxAIRun",
+   "NucleuxAIRun.AGENT_GLYPH",
    "NucleuxAIRun.Event",
    "NucleuxAIRun.Event.Fail",
    "NucleuxAIRun.Event.Finish",
@@ -60558,6 +60627,7 @@
    "NucleuxIconButtonVariant.Solid",
    "NucleuxIcons",
    "NucleuxIcons.ArrowUp",
+   "NucleuxIcons.BadgeInfo",
    "NucleuxIcons.Ban",
    "NucleuxIcons.Check",
    "NucleuxIcons.ChevronDown",
@@ -61668,6 +61738,7 @@
    "NucleuxAIRun",
    "NucleuxAIRun.NucleuxAIRun",
    "NucleuxAIRun.actionName",
+   "NucleuxAIRun.agentGlyph",
    "NucleuxAIRun.doneAnnouncement",
    "NucleuxAIRun.failedAnnouncement",
    "NucleuxAIRun.marks",
@@ -62331,6 +62402,7 @@
    "NucleuxDisclosureChip",
    "NucleuxDisclosureChip.NucleuxDisclosureChip",
    "NucleuxDisclosureChip.label",
+   "NucleuxDisclosureChip.mark",
    "NucleuxDisclosureFact",
    "NucleuxDisclosureFact.NucleuxDisclosureFact",
    "NucleuxDisclosureFact.kind",
@@ -62543,6 +62615,7 @@
    "NucleuxIconButtonVariant.solid",
    "NucleuxIcons",
    "NucleuxIcons.arrowUp",
+   "NucleuxIcons.badgeInfo",
    "NucleuxIcons.ban",
    "NucleuxIcons.check",
    "NucleuxIcons.chevronDown",
@@ -63904,6 +63977,7 @@
    "NucleuxWorkflowTemplate.uses",
    "NucleuxWorkingMark",
    "NucleuxWorkingMark.NucleuxWorkingMark",
+   "NucleuxWorkingMark.color",
    "NucleuxWorkingMark.size",
    "NudgeAccept",
    "NudgeAccept.NudgeAccept",
@@ -64122,6 +64196,7 @@
    "ADD_NAME_LABEL",
    "ADD_URL_LABEL",
    "ADVANCED_LABEL",
+   "AGENT_GLYPH",
    "AGENT_GLYPH_COLORS",
    "AGENT_TAG",
    "AI_MARKS",
@@ -65632,6 +65707,7 @@
   "flag",
   "sliders-horizontal",
   "pen-line",
-  "clock"
+  "clock",
+  "badge-info"
  ]
 }

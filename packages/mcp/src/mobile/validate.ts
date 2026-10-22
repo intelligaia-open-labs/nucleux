@@ -188,6 +188,23 @@ export const USAGE_RULES: Rule[] = [
     },
   },
   {
+    code: "ai-glyph-by-name",
+    severity: "warning",
+    patterns: {
+      swiftui: [/\bNucleuxIconView\(\s*\.(?:sparkles|badgeInfo)\b/, /\bicon:\s*\.(?:sparkles|badgeInfo)\b/],
+      compose: [/\bNucleuxIcons\.(?:Sparkles|BadgeInfo)\b/],
+      flutter: [/\bNucleuxIcons\.(?:sparkles|badgeInfo)\b/],
+      "react-native": [/name=\{?["'](?:sparkles|badge-info)["']/],
+    },
+    message: "An AI glyph drawn by name. Nucleux Mobile keeps one glyph per AI meaning (Iconography, 22 Oct): the star for an AI action and the agent's own mark, the info badge for generated content, the turning mark for working, the wrench for tool use. Take it from the role table so the meaning, not the drawing, is chosen.",
+    fix: {
+      swiftui: "NucleuxIconView(NucleuxAIRun.marks[.action]!) on a control that runs AI; NucleuxAIRun.marks[.generated]! on content AI wrote; NucleuxAIRun.agentGlyph for the agent itself",
+      compose: "NucleuxAIRun.MARKS.getValue(NucleuxAIRun.Role.Action) / Role.Generated, or NucleuxAIRun.AGENT_GLYPH for the agent itself",
+      flutter: "NucleuxAIRun.marks[NucleuxAIRole.action] / NucleuxAIRole.generated, or NucleuxAIRun.agentGlyph for the agent itself",
+      "react-native": "<Icon name={AI_MARKS.action} /> / AI_MARKS.generated, or AGENT_GLYPH for the agent itself",
+    },
+  },
+  {
     code: "generic-ai-warning",
     severity: "error",
     patterns: {
