@@ -120,6 +120,24 @@ export const USAGE_RULES: Rule[] = [
     fix: { swiftui: ".nucleuxDisclaimerLine(agent: \"Aria\", onPress: { showStatement = true })" },
   },
   {
+    code: "removed-api",
+    severity: "error",
+    patterns: {
+      all: [
+        /\bNucleuxConsentAsk\b/, /\bConsentAsk\b/, /\bNucleuxConsentScope\b/, /\bConsentScope\b/,
+        /\bconsentInitial\b/, /\bconsentGapNote\b/, /\bgapNote\b/, /\bCONSENT_ASK_ACTIONS\b/, /\baskActions\b/,
+        /\bAllow selected\b/, /\bAllow once\b/, /\bAlways allow\b/,
+      ],
+    },
+    message: "The multi-switch consent request (needed sources pre-switched on, \"Allow selected\"), its gap note and the \"Allow once / Always allow / Decline\" ask were removed on 22 Oct 2026. Consent is one request with the scope in plain lines and two equal answers, Not now and Continue, with nothing preselected; it handles approved, denied, expired and revoked itself.",
+    fix: {
+      swiftui: "NucleuxConsentRequest(NucleuxConsent.Content(agent: \"Aria\", resource: \"Google Drive\", why: …, scope: [.init(.can, …), .init(.cannot, …), .init(.duration, …)], then: …, granted: …), onConnect: { … }, onResume: { … })",
+      compose: "NucleuxConsentRequest(NucleuxConsent.Content(agent, resource, why, scope, then, granted = …), onConnect = { … }, onResume = { … })",
+      flutter: "NucleuxConsentRequest(content: NucleuxConsentContent(agent: 'Aria', resource: 'Google Drive', why: …, scope: […], then: …, granted: …), onConnect: …, onResume: …)",
+      "react-native": "<ConsentRequest content={content} onConnect={…} onResume={…} onRevoke={…} onAlternative={…} />",
+    },
+  },
+  {
     code: "generic-ai-warning",
     severity: "error",
     patterns: {
@@ -216,7 +234,7 @@ const SYMBOL_PATTERNS: Record<MobileFramework, RegExp[]> = {
 };
 
 /** Removed names reported by the removed-api rules, so they are not also reported as unknown. */
-const REMOVED_NAMES = new Set(["NucleuxCaveatVariant", "nucleuxCaveat", "onCaveatPress", "CAVEAT_OUTPUT", "CAVEAT_ACTION", "caveatText"]);
+const REMOVED_NAMES = new Set(["NucleuxCaveatVariant", "nucleuxCaveat", "onCaveatPress", "CAVEAT_OUTPUT", "CAVEAT_ACTION", "caveatText", "NucleuxConsentAsk", "NucleuxConsentScope"]);
 
 function lineOf(text: string, index: number): number {
   let n = 1;
