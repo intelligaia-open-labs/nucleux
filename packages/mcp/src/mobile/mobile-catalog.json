@@ -23849,7 +23849,7 @@
    },
    "tracker": [
     "Avatar and Name (the agent's mark and states, identity row and card, byline)",
-    "Iconography and Color (reserved glyph, two-author bubbles, presence)"
+    "Iconography and Color (one glyph per AI meaning, two-author bubbles, presence)"
    ],
    "spec": "specs/identity.md",
    "specSummary": "The pattern library's **Avatar** and **Name** patterns (branch-2: `material-patterns.js` → `avatar` with examples `agent-vs-person`, `states`, `sizes`, and `name` with `identity-card`, `introduction`, `byline`; the simulators in `material-sim.js`; CSS `.md-agentav`, `.md-idrow`, `.md-idcard`). **One mark** and **one name** for the agent on every surface, and neither can be mistaken for a person's.\n\nThe wording and sizes live in `react-native/src/identity.ts`, with the shapes and initials in `trust.ts`. `npm run fixtures` writes `specs/identity.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.",
@@ -31536,7 +31536,7 @@
     "react-native": "Done"
    },
    "tracker": [
-    "Icons (AI action, working, tool use, generated with Undo)"
+    "Icons (AI action, generated, working, tool use: four glyphs)"
    ],
    "spec": "specs/ai-marks.md",
    "specSummary": "The pattern library's **Icons** pattern (branch-2: `material-patterns.js` → `ai-icons`; the simulator in `material-sim.js`, a release-note editor in Orbit). **One mark per AI meaning**, each kept for that meaning everywhere: the action that runs AI, the content AI made, the agent working, and a tool the agent used. Every mark travels with words.\n\n**Four glyphs, since 22 Oct.** The library's 16 Oct revision of Iconography settles the old open question: one glyph per meaning, and AI-generated content carries \"Generated with AI\" \"with its own mark — not the star that started it\". Until then the kit used sparkles for both action and generated (backlog item 7). The roles and glyphs are one table (`AI_MARKS`, plus `AGENT_GLYPH` for the agent's own mark); no component names an AI glyph itself, and a test lists each role's users.\n\nThe rules and wording live in `react-native/src/aiMarks.ts`. `npm run fixtures` writes `specs/ai-marks.fixtures.json` (7 step-by-step runs), and SwiftUI, Compose and Flutter are tested against it.",
