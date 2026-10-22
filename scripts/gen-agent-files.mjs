@@ -35,7 +35,7 @@ Do not fall back to guessing Nucleux APIs.`;
 
 const skill = `---
 name: nucleux-design
-description: Build or extend React UI with the Nucleux design system (@nucleux/react) — app shells, dashboards, list/table pages, settings and loading/empty/error states — design-first, from curated patterns and exact component contracts. Use when asked to build pages or an app with Nucleux, or when the project depends on @nucleux packages.
+description: Build or extend React UI with the Nucleux design system (@nucleux/react) — app shells, dashboards, list/table pages, settings and loading/empty/error states — design-first, from curated patterns and exact component contracts. Also covers native mobile apps (SwiftUI, Jetpack Compose, Flutter, React Native) through Nucleux Mobile. Use when asked to build pages or an app with Nucleux, or when the project depends on @nucleux packages.
 ---
 
 ${GENERATED}

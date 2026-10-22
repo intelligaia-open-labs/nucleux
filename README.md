@@ -137,7 +137,9 @@ npx -y @nucleux/mcp init --codex --agents-md
 ```
 
 Tools: `search_patterns`, `get_pattern`, `search_components`, `get_component`,
-`validate_design`, `get_setup`, `list_components`, `list_examples`, `get_example`. Full guide,
+`validate_design`, `get_setup`, `list_components`, `list_examples`, `get_example`, and for
+Nucleux Mobile (SwiftUI, Jetpack Compose, Flutter, React Native; pass `framework`)
+`get_mobile_spec`, `get_mobile_words`, `validate_mobile_usage`. Full guide,
 example prompts and troubleshooting: [`packages/mcp`](packages/mcp/README.md).
 Patterns and the workflow live in [`knowledge/`](knowledge/README.md);
 benchmark in [`evals/`](evals/README.md).

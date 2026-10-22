@@ -10,7 +10,9 @@ It ships three things:
 
 - **An MCP server** with curated page patterns, exact component contracts
   (props, types, required/optional, defaults and variant values, generated
-  from the TypeScript sources), setup instructions and example screens.
+  from the TypeScript sources), setup instructions and example screens. It
+  also covers **Nucleux Mobile**, the same agentic components in SwiftUI,
+  Jetpack Compose, Flutter and React Native (see [Native mobile](#native-mobile)).
 - **The `nucleux-design` skill**: a design-first workflow (inspect → analyse →
   discover → plan → implement → validate → report) for Claude Code and Codex.
 - **`add`**: one command that connects every coding agent on your machine and
@@ -137,8 +139,28 @@ Discovery is concise; details come on request, so no call returns the whole cata
 | `get_setup` | Requirements and install for `react` (pass `packageManager` and `configModule`) or plain `html`. |
 | `list_components` | Every component with a one-line description. |
 | `list_examples` / `get_example` | Larger reference screens (agent chat, dashboards, login, settings…). |
+| `get_mobile_spec` | Nucleux Mobile: the full spec of one mobile component or pattern (rules, state machine, accessibility, scope). |
+| `get_mobile_words` | Nucleux Mobile: the exact strings and announcements from the shared fixtures, plus the framework's constants. |
+| `validate_mobile_usage` | Nucleux Mobile: a static check of SwiftUI/Compose/Flutter/React Native code. JSON issues for names that do not exist, removed APIs, generic AI-warning copy, hard-coded colours, stolen focus and separate composers. |
 
 Prompt: `build_with_nucleux` (optional `request`) returns the full workflow.
+
+### Native mobile
+
+`list_components`, `get_component`, `search_components`, `get_setup`,
+`list_examples` and `get_example` take `framework: "swiftui" | "compose" |
+"flutter" | "react-native"` for Nucleux Mobile: the import line and that
+framework's exact public API (Swift inits and view modifiers, Kotlin
+`@Composable` functions with defaults, Dart named parameters, React Native
+`Props`), the dependency and theming setup, and a working example (the iOS
+catalog screen, or the Compose/Flutter/React Native test host). Without a mobile
+`framework` every answer is the React kit's, exactly as before.
+
+```text
+get_component  { "name": "PromptComposer", "framework": "compose" }
+get_setup      { "framework": "swiftui" }
+get_mobile_words { "name": "caveat" }
+```
 
 ### Curated patterns
 
@@ -168,6 +190,7 @@ the gap instead of presenting something invented as a Nucleux pattern.
 | `packages/*/src/index.tsx` | `src/catalog.json`: exports, structured Props | `scripts/gen-mcp-catalog.mjs` (TypeScript parser) |
 | `knowledge/patterns/<id>/pattern.json` + `example.tsx` | `src/knowledge.json` | `scripts/gen-mcp-knowledge.mjs` (fails on unknown components) |
 | `knowledge/workflow.md` | the skill, the AGENTS.md section, the prompt | `scripts/gen-agent-files.mjs` |
+| intelligaia/nucleux-mobile (`mcp/src/`) | `src/mobile/`: the mobile catalog and tool module | generated there (`npm run mcp:catalog`), copied here by `scripts/vendor-mobile-mcp.mjs <path to nucleux-mobile>` |
 
 All of this runs in `pnpm --filter @nucleux/mcp build`. To add a pattern, see
 [`knowledge/README.md`](../../knowledge/README.md).
@@ -177,7 +200,10 @@ All of this runs in `pnpm --filter @nucleux/mcp build`. To add a pattern, see
 - React ≥ 18 (tested with React 19 + Vite 6) and Tailwind CSS v3.4. Tailwind v4 is untested.
 - Plain HTML: Tailwind classes only (`get_component` / `get_setup` with
   `framework: "html"`), no interactive behavior.
-- Not covered: Vue, Svelte, Angular, React Native (see `nucleux-mobile` for native).
+- Native mobile: SwiftUI (iOS 17+), Jetpack Compose (minSdk 24), Flutter and
+  React Native through Nucleux Mobile (`framework: "swiftui"`, `"compose"`,
+  `"flutter"`, `"react-native"`).
+- Not covered: Vue, Svelte, Angular.
 
 ## Troubleshooting
 

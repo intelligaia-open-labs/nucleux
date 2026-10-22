@@ -48,6 +48,13 @@ contracts, then write code.
    tokens, and report the gap. Never present an invented component as Nucleux.
 12. Nucleux is not mandatory. If the project already uses another component
     system and the user did not ask to switch, extend that system and say so.
+13. Native mobile apps (SwiftUI, Jetpack Compose, Flutter, React Native) use
+    Nucleux Mobile through the same server: pass `framework` (`swiftui`,
+    `compose`, `flutter` or `react-native`) to `get_setup`,
+    `search_components`, `get_component` and `get_example`, copy the kit's
+    wording from `get_mobile_words`, and check the code with
+    `validate_mobile_usage`. The page patterns and `validate_design` are for
+    the React kit.
 
 ## Workflow
 

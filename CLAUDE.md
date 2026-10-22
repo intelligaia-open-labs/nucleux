@@ -85,6 +85,10 @@ list is checked by `src/test/docs.test.ts`; never add a name the catalog lacks.
 - `knowledge/patterns/<id>/` — `pattern.json` (spec) + `example.tsx` (typechecked,
   render + axe tested). `scripts/gen-mcp-knowledge.mjs` validates every component
   reference against the catalog and writes `packages/mcp/src/knowledge.json`.
+- `packages/mcp/src/mobile/` is Nucleux Mobile's catalog and tool module, vendored from
+  intelligaia/nucleux-mobile (private) by `node scripts/vendor-mobile-mcp.mjs <path>`; do
+  not edit it here. `server.ts` routes `framework: swiftui|compose|flutter|react-native`
+  to it.
 - `scripts/gen-mcp-catalog.mjs` parses Props with the TypeScript parser
   (`scripts/lib/extract-props.mjs`) into structured contracts.
 - After changing a component's props, a pattern or the workflow, run
