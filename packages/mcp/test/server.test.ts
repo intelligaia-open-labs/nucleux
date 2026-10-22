@@ -257,4 +257,15 @@ describe("MCP server", () => {
   it("server instructions point agents at patterns first", () => {
     expect(client.getInstructions()).toMatch(/search_patterns first/);
   });
+
+  it("server instructions and the skill make the agent ask Material 3 or shadcn first", async () => {
+    const instr = client.getInstructions() ?? "";
+    expect(instr.indexOf("Material 3 (Md3*) or shadcn")).toBeLessThan(instr.indexOf("search_patterns first"));
+    expect(instr).toMatch(/Nucleux family: Material 3/);
+    const { readFileSync } = await import("node:fs");
+    const { resolve } = await import("node:path");
+    const skill = readFileSync(resolve(__dirname, "../skills/nucleux-design/SKILL.md"), "utf8");
+    expect(skill).toMatch(/Ask which family first/);
+    expect(skill).toMatch(/\*\*B\. Choose the family\.\*\*/);
+  });
 });

@@ -21,10 +21,15 @@ contracts, then write code.
 3. Read the contract (`get_component`) before using a component. Use only the
    imports, props and variant values it lists. Never guess a Nucleux export,
    prop or variant. If it is not in the catalog, it does not exist.
-4. Pick one family per app and do not mix them: Material 3 (`Md3*`) when the
-   project already uses Material Design or the user asks for it, otherwise
-   shadcn. Patterns are written with shadcn components; in a Material 3 app use
-   each one's `Md3` twin, and where Material 3 has none (e.g. `DataTable`), the
+4. **Ask which family first.** Before writing any UI, ask the user: *"Material 3
+   or shadcn?"* (nucleux.in shows both: its Material 3.0 pages are the `Md3*`
+   components, its ShadCN pages the plain ones). Skip the question only when
+   the user already said, or the project already records or uses one (an
+   `@nucleux/md3-*` import means Material 3). Record the answer in the
+   project's AGENTS.md or CLAUDE.md as `Nucleux family: Material 3` (or
+   `shadcn`) so it is asked once. Then use only that family; never mix them.
+   Patterns are written with shadcn components; in a Material 3 app use each
+   one's `Md3` twin, and where Material 3 has none (e.g. `DataTable`), the
    shadcn component under the `md3-theme` class. Agentic components have the
    same props in both families.
 5. For AI features use the agentic components (nucleux.in's patterns):
@@ -62,30 +67,33 @@ manager (lockfile), TypeScript, Tailwind version and config, router, existing
 component system, and any installed `@nucleux/*` packages. If Nucleux is not set
 up, call `get_setup` and follow it exactly.
 
-**B. Analyse the request.** List the pages, the main user journeys, the key
+**B. Choose the family.** Ask "Material 3 or shadcn?" unless it is already
+known (rule 4), and record the answer in the project.
+
+**C. Analyse the request.** List the pages, the main user journeys, the key
 interactions on each page, and what matters most on each screen. Ask only about
 ambiguities that change the architecture; pick sensible defaults otherwise.
 
-**C. Discover.** For each page call `search_patterns` with what the page is for,
+**D. Discover.** For each page call `search_patterns` with what the page is for,
 then `get_pattern` for the best match (`app-shell` for the frame, plus one
 pattern per page). Call `get_component` for every component you will use that
 you have not read in this session. Use `search_components` for needs inside a
 page that no pattern covers.
 
-**D. Plan.** Write a short plan: shared layout, then each route →
+**E. Plan.** Write a short plan: shared layout, then each route →
 pattern(s) → components → app-specific pieces you will write → states. Mark
 anything Nucleux does not cover. Check the plan with `validate_design` (pattern
 ids plus the components and props you intend to use) and fix every error.
 
-**E. Implement.** Build the shared shell once and wrap every route in it.
+**F. Implement.** Build the shared shell once and wrap every route in it.
 Start each page from its pattern's example, replace the sample data with the
 app's data model, and keep app-specific components (a TaskCard bound to your
 data) in the app, composed from Nucleux parts.
 
-**F. Validate.** Run the project's type check, lint, tests and production build;
+**G. Validate.** Run the project's type check, lint, tests and production build;
 fix every error. Re-check each page against its pattern's responsive and
 accessibility rules.
 
-**G. Report.** Summarise the pages built, the patterns and components used per
+**H. Report.** Summarise the family used, the pages built, the patterns and components used per
 page, design decisions, the checks you ran and their results, anything you built
 custom and why, and the gaps or open issues.

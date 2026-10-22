@@ -138,6 +138,8 @@ function renderComponent(p: Pkg): string {
 
 const INSTRUCTIONS = `Nucleux (@nucleux/react) is intelligaia's React component library for AI products, in two families: shadcn-style components and their Material 3 counterparts (Md3*). It covers the basics (buttons, inputs, menus, dialogs, tables, navigation, empty states…) and agentic components (Disclosure, Consent, Caveat, OpenInput, SuggestedPrompts, ModelSelection, KnowledgeBase, Connectors, VoiceInput, StructuredInput, Message, MessageScroller…), published as ${catalog.counts.components} component packages behind one umbrella.
 
+First ask the user which family they want — Material 3 (Md3*) or shadcn — unless they already said or the project already uses or records one; record the answer in the project's AGENTS.md or CLAUDE.md (\"Nucleux family: Material 3\") and use only that family.
+
 Design-first workflow: for any page or app, call search_patterns first, then get_pattern for the curated composition (structure, responsive and accessibility rules, typechecked example). Then get_component for the exact contract of each component you use, and get_setup for install and Tailwind configuration. Use search_components for needs no pattern covers, and get_example (e.g. "agent-chat") for the larger reference screens. The build_with_nucleux prompt holds the full step-by-step workflow.
 
 Use these tools instead of guessing props: the catalog is generated from the package sources, so exports, prop names, types, variant values and defaults are exact. If a component, prop or pattern is not in the catalog it does not exist — report the gap instead of inventing it.
