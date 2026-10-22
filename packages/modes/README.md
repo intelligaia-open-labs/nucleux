@@ -1,6 +1,6 @@
 # @nucleux/modes
 
-Modes — choose how the agent works on a request (Fast, Balanced, Deep research), shown in the composer and switchable before sending — Nucleux agentic UI for React.
+Modes — choose how the agent works on a request (Fast, Balanced, Deep research), as a chip in the composer or a Mode row in Request settings, switchable before sending — Nucleux agentic UI for React.
 
 Part of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).
 

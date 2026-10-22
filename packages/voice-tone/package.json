@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/voice-tone",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
-  "description": "Voice & Tone — say how the reply should sound (named presets, a rules list, a sample line), sent beside the prompt and never editing it — Nucleux agentic UI for React.",
+  "description": "Voice & Tone — say how the reply should sound (named presets, a rules list, a sample line), as a Tone chip or a Tone row in Request settings, never editing the prompt — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -14,7 +14,8 @@
     "tailwind",
     "voice-tone",
     "tone",
-    "prompt-scaffold"
+    "prompt-scaffold",
+    "request-settings"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

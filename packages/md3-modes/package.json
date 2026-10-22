@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/md3-modes",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
-  "description": "Material 3 Modes \u2014 choose how the agent approaches a request (Brainstorm, Draft, Review, Plan), shown as a chip in the composer and switchable before sending \u2014 Nucleux agentic UI for React.",
+  "description": "Material 3 Modes — choose how the agent approaches a request (Brainstorm, Draft, Review, Plan), as a chip in the composer or a Mode row in Request settings, switchable before sending — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -17,7 +17,8 @@
     "md3-modes",
     "modes",
     "mode-picker",
-    "prompt-scaffolds"
+    "prompt-scaffolds",
+    "request-settings"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

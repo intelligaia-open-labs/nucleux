@@ -8,6 +8,18 @@ The format is machine-readable: each version heading starts with `## ` followed
 by a version tag and date, and entries are grouped under `### Added`, `### Changed`,
 `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings.
 
+## [0.8.1] — 2026-10-22
+
+### Fixed
+- MCP `search_components` now finds the Request settings control by what it does
+  ("request settings", "tune menu", "mode tone style"): the descriptions and
+  keywords of `@nucleux/open-input`, `@nucleux/md3-open-input`,
+  `@nucleux/md3-agent-composer` and the Modes, Voice & Tone, Preset Styles and
+  Prompt Enhancer packages (both families) now say they ship or use it. Before,
+  the search suggested starting from shadcn's Context Menu.
+- The Voice & Tone and Modes descriptions no longer say they appear only as a chip
+  in the composer.
+
 ## [0.8.0] — 2026-10-21
 
 Follows nucleux.in's 21 Oct changes to its Material 3 composer.

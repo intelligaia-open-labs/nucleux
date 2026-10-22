@@ -1,6 +1,6 @@
 # @nucleux/preset-styles
 
-Preset Styles — one-click named styles for how the agent's output looks or reads — Nucleux agentic UI for React.
+Preset Styles — one-click named styles for how the agent's output looks or reads, as a chip or a Style row in Request settings — Nucleux agentic UI for React.
 
 Part of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).
 

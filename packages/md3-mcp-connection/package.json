@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-mcp-connection",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 MCP Connection — connect a server, discover what it can do, and decide before the agent uses it — Nucleux agentic UI for React.",

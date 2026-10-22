@@ -1,9 +1,9 @@
 {
   "name": "@nucleux/preset-styles",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
-  "description": "Preset Styles — one-click named styles for how the agent's output looks or reads — Nucleux agentic UI for React.",
+  "description": "Preset Styles — one-click named styles for how the agent's output looks or reads, as a chip or a Style row in Request settings — Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -15,7 +15,8 @@
     "preset-styles",
     "styles",
     "style-picker",
-    "prompt-scaffold"
+    "prompt-scaffold",
+    "request-settings"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

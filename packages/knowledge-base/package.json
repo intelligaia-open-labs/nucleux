@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/knowledge-base",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "sideEffects": false,
   "description": "Knowledge Base — choose the sources the agent may draw on — Nucleux agentic UI for React.",

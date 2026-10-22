@@ -167,6 +167,16 @@ describe("MCP server", () => {
     expect(text).toContain('import { cn, Slot } from "@nucleux/utils"');
   });
 
+  it("search_components finds Request settings by what it does, not only by name", async () => {
+    const { text } = await call("search_components", { query: "request settings tune menu mode tone style" });
+    const first = text.split("\n").slice(0, 2).join("\n");
+    expect(first).toMatch(/OpenInput/);
+    expect(text).not.toMatch(/start from ShadCN/i);
+    for (const n of ["Modes", "VoiceTone", "PresetStyles", "PromptEnhancer"]) {
+      expect((await call("search_components", { query: `${n} request settings` })).text).toContain(n);
+    }
+  });
+
   it("get_component still answers a near-miss with suggestions", async () => {
     const { text } = await call("get_component", { name: "Buttons" });
     expect(text).toMatch(/Did you mean: .*Button/);

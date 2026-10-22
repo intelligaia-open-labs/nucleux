@@ -1,6 +1,6 @@
 # @nucleux/prompt-enhancer
 
-Prompt Enhancer — a magic-wand action that rewrites a short ask into a precise one, shown as a reviewable diff — Nucleux agentic UI for React.
+Prompt Enhancer — a magic-wand action that rewrites a short ask into a precise one, shown as a reviewable diff; starts from the wand or the Improve prompt row in Request settings — Nucleux agentic UI for React.
 
 Part of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).
 

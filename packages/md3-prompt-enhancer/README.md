@@ -1,6 +1,6 @@
 # @nucleux/md3-prompt-enhancer
 
-Material 3 Prompt Enhancer — proposes a clearer version of the request you wrote, every addition marked and explained — Nucleux agentic UI for React.
+Material 3 Prompt Enhancer — proposes a clearer version of the request you wrote, every addition marked and explained; starts from the wand or the Improve prompt row in Request settings — Nucleux agentic UI for React.
 
 Part of **[Nucleux](https://github.com/intelligaia-open-labs/nucleux)** — agentic UI components for React. Install a single component, or the full kit via [`@nucleux/react`](https://www.npmjs.com/package/@nucleux/react).
 
