@@ -156,6 +156,38 @@ export const USAGE_RULES: Rule[] = [
     },
   },
   {
+    code: "removed-api",
+    severity: "error",
+    patterns: {
+      all: [/\bdraftedBy\b/, /\bDRAFTED_BY\b/, /\bdraftedByLabel\b/],
+    },
+    message: "\"Drafted by …\" was removed on 22 Oct 2026 with the Disclosure revision. Content AI wrote or changed carries \"Generated with AI\" where it sits, opening to what the agent did, what it used, what nobody checked and that the original is kept; agent turns carry \"AI agent\".",
+    fix: {
+      swiftui: "NucleuxGeneratedLabel(agent: \"Aria\", noun: \"paragraph\", details: .init(did: …, used: …, notChecked: …, original: …), onUndo: { … }) or NucleuxGeneratedValue(label:value:agent:details:)",
+      compose: "NucleuxGeneratedLabel(\"Aria\", \"paragraph\", NucleuxTrust.Details(did, used, notChecked, original), onUndo = { … })",
+      flutter: "NucleuxGeneratedLabel(agent: 'Aria', noun: 'paragraph', details: NucleuxGeneratedDetails(did: …, used: …, notChecked: …, original: …), onUndo: …)",
+      "react-native": "<GeneratedLabel agent=\"Aria\" noun=\"paragraph\" details={{ did, used, notChecked, original }} onUndo={…} />",
+    },
+  },
+  {
+    code: "disclosure-claims-checked",
+    severity: "error",
+    patterns: {
+      all: [
+        /\b(?:AI|agent)[- ](?:verified|fact[- ]checked)\b/i,
+        /\b(?:verified|fact[- ]checked) by (?:AI|the agent|Aria)\b/i,
+        /\bGenerated with AI\b[^"'\n]{0,40}\b(?:verified|fact[- ]checked|accurate)\b/i,
+      ],
+    },
+    message: "Disclosure never claims a check it can't make: no \"verified\", \"fact-checked\" or \"accurate\" beside AI-generated content. Say what was not checked instead (the generated label's \"Not checked\" line).",
+    fix: {
+      swiftui: "Drop the claim; put what nobody checked in NucleuxGeneratedLabel's details: .init(did: …, used: …, notChecked: \"Figures from the Q2 export\", …)",
+      compose: "Drop the claim; put what nobody checked in NucleuxTrust.Details(did, used, notChecked = \"Figures from the Q2 export\") on NucleuxGeneratedLabel",
+      flutter: "Drop the claim; put what nobody checked in NucleuxGeneratedDetails(notChecked: 'Figures from the Q2 export', …) on NucleuxGeneratedLabel",
+      "react-native": "Drop the claim; put what nobody checked in <GeneratedLabel details={{ notChecked: 'Figures from the Q2 export', … }} />",
+    },
+  },
+  {
     code: "generic-ai-warning",
     severity: "error",
     patterns: {
@@ -252,7 +284,7 @@ const SYMBOL_PATTERNS: Record<MobileFramework, RegExp[]> = {
 };
 
 /** Removed names reported by the removed-api rules, so they are not also reported as unknown. */
-const REMOVED_NAMES = new Set(["NucleuxCaveatVariant", "nucleuxCaveat", "onCaveatPress", "CAVEAT_OUTPUT", "CAVEAT_ACTION", "caveatText", "NucleuxConsentAsk", "NucleuxConsentScope", "NucleuxTemplateCard", "NucleuxTemplateList", "NucleuxPromptTemplate", "NucleuxTemplateSlot"]);
+const REMOVED_NAMES = new Set(["NucleuxCaveatVariant", "nucleuxCaveat", "onCaveatPress", "CAVEAT_OUTPUT", "CAVEAT_ACTION", "caveatText", "NucleuxConsentAsk", "NucleuxConsentScope", "NucleuxTemplateCard", "NucleuxTemplateList", "NucleuxPromptTemplate", "NucleuxTemplateSlot", "draftedBy"]);
 
 function lineOf(text: string, index: number): number {
   let n = 1;
