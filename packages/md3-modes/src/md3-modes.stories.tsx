@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Eye, Flag, Lightbulb, Mic, NotebookPen, Plus, Search } from "lucide-react";
+import { Eye, Flag, Lightbulb, MessagesSquare, Mic, NotebookPen, PenLine, Plus, Search, Sparkles } from "lucide-react";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3IconButton } from "@nucleux/md3-icon-button";
 import { Md3Modes, type Md3ModeOption, type Md3ModesProps } from "./index";
@@ -21,7 +21,7 @@ const MODES: Md3ModeOption[] = [
 
 /** Per-story sample data (ids are family-specific, so they live here rather than in args). */
 const SAMPLE: Record<string, Partial<Md3ModesProps>> = {
-  LivePreview: { defaultValue: "plan" },
+  LivePreview: { defaultValue: "plan", trigger: "settings", settingsItems: [{ id: "tone", label: "Tone", icon: <MessagesSquare />, value: "Default" }, { id: "style", label: "Style", icon: <PenLine />, value: "Normal" }, { id: "improve", label: "Improve prompt", icon: <Sparkles /> }] },
   NoMode: {},
   PickerOpen: { defaultValue: "plan" },
   ModeChanged: { defaultValue: "review", defaultNotice: { type: "changed", from: "plan" } },
@@ -29,6 +29,7 @@ const SAMPLE: Record<string, Partial<Md3ModesProps>> = {
   Segmented: { defaultValue: "plan", modes: MODES.filter((m) => m.id !== "research") },
   ModePickerDropdown: { defaultValue: "plan" },
   ModeChip: { defaultValue: "plan" },
+  RequestSettings: { defaultValue: "plan" },
 };
 
 const story = (name: string): Story["render"] =>
@@ -77,7 +78,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** The site's live preview: "Mode Plan" set in the composer, beside the model chip; text untouched. */
+/** The site's live preview: Mode Plan set — no chip up front; a dot on the tune control right after + says a setting is on, and its menu lists Mode with the value. Text untouched. */
 export const LivePreview: Story = { args: { variant: "composer" }, render: story("LivePreview") };
 
 /** No mode chosen yet: an outlined Mode chip; Aria works the general way. */
@@ -106,3 +107,6 @@ export const ModePickerDropdown: Story = { args: { variant: "list" }, render: st
 
 /** Variant: only the Mode chip and its picker. */
 export const ModeChip: Story = { args: { variant: "chip" }, render: story("ModeChip") };
+
+/** Request settings: no Mode chip up front — the tune control right after + carries a dot, names the mode in its accessible name, and its menu lists Mode with the value; that row opens the picker (with a close ×). */
+export const RequestSettings: Story = { args: { variant: "composer", trigger: "settings" }, render: story("RequestSettings") };

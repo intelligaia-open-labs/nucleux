@@ -31,6 +31,7 @@ const SAMPLE: Record<string, Partial<ModesProps>> = {
   Segmented: { defaultValue: "fast" },
   ModePickerDropdown: { defaultValue: "fast", modes: WITH_OFF },
   ModeChip: { defaultValue: "fast" },
+  RequestSettings: { defaultValue: "fast" },
 };
 
 const story = (name: string): Story["render"] =>
@@ -101,3 +102,6 @@ export const ModePickerDropdown: Story = { args: { variant: "list" }, render: st
 
 /** Variant: only the chip, switchable on the fly (chat, email compose toolbars). */
 export const ModeChip: Story = { args: { variant: "chip" }, render: story("ModeChip") };
+
+/** Request settings: no Mode chip up front — the tune control right after + carries a dot, names the mode in its accessible name, and its menu lists Mode with the value; that row opens the picker (with a close ×). */
+export const RequestSettings: Story = { args: { variant: "composer", trigger: "settings" }, render: story("RequestSettings") };

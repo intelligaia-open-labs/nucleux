@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/modes",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "module",
   "sideEffects": false,
   "description": "Modes \u2014 choose how the agent works on a request (Fast, Balanced, Deep research), shown in the composer and switchable before sending \u2014 Nucleux agentic UI for React.",
@@ -40,6 +40,7 @@
   "dependencies": {
     "@nucleux/button": "workspace:*",
     "@nucleux/input-group": "workspace:*",
+    "@nucleux/open-input": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0"
   },

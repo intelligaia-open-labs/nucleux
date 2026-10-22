@@ -1,4 +1,5 @@
 import * as React from "react";
+import { mergeRequestSettingsItems, type RequestSettingsItem } from "@nucleux/open-input";
 
 /**
  * Layout, from the two specs: `"grid"` — a swatch grid picked before generating
@@ -16,6 +17,13 @@ export type PresetStylesView = "closed" | "menu" | "create" | "review";
 
 /** The one-line confirmation under the composer: a style was applied, or it went back to the base style. */
 export type PresetStylesNotice = "applied" | "reset";
+
+/**
+ * Where the style is set from in the menu variant. "chip" (default): the Style control up front.
+ * "settings": no Style control; a Request settings control (the tune icon) lists Style with its
+ * value, and its row opens "Use style".
+ */
+export type PresetStylesTrigger = "chip" | "settings";
 
 /** Where a custom style is learnt from. */
 export type PresetStyleSource = "example" | "description";
@@ -145,6 +153,20 @@ export interface PresetStylesProps
   onSubmit?: (text: string, styleId: string) => void;
   /** Composer placeholder. Defaults to `"Describe what you need…"`. */
   placeholder?: string;
+  /** Menu: composer controls placed first in the toolbar, before the Style control or Request settings (attach, +…). */
+  composerLeading?: React.ReactNode;
+  /** Menu: more composer tools, placed after the Style control (model, voice…). */
+  composerActions?: React.ReactNode;
+  /**
+   * Menu: "chip" (default) puts the Style control in the composer. "settings": no Style control; a
+   * Request settings control right after `composerLeading` lists Style (with its value) and opens
+   * "Use style" from that row.
+   */
+  trigger?: PresetStylesTrigger;
+  /** With `trigger="settings"`: the app's other request settings for the same menu (Mode, Tone, Improve prompt…), merged in the site's order. */
+  settingsItems?: RequestSettingsItem[];
+  /** With `trigger="settings"`: called when one of `settingsItems` is chosen. */
+  onSettingsSelect?: (id: string) => void;
 }
 
 type GenerateStatus = "idle" | "busy" | "error";
@@ -579,6 +601,21 @@ export function usePresetStyles(props: PresetStylesProps) {
     setMessage,
     submit,
     agentName,
+    /** Request settings rows: the Style row (current style, or the base style's name) merged with `settingsItems`. */
+    settingsItems: (icon?: React.ReactNode) =>
+      mergeRequestSettingsItems(
+        { id: "style", label: "Style", icon, value: currentStyle?.name ?? baseName, set: isSet },
+        props.settingsItems,
+      ),
+    /** Handles a Request settings row: Style opens "Use style"; others go to `onSettingsSelect`. */
+    onSettingsSelect: (id: string) => {
+      if (id === "style") openMenu();
+      else props.onSettingsSelect?.(id);
+    },
+    /** When the Request settings menu opens, an open "Use style" closes. */
+    onSettingsOpenChange: (o: boolean) => {
+      if (o && view === "menu") closeMenu(false);
+    },
   };
 }
 

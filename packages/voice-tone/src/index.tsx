@@ -4,7 +4,7 @@ import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import { Checkbox } from "@nucleux/checkbox";
 import { Input } from "@nucleux/input";
-import { OpenInput } from "@nucleux/open-input";
+import { OpenInput, RequestSettings, mergeRequestSettingsItems, type RequestSettingsItem } from "@nucleux/open-input";
 import { Popover, PopoverContent, PopoverTrigger } from "@nucleux/popover";
 import { Slider } from "@nucleux/slider";
 
@@ -59,6 +59,13 @@ export type VoiceToneLayout = "cards" | "list" | "segmented" | "slider";
 
 /** The one quiet line shown after a change: switched tone, described tone, or removed tone (with Undo). */
 export type VoiceToneNotice = "changed" | "custom" | "removed";
+
+/**
+ * Where the tone is set from in the composer and chip variants. "chip" (default): the Tone chip up
+ * front. "settings": no chip; a Request settings control (the tune icon) lists Tone with its value,
+ * and its row opens the tone picker.
+ */
+export type VoiceToneTrigger = "chip" | "settings";
 
 export interface VoiceToneProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "onSubmit" | "defaultValue"> {
@@ -125,6 +132,17 @@ export interface VoiceToneProps
   onStop?: () => void;
   /** More composer tools, placed after the Tone chip. */
   actions?: React.ReactNode;
+  /** Composer controls placed first in the toolbar, before the Tone chip or Request settings (attach, +…). */
+  composerLeading?: React.ReactNode;
+  /**
+   * "chip" (default): the Tone chip sits in the composer. "settings": no chip; a Request settings
+   * control right after `composerLeading` lists Tone (with its value) and opens the tone picker.
+   */
+  trigger?: VoiceToneTrigger;
+  /** With `trigger="settings"`: the app's other request settings for the same menu (Mode, Style, Improve prompt…), merged in the site's order. */
+  settingsItems?: RequestSettingsItem[];
+  /** With `trigger="settings"`: called when one of `settingsItems` is chosen. */
+  onSettingsSelect?: (id: string) => void;
 }
 
 /** The three named presets of the tone-presets variant. */
@@ -416,7 +434,23 @@ export function useVoiceTone(props: VoiceToneProps) {
     rootRef,
     triggerRef,
     ids,
-    /** Accessible name of the chip's value button and its remove button. */
+    /** Close the picker and return focus to its trigger (the chip or the Request settings control). */
+    closePicker: () => closePicker(true),
+    /** Request settings rows: this Tone row merged with the app's `settingsItems`, in the site's order. */
+    settingsItems: (icon?: React.ReactNode) =>
+      mergeRequestSettingsItems(
+        { id: "tone", label, icon, value: toneName ?? "Default", set: toneName != null },
+        props.settingsItems,
+      ),
+    /** Handles a Request settings row: Tone opens the picker; others go to `onSettingsSelect`. */
+    onSettingsSelect: (id: string) => {
+      if (id === "tone") setOpen(true);
+      else props.onSettingsSelect?.(id);
+    },
+    /** When the Request settings menu opens, an open tone picker closes. */
+    onSettingsOpenChange: (o: boolean) => {
+      if (o && open) setOpen(false);
+    },
     chipLabel: toneName ? `${label} ${toneName} — change` : label,
     removeLabel: `Remove ${label.toLowerCase()} ${toneName ?? ""}`.trim(),
     pickerTitle: `Choose a ${label.toLowerCase()}`,
@@ -640,15 +674,27 @@ function Notice({ vt }: { vt: VoiceToneState }) {
   );
 }
 
-function Picker({ vt }: { vt: VoiceToneState }) {
+function Picker({ vt, showClose }: { vt: VoiceToneState; showClose?: boolean }) {
   return (
     <PopoverContent
       role="dialog"
       aria-labelledby={vt.ids.title}
       onKeyDown={vt.onPickerKeyDown}
-      className="bottom-full top-auto mb-2 mt-0 flex w-[min(32rem,calc(100vw-2rem))] flex-col gap-2.5 rounded-xl p-2.5 motion-reduce:animate-none"
+      className="bottom-full top-auto mb-2 mt-0 flex w-[min(32rem,calc(100vw-2rem))] flex-col gap-2.5 rounded-xl p-2.5 text-left font-normal motion-reduce:animate-none"
     >
-      <div className="flex flex-col gap-0.5 px-1 pt-0.5">
+      <div className={cn("relative flex flex-col gap-0.5 px-1 pt-0.5", showClose && "pr-10")}>
+        {showClose && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            aria-label="Close"
+            onClick={vt.closePicker}
+            className="absolute -top-1 right-0 text-muted-foreground"
+          >
+            <X className="size-4" aria-hidden="true" />
+          </Button>
+        )}
         <p id={vt.ids.title} className="text-sm font-semibold text-foreground">
           {vt.label}
           <span className="sr-only"> — {vt.pickerTitle.toLowerCase()}</span>
@@ -721,6 +767,22 @@ function ToneChip({ vt }: { vt: VoiceToneState }) {
           </PopoverTrigger>
         )}
         <Picker vt={vt} />
+      </Popover>
+    </div>
+  );
+}
+
+function ToneSettings({ vt }: { vt: VoiceToneState }) {
+  return (
+    <div ref={vt.rootRef} className="inline-flex [&>div]:static">
+      <Popover open={vt.open} onOpenChange={vt.setOpen}>
+        <RequestSettings
+          ref={vt.triggerRef}
+          items={vt.settingsItems(<MessagesSquare />)}
+          onSelect={vt.onSettingsSelect}
+          onOpenChange={vt.onSettingsOpenChange}
+        />
+        <Picker vt={vt} showClose />
       </Popover>
     </div>
   );
@@ -817,9 +879,14 @@ export const VoiceTone = React.forwardRef<HTMLDivElement, VoiceToneProps>((props
     loading,
     onStop,
     actions,
+    composerLeading,
+    trigger = "chip",
+    settingsItems: _si,
+    onSettingsSelect: _oss,
     className,
     ...rest
   } = props;
+  const control = trigger === "settings" ? <ToneSettings vt={vt} /> : <ToneChip vt={vt} />;
 
   if (vt.variant === "settings") {
     return (
@@ -843,7 +910,7 @@ export const VoiceTone = React.forwardRef<HTMLDivElement, VoiceToneProps>((props
     return (
       <div ref={ref} data-variant="chip" className={cn("relative inline-flex flex-col gap-1", className)} {...rest}>
         <Notice vt={vt} />
-        <ToneChip vt={vt} />
+        {control}
       </div>
     );
   }
@@ -863,7 +930,8 @@ export const VoiceTone = React.forwardRef<HTMLDivElement, VoiceToneProps>((props
         className="rounded-3xl p-3 shadow-md focus-within:rounded-3xl"
         actions={
           <>
-            <ToneChip vt={vt} />
+            {composerLeading}
+            {control}
             {actions}
           </>
         }

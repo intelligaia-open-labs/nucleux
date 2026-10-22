@@ -2,6 +2,8 @@ import * as React from "react";
 import { Check, ChevronDown, Info, MessagesSquare, RefreshCw, Sparkles, X } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { Md3AgentComposer } from "@nucleux/md3-agent-composer";
+import { Md3IconButton } from "@nucleux/md3-icon-button";
+import { Md3RequestSettings } from "@nucleux/md3-open-input";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3Card } from "@nucleux/md3-card";
 import { Md3Checkbox } from "@nucleux/md3-checkbox";
@@ -19,6 +21,7 @@ export type {
   VoiceToneLayout,
   VoiceToneNotice,
   VoiceToneState,
+  VoiceToneTrigger,
 } from "@nucleux/voice-tone";
 export { defaultVoiceTones, defaultVoiceToneRules, useVoiceTone, VOICE_TONE_CUSTOM } from "@nucleux/voice-tone";
 export type Md3VoiceToneProps = VoiceToneProps;
@@ -243,7 +246,7 @@ function Notice({ vt }: { vt: VoiceToneState }) {
   );
 }
 
-function Picker({ vt }: { vt: VoiceToneState }) {
+function Picker({ vt, showClose }: { vt: VoiceToneState; showClose?: boolean }) {
   if (!vt.open) return null;
   return (
     <div
@@ -253,7 +256,12 @@ function Picker({ vt }: { vt: VoiceToneState }) {
       onKeyDown={vt.onPickerKeyDown}
       className="absolute bottom-full left-0 z-50 mb-2 flex w-[min(34rem,calc(100vw-2rem))] flex-col gap-2 rounded-md-lg bg-md-surface-container p-2 text-md-on-surface shadow-md-2 animate-nx-fade-in motion-reduce:animate-none"
     >
-      <div className="flex flex-col gap-0.5 px-3 pb-1 pt-2.5">
+      <div className={cn("relative flex flex-col gap-0.5 px-3 pb-1 pt-2.5", showClose && "pr-12")}>
+        {showClose && (
+          <Md3IconButton aria-label="Close" onClick={vt.closePicker} className="absolute right-0 top-0">
+            <X aria-hidden="true" />
+          </Md3IconButton>
+        )}
         <p id={vt.ids.title} className="text-base font-medium leading-6">
           {vt.label}
           <span className="sr-only"> — {vt.pickerTitle.toLowerCase()}</span>
@@ -333,6 +341,21 @@ function ToneChip({ vt }: { vt: VoiceToneState }) {
         </Md3Chip>
       )}
       <Picker vt={vt} />
+    </div>
+  );
+}
+
+function ToneSettings({ vt, anchored }: { vt: VoiceToneState; anchored?: boolean }) {
+  return (
+    <div ref={vt.rootRef} className="inline-flex">
+      <Md3RequestSettings
+        ref={vt.triggerRef}
+        items={vt.settingsItems(<MessagesSquare />)}
+        onSelect={vt.onSettingsSelect}
+        onOpenChange={vt.onSettingsOpenChange}
+        className={anchored ? "static [&>[role=menu]]:left-10" : undefined}
+      />
+      <Picker vt={vt} showClose />
     </div>
   );
 }
@@ -423,9 +446,14 @@ export const Md3VoiceTone = React.forwardRef<HTMLDivElement, Md3VoiceToneProps>(
     loading,
     onStop,
     actions,
+    composerLeading,
+    trigger = "chip",
+    settingsItems: _si,
+    onSettingsSelect: _oss,
     className,
     ...rest
   } = props;
+  const settingsControl = trigger === "settings";
 
   if (vt.variant === "settings") {
     return (
@@ -447,7 +475,7 @@ export const Md3VoiceTone = React.forwardRef<HTMLDivElement, Md3VoiceToneProps>(
     return (
       <div ref={ref} data-variant="chip" className={cn("relative inline-flex flex-col gap-1", className)} {...rest}>
         <Notice vt={vt} />
-        <ToneChip vt={vt} />
+        {settingsControl ? <ToneSettings vt={vt} /> : <ToneChip vt={vt} />}
       </div>
     );
   }
@@ -462,13 +490,18 @@ export const Md3VoiceTone = React.forwardRef<HTMLDivElement, Md3VoiceToneProps>(
         placeholder={placeholder}
         loading={loading}
         onStop={onStop}
-        className="rounded-md-xl border border-md-outline-variant bg-md-surface px-4 pb-2.5 pt-4 shadow-md-1 [&_textarea]:text-base"
+        className={cn(
+          "rounded-md-xl border border-md-outline-variant bg-md-surface px-4 pb-2.5 pt-4 shadow-md-1 [&_textarea]:text-base",
+          settingsControl && "relative",
+        )}
         leftActions={
           <>
-            <ToneChip vt={vt} />
-            {actions}
+            {composerLeading}
+            {settingsControl ? <ToneSettings vt={vt} anchored /> : <ToneChip vt={vt} />}
+            {settingsControl ? null : actions}
           </>
         }
+        rightActions={settingsControl ? actions : undefined}
       />
     </div>
   );

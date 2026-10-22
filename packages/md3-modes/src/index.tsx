@@ -4,6 +4,7 @@ import { cn } from "@nucleux/utils";
 import {
   modeSupportingText,
   modesLabels,
+  modesSettingsItem,
   useModes,
   useModesDismiss,
   useModesRoving,
@@ -16,8 +17,10 @@ import {
   type ModesProps,
   type ModesSegmentedProps,
   type ModesSubmitDetails,
+  type ModesTrigger,
   type ModesVariant,
 } from "@nucleux/modes";
+import { Md3RequestSettings, mergeRequestSettingsItems } from "@nucleux/md3-open-input";
 import { Md3AgentComposer } from "@nucleux/md3-agent-composer";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3Chip } from "@nucleux/md3-chip";
@@ -28,6 +31,7 @@ import { Md3SegmentedButton, Md3SegmentedButtonItem } from "@nucleux/md3-segment
 export type Md3ModeOption = ModeOption;
 export type Md3ModesNotice = ModesNotice;
 export type Md3ModesVariant = ModesVariant;
+export type Md3ModesTrigger = ModesTrigger;
 export type Md3ModesSubmitDetails = ModesSubmitDetails;
 export type Md3ModesProps = ModesProps;
 export type Md3ModesSegmentedProps = ModesSegmentedProps;
@@ -257,6 +261,7 @@ export const Md3ModesPicker = React.forwardRef<HTMLDivElement, Md3ModesPickerPro
       rejected,
       showDescriptions = true,
       autoFocus = false,
+      showClose = false,
       className,
       onKeyDown,
       ...props
@@ -290,9 +295,14 @@ export const Md3ModesPicker = React.forwardRef<HTMLDivElement, Md3ModesPickerPro
         }}
         {...props}
       >
-        <div className="flex flex-col gap-0.5 px-3 pb-2 pt-2.5">
+        <div className={cn("relative flex flex-col gap-0.5 px-3 pb-2 pt-2.5", showClose && "pr-12")}>
           <p className="text-base font-medium leading-6 text-md-on-surface">{label}</p>
           {description != null && <p className="text-xs leading-[18px] text-md-on-surface-variant">{description}</p>}
+          {showClose && (
+            <Md3IconButton aria-label={modesLabels.close} onClick={onClose} className="absolute right-0 top-0">
+              <X aria-hidden="true" />
+            </Md3IconButton>
+          )}
         </div>
         <Md3ModesList
           ref={listRef}
@@ -383,6 +393,9 @@ export const Md3Modes = React.forwardRef<HTMLDivElement, Md3ModesProps>(
       composerLeading,
       composerActions,
       sendLabel: _sendLabel,
+      trigger = "chip",
+      settingsItems,
+      onSettingsSelect,
       className,
       ...props
     },
@@ -467,6 +480,25 @@ export const Md3Modes = React.forwardRef<HTMLDivElement, Md3ModesProps>(
         />
       </div>
     );
+    const settings = (
+      <div ref={chipBoxRef} className="inline-flex">
+        <Md3RequestSettings
+          ref={chipRef}
+          items={mergeRequestSettingsItems(modesSettingsItem(label, s.mode, <SlidersHorizontal />), settingsItems)}
+          onSelect={(id) => {
+            if (id !== "mode") return onSettingsSelect?.(id);
+            setUserOpened(true);
+            s.setOpen(true);
+          }}
+          onOpenChange={(o) => {
+            if (o && s.open) s.setOpen(false);
+          }}
+          className={variant === "composer" ? "static [&>[role=menu]]:left-10" : undefined}
+        />
+      </div>
+    );
+    const control = trigger === "settings" ? settings : chip;
+
     const picker = s.open ? (
       <Md3ModesPicker
         ref={pickerRef}
@@ -480,6 +512,7 @@ export const Md3Modes = React.forwardRef<HTMLDivElement, Md3ModesProps>(
         rejected={rejected}
         showDescriptions={showDescriptions}
         autoFocus={userOpened}
+        showClose={trigger === "settings"}
         className={cn(
           "absolute z-50",
           variant === "chip" ? "bottom-full left-0 mb-2 w-[22rem]" : "inset-x-0 bottom-full mb-2",
@@ -518,7 +551,7 @@ export const Md3Modes = React.forwardRef<HTMLDivElement, Md3ModesProps>(
     if (variant === "chip") {
       return (
         <div ref={ref} className={cn("relative inline-flex flex-col items-start gap-2", className)} {...props}>
-          {chip}
+          {control}
           {picker}
           {note}
           {live}
@@ -539,15 +572,24 @@ export const Md3Modes = React.forwardRef<HTMLDivElement, Md3ModesProps>(
             if (draftProp === undefined) setInternalDraft("");
           }}
           placeholder={placeholder}
-          leftActions={composerLeading}
+          leftActions={
+            trigger === "settings" ? (
+              <>
+                {composerLeading}
+                {settings}
+              </>
+            ) : (
+              composerLeading
+            )
+          }
           rightActions={
             <>
-              {chip}
+              {trigger === "chip" && chip}
               {composerActions}
             </>
           }
           className={cn(
-            "gap-2 rounded-md-xl border border-md-outline-variant bg-md-surface px-4 pb-2.5 pt-4 shadow-md-1",
+            "relative gap-2 rounded-md-xl border border-md-outline-variant bg-md-surface px-4 pb-2.5 pt-4 shadow-md-1",
           )}
         />
         {live}

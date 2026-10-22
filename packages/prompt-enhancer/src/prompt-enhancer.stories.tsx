@@ -92,3 +92,15 @@ export const AutoEnhanceToggle: Story = {
     </CardContainer>
   ),
 };
+
+/** Request settings: no Enhance tool up front — “Improve prompt” sits in the tune control's menu beside the app's other settings (Mode Plan is on, so the control shows a dot); choosing it starts enhancing and shows the review. */
+export const RequestSettings: Story = {
+  args: {
+    trigger: "settings",
+    settingsItems: [
+      { id: "mode", label: "Mode", value: "Plan", set: true },
+      { id: "tone", label: "Tone", value: "Default" },
+      { id: "style", label: "Style", value: "Normal" },
+    ],
+  },
+};

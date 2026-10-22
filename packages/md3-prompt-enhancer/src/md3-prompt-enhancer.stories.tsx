@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { buildEnhancedPrompt, type PromptEnhancerSuggestion } from "@nucleux/prompt-enhancer";
+import { MessagesSquare, Mic, PenLine, Plus, SlidersHorizontal } from "lucide-react";
+import { Md3Button } from "@nucleux/md3-button";
+import { Md3IconButton } from "@nucleux/md3-icon-button";
 import { Md3PromptEnhancer } from "./index";
 
 const ORIGINAL = "summarise yesterday's standup";
@@ -35,9 +38,36 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** The site's live preview: the review card above the composer, each addition highlighted, explained and removable. */
+/** The site's live preview: the review card above the composer, each addition highlighted, explained and removable; Improve prompt lives in the tune control right after +. */
 export const Enhanced: Story = {
   args: { defaultState: "enhanced", defaultSuggestion: SUGGESTION },
+  render: (args) => (
+    <div className="w-[36rem] max-w-full">
+      <Md3PromptEnhancer
+        {...args}
+        hint={undefined}
+        trigger="settings"
+        settingsItems={[{ id: "mode", label: "Mode", icon: <SlidersHorizontal />, value: "None" }, { id: "tone", label: "Tone", icon: <MessagesSquare />, value: "Default" }, { id: "style", label: "Style", icon: <PenLine />, value: "Normal" }]}
+        onEnhance={fakeEnhance}
+        onSubmit={() => {}}
+        composerLeading={
+          <Md3IconButton aria-label="Add context">
+            <Plus />
+          </Md3IconButton>
+        }
+        composerActions={
+          <>
+            <Md3Button variant="text" aria-label="Model Balanced, effort High" className="px-3">
+              <span className="font-semibold">Balanced</span> <span className="font-normal">High</span>
+            </Md3Button>
+            <Md3IconButton aria-label="Voice input">
+              <Mic />
+            </Md3IconButton>
+          </>
+        }
+      />
+    </div>
+  ),
 };
 
 /** A short prompt in the composer with the Enhance tool beside it. */
@@ -91,4 +121,16 @@ export const AutoEnhanceToggle: Story = {
       <Md3PromptEnhancer {...args} onEnhance={fakeEnhance} onSubmit={() => {}} />
     </div>
   ),
+};
+
+/** Request settings: no Enhance tool up front — “Improve prompt” sits in the tune control's menu beside the app's other settings (Mode Plan is on, so the control shows a dot); choosing it starts enhancing and shows the review. */
+export const RequestSettings: Story = {
+  args: {
+    trigger: "settings",
+    settingsItems: [
+      { id: "mode", label: "Mode", value: "Plan", set: true },
+      { id: "tone", label: "Tone", value: "Default" },
+      { id: "style", label: "Style", value: "Normal" },
+    ],
+  },
 };

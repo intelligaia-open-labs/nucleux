@@ -1,4 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { Mic, PenLine, Plus, SlidersHorizontal, Sparkles } from "lucide-react";
+import { Md3Button } from "@nucleux/md3-button";
+import { Md3IconButton } from "@nucleux/md3-icon-button";
 import { Md3VoiceTone } from "./index";
 
 const meta = {
@@ -46,12 +49,34 @@ const WithPicker = (args: Story["args"]) => (
   </div>
 );
 
-/** The site's live preview: Professional chosen — the Tone chip in the composer names it, with a chevron to change and × to remove. The prompt text is untouched. */
+/** The site's live preview: Professional chosen — no chip up front; a dot on the tune control right after + says a setting is on, and its menu lists Tone with the value. The prompt text is untouched. */
 export const LivePreview: Story = {
   args: { tones: presets, rules, defaultValue: "professional", defaultRuleValues: ["no-emojis", "uk-english"], defaultDraft: draft },
   render: (args) => (
     <div className="w-[40rem] max-w-[calc(100vw-2rem)]">
-      <Md3VoiceTone {...args} variant="composer" className="mx-auto" onSubmit={() => {}} />
+      <Md3VoiceTone
+        {...args}
+        variant="composer"
+        trigger="settings"
+        settingsItems={[{ id: "mode", label: "Mode", icon: <SlidersHorizontal />, value: "None" }, { id: "style", label: "Style", icon: <PenLine />, value: "Normal" }, { id: "improve", label: "Improve prompt", icon: <Sparkles /> }]}
+        className="mx-auto"
+        onSubmit={() => {}}
+        composerLeading={
+          <Md3IconButton aria-label="Add context">
+            <Plus />
+          </Md3IconButton>
+        }
+        actions={
+          <>
+            <Md3Button variant="text" aria-label="Model Balanced, effort High" className="px-3">
+              <span className="font-semibold">Balanced</span> <span className="font-normal">High</span>
+            </Md3Button>
+            <Md3IconButton aria-label="Voice input">
+              <Mic />
+            </Md3IconButton>
+          </>
+        }
+      />
     </div>
   ),
 };
@@ -143,4 +168,10 @@ export const PickerSegmented: Story = {
 /** The Tone chip and picker alone, for your own composer's toolbar. */
 export const ChipOnly: Story = {
   args: { variant: "chip", tones: updateTones, defaultValue: "professional" },
+};
+
+/** Request settings: no Tone chip up front — the tune control carries a dot and “Tone Professional” in its accessible name; its menu lists Tone with the value, and that row opens the tone picker (with a close ×). */
+export const RequestSettings: Story = {
+  args: { variant: "composer", trigger: "settings", tones: updateTones, defaultDraft: draft, defaultValue: "professional" },
+  render: Composer,
 };

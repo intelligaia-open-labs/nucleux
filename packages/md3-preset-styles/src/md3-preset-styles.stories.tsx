@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Md3PresetStyle as PresetStyle, Md3PresetStyleDraft as PresetStyleDraft } from "./index";
+import { MessagesSquare, Mic, Plus, SlidersHorizontal, Sparkles } from "lucide-react";
+import { Md3Button } from "@nucleux/md3-button";
+import { Md3IconButton } from "@nucleux/md3-icon-button";
 import { Md3PresetStyles } from "./index";
 
 /** Image-output presets (the Style grid): token tones, no raw colours. */
@@ -80,10 +83,32 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Chat: "Use style" open from the composer's Style control, previewing Concise — nothing changes until they choose. */
+/** Chat: "Use style" open from the Request settings control (no Style chip up front), previewing Concise, with a close × — nothing changes until they choose. */
 export const UseStyleMenu: Story = {
   args: { ...menuArgs, defaultView: "menu", defaultPreview: "concise" },
   decorators: [composerFrame],
+  render: (args) => (
+    <Md3PresetStyles
+      {...args}
+      trigger="settings"
+      settingsItems={[{ id: "mode", label: "Mode", icon: <SlidersHorizontal />, value: "None" }, { id: "tone", label: "Tone", icon: <MessagesSquare />, value: "Default" }, { id: "improve", label: "Improve prompt", icon: <Sparkles /> }]}
+      composerLeading={
+        <Md3IconButton aria-label="Add context">
+          <Plus />
+        </Md3IconButton>
+      }
+      composerActions={
+        <>
+          <Md3Button variant="text" aria-label="Model Balanced, effort High" className="px-3">
+            <span className="font-semibold">Balanced</span> <span className="font-normal">High</span>
+          </Md3Button>
+          <Md3IconButton aria-label="Voice input">
+            <Mic />
+          </Md3IconButton>
+        </>
+      }
+    />
+  ),
 };
 
 /** Creative canvas: pick the look before generating — swatches, a reference-image drop, and the style locked for the project. */
@@ -166,5 +191,11 @@ export const WithCustomStyle: Story = {
       { id: "house", name: houseDraft.name, description: houseDraft.description, sample: houseDraft.sample, custom: true },
     ],
   },
+  decorators: [composerFrame],
+};
+
+/** Request settings: no Style control up front — the tune control carries a dot and “Style Concise” in its accessible name; its menu lists Style with the value, and that row opens Use style (with a close ×). */
+export const RequestSettings: Story = {
+  args: { ...menuArgs, trigger: "settings", defaultValue: "concise" },
   decorators: [composerFrame],
 };

@@ -1,6 +1,6 @@
 {
   "name": "nucleux",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Nucleux design system for coding agents: the nucleux MCP server (curated page patterns, exact component contracts, setup) plus the nucleux-design workflow skill.",
   "author": { "name": "intelligaia-open-labs" },
   "homepage": "https://github.com/intelligaia-open-labs/nucleux#readme",

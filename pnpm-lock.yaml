@@ -2962,6 +2962,9 @@ importers:
       '@nucleux/md3-menu':
         specifier: workspace:*
         version: link:../md3-menu
+      '@nucleux/md3-open-input':
+        specifier: workspace:*
+        version: link:../md3-open-input
       '@nucleux/md3-segmented-button':
         specifier: workspace:*
         version: link:../md3-segmented-button
@@ -3210,6 +3213,9 @@ importers:
       '@nucleux/md3-icon-button':
         specifier: workspace:*
         version: link:../md3-icon-button
+      '@nucleux/md3-open-input':
+        specifier: workspace:*
+        version: link:../md3-open-input
       '@nucleux/md3-progress':
         specifier: workspace:*
         version: link:../md3-progress
@@ -3321,6 +3327,9 @@ importers:
       '@nucleux/md3-checkbox':
         specifier: workspace:*
         version: link:../md3-checkbox
+      '@nucleux/md3-open-input':
+        specifier: workspace:*
+        version: link:../md3-open-input
       '@nucleux/md3-switch':
         specifier: workspace:*
         version: link:../md3-switch
@@ -3337,6 +3346,9 @@ importers:
         specifier: '>=18'
         version: 18.3.1(react@18.3.1)
     devDependencies:
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
       '@types/react':
         specifier: ^18.3.18
         version: 18.3.31
@@ -3984,6 +3996,12 @@ importers:
       '@nucleux/md3-chip':
         specifier: workspace:*
         version: link:../md3-chip
+      '@nucleux/md3-icon-button':
+        specifier: workspace:*
+        version: link:../md3-icon-button
+      '@nucleux/md3-open-input':
+        specifier: workspace:*
+        version: link:../md3-open-input
       '@nucleux/md3-slider':
         specifier: workspace:*
         version: link:../md3-slider
@@ -4139,6 +4157,9 @@ importers:
       '@nucleux/input-group':
         specifier: workspace:*
         version: link:../input-group
+      '@nucleux/open-input':
+        specifier: workspace:*
+        version: link:../open-input
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
@@ -4496,6 +4517,9 @@ importers:
       '@nucleux/input-group':
         specifier: workspace:*
         version: link:../input-group
+      '@nucleux/open-input':
+        specifier: workspace:*
+        version: link:../open-input
       '@nucleux/spinner':
         specifier: workspace:*
         version: link:../spinner

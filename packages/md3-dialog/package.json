@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-dialog",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 dialog — Nucleux agentic UI for React.",

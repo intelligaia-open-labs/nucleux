@@ -19,7 +19,7 @@ import { Button } from "@nucleux/button";
 import { CardContainer } from "@nucleux/card";
 import { Input } from "@nucleux/input";
 import { Label } from "@nucleux/label";
-import { OpenInput } from "@nucleux/open-input";
+import { OpenInput, RequestSettings } from "@nucleux/open-input";
 import { Spinner } from "@nucleux/spinner";
 import { Textarea } from "@nucleux/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@nucleux/toggle-group";
@@ -224,12 +224,14 @@ function Trigger({ s }: { s: PresetStylesState }) {
   );
 }
 
-function Menu({ s, label, description, showPreview, previewPrompt }: {
+function Menu({ s, label, description, showPreview, previewPrompt, showClose }: {
   s: PresetStylesState;
   label: string;
   description: string;
   showPreview: boolean;
   previewPrompt?: string;
+  /** A close × in the header, when the menu opened from Request settings. */
+  showClose?: boolean;
 }) {
   const titleId = `${s.ids}-menu-title`;
   const descId = `${s.ids}-menu-desc`;
@@ -278,7 +280,18 @@ function Menu({ s, label, description, showPreview, previewPrompt }: {
       aria-describedby={descId}
       className="absolute bottom-full left-0 z-50 mb-2 flex w-full min-w-[min(36rem,calc(100vw-2rem))] flex-col rounded-xl border border-border bg-background p-2 text-foreground shadow-md animate-nx-fade-in motion-reduce:animate-none"
     >
-      <div className="flex flex-col gap-0.5 px-3 pb-2 pt-2.5">
+      <div className={cn("relative flex flex-col gap-0.5 px-3 pb-2 pt-2.5", showClose && "pr-11")}>
+        {showClose && (
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            aria-label="Close"
+            onClick={() => s.closeMenu()}
+            className="absolute right-1 top-1.5 text-muted-foreground"
+          >
+            <X aria-hidden="true" className="size-4" />
+          </Button>
+        )}
         <p id={titleId} className="text-base font-semibold text-foreground">
           {label}
         </p>
@@ -555,6 +568,11 @@ export const PresetStyles = React.forwardRef<HTMLDivElement, PresetStylesProps>(
     onMessageChange: _onMessageChange,
     onSubmit: _onSubmit,
     placeholder = presetStylesCopy.placeholder,
+    composerLeading,
+    composerActions,
+    trigger: triggerMode = "chip",
+    settingsItems: _settingsItems,
+    onSettingsSelect: _onSettingsSelect,
     className,
     ...rest
   } = props;
@@ -564,7 +582,17 @@ export const PresetStyles = React.forwardRef<HTMLDivElement, PresetStylesProps>(
 
   if (variant === "menu") {
     const description = descriptionProp ?? presetStylesCopy.menuDescription(s.agentName);
-    const trigger = <Trigger s={s} />;
+    const trigger =
+      triggerMode === "settings" ? (
+        <RequestSettings
+          ref={s.triggerRef}
+          items={s.settingsItems(<PenLine />)}
+          onSelect={s.onSettingsSelect}
+          onOpenChange={s.onSettingsOpenChange}
+        />
+      ) : (
+        <Trigger s={s} />
+      );
     return (
       <div
         ref={ref}
@@ -572,7 +600,14 @@ export const PresetStyles = React.forwardRef<HTMLDivElement, PresetStylesProps>(
         {...rest}
       >
         {s.open && (
-          <Menu s={s} label={label} description={description} showPreview={showPreview} previewPrompt={previewPrompt} />
+          <Menu
+            s={s}
+            label={label}
+            description={description}
+            showPreview={showPreview}
+            previewPrompt={previewPrompt}
+            showClose={triggerMode === "settings"}
+          />
         )}
         {s.view === "create" && <CreateCard s={s} />}
         {s.view === "review" && <ReviewCard s={s} previewPrompt={previewPrompt} />}
@@ -603,7 +638,13 @@ export const PresetStyles = React.forwardRef<HTMLDivElement, PresetStylesProps>(
             value={s.message}
             onValueChange={s.setMessage}
             onSubmit={s.submit}
-            actions={trigger}
+            actions={
+              <>
+                {composerLeading}
+                {trigger}
+                {composerActions}
+              </>
+            }
           />
         ) : (
           trigger
