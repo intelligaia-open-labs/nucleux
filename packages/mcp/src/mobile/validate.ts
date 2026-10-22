@@ -138,6 +138,24 @@ export const USAGE_RULES: Rule[] = [
     },
   },
   {
+    code: "removed-api",
+    severity: "error",
+    patterns: {
+      all: [
+        /\bNucleuxTemplateCard\b/, /\bNucleuxTemplateList\b/, /\bTemplateCard\b/, /\bTemplateList\b/,
+        /\bNucleuxPromptTemplate\b/, /\bPromptTemplate\b/, /\bNucleuxTemplateSlot\b/, /\bTemplateSlot\b/,
+        /\bassemblePrompt\b/, /\btemplateSegments\b/, /\bonEditAsText\b/,
+      ],
+    },
+    message: "The sentence-with-slots Templates (TemplateList / TemplateCard, slots, \"Edit as text\") was removed on 22 Oct 2026: that pattern is now Madlibs. Templates is now a reusable workflow: previewed, applied as editable fields, never run until Run.",
+    fix: {
+      swiftui: "A sentence with blanks: NucleuxMadlibCard(control: NucleuxMadlibControl(madlib, onPlace: { … })). A repeatable workflow: NucleuxTemplateFlow(templates: [NucleuxTemplates.Template(…)], onRun: { t, values in … })",
+      compose: "A sentence with blanks: NucleuxMadlibCard(…). A repeatable workflow: NucleuxTemplateFlow(templates = listOf(NucleuxTemplates.Template(…)), onRun = { t, values -> … })",
+      flutter: "A sentence with blanks: NucleuxMadlibCard(control: NucleuxMadlibControl(madlib, onPlace: …)). A repeatable workflow: NucleuxTemplateFlow(templates: [NucleuxWorkflowTemplate(…)], onRun: (t, values) async { … })",
+      "react-native": "A sentence with blanks: <MadlibCard …/>. A repeatable workflow: <TemplateFlow templates={templates} onRun={(t, values) => …} />",
+    },
+  },
+  {
     code: "generic-ai-warning",
     severity: "error",
     patterns: {
@@ -234,7 +252,7 @@ const SYMBOL_PATTERNS: Record<MobileFramework, RegExp[]> = {
 };
 
 /** Removed names reported by the removed-api rules, so they are not also reported as unknown. */
-const REMOVED_NAMES = new Set(["NucleuxCaveatVariant", "nucleuxCaveat", "onCaveatPress", "CAVEAT_OUTPUT", "CAVEAT_ACTION", "caveatText", "NucleuxConsentAsk", "NucleuxConsentScope"]);
+const REMOVED_NAMES = new Set(["NucleuxCaveatVariant", "nucleuxCaveat", "onCaveatPress", "CAVEAT_OUTPUT", "CAVEAT_ACTION", "caveatText", "NucleuxConsentAsk", "NucleuxConsentScope", "NucleuxTemplateCard", "NucleuxTemplateList", "NucleuxPromptTemplate", "NucleuxTemplateSlot"]);
 
 function lineOf(text: string, index: number): number {
   let n = 1;
