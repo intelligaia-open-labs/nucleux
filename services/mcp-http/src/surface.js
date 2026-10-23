@@ -1,9 +1,9 @@
 // The tool surface a request sees: the web catalog (@nucleux/mcp) for everyone,
-// merged with Nucleux Mobile for signed-in requests.
+// merged with Nucleux Mobile for requests with a valid token.
 //
 // Both upstreams use the same names for the shared tools (list_components,
 // get_component, search_components, get_setup, list_examples, get_example), so
-// a signed-in client sees ONE tool per shared name whose `framework` takes the
+// a client with a token sees ONE tool per shared name whose `framework` takes the
 // web values (react/html) plus the mobile ones (swiftui, compose, flutter,
 // react-native) and is routed by that value. Tools only one side has pass
 // through unchanged. Anonymous requests (NUCLEUX_AUTH=optional|off) see the web

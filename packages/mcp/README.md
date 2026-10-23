@@ -53,7 +53,7 @@ add instead.
 | `--dry-run` | Show what would change; change nothing. |
 | `--only cursor,codex` | Just these agents (`claude-code`, `cursor`, `vscode`, `codex`, `windsurf`, `claude-desktop`, `gemini`), even if not detected. |
 | `--no-project` | Connect the agents only; write nothing into the current folder. |
-| `--code ABCD-2345` | Sign in and connect the agents directly to the hosted server (see [Signed-in hosted server](#signed-in-hosted-server)). |
+| `--code ABCD-2345` | Connect the agents directly to the hosted server with a one-time code (see [Hosted server](#hosted-server)). |
 | `--local` | Switch agents connected with `--code` back to this open local server. |
 
 Or set up each agent yourself:
@@ -101,29 +101,28 @@ args = ["-y", "@nucleux/mcp"]
 These clients do not read skills. The server's own instructions point the agent
 at the same workflow, and the `build_with_nucleux` prompt carries it in full.
 
-## Signed-in hosted server
+## Hosted server
 
 Everything above runs locally with the catalog bundled in the package: no
 account, no network. You can instead connect your agents to the hosted server
-at `https://nucleux.in/mcp`, signed in with Google or GitHub.
+at `https://nucleux.in/mcp`, which needs a token but no account.
 
-1. Open [nucleux.in/mcp/connect](https://nucleux.in/mcp/connect), sign in and
-   press **Generate connect line**.
-2. Paste the line it shows into your coding agent (or run the command in a
-   terminal yourself):
+1. Open [nucleux.in/mcp](https://nucleux.in/mcp) and get a connect
+   prompt.
+2. Paste it into your coding agent, or run its command in a terminal yourself:
 
    ```bash
    npx -y @nucleux/mcp add --code ABCD-2345
    ```
 
 ```
-Signed in to https://nucleux.in/mcp as Ada <ada@example.com>. Token saved to ~/.config/nucleux/credentials.json (readable only by you).
+Signed in to https://nucleux.in/mcp as anonymous. Token saved to ~/.config/nucleux/credentials.json (readable only by you).
 Found: Claude Code, Cursor, Claude Desktop
   ✓ Claude Code     connected directly to https://nucleux.in/mcp (replaced the previous nucleux entry) — claude mcp (user scope)
   ✓ Cursor          connected directly to https://nucleux.in/mcp — ~/.cursor/mcp.json
   ✓ Claude Desktop  connected to https://nucleux.in/mcp through `npx -y @nucleux/mcp remote` (Claude Desktop's config can't send a token to a remote server) — …/claude_desktop_config.json
   (Replaced the nucleux entry in Claude Code; other servers and settings are untouched.)
-  (Your token is in each agent's MCP config, readable only by you. Revoke it at https://nucleux.in/mcp/connect.)
+  (Your token is in each agent's MCP config, readable only by you. Revoke it with `npx -y @nucleux/mcp logout`.)
 ```
 
 The code works once and expires after 10 minutes. `add --code` exchanges it for
@@ -144,9 +143,13 @@ over HTTP, with an `Authorization: Bearer …` header:
 (`%APPDATA%\nucleux\credentials.json` on Windows), used by `whoami`, `logout`
 and the `remote` proxy, and in each agent's MCP config. `add` makes every file
 it writes the token into readable only by you (0600) and never prints the
-token. It isn't pasted into a chat: the connect line only carries the one-time
-code. You can revoke the token at any time on the
-[Connect page](https://nucleux.in/mcp/connect).
+token. It isn't pasted into a chat: the connect prompt only carries the one-time
+code. `npx -y @nucleux/mcp logout` revokes the token at any time. If it may have
+leaked from a machine you can't reach, ask the Nucleux team to revoke it.
+
+To configure an agent by hand instead, get a token on
+[nucleux.in/mcp](https://nucleux.in/mcp) and add `https://nucleux.in/mcp`
+with the header `Authorization: Bearer nx_…`.
 
 `--code` replaces any existing `nucleux` entry (the local server, the `remote`
 proxy or an older direct one); everything else in each config is kept. Run it
@@ -155,22 +158,23 @@ again with a new code to rotate the token. `--only`, `--no-project` and
 
 | Command | |
 | --- | --- |
-| `npx -y @nucleux/mcp whoami` | Show which account this machine is signed in as. |
-| `npx -y @nucleux/mcp logout` | Revoke the token on the server, delete the credentials file, and remove the hosted `nucleux` entries from every agent. If the server can't be reached it says so; revoke it on the Connect page. Run `npx -y @nucleux/mcp add` afterwards for the open local catalog. |
-| `npx -y @nucleux/mcp add --local` | Switch every agent back to the open local server (replaces hosted entries; keeps your sign-in). |
-| `npx -y @nucleux/mcp remote` | The stdio proxy to the hosted server (used for Claude Desktop, or by anyone who prefers it: `npx -y @nucleux/mcp remote` as the command). It reads the token from the credentials file; without a valid token it tells the agent how to sign in and never falls back to the local server. |
+| `npx -y @nucleux/mcp whoami` | Check that this machine's token is accepted (and by which server). |
+| `npx -y @nucleux/mcp logout` | Revoke the token on the server, delete the credentials file, and remove the hosted `nucleux` entries from every agent. If the server can't be reached it says so; run it again when online, or ask the Nucleux team to revoke it. Run `npx -y @nucleux/mcp add` afterwards for the open local catalog. |
+| `npx -y @nucleux/mcp add --local` | Switch every agent back to the open local server (replaces hosted entries; keeps the saved token). |
+| `npx -y @nucleux/mcp remote` | The stdio proxy to the hosted server (used for Claude Desktop, or by anyone who prefers it: `npx -y @nucleux/mcp remote` as the command). It reads the token from the credentials file; without a valid token it tells the agent how to get one (https://nucleux.in/mcp) and never falls back to the local server. |
 
 Environment: `NUCLEUX_TOKEN` overrides the saved token for `remote` and
 `whoami` (CI), and `NUCLEUX_MCP_URL` points at another server (default
 `https://nucleux.in/mcp`).
 
 In **claude.ai**, add the hosted server as a connector instead: Settings →
-Connectors → Add custom connector → `https://nucleux.in/mcp`, then sign in.
+Connectors → Add custom connector → `https://nucleux.in/mcp`, then click **Allow**
+on the consent page (no account needed).
 
 ### Mobile
 
 Nucleux Mobile, the same agentic components for SwiftUI, Jetpack Compose,
-Flutter and React Native, is served **only by the signed-in hosted server**; it
+Flutter and React Native, is served **only by the hosted server** (to any token); it
 is not in this package or its local catalog. Once connected with `add --code`
 (or the claude.ai connector), the shared tools take `framework: "swiftui" |
 "compose" | "flutter" | "react-native"`, and `get_mobile_spec`,
@@ -256,7 +260,7 @@ All of this runs in `pnpm --filter @nucleux/mcp build`. To add a pattern, see
 - Plain HTML: Tailwind classes only (`get_component` / `get_setup` with
   `framework: "html"`), no interactive behavior.
 - Not covered: Vue, Svelte, Angular. Native apps (SwiftUI, Compose, Flutter,
-  React Native): Nucleux Mobile, from the signed-in hosted server only (see [Mobile](#mobile)).
+  React Native): Nucleux Mobile, from the hosted server only (see [Mobile](#mobile)).
 
 ## Troubleshooting
 

@@ -1,49 +1,23 @@
-# Deploying the signed-in hosted MCP
+# Deploying the hosted MCP (token only)
 
 Box: the shared Ubuntu host. The app lives in `~/nucleux-mcp`, runs as pm2 app
 `nucleux-mcp` under the `jaswant-singh` daemon, listens on `127.0.0.1:8118`, and sits
 behind nginx at `https://nucleux.in/mcp`. The node version there is 21.
 
-## 1. Register the OAuth apps
+There is no sign-in, so there are no OAuth apps or SMTP accounts to register. Tokens come from
+the site's MCP page (`https://nucleux.in/mcp`, which calls `POST /mcp/tokens` and
+`POST /mcp/tokens/prompt`), from connect codes, or from the OAuth consent page.
 
-**Google** (Google Cloud console → APIs & Services → Credentials → Create OAuth client ID → *Web application*):
-- Authorized redirect URI: `https://nucleux.in/mcp/auth/callback/google`
-- OAuth consent screen scopes: `openid`, `email`, `profile` (all non-sensitive; no verification needed).
-- Publish the consent screen (*In production*), or only listed test users can sign in.
+## 1. What changes from the sign-in version
 
-**GitHub** (Settings → Developer settings → OAuth Apps → New OAuth App):
-- Homepage URL: `https://nucleux.in/mcp/connect`
-- Authorization callback URL: `https://nucleux.in/mcp/auth/callback/github`
-- Scopes are requested at sign-in: `read:user user:email`. The primary verified email is used.
-
-**Email codes** (Google Workspace SMTP). This is optional; without it, the email form is hidden:
-1. Pick the sending account, e.g. a `no-reply@` or `auth@` user in the Workspace. Mail goes
-   out as that account, so use one nobody signs in to day to day.
-2. On that account, turn on **2-Step Verification** (myaccount.google.com → Security).
-   App passwords only exist for accounts with 2SV.
-3. myaccount.google.com → Security → **App passwords** (or myaccount.google.com/apppasswords),
-   then create one named "Nucleux MCP". Copy the 16 characters without spaces; that is `SMTP_PASS`.
-   - If App passwords is missing, a Workspace admin has to allow it: Admin console →
-     Security → Authentication → 2-Step Verification → *Allow users to turn on 2-Step
-     Verification* (and the account must be enrolled). Some orgs block app passwords
-     outright (Advanced Protection, or "less secure apps" policies). In that case use the
-     **SMTP relay service** (Admin console → Apps → Google Workspace → Gmail → Routing →
-     SMTP relay service: allow the box's IP, require TLS, `SMTP_HOST=smtp-relay.gmail.com`,
-     `SMTP_PORT=587`) instead.
-   - Changing the account's password revokes its app passwords; create a new one if that happens.
-4. **Deliverability.** Codes in spam are the usual failure. Check these:
-   - **SPF.** The domain's TXT record includes Google: `v=spf1 include:_spf.google.com ~all`
-     (merge with any existing SPF record; only one per domain).
-   - **DKIM.** Admin console → Apps → Google Workspace → Gmail → **Authenticate email** →
-     generate a key, add the `google._domainkey` TXT record at the DNS host, then click
-     *Start authentication*.
-   - **DMARC.** At least `_dmarc` TXT `v=DMARC1; p=none; rua=mailto:dmarc@<domain>`, tightened later.
-   - `MAIL_FROM` has to use the sending account's address (or a verified alias) on that same
-     domain, or Gmail rewrites it and alignment fails.
-   - Send yourself a code at a Gmail and an Outlook address. In Gmail, *Show original* should
-     say SPF, DKIM and DMARC: PASS.
-5. Gmail limits sending to about 2,000 messages a day per Workspace user. Each address can
-   receive at most 5 codes an hour, so this is plenty.
+- `/mcp/connect` (and everything under it) 301-redirects to `https://nucleux.in/mcp#setup`.
+  **The site page must have a `#setup` section** that calls the two token endpoints (see README).
+- Google, GitHub and email sign-in are gone. Their env keys (`GOOGLE_*`, `GITHUB_*`, `SMTP_*`,
+  `MAIL_FROM`, `NUCLEUX_ADMINS`, `NUCLEUX_ALLOWED_*`) are ignored; delete them from `.env`.
+- Existing principals and tokens (Google/GitHub/email) keep working. Nothing is migrated or deleted.
+- `/admin` uses HTTP Basic with `NUCLEUX_ADMIN_PASSWORD` instead of an admin email list.
+- `NUCLEUX_AUTH` now defaults to `required`.
+- nodemailer is no longer a dependency.
 
 ## 2. Ship the code
 
@@ -53,7 +27,7 @@ cd ~/nucleux-mcp
 ts=$(date +%Y%m%d-%H%M%S)
 cp package.json package.json.bak-$ts && cp package-lock.json package-lock.json.bak-$ts && cp -r src src.bak-$ts
 # copy services/mcp-http/{src,package.json,package-lock.json,ecosystem.config.cjs,README.md,DEPLOY.md} over
-ls vendor/nucleux-mcp-0.10.0.tgz          # already there from the last upgrade
+ls vendor/nucleux-mcp-0.12.0.tgz          # already there from the last upgrade
 npm ci --omit=dev                          # pulls better-sqlite3 10.1.0's prebuilt linux-x64 binary for Node 21
 node -e "new (require('better-sqlite3'))(':memory:'); console.log('sqlite ok')"
 mkdir -p data && chmod 700 data
@@ -61,7 +35,7 @@ mkdir -p data && chmod 700 data
 
 ### Nucleux Mobile bundle (private)
 
-Signed-in users also get the Nucleux Mobile tools (SwiftUI, Compose, Flutter, React Native)
+Any valid token also gets the Nucleux Mobile tools (SwiftUI, Compose, Flutter, React Native)
 from the private kit's MCP server, bundled into one file in the private repo
 `intelligaia/nucleux-mobile-mcp`. It is never committed here (`vendor/` is gitignored) and
 never published to npm. Fetch it on a machine with access and copy it over:
@@ -80,8 +54,8 @@ The path is `NUCLEUX_MOBILE_MCP` (default `vendor/nucleux-mobile-mcp.cjs`, relat
 `~/nucleux-mcp`). It is self-contained (SDK, zod and catalog inside), so it needs no
 `npm install`. Without the file the server runs web-only. After `pm2 restart nucleux-mcp`,
 check `curl -s http://127.0.0.1:8118/health` shows `"mobile":{"version":…,"components":…}`
-rather than `"unavailable"`. Anonymous callers never see the mobile tools, so this only matters
-with sign-in. To update after a kit change, fetch the file again and restart.
+rather than `"unavailable"`. Requests without a token never see the mobile tools. To update after
+a kit change, fetch the file again and restart.
 
 ## 3. The `.env` file
 
@@ -92,42 +66,38 @@ already in the environment win). Don't rely on `node --env-file` under pm2: pm2 
 ```bash
 umask 077
 cat > ~/nucleux-mcp/.env <<'EOF'
-NUCLEUX_AUTH=optional
+NUCLEUX_AUTH=required
 NUCLEUX_SESSION_SECRET=<openssl rand -hex 32>
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
-GITHUB_CLIENT_ID=...
-GITHUB_CLIENT_SECRET=...
-NUCLEUX_ADMINS=neeraj@intelligaia.com
-# Email sign-in (optional; omit SMTP_USER/SMTP_PASS to hide it)
-SMTP_USER=no-reply@intelligaia.com
-SMTP_PASS=<16-character app password, no spaces>
-# SMTP_HOST=smtp.gmail.com
-# SMTP_PORT=465
-# MAIL_FROM=Nucleux <no-reply@intelligaia.com>
-# NUCLEUX_ALLOWED_DOMAINS=intelligaia.com     # optional; empty = anyone
+NUCLEUX_ADMIN_PASSWORD=<openssl rand -base64 24>
+# NUCLEUX_ISSUE_PER_HOUR=10        # self-serve tokens/prompts per IP per hour (each)
+# NUCLEUX_SITE_URL=https://nucleux.in/mcp
 EOF
 chmod 600 ~/nucleux-mcp/.env
 ```
 
+Keep the admin password in the team's password manager. `/admin` sends it as HTTP Basic, so
+only open it over https.
+
 Then:
 
 ```bash
-pm2 delete nucleux-mcp && pm2 start ecosystem.config.cjs && pm2 save   # reloads the config
-curl -s http://127.0.0.1:8118/health                  # "auth":"optional"
-curl -s https://nucleux.in/mcp/.well-known/oauth-authorization-server | head -c 200
+pm2 restart nucleux-mcp && pm2 save
+curl -s http://127.0.0.1:8118/health                                   # "auth":"required"
+curl -sI https://nucleux.in/mcp/connect | grep -i '^location'          # https://nucleux.in/mcp#setup
+curl -s -X POST https://nucleux.in/mcp/tokens -H 'Origin: https://nucleux.in' \
+  -H 'content-type: application/json' -d '{}'                         # {"token":"nx_…"}
+curl -s -X POST https://nucleux.in/mcp/tokens -H 'Origin: https://evil.example' -d '{}'   # 403 forbidden_origin
+curl -s -o /dev/null -w '%{http_code}\n' -u admin:"$NUCLEUX_ADMIN_PASSWORD" https://nucleux.in/mcp/admin   # 200
 ```
 
-The boot log says `email sign-in: SMTP smtp.gmail.com:465 ok`, or that the check failed
-with an SMTP code: `EAUTH 535` means a wrong app password or that app passwords aren't allowed.
-
-Open `https://nucleux.in/mcp/connect`, sign in with each method (Google, GitHub, emailed
-code), generate a connect line, and run it on a laptop. Then check `/admin`.
+Then, from the site page, get a connect prompt and run it on a laptop. Also add
+`https://nucleux.in/mcp` as a custom connector in claude.ai and click **Allow**. Check `/admin`
+afterwards: each should show as an anonymous principal.
 
 ## 4. nginx (needs an admin with sudo)
 
 The existing `location = /mcp` and `location /mcp/` blocks strip the prefix and proxy to
-`127.0.0.1:8118` with `proxy_buffering off`. Those already cover `/mcp/connect`,
+`127.0.0.1:8118` with `proxy_buffering off`. Those already cover `/mcp/tokens`,
 `/mcp/oauth/*`, `/mcp/.well-known/*` and so on. Make sure they also pass the client
 address, because the rate limits use it:
 
@@ -183,25 +153,22 @@ curl -s https://nucleux.in/.well-known/oauth-authorization-server/mcp | head -c 
 
 ## 5. Rollout
 
-1. **`NUCLEUX_AUTH=optional`** (the default). Anonymous calls still work, so the existing
-   claude.ai connector and URL-configured agents keep running. Signed-in agents
-   (`add --code`) are attributed and show up on `/connect` and `/admin`. In this mode
-   claude.ai never gets a 401, so it never starts OAuth and its calls stay anonymous.
-2. Once the nginx blocks are live, check OAuth from a real client before requiring it.
-   On a staging port with `NUCLEUX_AUTH=required`, or with the MCP Inspector against
-   `https://nucleux.in/mcp`, make sure discovery, registration, consent and the token all work.
-3. **`NUCLEUX_AUTH=required`**: edit `.env`, then `pm2 restart nucleux-mcp`. Existing
-   anonymous URL configs get a 401 that points at the metadata. claude.ai then prompts the
-   user to connect, and the coding agents need `add --code`.
-   Announce it first; the npm package (`npx -y @nucleux/mcp`, local) stays open.
+1. Ship the site page with its `#setup` section first (it calls `/mcp/tokens` and
+   `/mcp/tokens/prompt`, same origin), then deploy this server. Until the server is deployed
+   those calls 404; once it is, `/mcp/connect` redirects to the page.
+2. `NUCLEUX_AUTH=required`. Agents configured with a token keep working, including tokens
+   from the sign-in version. URL-only configs get a 401 that points at the OAuth metadata, so
+   OAuth-capable clients show the consent page and the others need a token from the site.
+3. OAuth discovery needs the nginx root `/.well-known/…` blocks above. Without them some clients
+   can't find the authorization server.
 
-Rollback: set `NUCLEUX_AUTH=off` (or `optional`) and `pm2 restart nucleux-mcp`. To return
-to the old code, restore the `*.bak-<ts>` files and `npm ci`. The database is additive
-and can stay in place.
+Rollback: restore the `*.bak-<ts>` files, `npm ci`, and restore the old `.env` keys. The
+database is unchanged in shape, apart from new `anon` principals, which the old code treats
+like any user. The `sessions` and `email_codes` tables were kept for exactly this reason.
 
 ## 6. Backups
 
-The database holds accounts and token hashes, but no plaintext tokens. It runs in WAL
+The database holds principals, token hashes and usage, but no plaintext tokens. It runs in WAL
 mode, so use SQLite's online backup instead of copying the file:
 
 ```bash
@@ -215,13 +182,14 @@ To restore: stop the app, copy a backup to `data/nucleux.db` (and delete any
 
 ## 7. Operations
 
-- Revoke a user: `/admin` → **Revoke all**, which revokes their tokens and OAuth grants. **Disable**
-  also ends their sessions and blocks sign-in.
-- Rotating `NUCLEUX_SESSION_SECRET` only breaks sign-ins that are in flight. Sessions are DB rows.
+- Revoke: `/admin` → **Revoke** on a token, or **Revoke all** on a principal (its tokens and
+  OAuth grants). **Disable** also blocks the principal's existing and future tokens. A user can
+  revoke their own machine's token with `npx -y @nucleux/mcp logout`.
+- Anonymous principals that never connected (an unused prompt code, say) are counted on
+  `/admin` but not listed.
+- Rotating `NUCLEUX_SESSION_SECRET` only invalidates consent and admin forms that are already open.
 - Logs: `logs/nucleux-mcp.{out,err}.log`. Tokens, codes and tool arguments are never logged.
 - When you upgrade `@nucleux/mcp`, the vendored-tarball steps are unchanged: `npm pack` into
   `vendor/`, bump the dependency, `npm install`, then `pm2 restart`.
 - When the mobile kit changes, re-fetch `vendor/nucleux-mobile-mcp.cjs` (section 2) and
   `pm2 restart nucleux-mcp`.
-- The first boot of this version migrates the database (adds `usage.upstream`); it is
-  additive, so rolling back the code leaves a harmless extra column.

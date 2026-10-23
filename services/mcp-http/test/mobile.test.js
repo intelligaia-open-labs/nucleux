@@ -1,8 +1,8 @@
-// Nucleux Mobile on the hosted server: merged for signed-in requests, absent
-// for anonymous ones, and optional (no bundle = web only).
+// Nucleux Mobile on the hosted server: merged for any valid token, absent for
+// requests without one, and optional (no bundle = web only).
 import { test, describe, before, after } from "node:test";
 import assert from "node:assert/strict";
-import { startServer, signIn, newCliCode, exchange, rpc, fakeWebUpstream, fakeMobileUpstream } from "./helpers.js";
+import { startServer, newCliCode, exchange, rpc, fakeWebUpstream, fakeMobileUpstream } from "./helpers.js";
 import { createMobileUpstream } from "../src/upstream.js";
 import { PLATFORM_PREAMBLE } from "../src/surface.js";
 
@@ -10,11 +10,11 @@ const INIT = { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { na
 const MOBILE = ["swiftui", "compose", "flutter", "react-native"];
 
 async function tokenFor(srv) {
-  return (await (await exchange(srv, await newCliCode(await signIn(srv)))).json()).token;
+  return (await (await exchange(srv, await newCliCode(srv))).json()).token;
 }
 const textOf = (res) => res.body.result.content.map((c) => c.text).join("\n");
 
-describe("signed in: web + mobile, one tool per shared name", () => {
+describe("with a token: web + mobile, one tool per shared name", () => {
   let srv, token, web, mobile;
   const call = (name, args) => rpc(srv, "tools/call", { name, arguments: args }, token);
   before(async () => {
