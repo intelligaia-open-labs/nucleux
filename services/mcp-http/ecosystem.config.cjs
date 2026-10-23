@@ -1,5 +1,5 @@
 // Secrets (OAuth client secrets, session secret) live in .env next to this file
-// (chmod 600), loaded by Node itself; see DEPLOY.md. Non-secret settings stay here.
+// (chmod 600), loaded by the server at startup (src/env.js); see DEPLOY.md. Non-secret settings stay here.
 module.exports = {
   apps: [
     {
@@ -7,7 +7,6 @@ module.exports = {
       cwd: "/home/jaswant-singh/nucleux-mcp",
       script: "src/index.js",
       interpreter: "node",
-      node_args: "--env-file=/home/jaswant-singh/nucleux-mcp/.env",
       instances: 1,
       exec_mode: "fork",
       autorestart: true,

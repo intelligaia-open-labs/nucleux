@@ -1,9 +1,21 @@
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir, hostname } from "node:os";
 import { dirname, join } from "node:path";
 
-import { AuthError, credentialsPath, exchangeCode, normalizeCode, who, writeCredentials, type AuthEnv } from "./auth.js";
+import {
+  AuthError,
+  credentialsPath,
+  DEFAULT_SERVER,
+  exchangeCode,
+  forgetCredentials,
+  normalizeCode,
+  readCredentials,
+  who,
+  writeCredentials,
+  type AuthEnv,
+  type Credentials,
+} from "./auth.js";
 import { installProjectFiles } from "./init.js";
 
 const USAGE = `Usage: npx -y @nucleux/mcp add [--code <XXXX-XXXX> | --local] [--only <agents>] [--no-project] [--dry-run]
@@ -13,12 +25,16 @@ nucleux-design guidance to the current project. Safe to run again: anything
 already set up is left alone.
 
   --code <code>    sign in to the hosted server (https://nucleux.in/mcp) with the
-                   one-time code from https://nucleux.in/mcp/connect. The token is
-                   saved once on this machine (never in agent configs) and every
-                   agent runs \`npx -y @nucleux/mcp remote\`; replaces a local
-                   nucleux entry. Without --code, agents run the open local server.
-  --local          switch agents set up with --code back to the open local
-                   server (replaces a remote nucleux entry; keeps the saved token)
+                   one-time code from https://nucleux.in/mcp/connect, and connect
+                   every agent directly to it over HTTP. Your token is saved in
+                   ~/.config/nucleux/credentials.json and in each agent's MCP
+                   config (both readable only by you); revoke it on the Connect
+                   page. Replaces any existing nucleux entry (re-run with a new
+                   code to rotate the token). Claude Desktop runs the local
+                   \`npx -y @nucleux/mcp remote\` proxy instead. Without --code,
+                   agents run the open local server.
+  --local          switch agents back to the open local server (replaces a hosted
+                   nucleux entry; keeps the saved sign-in)
   --only <agents>  comma-separated subset: ${"claude-code,cursor,vscode,codex,windsurf,claude-desktop,gemini"}
   --no-project     only connect the agents; write nothing into this folder
   --dry-run        show what would change, change nothing`;
@@ -66,11 +82,7 @@ function defaultEnv(): AddEnv {
   };
 }
 
-/**
- * The server command. Windows clients need `cmd /c` to start npx. `remote` is
- * the signed-in proxy to the hosted server; it reads the token from the
- * credentials file, so no secret ever goes into an agent's config.
- */
+/** The local server command. Windows clients need `cmd /c` to start npx. `remote` is the signed-in stdio proxy. */
 function serverCommand(platform: NodeJS.Platform, remote = false) {
   const pkg = ["-y", "@nucleux/mcp", ...(remote ? ["remote"] : [])];
   return platform === "win32" ? { command: "cmd", args: ["/c", "npx", ...pkg] } : { command: "npx", args: pkg };
@@ -83,56 +95,149 @@ function appSupport(env: AddEnv, app: string) {
   return join(env.home, ".config", app);
 }
 
+/**
+ * What `add` writes. `local`: the open stdio server (`replaceHosted` also swaps
+ * a hosted entry back, for `--local`). `hosted`: a direct HTTP connection with
+ * the user's token (`--code`), replacing whatever `nucleux` entry is there.
+ */
+type Mode = { kind: "local"; replaceHosted: boolean } | { kind: "hosted"; server: string; token: string };
+
+/** What an existing `nucleux` entry is: the local server, the `remote` proxy, a direct hosted connection, or something else. */
+type Kind = "local" | "proxy" | "direct" | "other";
+
+function classify(entry: unknown): Kind {
+  if (!entry || typeof entry !== "object") return "other";
+  const e = entry as Record<string, unknown>;
+  if (typeof e.url === "string" || typeof e.serverUrl === "string" || typeof e.httpUrl === "string") return "direct";
+  const args = JSON.stringify(e.args ?? []);
+  if (args.includes("@nucleux/mcp")) return /"remote"/.test(args) ? "proxy" : "local";
+  return "other";
+}
+const trimSlash = (u: string) => u.replace(/\/+$/, "");
+const directUrl = (entry: unknown) => {
+  const e = (entry ?? {}) as Record<string, unknown>;
+  return trimSlash(String(e.url ?? e.serverUrl ?? e.httpUrl ?? ""));
+};
+/** Is this entry ours to remove on logout: the proxy, or a direct connection to `server`? */
+const isHostedFor = (entry: unknown, server: string) => {
+  const k = classify(entry);
+  return k === "proxy" || (k === "direct" && directUrl(entry) === trimSlash(server));
+};
+
+const TOKEN_PLACEHOLDER = "<token from your nucleux credentials.json>";
+/** Never print the token: hints show a placeholder instead. */
+const redact = (text: string, token?: string) => (token ? text.split(token).join(TOKEN_PLACEHOLDER) : text);
+
+/** Owner-only, for files that now hold a token. Keeps the rest of the file as is. */
+function protect(file: string, platform: NodeJS.Platform) {
+  if (platform !== "win32") chmodSync(file, 0o600);
+}
+
 type Outcome = "added" | "replaced" | "already" | "manual";
+interface Result {
+  outcome: Outcome;
+  where: string;
+  hint?: string;
+  /** How a hosted entry connects. */
+  via?: "direct" | "proxy";
+}
 interface Agent {
   id: AgentId;
   name: string;
   detected: boolean;
-  connect: (dryRun: boolean) => { outcome: Outcome; where: string; hint?: string };
+  connect: (dryRun: boolean) => Result;
+  /** Removes a hosted `nucleux` entry for `server` (logout); returns where, or undefined if there was none. */
+  disconnect: (server: string) => string | undefined;
   /** Reads AGENTS.md / a skill folder in the project. */
   reads: "claude-skill" | "agents-md" | "none";
 }
 
 const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
 
+/** Should `add` swap an existing `nucleux` entry for `entry`? */
+function shouldReplace(mode: Mode, existing: unknown, entry: unknown) {
+  if (same(existing, entry)) return false;
+  if (mode.kind === "hosted") return true;
+  return mode.replaceHosted && (classify(existing) === "proxy" || classify(existing) === "direct");
+}
+
+function readJson(file: string): Record<string, unknown> | undefined {
+  if (!existsSync(file)) return {};
+  try {
+    const text = readFileSync(file, "utf8");
+    return text.trim() ? JSON.parse(text) : {};
+  } catch {
+    return undefined;
+  }
+}
+
 /**
  * Adds `nucleux` to a JSON config under `key`, keeping everything else. Never rewrites a file it can't parse.
- * With `replace` (signing in), an existing different `nucleux` entry is swapped for `entry`.
+ * Replaces an existing entry as the mode says; a file that gets a token becomes 0600.
  */
-function jsonServer(file: string, key: "mcpServers" | "servers", entry: object, dryRun: boolean, replace = false) {
-  let data: Record<string, unknown> = {};
-  if (existsSync(file)) {
-    try {
-      const text = readFileSync(file, "utf8");
-      data = text.trim() ? JSON.parse(text) : {};
-    } catch {
-      return {
-        outcome: "manual" as const,
-        where: file,
-        hint: `couldn't read it as plain JSON (comments?); add under "${key}": "nucleux": ${JSON.stringify(entry)}`,
-      };
-    }
+function jsonServer(env: AddEnv, file: string, key: "mcpServers" | "servers", entry: object, dryRun: boolean, mode: Mode, via?: Result["via"]): Result {
+  const token = mode.kind === "hosted" ? mode.token : undefined;
+  const data = readJson(file);
+  if (!data) {
+    return {
+      outcome: "manual",
+      where: file,
+      hint: redact(`couldn't read it as plain JSON (comments?); add under "${key}": "nucleux": ${JSON.stringify(entry)}`, token),
+      via,
+    };
   }
   const servers = (data[key] ?? {}) as Record<string, unknown>;
-  if (servers.nucleux && (!replace || same(servers.nucleux, entry))) return { outcome: "already" as const, where: file };
-  const outcome = servers.nucleux ? ("replaced" as const) : ("added" as const);
+  if (servers.nucleux && !shouldReplace(mode, servers.nucleux, entry)) return { outcome: "already", where: file, via };
+  const outcome = servers.nucleux ? "replaced" : "added";
   if (!dryRun) {
     data[key] = { ...servers, nucleux: entry };
     mkdirSync(dirname(file), { recursive: true });
     writeFileSync(file, JSON.stringify(data, null, 2) + "\n");
+    if (token && JSON.stringify(entry).includes(token)) protect(file, env.platform);
   }
-  return { outcome, where: file };
+  return { outcome, where: file, via };
+}
+
+/** Removes a hosted `nucleux` entry from a JSON config, keeping everything else. */
+function jsonRemove(file: string, key: "mcpServers" | "servers", server: string) {
+  if (!existsSync(file)) return undefined;
+  const data = readJson(file);
+  const servers = data?.[key] as Record<string, unknown> | undefined;
+  if (!data || !servers?.nucleux || !isHostedFor(servers.nucleux, server)) return undefined;
+  const { nucleux: _removed, ...others } = servers;
+  data[key] = others;
+  writeFileSync(file, JSON.stringify(data, null, 2) + "\n");
+  return file;
 }
 
 /** The `[mcp_servers.nucleux]` table (and any `[mcp_servers.nucleux.*]` sub-tables) in a Codex config. */
 const CODEX_BLOCK = /^\[mcp_servers\.nucleux(?:\.[^\]]*)?\][^\n]*\n?(?:(?!\[)[^\n]*\n?)*/gm;
 
-/** `replace`: swap an existing `nucleux` entry of the other kind (local ↔ remote) for this one. */
-function agents(env: AddEnv, remote = false, replace = false): Agent[] {
-  const srv = serverCommand(env.platform, remote);
+function codexKind(block: string): { kind: Kind; url?: string } {
+  const url = block.match(/^\s*url\s*=\s*"([^"]*)"/m)?.[1];
+  if (url !== undefined) return { kind: "direct", url: trimSlash(url) };
+  if (/"@nucleux\/mcp",\s*"remote"/.test(block)) return { kind: "proxy" };
+  if (block.includes("@nucleux/mcp")) return { kind: "local" };
+  return { kind: "other" };
+}
+
+function agents(env: AddEnv, mode: Mode): Agent[] {
+  const hosted = mode.kind === "hosted" ? mode : undefined;
+  const local = serverCommand(env.platform);
+  const proxy = serverCommand(env.platform, true);
+  const headers = hosted ? { Authorization: `Bearer ${hosted.token}` } : {};
+  const via: Result["via"] = hosted ? "direct" : undefined;
   const codexDir = join(env.home, ".codex");
+  const codexFile = join(codexDir, "config.toml");
   const vscodeUser = join(appSupport(env, "Code"), "User");
   const desktopDir = appSupport(env, "Claude");
+  const files = {
+    cursor: join(env.home, ".cursor", "mcp.json"),
+    vscode: join(vscodeUser, "mcp.json"),
+    windsurf: join(env.home, ".codeium", "windsurf", "mcp_config.json"),
+    desktop: join(desktopDir, "claude_desktop_config.json"),
+    gemini: join(env.home, ".gemini", "settings.json"),
+  };
   return [
     {
       id: "claude-code",
@@ -143,20 +248,31 @@ function agents(env: AddEnv, remote = false, replace = false): Agent[] {
         const where = "claude mcp (user scope)";
         let outcome: Outcome = "added";
         if (env.run("claude", ["mcp", "get", "nucleux"]) === 0) {
-          const isRemote = !!env.output?.("claude", ["mcp", "get", "nucleux"])?.includes("@nucleux/mcp remote");
-          if (!replace || isRemote === remote) {
-            return { outcome: "already", where };
-          }
+          const info = env.output?.("claude", ["mcp", "get", "nucleux"]) ?? "";
+          const isHosted = info.includes("@nucleux/mcp remote") || /^\s*(Type:\s*(http|sse)|URL:)/im.test(info);
+          // Hosted: always re-add (a new code means a new token). Local: only --local swaps a hosted entry back.
+          if (!hosted && !(mode.kind === "local" && mode.replaceHosted && isHosted)) return { outcome: "already", where, via };
           outcome = "replaced";
           if (!dryRun && env.run("claude", ["mcp", "remove", "--scope", "user", "nucleux"]) !== 0) {
             env.run("claude", ["mcp", "remove", "nucleux"]);
           }
         }
-        if (dryRun) return { outcome, where };
-        const ok = env.run("claude", ["mcp", "add", "--scope", "user", "nucleux", "--", srv.command, ...srv.args]) === 0;
-        return ok
-          ? { outcome, where }
-          : { outcome: "manual", where, hint: `run: claude mcp add --scope user nucleux -- ${[srv.command, ...srv.args].join(" ")}` };
+        if (dryRun) return { outcome, where, via };
+        const args = hosted
+          ? ["mcp", "add", "--transport", "http", "--scope", "user", "nucleux", hosted.server, "--header", `Authorization: Bearer ${hosted.token}`]
+          : ["mcp", "add", "--scope", "user", "nucleux", "--", local.command, ...local.args];
+        if (env.run("claude", args) === 0) return { outcome, where, via };
+        return { outcome: "manual", where, via, hint: `run: claude ${redact(args.map((a) => (a.includes(" ") ? `"${a}"` : a)).join(" "), hosted?.token)}` };
+      },
+      disconnect: (server) => {
+        if (!env.has("claude") || env.run("claude", ["mcp", "get", "nucleux"]) !== 0) return undefined;
+        const info = env.output?.("claude", ["mcp", "get", "nucleux"]) ?? "";
+        const isOurs = info.includes("@nucleux/mcp remote") || info.includes(trimSlash(server));
+        if (!isOurs) return undefined;
+        if (env.run("claude", ["mcp", "remove", "--scope", "user", "nucleux"]) !== 0 && env.run("claude", ["mcp", "remove", "nucleux"]) !== 0) {
+          return undefined;
+        }
+        return "claude mcp (user scope)";
       },
     },
     {
@@ -164,14 +280,17 @@ function agents(env: AddEnv, remote = false, replace = false): Agent[] {
       name: "Cursor",
       detected: existsSync(join(env.home, ".cursor")) || env.has("cursor"),
       reads: "agents-md",
-      connect: (dryRun) => jsonServer(join(env.home, ".cursor", "mcp.json"), "mcpServers", srv, dryRun, replace),
+      connect: (dryRun) => jsonServer(env, files.cursor, "mcpServers", hosted ? { url: hosted.server, headers } : local, dryRun, mode, via),
+      disconnect: (server) => jsonRemove(files.cursor, "mcpServers", server),
     },
     {
       id: "vscode",
       name: "VS Code (Copilot)",
       detected: existsSync(vscodeUser),
       reads: "agents-md",
-      connect: (dryRun) => jsonServer(join(vscodeUser, "mcp.json"), "servers", { type: "stdio", ...srv }, dryRun, replace),
+      connect: (dryRun) =>
+        jsonServer(env, files.vscode, "servers", hosted ? { type: "http", url: hosted.server, headers } : { type: "stdio", ...local }, dryRun, mode, via),
+      disconnect: (server) => jsonRemove(files.vscode, "servers", server),
     },
     {
       id: "codex",
@@ -179,25 +298,38 @@ function agents(env: AddEnv, remote = false, replace = false): Agent[] {
       detected: existsSync(codexDir) || env.has("codex"),
       reads: "agents-md",
       connect: (dryRun) => {
-        const file = join(codexDir, "config.toml");
-        let current = existsSync(file) ? readFileSync(file, "utf8") : "";
-        const block = `[mcp_servers.nucleux]\ncommand = ${JSON.stringify(srv.command)}\nargs = ${JSON.stringify(srv.args)}\n`;
+        let current = existsSync(codexFile) ? readFileSync(codexFile, "utf8") : "";
+        const block = hosted
+          ? `[mcp_servers.nucleux]\nurl = ${JSON.stringify(hosted.server)}\nhttp_headers = { "Authorization" = ${JSON.stringify(headers.Authorization)} }\n`
+          : `[mcp_servers.nucleux]\ncommand = ${JSON.stringify(local.command)}\nargs = ${JSON.stringify(local.args)}\n`;
         let outcome: Outcome = "added";
         if (/^\[mcp_servers\.nucleux\]/m.test(current)) {
           const existing = current.match(CODEX_BLOCK)?.join("") ?? "";
-          const isRemote = /"@nucleux\/mcp",\s*"remote"/.test(existing);
-          if (!replace || isRemote === remote) {
-            return { outcome: "already", where: file };
-          }
+          const { kind } = codexKind(existing);
+          const replace = hosted
+            ? existing.trim() !== block.trim()
+            : mode.kind === "local" && mode.replaceHosted && (kind === "proxy" || kind === "direct");
+          if (!replace) return { outcome: "already", where: codexFile, via };
           outcome = "replaced";
           current = current.replace(CODEX_BLOCK, "").replace(/\n{3,}/g, "\n\n");
         }
         if (!dryRun) {
           mkdirSync(codexDir, { recursive: true });
           const sep = current && !current.endsWith("\n\n") ? (current.endsWith("\n") ? "\n" : "\n\n") : "";
-          writeFileSync(file, current + sep + block);
+          writeFileSync(codexFile, current + sep + block);
+          if (hosted) protect(codexFile, env.platform);
         }
-        return { outcome, where: file };
+        return { outcome, where: codexFile, via };
+      },
+      disconnect: (server) => {
+        if (!existsSync(codexFile)) return undefined;
+        const current = readFileSync(codexFile, "utf8");
+        const existing = current.match(CODEX_BLOCK)?.join("");
+        if (!existing) return undefined;
+        const { kind, url } = codexKind(existing);
+        if (!(kind === "proxy" || (kind === "direct" && url === trimSlash(server)))) return undefined;
+        writeFileSync(codexFile, current.replace(CODEX_BLOCK, "").replace(/\n{3,}/g, "\n\n"));
+        return codexFile;
       },
     },
     {
@@ -205,21 +337,25 @@ function agents(env: AddEnv, remote = false, replace = false): Agent[] {
       name: "Windsurf",
       detected: existsSync(join(env.home, ".codeium", "windsurf")),
       reads: "agents-md",
-      connect: (dryRun) => jsonServer(join(env.home, ".codeium", "windsurf", "mcp_config.json"), "mcpServers", srv, dryRun, replace),
+      connect: (dryRun) => jsonServer(env, files.windsurf, "mcpServers", hosted ? { serverUrl: hosted.server, headers } : local, dryRun, mode, via),
+      disconnect: (server) => jsonRemove(files.windsurf, "mcpServers", server),
     },
     {
       id: "claude-desktop",
       name: "Claude Desktop",
       detected: existsSync(desktopDir),
       reads: "none",
-      connect: (dryRun) => jsonServer(join(desktopDir, "claude_desktop_config.json"), "mcpServers", srv, dryRun, replace),
+      // Its config file can't send headers to a remote server, so it keeps the stdio proxy (token read from credentials.json).
+      connect: (dryRun) => jsonServer(env, files.desktop, "mcpServers", hosted ? proxy : local, dryRun, mode, hosted ? "proxy" : undefined),
+      disconnect: (server) => jsonRemove(files.desktop, "mcpServers", server),
     },
     {
       id: "gemini",
       name: "Gemini CLI",
       detected: existsSync(join(env.home, ".gemini")) || env.has("gemini"),
       reads: "agents-md",
-      connect: (dryRun) => jsonServer(join(env.home, ".gemini", "settings.json"), "mcpServers", srv, dryRun, replace),
+      connect: (dryRun) => jsonServer(env, files.gemini, "mcpServers", hosted ? { httpUrl: hosted.server, headers } : local, dryRun, mode, via),
+      disconnect: (server) => jsonRemove(files.gemini, "mcpServers", server),
     },
   ];
 }
@@ -269,9 +405,13 @@ export function runAdd(args: string[], env: AddEnv = defaultEnv()): number | Pro
     console.error(`Use either --code or --local, not both.\n\n${USAGE}`);
     return 1;
   }
-  const all = agents(env, remote, remote || local);
-  // --only connects what was asked for even if we can't see it installed.
-  const chosen = only ? all.filter((a) => only!.includes(a.id)) : all.filter((a) => a.detected);
+  const pick = (mode: Mode) => {
+    const all = agents(env, mode);
+    // --only connects what was asked for even if we can't see it installed.
+    return only ? all.filter((a) => only!.includes(a.id)) : all.filter((a) => a.detected);
+  };
+  const localMode: Mode = { kind: "local", replaceHosted: local };
+  const chosen = pick(localMode);
   if (!chosen.length) {
     env.log(
       `No coding agents found. Pick one with --only (${AGENT_IDS.join(", ")}),\n` +
@@ -279,8 +419,12 @@ export function runAdd(args: string[], env: AddEnv = defaultEnv()): number | Pro
     );
     return 1;
   }
-  if (!remote) return connectAgents(env, chosen, { dryRun, noProject, remote });
-  return signIn(env, code!, dryRun).then((ok) => (ok ? connectAgents(env, chosen, { dryRun, noProject, remote }) : 1));
+  if (!remote) return connectAgents(env, chosen, { dryRun, noProject, mode: localMode });
+  return signIn(env, code!, dryRun).then((creds) => {
+    if (!creds) return 1;
+    const mode: Mode = { kind: "hosted", server: creds.server, token: creds.token };
+    return connectAgents(env, pick(mode), { dryRun, noProject, mode });
+  });
 }
 
 function authEnv(env: AddEnv): AuthEnv {
@@ -295,47 +439,56 @@ function authEnv(env: AddEnv): AuthEnv {
   };
 }
 
-/** Exchanges the one-time code for the user's token and saves it (0600). Writes nothing on --dry-run. */
-async function signIn(env: AddEnv, code: string, dryRun: boolean): Promise<boolean> {
+/**
+ * Exchanges the one-time code for the user's token and saves it (0600).
+ * On --dry-run it spends nothing and writes nothing (the returned token is a placeholder).
+ */
+async function signIn(env: AddEnv, code: string, dryRun: boolean): Promise<Credentials | undefined> {
   const a = authEnv(env);
   const file = credentialsPath(a);
   if (dryRun) {
     env.log(`Dry run — nothing is changed.\nWould sign in with code ${code} and save the token to ${file}.`);
-    return true;
+    const server = (a.vars.NUCLEUX_MCP_URL || DEFAULT_SERVER).replace(/\/+$/, "");
+    return { server, token: "nx_dry_run" };
   }
   try {
     const creds = await exchangeCode(a, code);
     writeCredentials(a, creds);
     env.log(`Signed in to ${creds.server} as ${who(creds)}. Token saved to ${file} (readable only by you).`);
-    return true;
+    return creds;
   } catch (err) {
     if (!(err instanceof AuthError)) throw err;
     env.log(err.message);
-    return false;
+    return undefined;
   }
 }
 
-function connectAgents(env: AddEnv, chosen: Agent[], o: { dryRun: boolean; noProject: boolean; remote: boolean }): number {
-  const { dryRun, noProject, remote } = o;
+function connectAgents(env: AddEnv, chosen: Agent[], o: { dryRun: boolean; noProject: boolean; mode: Mode }): number {
+  const { dryRun, noProject, mode } = o;
+  const remote = mode.kind === "hosted";
   const pad = Math.max(...chosen.map((a) => a.name.length));
   env.log(`${dryRun && !remote ? "Dry run — nothing is changed.\n" : ""}Found: ${chosen.map((a) => a.name).join(", ")}`);
   const manual: string[] = [];
   const restart: string[] = [];
   const replaced: string[] = [];
-  const target = remote ? "the hosted Nucleux server" : "Nucleux";
+  const server = mode.kind === "hosted" ? mode.server : "";
   for (const a of chosen) {
     const r = a.connect(dryRun);
     const mark = r.outcome === "manual" ? "!" : "✓";
-    const what =
-      r.outcome === "added"
-        ? dryRun ? `would connect ${target}` : `${remote ? "hosted Nucleux" : "Nucleux"} connected`
-        : r.outcome === "replaced"
-          ? remote
-            ? dryRun ? "would replace the local server with the hosted one" : "local server replaced by the hosted one"
-            : dryRun ? "would replace the hosted server with the local one" : "hosted server replaced by the local one"
-          : r.outcome === "already"
-            ? "already connected"
-            : "needs one step";
+    const changed = r.outcome === "added" || r.outcome === "replaced";
+    const how =
+      r.via === "proxy"
+        ? `connected to ${server} through \`npx -y @nucleux/mcp remote\` (Claude Desktop's config can't send a token to a remote server)`
+        : `connected directly to ${server}`;
+    const what = !changed
+      ? r.outcome === "already"
+        ? "already connected"
+        : "needs one step"
+      : remote
+        ? `${dryRun ? "would be " : ""}${how}${r.outcome === "replaced" ? " (replaced the previous nucleux entry)" : ""}`
+        : r.outcome === "added"
+          ? dryRun ? "would connect Nucleux" : "Nucleux connected"
+          : dryRun ? "would replace the hosted server with the local one" : "hosted server replaced by the local one";
     env.log(`  ${mark} ${a.name.padEnd(pad)}  ${what} — ${r.where}`);
     if (r.hint) manual.push(`  ${a.name}: ${r.hint}`);
     if (r.outcome === "replaced") replaced.push(a.name);
@@ -346,7 +499,7 @@ function connectAgents(env: AddEnv, chosen: Agent[], o: { dryRun: boolean; noPro
   if (replaced.length) {
     env.log(
       remote
-        ? `  (Replaced the local nucleux entry in ${replaced.join(", ")} with \`npx -y @nucleux/mcp remote\`; other servers and settings are untouched.)`
+        ? `  (Replaced the nucleux entry in ${replaced.join(", ")}; other servers and settings are untouched.)`
         : `  (Replaced the hosted nucleux entry in ${replaced.join(", ")} with the local \`npx -y @nucleux/mcp\`; other servers and settings are untouched. Your sign-in is kept: \`npx -y @nucleux/mcp logout\` removes it.)`,
     );
   }
@@ -368,6 +521,9 @@ function connectAgents(env: AddEnv, chosen: Agent[], o: { dryRun: boolean; noPro
     env.log("  (not in a project folder, so no project files were written; run it again from your app's root)");
   }
 
+  if (remote && !dryRun && chosen.some((a) => a.id !== "claude-desktop")) {
+    env.log(`  (Your token is in each agent's MCP config, readable only by you. Revoke it at https://nucleux.in/mcp/connect.)`);
+  }
   if (manual.length) env.log(`\nOne step left:\n${manual.join("\n")}`);
   env.log(
     `\n${dryRun ? "Run it without --dry-run to apply." : "Done."}` +
@@ -375,4 +531,28 @@ function connectAgents(env: AddEnv, chosen: Agent[], o: { dryRun: boolean; noPro
       ` Then ask your agent: "Build a settings page with Nucleux".`,
   );
   return manual.length ? 2 : 0;
+}
+
+/**
+ * `nucleux-mcp logout`: revoke the saved token on the server (best effort), delete the
+ * credentials file, and remove the hosted `nucleux` entries from every agent.
+ */
+export async function runLogout(args: string[], env: AddEnv = defaultEnv()): Promise<number> {
+  if (args.length) {
+    console.error("Usage: npx -y @nucleux/mcp logout");
+    return 1;
+  }
+  const a = authEnv(env);
+  const server = ((a.vars.NUCLEUX_MCP_URL || readCredentials(a)?.server || DEFAULT_SERVER) as string).replace(/\/+$/, "");
+  await forgetCredentials(a);
+  const removed: string[] = [];
+  for (const agent of agents(env, { kind: "local", replaceHosted: false })) {
+    const where = agent.disconnect(server);
+    if (where) removed.push(`  ✓ ${agent.name}: removed the hosted nucleux entry — ${where}`);
+  }
+  if (removed.length) {
+    env.log(removed.join("\n"));
+    env.log("For the open local catalog (no account), run: npx -y @nucleux/mcp add");
+  }
+  return 0;
 }

@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/caveat",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "type": "module",
   "sideEffects": false,
   "description": "Caveat — says what is incomplete, uncertain or out of date about an AI result — Nucleux agentic UI for React.",

@@ -5,6 +5,7 @@
 // agents, an OAuth 2.1 authorization server for claude.ai, and per-user usage
 // tracking (see app.js). Configuration is all environment; see README.md.
 
+import { loadEnvFile } from "./env.js";
 import { loadConfig } from "./config.js";
 import { openDb } from "./db.js";
 import { createStore } from "./store.js";
@@ -12,6 +13,10 @@ import { createUpstream } from "./upstream.js";
 import { providersFromConfig } from "./providers.js";
 import { createApp } from "./app.js";
 
+// The database and its -wal/-shm files hold emails and token hashes: owner only.
+process.umask(0o077);
+const fromFile = loadEnvFile();
+if (fromFile.length) console.log(`[nucleux-mcp] loaded ${fromFile.length} settings from .env`);
 const config = loadConfig();
 const db = openDb(config.dbFile);
 const store = createStore(db);

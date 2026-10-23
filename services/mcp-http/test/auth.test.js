@@ -177,6 +177,32 @@ describe("CLI code exchange", () => {
   });
   after(() => srv.close());
 
+  test("the connect prompt is self-contained and covers the edge cases", async () => {
+    const page = await (await browser.get("/connect")).text();
+    const html = await (await browser.post("/connect/code", { _csrf: page.match(/name="_csrf" value="([^"]+)"/)[1] })).text();
+    const prompt = html.match(/<pre id="connect-line"[^>]*>([\s\S]*?)<\/pre>/)[1].replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+    const code = prompt.match(/add --code ([A-Z0-9]{4}-[A-Z0-9]{4})/)[1];
+    for (const needle of [
+      `npx -y @nucleux/mcp@latest add --code ${code}`,
+      "signed in as alice@example.com",
+      "works once and expires 10 minutes",
+      "unknown, expired or already used",
+      "Node.js 18",
+      "HTTPS_PROXY",
+      "ask me to run the command myself",
+      "--only",
+      "--no-project",
+      "whoami",
+      "restarted",
+      "Never print, paste, log or commit it",
+      "npx -y @nucleux/mcp logout",
+      'first ask me "Material 3 or shadcn?"',
+    ]) {
+      assert.ok(prompt.includes(needle), `prompt mentions ${needle}`);
+    }
+    assert.doesNotMatch(prompt, /nx_[0-9A-Za-z]{10}/, "the prompt carries the one-time code, never a token");
+  });
+
   test("valid code -> token, whoami, label", async () => {
     const code = await newCliCode(browser);
     assert.match(code, /^[A-HJKMNP-Z2-9]{4}-[A-HJKMNP-Z2-9]{4}$/);

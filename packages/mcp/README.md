@@ -53,7 +53,8 @@ add instead.
 | `--dry-run` | Show what would change; change nothing. |
 | `--only cursor,codex` | Just these agents (`claude-code`, `cursor`, `vscode`, `codex`, `windsurf`, `claude-desktop`, `gemini`), even if not detected. |
 | `--no-project` | Connect the agents only; write nothing into the current folder. |
-| `--code ABCD-2345` | Sign in and use the hosted server instead (see [Signed-in hosted server](#signed-in-hosted-server)). |
+| `--code ABCD-2345` | Sign in and connect the agents directly to the hosted server (see [Signed-in hosted server](#signed-in-hosted-server)). |
+| `--local` | Switch agents connected with `--code` back to this open local server. |
 
 Or set up each agent yourself:
 
@@ -117,37 +118,54 @@ at `https://nucleux.in/mcp`, signed in with Google or GitHub.
 
 ```
 Signed in to https://nucleux.in/mcp as Ada <ada@example.com>. Token saved to ~/.config/nucleux/credentials.json (readable only by you).
-Found: Claude Code, Cursor
-  ✓ Claude Code  local server replaced by the hosted one — claude mcp (user scope)
-  ✓ Cursor       hosted Nucleux connected — ~/.cursor/mcp.json
-  (Replaced the local nucleux entry in Claude Code with `npx -y @nucleux/mcp remote`; other servers and settings are untouched.)
+Found: Claude Code, Cursor, Claude Desktop
+  ✓ Claude Code     connected directly to https://nucleux.in/mcp (replaced the previous nucleux entry) — claude mcp (user scope)
+  ✓ Cursor          connected directly to https://nucleux.in/mcp — ~/.cursor/mcp.json
+  ✓ Claude Desktop  connected to https://nucleux.in/mcp through `npx -y @nucleux/mcp remote` (Claude Desktop's config can't send a token to a remote server) — …/claude_desktop_config.json
+  (Replaced the nucleux entry in Claude Code; other servers and settings are untouched.)
+  (Your token is in each agent's MCP config, readable only by you. Revoke it at https://nucleux.in/mcp/connect.)
 ```
 
 The code works once and expires after 10 minutes. `add --code` exchanges it for
-your personal token, saves the token once on this machine
-(`~/.config/nucleux/credentials.json`, or `%APPDATA%\nucleux\credentials.json`
-on Windows, mode 0600) and configures each agent to run
-`npx -y @nucleux/mcp remote`, a local stdio proxy to the hosted server. The
-token never goes into an agent's config or into the chat. An existing local
-`nucleux` entry is replaced; everything else in the config is kept. `--only`,
-`--no-project` and `--dry-run` work as above (`--dry-run` doesn't use up the
-code).
+your personal token and connects each agent **directly** to the hosted server
+over HTTP, with an `Authorization: Bearer …` header:
+
+| Agent | Entry written |
+| --- | --- |
+| Claude Code | `claude mcp add --transport http --scope user nucleux https://nucleux.in/mcp --header "Authorization: Bearer …"` |
+| Cursor (`~/.cursor/mcp.json`) | `{ "url": "https://nucleux.in/mcp", "headers": { "Authorization": "Bearer …" } }` |
+| VS Code (user `mcp.json`) | `{ "type": "http", "url": …, "headers": { … } }` |
+| Windsurf (`mcp_config.json`) | `{ "serverUrl": …, "headers": { … } }` |
+| Gemini CLI (`settings.json`) | `{ "httpUrl": …, "headers": { … } }` |
+| Codex (`config.toml`) | `[mcp_servers.nucleux]` with `url = "…"` and `http_headers = { "Authorization" = "Bearer …" }` |
+| Claude Desktop | `npx -y @nucleux/mcp remote`, a local stdio proxy (its config can't send headers to a remote server) |
+
+**Where the token lives:** in `~/.config/nucleux/credentials.json`
+(`%APPDATA%\nucleux\credentials.json` on Windows), used by `whoami`, `logout`
+and the `remote` proxy, and in each agent's MCP config. `add` makes every file
+it writes the token into readable only by you (0600) and never prints the
+token. It isn't pasted into a chat: the connect line only carries the one-time
+code. You can revoke the token at any time on the
+[Connect page](https://nucleux.in/mcp/connect).
+
+`--code` replaces any existing `nucleux` entry (the local server, the `remote`
+proxy or an older direct one); everything else in each config is kept. Run it
+again with a new code to rotate the token. `--only`, `--no-project` and
+`--dry-run` work as above (`--dry-run` doesn't use up the code).
 
 | Command | |
 | --- | --- |
 | `npx -y @nucleux/mcp whoami` | Show which account this machine is signed in as. |
-| `npx -y @nucleux/mcp logout` | Revoke the saved token on the server, then delete it from this machine (if the server can't be reached, it says so; revoke it on the Connect page). |
-| `npx -y @nucleux/mcp remote` | The proxy the agents run. Without a valid token it tells the agent how to sign in; it never falls back to the local server. |
+| `npx -y @nucleux/mcp logout` | Revoke the token on the server, delete the credentials file, and remove the hosted `nucleux` entries from every agent. If the server can't be reached it says so; revoke it on the Connect page. Run `npx -y @nucleux/mcp add` afterwards for the open local catalog. |
+| `npx -y @nucleux/mcp add --local` | Switch every agent back to the open local server (replaces hosted entries; keeps your sign-in). |
+| `npx -y @nucleux/mcp remote` | The stdio proxy to the hosted server (used for Claude Desktop, or by anyone who prefers it: `npx -y @nucleux/mcp remote` as the command). It reads the token from the credentials file; without a valid token it tells the agent how to sign in and never falls back to the local server. |
 
-Environment: `NUCLEUX_TOKEN` overrides the saved token (CI), and
-`NUCLEUX_MCP_URL` points at another server (default `https://nucleux.in/mcp`).
+Environment: `NUCLEUX_TOKEN` overrides the saved token for `remote` and
+`whoami` (CI), and `NUCLEUX_MCP_URL` points at another server (default
+`https://nucleux.in/mcp`).
 
 In **claude.ai**, add the hosted server as a connector instead: Settings →
 Connectors → Add custom connector → `https://nucleux.in/mcp`, then sign in.
-
-To go back to the open local server, run `npx -y @nucleux/mcp add --local`: it
-swaps every `remote` entry for the local `npx -y @nucleux/mcp` (keeping the
-rest of each config) and leaves your sign-in alone; `logout` removes that too.
 
 ## Example prompts
 

@@ -1,8 +1,8 @@
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import catalog from "./catalog.json";
 import { patterns } from "./patterns.js";
-import { runAdd } from "./add.js";
-import { runLogout, runWhoami } from "./auth.js";
+import { runAdd, runLogout } from "./add.js";
+import { runWhoami } from "./auth.js";
 import { runInit } from "./init.js";
 import { runRemote } from "./remote.js";
 import { createServer } from "./server.js";
