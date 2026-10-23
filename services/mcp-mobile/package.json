@@ -1,0 +1,44 @@
+{
+  "name": "@intelligaia/nucleux-mobile-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Model Context Protocol server for Nucleux Mobile (SwiftUI, Jetpack Compose, Flutter, React Native) — lets AI coding agents discover and correctly use the mobile components.",
+  "bin": {
+    "nucleux-mobile-mcp": "./dist/index.js"
+  },
+  "main": "./dist/lib.js",
+  "exports": {
+    ".": "./dist/lib.js",
+    "./catalog": "./src/mobile-catalog.json"
+  },
+  "files": [
+    "dist",
+    "src/mobile-catalog.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit -p .",
+    "test": "tsc --noEmit -p . && tsup && node --test test/*.test.mjs",
+    "prepare": "tsup"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.1",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelligaia/nucleux-mobile.git",
+    "directory": "mcp"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
