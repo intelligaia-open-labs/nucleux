@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-randomize",
-  "version": "0.11.3",
+  "version": "0.12.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Randomize \u2014 a surprise-me control that places a random, editable starter in the composer \u2014 Nucleux agentic UI for React.",

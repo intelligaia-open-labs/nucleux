@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-suggested-prompts",
-  "version": "0.11.3",
+  "version": "0.12.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Suggested Prompts \u2014 a few ready-made requests that place editable text in the composer \u2014 Nucleux agentic UI for React.",

@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/mcp",
-  "version": "0.11.3",
+  "version": "0.12.0",
   "type": "module",
   "description": "Model Context Protocol server for the Nucleux agentic UI component library — lets AI coding agents discover, search, and correctly use @nucleux components.",
   "bin": {

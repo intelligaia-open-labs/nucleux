@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-date-picker",
-  "version": "0.11.3",
+  "version": "0.12.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 date picker — Nucleux agentic UI for React.",
