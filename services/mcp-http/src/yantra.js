@@ -2,10 +2,11 @@
 // pattern catalog it already has; Yantra (Intelligaia's model gateway) picks
 // the patterns to build with. The key stays here; the browser never sees it.
 //
-// Yantra speaks Ollama's /api/chat: it streams NDJSON unless stream:false,
-// "thinks" out loud unless think:false, and format:"json" makes message.content
-// one JSON object. An OpenAI-style reply (choices[0].message.content) is read
-// too, in case the gateway changes.
+// Yantra has two chat endpoints. /v1/chat/completions is OpenAI-compatible and
+// honours the requested model; JSON mode is response_format json_object.
+// /v1/chat is Ollama's /api/chat: NDJSON unless stream:false, "thinking" unless
+// think:false, format:"json" for JSON (and it may answer with another model).
+// The body follows the URL; either reply shape is read.
 
 const SYSTEM = `You plan UI screens for Nucleux, a design-system pattern library for AI products.
 You get a user's request and the catalog of available patterns (id, name, summary).
@@ -16,20 +17,17 @@ Reply with one JSON object and nothing else:
 
 export function createYantra({ url, key, model, timeoutMs = 25_000, fetchImpl = fetch } = {}) {
   if (!url || !key) return null;
+  const openai = /\/chat\/completions\/?$/.test(url);
 
   async function plan({ prompt, patterns }) {
     const catalog = patterns.map((p) => `${p.id} | ${p.name}${p.summary ? ` | ${p.summary}` : ""}`).join("\n");
-    const body = {
-      model,
-      stream: false,
-      think: false,
-      format: "json",
-      options: { temperature: 0.2 },
-      messages: [
-        { role: "system", content: SYSTEM },
-        { role: "user", content: `Catalog:\n${catalog}\n\nRequest: ${prompt}` },
-      ],
-    };
+    const messages = [
+      { role: "system", content: SYSTEM },
+      { role: "user", content: `Catalog:\n${catalog}\n\nRequest: ${prompt}` },
+    ];
+    const body = openai
+      ? { model, messages, stream: false, temperature: 0.2, response_format: { type: "json_object" } }
+      : { model, messages, stream: false, think: false, format: "json", options: { temperature: 0.2 } };
     const res = await fetchImpl(url, {
       method: "POST",
       headers: { authorization: `Bearer ${key}`, "content-type": "application/json", accept: "application/json" },
@@ -38,13 +36,14 @@ export function createYantra({ url, key, model, timeoutMs = 25_000, fetchImpl = 
     });
     if (!res.ok) throw new Error(`yantra ${res.status}`);
     const text = await res.text();
+    const answeredBy = modelOf(text);
     const out = parsePlan(contentOf(text));
     const known = new Set(patterns.map((p) => p.id));
     const seen = new Set();
     const picks = out.picks
       .filter((p) => known.has(p.id) && !seen.has(p.id) && seen.add(p.id))
       .slice(0, 8);
-    return { reply: out.reply, title: out.title, picks };
+    return { reply: out.reply, title: out.title, picks, model: answeredBy || model };
   }
 
   return { plan, model };
@@ -66,6 +65,15 @@ export function contentOf(text) {
     else if (j?.choices?.[0]?.message?.content) content += j.choices[0].message.content;
   }
   return content;
+}
+
+// The model that actually answered (the gateway may route elsewhere).
+export function modelOf(text) {
+  try {
+    return JSON.parse(text.trim().split("\n")[0])?.model || null;
+  } catch {
+    return null;
+  }
 }
 
 export function parsePlan(content) {
