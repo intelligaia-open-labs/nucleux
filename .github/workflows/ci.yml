@@ -41,3 +41,11 @@ jobs:
           mkdir -p vendor && (cd vendor && npm pack "@nucleux/mcp@$v")
           npm ci
           npm test
+
+      # Nucleux Mobile MCP (snapshot of intelligaia/nucleux-mobile's mcp/).
+      # The checks that need the kit's own sources are skipped here.
+      - name: Mobile MCP tests
+        working-directory: services/mcp-mobile
+        run: |
+          npm ci
+          npm test
