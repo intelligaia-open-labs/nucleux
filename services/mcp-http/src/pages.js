@@ -25,6 +25,8 @@ const ICONS = {
 
 export function createPages(config) {
   const p = (path) => `${config.basePath}${path}`;
+  // "Google", "GitHub" or "Google or GitHub": only the providers that are configured.
+  const signInWith = [config.providers.google && "Google", config.providers.github && "GitHub"].filter(Boolean).join(" or ") || "same";
   const csrfField = (csrf) => `<input type="hidden" name="_csrf" value="${e(csrf)}">`;
 
   function layout({ title, body, user, csrf, narrow = false }) {
@@ -85,20 +87,48 @@ ${body}
     return layout({ title: "Sign in", body, narrow: true });
   }
 
+  // The prompt a user pastes into their coding agent. It must be self-contained:
+  // the agent has no other context, may run sandboxed, and must never echo the token.
+  function connectPrompt({ code, email, base }) {
+    const cmd = `npx -y @nucleux/mcp@latest add --code ${code}`;
+    return [
+      `Connect the coding agents on this machine to the Nucleux MCP server, hosted at ${base}, signed in as ${email}.`,
+      ``,
+      `1. Run this once, in a terminal on THIS machine (not a remote container or cloud sandbox), from the root of the project I'm working in:`,
+      ``,
+      `   ${cmd}`,
+      ``,
+      `   - The code ${code} works once and expires 10 minutes after it was generated. If the command says the code is "unknown, expired or already used", don't retry it: ask me for a new prompt from ${base}/connect.`,
+      `   - It needs Node.js 18 or later and network access to registry.npmjs.org and ${new URL(base).host}. If npx is missing, tell me to install Node.js from https://nodejs.org; don't install it yourself. If npm is behind a proxy, it uses the HTTPS_PROXY setting.`,
+      `   - If your sandbox blocks network access or writing to my home folder, stop and ask me to run the command myself in my own terminal.`,
+      `   - It finds Claude Code, Cursor, VS Code, Codex, Windsurf, Gemini CLI and Claude Desktop, and connects each one directly to ${base} with my personal token. It replaces any existing "nucleux" MCP entry and keeps every other server and setting. If it finds no agent, run it again with --only and the agent you are (claude-code, cursor, vscode, codex, windsurf, gemini or claude-desktop).`,
+      `   - If it can't read an agent's config file (for example JSON with comments), it leaves that file untouched and prints what to add. Tell me which file, but don't add it yourself and don't show the token.`,
+      `   - Run from a project folder, it also adds the nucleux-design guidance (a skill and an AGENTS.md section) to the project. Add --no-project if I don't want project files changed.`,
+      ``,
+      `2. Check it worked: run \`npx -y @nucleux/mcp@latest whoami\`. It should print ${email}. If it says the token was rejected, ask me for a new prompt.`,
+      ``,
+      `3. Tell me which agents were connected, and that each one has to be restarted before it can use Nucleux (MCP servers are loaded when an agent starts, so this session won't see the tools until then). After the restart the nucleux tools (list_components, get_component, search_patterns, get_setup…) are available.`,
+      ``,
+      `4. Keep the token secret. It is stored in ~/.config/nucleux/credentials.json and in each agent's MCP config, readable only by me. Never print, paste, log or commit it, and never copy those files into the project. If something looks wrong, I can revoke this machine at ${base}/connect; to sign out and remove the connections, run \`npx -y @nucleux/mcp logout\`.`,
+      ``,
+      `5. Afterwards, when I ask you to build UI with Nucleux, first ask me "Material 3 or shadcn?" (unless the project already records it), then follow the Nucleux MCP's instructions.`,
+    ].join("\n");
+  }
+
   function connect({ user, csrf, code, tokens, apps, usage, isAdmin, notice }) {
-    const line = code ? `Connect Nucleux to my coding agents: run \`npx -y @nucleux/mcp add --code ${code}\`` : null;
+    const line = code ? connectPrompt({ code, email: user.email, base: config.base }) : null;
     const greeting = user.name ? `Hi, ${user.name.split(" ")[0]}` : "Welcome";
 
     const codeBlock = line
       ? `<div class="stack" aria-live="polite">
-           <p class="small"><strong>Paste this into your coding agent</strong> (Claude Code, Cursor, Codex…):</p>
+           <p class="small"><strong>Copy this prompt and paste it into your coding agent</strong> (Claude Code, Cursor, Codex…). It walks the agent through the setup, including what to do if something goes wrong. Your code is <code class="inline">${e(code)}</code>.</p>
            <div class="connect-line">
-             <code id="connect-line">${e(line)}</code>
+             <pre id="connect-line" class="connect-prompt" tabindex="0" aria-label="Connect prompt">${e(line)}</pre>
              <button class="btn btn-outline" type="button" data-copy-target="connect-line">${ICONS.copy}<span data-copy-label aria-live="polite">Copy</span></button>
            </div>
            <p class="muted small">Expires in 10 minutes and works once. It connects every detected agent directly to the hosted server with your personal token (saved in each agent's MCP settings, readable only by you) — the token itself never appears in a chat. Revoke a machine below at any time.</p>
          </div>`
-      : `<p class="muted small">Generates a single-use code and the line to paste into your agent.</p>`;
+      : `<p class="muted small">Generates a single-use code and a prompt to paste into your coding agent.</p>`;
 
     const tokenRows = tokens.length
       ? tokens
@@ -151,7 +181,7 @@ ${notice ? `<div class="alert alert-success" role="status">${e(notice)}</div>` :
   </div>
   <div class="card-footer">
     <form method="post" action="${p("/connect/code")}">${csrfField(csrf)}
-      <button class="btn btn-primary" type="submit">${line ? "Generate a new connect line" : "Generate connect line"}</button>
+      <button class="btn btn-primary" type="submit">${line ? "Generate a new prompt" : "Generate connect prompt"}</button>
     </form>
   </div>
 </section>
@@ -165,7 +195,7 @@ ${notice ? `<div class="alert alert-success" role="status">${e(notice)}</div>` :
     <ol class="steps">
       <li>Open <strong>Settings → Connectors</strong> and choose <strong>Add custom connector</strong>.</li>
       <li>Enter <code class="inline">${e(config.base)}</code> as the URL.</li>
-      <li>Click <strong>Connect</strong> and sign in with the same Google or GitHub account.</li>
+      <li>Click <strong>Connect</strong> and sign in with the same ${e(signInWith)} account.</li>
     </ol>
   </div>
 </section>
