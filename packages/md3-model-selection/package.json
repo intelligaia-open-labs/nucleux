@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-model-selection",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Model Selection — choose which model answers, and know what changes when you do — Nucleux agentic UI for React.",

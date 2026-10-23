@@ -8,6 +8,24 @@ The format is machine-readable: each version heading starts with `## ` followed
 by a version tag and date, and entries are grouped under `### Added`, `### Changed`,
 `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings.
 
+## [0.11.2] — 2026-10-23
+
+### Added
+- **Nucleux Mobile on the hosted MCP.** Signed-in users of
+  https://nucleux.in/mcp also get the mobile kit (SwiftUI, Jetpack Compose,
+  Flutter, React Native): the shared tools take `framework:
+  swiftui | compose | flutter | react-native`, `list_components` /
+  `search_components` cover both platforms, and `get_mobile_spec`,
+  `get_mobile_words` and `validate_mobile_usage` are added. Anonymous callers and
+  the open local package stay web-only.
+
+### Changed
+- The `nucleux-design` skill and AGENTS.md: agents detect web vs mobile (and
+  the mobile framework) from the project, ask only when unclear, and record it;
+  for web they still ask "Material 3 or shadcn?". The skill's description now
+  covers native apps.
+- The Connect page's prompt ends with the same platform rule.
+
 ## [0.11.1] — 2026-10-23
 
 ### Changed

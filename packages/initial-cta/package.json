@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/initial-cta",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "type": "module",
   "sideEffects": false,
   "description": "Initial CTA — the large, inviting input that anchors the empty state — Nucleux agentic UI for React.",

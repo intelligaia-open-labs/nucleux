@@ -30,6 +30,30 @@ node -e "new (require('better-sqlite3'))(':memory:'); console.log('sqlite ok')"
 mkdir -p data && chmod 700 data
 ```
 
+### Nucleux Mobile bundle (private)
+
+Signed-in users also get the Nucleux Mobile tools (SwiftUI, Compose, Flutter, React Native)
+from the private kit's MCP server, bundled into one file in the private repo
+`intelligaia/nucleux-mobile-mcp`. It is never committed here (`vendor/` is gitignored) and
+never published to npm. Fetch it on a machine with access and copy it over:
+
+```bash
+# laptop (gh signed in with read access to intelligaia/nucleux-mobile-mcp)
+gh api repos/intelligaia/nucleux-mobile-mcp/contents/nucleux-mobile-mcp.cjs \
+  -H "Accept: application/vnd.github.raw" > nucleux-mobile-mcp.cjs
+head -1 nucleux-mobile-mcp.cjs             # #!/usr/bin/env node
+scp nucleux-mobile-mcp.cjs <box>:nucleux-mcp/vendor/nucleux-mobile-mcp.cjs
+# on the box
+chmod 600 ~/nucleux-mcp/vendor/nucleux-mobile-mcp.cjs
+```
+
+The path is `NUCLEUX_MOBILE_MCP` (default `vendor/nucleux-mobile-mcp.cjs`, relative to
+`~/nucleux-mcp`). It is self-contained (SDK, zod and catalog inside), so it needs no
+`npm install`. Without the file the server runs web-only. After `pm2 restart nucleux-mcp`,
+check `curl -s http://127.0.0.1:8118/health` shows `"mobile":{"version":…,"components":…}`
+rather than `"unavailable"`. Anonymous callers never see the mobile tools, so this only matters
+with sign-in. To update after a kit change, fetch the file again and restart.
+
 ## 3. The `.env` file
 
 `~/nucleux-mcp/.env`, `chmod 600`. The server reads it at startup (`src/env.js`; values
@@ -159,3 +183,7 @@ To restore: stop the app, copy a backup to `data/nucleux.db` (and delete any
 - Logs: `logs/nucleux-mcp.{out,err}.log`. Tokens, codes and tool arguments are never logged.
 - When you upgrade `@nucleux/mcp`, the vendored-tarball steps are unchanged: `npm pack` into
   `vendor/`, bump the dependency, `npm install`, then `pm2 restart`.
+- When the mobile kit changes, re-fetch `vendor/nucleux-mobile-mcp.cjs` (section 2) and
+  `pm2 restart nucleux-mcp`.
+- The first boot of this version migrates the database (adds `usage.upstream`); it is
+  additive, so rolling back the code leaves a harmless extra column.

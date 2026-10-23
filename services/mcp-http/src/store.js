@@ -319,14 +319,16 @@ export function createStore(db, { now = () => Date.now() } = {}) {
     },
 
     // ---- usage ------------------------------------------------------------------
-    logUsage({ userId, kind, tokenId, tool, ms, ok }) {
+    // `upstream`: which catalog answered — "web", "mobile" or "web+mobile".
+    logUsage({ userId, kind, tokenId, tool, upstream, ms, ok }) {
       db.run(
-        "INSERT INTO usage (user_id, token_kind, token_id, tool, ts, ms, ok) VALUES (@u, @k, @tid, @tool, @ts, @ms, @ok)",
+        "INSERT INTO usage (user_id, token_kind, token_id, tool, upstream, ts, ms, ok) VALUES (@u, @k, @tid, @tool, @up, @ts, @ms, @ok)",
         {
           u: userId ?? null,
           k: kind ?? null,
           tid: tokenId ?? null,
           tool: String(tool).slice(0, 100),
+          up: upstream ? String(upstream).slice(0, 20) : null,
           ts: now(),
           ms: Math.max(0, Math.round(ms)),
           ok: ok ? 1 : 0,

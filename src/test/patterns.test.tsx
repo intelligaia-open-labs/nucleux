@@ -40,7 +40,7 @@ describe("curated patterns", () => {
 
   it("the shared workflow covers every stage and the core rules", () => {
     const w = knowledge.workflow;
-    for (const stage of ["A. Inspect", "B. Choose the family", "C. Analyse", "D. Discover", "E. Plan", "F. Implement", "G. Validate", "H. Report"]) {
+    for (const stage of ["A. Inspect", "B. Choose the platform and family", "C. Analyse", "D. Discover", "E. Plan", "F. Implement", "G. Validate", "H. Report"]) {
       expect(w).toContain(stage);
     }
     for (const tool of ["search_patterns", "get_pattern", "get_component", "get_setup"]) expect(w).toContain(tool);

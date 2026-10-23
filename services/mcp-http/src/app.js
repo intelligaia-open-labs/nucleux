@@ -13,6 +13,7 @@ import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { createPages } from "./pages.js";
+import { createSurface } from "./surface.js";
 import {
   sign,
   verify,
@@ -46,7 +47,9 @@ const DEFAULT_LIMITS = {
 
 const jsonRpcError = (code, message) => ({ jsonrpc: "2.0", error: { code, message }, id: null });
 
-export function createApp({ config, store, upstream, providers = {}, limits = {} }) {
+export function createApp({ config, store, upstream, mobile = null, providers = {}, limits = {} }) {
+  // Web for everyone; web + Nucleux Mobile for signed-in requests (surface.js).
+  const surface = createSurface({ web: upstream, mobile });
   const pages = createPages(config);
   const p = (route) => `${config.basePath}${route}`;
   const abs = (route) => `${config.base}${route}`;
@@ -170,12 +173,15 @@ export function createApp({ config, store, upstream, providers = {}, limits = {}
     asyncRoute(async (_req, res) => {
       try {
         const tools = await upstream.listTools();
+        // Mobile is optional: its absence or failure never makes health fail.
+        const mobileInfo = mobile?.available ? await mobile.info() : null;
         res.json({
           status: "ok",
           service: "nucleux-mcp",
           upstream: `@nucleux/mcp@${upstream.version}`,
           auth: config.authMode,
           tools: tools.map((t) => t.name),
+          mobile: mobileInfo ?? "unavailable",
         });
       } catch (err) {
         console.error("[nucleux-mcp] health check failed:", err);
@@ -774,16 +780,24 @@ export function createApp({ config, store, upstream, providers = {}, limits = {}
   }
 
   function buildServer(instructions, principal) {
+    // Signed in = a valid bearer token. Only then is Nucleux Mobile merged in.
+    const signedIn = !!principal;
     const server = new Server(
       { name: "nucleux", version: upstream.version },
       { capabilities: { tools: {} }, instructions }
     );
-    server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: await upstream.listTools() }));
+    server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: await surface.listTools(signedIn) }));
     server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const started = performance.now();
       let ok = false;
+      let answeredBy = null;
       try {
-        const result = await upstream.callTool(request.params.name, request.params.arguments ?? {});
+        const { result, upstream: by } = await surface.callTool(
+          request.params.name,
+          request.params.arguments ?? {},
+          signedIn
+        );
+        answeredBy = by;
         ok = !result?.isError;
         return result;
       } finally {
@@ -794,6 +808,7 @@ export function createApp({ config, store, upstream, providers = {}, limits = {}
             kind: principal?.kind,
             tokenId: principal?.tokenId,
             tool: request.params.name,
+            upstream: answeredBy,
             ms: performance.now() - started,
             ok,
           });
@@ -806,7 +821,7 @@ export function createApp({ config, store, upstream, providers = {}, limits = {}
   }
 
   async function handleMcpPost(req, res) {
-    const server = buildServer(await upstream.instructions(), req.principal);
+    const server = buildServer(await surface.instructions(!!req.principal), req.principal);
     const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
     // One server per request, so both must die with the response or every
     // call leaks a transport.

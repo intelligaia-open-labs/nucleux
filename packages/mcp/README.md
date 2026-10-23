@@ -167,6 +167,16 @@ Environment: `NUCLEUX_TOKEN` overrides the saved token for `remote` and
 In **claude.ai**, add the hosted server as a connector instead: Settings →
 Connectors → Add custom connector → `https://nucleux.in/mcp`, then sign in.
 
+### Mobile
+
+Nucleux Mobile, the same agentic components for SwiftUI, Jetpack Compose,
+Flutter and React Native, is served **only by the signed-in hosted server**; it
+is not in this package or its local catalog. Once connected with `add --code`
+(or the claude.ai connector), the shared tools take `framework: "swiftui" |
+"compose" | "flutter" | "react-native"`, and `get_mobile_spec`,
+`get_mobile_words` and `validate_mobile_usage` appear beside them. Agents work
+out web vs mobile from the project and ask only when they can't tell.
+
 ## Example prompts
 
 > Build a project management app with a dashboard, project list, task
@@ -245,7 +255,8 @@ All of this runs in `pnpm --filter @nucleux/mcp build`. To add a pattern, see
 - React ≥ 18 (tested with React 19 + Vite 6) and Tailwind CSS v3.4. Tailwind v4 is untested.
 - Plain HTML: Tailwind classes only (`get_component` / `get_setup` with
   `framework: "html"`), no interactive behavior.
-- Not covered: Vue, Svelte, Angular, React Native (see `nucleux-mobile` for native).
+- Not covered: Vue, Svelte, Angular. Native apps (SwiftUI, Compose, Flutter,
+  React Native): Nucleux Mobile, from the signed-in hosted server only (see [Mobile](#mobile)).
 
 ## Troubleshooting
 

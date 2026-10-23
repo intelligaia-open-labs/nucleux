@@ -196,7 +196,15 @@ describe("CLI code exchange", () => {
       "restarted",
       "Never print, paste, log or commit it",
       "npx -y @nucleux/mcp logout",
-      'first ask me "Material 3 or shadcn?"',
+      "first work out the platform from the project",
+      "Package.swift or an .xcodeproj is SwiftUI",
+      "build.gradle(.kts) with Compose is Jetpack Compose",
+      "pubspec.yaml is Flutter",
+      "react-native is React Native",
+      "pass that framework (swiftui, compose, flutter or react-native)",
+      'For web, ask me "Material 3 or shadcn?"',
+      "Ask me only what you can't tell from the project",
+      '"Nucleux platform: SwiftUI"',
     ]) {
       assert.ok(prompt.includes(needle), `prompt mentions ${needle}`);
     }

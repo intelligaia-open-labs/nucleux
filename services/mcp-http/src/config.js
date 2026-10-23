@@ -51,5 +51,7 @@ export function loadConfig(env = process.env) {
     port: Number(env.NUCLEUX_MCP_PORT ?? 8118),
     host: env.NUCLEUX_MCP_HOST ?? "127.0.0.1",
     callTimeoutMs: Number(env.NUCLEUX_MCP_TIMEOUT_MS ?? 30_000),
+    // The private Nucleux Mobile MCP bundle; relative to services/mcp-http. Missing = web only.
+    mobileFile: env.NUCLEUX_MOBILE_MCP || "vendor/nucleux-mobile-mcp.cjs",
   };
 }

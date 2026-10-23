@@ -111,7 +111,7 @@ ${body}
       ``,
       `4. Keep the token secret. It is stored in ~/.config/nucleux/credentials.json and in each agent's MCP config, readable only by me. Never print, paste, log or commit it, and never copy those files into the project. If something looks wrong, I can revoke this machine at ${base}/connect; to sign out and remove the connections, run \`npx -y @nucleux/mcp logout\`.`,
       ``,
-      `5. Afterwards, when I ask you to build UI with Nucleux, first ask me "Material 3 or shadcn?" (unless the project already records it), then follow the Nucleux MCP's instructions.`,
+      `5. Afterwards, when I ask you to build UI with Nucleux, first work out the platform from the project: Package.swift or an .xcodeproj is SwiftUI, build.gradle(.kts) with Compose is Jetpack Compose, pubspec.yaml is Flutter, a package.json with react-native is React Native, and a React, Next.js or Vite web app is web. For mobile, pass that framework (swiftui, compose, flutter or react-native) to the Nucleux tools. For web, ask me "Material 3 or shadcn?". Ask me only what you can't tell from the project or what it already records (AGENTS.md or CLAUDE.md, e.g. "Nucleux platform: SwiftUI" or "Nucleux family: Material 3"), record the answer there, then follow the Nucleux MCP's instructions.`,
     ].join("\n");
   }
 

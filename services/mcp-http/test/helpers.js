@@ -1,5 +1,5 @@
-// Test harness: the real app on an ephemeral port, an in-memory database, a
-// fake upstream (no child process) and a fake sign-in provider (no network).
+// Test harness: the real app on an ephemeral port, an in-memory database,
+// fake upstreams (no child process) and a fake sign-in provider (no network).
 
 import crypto from "node:crypto";
 import { loadConfig } from "../src/config.js";
@@ -20,6 +20,76 @@ export const fakeUpstream = {
       : { content: [{ type: "text", text: JSON.stringify(args) }] },
 };
 
+// Fakes shaped like the real upstreams' shared tools (schemas as the packages
+// publish them), for the web + mobile merge. Every call is recorded.
+const str = (description) => ({ type: "string", description });
+const MOBILE_FW = { type: "string", enum: ["swiftui", "compose", "flutter", "react-native"], description: "mobile framework" };
+const reply = (text, isError) => ({ content: [{ type: "text", text }], ...(isError ? { isError: true } : {}) });
+
+export function fakeWebUpstream() {
+  const calls = [];
+  return {
+    calls,
+    version: "0.0.0-web",
+    instructions: async () => "WEB INSTRUCTIONS",
+    listTools: async () => [
+      { name: "list_components", description: "web list", inputSchema: { type: "object", properties: { kind: { type: "string", enum: ["component", "infrastructure", "all"], description: "web kinds" } } } },
+      { name: "get_component", description: "web get", inputSchema: { type: "object", properties: { name: str("name"), framework: { type: "string", enum: ["react", "html"], description: "react or html" }, template: { type: "boolean" } }, required: ["name"] } },
+      { name: "search_components", description: "web search", inputSchema: { type: "object", properties: { query: str("query") }, required: ["query"] } },
+      { name: "get_setup", description: "web setup", inputSchema: { type: "object", properties: { framework: { type: "string", enum: ["react", "html"] }, packageManager: { type: "string", enum: ["npm", "pnpm"] } } } },
+      { name: "list_examples", description: "web examples", inputSchema: { type: "object", properties: {} } },
+      { name: "get_example", description: "web example", inputSchema: { type: "object", properties: { name: str("name") }, required: ["name"] } },
+      { name: "search_patterns", description: "web patterns", inputSchema: { type: "object", properties: { query: str("query") }, required: ["query"] } },
+    ],
+    callTool: async (name, args) => {
+      calls.push({ name, args });
+      if (name === "get_component" && !["Button", "InitialCta"].includes(args.name)) return reply(`Nucleux has no "${args.name}". Use list_components.`);
+      if (name === "list_components") return reply("WEB LIST: Button, InitialCta");
+      if (name === "search_components") return reply(`WEB SEARCH ${args.query}`);
+      return reply(`WEB ${name} ${JSON.stringify(args)}`);
+    },
+  };
+}
+
+export function fakeMobileUpstream() {
+  const calls = [];
+  return {
+    calls,
+    available: true,
+    info: async () => ({ version: "0.1.0", components: 2 }),
+    instructions: async () => "MOBILE INSTRUCTIONS",
+    listTools: async () => [
+      { name: "list_components", description: "mobile list", inputSchema: { type: "object", properties: { framework: MOBILE_FW, kind: { type: "string", enum: ["component", "pattern", "foundation", "all"], description: "mobile kinds" } } } },
+      { name: "get_component", description: "mobile get", inputSchema: { type: "object", properties: { name: str("name"), framework: MOBILE_FW }, required: ["name"] } },
+      { name: "search_components", description: "mobile search", inputSchema: { type: "object", properties: { query: str("query"), framework: MOBILE_FW }, required: ["query"] } },
+      { name: "get_setup", description: "mobile setup", inputSchema: { type: "object", properties: { framework: MOBILE_FW } } },
+      { name: "list_examples", description: "mobile examples", inputSchema: { type: "object", properties: { framework: MOBILE_FW } } },
+      { name: "get_example", description: "mobile example", inputSchema: { type: "object", properties: { name: str("name"), framework: MOBILE_FW }, required: ["name"] } },
+      { name: "get_mobile_spec", description: "spec", inputSchema: { type: "object", properties: { name: str("name") }, required: ["name"] } },
+      { name: "get_mobile_words", description: "words", inputSchema: { type: "object", properties: { name: str("name"), framework: MOBILE_FW }, required: ["name"] } },
+      { name: "validate_mobile_usage", description: "validate", inputSchema: { type: "object", properties: { framework: MOBILE_FW, code: str("code") }, required: ["framework", "code"] } },
+    ],
+    callTool: async (name, args) => {
+      calls.push({ name, args });
+      if (name === "list_components") {
+        return reply(
+          "Nucleux Mobile 0.1.0 — 2 components and patterns.\n\n" +
+            "- **PromptComposer** (`prompt-composer`, Component) — the composer — SwiftUI Done\n" +
+            "- **Initial CTA** (`initial-cta`, Pattern) — the empty state — SwiftUI Done\n\nAsk which framework."
+        );
+      }
+      if (name === "get_component") {
+        const known = { promptcomposer: "PromptComposer (`prompt-composer`, Component)", initialcta: "Initial CTA (`initial-cta`, Pattern)" };
+        const hit = known[String(args.name).toLowerCase()];
+        if (!hit) return reply(`No Nucleux Mobile component named "${args.name}".`, true);
+        return reply(`# ${hit} — Nucleux Mobile\n\nMOBILE ${args.name} ${args.framework ?? "all"}`);
+      }
+      if (name === "search_components") return reply(`MOBILE SEARCH ${args.query}`);
+      return reply(`MOBILE ${name} ${JSON.stringify(args)}`);
+    },
+  };
+}
+
 // Profiles keyed by the `code` the fake provider "returns".
 export const PROFILES = {
   alice: { providerId: "1", email: "alice@example.com", name: "Alice Doe", avatar: null },
@@ -38,7 +108,7 @@ export const fakeProvider = {
   },
 };
 
-export async function startServer(env = {}, { limits } = {}) {
+export async function startServer(env = {}, { limits, upstream = fakeUpstream, mobile = null } = {}) {
   const clock = { t: Date.UTC(2026, 9, 22, 12, 0, 0) };
   const config = loadConfig({
     NUCLEUX_PUBLIC_URL: "https://nucleux.test/mcp",
@@ -48,7 +118,7 @@ export async function startServer(env = {}, { limits } = {}) {
   });
   const db = openDb(":memory:");
   const store = createStore(db, { now: () => clock.t });
-  const app = createApp({ config, store, upstream: fakeUpstream, providers: { fake: fakeProvider }, limits });
+  const app = createApp({ config, store, upstream, mobile, providers: { fake: fakeProvider }, limits });
   const server = await new Promise((resolve) => {
     const s = app.listen(0, "127.0.0.1", () => resolve(s));
   });
