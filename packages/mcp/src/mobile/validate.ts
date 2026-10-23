@@ -216,6 +216,23 @@ export const USAGE_RULES: Rule[] = [
     },
   },
   {
+    code: "removed-api",
+    severity: "error",
+    patterns: {
+      swiftui: [/\bNucleuxAgentAvatar\([^)\n]*size:\s*\.lg\b/, /\bNucleuxPersonAvatar\([^)\n]*size:\s*\.lg\b/, /\bringSeconds\b/],
+      compose: [/\bNucleuxAvatarSize\.Lg\b/, /\bRING_MILLIS\b/],
+      flutter: [/\bNucleuxAvatarSize\.lg\b/, /\bNucleuxIdentity\.ring\b/],
+      "react-native": [/<(?:Agent|Person)Avatar\b[^>\n]*size=["']lg["']/, /\bAVATAR_RING_MS\b/],
+    },
+    message: "The 56 avatar and the pulsing ring were replaced on 23 Oct 2026 (Avatar revision): one shape at 24, 32 and 40 (xs, sm, md), the identity card at 40, a still ring for active and a turning ring for working, with words and Stop beside it.",
+    fix: {
+      swiftui: "NucleuxAgentAvatar(agent, size: .md) (40); .sm (32) for a turn; .xs (24) for activity and bylines; state: .active / .working",
+      compose: "NucleuxAvatarSize.Md (40); Sm (32) for a turn; Xs (24) for activity and bylines; NucleuxIdentity.TURN_MILLIS",
+      flutter: "NucleuxAvatarSize.md (40); sm (32) for a turn; xs (24) for activity and bylines; NucleuxIdentity.turn",
+      "react-native": "<AgentAvatar size=\"md\" /> (40); \"sm\" (32) for a turn; \"xs\" (24) for activity and bylines; AVATAR_TURN_MS",
+    },
+  },
+  {
     code: "ai-glyph-by-name",
     severity: "warning",
     patterns: {

@@ -60,10 +60,10 @@
  "counts": {
   "components": 37,
   "examples": 136,
-  "swiftui": 2080,
-  "compose": 1493,
-  "flutter": 2709,
-  "react-native": 1524
+  "swiftui": 2118,
+  "compose": 1522,
+  "flutter": 2754,
+  "react-native": 1548
  },
  "components": [
   {
@@ -25493,7 +25493,7 @@
    ],
    "spec": "specs/identity.md",
    "specSummary": "The pattern library's **Avatar** and **Name** patterns (branch-2: `material-patterns.js` → `avatar` with examples `agent-vs-person`, `states`, `sizes`, and `name` with `identity-card`, `introduction`, `byline`; the simulators in `material-sim.js`; CSS `.md-agentav`, `.md-idrow`, `.md-idcard`). **One mark** and **one name** for the agent on every surface, and neither can be mistaken for a person's.\n\nThe wording and sizes live in `react-native/src/identity.ts`, with the shapes and initials in `trust.ts`. `npm run fixtures` writes `specs/identity.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.",
-   "specText": "# Identity: Avatar, Name, Iconography and Color\n\nThe pattern library's **Avatar** and **Name** patterns (branch-2: `material-patterns.js` → `avatar` with examples `agent-vs-person`, `states`, `sizes`, and `name` with `identity-card`, `introduction`, `byline`; the simulators in `material-sim.js`; CSS `.md-agentav`, `.md-idrow`, `.md-idcard`). **One mark** and **one name** for the agent on every surface, and neither can be mistaken for a person's.\n\nThe wording and sizes live in `react-native/src/identity.ts`, with the shapes and initials in `trust.ts`. `npm run fixtures` writes `specs/identity.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` (wording) |\n| Compose | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` |\n| Flutter | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` |\n| React Native | `AgentAvatar`, `PersonAvatar`, `IdentityRow`, `AgentIdentityCard`, `AgentByline`, `AgentGlyph`, `MessageBubble`, `AgentPresence` |\n\n## Avatar\n\n| | Agent | Person |\n|---|---|---|\n| Shape | Rounded square | Circle |\n| Fill | `brandMuted` | `muted` |\n| Content | The reserved glyph: Lucide `sparkles` in `brand`. **Never a face, never initials** | Initials (`initials(name)`: \"Dana Khoury\" → \"DK\") in `mutedForeground`, semibold |\n\n| Size | Box | Glyph | Initials | Corner (agent) | Use |\n|---|---|---|---|---|---|\n| `sm` | 28 | 15 | 11 | 8 | A turn in a thread, a dense list, a byline |\n| `md` | 40 | 20 | 15 | 11 | An identity row |\n| `lg` | 56 | 28 | 20 | 16 | The identity card |\n\nOne silhouette at every size; only the glyph scales.\n\n**State on the mark** (agent only), from the host:\n\n| State | Shown | Read aloud |\n|---|---|---|\n| `ready` | The mark | Hidden beside the name; standalone: \"Aria, AI agent\" |\n| `working` | A 2pt `brand` ring 4pt outside the mark, pulsing (scale 0.92 → 1.08, fading out, 1600 ms, repeating). With Reduce Motion: a still ring at 55% | A status: \"Aria is working\" |\n| `off` (stood down) | `muted` fill, glyph in `mutedForeground` | Standalone: \"Aria, AI agent, stood down\" |\n\nThe ring runs only while the agent is actually working, and goes the moment it stops. State belongs on the mark rather than in a spinner elsewhere.\n\n`AgentMessage` and `PersonMessage` (Disclosure) now use these avatars at `sm`.\n\n## Name\n\n- **`IdentityRow`:** an `md` avatar, the name (16 semibold `foreground`), the \"AI agent\" tag for an agent, and a line under it (14 `mutedForeground`): \"Assistant · answers from your pipeline\", or a person's team.\n- **`AgentIdentityCard`:** where the agent is introduced or looked up. An `lg` avatar, the name (17 semibold), the role line (14 `mutedForeground`): `agentRoleLine(\"Helpdesk\")` → \"Assistant in Helpdesk · not a person\". Then a divider, the \"AI agent\" chip and an optional action (\"What Aria can see\"). Card: 1pt `border`, corner 16, padding 20.\n- **`AgentByline`:** under a record the agent wrote, away from the conversation: an `sm` avatar, \"Written by Aria · 14 March, 10:24\" (13 `mutedForeground`), and an optional action (\"History\").\n\nThe host's rules, from the pattern: one name everywhere, including email, the audit log and support; no surname, pronouns or a person's job title; not renamed per surface. Say the role the first time the name is seen; after that, the bare name is enough.\n\n## Iconography\n\nThe pattern library's **Iconography** pattern (`iconography`: `glyph-containers`, `in-a-menu`, `inline-entry`), revised 16 Oct: **one glyph per AI meaning, always with words**. The AI action is Lucide `sparkles` (the star, also the agent's own mark), generated content `badge-info`, working `loader-circle`, tool use `wrench` (`specs/ai-marks.md`). Each is **spent nowhere else**: not on \"new\", not on \"featured\", not on a nudge (Nudges use `lightbulb`).\n\n`AgentGlyph` shows the action mark in one of three containers; only the container changes:\n\n| Container | Fill | Glyph | Where |\n|---|---|---|---|\n| `quiet` | `muted` | `brand` | A menu row, a toolbar |\n| `tonal` | `brandMuted` | `brand` | A chip |\n| `filled` | `brand` | `brandForeground` | A primary action |\n\nIt is decorative (hidden from screen readers): the control's own label says what it does (\"Draft a reply\"). Nothing about it is animated. Pair it with a verb the first few times; don't use it on a control that doesn't generate.\n\n**Audited:** no component names an AI glyph itself (a React Native test fails if one does); each draws it from the role table, and the test lists each role's users, failing on a new one. Action: `AgentGlyph`, the AI action button and status, Improve prompt, Try a direction. Generated: the Disclosure label, \"Suggested by Aria\", a direction's header, Templates' suggested values, the recommended tone, a style Aria made. The agent's own mark: the avatar, the identity card, the Disclosure banner and introduction, the Disclaimer statement.\n\n## Color\n\nThe pattern library's **Color** pattern (`color`: `two-grounds`, `reserved-roles`, `presence`). Colour roles **held back for the agent**: `brandMuted` for its ground, `brand` for presence and working state. People stay on neutral surfaces (`muted`). Colour is never the only signal: every use has a glyph or words beside it.\n\n- **`MessageBubble`:** a turn as a bubble. The agent's: its `sm` mark beside it, `brandMuted`, corner 16 with the **bottom-left** corner sharp (4). The person's own: on the right, `muted`, the **bottom-right** corner sharp. At most 82% of the width; padding 12 / 16; text 15. The pair separates in greyscale by its corners. Read with the author first: \"Aria, Generated with AI: £4.1m, 6% ahead of plan.\" / \"You: Where did Q2 renewals land?\"\n- **`AgentPresence`:** the agent working inside a surface a person owns. While `active`: a 2pt `brand` outline around the surface (corner 16) and a status line, a `brand` dot with \"Aria is drafting in this document\" (14 semibold `brand`) and the host's line under it (\"Nothing is saved until you accept it.\"). When it stops, the outline and line go, and \"Aria has stopped.\" is announced. Starting announces the status line.\n\n## Personality\n\nThe pattern library's **Personality** pattern is the voice. It lives in `specs/voice.md`, with the checker in `react-native/src/voiceRules.ts`.\n\n## Accessibility\n\n- The identity card is one element: \"Aria, Assistant in Helpdesk, not a person\". Its action stays separately reachable.\n- The row reads like the message header: \"Aria, Generated with AI\" then its line.\n- The byline is one element: \"Written by Aria, AI agent, 14 March, 10:24\". Its action stays separately reachable.\n- Middle dots are read as commas, not \"dot\".\n- Every action has a 44pt / 48dp target.\n\n## Ours, not the pattern's\n\n- **The agent is a rounded square**, decided with Disclosure (12 Oct). The pattern keeps both marks round and separates them by colour role only; we keep its colour split and add the shape split, so the difference survives greyscale and colour-blindness.\n- **Look:** `brandMuted` and `brand` stand in for Material's primary-container and primary; `muted` for surface-container-highest. Nucleux has no secondary or tertiary container, so the tonal glyph uses `brandMuted` and the disclosure chip keeps `accent`.\n- **Bubbles are the person's own on the right.** The pattern's example doesn't say whose; in a two-party chat the person's own words go right, and a third person in a shared thread uses `PersonMessage` instead.\n- **Presence says when it ends** (\"Aria has stopped.\"), so the outline going isn't the only signal; the pattern only shows it starting.\n- **The spoken labels** (\"Aria, AI agent\", \"… stood down\", the byline's) are ours; the pattern gives only \"Aria is working\".\n- **The message avatar shrinks from 32 to 28** and shows the glyph rather than the agent's first letter, which the pattern rules out (\"initials are what people get\").\n\n## Not in scope (later)\n\n- The voice card (\"How Aria speaks\") and register switch from the Personality pattern: they're a settings surface for the host.\n- The agent's ground on a person's surface beyond presence (a whole document in `brandMuted`): the pattern warns against colour as decoration.\n- A notification or email template: the host renders those, using the same name and role line.\n",
+   "specText": "# Identity: Avatar, Name, Iconography and Color\n\nThe pattern library's **Avatar** and **Name** patterns (branch-2: `material-patterns.js` → `avatar` with examples `agent-vs-person`, `states`, `sizes`, and `name` with `identity-card`, `introduction`, `byline`; the simulators in `material-sim.js`; CSS `.md-agentav`, `.md-idrow`, `.md-idcard`). **One mark** and **one name** for the agent on every surface, and neither can be mistaken for a person's.\n\nThe wording and sizes live in `react-native/src/identity.ts`, with the shapes and initials in `trust.ts`. `npm run fixtures` writes `specs/identity.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` (wording) |\n| Compose | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` |\n| Flutter | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` |\n| React Native | `AgentAvatar`, `PersonAvatar`, `IdentityRow`, `AgentIdentityCard`, `AgentByline`, `AgentGlyph`, `MessageBubble`, `AgentPresence` |\n\n## Avatar\n\nRevised 23 Oct from the library's 16 Oct revision (backlog item 10).\n\n| | Agent | Person |\n|---|---|---|\n| Shape | Rounded square | Circle |\n| Fill | `brandMuted` | `muted` |\n| Content | An approved abstract `image`, or the agent glyph (Lucide `sparkles` in `brand`). **Never a face, never initials.** If the image fails to load, the glyph is drawn; the shape and label stay | Initials (`initials(name)`: \"Dana Khoury\" → \"DK\") in `mutedForeground`, semibold |\n\n| Size | Box | Glyph | Initials | Corner (agent) | Use |\n|---|---|---|---|---|---|\n| `xs` | 24 | 13 | 10 | 7 | Activity, a byline |\n| `sm` | 32 | 17 | 12 | 9 | A turn in a thread, a bubble |\n| `md` | 40 | 20 | 15 | 11 | An identity row, the identity card |\n\nOne shape and one container at every size; only the glyph scales. (Before 23 Oct: 28, 40 and 56.)\n\n**State on the mark** (agent only), from the host:\n\n| State | Shown | Read aloud |\n|---|---|---|\n| `ready` | The mark | Hidden beside the name; standalone: \"Aria, AI agent\" |\n| `active` | A still 2pt `brand` ring, 4 outside the mark | Standalone: \"Aria, AI agent, active\" |\n| `working` | The ring on `brandMuted` with a quarter arc in `brand` turning once a second; still with Reduce Motion. On an `IdentityRow`, `status` under the name (\"Summarizing the meeting…\") and **Stop** | A status: \"Aria is working\"; the status line is polite; Stop says \"Stopped. Aria is still here.\" |\n| `off` (stood down) | `muted` fill, glyph in `mutedForeground` | Standalone: \"Aria, AI agent, stood down\" |\n\nThe ring turns only while the agent is actually working, never as the only signal: the words beside it carry it.\n\n`AgentMessage` and `PersonMessage` (Disclosure) use the avatars at `sm`.\n\n## Name\n\n- **`IdentityRow`:** an `md` avatar, the name (16 semibold `foreground`), \"(formerly Aria)\" after a rename, the \"AI agent\" tag, and the **role in the product's words** under it (14 `mutedForeground`): \"Customer Support Agent\", \"Meeting assistant\", or a person's team. Read as one: \"Aria, AI agent, Customer Support Agent\" (`agentNameLabel`), so compact surfaces keep the role in the spoken name. Optional `status` and `onStop` while working.\n- **`AgentIdentityCard`:** where the agent is introduced or looked up: an `md` avatar, the name (17 semibold), the role, an optional **introduction** (`agentIntro(\"Aria\", \"Northwind\", \"I can track orders, start returns and update delivery details.\")` → \"I’m Aria, an AI agent run by Northwind. I can track orders, start returns and update delivery details. I’m not a person.\"), then a divider, the \"AI agent\" chip and an optional action. Card: 1pt `border`, corner 16, padding 20.\n- **`AgentByline`:** under a record the agent wrote: an `xs` avatar, \"Written by Aria · 14 March, 10:24\", and an optional action.\n\n**A rename** (`useAgentName`, `AgentRenameNotice`): an admin renames the agent; the host uses `name` on every surface, so it lands everywhere at once. The old name shows as \"(formerly Aria)\" for a while (until `settle()`), and a line confirms it: \"Renamed to Atlas. Role and permissions are unchanged.\" with **Undo** (\"Name restored to Aria.\"). Announced: \"Aria renamed to Atlas. Role and permissions are unchanged.\" A name is refused when it is empty (\"Give it a name.\"), longer than 12 characters (\"12 characters at most.\"), or unchanged (\"That’s its name already.\").\n\nThe host's rules, from the pattern: one short name (12 characters at most), not a real person's full name; the same name and role in messages, activity, notifications, chips and email; with several agents, each its own name, role and glyph. Never claim capabilities it lacks.\n\n**Ours, not the pattern's:** the image fallback keeps `brandMuted` (the library says `muted`, which the kit uses for stood down); the active label and \"Stopped. Aria is still here.\"; the refusal wording and `settle()`; the rename confirmation as a line in place rather than a snackbar.\n\n## Iconography\n\nThe pattern library's **Iconography** pattern (`iconography`: `glyph-containers`, `in-a-menu`, `inline-entry`), revised 16 Oct: **one glyph per AI meaning, always with words**. The AI action is Lucide `sparkles` (the star, also the agent's own mark), generated content `badge-info`, working `loader-circle`, tool use `wrench` (`specs/ai-marks.md`). Each is **spent nowhere else**: not on \"new\", not on \"featured\", not on a nudge (Nudges use `lightbulb`).\n\n`AgentGlyph` shows the action mark in one of three containers; only the container changes:\n\n| Container | Fill | Glyph | Where |\n|---|---|---|---|\n| `quiet` | `muted` | `brand` | A menu row, a toolbar |\n| `tonal` | `brandMuted` | `brand` | A chip |\n| `filled` | `brand` | `brandForeground` | A primary action |\n\nIt is decorative (hidden from screen readers): the control's own label says what it does (\"Draft a reply\"). Nothing about it is animated. Pair it with a verb the first few times; don't use it on a control that doesn't generate.\n\n**Audited:** no component names an AI glyph itself (a React Native test fails if one does); each draws it from the role table, and the test lists each role's users, failing on a new one. Action: `AgentGlyph`, the AI action button and status, Improve prompt, Try a direction. Generated: the Disclosure label, \"Suggested by Aria\", a direction's header, Templates' suggested values, the recommended tone, a style Aria made. The agent's own mark: the avatar, the identity card, the Disclosure banner and introduction, the Disclaimer statement.\n\n## Color\n\nThe pattern library's **Color** pattern (`color`: `two-grounds`, `reserved-roles`, `presence`). Colour roles **held back for the agent**: `brandMuted` for its ground, `brand` for presence and working state. People stay on neutral surfaces (`muted`). Colour is never the only signal: every use has a glyph or words beside it.\n\n- **`MessageBubble`:** a turn as a bubble. The agent's: its `sm` mark beside it, `brandMuted`, corner 16 with the **bottom-left** corner sharp (4). The person's own: on the right, `muted`, the **bottom-right** corner sharp. At most 82% of the width; padding 12 / 16; text 15. The pair separates in greyscale by its corners. Read with the author first: \"Aria, Generated with AI: £4.1m, 6% ahead of plan.\" / \"You: Where did Q2 renewals land?\"\n- **`AgentPresence`:** the agent working inside a surface a person owns. While `active`: a 2pt `brand` outline around the surface (corner 16) and a status line, a `brand` dot with \"Aria is drafting in this document\" (14 semibold `brand`) and the host's line under it (\"Nothing is saved until you accept it.\"). When it stops, the outline and line go, and \"Aria has stopped.\" is announced. Starting announces the status line.\n\n## Personality\n\nThe pattern library's **Personality** pattern is the voice. It lives in `specs/voice.md`, with the checker in `react-native/src/voiceRules.ts`.\n\n## Accessibility\n\n- The identity card is one element: \"Aria, Assistant in Helpdesk, not a person\". Its action stays separately reachable.\n- The row reads like the message header: \"Aria, Generated with AI\" then its line.\n- The byline is one element: \"Written by Aria, AI agent, 14 March, 10:24\". Its action stays separately reachable.\n- Middle dots are read as commas, not \"dot\".\n- Every action has a 44pt / 48dp target.\n\n## Ours, not the pattern's\n\n- **The agent is a rounded square**, decided with Disclosure (12 Oct). The pattern keeps both marks round and separates them by colour role only; we keep its colour split and add the shape split, so the difference survives greyscale and colour-blindness.\n- **Look:** `brandMuted` and `brand` stand in for Material's primary-container and primary; `muted` for surface-container-highest. Nucleux has no secondary or tertiary container, so the tonal glyph uses `brandMuted` and the disclosure chip keeps `accent`.\n- **Bubbles are the person's own on the right.** The pattern's example doesn't say whose; in a two-party chat the person's own words go right, and a third person in a shared thread uses `PersonMessage` instead.\n- **Presence says when it ends** (\"Aria has stopped.\"), so the outline going isn't the only signal; the pattern only shows it starting.\n- **The spoken labels** (\"Aria, AI agent\", \"… stood down\", the byline's) are ours; the pattern gives only \"Aria is working\".\n- **The message avatar shrinks from 32 to 28** and shows the glyph rather than the agent's first letter, which the pattern rules out (\"initials are what people get\").\n\n## Not in scope (later)\n\n- The voice card (\"How Aria speaks\") and register switch from the Personality pattern: they're a settings surface for the host.\n- The agent's ground on a person's surface beyond presence (a whole document in `brandMuted`): the pattern warns against colour as decoration.\n- A notification or email template: the host renders those, using the same name and role line.\n",
    "fixtures": [
     "specs/identity.fixtures.json"
    ],
@@ -25501,22 +25501,39 @@
     "specs/identity.fixtures.json": {
      "constants": {
       "chip": "AI agent",
+      "nameProblems": {
+       "empty": "Give it a name.",
+       "tooLong": "12 characters at most.",
+       "same": "That’s its name already."
+      },
       "agents": [
        {
         "agent": "Aria",
         "labels": {
          "ready": "Aria, AI agent",
+         "active": "Aria, AI agent, active",
          "working": "Aria is working",
          "off": "Aria, AI agent, stood down"
-        }
+        },
+        "named": "Aria, AI agent, Customer Support Agent",
+        "intro": "I’m Aria, an AI agent run by Northwind. I can track orders, start returns and update delivery details. I’m not a person.",
+        "stopped": "Stopped. Aria is still here.",
+        "formerly": "formerly Aria",
+        "notice": "Renamed to Aria. Role and permissions are unchanged."
        },
        {
         "agent": "Atlas",
         "labels": {
          "ready": "Atlas, AI agent",
+         "active": "Atlas, AI agent, active",
          "working": "Atlas is working",
          "off": "Atlas, AI agent, stood down"
-        }
+        },
+        "named": "Atlas, AI agent, Customer Support Agent",
+        "intro": "I’m Atlas, an AI agent run by Northwind. I can track orders, start returns and update delivery details. I’m not a person.",
+        "stopped": "Stopped. Atlas is still here.",
+        "formerly": "formerly Atlas",
+        "notice": "Renamed to Atlas. Role and permissions are unchanged."
        }
       ],
       "bylines": [
@@ -25555,6 +25572,11 @@
       ]
      },
      "inCases": [
+      "Meeting Helper",
+      " Aria ",
+      "Ünïcødé Bøt",
+      "Aria renamed to Atlas. Role and permissions are unchanged.",
+      "Name restored to Aria.",
       "Assistant in Helpdesk · not a person",
       "Assistant in Beacon · not a person",
       "Aria, Assistant in Helpdesk, not a person",
@@ -25587,9 +25609,9 @@
        "line": 4,
        "members": [
         {
-         "signature": "public static let ringSeconds = 1.6",
-         "doc": "",
-         "name": "ringSeconds"
+         "signature": "public static let turnMs = 1000",
+         "doc": "One turn of the working ring.",
+         "name": "turnMs"
         },
         {
          "signature": "public static let chip = \"AI agent\"",
@@ -25597,9 +25619,54 @@
          "name": "chip"
         },
         {
+         "signature": "public static let stop = \"Stop\"",
+         "doc": "",
+         "name": "stop"
+        },
+        {
          "signature": "public static func avatarLabel(_ agent: String, _ state: AgentState = .ready) -> String",
          "doc": "The mark read aloud when it stands alone, or while working.",
          "name": "avatarLabel"
+        },
+        {
+         "signature": "public static func nameLabel(_ agent: String, role: String) -> String",
+         "doc": "On a compact surface the role stays in the spoken name: \"Aria, AI agent, Customer Support Agent\".",
+         "name": "nameLabel"
+        },
+        {
+         "signature": "public static func intro(_ agent: String, operator op: String, does: String) -> String",
+         "doc": "Once, where the agent is met: who runs it, what it does, and that it is not a person.",
+         "name": "intro"
+        },
+        {
+         "signature": "public static func stopped(_ agent: String) -> String { \"Stopped. \\(agent) is still here.\" }",
+         "doc": "Said when Stop ends the work; the agent is still there.",
+         "name": "stopped"
+        },
+        {
+         "signature": "public static let nameMax = 12",
+         "doc": "",
+         "name": "nameMax"
+        },
+        {
+         "signature": "public static func nameProblem(_ name: String, current: String) -> NameProblem?",
+         "doc": "",
+         "name": "nameProblem"
+        },
+        {
+         "signature": "public static func formerlyLabel(_ name: String) -> String { \"formerly \\(name)\" }",
+         "doc": "",
+         "name": "formerlyLabel"
+        },
+        {
+         "signature": "public static func renameNotice(_ to: String) -> String { \"Renamed to \\(to). Role and permissions are unchanged.\" }",
+         "doc": "",
+         "name": "renameNotice"
+        },
+        {
+         "signature": "public static func reduce(_ s: NameState, _ e: NameEvent) -> NameResult",
+         "doc": "",
+         "name": "reduce"
         },
         {
          "signature": "public static func roleLine(_ product: String) -> String { \"Assistant in \\(product) · not a person\" }",
@@ -25667,13 +25734,13 @@
        "line": 5,
        "members": [
         {
-         "signature": "case sm, md, lg",
+         "signature": "case xs, sm, md",
          "doc": "",
-         "name": "sm"
+         "name": "xs"
         },
         {
          "signature": "public var box: CGFloat",
-         "doc": "28 in a turn or a dense list, 40 in a row, 56 on an identity card. Only the glyph scales.",
+         "doc": "24 (activity, a byline), 32 (a turn, a bubble), 40 (a row, the identity card). Only the glyph scales.",
          "name": "box"
         },
         {
@@ -25696,11 +25763,95 @@
       {
        "name": "NucleuxIdentity.AgentState",
        "kind": "enum",
-       "signature": "public enum AgentState: String, Sendable { case ready, working, off }",
-       "doc": "Carried on the mark: `working` is a ring that runs only while it works; `off` is muted everywhere at once.",
+       "signature": "public enum AgentState: String, Sendable { case ready, active, working, off }",
+       "doc": "Carried on the mark: `active` a still ring; `working` a ring that turns only while it works, with words and\nStop beside it; `off` muted everywhere at once.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 16,
+       "line": 17,
        "members": []
+      },
+      {
+       "name": "NucleuxIdentity.NameProblem",
+       "kind": "enum",
+       "signature": "public enum NameProblem: String, Sendable, CaseIterable",
+       "doc": "",
+       "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
+       "line": 50,
+       "members": [
+        {
+         "signature": "case empty, tooLong, same",
+         "doc": "",
+         "name": "empty"
+        },
+        {
+         "signature": "public var text: String",
+         "doc": "",
+         "name": "text"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxIdentity.NameState",
+       "kind": "struct",
+       "signature": "public struct NameState: Sendable, Equatable",
+       "doc": "",
+       "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
+       "line": 72,
+       "members": [
+        {
+         "signature": "public var name: String",
+         "doc": "",
+         "name": "name"
+        },
+        {
+         "signature": "public var formerly: String?",
+         "doc": "Beside the name for a while after a rename.",
+         "name": "formerly"
+        },
+        {
+         "signature": "public var notice: (from: String, to: String)?",
+         "doc": "The confirmation with Undo, until it settles.",
+         "name": "notice"
+        },
+        {
+         "signature": "public init(_ name: String)",
+         "doc": "",
+         "name": "init"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxIdentity.NameEvent",
+       "kind": "enum",
+       "signature": "public enum NameEvent: Sendable, Equatable { case rename(String), undo, settle }",
+       "doc": "",
+       "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
+       "line": 84,
+       "members": []
+      },
+      {
+       "name": "NucleuxIdentity.NameResult",
+       "kind": "struct",
+       "signature": "public struct NameResult: Sendable, Equatable",
+       "doc": "",
+       "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
+       "line": 86,
+       "members": [
+        {
+         "signature": "public var state: NameState",
+         "doc": "",
+         "name": "state"
+        },
+        {
+         "signature": "public var announcement: String?",
+         "doc": "",
+         "name": "announcement"
+        },
+        {
+         "signature": "public var problem: NameProblem?",
+         "doc": "",
+         "name": "problem"
+        }
+       ]
       },
       {
        "name": "NucleuxIdentity.GlyphContainer",
@@ -25708,7 +25859,7 @@
        "signature": "public enum GlyphContainer: String, CaseIterable, Sendable",
        "doc": "The reserved glyph's containers: only the container changes, never the drawing.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 44,
+       "line": 124,
        "members": [
         {
          "signature": "case quiet, tonal, filled",
@@ -25726,13 +25877,13 @@
        "name": "NucleuxAgentAvatar",
        "kind": "struct",
        "signature": "public struct NucleuxAgentAvatar: View",
-       "doc": "The agent's mark: the reserved glyph on a rounded square, never a face or initials. Carries working state as a\nring on the mark itself. See specs/identity.md.",
+       "doc": "The agent's mark: an approved image or the agent glyph on a rounded square, never a face or initials. Carries\nits state on the mark itself: a still ring when active, a turning ring while working. See specs/identity.md.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 87,
+       "line": 167,
        "members": [
         {
-         "signature": "public init(_ agent: String, size: NucleuxIdentity.AvatarSize = .md, state: NucleuxIdentity.AgentState = .ready, standalone: Bool = false)",
-         "doc": "- Parameter standalone: The mark stands alone (a toolbar, a notification), so it is named. Beside the name it is hidden.",
+         "signature": "public init(_ agent: String, size: NucleuxIdentity.AvatarSize = .md, state: NucleuxIdentity.AgentState = .ready, image: URL? = nil, standalone: Bool = false)",
+         "doc": "- Parameters:\n  - image: An approved abstract image. If it fails to load, the glyph is drawn instead; the label stays.\n  - standalone: The mark stands alone (a toolbar, a notification), so it is named. Beside the name it is hidden.",
          "paramDocs": {
           "standalone": "The mark stands alone (a toolbar, a notification), so it is named. Beside the name it is hidden."
          },
@@ -25746,7 +25897,7 @@
        "signature": "public struct NucleuxPersonAvatar: View",
        "doc": "A person's mark: initials on a circle. Hidden from VoiceOver; the name beside it is read.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 137,
+       "line": 240,
        "members": [
         {
          "signature": "public init(_ name: String, size: NucleuxIdentity.AvatarSize = .md)",
@@ -25759,13 +25910,17 @@
        "name": "NucleuxIdentityRow",
        "kind": "struct",
        "signature": "public struct NucleuxIdentityRow: View",
-       "doc": "A name with its line: an agent (with \"AI agent\") or a person.",
+       "doc": "A name with its line: an agent (with \"AI agent\" and its role in the product's words) or a person. While the agent\nworks, `status` says what it is doing, beside the turning ring, with Stop.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 157,
+       "line": 261,
        "members": [
         {
-         "signature": "public init(agent name: String, detail: String, state: NucleuxIdentity.AgentState = .ready)",
-         "doc": "",
+         "signature": "public init(agent name: String, detail: String, state: NucleuxIdentity.AgentState = .ready, image: URL? = nil, status: String? = nil, onStop: (() -> Void)? = nil, formerly: String? = nil)",
+         "doc": "- Parameters:\n  - detail: the role in the product's words (\"Customer Support Agent\").\n  - status: while working, \"Summarizing the meeting…\".\n  - formerly: after a rename, for a while, the old name.",
+         "paramDocs": {
+          "status": "while working, \"Summarizing the meeting…\".",
+          "formerly": "after a rename, for a while, the old name."
+         },
          "name": "init"
         },
         {
@@ -25781,12 +25936,13 @@
        "signature": "public struct NucleuxAgentIdentityCard: View",
        "doc": "Where the agent is introduced or looked up: the name with its role line, and the \"AI agent\" chip.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 192,
+       "line": 330,
        "members": [
         {
-         "signature": "public init(agent: String, role: String, state: NucleuxIdentity.AgentState = .ready, actionLabel: String? = nil, onAction: (() -> Void)? = nil)",
-         "doc": "- Parameters:\n  - role: What it is and what it is not: `NucleuxIdentity.roleLine(\"Helpdesk\")`.\n  - actionLabel: e.g. \"What Aria can see\".",
+         "signature": "public init(agent: String, role: String, intro: String? = nil, state: NucleuxIdentity.AgentState = .ready, image: URL? = nil, formerly: String? = nil, actionLabel: String? = nil, onAction: (() -> Void)? = nil)",
+         "doc": "- Parameters:\n  - role: Its role in the product's words: \"Customer Support Agent\", or `NucleuxIdentity.roleLine(\"Helpdesk\")`.\n  - intro: Once, where the agent is met: `NucleuxIdentity.intro(_:operator:does:)`.\n  - actionLabel: e.g. \"What Aria can see\".",
          "paramDocs": {
+          "intro": "Once, where the agent is met: `NucleuxIdentity.intro(_:operator:does:)`.",
           "actionLabel": "e.g. \"What Aria can see\"."
          },
          "name": "init"
@@ -25799,7 +25955,7 @@
        "signature": "public struct NucleuxAgentByline: View",
        "doc": "Under a record the agent wrote, away from the conversation: the same mark and name.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 243,
+       "line": 391,
        "members": [
         {
          "signature": "public init(agent: String, when: String? = nil, actionLabel: String? = nil, onAction: (() -> Void)? = nil)",
@@ -25814,7 +25970,7 @@
        "signature": "public struct NucleuxAgentGlyph: View",
        "doc": "The reserved glyph in one of its three containers, for controls that trigger generation and nothing else.\nDecorative: the control's own label says what it does.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 276,
+       "line": 424,
        "members": [
         {
          "signature": "public init(_ container: NucleuxIdentity.GlyphContainer = .quiet, size: CGFloat = 32, glyph: CGFloat = 18)",
@@ -25829,7 +25985,7 @@
        "signature": "public struct NucleuxMessageBubble: View",
        "doc": "One turn as a bubble. With `agent`, the agent's: its mark beside it, `brandMuted`, sharp corner bottom-left.\nWithout, the person's own: `muted`, on the right, sharp corner bottom-right. Read with the author first.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 298,
+       "line": 446,
        "members": [
         {
          "signature": "public init(_ text: String, agent: String? = nil)",
@@ -25844,7 +26000,7 @@
        "signature": "public struct NucleuxAgentPresence<Content: View>: View",
        "doc": "The agent working inside a surface a person owns: while `active`, a 2pt `brand` outline around it and a status\nline. Both go when the work does, and that is said too.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 359,
+       "line": 507,
        "members": [
         {
          "signature": "public init(agent: String, activity: String, detail: String? = nil, active: Bool, @ViewBuilder content: () -> Content)",
@@ -25852,6 +26008,66 @@
          "paramDocs": {
           "detail": "\"Nothing is saved until you accept it.\""
          },
+         "name": "init"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxAgentNameController",
+       "kind": "class",
+       "signature": "public final class NucleuxAgentNameController",
+       "doc": "The agent's name, renamed by an admin: one name everywhere at once, \"formerly\" for a while, and the confirmation\nwith Undo. Use `name` on every surface.",
+       "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
+       "line": 560,
+       "members": [
+        {
+         "signature": "public private(set) var state: NucleuxIdentity.NameState",
+         "doc": "",
+         "name": "state"
+        },
+        {
+         "signature": "public var name: String",
+         "doc": "",
+         "name": "name"
+        },
+        {
+         "signature": "public var formerly: String?",
+         "doc": "",
+         "name": "formerly"
+        },
+        {
+         "signature": "public init(_ name: String)",
+         "doc": "",
+         "name": "init"
+        },
+        {
+         "signature": "public func rename(_ to: String) -> NucleuxIdentity.NameProblem?",
+         "doc": "Returns why the name was refused, if it was.",
+         "name": "rename"
+        },
+        {
+         "signature": "public func undo()",
+         "doc": "",
+         "name": "undo"
+        },
+        {
+         "signature": "public func settle()",
+         "doc": "",
+         "name": "settle"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxAgentRenameNotice",
+       "kind": "struct",
+       "signature": "public struct NucleuxAgentRenameNotice: View",
+       "doc": "\"Renamed to Atlas. Role and permissions are unchanged.\" with Undo, after a rename, until it settles.",
+       "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
+       "line": 583,
+       "members": [
+        {
+         "signature": "public init(_ controller: NucleuxAgentNameController)",
+         "doc": "",
          "name": "init"
         }
        ]
@@ -25873,12 +26089,12 @@
        "doc": "Avatar and Name wording and sizes. Must reproduce specs/identity.fixtures.json (reference: react-native/src/identity.ts).",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 45,
+       "line": 59,
        "members": [
         {
-         "name": "RING_MILLIS",
-         "signature": "public const val RING_MILLIS: Int = 1600",
-         "doc": ""
+         "name": "TURN_MILLIS",
+         "signature": "public const val TURN_MILLIS: Int = 1000",
+         "doc": "One turn of the working ring."
         },
         {
          "name": "CHIP",
@@ -25886,9 +26102,54 @@
          "doc": ""
         },
         {
+         "name": "STOP",
+         "signature": "public const val STOP: String = \"Stop\"",
+         "doc": ""
+        },
+        {
          "name": "avatarLabel",
          "signature": "public fun avatarLabel(agent: String, state: NucleuxAgentState = NucleuxAgentState.Ready): String = when (state)",
          "doc": "The mark read aloud when it stands alone, or while working."
+        },
+        {
+         "name": "nameLabel",
+         "signature": "public fun nameLabel(agent: String, role: String): String = \"$agent, AI agent, ${spoken(role.trim())}\"",
+         "doc": "On a compact surface the role stays in the spoken name: \"Aria, AI agent, Customer Support Agent\"."
+        },
+        {
+         "name": "intro",
+         "signature": "public fun intro(agent: String, operator: String, does: String): String = \"I’m $agent, an AI agent run by $operator. ${does.trim()} I’m not a person.\"",
+         "doc": "Once, where the agent is met: who runs it, what it does, and that it is not a person."
+        },
+        {
+         "name": "stopped",
+         "signature": "public fun stopped(agent: String): String = \"Stopped. $agent is still here.\"",
+         "doc": "Said when Stop ends the work; the agent is still there."
+        },
+        {
+         "name": "NAME_MAX",
+         "signature": "public const val NAME_MAX: Int = 12",
+         "doc": ""
+        },
+        {
+         "name": "nameProblem",
+         "signature": "public fun nameProblem(name: String, current: String): NameProblem?",
+         "doc": ""
+        },
+        {
+         "name": "formerlyLabel",
+         "signature": "public fun formerlyLabel(name: String): String = \"formerly $name\"",
+         "doc": ""
+        },
+        {
+         "name": "renameNotice",
+         "signature": "public fun renameNotice(to: String): String = \"Renamed to $to. Role and permissions are unchanged.\"",
+         "doc": ""
+        },
+        {
+         "name": "reduce",
+         "signature": "public fun reduce(s: NameState, e: NameEvent): NameResult = when (e)",
+         "doc": ""
         },
         {
          "name": "roleLine",
@@ -25948,17 +26209,92 @@
        ]
       },
       {
-       "name": "NucleuxAvatarSize",
+       "name": "NucleuxIdentity.NameProblem",
        "kind": "enum",
-       "signature": "public enum class NucleuxAvatarSize(public val key: String, public val box: Dp, public val glyph: Dp, public val initials: Int, public val corner: Dp)",
-       "doc": "28 in a turn or a dense list, 40 in a row, 56 on an identity card. Only the glyph scales.",
+       "signature": "public enum class NameProblem(public val key: String, public val text: String)",
+       "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 89,
+       "line": 85,
        "members": [
         {
          "name": "entries",
-         "signature": "Sm(\"sm\", 28.dp, 15.dp, 11, 8.dp), Md(\"md\", 40.dp, 20.dp, 15, 11.dp), Lg(\"lg\", 56.dp, 28.dp, 20, 16.dp)"
+         "signature": "Empty(\"empty\", \"Give it a name.\"), TooLong(\"tooLong\", \"$NAME_MAX characters at most.\"), Same(\"same\", \"That’s its name already.\")"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxIdentity.NameState",
+       "kind": "class",
+       "signature": "public data class NameState(val name: String, val formerly: String? = null, val noticeFrom: String? = null)",
+       "doc": "[formerly] beside the name for a while after a rename; [noticeFrom] while the confirmation with Undo shows.",
+       "annotations": [],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
+       "line": 105,
+       "members": []
+      },
+      {
+       "name": "NucleuxIdentity.NameEvent",
+       "kind": "interface",
+       "signature": "public sealed interface NameEvent",
+       "doc": "",
+       "annotations": [],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
+       "line": 107,
+       "members": []
+      },
+      {
+       "name": "NucleuxIdentity.NameEvent.Rename",
+       "kind": "class",
+       "signature": "public data class Rename(val to: String) : NameEvent",
+       "doc": "",
+       "annotations": [],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
+       "line": 108,
+       "members": []
+      },
+      {
+       "name": "NucleuxIdentity.NameEvent.Undo",
+       "kind": "object",
+       "signature": "public data object Undo : NameEvent",
+       "doc": "",
+       "annotations": [],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
+       "line": 109,
+       "members": []
+      },
+      {
+       "name": "NucleuxIdentity.NameEvent.Settle",
+       "kind": "object",
+       "signature": "public data object Settle : NameEvent",
+       "doc": "",
+       "annotations": [],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
+       "line": 110,
+       "members": []
+      },
+      {
+       "name": "NucleuxIdentity.NameResult",
+       "kind": "class",
+       "signature": "public data class NameResult(val state: NameState, val announcement: String? = null, val problem: NameProblem? = null)",
+       "doc": "",
+       "annotations": [],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
+       "line": 113,
+       "members": []
+      },
+      {
+       "name": "NucleuxAvatarSize",
+       "kind": "enum",
+       "signature": "public enum class NucleuxAvatarSize(public val key: String, public val box: Dp, public val glyph: Dp, public val initials: Int, public val corner: Dp)",
+       "doc": "24 (activity, a byline), 32 (a turn, a bubble), 40 (a row, the identity card). Only the glyph scales.",
+       "annotations": [],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
+       "line": 156,
+       "members": [
+        {
+         "name": "entries",
+         "signature": "Xs(\"xs\", 24.dp, 13.dp, 10, 7.dp), Sm(\"sm\", 32.dp, 17.dp, 12, 9.dp), Md(\"md\", 40.dp, 20.dp, 15, 11.dp)"
         }
        ]
       },
@@ -25969,7 +26305,7 @@
        "doc": "The reserved glyph's containers: only the container changes, never the drawing. Token names for the fixtures.",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 96,
+       "line": 163,
        "members": [
         {
          "name": "entries",
@@ -25980,23 +26316,23 @@
       {
        "name": "NucleuxAgentState",
        "kind": "enum",
-       "signature": "public enum class NucleuxAgentState { Ready, Working, Off }",
-       "doc": "Carried on the mark: [Working] is a ring that runs only while it works; [Off] is muted everywhere at once.",
+       "signature": "public enum class NucleuxAgentState { Ready, Active, Working, Off }",
+       "doc": "Carried on the mark: [Active] a still ring; [Working] a ring that turns only while it works, with words and Stop\nbeside it; [Off] muted everywhere at once.",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 103,
+       "line": 173,
        "members": []
       },
       {
        "name": "NucleuxAgentAvatar",
        "kind": "composable",
-       "signature": "public fun NucleuxAgentAvatar(agent: String, modifier: Modifier = Modifier, size: NucleuxAvatarSize = NucleuxAvatarSize.Md, state: NucleuxAgentState = NucleuxAgentState.Ready, standalone: Boolean = false)",
-       "doc": "The agent's mark: the reserved glyph on a rounded square, never a face or initials. Carries working state as a ring\non the mark itself. [standalone]: the mark stands alone (a toolbar, a notification), so it is named; beside the\nname it is hidden. See specs/identity.md.",
+       "signature": "public fun NucleuxAgentAvatar(agent: String, modifier: Modifier = Modifier, size: NucleuxAvatarSize = NucleuxAvatarSize.Md, state: NucleuxAgentState = NucleuxAgentState.Ready, image: Painter? = null, standalone: Boolean = false)",
+       "doc": "The agent's mark: an approved image or the agent glyph on a rounded square, never a face or initials. Carries its\nstate on the mark itself: a still ring when active, a turning ring while working. [image]: the approved image, null\nwhile it loads or when it failed, so the glyph is drawn; the label stays. [standalone]: the mark stands alone (a\ntoolbar, a notification), so it is named; beside the name it is hidden. See specs/identity.md.",
        "annotations": [
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 111,
+       "line": 182,
        "members": []
       },
       {
@@ -26008,31 +26344,31 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 170,
+       "line": 248,
        "members": []
       },
       {
        "name": "NucleuxIdentityRow",
        "kind": "composable",
-       "signature": "public fun NucleuxIdentityRow(name: String, detail: String, modifier: Modifier = Modifier, agent: Boolean = false, state: NucleuxAgentState = NucleuxAgentState.Ready)",
-       "doc": "A name with its line: an agent (with \"AI agent\") or a person.",
+       "signature": "public fun NucleuxIdentityRow(name: String, detail: String, modifier: Modifier = Modifier, agent: Boolean = false, state: NucleuxAgentState = NucleuxAgentState.Ready, image: Painter? = null, status: String? = null, onStop: (() -> Unit)? = null, formerly: String? = null)",
+       "doc": "A name with its line: an agent (with \"AI agent\" and its role in the product's words) or a person. While the agent\nworks, [status] says what it is doing, beside the turning ring, with Stop. [formerly]: after a rename, the old name.",
        "annotations": [
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 182,
+       "line": 263,
        "members": []
       },
       {
        "name": "NucleuxAgentIdentityCard",
        "kind": "composable",
-       "signature": "public fun NucleuxAgentIdentityCard(agent: String, role: String, modifier: Modifier = Modifier, state: NucleuxAgentState = NucleuxAgentState.Ready, actionLabel: String? = null, onAction: (() -> Unit)? = null)",
-       "doc": "Where the agent is introduced or looked up: the name with its role line, and the \"AI agent\" chip.\n[role]: what it is and what it is not, `NucleuxIdentity.roleLine(\"Helpdesk\")`. [actionLabel]: e.g. \"What Aria can see\".",
+       "signature": "public fun NucleuxAgentIdentityCard(agent: String, role: String, modifier: Modifier = Modifier, intro: String? = null, state: NucleuxAgentState = NucleuxAgentState.Ready, image: Painter? = null, formerly: String? = null, actionLabel: String? = null, onAction: (() -> Unit)? = null)",
+       "doc": "Where the agent is introduced or looked up: the name with its role, the introduction, and the \"AI agent\" chip.\n[role]: its role in the product's words (\"Customer Support Agent\"). [intro]: once, `NucleuxIdentity.intro(…)`.\n[actionLabel]: e.g. \"What Aria can see\".",
        "annotations": [
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 215,
+       "line": 318,
        "members": []
       },
       {
@@ -26044,7 +26380,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 248,
+       "line": 361,
        "members": []
       },
       {
@@ -26056,7 +26392,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 274,
+       "line": 387,
        "members": []
       },
       {
@@ -26068,7 +26404,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 297,
+       "line": 410,
        "members": []
       },
       {
@@ -26080,7 +26416,74 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 322,
+       "line": 435,
+       "members": []
+      },
+      {
+       "name": "NucleuxAgentNameController",
+       "kind": "class",
+       "signature": "public class NucleuxAgentNameController(name: String)",
+       "doc": "The agent's name, renamed by an admin: one name everywhere at once, \"formerly\" for a while, and the confirmation\nwith Undo. Use [name] on every surface.",
+       "annotations": [
+        "@Stable"
+       ],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
+       "line": 482,
+       "members": [
+        {
+         "name": "state",
+         "signature": "public var state: NucleuxIdentity.NameState by mutableStateOf(NucleuxIdentity.NameState(name.trim()))",
+         "doc": ""
+        },
+        {
+         "name": "name",
+         "signature": "public val name: String get() = state.name",
+         "doc": ""
+        },
+        {
+         "name": "formerly",
+         "signature": "public val formerly: String? get() = state.formerly",
+         "doc": ""
+        },
+        {
+         "name": "rename",
+         "signature": "public fun rename(to: String): NucleuxIdentity.NameProblem? = send(NucleuxIdentity.NameEvent.Rename(to))",
+         "doc": "Returns why the name was refused, if it was."
+        },
+        {
+         "name": "undo",
+         "signature": "public fun undo()",
+         "doc": ""
+        },
+        {
+         "name": "settle",
+         "signature": "public fun settle()",
+         "doc": ""
+        }
+       ]
+      },
+      {
+       "name": "rememberNucleuxAgentNameController",
+       "kind": "composable",
+       "signature": "public fun rememberNucleuxAgentNameController(name: String): NucleuxAgentNameController",
+       "doc": "",
+       "annotations": [
+        "@Composable"
+       ],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
+       "line": 503,
+       "members": []
+      },
+      {
+       "name": "NucleuxAgentRenameNotice",
+       "kind": "composable",
+       "signature": "public fun NucleuxAgentRenameNotice(controller: NucleuxAgentNameController, modifier: Modifier = Modifier)",
+       "doc": "\"Renamed to Atlas. Role and permissions are unchanged.\" with Undo, after a rename, until it settles.",
+       "annotations": [
+        "@Composable"
+       ],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
+       "line": 510,
        "members": []
       }
      ],
@@ -26097,13 +26500,13 @@
        "name": "NucleuxAvatarSize",
        "kind": "enum",
        "signature": "enum NucleuxAvatarSize",
-       "doc": "28 in a turn or a dense list, 40 in a row, 56 on an identity card. Only the glyph scales.",
+       "doc": "24 (activity, a byline), 32 (a turn, a bubble), 40 (a row, the identity card). Only the glyph scales.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 9,
+       "line": 11,
        "members": [
         {
          "name": "values",
-         "signature": "sm(28, 15, 11, 8), md(40, 20, 15, 11), lg(56, 28, 20, 16)"
+         "signature": "xs(24, 13, 10, 7), sm(32, 17, 12, 9), md(40, 20, 15, 11)"
         }
        ]
       },
@@ -26113,7 +26516,7 @@
        "signature": "enum NucleuxGlyphContainer",
        "doc": "The reserved glyph's containers: only the container changes, never the drawing. Token names for the fixtures.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 22,
+       "line": 24,
        "members": [
         {
          "name": "values",
@@ -26125,13 +26528,118 @@
        "name": "NucleuxAgentState",
        "kind": "enum",
        "signature": "enum NucleuxAgentState",
-       "doc": "Carried on the mark: [working] is a ring that runs only while it works; [off] is muted everywhere at once.",
+       "doc": "Carried on the mark: [active] a still ring; [working] a ring that turns only while it works, with words and Stop\nbeside it; [off] muted everywhere at once.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 33,
+       "line": 36,
        "members": [
         {
          "name": "values",
-         "signature": "ready, working, off"
+         "signature": "ready, active, working, off"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxNameProblem",
+       "kind": "enum",
+       "signature": "enum NucleuxNameProblem",
+       "doc": "",
+       "file": "flutter/lib/src/identity.dart",
+       "line": 38,
+       "members": [
+        {
+         "name": "values",
+         "signature": "empty('Give it a name.'), tooLong('12 characters at most.'), same('That’s its name already.')"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxAgentNameState",
+       "kind": "typedef",
+       "signature": "typedef NucleuxAgentNameState = ({ String name, String? formerly, String? noticeFrom, })",
+       "doc": "[formerly] beside the name for a while after a rename; [noticeFrom] while the confirmation with Undo shows.",
+       "file": "flutter/lib/src/identity.dart",
+       "line": 48,
+       "members": []
+      },
+      {
+       "name": "NucleuxAgentNameEvent",
+       "kind": "class",
+       "signature": "sealed class NucleuxAgentNameEvent",
+       "doc": "",
+       "file": "flutter/lib/src/identity.dart",
+       "line": 54,
+       "members": [
+        {
+         "name": "NucleuxAgentNameEvent",
+         "kind": "constructor",
+         "signature": "const NucleuxAgentNameEvent()",
+         "doc": "",
+         "params": []
+        }
+       ]
+      },
+      {
+       "name": "AgentRename",
+       "kind": "class",
+       "signature": "class AgentRename extends NucleuxAgentNameEvent",
+       "doc": "",
+       "file": "flutter/lib/src/identity.dart",
+       "line": 58,
+       "members": [
+        {
+         "name": "AgentRename",
+         "kind": "constructor",
+         "signature": "const AgentRename(this.to)",
+         "doc": "",
+         "params": [
+          {
+           "name": "to",
+           "type": "String",
+           "named": false,
+           "required": true,
+           "position": 0
+          }
+         ]
+        },
+        {
+         "name": "to",
+         "kind": "field",
+         "signature": "final String to",
+         "doc": ""
+        }
+       ]
+      },
+      {
+       "name": "AgentNameUndo",
+       "kind": "class",
+       "signature": "class AgentNameUndo extends NucleuxAgentNameEvent",
+       "doc": "",
+       "file": "flutter/lib/src/identity.dart",
+       "line": 63,
+       "members": [
+        {
+         "name": "AgentNameUndo",
+         "kind": "constructor",
+         "signature": "const AgentNameUndo()",
+         "doc": "",
+         "params": []
+        }
+       ]
+      },
+      {
+       "name": "AgentNameSettle",
+       "kind": "class",
+       "signature": "class AgentNameSettle extends NucleuxAgentNameEvent",
+       "doc": "",
+       "file": "flutter/lib/src/identity.dart",
+       "line": 67,
+       "members": [
+        {
+         "name": "AgentNameSettle",
+         "kind": "constructor",
+         "signature": "const AgentNameSettle()",
+         "doc": "",
+         "params": []
         }
        ]
       },
@@ -26141,18 +26649,84 @@
        "signature": "abstract final class NucleuxIdentity",
        "doc": "Avatar and Name wording. Must reproduce specs/identity.fixtures.json (reference: react-native/src/identity.ts).",
        "file": "flutter/lib/src/identity.dart",
-       "line": 36,
+       "line": 72,
        "members": [
         {
-         "name": "ring",
+         "name": "turn",
          "kind": "static",
-         "signature": "static const ring = Duration(milliseconds: 1600)",
-         "doc": ""
+         "signature": "static const turn = Duration(milliseconds: 1000)",
+         "doc": "One turn of the working ring."
         },
         {
          "name": "chip",
          "kind": "static",
          "signature": "static const chip = 'AI agent'",
+         "doc": ""
+        },
+        {
+         "name": "stop",
+         "kind": "static",
+         "signature": "static const stop = 'Stop'",
+         "doc": ""
+        },
+        {
+         "name": "nameMax",
+         "kind": "static",
+         "signature": "static const nameMax = 12",
+         "doc": ""
+        },
+        {
+         "name": "nameLabel",
+         "kind": "static",
+         "signature": "static String nameLabel(String agent, String role) => '$agent, AI agent, ${_spoken(role.trim())}'",
+         "doc": "On a compact surface the role stays in the spoken name: \"Aria, AI agent, Customer Support Agent\"."
+        },
+        {
+         "name": "intro",
+         "kind": "static",
+         "signature": "static String intro(String agent, String operator, String does) => 'I’m $agent, an AI agent run by $operator. ${does.trim()} I’m not a person.'",
+         "doc": "Once, where the agent is met: who runs it, what it does, and that it is not a person."
+        },
+        {
+         "name": "stopped",
+         "kind": "static",
+         "signature": "static String stopped(String agent) => 'Stopped. $agent is still here.'",
+         "doc": "Said when Stop ends the work; the agent is still there."
+        },
+        {
+         "name": "nameProblem",
+         "kind": "static",
+         "signature": "static NucleuxNameProblem? nameProblem(String name, String current)",
+         "doc": ""
+        },
+        {
+         "name": "formerlyLabel",
+         "kind": "static",
+         "signature": "static String formerlyLabel(String name) => 'formerly $name'",
+         "doc": ""
+        },
+        {
+         "name": "renameNotice",
+         "kind": "static",
+         "signature": "static String renameNotice(String to) => 'Renamed to $to. Role and permissions are unchanged.'",
+         "doc": ""
+        },
+        {
+         "name": "initialName",
+         "kind": "static",
+         "signature": "static NucleuxAgentNameState initialName(String name) => (name: name.trim(), formerly: null, noticeFrom: null)",
+         "doc": ""
+        },
+        {
+         "name": "static",
+         "kind": "static",
+         "signature": "static ({ NucleuxAgentNameState state, String? announcement, NucleuxNameProblem? problem, })",
+         "doc": ""
+        },
+        {
+         "name": "reduceName",
+         "kind": "method",
+         "signature": "reduceName(NucleuxAgentNameState s, NucleuxAgentNameEvent e)",
          "doc": ""
         },
         {
@@ -26233,14 +26807,14 @@
        "name": "NucleuxAgentAvatar",
        "kind": "class",
        "signature": "class NucleuxAgentAvatar extends StatelessWidget",
-       "doc": "The agent's mark: the reserved glyph on a rounded square, never a face or initials. Carries working state as a\nring on the mark itself. [standalone]: the mark stands alone (a toolbar, a notification), so it is named; beside\nthe name it is hidden. See specs/identity.md.",
+       "doc": "The agent's mark: an approved image or the agent glyph on a rounded square, never a face or initials. Carries\nits state on the mark itself: a still ring when active, a turning ring while working. [image]: if it fails to\nload, the glyph is drawn; the label stays. [standalone]: the mark stands alone (a toolbar, a notification), so it\nis named; beside the name it is hidden. See specs/identity.md.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 94,
+       "line": 197,
        "members": [
         {
          "name": "NucleuxAgentAvatar",
          "kind": "constructor",
-         "signature": "const NucleuxAgentAvatar({ super.key, required this.agent, this.size = NucleuxAvatarSize.md, this.state = NucleuxAgentState.ready, this.standalone = false, })",
+         "signature": "const NucleuxAgentAvatar({ super.key, required this.agent, this.size = NucleuxAvatarSize.md, this.state = NucleuxAgentState.ready, this.image, this.standalone = false, })",
          "doc": "",
          "params": [
           {
@@ -26262,6 +26836,12 @@
            "named": true,
            "required": false,
            "default": "NucleuxAgentState.ready"
+          },
+          {
+           "name": "image",
+           "type": "ImageProvider?",
+           "named": true,
+           "required": false
           },
           {
            "name": "standalone",
@@ -26291,6 +26871,12 @@
          "doc": ""
         },
         {
+         "name": "image",
+         "kind": "field",
+         "signature": "final ImageProvider? image",
+         "doc": ""
+        },
+        {
          "name": "standalone",
          "kind": "field",
          "signature": "final bool standalone",
@@ -26304,7 +26890,7 @@
        "signature": "class NucleuxPersonAvatar extends StatelessWidget",
        "doc": "A person's mark: initials on a circle. Hidden from screen readers; the name beside it is read.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 219,
+       "line": 382,
        "members": [
         {
          "name": "NucleuxPersonAvatar",
@@ -26345,14 +26931,14 @@
        "name": "NucleuxIdentityRow",
        "kind": "class",
        "signature": "class NucleuxIdentityRow extends StatelessWidget",
-       "doc": "A name with its line: an agent (with \"AI agent\") or a person.",
+       "doc": "A name with its line: an agent (with \"AI agent\" and its role in the product's words) or a person. While the\nagent works, [status] says what it is doing, beside the turning ring, with Stop. [formerly]: after a rename.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 256,
+       "line": 434,
        "members": [
         {
          "name": "NucleuxIdentityRow",
          "kind": "constructor",
-         "signature": "const NucleuxIdentityRow({ super.key, required this.name, required this.detail, this.agent = false, this.state = NucleuxAgentState.ready, })",
+         "signature": "const NucleuxIdentityRow({ super.key, required this.name, required this.detail, this.agent = false, this.state = NucleuxAgentState.ready, this.image, this.status, this.onStop, this.formerly, })",
          "doc": "",
          "params": [
           {
@@ -26365,7 +26951,8 @@
            "name": "detail",
            "type": "String",
            "named": true,
-           "required": true
+           "required": true,
+           "doc": "The agent's role in the product's words (\"Customer Support Agent\"), or a person's team."
           },
           {
            "name": "agent",
@@ -26380,6 +26967,31 @@
            "named": true,
            "required": false,
            "default": "NucleuxAgentState.ready"
+          },
+          {
+           "name": "image",
+           "type": "ImageProvider?",
+           "named": true,
+           "required": false
+          },
+          {
+           "name": "status",
+           "type": "String?",
+           "named": true,
+           "required": false,
+           "doc": "While working: \"Summarizing the meeting…\"."
+          },
+          {
+           "name": "onStop",
+           "type": "VoidCallback?",
+           "named": true,
+           "required": false
+          },
+          {
+           "name": "formerly",
+           "type": "String?",
+           "named": true,
+           "required": false
           }
          ]
         },
@@ -26393,7 +27005,7 @@
          "name": "detail",
          "kind": "field",
          "signature": "final String detail",
-         "doc": ""
+         "doc": "The agent's role in the product's words (\"Customer Support Agent\"), or a person's team."
         },
         {
          "name": "agent",
@@ -26406,6 +27018,30 @@
          "kind": "field",
          "signature": "final NucleuxAgentState state",
          "doc": ""
+        },
+        {
+         "name": "image",
+         "kind": "field",
+         "signature": "final ImageProvider? image",
+         "doc": ""
+        },
+        {
+         "name": "status",
+         "kind": "field",
+         "signature": "final String? status",
+         "doc": "While working: \"Summarizing the meeting…\"."
+        },
+        {
+         "name": "onStop",
+         "kind": "field",
+         "signature": "final VoidCallback? onStop",
+         "doc": ""
+        },
+        {
+         "name": "formerly",
+         "kind": "field",
+         "signature": "final String? formerly",
+         "doc": ""
         }
        ]
       },
@@ -26415,12 +27051,12 @@
        "signature": "class NucleuxAgentIdentityCard extends StatelessWidget",
        "doc": "Where the agent is introduced or looked up: the name with its role line, and the \"AI agent\" chip.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 323,
+       "line": 546,
        "members": [
         {
          "name": "NucleuxAgentIdentityCard",
          "kind": "constructor",
-         "signature": "const NucleuxAgentIdentityCard({ super.key, required this.agent, required this.role, this.state = NucleuxAgentState.ready, this.actionLabel, this.onAction, })",
+         "signature": "const NucleuxAgentIdentityCard({ super.key, required this.agent, required this.role, this.intro, this.state = NucleuxAgentState.ready, this.image, this.formerly, this.actionLabel, this.onAction, })",
          "doc": "",
          "params": [
           {
@@ -26434,7 +27070,14 @@
            "type": "String",
            "named": true,
            "required": true,
-           "doc": "What it is and what it is not: `NucleuxIdentity.roleLine('Helpdesk')`."
+           "doc": "Its role in the product's words: \"Customer Support Agent\", or `NucleuxIdentity.roleLine('Helpdesk')`."
+          },
+          {
+           "name": "intro",
+           "type": "String?",
+           "named": true,
+           "required": false,
+           "doc": "Once, where the agent is met: `NucleuxIdentity.intro(…)`."
           },
           {
            "name": "state",
@@ -26442,6 +27085,18 @@
            "named": true,
            "required": false,
            "default": "NucleuxAgentState.ready"
+          },
+          {
+           "name": "image",
+           "type": "ImageProvider?",
+           "named": true,
+           "required": false
+          },
+          {
+           "name": "formerly",
+           "type": "String?",
+           "named": true,
+           "required": false
           },
           {
            "name": "actionLabel",
@@ -26468,12 +27123,30 @@
          "name": "role",
          "kind": "field",
          "signature": "final String role",
-         "doc": "What it is and what it is not: `NucleuxIdentity.roleLine('Helpdesk')`."
+         "doc": "Its role in the product's words: \"Customer Support Agent\", or `NucleuxIdentity.roleLine('Helpdesk')`."
+        },
+        {
+         "name": "intro",
+         "kind": "field",
+         "signature": "final String? intro",
+         "doc": "Once, where the agent is met: `NucleuxIdentity.intro(…)`."
         },
         {
          "name": "state",
          "kind": "field",
          "signature": "final NucleuxAgentState state",
+         "doc": ""
+        },
+        {
+         "name": "image",
+         "kind": "field",
+         "signature": "final ImageProvider? image",
+         "doc": ""
+        },
+        {
+         "name": "formerly",
+         "kind": "field",
+         "signature": "final String? formerly",
          "doc": ""
         },
         {
@@ -26496,7 +27169,7 @@
        "signature": "class NucleuxAgentByline extends StatelessWidget",
        "doc": "Under a record the agent wrote, away from the conversation: the same mark and name.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 426,
+       "line": 678,
        "members": [
         {
          "name": "NucleuxAgentByline",
@@ -26562,7 +27235,7 @@
        "signature": "class NucleuxAgentGlyph extends StatelessWidget",
        "doc": "The reserved glyph in one of its three containers, for controls that trigger generation and nothing else.\nDecorative: the control's own label says what it does.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 479,
+       "line": 731,
        "members": [
         {
          "name": "NucleuxAgentGlyph",
@@ -26619,7 +27292,7 @@
        "signature": "class NucleuxMessageBubble extends StatelessWidget",
        "doc": "One turn as a bubble. With [agent], the agent's: its mark beside it, `brandMuted`, sharp corner bottom-left.\nWithout, the person's own: `muted`, on the right, sharp corner bottom-right. Read with the author first.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 521,
+       "line": 773,
        "members": [
         {
          "name": "NucleuxMessageBubble",
@@ -26662,7 +27335,7 @@
        "signature": "class NucleuxAgentPresence extends StatefulWidget",
        "doc": "The agent working inside a surface a person owns: while [active], a 2pt `brand` outline around it and a status\nline (\"Aria is drafting in this document\"). Both go when the work does, and that is said too.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 579,
+       "line": 831,
        "members": [
         {
          "name": "NucleuxAgentPresence",
@@ -26735,6 +27408,97 @@
          "doc": ""
         }
        ]
+      },
+      {
+       "name": "NucleuxAgentNameController",
+       "kind": "class",
+       "signature": "class NucleuxAgentNameController extends ChangeNotifier",
+       "doc": "The agent's name, renamed by an admin: one name everywhere at once, \"formerly\" for a while, and the confirmation\nwith Undo. Use [name] on every surface.",
+       "file": "flutter/lib/src/identity.dart",
+       "line": 940,
+       "members": [
+        {
+         "name": "NucleuxAgentNameController",
+         "kind": "constructor",
+         "signature": "NucleuxAgentNameController(String name)",
+         "doc": "",
+         "params": [
+          {
+           "name": "name",
+           "type": "String",
+           "named": false,
+           "required": true,
+           "position": 0
+          }
+         ]
+        },
+        {
+         "name": "state",
+         "kind": "method",
+         "signature": "NucleuxAgentNameState get state => _state",
+         "doc": ""
+        },
+        {
+         "name": "name",
+         "kind": "method",
+         "signature": "String get name => _state.name",
+         "doc": ""
+        },
+        {
+         "name": "formerly",
+         "kind": "method",
+         "signature": "String? get formerly => _state.formerly",
+         "doc": ""
+        },
+        {
+         "name": "rename",
+         "kind": "method",
+         "signature": "NucleuxNameProblem? rename(String to, [BuildContext? context]) => _send(AgentRename(to), context)",
+         "doc": "Returns why the name was refused, if it was. With [context], announces it."
+        },
+        {
+         "name": "undo",
+         "kind": "method",
+         "signature": "void undo([BuildContext? context]) => _send(const AgentNameUndo(), context)",
+         "doc": ""
+        },
+        {
+         "name": "settle",
+         "kind": "method",
+         "signature": "void settle() => _send(const AgentNameSettle(), null)",
+         "doc": ""
+        }
+       ]
+      },
+      {
+       "name": "NucleuxAgentRenameNotice",
+       "kind": "class",
+       "signature": "class NucleuxAgentRenameNotice extends StatelessWidget",
+       "doc": "\"Renamed to Atlas. Role and permissions are unchanged.\" with Undo, after a rename, until it settles.",
+       "file": "flutter/lib/src/identity.dart",
+       "line": 972,
+       "members": [
+        {
+         "name": "NucleuxAgentRenameNotice",
+         "kind": "constructor",
+         "signature": "const NucleuxAgentRenameNotice({super.key, required this.controller})",
+         "doc": "",
+         "params": [
+          {
+           "name": "controller",
+           "type": "NucleuxAgentNameController",
+           "named": true,
+           "required": true
+          }
+         ]
+        },
+        {
+         "name": "controller",
+         "kind": "field",
+         "signature": "final NucleuxAgentNameController controller",
+         "doc": ""
+        }
+       ]
       }
      ],
      "example": "Test host from identity_test.dart"
@@ -26745,45 +27509,45 @@
       "react-native/src/Avatar.tsx",
       "react-native/src/AgentIdentity.tsx"
      ],
-     "import": "import { AgentAvatar, PersonAvatar, IdentityRow, AgentIdentityCard, AgentByline, AgentGlyph } from '@intelligaia/nucleux';",
+     "import": "import { AgentAvatar, PersonAvatar, IdentityRow, AgentIdentityCard, AgentRenameNotice, AgentByline } from '@intelligaia/nucleux';",
      "primary": "AgentAvatar",
      "symbols": [
       {
        "name": "AvatarSize",
        "kind": "type",
-       "signature": "export type AvatarSize = 'sm' | 'md' | 'lg'",
+       "signature": "export type AvatarSize = 'xs' | 'sm' | 'md'",
        "doc": "",
        "file": "react-native/src/identity.ts",
        "line": 7,
        "members": [],
-       "body": "export type AvatarSize = 'sm' | 'md' | 'lg';"
+       "body": "export type AvatarSize = 'xs' | 'sm' | 'md';"
       },
       {
        "name": "AVATAR_SIZES",
        "kind": "const",
-       "signature": "export const AVATAR_SIZES: Record<AvatarSize, { box: number; glyph: number; initials: number; corner: number }> = {\n  sm: { box: 28, glyph: 15, initials: 11, corner: 8 },\n  md: { box: 40, glyph: 20, initials: 15, corner: 11 },\n  lg: { box: 56, glyph: 28, initials: 20, corner: 16 },\n}",
-       "doc": "28 in a dense list or a turn, 40 in a row, 56 on an identity card. Only the glyph scales with it.",
+       "signature": "export const AVATAR_SIZES: Record<AvatarSize, { box: number; glyph: number; initials: number; corner: number }> = {\n  xs: { box: 24, glyph: 13, initials: 10, corner: 7 },\n  sm: { box: 32, glyph: 17, initials: 12, corner: 9 },\n  md: { box: 40, glyph: 20, initials: 15, corner: 11 },\n}",
+       "doc": "One shape and one container at 24 (activity, a byline), 32 (a turn in a thread, a bubble) and 40 (a row, the\nidentity card). Only the glyph scales with it.",
        "file": "react-native/src/identity.ts",
-       "line": 10,
+       "line": 13,
        "members": []
       },
       {
        "name": "AgentState",
        "kind": "type",
-       "signature": "export type AgentState = 'ready' | 'working' | 'off'",
-       "doc": "The agent's state, carried on the mark: `working` is a ring that runs only while it works; `off` is muted\neverywhere at once, so no surface still implies the agent is on it.",
+       "signature": "export type AgentState = 'ready' | 'active' | 'working' | 'off'",
+       "doc": "The agent's state, carried on the mark: `active` is a still ring (it is here); `working` a ring that turns only\nwhile it works, always with words and Stop beside it; `off` is muted everywhere at once, so no surface still\nimplies the agent is on it.",
        "file": "react-native/src/identity.ts",
-       "line": 20,
+       "line": 24,
        "members": [],
-       "body": "export type AgentState = 'ready' | 'working' | 'off';"
+       "body": "export type AgentState = 'ready' | 'active' | 'working' | 'off';"
       },
       {
-       "name": "AVATAR_RING_MS",
+       "name": "AVATAR_TURN_MS",
        "kind": "const",
-       "signature": "export const AVATAR_RING_MS = 1600",
-       "doc": "How long one pulse of the working ring takes.",
+       "signature": "export const AVATAR_TURN_MS = 1000",
+       "doc": "One turn of the working ring.",
        "file": "react-native/src/identity.ts",
-       "line": 23,
+       "line": 27,
        "members": []
       },
       {
@@ -26792,7 +27556,154 @@
        "signature": "export function agentAvatarLabel(agent: string, state: AgentState = 'ready'): string",
        "doc": "What a screen reader hears for the mark when it stands alone (a toolbar, a notification). Beside the\nagent's name it is hidden, except while working, when it is a status.",
        "file": "react-native/src/identity.ts",
-       "line": 29,
+       "line": 33,
+       "members": []
+      },
+      {
+       "name": "agentNameLabel",
+       "kind": "function",
+       "signature": "export function agentNameLabel(agent: string, role: string): string",
+       "doc": "On a compact surface the role stays in the spoken name: \"Aria, AI agent, Customer Support Agent\".",
+       "file": "react-native/src/identity.ts",
+       "line": 47,
+       "members": []
+      },
+      {
+       "name": "agentIntro",
+       "kind": "function",
+       "signature": "export function agentIntro(agent: string, operator: string, does: string): string",
+       "doc": "The introduction, once, where the agent is met: who runs it, what it does, and that it is not a person.\n`does` is the host's sentence (\"I can track orders, start returns and update delivery details.\").",
+       "file": "react-native/src/identity.ts",
+       "line": 55,
+       "members": []
+      },
+      {
+       "name": "AGENT_STOP",
+       "kind": "const",
+       "signature": "export const AGENT_STOP = 'Stop'",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 59,
+       "members": []
+      },
+      {
+       "name": "agentStopped",
+       "kind": "function",
+       "signature": "export function agentStopped(agent: string): string",
+       "doc": "Said when Stop ends the work; the agent is still there.",
+       "file": "react-native/src/identity.ts",
+       "line": 62,
+       "members": []
+      },
+      {
+       "name": "AGENT_NAME_MAX",
+       "kind": "const",
+       "signature": "export const AGENT_NAME_MAX = 12",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 68,
+       "members": []
+      },
+      {
+       "name": "AgentNameProblem",
+       "kind": "type",
+       "signature": "export type AgentNameProblem = 'empty' | 'tooLong' | 'same'",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 70,
+       "members": [],
+       "body": "export type AgentNameProblem = 'empty' | 'tooLong' | 'same';"
+      },
+      {
+       "name": "AGENT_NAME_PROBLEMS",
+       "kind": "const",
+       "signature": "export const AGENT_NAME_PROBLEMS: Record<AgentNameProblem, string> = {\n  empty: 'Give it a name.',\n  tooLong: `${AGENT_NAME_MAX} characters at most.`,\n  same: 'That’s its name already.',\n}",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 72,
+       "members": []
+      },
+      {
+       "name": "agentNameProblem",
+       "kind": "function",
+       "signature": "export function agentNameProblem(name: string, current: string): AgentNameProblem | null",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 78,
+       "members": []
+      },
+      {
+       "name": "AgentNameState",
+       "kind": "interface",
+       "signature": "export interface AgentNameState",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 86,
+       "members": [
+        {
+         "name": "name",
+         "optional": false,
+         "type": "string",
+         "doc": ""
+        },
+        {
+         "name": "formerly",
+         "optional": false,
+         "type": "string | null",
+         "doc": "Shown beside the name for a while after a rename: \"(formerly Aria)\"."
+        },
+        {
+         "name": "notice",
+         "optional": false,
+         "type": "{ from: string; to: string } | null",
+         "doc": "The confirmation with Undo, until it settles."
+        }
+       ]
+      },
+      {
+       "name": "AgentNameEvent",
+       "kind": "type",
+       "signature": "export type AgentNameEvent =\n  | { type: 'rename'; to: string }",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 94,
+       "members": [],
+       "body": "export type AgentNameEvent =\n  | { type: 'rename'; to: string }"
+      },
+      {
+       "name": "initialAgentName",
+       "kind": "function",
+       "signature": "export function initialAgentName(name: string): AgentNameState",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 101,
+       "members": []
+      },
+      {
+       "name": "formerlyLabel",
+       "kind": "function",
+       "signature": "export function formerlyLabel(name: string): string",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 105,
+       "members": []
+      },
+      {
+       "name": "renameNotice",
+       "kind": "function",
+       "signature": "export function renameNotice(to: string): string",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 109,
+       "members": []
+      },
+      {
+       "name": "agentNameReduce",
+       "kind": "function",
+       "signature": "export function agentNameReduce(s: AgentNameState, e: AgentNameEvent):",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 113,
        "members": []
       },
       {
@@ -26801,7 +27712,7 @@
        "signature": "export function agentRoleLine(product: string): string",
        "doc": "The role line under the name, the first time it is seen: what it is, and what it is not.",
        "file": "react-native/src/identity.ts",
-       "line": 41,
+       "line": 141,
        "members": []
       },
       {
@@ -26810,7 +27721,7 @@
        "signature": "export const IDENTITY_CHIP = 'AI agent'",
        "doc": "The chip on the identity card.",
        "file": "react-native/src/identity.ts",
-       "line": 46,
+       "line": 146,
        "members": []
       },
       {
@@ -26819,7 +27730,7 @@
        "signature": "export function bylineText(agent: string, when?: string): string",
        "doc": "The attribution under a record the agent wrote, away from the conversation.",
        "file": "react-native/src/identity.ts",
-       "line": 49,
+       "line": 149,
        "members": []
       },
       {
@@ -26828,7 +27739,7 @@
        "signature": "export function bylineLabel(agent: string, when?: string): string",
        "doc": "The byline read aloud: commas for the separators, and what wrote it said in words.",
        "file": "react-native/src/identity.ts",
-       "line": 54,
+       "line": 154,
        "members": []
       },
       {
@@ -26837,7 +27748,7 @@
        "signature": "export function identityLabel(agent: string, role: string): string",
        "doc": "The identity card read aloud: the name, then the role line with its separator spoken as a comma.",
        "file": "react-native/src/identity.ts",
-       "line": 64,
+       "line": 164,
        "members": []
       },
       {
@@ -26846,7 +27757,7 @@
        "signature": "export type AgentGlyphContainer = 'quiet' | 'tonal' | 'filled'",
        "doc": "The reserved glyph (Lucide `sparkles`), on every control that triggers generation and on nothing else. Only the\ncontainer changes: `quiet` in a menu or toolbar, `tonal` on a chip, `filled` on a primary action.",
        "file": "react-native/src/identity.ts",
-       "line": 76,
+       "line": 176,
        "members": [],
        "body": "export type AgentGlyphContainer = 'quiet' | 'tonal' | 'filled';"
       },
@@ -26856,7 +27767,7 @@
        "signature": "export const AGENT_GLYPH_COLORS: Record<AgentGlyphContainer, { fill: 'muted' | 'brandMuted' | 'brand'; glyph: 'brand' | 'brandForeground' }> = {\n  quiet: { fill: 'muted', glyph: 'brand' },\n  tonal: { fill: 'brandMuted', glyph: 'brand' },\n  filled: { fill: 'brand', glyph: 'brandForeground' },\n}",
        "doc": "",
        "file": "react-native/src/identity.ts",
-       "line": 78,
+       "line": 178,
        "members": []
       },
       {
@@ -26865,7 +27776,7 @@
        "signature": "export const BUBBLE = { radius: 16, sharp: 4, maxWidth: 0.82 } as const",
        "doc": "Two authors, two grounds: the agent's bubble on `brandMuted` with its sharp corner bottom-left, a person's on\n`muted` with its sharp corner bottom-right, so the pair still separates in greyscale.",
        "file": "react-native/src/identity.ts",
-       "line": 88,
+       "line": 188,
        "members": []
       },
       {
@@ -26874,7 +27785,7 @@
        "signature": "export interface BubbleCorners",
        "doc": "",
        "file": "react-native/src/identity.ts",
-       "line": 90,
+       "line": 190,
        "members": [
         {
          "name": "topLeft",
@@ -26908,7 +27819,7 @@
        "signature": "export function bubbleCorners(fromAgent: boolean): BubbleCorners",
        "doc": "",
        "file": "react-native/src/identity.ts",
-       "line": 97,
+       "line": 197,
        "members": []
       },
       {
@@ -26917,7 +27828,7 @@
        "signature": "export function bubbleLabel(text: string, agent?: string): string",
        "doc": "A bubble read aloud: colour is never the only signal, so the author is said first.",
        "file": "react-native/src/identity.ts",
-       "line": 105,
+       "line": 205,
        "members": []
       },
       {
@@ -26926,7 +27837,7 @@
        "signature": "export function presenceLabel(agent: string, activity: string): string",
        "doc": "Presence: the agent is working inside a surface a person owns. Said as a status, with the outline, and both go\nwhen the work does. `activity`: \"drafting in this document\".",
        "file": "react-native/src/identity.ts",
-       "line": 113,
+       "line": 213,
        "members": []
       },
       {
@@ -26935,7 +27846,7 @@
        "signature": "export function presenceEnded(agent: string): string",
        "doc": "Said when the presence ends, so the outline going is not the only signal.",
        "file": "react-native/src/identity.ts",
-       "line": 118,
+       "line": 218,
        "members": []
       },
       {
@@ -26965,6 +27876,12 @@
          "doc": ""
         },
         {
+         "name": "image",
+         "optional": true,
+         "type": "ImageSourcePropType",
+         "doc": "An approved abstract image. If it fails to load, the glyph is drawn instead; the label stays."
+        },
+        {
          "name": "standalone",
          "optional": true,
          "type": "boolean",
@@ -26981,10 +27898,10 @@
       {
        "name": "AgentAvatar",
        "kind": "component",
-       "signature": "export function AgentAvatar({ agent, size = 'md', state = 'ready', standalone = false, testID = 'avatar-agent' }: AgentAvatarProps)",
-       "doc": "The agent's mark: the reserved glyph on a rounded square, never a face or initials. Carries working state\nas a ring on the mark itself. See specs/identity.md.",
+       "signature": "export function AgentAvatar({ agent, size = 'md', state = 'ready', image, standalone = false, testID = 'avatar-agent' }: AgentAvatarProps)",
+       "doc": "The agent's mark: an approved image or the agent glyph on a rounded square, never a face or initials. Carries its\nstate on the mark itself: a still ring when active, a turning ring while working. See specs/identity.md.",
        "file": "react-native/src/Avatar.tsx",
-       "line": 22,
+       "line": 24,
        "members": []
       },
       {
@@ -26993,16 +27910,16 @@
        "signature": "export function PersonAvatar({ name, size = 'md', testID = 'avatar-person' }: { name: string; size?: AvatarSize; testID?: string })",
        "doc": "A person's mark: initials on a circle. Hidden from screen readers; the name beside it is read.",
        "file": "react-native/src/Avatar.tsx",
-       "line": 84,
+       "line": 90,
        "members": []
       },
       {
        "name": "IdentityRow",
        "kind": "component",
-       "signature": "export function IdentityRow({ name, detail, agent = false, state }: { name: string; detail: string; agent?: boolean; state?: AgentState })",
-       "doc": "A name with its line: an agent (with \"AI agent\") or a person. See specs/identity.md.",
+       "signature": "export function IdentityRow({ name, detail, agent = false, state, image, status, onStop, formerly, }: { name: string; detail: string; agent?: boolean; state?: AgentState; image?: ImageSourcePropType; status?: string; onStop?: () => void; formerly?: string | null; })",
+       "doc": "A name with its line: an agent (with \"AI agent\" and its role in the product's words) or a person. While the agent\nworks, `status` says what it is doing, beside the turning ring, with Stop.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 26,
+       "line": 43,
        "members": []
       },
       {
@@ -27011,7 +27928,7 @@
        "signature": "export interface AgentIdentityCardProps",
        "doc": "",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 42,
+       "line": 101,
        "members": [
         {
          "name": "agent",
@@ -27023,12 +27940,30 @@
          "name": "role",
          "optional": false,
          "type": "string",
-         "doc": "What it is and what it is not: agentRoleLine(\"Helpdesk\")."
+         "doc": "Its role in the product's words: \"Customer Support Agent\", or agentRoleLine(\"Helpdesk\")."
+        },
+        {
+         "name": "intro",
+         "optional": true,
+         "type": "string",
+         "doc": "Once, where the agent is met: agentIntro(agent, operator, does)."
         },
         {
          "name": "state",
          "optional": true,
          "type": "AgentState",
+         "doc": ""
+        },
+        {
+         "name": "image",
+         "optional": true,
+         "type": "ImageSourcePropType",
+         "doc": ""
+        },
+        {
+         "name": "formerly",
+         "optional": true,
+         "type": "string | null",
          "doc": ""
         },
         {
@@ -27048,10 +27983,38 @@
       {
        "name": "AgentIdentityCard",
        "kind": "component",
-       "signature": "export function AgentIdentityCard({ agent, role, state, actionLabel, onAction }: AgentIdentityCardProps)",
-       "doc": "Where the agent is introduced or looked up: the name with its role line, and the \"AI agent\" chip.",
+       "signature": "export function AgentIdentityCard({ agent, role, intro, state, image, formerly, actionLabel, onAction }: AgentIdentityCardProps)",
+       "doc": "Where the agent is introduced or looked up: the name with its role, the introduction, and the \"AI agent\" chip.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 53,
+       "line": 116,
+       "members": []
+      },
+      {
+       "name": "useAgentName",
+       "kind": "hook",
+       "signature": "export function useAgentName(initial: string)",
+       "doc": "The agent's name, renamed by an admin: one name everywhere at once, \"formerly\" for a while, and the\nconfirmation with Undo. Use `name` on every surface. See specs/identity.md.",
+       "file": "react-native/src/AgentIdentity.tsx",
+       "line": 147,
+       "members": []
+      },
+      {
+       "name": "AgentNameHandle",
+       "kind": "type",
+       "signature": "export type AgentNameHandle = ReturnType<typeof useAgentName>",
+       "doc": "",
+       "file": "react-native/src/AgentIdentity.tsx",
+       "line": 168,
+       "members": [],
+       "body": "export type AgentNameHandle = ReturnType<typeof useAgentName>;"
+      },
+      {
+       "name": "AgentRenameNotice",
+       "kind": "component",
+       "signature": "export function AgentRenameNotice({ agentName }: { agentName: AgentNameHandle })",
+       "doc": "\"Renamed to Atlas. Role and permissions are unchanged.\" with Undo, after a rename, until it settles.",
+       "file": "react-native/src/AgentIdentity.tsx",
+       "line": 171,
        "members": []
       },
       {
@@ -27060,7 +28023,7 @@
        "signature": "export function AgentByline({ agent, when, actionLabel, onAction }: { agent: string; when?: string; actionLabel?: string; onAction?: () => void })",
        "doc": "Under a record the agent wrote, away from the conversation: the same mark and name.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 77,
+       "line": 185,
        "members": []
       },
       {
@@ -27069,7 +28032,7 @@
        "signature": "export function AgentGlyph({ container = 'quiet', size = 32, glyph = 18 }: { container?: AgentGlyphContainer; size?: number; glyph?: number })",
        "doc": "The reserved glyph in one of its three containers, for controls that trigger generation (a menu row, a chip, a\nprimary action) and nothing else. Decorative: the control's own label says what it does.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 94,
+       "line": 202,
        "members": []
       },
       {
@@ -27078,7 +28041,7 @@
        "signature": "export function MessageBubble({ agent, children }: { agent?: string; children: string })",
        "doc": "One turn as a bubble. With `agent`, the agent's: its mark beside it, `brandMuted`, sharp corner bottom-left.\nWithout, the person's own: `muted`, on the right, sharp corner bottom-right. Read with the author first.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 112,
+       "line": 220,
        "members": []
       },
       {
@@ -27087,11 +28050,12 @@
        "signature": "export function AgentPresence({ agent, activity, detail, active, children, }: { agent: string; activity: string; detail?: string; active: boolean; children: React.ReactNode; })",
        "doc": "The agent working inside a surface a person owns: while `active`, a 2pt `brand` outline around it and a status\nline (\"Aria is drafting in this document\"). Both go when the work does, and that is said too.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 149,
+       "line": 257,
        "members": []
       }
      ],
      "constants": {
+      "AGENT_STOP": "Stop",
       "IDENTITY_CHIP": "AI agent"
      },
      "example": "Test host from Identity.test.tsx"
@@ -58523,7 +59487,7 @@
    "component": "icons",
    "framework": "swiftui",
    "title": "AgentColorScreen (iOS catalog app, SCREEN=agent-color)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:919",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:935",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct AgentColorScreen: View {\n    @State private var drafting = true\n\n    var body: some View {\n        ScrollView {\n            VStack(alignment: .leading, spacing: 20) {\n                Text(\"Ticket 5512\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                VStack(alignment: .leading, spacing: 0) {\n                    row(\"Draft a reply\", ai: true)\n                    row(\"Summarise this thread\", ai: true)\n                    Divider().overlay(NucleuxColor.border).padding(.vertical, 4)\n                    row(\"Add a note\", ai: false)\n                    row(\"Assign to someone\", ai: false)\n                }\n                .padding(.vertical, 6)\n                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(NucleuxColor.border))\n                HStack(spacing: 16) {\n                    ForEach(NucleuxIdentity.GlyphContainer.allCases, id: \\.self) { k in\n                        VStack(spacing: 6) {\n                            NucleuxAgentGlyph(k, size: 44, glyph: 22)\n                            Text(k.rawValue.capitalized).font(.system(size: 11, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                        }\n                    }\n                }\n                VStack(spacing: 10) {\n                    NucleuxMessageBubble(\"Where did Q2 renewals land?\")\n                    NucleuxMessageBubble(\"£4.1m, 6% ahead of plan — almost all of it enterprise renewals.\", agent: \"Aria\")\n                }\n                NucleuxAgentPresence(agent: \"Aria\", activity: \"drafting in this document\",\n                                     detail: \"Nothing is saved until you accept it.\", active: drafting) {\n                    Text(\"Q2 renewal summary\").font(.system(size: 15, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                    Text(\"Renewals closed at 94%, up four points.\").font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                }\n                NucleuxButton(drafting ? \"Stop Aria\" : \"Let Aria draft\", variant: .secondary, size: .sm) { drafting.toggle() }\n            }\n            .padding(16)\n        }\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func row(_ label: String, ai: Bool) -> some View {\n        HStack(spacing: 12) {\n            if ai {\n                NucleuxAgentGlyph(.quiet, size: 28, glyph: 16)\n            } else {\n                NucleuxIconView(.fileText, size: 18).foregroundStyle(NucleuxColor.mutedForeground).frame(width: 28, height: 28)\n                    .accessibilityHidden(true)\n            }\n            Text(label).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n            Spacer()\n        }\n        .padding(.horizontal, 12).frame(minHeight: 44)\n        .accessibilityElement(children: .combine)\n        .accessibilityAddTraits(.isButton)\n    }\n}",
    "lines": 60
   },
@@ -59063,7 +60027,7 @@
    "component": "caveat",
    "framework": "swiftui",
    "title": "CaveatScreen (iOS catalog app, SCREEN=caveat)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1877",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1893",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct CaveatScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    @State private var text = \"\"\n    @State private var updated = Self.env[\"STATE\"] == \"resolved\"\n    private static let content = NucleuxCaveatRules.Content(\n        message: \"2 of 8 interviews could not be opened, so this summary reflects 6.\",\n        why: \"Themes raised only in those two calls are missing, not just under-counted.\",\n        short: \"2 of 8 interviews could not be opened.\", noun: \"summary\",\n        sources: [\n            .init(name: \"6 interviews read\", note: \"Ana, Bo, Chen, Dee, Femi, Ines\", ok: true),\n            .init(name: \"Hana Kim · Oct 3\", note: \"Not opened — the file was moved\", ok: false),\n            .init(name: \"Marcus Lee · Oct 9\", note: \"Not opened — sharing was removed\", ok: false),\n        ],\n        recover: .init(label: \"Reconnect\", busy: \"Reconnecting to Research › October…\", ready: \"Both interviews are available again.\"))\n    private static let points = [\n        \"Onboarding takes too long for teams that import from spreadsheets (5 of 6 interviews).\",\n        \"Shared links expiring early is the most frequent complaint.\",\n        \"Two teams asked for a weekly digest instead of real-time alerts.\",\n    ]\n    private static let added = \"Invoice exports confuse finance teams (2 of 8 interviews).\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    Text(\"Summarize customer feedback from this month.\").font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                    NucleuxMessage(agent: \"Aria\", text: \"Customer feedback · October\")\n                    VStack(alignment: .leading, spacing: 6) {\n                        ForEach(Self.points + (updated ? [Self.added] : []), id: \\.self) { p in\n                            HStack(alignment: .top, spacing: 6) {\n                                Text(\"•\").foregroundStyle(NucleuxColor.mutedForeground)\n                                VStack(alignment: .leading, spacing: 2) {\n                                    Text(p).font(.system(size: 14)).foregroundStyle(NucleuxColor.foreground).fixedSize(horizontal: false, vertical: true)\n                                    if updated && p == Self.added { NucleuxCaveatUpdatedMark() }\n                                }\n                            }\n                        }\n                    }\n                    .padding(.leading, 4)\n                    NucleuxCaveat(Self.content, onRecover: {\n                        try? await Task.sleep(for: .seconds(1.5))\n                        return Self.env[\"RECOVER\"] != \"fails\"\n                    }, onUpdate: {\n                        try? await Task.sleep(for: .seconds(1.5))\n                        updated = true\n                        return .init(message: \"All 8 interviews read — summary updated\",\n                                     why: \"One theme was added from the two calls that were missing.\",\n                                     announcement: \"All 8 interviews read. Summary updated: one theme added.\")\n                    })\n                    Text(\"Sources: \\(updated ? 8 : 6) interview notes · Research › October\").font(.system(size: 12))\n                        .foregroundStyle(NucleuxColor.mutedForeground).accessibilityIdentifier(\"sources-line\")\n                }\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask about the interviews…\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 64
   },
@@ -59207,43 +60171,43 @@
    "component": "identity",
    "framework": "swiftui",
    "title": "IdentityScreen (iOS catalog app, SCREEN=identity)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:863",
-   "code": "import SwiftUI\nimport Nucleux\n\nstruct IdentityScreen: View {\n    @State private var seen = false\n    @State private var history = false\n\n    var body: some View {\n        ScrollView {\n            VStack(alignment: .leading, spacing: 20) {\n                Text(\"Migration cutover\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                VStack(alignment: .leading, spacing: 14) {\n                    NucleuxIdentityRow(agent: \"Aria\", detail: \"Assistant · answers from your pipeline\")\n                    NucleuxIdentityRow(person: \"Dana Khoury\", detail: \"Revenue operations\")\n                }\n                NucleuxAgentIdentityCard(agent: \"Aria\", role: NucleuxIdentity.roleLine(\"Helpdesk\"),\n                                         actionLabel: \"What Aria can see\") { seen = true }\n                if seen { Text(\"Aria can see: the pipeline, the Q2 board pack.\").font(.system(size: 13)).foregroundStyle(NucleuxColor.mutedForeground) }\n                VStack(alignment: .leading, spacing: 10) {\n                    Text(\"State on the mark\").font(.system(size: 13, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                    HStack(spacing: 28) {\n                        specimen(\"Ready\") { NucleuxAgentAvatar(\"Aria\") }\n                        specimen(\"Working\") { NucleuxAgentAvatar(\"Aria\", state: .working) }\n                        specimen(\"Off\") { NucleuxAgentAvatar(\"Aria\", state: .off, standalone: true) }\n                    }\n                    Text(\"One silhouette, three sizes\").font(.system(size: 13, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                        .padding(.top, 6)\n                    HStack(alignment: .bottom, spacing: 28) {\n                        specimen(\"28\") { NucleuxAgentAvatar(\"Aria\", size: .sm) }\n                        specimen(\"40\") { NucleuxAgentAvatar(\"Aria\", size: .md) }\n                        specimen(\"56\") { NucleuxAgentAvatar(\"Aria\", size: .lg) }\n                        specimen(\"Person\") { NucleuxPersonAvatar(\"Dana Khoury\") }\n                    }\n                }\n                VStack(alignment: .leading, spacing: 6) {\n                    Text(\"Account summary\").font(.system(size: 12)).foregroundStyle(NucleuxColor.mutedForeground)\n                    Text(\"Renewal risk moved to medium after two support escalations in March.\")\n                        .font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                    NucleuxAgentByline(agent: \"Aria\", when: \"14 March, 10:24\", actionLabel: \"History\") { history = true }\n                }\n                .padding(12)\n                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(NucleuxColor.border))\n            }\n            .padding(16)\n        }\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func specimen(_ label: String, @ViewBuilder mark: () -> some View) -> some View {\n        VStack(spacing: 8) {\n            mark()\n            Text(label).font(.system(size: 11, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n        }\n    }\n}",
-   "lines": 56
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:864",
+   "code": "import SwiftUI\nimport Nucleux\n\nstruct IdentityScreen: View {\n    @State private var seen = false\n    @State private var history = false\n    @State private var working = false\n    @State private var agentName = NucleuxAgentNameController(\"Aria\")\n\n    var body: some View {\n        ScrollView {\n            VStack(alignment: .leading, spacing: 20) {\n                Text(\"Launch sync · 2.4\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                VStack(alignment: .leading, spacing: 14) {\n                    NucleuxIdentityRow(agent: agentName.name, detail: \"Meeting assistant\", state: working ? .working : .active,\n                                       status: \"Summarizing the meeting…\", onStop: { working = false }, formerly: agentName.formerly)\n                    NucleuxIdentityRow(person: \"Maya Chen\", detail: \"Product lead\")\n                }\n                HStack(spacing: 8) {\n                    NucleuxButton(working ? \"Summarizing…\" : \"Ask \\(agentName.name) to summarize\", variant: .secondary, size: .sm,\n                                  icon: NucleuxAIRun.marks[.action]!, iconColor: NucleuxColor.brand) { working = true }\n                        .disabled(working)\n                    NucleuxButton(agentName.formerly == nil ? \"Rename to Atlas (admin)\" : \"Renamed\", variant: .ghost, size: .sm) {\n                        agentName.rename(\"Atlas\")\n                    }\n                }\n                NucleuxAgentRenameNotice(agentName)\n                NucleuxAgentIdentityCard(agent: agentName.name, role: \"Customer Support Agent\",\n                                         intro: NucleuxIdentity.intro(agentName.name, operator: \"Northwind\",\n                                                                      does: \"I can track orders, start returns and update delivery details.\"),\n                                         formerly: agentName.formerly, actionLabel: \"What \\(agentName.name) can see\") { seen = true }\n                if seen { Text(\"Aria can see: orders, returns and delivery details.\").font(.system(size: 13)).foregroundStyle(NucleuxColor.mutedForeground) }\n                VStack(alignment: .leading, spacing: 10) {\n                    Text(\"State on the mark\").font(.system(size: 13, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                    HStack(spacing: 24) {\n                        specimen(\"Ready\") { NucleuxAgentAvatar(\"Aria\") }\n                        specimen(\"Active\") { NucleuxAgentAvatar(\"Aria\", state: .active) }\n                        specimen(\"Working\") { NucleuxAgentAvatar(\"Aria\", state: .working, standalone: true) }\n                        specimen(\"Off\") { NucleuxAgentAvatar(\"Aria\", state: .off, standalone: true) }\n                    }\n                    Text(\"One shape, three sizes\").font(.system(size: 13, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                        .padding(.top, 6)\n                    HStack(alignment: .bottom, spacing: 28) {\n                        specimen(\"24\") { NucleuxAgentAvatar(\"Aria\", size: .xs) }\n                        specimen(\"32\") { NucleuxAgentAvatar(\"Aria\", size: .sm) }\n                        specimen(\"40\") { NucleuxAgentAvatar(\"Aria\", size: .md) }\n                        specimen(\"Person\") { NucleuxPersonAvatar(\"Dana Khoury\") }\n                    }\n                }\n                VStack(alignment: .leading, spacing: 6) {\n                    Text(\"Account summary\").font(.system(size: 12)).foregroundStyle(NucleuxColor.mutedForeground)\n                    Text(\"Renewal risk moved to medium after two support escalations in March.\")\n                        .font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                    NucleuxAgentByline(agent: \"Aria\", when: \"14 March, 10:24\", actionLabel: \"History\") { history = true }\n                }\n                .padding(12)\n                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(NucleuxColor.border))\n            }\n            .padding(16)\n        }\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func specimen(_ label: String, @ViewBuilder mark: () -> some View) -> some View {\n        VStack(spacing: 8) {\n            mark()\n            Text(label).font(.system(size: 11, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n        }\n    }\n}",
+   "lines": 71
   },
   {
    "name": "identity",
    "component": "identity",
    "framework": "compose",
    "title": "Test host from NucleuxIdentityTest.kt",
-   "source": "compose/nucleux/src/test/kotlin/com/intelligaia/nucleux/NucleuxIdentityTest.kt:177",
-   "code": "private var seen = false\nprivate var history = false\n\nprivate fun setStory(dark: Boolean = false) {\n    compose.setContent {\n        NucleuxTheme(darkTheme = dark) {\n            val c = Nucleux.colors\n            Column(Modifier.fillMaxSize().background(c.background).padding(16.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {\n                BasicText(\"Migration cutover\", style = TextStyle(color = c.foreground, fontSize = 17.sp, fontWeight = FontWeight.SemiBold))\n                Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {\n                    NucleuxIdentityRow(\"Aria\", \"Assistant · answers from your pipeline\", agent = true)\n                    NucleuxIdentityRow(\"Dana Khoury\", \"Revenue operations\")\n                }\n                NucleuxAgentIdentityCard(\"Aria\", NucleuxIdentity.roleLine(\"Helpdesk\"), actionLabel = \"What Aria can see\", onAction = { seen = true })\n                Row(horizontalArrangement = Arrangement.spacedBy(28.dp), verticalAlignment = Alignment.Bottom) {\n                    NucleuxAgentAvatar(\"Aria\", size = NucleuxAvatarSize.Sm)\n                    NucleuxAgentAvatar(\"Aria\", state = NucleuxAgentState.Working)\n                    NucleuxAgentAvatar(\"Aria\", state = NucleuxAgentState.Off, standalone = true)\n                    NucleuxAgentAvatar(\"Aria\", size = NucleuxAvatarSize.Lg)\n                    NucleuxPersonAvatar(\"Dana Khoury\")\n                }\n                NucleuxAgentByline(\"Aria\", `when` = \"14 March, 10:24\", actionLabel = \"History\", onAction = { history = true })\n            }\n        }\n    }\n}",
-   "lines": 26
+   "source": "compose/nucleux/src/test/kotlin/com/intelligaia/nucleux/NucleuxIdentityTest.kt:217",
+   "code": "private val said = mutableListOf<String>()\nprivate var seen = false\nprivate var history = false\nprivate var working by mutableStateOf(false)\n\nprivate fun setStory(dark: Boolean = false) {\n    compose.setContent {\n        CompositionLocalProvider(LocalNucleuxAnnounce provides { said += it }) {\n            NucleuxTheme(darkTheme = dark) {\n                val c = Nucleux.colors\n                names = rememberNucleuxAgentNameController(\"Aria\")\n                Column(Modifier.fillMaxSize().background(c.background).padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n                    BasicText(\"Launch sync · 2.4\", style = TextStyle(color = c.foreground, fontSize = 17.sp, fontWeight = FontWeight.SemiBold))\n                    Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {\n                        NucleuxIdentityRow(names.name, \"Meeting assistant\", agent = true,\n                            state = if (working) NucleuxAgentState.Working else NucleuxAgentState.Active,\n                            status = \"Summarizing the meeting…\", onStop = { working = false }, formerly = names.formerly)\n                        NucleuxIdentityRow(\"Maya Chen\", \"Product lead\")\n                    }\n                    NucleuxAgentRenameNotice(names)\n                    NucleuxAgentIdentityCard(names.name, \"Customer Support Agent\",\n                        intro = NucleuxIdentity.intro(names.name, \"Northwind\", \"I can track orders, start returns and update delivery details.\"),\n                        formerly = names.formerly, actionLabel = \"What ${names.name} can see\", onAction = { seen = true })\n                    Row(horizontalArrangement = Arrangement.spacedBy(24.dp), verticalAlignment = Alignment.Bottom) {\n                        NucleuxAgentAvatar(\"Aria\", size = NucleuxAvatarSize.Xs)\n                        NucleuxAgentAvatar(\"Aria\", size = NucleuxAvatarSize.Sm)\n                        NucleuxAgentAvatar(\"Aria\", state = NucleuxAgentState.Off, standalone = true)\n                        NucleuxPersonAvatar(\"Dana Khoury\")\n                    }\n                    NucleuxAgentByline(\"Aria\", `when` = \"14 March, 10:24\", actionLabel = \"History\", onAction = { history = true })\n                }\n            }\n        }\n    }\n}",
+   "lines": 35
   },
   {
    "name": "identity",
    "component": "identity",
    "framework": "flutter",
    "title": "Test host from identity_test.dart",
-   "source": "flutter/test/identity_test.dart:154",
-   "code": "import 'package:flutter/material.dart';\nimport 'package:flutter_test/flutter_test.dart';\nimport 'package:nucleux/nucleux.dart';\n\nvar seen = false;\nvar history = false;\n\nFuture<void> story(WidgetTester tester) async {\n  tester.view.physicalSize = const Size(402, 874);\n  tester.view.devicePixelRatio = 1;\n  addTearDown(tester.view.reset);\n  await tester.pumpWidget(\n    MaterialApp(\n      home: Scaffold(\n        body: Padding(\n          padding: const EdgeInsets.all(16),\n          child: Column(\n            crossAxisAlignment: CrossAxisAlignment.start,\n            spacing: 20,\n            children: [\n              const NucleuxIdentityRow(\n                name: 'Aria',\n                detail: 'Assistant · answers from your pipeline',\n                agent: true,\n              ),\n              const NucleuxIdentityRow(\n                name: 'Dana Khoury',\n                detail: 'Revenue operations',\n              ),\n              NucleuxAgentIdentityCard(\n                agent: 'Aria',\n                role: NucleuxIdentity.roleLine('Helpdesk'),\n                actionLabel: 'What Aria can see',\n                onAction: () => seen = true,\n              ),\n              const Row(\n                spacing: 28,\n                children: [\n                  NucleuxAgentAvatar(\n                    agent: 'Aria',\n                    state: NucleuxAgentState.working,\n                  ),\n                  NucleuxAgentAvatar(\n                    agent: 'Aria',\n                    state: NucleuxAgentState.off,\n                    standalone: true,\n                  ),\n                ],\n              ),\n              NucleuxAgentByline(\n                agent: 'Aria',\n                when: '14 March, 10:24',\n                actionLabel: 'History',\n                onAction: () => history = true,\n              ),\n            ],\n          ),\n        ),\n      ),\n    ),\n  );\n}",
-   "lines": 62
+   "source": "flutter/test/identity_test.dart:219",
+   "code": "import 'package:flutter/material.dart';\nimport 'package:flutter_test/flutter_test.dart';\nimport 'package:nucleux/nucleux.dart';\n\nvar seen = false;\nvar history = false;\n\nFuture<void> story(WidgetTester tester) async {\n  tester.view.physicalSize = const Size(402, 874);\n  tester.view.devicePixelRatio = 1;\n  addTearDown(tester.view.reset);\n  await tester.pumpWidget(\n    MaterialApp(\n      home: Scaffold(\n        body: Padding(\n          padding: const EdgeInsets.all(16),\n          child: Column(\n            crossAxisAlignment: CrossAxisAlignment.start,\n            spacing: 20,\n            children: [\n              const NucleuxIdentityRow(\n                name: 'Aria',\n                detail: 'Assistant · answers from your pipeline',\n                agent: true,\n                state: NucleuxAgentState.active,\n              ),\n              const NucleuxIdentityRow(\n                name: 'Dana Khoury',\n                detail: 'Revenue operations',\n              ),\n              NucleuxAgentIdentityCard(\n                agent: 'Aria',\n                role: NucleuxIdentity.roleLine('Helpdesk'),\n                actionLabel: 'What Aria can see',\n                onAction: () => seen = true,\n              ),\n              const Row(\n                spacing: 28,\n                children: [\n                  NucleuxAgentAvatar(\n                    agent: 'Aria',\n                    state: NucleuxAgentState.working,\n                  ),\n                  NucleuxAgentAvatar(\n                    agent: 'Aria',\n                    state: NucleuxAgentState.off,\n                    standalone: true,\n                  ),\n                ],\n              ),\n              NucleuxAgentByline(\n                agent: 'Aria',\n                when: '14 March, 10:24',\n                actionLabel: 'History',\n                onAction: () => history = true,\n              ),\n            ],\n          ),\n        ),\n      ),\n    ),\n  );\n}",
+   "lines": 63
   },
   {
    "name": "identity",
    "component": "identity",
    "framework": "react-native",
    "title": "Test host from Identity.test.tsx",
-   "source": "react-native/src/__tests__/Identity.test.tsx:82",
-   "code": "import React from 'react';\nimport { AccessibilityInfo, StyleSheet, Text } from 'react-native';\nimport { fireEvent, render, screen } from '@testing-library/react-native';\nimport {\n  AGENT_GLYPH_COLORS,\n  AVATAR_RING_MS,\n  AgentGlyph,\n  AgentPresence,\n  BUBBLE,\n  MessageBubble,\n  bubbleCorners,\n  bubbleLabel,\n  presenceEnded,\n  presenceLabel,\n  colors,\n  AVATAR_SIZES,\n  AgentAvatar,\n  AgentByline,\n  AgentIdentityCard,\n  AgentMessage,\n  IDENTITY_CHIP,\n  IdentityRow,\n  PersonAvatar,\n  agentAvatarLabel,\n  agentRoleLine,\n  bylineLabel,\n  bylineText,\n  identityLabel,\n} from '@intelligaia/nucleux';\nimport fixtures from 'nucleux-mobile/specs/identity.fixtures.json';\n\nit('hidden beside the name, named when standalone, a status while working', async () => {\n  const { rerender } = await render(<AgentAvatar agent=\"Aria\" />);\n  expect(screen.queryByLabelText('Aria, AI agent')).toBeNull();\n  await rerender(<AgentAvatar agent=\"Aria\" standalone />);\n  expect(screen.getByLabelText('Aria, AI agent')).toBeTruthy();\n  await rerender(<AgentAvatar agent=\"Aria\" state=\"working\" />);\n  expect(screen.getByLabelText('Aria is working').props.accessibilityLiveRegion).toBe('polite');\n  expect(screen.getByTestId('avatar-ring', { includeHiddenElements: true })).toBeTruthy();\n  await rerender(<AgentAvatar agent=\"Aria\" state=\"off\" standalone />);\n  expect(screen.queryByTestId('avatar-ring', { includeHiddenElements: true })).toBeNull();\n  expect(screen.getByLabelText('Aria, AI agent, stood down')).toBeTruthy();\n});",
-   "lines": 43
+   "source": "react-native/src/__tests__/Identity.test.tsx:130",
+   "code": "import React from 'react';\nimport { AccessibilityInfo, StyleSheet, Text } from 'react-native';\nimport { fireEvent, render, screen } from '@testing-library/react-native';\nimport {\n  AGENT_GLYPH_COLORS,\n  AVATAR_TURN_MS,\n  AGENT_NAME_MAX,\n  AGENT_NAME_PROBLEMS,\n  AGENT_STOP,\n  AgentRenameNotice,\n  agentIntro,\n  agentNameLabel,\n  agentNameProblem,\n  agentNameReduce,\n  agentStopped,\n  formerlyLabel,\n  initialAgentName,\n  renameNotice,\n  useAgentName,\n  type AgentNameEvent,\n  type AgentNameState,\n  AgentGlyph,\n  AgentPresence,\n  BUBBLE,\n  MessageBubble,\n  bubbleCorners,\n  bubbleLabel,\n  presenceEnded,\n  presenceLabel,\n  colors,\n  AVATAR_SIZES,\n  AgentAvatar,\n  AgentByline,\n  AgentIdentityCard,\n  AgentMessage,\n  IDENTITY_CHIP,\n  IdentityRow,\n  PersonAvatar,\n  agentAvatarLabel,\n  agentRoleLine,\n  bylineLabel,\n  bylineText,\n  identityLabel,\n} from '@intelligaia/nucleux';\nimport fixtures from 'nucleux-mobile/specs/identity.fixtures.json';\n\nit('active is a still ring; an image that fails falls back to the glyph, the label kept', async () => {\n  const { rerender } = await render(<AgentAvatar agent=\"Aria\" state=\"active\" standalone image={{ uri: 'https://example.com/aria.png' }} />);\n  expect(screen.getByLabelText('Aria, AI agent, active')).toBeTruthy();\n  expect(screen.getByTestId('avatar-ring', { includeHiddenElements: true })).toBeTruthy();\n  const img = screen.getByTestId('avatar-agent-image', { includeHiddenElements: true });\n  await fireEvent(img, 'error');\n  expect(screen.queryByTestId('avatar-agent-image', { includeHiddenElements: true })).toBeNull();\n  expect(screen.getByLabelText('Aria, AI agent, active')).toBeTruthy();\n  await rerender(<AgentAvatar agent=\"Aria\" standalone />);\n  expect(screen.queryByTestId('avatar-ring', { includeHiddenElements: true })).toBeNull();\n});",
+   "lines": 57
   },
   {
    "name": "example-gallery",
    "component": "example-gallery",
    "framework": "swiftui",
    "title": "GalleryScreen (iOS catalog app, SCREEN=gallery)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:978",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:994",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct GalleryScreen: View {\n    static let examples = [\n        NucleuxGalleryExample(id: \"risk\", category: \"Analysis\", ask: \"Which renewals are at risk this quarter?\",\n                              out: \"Seven accounts, ranked, with the signal behind each.\",\n                              full: \"Seven accounts are at risk by weighted value. Northwind and Contoso are the two that matter: both have an open escalation and lost their champion this quarter.\",\n                              title: \"Renewal risk, ranked\"),\n        NucleuxGalleryExample(id: \"note\", category: \"Drafting\", ask: \"Draft the renewal note to Dana\",\n                              out: \"A three-line message with the figures attached, ready to edit.\",\n                              full: \"Thanks Dana — the Q3 figures are attached. Enterprise is 6% ahead of plan; the two gaps are Northwind and Contoso. I can walk you through it on Thursday.\"),\n        NucleuxGalleryExample(id: \"moves\", category: \"Analysis\", ask: \"What moved in the pipeline this week?\",\n                              out: \"Movements over £50k, with what caused each one.\",\n                              full: \"Four movements over £50k. Two closed, one slipped a quarter, and one was re-scoped downwards after the security review.\"),\n    ]\n    @State private var text = ProcessInfo.processInfo.environment[\"COMPOSER_TEXT\"] ?? \"\"\n    @State private var placed: String?\n    @State private var open: NucleuxGalleryExample?\n    @State private var turns: [String] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 14) {\n                    if turns.isEmpty {\n                        Text(\"Nothing here yet. These are things people on your team actually asked, with what came back.\")\n                            .font(.system(size: 14)).foregroundStyle(NucleuxColor.mutedForeground)\n                        if let e = open {\n                            NucleuxExampleDetail(e, text: text, placed: placed, onUse: { ask in\n                                text = ask\n                                placed = ask\n                                open = nil\n                                AccessibilityNotification.Announcement(NucleuxGallery.announcement(ask: ask)).post()\n                            }, onBack: { open = nil })\n                        } else {\n                            NucleuxExampleGallery(Self.examples) { open = $0 }\n                        }\n                    }\n                    ForEach(Array(turns.enumerated()), id: \\.offset) { _, t in\n                        Text(\"You: \\(t)\").foregroundStyle(NucleuxColor.foreground).frame(maxWidth: .infinity, alignment: .leading)\n                    }\n                }\n                .padding(.top, 16)\n            }\n            if open == nil {\n                NucleuxPromptComposer(\n                    text: $text, label: \"Message Aria\", placeholder: \"Or describe what you want to know\",\n                    onAddContext: {}, onVoice: {},\n                    onSend: { turns.append($0); text = \"\" }\n                )\n            }\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 58
   },
@@ -59279,7 +60243,7 @@
    "component": "templates",
    "framework": "swiftui",
    "title": "TemplatesScreen (iOS catalog app, SCREEN=templates)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1036",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1052",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct TemplatesScreen: View {\n    static let templates: [NucleuxTemplates.Template] = [\n        .init(id: \"competitive\", name: \"Competitive analysis\", description: \"Compare competitors on the criteria you choose, from their public pages.\",\n              sections: [.init(heading: \"Sources\", items: [\"Competitors’ public pages\", \"Your workspace files\"]),\n                         .init(heading: \"Competitors\", items: [\"You list them\"]),\n                         .init(heading: \"Evaluation criteria\", items: [\"Suggested from your last analysis\"]),\n                         .init(heading: \"Output format\", items: [\"Comparison table\", \"One-page summary\"])],\n              produces: \"comparison table and summary\", uses: [\"Uses web access to read competitors’ public pages.\"],\n              fields: [.init(id: \"comp\", label: \"Competitors\", required: true, requiredHint: \"Required — add at least two\"),\n                       .init(id: \"crit\", label: \"Evaluation criteria\"), .init(id: \"fmt\", label: \"Output format\")],\n              requirements: [.init(id: \"web\", name: \"web access\", why: \"It reads each competitor’s pricing and docs pages.\",\n                                   connect: \"Turn on web access\", fallback: \"Use workspace files only\",\n                                   fallbackNote: \"Using workspace files only — public pages won’t be read.\")]),\n        .init(id: \"interviews\", name: \"Interview synthesis\", description: \"Themes and quotes across uploaded interviews.\",\n              sections: [.init(heading: \"Sources\", items: [\"Your uploaded interviews\"]), .init(heading: \"Output format\", items: [\"Themes with quotes\"])],\n              produces: \"themes with quotes\", fields: [.init(id: \"focus\", label: \"Focus\", required: true)]),\n        .init(id: \"sizing\", name: \"Market sizing\", description: \"A bottom-up estimate with stated assumptions.\",\n              sections: [.init(heading: \"Output format\", items: [\"Estimate with assumptions\"])],\n              produces: \"an estimate with assumptions\", fields: [.init(id: \"market\", label: \"Market\", required: true)]),\n    ]\n    @State private var report: String?\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 16) {\n                    NucleuxTemplateFlow(templates: Self.templates, suggest: { t in\n                        t.id == \"competitive\"\n                            ? [\"crit\": .init(\"Pricing, onboarding, integrations\", suggested: \"from your last analysis\"), \"fmt\": .init(\"Comparison table\")]\n                            : [:]\n                    }, onConnect: { _ in\n                        try? await Task.sleep(for: .seconds(0.6))\n                        return true\n                    }, onRun: { t, values in\n                        try? await Task.sleep(for: .seconds(1))\n                        report = \"\\(t.name) · \\(values[\"comp\"] ?? \"\"): a comparison table and a one-page summary.\"\n                    })\n                    if let report { NucleuxMessage(agent: \"Aria\", text: report).accessibilityIdentifier(\"report\") }\n                }\n                .padding(.top, 16)\n            }\n            .scrollDismissesKeyboard(.immediately)\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask about this research…\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 53
   },
@@ -59315,7 +60279,7 @@
    "component": "randomize",
    "framework": "swiftui",
    "title": "RandomizeScreen (iOS catalog app, SCREEN=randomize)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1088",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1104",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct RandomizeScreen: View {\n    nonisolated static let items = [\n        NucleuxDirection(title: \"Launch through customer stories\", line: \"Lead with three teams who halved their onboarding time, in their own words.\"),\n        NucleuxDirection(title: \"Turn onboarding failures into a challenge campaign\", line: \"Invite teams to beat their old setup time, and publish the leaderboard.\"),\n        NucleuxDirection(title: \"The 15-minute workspace\", line: \"Every asset shows a real team going from sign-up to a first plan in fifteen minutes.\"),\n    ]\n    @State private var text = ProcessInfo.processInfo.environment[\"COMPOSER_TEXT\"] ?? \"\"\n    @State private var turns: [String] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 14) {\n                    Text(\"Planboard 3.0 launch · campaign directions\")\n                        .font(.system(size: 14)).foregroundStyle(NucleuxColor.mutedForeground)\n                    ForEach(Array(turns.enumerated()), id: \\.offset) { _, t in\n                        Text(\"You: \\(t)\").foregroundStyle(NucleuxColor.foreground).frame(maxWidth: .infinity, alignment: .leading)\n                    }\n                }\n                .padding(.top, 16)\n                .frame(maxWidth: .infinity, alignment: .leading)\n            }\n            NucleuxPromptComposer(\n                text: $text, label: \"Message Aria\", placeholder: \"Describe the campaign direction\",\n                onAddContext: {}, onVoice: {},\n                onSend: { turns.append($0); text = \"\" }\n            )\n            .nucleuxRandomize(generate: { seen in\n                try await Task.sleep(for: .milliseconds(ProcessInfo.processInfo.environment[\"SLOW\"] == \"1\" ? 3000 : 600))\n                return NucleuxRandomize.next(from: RandomizeScreen.items, seen: seen, pick: { $0[0] })!\n            }, prompt: { \"Draft launch messaging for Planboard 3.0 around this direction: \\($0.title). \\($0.line)\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 40
   },
@@ -59351,7 +60315,7 @@
    "component": "ai-marks",
    "framework": "swiftui",
    "title": "AIMarksScreen (iOS catalog app, SCREEN=ai-marks)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1128",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1144",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct AIMarksScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static let words = NucleuxAIActionWords(verb: \"Rewrite\", doing: \"Rewriting\", status: \"Rewriting release note\", done: \"Release note rewritten.\")\n    static let draft = \"We fixed a bunch of stuff in onboarding and the export thing should work better now.\"\n    @State private var run = NucleuxAIRun()\n    @State private var text = AIMarksScreen.env[\"EMPTY\"] == \"1\" ? \"\" : AIMarksScreen.draft\n    @State private var original = \"\"\n    @State private var job: Task<Void, Never>?\n\n    var body: some View {\n        ScrollView {\n            VStack(alignment: .leading, spacing: 16) {\n                HStack(spacing: 8) {\n                    NucleuxButton(\"Preview\", variant: .ghost, size: .sm) {}\n                    HStack(spacing: 4) {\n                        NucleuxButton(\"Import changelog\", variant: .ghost, size: .sm) {}\n                        Text(\"New\").font(.system(size: 11, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            .padding(.horizontal, 6).padding(.vertical, 2)\n                            .overlay(Capsule().strokeBorder(NucleuxColor.border))\n                    }\n                    Spacer(minLength: 0)\n                    NucleuxAIActionButton(Self.words, working: run.phase == .working,\n                                          disabledReason: text.trimmingCharacters(in: .whitespaces).isEmpty ? \"Write something first\" : nil,\n                                          iconOnly: Self.env[\"ICON_ONLY\"] == \"1\") { start() }\n                }\n                Text(\"What changed\").font(.system(size: 12, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                Text(text.isEmpty ? \"Nothing written yet.\" : text)\n                    .font(.system(size: 15)).foregroundStyle(text.isEmpty ? NucleuxColor.mutedForeground : NucleuxColor.foreground)\n                    .accessibilityIdentifier(\"doc\")\n                // Disclosure: the action explains itself before it runs; the result says what was done and not checked.\n                if run.phase == .idle && !text.isEmpty {\n                    NucleuxAIActionNote(verb: Self.words.verb, sentence: \"Aria rewrites this release note. You review the result before it replaces your text.\")\n                }\n                if run.phase == .done {\n                    NucleuxGeneratedResult(details: .init(\n                        did: \"Rewrote your note to be shorter and clearer. It named the three changes and added nothing that is not in the changelog.\",\n                        used: \"Your draft, the Orbit style guide (14 terms) and the 2.4 changelog.\",\n                        notChecked: \"Whether the changes are shipped: “no longer times out” comes from changelog entry EXP-210.\",\n                        original: original), agent: \"Aria\", noun: \"release note\") { send(.undo); text = original }\n                }\n                if run.phase == .working { NucleuxAIWorkingStatus(Self.words) { job?.cancel(); send(.stop) } }\n                ForEach(Array(run.tools.enumerated()), id: \\.offset) { _, t in NucleuxToolUseLine(t) }\n            }\n            .padding(16)\n        }\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func send(_ e: NucleuxAIRun.Event) {\n        if let said = run.reduce(e, words: Self.words) { AccessibilityNotification.Announcement(said).post() }\n    }\n\n    private func start() {\n        send(.start)\n        job = Task {\n            try? await Task.sleep(for: .milliseconds(1500)); guard !Task.isCancelled else { return }\n            send(.toolStarted(\"Checking the style guide…\"))\n            try? await Task.sleep(for: .milliseconds(1500)); guard !Task.isCancelled else { return }\n            send(.toolDone(\"Style guide checked\", detail: \"Checked 14 terms against the Orbit style guide: “a bunch of stuff” named as three changes, “the export thing” → “CSV export”.\"))\n            try? await Task.sleep(for: .milliseconds(1000)); guard !Task.isCancelled else { return }\n            original = text\n            text = \"Onboarding is quicker to finish, CSV export no longer times out on large projects, and three small layout fixes are in.\"\n            send(.finish)\n        }\n    }\n}",
    "lines": 70
   },
@@ -59387,7 +60351,7 @@
    "component": "model-fallback",
    "framework": "swiftui",
    "title": "ModelFallbackScreen (iOS catalog app, SCREEN=model-fallback)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1198",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1214",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ModelFallbackScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    @State private var model = \"Deep reasoning\"\n    @State private var withdrawn = true\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 16) {\n                    NucleuxMessage(person: \"Priya\", text: \"What is the riskiest part of moving billing off the shared database?\")\n                    NucleuxMessage(agent: \"Aria\", credit: NucleuxModelCredit(answeredBy: \"Deep reasoning\"),\n                                   text: \"Dual ownership during the parallel run: if both systems can write a billing row you get double charges.\")\n                    NucleuxMessage(person: \"Priya\", text: \"And what would you do first?\")\n                    NucleuxMessage(agent: \"Aria\", credit: NucleuxModelCredit(answeredBy: \"Fast\", asked: \"Deep reasoning\"),\n                                   text: \"Make every write idempotent, then cut over behind a flag.\")\n                }\n                .padding(.top, 16)\n            }\n            if withdrawn {\n                NucleuxModelFallback(\"Deep reasoning\",\n                                     reason: Self.env[\"REASON\"] == \"restricted\" ? .restricted : .unavailable,\n                                     onUseAuto: Self.env[\"NO_AUTO\"] == \"1\" ? nil : {\n                                         model = \"Auto\"; withdrawn = false\n                                         AccessibilityNotification.Announcement(NucleuxModelFallbackText.autoChosen).post()\n                                     },\n                                     onChoose: { model = \"Balanced\"; withdrawn = false })\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask a follow-up\",\n                                  model: model, effort: \"High\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 39
   },
@@ -59423,7 +60387,7 @@
    "component": "knowledge-base",
    "framework": "swiftui",
    "title": "KnowledgeScreen (iOS catalog app, SCREEN=knowledge)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1236",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1252",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct KnowledgeScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static func base() -> [NucleuxKnowledgeSource] {\n        [(\"interviews-sept\", \"Customer interviews — Sept\", NucleuxKnowledgeSource.Kind.pdf, NucleuxKnowledgeSource.Origin.upload, \"Uploaded 2 days ago\"),\n         (\"interviews-june\", \"Customer interviews — June\", .pdf, .upload, \"Uploaded in June\"),\n         (\"analytics\", \"Onboarding analytics\", .sheet, .link, \"Linked · follows the original\"),\n         (\"funnel\", \"Activation funnel — Q3\", .sheet, .link, \"Linked · follows the original\"),\n         (\"brief\", \"Product brief v4\", .doc, .upload, \"Uploaded 3 weeks ago\"),\n         (\"notes\", \"Usability session notes\", .note, .upload, \"Uploaded 9 days ago\"),\n         (\"schema\", \"Schema definitions\", .code, .link, \"Linked · follows the original\"),\n         (\"spec\", \"Onboarding spec v2\", .drive, .link, \"Linked · follows the original\")]\n            .map { NucleuxKnowledgeSource(id: $0.0, name: $0.1, kind: $0.2, origin: $0.3, fresh: $0.4, state: .ready) }\n    }\n    static func start() -> [NucleuxKnowledgeSource] {\n        var l = base()\n        switch env[\"KB\"] {\n        case \"mixed\":\n            l[0].state = .failed; l[0].note = \"The file is password protected, so it could not be read.\"\n            l[2].state = .unavailable; l[2].note = \"The linked file is no longer shared with this project.\"\n            l[3].state = .stale; l[3].fresh = \"Linked · the original changed since it was read\"\n        case \"preparing\": l = Array(l.prefix(4)).map { var x = $0; x.state = .preparing; return x }\n        case \"empty\": l = []\n        default: break\n        }\n        return l\n    }\n    @State private var sources = KnowledgeScreen.start()\n    @State private var moment: NucleuxKnowledge.Moment? = env[\"KB\"] == \"inactive\" ? .inactive : env[\"KB\"] == \"none\" ? .nothingFound : nil\n    @State private var activity: String?\n    @State private var used: [NucleuxKnowledgeSource] = []\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 16) {\n                    NucleuxKnowledgeBasePanel(\n                        \"Product Research\", mark: \"PR\", where: \"in this project\", sources: sources, moment: moment, activity: activity,\n                        noneTopic: \"pricing\", manage: true, remove: true, switchable: true, deletable: true,\n                        onAskWithout: { moment = nil },\n                        onAction: { a in\n                            switch a {\n                            case .activate: moment = nil; say(NucleuxKnowledge.Said.active(\"Product Research\", where: \"in this project\"))\n                            case .deactivate: moment = .inactive; say(NucleuxKnowledge.Said.inactive(\"Product Research\", where: \"in this project\"))\n                            default: break\n                            }\n                        },\n                        onSourceAction: { id, a in\n                            guard let i = sources.firstIndex(where: { $0.id == id }) else { return }\n                            switch a {\n                            case .remove: sources.remove(at: i)\n                            case .retry, .reconnect, .refresh:\n                                sources[i].state = .ready; sources[i].note = nil\n                                if a == .refresh { sources[i].fresh = \"Linked · follows the original\" }\n                                say(a == .reconnect ? NucleuxKnowledge.Said.back(sources[i].name) : NucleuxKnowledge.Said.ready(sources[i].name))\n                            case .replace: break\n                            }\n                        })\n                    if !used.isEmpty {\n                        NucleuxMessage(agent: \"Aria\", text: \"Onboarding drop-off is mostly at the workspace step: 41% of new teams stop there.\")\n                        NucleuxKnowledgeProvenance(base: \"Product Research\", used: used, onOpen: { _ in })\n                    }\n                }\n                .padding(.top, 16)\n            }\n            if moment != .inactive && !sources.isEmpty {\n                HStack {\n                    NucleuxKnowledgeChip(\"Product Research\", mark: \"PR\", sources: sources, moment: moment) {}\n                    Spacer()\n                    NucleuxButton(\"Ask about onboarding\", variant: .secondary, size: .sm) { ask() }.accessibilityIdentifier(\"ask\")\n                }\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask about this project\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func say(_ s: String) { AccessibilityNotification.Announcement(s).post() }\n\n    private func ask() {\n        used = []\n        moment = .using\n        activity = NucleuxKnowledge.searching(\"Product Research\")\n        say(NucleuxKnowledge.Said.searching(\"Product Research\"))\n        Task {\n            try? await Task.sleep(for: .milliseconds(2500))\n            activity = NucleuxKnowledge.reading(4)\n            say(NucleuxKnowledge.Said.reading(4))\n            try? await Task.sleep(for: .milliseconds(2500))\n            used = Array(sources.filter { $0.state == .ready }.prefix(4))\n            moment = nil; activity = nil\n            say(NucleuxKnowledge.Said.used(used.count, base: \"Product Research\"))\n        }\n    }\n}",
    "lines": 100
   },
@@ -59459,7 +60423,7 @@
    "component": "mcp-server",
    "framework": "swiftui",
    "title": "MCPScreen (iOS catalog app, SCREEN=mcp)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1336",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1352",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct MCPScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static let jira = NucleuxMCPServer(\n        name: \"Jira MCP\", mark: \"JR\", url: \"https://mcp.atlassian.com/v1/mcp\", auth: \"OAuth 2.1\", resources: 3, prompts: 1,\n        tools: [\n            .init(name: \"search_issues\", label: \"Search issues\", what: \"Find issues by project, status or text\",\n                  does: \"Runs a JQL query against the projects your account can see and returns matching issues.\",\n                  data: \"Reads issue summaries, statuses and assignees. Writes nothing.\", risk: .read),\n            .init(name: \"get_issue\", label: \"Read issue\", what: \"Read one issue and its comments\",\n                  does: \"Fetches a single issue by key, with its description, comments and linked items.\",\n                  data: \"Reads one issue and everything attached to it. Writes nothing.\", risk: .read),\n            .init(name: \"create_issue\", label: \"Create issue\", what: \"Create a new issue in a selected project\",\n                  does: \"Opens a new issue in a project you choose, with a summary, description and type.\",\n                  data: \"Writes a new issue. Nothing existing is changed.\", risk: .write),\n            .init(name: \"update_issue\", label: \"Update issue\", what: \"Change summary, status, labels or assignee\",\n                  does: \"Edits fields on an existing issue, including moving it through the workflow.\",\n                  data: \"Overwrites fields on an issue that already exists.\", risk: .write),\n        ])\n    static let github = NucleuxMCPServer(\n        name: \"GitHub MCP\", mark: \"GH\", url: \"https://api.githubcopilot.com/mcp/\", auth: \"OAuth 2.1\", resources: 2, prompts: 0,\n        tools: [\n            .init(name: \"search_code\", label: \"Search code\", what: \"Find code across the repositories you can see\",\n                  does: \"Runs a code search scoped to the repositories your account has access to.\",\n                  data: \"Reads file contents and paths. Writes nothing.\", risk: .read),\n            .init(name: \"create_issue\", label: \"Create issue\", what: \"Open an issue on a repository\",\n                  does: \"Opens a new issue with a title, body and labels on a repository you choose.\",\n                  data: \"Writes a new issue. Nothing existing is changed.\", risk: .write),\n            .init(name: \"merge_pull_request\", label: \"Merge pull request\", what: \"Merge a pull request into its base branch\",\n                  does: \"Merges the pull request and, where the repository is set up for it, deletes the source branch.\",\n                  data: \"Changes the base branch. This can’t be undone from here.\", risk: .destroy),\n        ])\n    static let fileIt = NucleuxMCPAsk(tool: \"create_issue\", args: [(\"project\", \"WEB\"), (\"type\", \"Bug\"), (\"summary\", \"Checkout regression\"), (\"priority\", \"High\")])\n    static let failed = NucleuxMCPRun(tool: \"update_issue\", state: .failed,\n                                      why: \"WEB-482 could not be updated. Its workflow does not allow that transition from its current status.\",\n                                      raw: \"HTTP 400 · transition_not_allowed\")\n\n    private let server = env[\"MCP\"] == \"destroy\" ? MCPScreen.github : MCPScreen.jira\n    @State private var status: NucleuxMCP.Status = Self.startStatus()\n    private static func startStatus() -> NucleuxMCP.Status {\n        switch env[\"MCP\"] {\n        case \"validating\": .validating\n        case \"ready\", \"gate\", \"toolfail\", \"destroy\": .ready\n        case \"expired\": .expired\n        default: .notConnected\n        }\n    }\n    @State private var enabled: [String] = NucleuxMCP.initialEnabled(env[\"MCP\"] == \"destroy\" ? MCPScreen.github.tools : MCPScreen.jira.tools)\n        + (env[\"MCP\"] == \"destroy\" ? [\"merge_pull_request\"] : [])\n    @State private var always: [String] = []\n    @State private var ask: NucleuxMCPAsk? = Self.startAsk()\n    private static func startAsk() -> NucleuxMCPAsk? {\n        switch env[\"MCP\"] {\n        case \"gate\": MCPScreen.fileIt\n        case \"destroy\": NucleuxMCPAsk(tool: \"merge_pull_request\", args: [(\"repository\", \"signal/web\"), (\"pull\", \"#311\"), (\"method\", \"squash\")])\n        default: nil\n        }\n    }\n    @State private var run: NucleuxMCPRun? = env[\"MCP\"] == \"toolfail\" ? MCPScreen.failed : nil\n    @State private var reply = \"\"\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    NucleuxMessage(person: \"Priya\", text: \"File a bug for the checkout regression and set it to high priority.\")\n                    NucleuxMessage(agent: \"Aria\", text: \"I can write it, but there’s no issue tracker connected. Add one and I’ll file it.\")\n                    NucleuxMCPPanel(\n                        server: server, status: status, enabled: enabled, always: always, ask: ask, run: run, agent: \"Aria\",\n                        technical: Self.env[\"TECHNICAL\"] == \"1\",\n                        onConnect: { _, _ in connect(then: nil) },\n                        onCancel: { status = .notConnected },\n                        onToggle: { t, on in enabled = on ? enabled + [t] : enabled.filter { $0 != t } },\n                        onDecide: { d in\n                            guard let a = ask else { return }\n                            ask = nil\n                            if d == .deny { reply = \"Left it alone. Nothing was sent to \\(server.name).\"; return }\n                            if d == .always { always.append(a.tool) }\n                            run = NucleuxMCPRun(tool: a.tool, state: .running)\n                            Task {\n                                try? await Task.sleep(for: .milliseconds(1000))\n                                run = NucleuxMCPRun(tool: a.tool, state: .done, detail: \"WEB-482\")\n                                reply = \"Filed as WEB-482 in WEB, priority High.\"\n                            }\n                        },\n                        onRetry: {\n                            run = NucleuxMCPRun(tool: \"update_issue\", state: .running)\n                            Task {\n                                try? await Task.sleep(for: .milliseconds(800))\n                                run = nil\n                                status = .expired\n                            }\n                        },\n                        onReconnect: { connect(then: NucleuxMCPRun(tool: \"update_issue\", state: .done, detail: \"WEB-482\")) },\n                        onDisconnect: { status = .disconnected; run = nil; ask = nil })\n                    if !reply.isEmpty { NucleuxMessage(agent: \"Aria\", text: reply) }\n                }\n                .padding(.top, 16)\n            }\n            if status == .ready {\n                HStack {\n                    NucleuxMCPChip(server.name, mark: server.mark, enabled: enabled.count, status: status) {}\n                    Spacer()\n                    if ask == nil && run == nil {\n                        NucleuxButton(\"Let it file the bug\", variant: .secondary, size: .sm) { ask = Self.fileIt }.accessibilityIdentifier(\"use\")\n                    } else if run?.state == .done && run?.tool == \"create_issue\" {\n                        NucleuxButton(\"Now let a call fail\", variant: .secondary, size: .sm) { breakOne() }.accessibilityIdentifier(\"break\")\n                    }\n                }\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask Aria\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func connect(then: NucleuxMCPRun?) {\n        status = .reaching\n        Task {\n            try? await Task.sleep(for: .milliseconds(900))\n            status = .validating\n            try? await Task.sleep(for: .milliseconds(900))\n            status = .discovering\n            try? await Task.sleep(for: .milliseconds(900))\n            status = .ready\n            if let then { run = then; reply = \"Signed back in and the update went through.\" }\n        }\n    }\n\n    private func breakOne() {\n        reply = \"\"\n        run = NucleuxMCPRun(tool: \"update_issue\", state: .running)\n        Task {\n            try? await Task.sleep(for: .milliseconds(900))\n            run = Self.failed\n        }\n    }\n}",
    "lines": 142
   },
@@ -59495,7 +60459,7 @@
    "component": "connect-source",
    "framework": "swiftui",
    "title": "ConnectScreen (iOS catalog app, SCREEN=connect)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1478",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1494",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ConnectScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static func svc(_ id: String, _ name: String, _ mark: String, _ purpose: String, _ account: String, _ what: String,\n                    _ benefits: [NucleuxConnectService.Benefit], _ canSee: [String]) -> NucleuxConnectService {\n        NucleuxConnectService(id: id, name: name, mark: mark, purpose: purpose,\n                              blurb: \"Use the \\(what) you already have access to when answering relevant questions.\", account: account,\n                              benefits: benefits + [.init(icon: .shield, title: \"You stay in control\", what: \"Disconnect \\(name) whenever you want.\")],\n                              canSee: canSee, useLine: \"The agent can use \\(what) you can access.\")\n    }\n    static let drive = NucleuxConnectService(\n        id: \"googledrive\", name: \"Google Drive\", mark: \"GD\", purpose: \"Files and documents\",\n        blurb: \"Use the files and folders you already have access to when answering relevant questions.\", account: \"j.rivera@northwind.example\",\n        benefits: [.init(icon: .search, title: \"Search your files\", what: \"files and folders you can already open\"),\n                   .init(icon: .doc, title: \"Read file contents\", what: \"documents, sheets and slides you have access to\"),\n                   .init(icon: .shield, title: \"You stay in control\", what: \"Disconnect Google Drive whenever you want.\")],\n        canSee: [\"Files and folders you can access\", \"Document contents\", \"Relevant shared drives\"],\n        useLine: \"The agent can use files and folders you can access, including their contents.\")\n    static let others = [\n        svc(\"slack\", \"Slack\", \"SL\", \"Messages and channels\", \"Northwind · @jordan\", \"messages in the channels\",\n            [.init(icon: .search, title: \"Search channels you’re in\", what: \"public and private channels you already belong to\"),\n             .init(icon: .chat, title: \"Read messages and threads\", what: \"text you can already see in those channels\")],\n            [\"Channels you belong to\", \"Messages and threads\"]),\n        svc(\"github\", \"GitHub\", \"GH\", \"Issues and pull requests\", \"jordan-work\", \"issues and pull requests\",\n            [.init(icon: .search, title: \"Search repositories\", what: \"the repositories your GitHub account can already access\"),\n             .init(icon: .code, title: \"Read issues and pull requests\", what: \"titles, status, labels, comments and history\")],\n            [\"Repositories you can access\", \"Issues and pull requests\"]),\n        svc(\"notion\", \"Notion\", \"NO\", \"Docs and wikis\", \"Northwind workspace\", \"pages and databases\",\n            [.init(icon: .search, title: \"Search shared pages\", what: \"pages and databases shared with your account\")],\n            [\"Pages and databases you can access\"]),\n    ]\n    static let wall = \"The research you’re asking about is in files I’ve never been given. Connecting Google Drive lets me read the ones you can already open.\"\n\n    @State private var state: NucleuxConnect.State = Self.startState()\n    private static func startState() -> NucleuxConnect.State {\n        switch env[\"CONN\"] {\n        case \"authorise\": .authorise\n        case \"connecting\": .connecting\n        case \"connected\", \"sources\", \"manage\": .connected\n        case \"active\": .active\n        case \"stale\": .stale\n        case \"error\": .error\n        case \"blocked\": .blocked\n        default: .available\n        }\n    }\n    @State private var phase: NucleuxConnect.Phase = .reading\n    @State private var answered = false\n    @State private var sheet: String? = Self.startSheet()\n    private static func startSheet() -> String? {\n        switch env[\"CONN\"] {\n        case \"sources\": \"sources\"\n        case \"manage\": \"manage\"\n        default: nil\n        }\n    }\n    @State private var slackOn = false\n    @State private var text = \"\"\n\n    private var items: [NucleuxConnect.Item] {\n        [NucleuxConnect.Item(service: Self.drive, connected: state != .available && state != .authorise && state != .connecting && state != .error && state != .blocked,\n                             state: state == .stale ? .stale : nil),\n         NucleuxConnect.Item(service: Self.others[0], connected: true, enabled: slackOn),\n         NucleuxConnect.Item(service: Self.others[1], connected: false, state: .error),\n         NucleuxConnect.Item(service: Self.others[2], connected: false, state: .blocked)]\n    }\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    NucleuxMessage(person: \"Jordan\", text: \"Summarise the main onboarding problems from our latest customer research.\")\n                    NucleuxMessage(agent: \"Aria\") {\n                        NucleuxConnectCard(Self.drive, state: state, inline: true, wall: Self.wall,\n                                           activity: state == .active ? (phase, phase == .searching ? 0 : 5) : nil) { act($0) }\n                    }\n                    if answered {\n                        NucleuxMessage(agent: \"Aria\", text: \"Three problems come up in most sessions: the workspace step, invite emails landing in spam, and an unclear first project.\")\n                    }\n                }\n                .padding(.top, 16)\n            }\n            HStack {\n                if NucleuxConnect.states[state]!.live && state != .limited {\n                    NucleuxConnectChip(Self.drive, state: .connected) { sheet = \"manage\" }\n                }\n                Spacer()\n                NucleuxButton(\"Sources\", variant: .ghost, size: .sm) { sheet = \"sources\" }.accessibilityIdentifier(\"open-sources\")\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask Aria\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .sheet(isPresented: Binding(get: { sheet != nil }, set: { if !$0 { sheet = nil } })) {\n            ScrollView {\n                Group {\n                    if sheet == \"manage\" {\n                        NucleuxConnectManage(Self.drive, state: state == .stale ? .stale : .connected, onReconnect: { state = .connected; sheet = nil },\n                                             onDisconnect: { state = .available; sheet = nil }, onDone: { sheet = nil })\n                    } else {\n                        VStack(alignment: .leading, spacing: 12) {\n                            Text(\"Your data sources\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                            NucleuxConnectSources(items, headings: true, onAction: { id, _ in if id == \"googledrive\" { sheet = nil; state = .authorise } },\n                                                  onToggle: { id, on in if id == \"slack\" { slackOn = on } }, onOpen: { _ in sheet = \"manage\" })\n                        }\n                    }\n                }\n                .padding(20)\n            }\n            .background(NucleuxColor.background)\n            .presentationDetents([.medium, .large])\n        }\n    }\n\n    private func act(_ a: NucleuxConnect.Action) {\n        switch a {\n        case .connect: state = .authorise\n        case .allow, .retry:\n            state = .connecting\n            Task {\n                try? await Task.sleep(for: .milliseconds(1500))\n                guard state == .connecting else { return }\n                state = .active\n                phase = .searching\n                try? await Task.sleep(for: .milliseconds(1000))\n                phase = .reading\n                try? await Task.sleep(for: .milliseconds(1000))\n                phase = .done\n                answered = true\n                try? await Task.sleep(for: .milliseconds(600))\n                state = .connected\n            }\n        case .cancel: state = .available\n        case .reconnect: state = .connecting; Task { try? await Task.sleep(for: .milliseconds(1200)); state = .connected }\n        case .manage: sheet = \"manage\"\n        case .ask: break\n        }\n    }\n}",
    "lines": 142
   },
@@ -59531,7 +60495,7 @@
    "component": "modes",
    "framework": "swiftui",
    "title": "ModesScreen (iOS catalog app, SCREEN=modes)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1619",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1635",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ModesScreen: View {\n    @State private var control = NucleuxModeControl(mode: ProcessInfo.processInfo.environment[\"MODE\"])\n    @State private var text = \"Help me prepare the October release.\"\n    @State private var sent: [(String, NucleuxModeOption?)] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, s in\n                        HStack(spacing: 6) {\n                            if let m = s.1 {\n                                Text(NucleuxModes.tag(m)).font(.system(size: 11, weight: .semibold)).padding(.horizontal, 6).padding(.vertical, 2)\n                                    .background(NucleuxColor.muted, in: Capsule())\n                            }\n                            Text(s.0).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                        }\n                        .accessibilityElement(children: .combine)\n                        Text(NucleuxModes.agentLine(\"Aria\", s.1)).font(.system(size: 12, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            .accessibilityIdentifier(\"agent-line\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe the task…\", onSend: { t in\n                sent.append((t, control.current))\n                control.sent()\n                text = \"\"\n            })\n            .nucleuxComposerSettings([control.setting(agent: \"Aria\")])\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 40
   },
@@ -59567,7 +60531,7 @@
    "component": "voice-tone",
    "framework": "swiftui",
    "title": "ToneScreen (iOS catalog app, SCREEN=tone)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1657",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1673",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ToneScreen: View {\n    @State private var mode = NucleuxModeControl()\n    @State private var tone = NucleuxToneControl(choice: .init(tone: ProcessInfo.processInfo.environment[\"TONE\"]),\n                                                 recommended: .init(id: \"professional\", reason: \"Recommended for stakeholders\"))\n    @State private var text = \"Write a short update about the onboarding improvements.\"\n    @State private var sent: [(String, NucleuxTone.Choice)] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, s in\n                        HStack(spacing: 6) {\n                            if let tag = NucleuxTone.tag(tone.tones, s.1) {\n                                Text(tag).font(.system(size: 11, weight: .semibold)).padding(.horizontal, 6).padding(.vertical, 2)\n                                    .background(NucleuxColor.muted, in: Capsule())\n                            }\n                            Text(s.0).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                        }\n                        .accessibilityElement(children: .combine)\n                        Text(NucleuxTone.agentLine(\"Aria\", tone.tones, s.1)).font(.system(size: 12, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            .accessibilityIdentifier(\"agent-line\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe the task…\", onSend: { t in\n                sent.append((t, tone.choice))\n                mode.sent()\n                tone.sent()\n                text = \"\"\n            })\n            .nucleuxComposerSettings([mode.setting(agent: \"Aria\"), tone.setting()])\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 43
   },
@@ -59603,7 +60567,7 @@
    "component": "preset-styles",
    "framework": "swiftui",
    "title": "StylesScreen (iOS catalog app, SCREEN=styles)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1698",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1714",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct StylesScreen: View {\n    @State private var mode = NucleuxModeControl()\n    @State private var tone = NucleuxToneControl()\n    @State private var style = NucleuxStyleControl(style: ProcessInfo.processInfo.environment[\"STYLE\"] ?? NucleuxStyles.normal, replies: true)\n    @State private var creator: NucleuxStyleCreateControl?\n    @State private var text = \"Now draft the customer email about it.\"\n    @State private var turns: [(String, String)] = [(\"Summarize the October release.\", NucleuxStyles.normal)]\n\n    static let house = NucleuxStyleDraft(\n        name: \"Release notes voice\", description: \"One line per change, the benefit first, plain verbs, no marketing words.\",\n        instructions: \"Write one short line per change. Start each line with New, Faster, Fixed or Next month. Lead with what the reader can now do. Use plain verbs; avoid marketing words and exclamation marks.\")\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(turns.enumerated()), id: \\.offset) { _, t in\n                        Text(t.0).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                        Text(NucleuxStyles.agentLine(\"Aria\", style.styles, t.1)).font(.system(size: 12, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            .accessibilityIdentifier(\"agent-line\")\n                    }\n                    if let creator {\n                        NucleuxStyleCreator(control: creator, preview: NucleuxStylePreviews(question: \"Summarize the October release.\",\n                            answers: [\"house\": \"New: shared dashboards — your whole team sees the same numbers. Faster: exports take half the time.\"]))\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            .scrollDismissesKeyboard(.immediately)\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe the task…\", onSend: { t in\n                turns.append((t, style.style))\n                mode.sent(); tone.sent(); style.sent()\n                text = \"\"\n            })\n            .nucleuxComposerSettings([mode.setting(agent: \"Aria\"), tone.setting(), style.setting()])\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .onAppear {\n            style.onCreate = {\n                let c = NucleuxStyleCreateControl(\n                    taken: { style.styles.map(\\.id) },\n                    // The demo's stand-in for the host's AI step.\n                    generate: { _, _ in try? await Task.sleep(for: .seconds(1)); return Self.house },\n                    onSave: { saved, use in style.add(saved, use: use); creator = nil })\n                c.open()\n                creator = c\n            }\n        }\n        .onChange(of: creator?.isOpen) { _, open in if open == false { creator = nil } }\n    }\n}",
    "lines": 57
   },
@@ -59639,7 +60603,7 @@
    "component": "additions",
    "framework": "swiftui",
    "title": "AdditionsScreen (iOS catalog app, SCREEN=additions)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1753",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1769",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct AdditionsScreen: View {\n    @State private var text = ProcessInfo.processInfo.environment[\"TEXT\"] ?? \"\"\n    @State private var sent: [String] = []\n\n    static let offer = NucleuxAdditionOffer(\n        items: [\"Include unresolved blockers\", \"Group the work by owner\", \"Compare with the August release\"],\n        why: \"Release summaries are read to decide what still needs attention — 3 blockers are open.\")\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, t in\n                        Text(t).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground).accessibilityIdentifier(\"sent\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe what you need…\", onSend: { t in\n                sent.append(t)\n                text = \"\"\n            })\n            .nucleuxOpenInput(agentName: \"Aria\")\n            // The demo's stand-in for the host: it fits a release summary that doesn't ask for blockers yet.\n            .nucleuxAdditions { t in\n                t.localizedCaseInsensitiveContains(\"release\") && !t.localizedCaseInsensitiveContains(\"blocker\") ? Self.offer : nil\n            }\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 37
   },
@@ -59675,7 +60639,7 @@
    "component": "prompt-enhancer",
    "framework": "swiftui",
    "title": "EnhancerScreen (iOS catalog app, SCREEN=enhancer)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1788",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1804",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct EnhancerScreen: View {\n    @State private var text = \"Analyze onboarding feedback.\"\n    @State private var sent: [String] = []\n    @State private var failNext = ProcessInfo.processInfo.environment[\"FAIL\"] == \"1\"\n\n    static let changes = [\n        NucleuxEnhancerChange(id: \"time\", add: \" from the last 30 days\", why: \"Keeps it to the feedback since the new flow shipped.\", assumption: \"Assumes the last 30 days.\"),\n        NucleuxEnhancerChange(id: \"step\", add: \", grouped by onboarding step\", why: \"Shows where in the flow people struggle.\"),\n        NucleuxEnhancerChange(id: \"exp\", add: \", and propose three experiments\", why: \"Turns findings into next steps — more than you asked for.\"),\n    ]\n    struct Down: Error {}\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, t in\n                        Text(t).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground).accessibilityIdentifier(\"sent\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe what you need…\", onSend: { t in\n                sent.append(t)\n                text = \"\"\n            })\n            .nucleuxOpenInput(agentName: \"Aria\")\n            // The demo's stand-in for the host's AI step.\n            .nucleuxEnhance { _ in\n                try await Task.sleep(for: .seconds(2))\n                if failNext { failNext = false; throw Down() }\n                return Self.changes\n            }\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 43
   },
@@ -59711,7 +60675,7 @@
    "component": "madlibs",
    "framework": "swiftui",
    "title": "MadlibsScreen (iOS catalog app, SCREEN=madlibs)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1829",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1845",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct MadlibsScreen: View {\n    static let madlib = NucleuxMadlib(\n        id: \"stakeholder-summary\", sentence: \"Create a summary of {project} for {audience}[, focusing on {topic}].\",\n        blanks: [\n            .init(id: \"project\", label: \"Project\", required: true, suggestions: [\"Checkout redesign\", \"Mobile onboarding\", \"Pricing v2\"]),\n            .init(id: \"audience\", label: \"Audience\", required: true, suggestions: [\"leadership\", \"sales\", \"customer success\"]),\n            .init(id: \"topic\", label: \"Topic\", required: false, suggestions: [\"risks\", \"the timeline\", \"customer impact\"]),\n        ])\n    @State private var text = \"\"\n    @State private var placed: String?\n    @State private var sent: [String] = []\n    @State private var control: NucleuxMadlibControl?\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    Text(\"I need a summary for stakeholders.\").font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                    Text(\"Tell me which project, who it’s for and what to focus on:\").font(.system(size: 15)).foregroundStyle(NucleuxColor.mutedForeground)\n                    if let control { NucleuxMadlibCard(control: control, useLabel: NucleuxMadlibs.useLabel(composerText: text, placed: placed)) }\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, t in\n                        Text(t).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground).accessibilityIdentifier(\"sent\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Or write your own request…\", onSend: { t in\n                sent.append(t)\n                text = \"\"\n            })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .onAppear {\n            guard control == nil else { return }\n            let c = NucleuxMadlibControl(Self.madlib) { t in text = t; placed = t }\n            // The demo's stand-in for a value the host can infer from the page.\n            if ProcessInfo.processInfo.environment[\"INFER\"] == \"1\" { c.send(.suggest(\"project\", \"Checkout redesign\")) }\n            control = c\n        }\n    }\n}",
    "lines": 47
   },
@@ -59870,8 +60834,18 @@
    "NucleuxAgentIdentityCard.init",
    "NucleuxAgentLimits",
    "NucleuxAgentLimits.init",
+   "NucleuxAgentNameController",
+   "NucleuxAgentNameController.formerly",
+   "NucleuxAgentNameController.init",
+   "NucleuxAgentNameController.name",
+   "NucleuxAgentNameController.rename",
+   "NucleuxAgentNameController.settle",
+   "NucleuxAgentNameController.state",
+   "NucleuxAgentNameController.undo",
    "NucleuxAgentPresence",
    "NucleuxAgentPresence.init",
+   "NucleuxAgentRenameNotice",
+   "NucleuxAgentRenameNotice.init",
    "NucleuxAgentTag",
    "NucleuxAgentTag.init",
    "NucleuxAttachment",
@@ -60568,6 +61542,7 @@
    "NucleuxIconView.init",
    "NucleuxIdentity",
    "NucleuxIdentity.AgentState",
+   "NucleuxIdentity.AgentState.active",
    "NucleuxIdentity.AgentState.off",
    "NucleuxIdentity.AgentState.ready",
    "NucleuxIdentity.AgentState.working",
@@ -60576,14 +61551,32 @@
    "NucleuxIdentity.AvatarSize.corner",
    "NucleuxIdentity.AvatarSize.glyph",
    "NucleuxIdentity.AvatarSize.initials",
-   "NucleuxIdentity.AvatarSize.lg",
    "NucleuxIdentity.AvatarSize.md",
    "NucleuxIdentity.AvatarSize.sm",
+   "NucleuxIdentity.AvatarSize.xs",
    "NucleuxIdentity.GlyphContainer",
    "NucleuxIdentity.GlyphContainer.filled",
    "NucleuxIdentity.GlyphContainer.quiet",
    "NucleuxIdentity.GlyphContainer.tokens",
    "NucleuxIdentity.GlyphContainer.tonal",
+   "NucleuxIdentity.NameEvent",
+   "NucleuxIdentity.NameEvent.rename",
+   "NucleuxIdentity.NameEvent.settle",
+   "NucleuxIdentity.NameEvent.undo",
+   "NucleuxIdentity.NameProblem",
+   "NucleuxIdentity.NameProblem.empty",
+   "NucleuxIdentity.NameProblem.same",
+   "NucleuxIdentity.NameProblem.text",
+   "NucleuxIdentity.NameProblem.tooLong",
+   "NucleuxIdentity.NameResult",
+   "NucleuxIdentity.NameResult.announcement",
+   "NucleuxIdentity.NameResult.problem",
+   "NucleuxIdentity.NameResult.state",
+   "NucleuxIdentity.NameState",
+   "NucleuxIdentity.NameState.formerly",
+   "NucleuxIdentity.NameState.init",
+   "NucleuxIdentity.NameState.name",
+   "NucleuxIdentity.NameState.notice",
    "NucleuxIdentity.avatarLabel",
    "NucleuxIdentity.bubbleCorners",
    "NucleuxIdentity.bubbleLabel",
@@ -60593,11 +61586,20 @@
    "NucleuxIdentity.bylineLabel",
    "NucleuxIdentity.bylineText",
    "NucleuxIdentity.chip",
+   "NucleuxIdentity.formerlyLabel",
    "NucleuxIdentity.identityLabel",
+   "NucleuxIdentity.intro",
+   "NucleuxIdentity.nameLabel",
+   "NucleuxIdentity.nameMax",
+   "NucleuxIdentity.nameProblem",
    "NucleuxIdentity.presenceEnded",
    "NucleuxIdentity.presenceLabel",
-   "NucleuxIdentity.ringSeconds",
+   "NucleuxIdentity.reduce",
+   "NucleuxIdentity.renameNotice",
    "NucleuxIdentity.roleLine",
+   "NucleuxIdentity.stop",
+   "NucleuxIdentity.stopped",
+   "NucleuxIdentity.turnMs",
    "NucleuxIdentityRow",
    "NucleuxIdentityRow.init",
    "NucleuxInitialCTA",
@@ -61924,8 +62926,17 @@
    "NucleuxAgentGlyph",
    "NucleuxAgentIdentityCard",
    "NucleuxAgentLimits",
+   "NucleuxAgentNameController",
+   "NucleuxAgentNameController.formerly",
+   "NucleuxAgentNameController.name",
+   "NucleuxAgentNameController.rename",
+   "NucleuxAgentNameController.settle",
+   "NucleuxAgentNameController.state",
+   "NucleuxAgentNameController.undo",
    "NucleuxAgentPresence",
+   "NucleuxAgentRenameNotice",
    "NucleuxAgentState",
+   "NucleuxAgentState.Active",
    "NucleuxAgentState.Off",
    "NucleuxAgentState.Ready",
    "NucleuxAgentState.Working",
@@ -61983,9 +62994,9 @@
    "NucleuxAutocompleteProvider.Kind.Tool",
    "NucleuxAutocompleteProvider.Trigger",
    "NucleuxAvatarSize",
-   "NucleuxAvatarSize.Lg",
    "NucleuxAvatarSize.Md",
    "NucleuxAvatarSize.Sm",
+   "NucleuxAvatarSize.Xs",
    "NucleuxButton",
    "NucleuxButtonSize",
    "NucleuxButtonSize.Lg",
@@ -62417,16 +63428,35 @@
    "NucleuxIdentity.BUBBLE_RADIUS",
    "NucleuxIdentity.BUBBLE_SHARP",
    "NucleuxIdentity.CHIP",
-   "NucleuxIdentity.RING_MILLIS",
+   "NucleuxIdentity.NAME_MAX",
+   "NucleuxIdentity.NameEvent",
+   "NucleuxIdentity.NameEvent.Rename",
+   "NucleuxIdentity.NameEvent.Settle",
+   "NucleuxIdentity.NameEvent.Undo",
+   "NucleuxIdentity.NameProblem",
+   "NucleuxIdentity.NameProblem.Empty",
+   "NucleuxIdentity.NameProblem.Same",
+   "NucleuxIdentity.NameProblem.TooLong",
+   "NucleuxIdentity.NameResult",
+   "NucleuxIdentity.NameState",
+   "NucleuxIdentity.STOP",
+   "NucleuxIdentity.TURN_MILLIS",
    "NucleuxIdentity.avatarLabel",
    "NucleuxIdentity.bubbleLabel",
    "NucleuxIdentity.bubbleShape",
    "NucleuxIdentity.bylineLabel",
    "NucleuxIdentity.bylineText",
+   "NucleuxIdentity.formerlyLabel",
    "NucleuxIdentity.identityLabel",
+   "NucleuxIdentity.intro",
+   "NucleuxIdentity.nameLabel",
+   "NucleuxIdentity.nameProblem",
    "NucleuxIdentity.presenceEnded",
    "NucleuxIdentity.presenceLabel",
+   "NucleuxIdentity.reduce",
+   "NucleuxIdentity.renameNotice",
    "NucleuxIdentity.roleLine",
+   "NucleuxIdentity.stopped",
    "NucleuxIdentityRow",
    "NucleuxInitialCta",
    "NucleuxKnowledge",
@@ -63314,6 +64344,7 @@
    "rememberLimitControl",
    "rememberMadlibControl",
    "rememberModeControl",
+   "rememberNucleuxAgentNameController",
    "rememberNucleuxProactiveController",
    "rememberNucleuxTipController",
    "rememberNucleuxVoiceController",
@@ -63359,6 +64390,13 @@
    "AdditionsUndo.text",
    "AdditionsWhy",
    "AdditionsWhy.AdditionsWhy",
+   "AgentNameSettle",
+   "AgentNameSettle.AgentNameSettle",
+   "AgentNameUndo",
+   "AgentNameUndo.AgentNameUndo",
+   "AgentRename",
+   "AgentRename.AgentRename",
+   "AgentRename.to",
    "CaveatDismiss",
    "CaveatDismiss.CaveatDismiss",
    "CaveatMore",
@@ -63596,6 +64634,7 @@
    "NucleuxAgentAvatar",
    "NucleuxAgentAvatar.NucleuxAgentAvatar",
    "NucleuxAgentAvatar.agent",
+   "NucleuxAgentAvatar.image",
    "NucleuxAgentAvatar.size",
    "NucleuxAgentAvatar.standalone",
    "NucleuxAgentAvatar.state",
@@ -63614,6 +64653,9 @@
    "NucleuxAgentIdentityCard.NucleuxAgentIdentityCard",
    "NucleuxAgentIdentityCard.actionLabel",
    "NucleuxAgentIdentityCard.agent",
+   "NucleuxAgentIdentityCard.formerly",
+   "NucleuxAgentIdentityCard.image",
+   "NucleuxAgentIdentityCard.intro",
    "NucleuxAgentIdentityCard.onAction",
    "NucleuxAgentIdentityCard.role",
    "NucleuxAgentIdentityCard.state",
@@ -63622,6 +64664,17 @@
    "NucleuxAgentLimits.agent",
    "NucleuxAgentLimits.scope",
    "NucleuxAgentLimits.summary",
+   "NucleuxAgentNameController",
+   "NucleuxAgentNameController.NucleuxAgentNameController",
+   "NucleuxAgentNameController.formerly",
+   "NucleuxAgentNameController.name",
+   "NucleuxAgentNameController.rename",
+   "NucleuxAgentNameController.settle",
+   "NucleuxAgentNameController.state",
+   "NucleuxAgentNameController.undo",
+   "NucleuxAgentNameEvent",
+   "NucleuxAgentNameEvent.NucleuxAgentNameEvent",
+   "NucleuxAgentNameState",
    "NucleuxAgentPresence",
    "NucleuxAgentPresence.NucleuxAgentPresence",
    "NucleuxAgentPresence.active",
@@ -63629,7 +64682,11 @@
    "NucleuxAgentPresence.agent",
    "NucleuxAgentPresence.child",
    "NucleuxAgentPresence.detail",
+   "NucleuxAgentRenameNotice",
+   "NucleuxAgentRenameNotice.NucleuxAgentRenameNotice",
+   "NucleuxAgentRenameNotice.controller",
    "NucleuxAgentState",
+   "NucleuxAgentState.active",
    "NucleuxAgentState.off",
    "NucleuxAgentState.ready",
    "NucleuxAgentState.working",
@@ -63713,9 +64770,9 @@
    "NucleuxAvailable",
    "NucleuxAvailable.NucleuxAvailable",
    "NucleuxAvatarSize",
-   "NucleuxAvatarSize.lg",
    "NucleuxAvatarSize.md",
    "NucleuxAvatarSize.sm",
+   "NucleuxAvatarSize.xs",
    "NucleuxBaseMoment",
    "NucleuxBaseMoment.available",
    "NucleuxBaseMoment.inactive",
@@ -64447,17 +65504,32 @@
    "NucleuxIdentity.bylineLabel",
    "NucleuxIdentity.bylineText",
    "NucleuxIdentity.chip",
+   "NucleuxIdentity.formerlyLabel",
    "NucleuxIdentity.identityLabel",
+   "NucleuxIdentity.initialName",
+   "NucleuxIdentity.intro",
+   "NucleuxIdentity.nameLabel",
+   "NucleuxIdentity.nameMax",
+   "NucleuxIdentity.nameProblem",
    "NucleuxIdentity.presenceEnded",
    "NucleuxIdentity.presenceLabel",
-   "NucleuxIdentity.ring",
+   "NucleuxIdentity.reduceName",
+   "NucleuxIdentity.renameNotice",
    "NucleuxIdentity.roleLine",
+   "NucleuxIdentity.static",
+   "NucleuxIdentity.stop",
+   "NucleuxIdentity.stopped",
+   "NucleuxIdentity.turn",
    "NucleuxIdentityRow",
    "NucleuxIdentityRow.NucleuxIdentityRow",
    "NucleuxIdentityRow.agent",
    "NucleuxIdentityRow.detail",
+   "NucleuxIdentityRow.formerly",
+   "NucleuxIdentityRow.image",
    "NucleuxIdentityRow.name",
+   "NucleuxIdentityRow.onStop",
    "NucleuxIdentityRow.state",
+   "NucleuxIdentityRow.status",
    "NucleuxIndeterminateProgress",
    "NucleuxIndeterminateProgress.NucleuxIndeterminateProgress",
    "NucleuxInitialCta",
@@ -65045,6 +66117,10 @@
    "NucleuxModes.tuneRowLabel",
    "NucleuxModes.tuneRowValue",
    "NucleuxModes.unavailableText",
+   "NucleuxNameProblem",
+   "NucleuxNameProblem.empty",
+   "NucleuxNameProblem.same",
+   "NucleuxNameProblem.tooLong",
    "NucleuxNoProgress",
    "NucleuxNoProgress.NucleuxNoProgress",
    "NucleuxOpenInput",
@@ -66045,6 +67121,9 @@
    "ADVANCED_LABEL",
    "AGENT_GLYPH",
    "AGENT_GLYPH_COLORS",
+   "AGENT_NAME_MAX",
+   "AGENT_NAME_PROBLEMS",
+   "AGENT_STOP",
    "AGENT_TAG",
    "AI_MARKS",
    "AI_ROLE_MEANING",
@@ -66060,8 +67139,8 @@
    "AUTOCOMPLETE_MENU_MAX",
    "AUTO_CHOSEN",
    "AVAIL_LABEL",
-   "AVATAR_RING_MS",
    "AVATAR_SIZES",
+   "AVATAR_TURN_MS",
    "AcceptSuggestion",
    "Accepted",
    "Accepted.announcement",
@@ -66088,6 +67167,7 @@
    "AgentAvatar",
    "AgentAvatarProps",
    "AgentAvatarProps.agent",
+   "AgentAvatarProps.image",
    "AgentAvatarProps.size",
    "AgentAvatarProps.standalone",
    "AgentAvatarProps.state",
@@ -66099,12 +67179,23 @@
    "AgentIdentityCardProps",
    "AgentIdentityCardProps.actionLabel",
    "AgentIdentityCardProps.agent",
+   "AgentIdentityCardProps.formerly",
+   "AgentIdentityCardProps.image",
+   "AgentIdentityCardProps.intro",
    "AgentIdentityCardProps.onAction",
    "AgentIdentityCardProps.role",
    "AgentIdentityCardProps.state",
    "AgentLimits",
    "AgentMessage",
+   "AgentNameEvent",
+   "AgentNameHandle",
+   "AgentNameProblem",
+   "AgentNameState",
+   "AgentNameState.formerly",
+   "AgentNameState.name",
+   "AgentNameState.notice",
    "AgentPresence",
+   "AgentRenameNotice",
    "AgentState",
    "AgentTag",
    "AiActionButton",
@@ -67249,8 +68340,13 @@
    "additionsTag",
    "agentAvatarLabel",
    "agentHeaderLabel",
+   "agentIntro",
    "agentModeLine",
+   "agentNameLabel",
+   "agentNameProblem",
+   "agentNameReduce",
    "agentRoleLine",
+   "agentStopped",
    "agentStyleLine",
    "agentToneLine",
    "aiActionName",
@@ -67369,6 +68465,7 @@
    "filterAnnouncement",
    "fontSize",
    "footActions",
+   "formerlyLabel",
    "galleryColumns",
    "galleryFilters",
    "gateDecisions",
@@ -67389,6 +68486,7 @@
    "improvedSpoken",
    "inactiveNote",
    "initialAdditionsState",
+   "initialAgentName",
    "initialAiRun",
    "initialCaveatState",
    "initialConsentState",
@@ -67456,6 +68554,7 @@
    "readingText",
    "removeBody",
    "removeTitle",
+   "renameNotice",
    "replaceTitle",
    "requestSettingsLabel",
    "requirementBanner",
@@ -67538,6 +68637,7 @@
    "unresolved",
    "urlProblem",
    "usable",
+   "useAgentName",
    "useLimit",
    "useMadlib",
    "useModeSetting",
