@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-attachments",
-  "version": "0.11.2",
+  "version": "0.11.3",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Attachments — hand the agent the files this request depends on — Nucleux agentic UI for React.",
