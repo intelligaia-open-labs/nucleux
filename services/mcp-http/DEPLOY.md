@@ -32,8 +32,9 @@ mkdir -p data && chmod 700 data
 
 ## 3. The `.env` file
 
-`~/nucleux-mcp/.env`, `chmod 600`. Node loads it through `node_args: --env-file=…` in
-`ecosystem.config.cjs`, so it must exist before the restart:
+`~/nucleux-mcp/.env`, `chmod 600`. The server reads it at startup (`src/env.js`; values
+already in the environment win). Don't rely on `node --env-file` under pm2: pm2 records
+`node_args` but did not pass them on the box, which left the secrets unset.
 
 ```bash
 umask 077
@@ -53,7 +54,7 @@ chmod 600 ~/nucleux-mcp/.env
 Then:
 
 ```bash
-pm2 delete nucleux-mcp && pm2 start ecosystem.config.cjs && pm2 save   # node_args changed, so reload the config
+pm2 delete nucleux-mcp && pm2 start ecosystem.config.cjs && pm2 save   # reloads the config
 curl -s http://127.0.0.1:8118/health                  # "auth":"optional"
 curl -s https://nucleux.in/mcp/.well-known/oauth-authorization-server | head -c 200
 ```
