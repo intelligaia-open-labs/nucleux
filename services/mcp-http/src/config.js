@@ -45,5 +45,14 @@ export function loadConfig(env = process.env) {
     callTimeoutMs: Number(env.NUCLEUX_MCP_TIMEOUT_MS ?? 30_000),
     // The private Nucleux Mobile MCP bundle; relative to services/mcp-http. Missing = web only.
     mobileFile: env.NUCLEUX_MOBILE_MCP || "vendor/nucleux-mobile-mcp.cjs",
+    // The Playground's planner (yantra.js). Unset URL or key = POST /playground is 503
+    // and the Playground keeps its built-in matching.
+    yantra: {
+      url: env.YANTRA_API_URL || null,
+      key: env.YANTRA_API_KEY || null,
+      model: env.YANTRA_MODEL || "deepseek-v4-flash:cloud",
+      timeoutMs: Number(env.YANTRA_TIMEOUT_MS || 25_000),
+    },
+    playgroundPerHour: Number(env.NUCLEUX_PLAYGROUND_PER_HOUR || 60),
   };
 }

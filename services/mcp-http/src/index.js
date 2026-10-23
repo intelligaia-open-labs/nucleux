@@ -13,6 +13,7 @@ import { openDb } from "./db.js";
 import { createStore } from "./store.js";
 import { createUpstream, createMobileUpstream } from "./upstream.js";
 import { createApp } from "./app.js";
+import { createYantra } from "./yantra.js";
 
 // The database and its -wal/-shm files hold token hashes (and old accounts' emails): owner only.
 process.umask(0o077);
@@ -23,7 +24,8 @@ const db = openDb(config.dbFile);
 const store = createStore(db);
 const upstream = createUpstream({ callTimeoutMs: config.callTimeoutMs });
 const mobile = createMobileUpstream({ file: config.mobileFile, callTimeoutMs: config.callTimeoutMs });
-const app = createApp({ config, store, upstream, mobile });
+const yantra = createYantra(config.yantra);
+const app = createApp({ config, store, upstream, mobile, yantra });
 
 app.listen(config.port, config.host, () => {
   console.log(

@@ -90,7 +90,7 @@ export function fakeMobileUpstream() {
   };
 }
 
-export async function startServer(env = {}, { limits, upstream = fakeUpstream, mobile = null } = {}) {
+export async function startServer(env = {}, { limits, upstream = fakeUpstream, mobile = null, yantra = null } = {}) {
   const clock = { t: Date.UTC(2026, 9, 22, 12, 0, 0) };
   const config = loadConfig({
     NUCLEUX_PUBLIC_URL: "https://nucleux.test/mcp",
@@ -100,7 +100,7 @@ export async function startServer(env = {}, { limits, upstream = fakeUpstream, m
   });
   const db = openDb(":memory:");
   const store = createStore(db, { now: () => clock.t });
-  const app = createApp({ config, store, upstream, mobile, limits });
+  const app = createApp({ config, store, upstream, mobile, yantra, limits });
   const server = await new Promise((resolve) => {
     const s = app.listen(0, "127.0.0.1", () => resolve(s));
   });
