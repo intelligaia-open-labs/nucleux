@@ -26,6 +26,7 @@ export const Md3IconButton = React.forwardRef<HTMLButtonElement, Md3IconButtonPr
       type={type}
       aria-pressed={props["aria-pressed"] ?? (selected || undefined)}
       className={cn(
+        "font-md",
         "relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full transition-colors [&_svg]:size-6",
         "before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-['']",
         "hover:before:opacity-[0.08] focus-visible:before:opacity-[0.12] active:before:opacity-[0.12]",

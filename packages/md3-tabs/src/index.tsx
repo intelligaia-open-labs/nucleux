@@ -29,7 +29,7 @@ export const Md3Tabs = React.forwardRef<HTMLDivElement, Md3TabsProps>(
       onValueChange?.(v);
     };
     return (
-      <div ref={ref} className={className} {...props}>
+      <div ref={ref} className={cn("font-md", className)} {...props}>
         <TabsContext.Provider value={{ value: current, setValue }}>{children}</TabsContext.Provider>
       </div>
     );
@@ -39,7 +39,7 @@ Md3Tabs.displayName = "Md3Tabs";
 
 export const Md3TabsList = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} role="tablist" className={cn("flex border-b border-md-surface-variant bg-md-surface", className)} {...props} />
+    <div ref={ref} role="tablist" className={cn("font-md", "flex border-b border-md-surface-variant bg-md-surface", className)} {...props} />
   ),
 );
 Md3TabsList.displayName = "Md3TabsList";
@@ -62,6 +62,7 @@ export const Md3Tab = React.forwardRef<HTMLButtonElement, Md3TabProps>(
         aria-selected={selected}
         onClick={() => setValue(value)}
         className={cn(
+          "font-md",
           "relative inline-flex h-12 flex-1 items-center justify-center gap-2 overflow-hidden px-4 text-sm font-medium transition-colors [&_svg]:size-5",
           "before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-['']",
           "hover:before:opacity-[0.08] focus-visible:before:opacity-[0.12]",
@@ -91,7 +92,7 @@ export const Md3TabPanel = React.forwardRef<HTMLDivElement, Md3TabPanelProps>(
   ({ value, className, ...props }, ref) => {
     const { value: active } = useTabs("Md3TabPanel");
     if (active !== value) return null;
-    return <div ref={ref} role="tabpanel" className={cn("p-4 text-md-on-surface", className)} {...props} />;
+    return <div ref={ref} role="tabpanel" className={cn("font-md", "p-4 text-md-on-surface", className)} {...props} />;
   },
 );
 Md3TabPanel.displayName = "Md3TabPanel";

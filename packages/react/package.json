@@ -113,6 +113,7 @@
     "@nucleux/md3-handwriting": "workspace:*",
     "@nucleux/md3-icon-button": "workspace:*",
     "@nucleux/md3-iconography": "workspace:*",
+    "@nucleux/md3-icons": "workspace:*",
     "@nucleux/md3-initial-cta": "workspace:*",
     "@nucleux/md3-knowledge-base": "workspace:*",
     "@nucleux/md3-list": "workspace:*",

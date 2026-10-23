@@ -32,6 +32,7 @@ export const Md3Caveat = React.forwardRef<HTMLParagraphElement, Md3CaveatProps>(
           role="note"
           data-variant={variant}
           className={cn(
+            "font-md",
             "flex w-full flex-col gap-1.5 text-md-on-surface [&_svg]:shrink-0",
             variant === "output-footer" &&
               "mt-3.5 rounded-md-md bg-md-surface-container-highest px-4 pb-1.5 pt-3.5 animate-nx-fade-in motion-reduce:animate-none",
@@ -56,6 +57,7 @@ export const Md3Caveat = React.forwardRef<HTMLParagraphElement, Md3CaveatProps>(
         role="note"
         data-variant={variant}
         className={cn(
+          "font-md",
           "items-center gap-2 text-xs leading-4 tracking-[0.4px] text-md-on-surface-variant [&_svg]:size-3.5 [&_svg]:shrink-0",
           variant === "output-footer"
             ? "mt-3.5 flex w-full flex-wrap rounded-md-sm bg-md-surface-container px-3 py-2.5 animate-nx-fade-in motion-reduce:animate-none"
@@ -95,7 +97,7 @@ export const Md3CaveatTooltip = React.forwardRef<HTMLSpanElement, Md3CaveatToolt
       "aria-describedby": [childProps["aria-describedby"], id].filter(Boolean).join(" "),
     } as Record<string, unknown>);
     return (
-      <span ref={ref} className={cn("group/caveat relative inline-flex", className)} {...props}>
+      <span ref={ref} className={cn("font-md", "group/caveat relative inline-flex", className)} {...props}>
         {trigger}
         <span
           role="tooltip"

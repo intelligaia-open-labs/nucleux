@@ -174,5 +174,6 @@ export * from "@nucleux/preset-styles";
 export * from "@nucleux/prompt-enhancer";
 export * from "@nucleux/suggestions";
 export * from "@nucleux/voice-tone";
+export * from "@nucleux/md3-icons";
 export * from "@nucleux/hooks";
 export * from "@nucleux/utils";

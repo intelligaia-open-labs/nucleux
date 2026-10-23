@@ -79,7 +79,7 @@ export const Md3AgentAvatar = React.forwardRef<HTMLSpanElement, Md3AgentAvatarPr
         data-shape={shape}
         data-status={status}
         aria-hidden={decorative || undefined}
-        className={cn("relative inline-flex shrink-0", radius, className)}
+        className={cn("font-md", "relative inline-flex shrink-0", radius, className)}
         {...props}
       >
         <span

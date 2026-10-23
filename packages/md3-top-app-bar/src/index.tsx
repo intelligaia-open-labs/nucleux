@@ -22,6 +22,7 @@ export const Md3TopAppBar = React.forwardRef<HTMLElement, Md3TopAppBarProps>(
       <header
         ref={ref}
         className={cn(
+          "font-md",
           "flex w-full bg-md-surface text-md-on-surface",
           tall ? "flex-col px-4 pb-6 pt-2" : "h-16 items-center gap-1 px-1",
           variant === "medium" && "h-28",

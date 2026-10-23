@@ -66,7 +66,7 @@ export const Md3Personality = React.forwardRef<HTMLDivElement, Md3PersonalityPro
         ref={ref}
         data-variant="tone-matrix"
         data-layout={variant}
-        className={cn("flex flex-col gap-2", className)}
+        className={cn("font-md", "flex flex-col gap-2", className)}
         {...props}
       >
         {label && (
@@ -192,6 +192,7 @@ export const Md3PersonalityVoiceCard = React.forwardRef<HTMLElement, Md3Personal
       aria-label={label}
       data-variant="voice-card"
       className={cn(
+        "font-md",
         "m-0 rounded-md-lg border border-md-outline-variant bg-md-surface p-5 text-md-on-surface",
         className,
       )}
@@ -234,7 +235,7 @@ export const Md3PersonalitySampleDialog = React.forwardRef<HTMLDivElement, Md3Pe
       role="group"
       aria-label={label}
       data-variant="sample-dialog"
-      className={cn("flex flex-col gap-2", className)}
+      className={cn("font-md", "flex flex-col gap-2", className)}
       {...props}
     >
       {turns.map((turn, i) => {

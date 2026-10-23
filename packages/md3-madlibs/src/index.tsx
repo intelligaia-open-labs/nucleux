@@ -325,6 +325,7 @@ export const Md3Madlibs = React.forwardRef<HTMLDivElement, Md3MadlibsProps>((pro
       aria-labelledby={ctl.ids.heading}
       data-status={ctl.placed ? "placed" : ctl.status}
       className={cn(
+        "font-md",
         "flex w-full max-w-[620px] flex-col overflow-visible rounded-md-lg bg-md-surface-container-lowest",
         "animate-nx-fade-in motion-reduce:animate-none",
         compact ? "gap-2.5 px-4 py-3.5" : "gap-3.5 px-5 py-[18px]",

@@ -35,7 +35,7 @@ export const Md3RadioGroup = React.forwardRef<HTMLDivElement, Md3RadioGroupProps
         ref={ref}
         role="radiogroup"
         aria-label={label}
-        className={cn("flex flex-col gap-1", className)}
+        className={cn("font-md", "flex flex-col gap-1", className)}
         {...props}
       >
         <RadioGroupContext.Provider value={{ value: current, setValue, name }}>
@@ -67,6 +67,7 @@ export const Md3Radio = React.forwardRef<HTMLButtonElement, Md3RadioProps>(
         disabled={disabled}
         onClick={() => ctx.setValue(value)}
         className={cn(
+          "font-md",
           "relative inline-flex h-10 w-10 items-center justify-center rounded-full outline-none",
           "before:absolute before:inset-0 before:rounded-full before:bg-md-on-surface before:opacity-0 before:transition-opacity before:content-['']",
           "hover:before:opacity-[0.08] focus-visible:before:opacity-[0.12] active:before:opacity-[0.12]",

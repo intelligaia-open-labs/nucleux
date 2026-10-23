@@ -1,0 +1,8 @@
+@nucleux/md3-icons
+
+The icon path data in src/paths.ts (and the built dist/ files) is taken unmodified
+from Material Symbols (Outlined, weight 400) by Google LLC, licensed under the
+Apache License, Version 2.0: https://www.apache.org/licenses/LICENSE-2.0
+Source: https://github.com/google/material-design-icons
+
+The surrounding React component code is MIT © Nucleux.

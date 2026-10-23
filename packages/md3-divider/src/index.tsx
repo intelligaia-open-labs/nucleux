@@ -15,6 +15,7 @@ export const Md3Divider = React.forwardRef<HTMLDivElement, Md3DividerProps>(
       role="separator"
       aria-orientation={orientation}
       className={cn(
+        "font-md",
         "shrink-0 bg-md-outline-variant",
         orientation === "horizontal" ? "h-px w-full" : "h-full w-px",
         inset && orientation === "horizontal" && "ml-4",

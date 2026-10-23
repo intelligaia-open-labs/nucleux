@@ -39,6 +39,10 @@
   --nx-ring: 255 32% 48%; /* md primary */
 
   --nx-radius: 1rem; /* rounder, Material 3 shape */
+
+  /* Material 3 type family (Roboto). @nucleux/md3-* components set it on their
+     own roots; this scope also puts shadcn components inside it in Roboto. */
+  font-family: var(--nx-font-md, Roboto, "Helvetica Neue", Arial, sans-serif);
 }
 
 .dark .nx-theme-mui,

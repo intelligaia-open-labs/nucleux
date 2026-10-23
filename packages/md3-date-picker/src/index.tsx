@@ -58,7 +58,7 @@ export const Md3DatePicker = React.forwardRef<HTMLButtonElement, Md3DatePickerPr
     };
 
     return (
-      <div ref={rootRef} className={cn("relative inline-block", className)} {...rest}>
+      <div ref={rootRef} className={cn("font-md", "relative inline-block", className)} {...rest}>
         <button
           ref={ref}
           type="button"

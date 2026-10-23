@@ -23,7 +23,7 @@ export const Md3Tooltip = React.forwardRef<HTMLDivElement, Md3TooltipProps>(
     return (
       <div
         ref={ref}
-        className={cn("relative inline-flex", className)}
+        className={cn("font-md", "relative inline-flex", className)}
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
         onFocusCapture={() => setOpen(true)}

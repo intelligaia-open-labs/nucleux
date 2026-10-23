@@ -39,7 +39,7 @@ export const Md3TextField = React.forwardRef<HTMLInputElement, Md3TextFieldProps
     const filled = variant === "filled";
 
     return (
-      <div className={cn("w-full", disabled && "opacity-[0.38]", className)}>
+      <div className={cn("font-md", "w-full", disabled && "opacity-[0.38]", className)}>
         <div className="relative">
           {leadingIcon && (
             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-md-on-surface-variant [&_svg]:size-5">

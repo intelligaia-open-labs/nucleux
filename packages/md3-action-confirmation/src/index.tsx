@@ -49,6 +49,7 @@ export const Md3ActionConfirmation = React.forwardRef<HTMLDivElement, Md3ActionC
         role="alertdialog"
         aria-label={typeof title === "string" ? title : undefined}
         className={cn(
+          "font-md",
           "flex flex-col gap-3 rounded-md-xl bg-md-surface-container-high p-5 text-md-on-surface shadow-md-1",
           className,
         )}

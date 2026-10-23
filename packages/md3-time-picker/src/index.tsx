@@ -40,7 +40,7 @@ export const Md3TimePicker = React.forwardRef<HTMLDivElement, Md3TimePickerProps
       );
 
     return (
-      <div ref={ref} className={cn("inline-flex items-center gap-2", className)}>
+      <div ref={ref} className={cn("font-md", "inline-flex items-center gap-2", className)}>
         <input
           type="number"
           min={1}

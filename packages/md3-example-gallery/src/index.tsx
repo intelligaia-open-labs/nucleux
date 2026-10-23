@@ -63,6 +63,7 @@ export const Md3ExampleGalleryItem = React.forwardRef<HTMLButtonElement, Md3Exam
           type={type}
           aria-pressed={selected === undefined ? undefined : selected}
           className={cn(
+            "font-md",
             "relative grid h-12 w-full place-items-center overflow-hidden rounded-md-md px-3 text-center text-sm font-medium tracking-[0.1px]",
             "outline-none focus-visible:ring-2 focus-visible:ring-md-primary focus-visible:ring-offset-2 focus-visible:ring-offset-md-surface",
             stateLayer,
@@ -84,6 +85,7 @@ export const Md3ExampleGalleryItem = React.forwardRef<HTMLButtonElement, Md3Exam
           type={type}
           aria-pressed={selected === undefined ? undefined : selected}
           className={cn(
+            "font-md",
             "relative flex w-full items-center gap-4 overflow-hidden px-4 py-4 text-left",
             "outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-md-primary",
             stateLayer,
@@ -116,6 +118,7 @@ export const Md3ExampleGalleryItem = React.forwardRef<HTMLButtonElement, Md3Exam
         type={type}
         aria-pressed={selected === undefined ? undefined : selected}
         className={cn(
+          "font-md",
           "group relative flex h-full w-full flex-col gap-3 overflow-hidden rounded-md-lg border p-2 text-left",
           "transition-[box-shadow,transform,background-color] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:-translate-y-0.5 hover:shadow-md-2 active:translate-y-0 active:scale-[0.995]",
           "motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100",
@@ -279,7 +282,7 @@ export const Md3ExampleGallery = React.forwardRef<HTMLElement, Md3ExampleGallery
 
     if (collapsed) {
       return (
-        <section ref={ref} aria-label="Examples" className={cn("flex", className)} {...props}>
+        <section ref={ref} aria-label="Examples" className={cn("font-md", "flex", className)} {...props}>
           <Md3Button variant="text" onClick={onExpand}>
             {expandLabel}
           </Md3Button>
@@ -329,7 +332,7 @@ export const Md3ExampleGallery = React.forwardRef<HTMLElement, Md3ExampleGallery
           ref={ref}
           aria-labelledby={label != null ? headingId : undefined}
           aria-label={label != null ? undefined : "Examples"}
-          className={cn("flex flex-col gap-3 text-md-on-surface", className)}
+          className={cn("font-md", "flex flex-col gap-3 text-md-on-surface", className)}
           {...props}
         >
           {label != null && (

@@ -103,6 +103,7 @@ export const Md3KnowledgeBase = React.forwardRef<HTMLDivElement, Md3KnowledgeBas
           aria-labelledby={heading ? headingId : undefined}
           aria-label={heading ? undefined : "Knowledge sources"}
           className={cn(
+            "font-md",
             "flex flex-col gap-3 rounded-md-md bg-md-surface-container-low p-4 text-md-on-surface shadow-md-1",
             className,
           )}
@@ -151,6 +152,7 @@ export const Md3KnowledgeBase = React.forwardRef<HTMLDivElement, Md3KnowledgeBas
       <div
         ref={ref}
         className={cn(
+          "font-md",
           "flex flex-col gap-1 rounded-md-md bg-md-surface-container-low py-3 text-md-on-surface shadow-md-1",
           className,
         )}
@@ -288,7 +290,7 @@ export const Md3KnowledgeBaseSources = React.forwardRef<HTMLDivElement, Md3Knowl
         count
       ));
     return (
-      <div ref={ref} className={cn("flex flex-col gap-2 text-md-on-surface", className)} {...props}>
+      <div ref={ref} className={cn("font-md", "flex flex-col gap-2 text-md-on-surface", className)} {...props}>
         <p
           id={headingId}
           role="status"
@@ -377,6 +379,7 @@ export const Md3KnowledgeBaseCoverage = React.forwardRef<HTMLSpanElement, Md3Kno
         ref={ref}
         data-level={level}
         className={cn(
+          "font-md",
           "inline-flex h-6 items-center gap-1 rounded-md-sm px-2 text-xs font-medium tracking-[0.5px]",
           c.cls,
           className,
@@ -438,6 +441,7 @@ export const Md3KnowledgeBaseCard = React.forwardRef<HTMLElement, Md3KnowledgeBa
         aria-labelledby={titleId}
         data-status={status}
         className={cn(
+          "font-md",
           "flex flex-col gap-4 rounded-md-lg border border-md-outline-variant bg-md-surface-container-lowest p-4 text-md-on-surface",
           className,
         )}

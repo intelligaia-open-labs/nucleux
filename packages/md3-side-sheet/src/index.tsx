@@ -129,6 +129,7 @@ export const Md3SideSheet = React.forwardRef<HTMLElement, Md3SideSheetProps>(
             aria-labelledby={hasTitle ? titleId : undefined}
             data-side={side}
             className={cn(
+              "font-md",
               "flex h-full w-full max-w-[400px] shrink-0 flex-col bg-md-surface text-md-on-surface",
               divider && (side === "right" ? "border-l border-md-outline-variant" : "border-r border-md-outline-variant"),
               className,
@@ -237,7 +238,7 @@ const ModalSideSheet = React.forwardRef<HTMLDivElement, ModalSideSheetProps>(
     };
 
     return (
-      <div className="fixed inset-0 z-50">
+      <div className="font-md fixed inset-0 z-50">
         <div
           aria-hidden="true"
           data-slot="md3-side-sheet-scrim"
@@ -305,6 +306,7 @@ export const Md3SideSheetHeader = React.forwardRef<HTMLDivElement, Md3SideSheetH
       <div
         ref={ref}
         className={cn(
+          "font-md",
           "flex min-h-[72px] shrink-0 items-center gap-1 pb-4 pt-3 pr-3",
           onBack ? "pl-3" : "pl-6",
           divider && "border-b border-md-outline-variant",
@@ -338,7 +340,7 @@ export const Md3SideSheetBody = React.forwardRef<HTMLDivElement, Md3SideSheetBod
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("min-h-0 flex-1 overflow-y-auto px-6 pb-6 text-sm text-md-on-surface-variant", className)}
+      className={cn("font-md", "min-h-0 flex-1 overflow-y-auto px-6 pb-6 text-sm text-md-on-surface-variant", className)}
       {...props}
     />
   ),
@@ -356,6 +358,7 @@ export const Md3SideSheetActions = React.forwardRef<HTMLDivElement, Md3SideSheet
     <div
       ref={ref}
       className={cn(
+        "font-md",
         "flex shrink-0 flex-wrap items-center gap-2 px-6 pb-6 pt-4",
         divider && "border-t border-md-outline-variant",
         className,

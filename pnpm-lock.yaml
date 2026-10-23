@@ -2720,6 +2720,28 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-icons:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-initial-cta:
     dependencies:
       '@nucleux/initial-cta':
@@ -5016,6 +5038,9 @@ importers:
       '@nucleux/md3-iconography':
         specifier: workspace:*
         version: link:../md3-iconography
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/md3-initial-cta':
         specifier: workspace:*
         version: link:../md3-initial-cta

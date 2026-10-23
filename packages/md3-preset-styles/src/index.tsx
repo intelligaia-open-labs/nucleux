@@ -638,7 +638,7 @@ export const Md3PresetStyles = React.forwardRef<HTMLDivElement, Md3PresetStylesP
     return (
       <div
         ref={ref}
-        className={cn("relative flex flex-col gap-2", withComposer ? "w-full" : "inline-flex", className)}
+        className={cn("font-md", "relative flex flex-col gap-2", withComposer ? "w-full" : "inline-flex", className)}
         {...rest}
       >
         {s.open && (
@@ -716,7 +716,7 @@ export const Md3PresetStyles = React.forwardRef<HTMLDivElement, Md3PresetStylesP
     <Md3Card
       ref={ref}
       variant="outlined"
-      className={cn("flex w-full max-w-[30rem] flex-col gap-3.5 rounded-md-lg p-4", className)}
+      className={cn("font-md", "flex w-full max-w-[30rem] flex-col gap-3.5 rounded-md-lg p-4", className)}
       {...rest}
     >
       <p id={labelId} className={overline}>

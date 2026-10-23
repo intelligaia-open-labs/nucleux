@@ -45,7 +45,7 @@ export const Md3RequestSettings = React.forwardRef<HTMLButtonElement, Md3Request
   } = props;
   const rs = useRequestSettings(props, ref);
   return (
-    <div ref={rs.rootRef} className={cn("relative inline-flex", className)} {...rest}>
+    <div ref={rs.rootRef} className={cn("font-md", "relative inline-flex", className)} {...rest}>
       <Md3IconButton
         {...rs.buttonProps}
         disabled={disabled}

@@ -463,7 +463,7 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
         aria-label={isAnnotation ? "Annotation input" : "Handwriting input"}
         data-variant={variant}
         data-status={status}
-        className={cn("flex flex-col gap-3 text-md-on-surface", className)}
+        className={cn("font-md", "flex flex-col gap-3 text-md-on-surface", className)}
         {...props}
       >
         {(padLabel != null || (compact && (inputMode === "draw" || onClose))) && (

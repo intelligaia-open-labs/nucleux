@@ -20,7 +20,7 @@ export const StreamingText = React.forwardRef<HTMLSpanElement, StreamingTextProp
       <span
         ref={ref}
         aria-live={streaming ? "polite" : undefined}
-        className={cn("whitespace-pre-wrap break-words", className)}
+        className={cn("font-md", "whitespace-pre-wrap break-words", className)}
         {...props}
       >
         {text}

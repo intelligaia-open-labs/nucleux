@@ -169,6 +169,7 @@ export const Md3Toolbar = React.forwardRef<HTMLDivElement, Md3ToolbarProps>(
         onKeyDown={handleKeyDown}
         onFocus={handleFocus}
         className={cn(
+          "font-md",
           "flex items-center",
           containers[color],
           type === "docked" && "h-16 w-full justify-evenly gap-2 px-4",
@@ -205,7 +206,7 @@ export const Md3ToolbarIconButton = React.forwardRef<HTMLButtonElement, Md3Toolb
         ref={ref}
         variant="standard"
         selected={selected}
-        className={cn("h-12 w-12", iconButtonColors[color][selected ? 1 : 0], className)}
+        className={cn("font-md", "h-12 w-12", iconButtonColors[color][selected ? 1 : 0], className)}
         {...props}
       />
     );

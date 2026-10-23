@@ -400,7 +400,7 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
       return (
         <div
           {...rootProps}
-          className={cn("flex flex-col gap-2 text-md-on-surface outline-none", className)}
+          className={cn("font-md", "flex flex-col gap-2 text-md-on-surface outline-none", className)}
         >
           {chips}
           {children}
@@ -453,7 +453,7 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
       return (
         <div
           {...rootProps}
-          className={cn("flex flex-col gap-3 text-md-on-surface outline-none", className)}
+          className={cn("font-md", "flex flex-col gap-3 text-md-on-surface outline-none", className)}
         >
           <div
             className={cn(
@@ -543,7 +543,7 @@ export const Md3VisualInput = React.forwardRef<HTMLDivElement, Md3VisualInputPro
     return (
       <div
         {...rootProps}
-        className={cn("flex flex-col gap-3 text-md-on-surface outline-none", className)}
+        className={cn("font-md", "flex flex-col gap-3 text-md-on-surface outline-none", className)}
       >
         <div
           onClick={(e) => {

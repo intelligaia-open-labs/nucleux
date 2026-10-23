@@ -120,6 +120,7 @@ export const Md3Disclosure = React.forwardRef<HTMLDivElement, Md3DisclosureProps
           ref={ref}
           data-variant={variant}
           className={cn(
+            "font-md",
             "rounded-md-lg bg-md-tertiary-container px-4 py-3.5 text-md-on-tertiary-container animate-nx-fade-in motion-reduce:animate-none",
             className,
           )}
@@ -149,6 +150,7 @@ export const Md3Disclosure = React.forwardRef<HTMLDivElement, Md3DisclosureProps
           ref={ref}
           data-variant={variant}
           className={cn(
+            "font-md",
             "flex items-center gap-4 rounded-md-md bg-md-tertiary-container py-3 pl-4 pr-3 text-sm text-md-on-tertiary-container [&_svg]:size-5",
             className,
           )}
@@ -182,14 +184,14 @@ export const Md3Disclosure = React.forwardRef<HTMLDivElement, Md3DisclosureProps
 
     if (details == null) {
       return (
-        <div ref={ref} data-variant={variant} className={cn(wrapper, "items-center", chip, className)} {...props}>
+        <div ref={ref} data-variant={variant} className={cn("font-md", wrapper, "items-center", chip, className)} {...props}>
           {chipBody}
         </div>
       );
     }
 
     return (
-      <div ref={ref} data-variant={variant} className={cn(wrapper, "flex-col items-start gap-2", className)} {...props}>
+      <div ref={ref} data-variant={variant} className={cn("font-md", wrapper, "flex-col items-start gap-2", className)} {...props}>
         <button
           type="button"
           aria-expanded={open}

@@ -57,7 +57,7 @@ export const Md3AgentName = React.forwardRef<HTMLDivElement, Md3AgentNameProps>(
 
     if (variant === "wordmark") {
       return (
-        <div ref={ref} data-variant={variant} className={cn("flex flex-col", className)} {...props}>
+        <div ref={ref} data-variant={variant} className={cn("font-md", "flex flex-col", className)} {...props}>
           <span className="text-[28px] font-normal leading-9 text-md-on-surface">{name}</span>
           <span className="mt-0.5 text-xs tracking-[0.4px] text-md-on-surface-variant">
             {descriptor}
@@ -72,7 +72,7 @@ export const Md3AgentName = React.forwardRef<HTMLDivElement, Md3AgentNameProps>(
         <div
           ref={ref}
           data-variant={variant}
-          className={cn("rounded-md-lg bg-md-surface-container-low p-5 text-md-on-surface", className)}
+          className={cn("font-md", "rounded-md-lg bg-md-surface-container-low p-5 text-md-on-surface", className)}
           {...props}
         >
           <div className="flex items-center gap-3">
@@ -100,6 +100,7 @@ export const Md3AgentName = React.forwardRef<HTMLDivElement, Md3AgentNameProps>(
           ref={ref}
           data-variant={variant}
           className={cn(
+            "font-md",
             "inline-flex w-max items-center gap-2.5 rounded-full bg-md-surface-container-high py-2 pl-2 pr-4 text-sm font-medium tracking-[0.1px] text-md-on-surface",
             className,
           )}
@@ -120,6 +121,7 @@ export const Md3AgentName = React.forwardRef<HTMLDivElement, Md3AgentNameProps>(
         ref={ref}
         data-variant={variant}
         className={cn(
+          "font-md",
           "inline-flex w-max items-center gap-3 rounded-full border border-md-outline-variant bg-md-surface py-1.5 pl-1.5 pr-4",
           className,
         )}

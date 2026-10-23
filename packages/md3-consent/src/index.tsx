@@ -251,6 +251,7 @@ export const Md3Consent = React.forwardRef<HTMLDivElement, Md3ConsentProps>(
       ref={ref}
       data-variant="inline-card"
       className={cn(
+        "font-md",
         "flex w-full max-w-md items-start gap-3 rounded-md-xl bg-md-surface-container-high p-5 text-md-on-surface shadow-md-1 animate-nx-fade-in motion-reduce:animate-none",
         className,
       )}
@@ -340,7 +341,7 @@ export const Md3ConsentToggle = React.forwardRef<HTMLDivElement, Md3ConsentToggl
   ({ title, description, checked, defaultChecked, onCheckedChange, disabled, className, ...props }, ref) => {
     const id = React.useId();
     return (
-      <div ref={ref} data-variant="settings-toggle" className={cn("flex items-center gap-4 py-3", className)} {...props}>
+      <div ref={ref} data-variant="settings-toggle" className={cn("font-md", "flex items-center gap-4 py-3", className)} {...props}>
         <div className="min-w-0 flex-1">
           <div id={`${id}-title`} className="text-base tracking-[0.5px] text-md-on-surface">
             {title}

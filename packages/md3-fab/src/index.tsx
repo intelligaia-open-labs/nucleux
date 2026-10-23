@@ -34,6 +34,7 @@ export const Md3Fab = React.forwardRef<HTMLButtonElement, Md3FabProps>(
       ref={ref}
       type={type}
       className={cn(
+        "font-md",
         "relative inline-flex items-center justify-center overflow-hidden shadow-md-3 transition-shadow hover:shadow-md-4",
         "before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-['']",
         "hover:before:opacity-[0.08] focus-visible:before:opacity-[0.12] active:before:opacity-[0.12]",

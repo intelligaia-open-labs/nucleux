@@ -96,7 +96,7 @@ export const Md3StructuredInput = React.forwardRef<HTMLDivElement, Md3Structured
       <Md3Card
         ref={ref}
         variant="outlined"
-        className={cn("flex flex-col gap-4 rounded-md-lg p-5 animate-nx-fade-in motion-reduce:animate-none", className)}
+        className={cn("font-md", "flex flex-col gap-4 rounded-md-lg p-5 animate-nx-fade-in motion-reduce:animate-none", className)}
         {...props}
       >
         <p id={questionId} className="text-base font-medium tracking-[0.15px] text-md-on-surface">
@@ -262,7 +262,7 @@ export const Md3StructuredInputSlots = React.forwardRef<HTMLFormElement, Md3Stru
         ref={ref}
         aria-label={title == null ? label : undefined}
         aria-labelledby={title == null ? undefined : titleId}
-        className={cn("grid grid-cols-1 gap-4 text-md-on-surface sm:grid-cols-2", className)}
+        className={cn("font-md", "grid grid-cols-1 gap-4 text-md-on-surface sm:grid-cols-2", className)}
         onSubmit={(e) => {
           e.preventDefault();
           if (canSubmit) onSubmit?.(values, extra);
@@ -535,7 +535,7 @@ export const Md3StructuredInputTags = React.forwardRef<HTMLDivElement, Md3Struct
     };
 
     return (
-      <div ref={ref} className={cn("flex flex-col gap-2 text-md-on-surface", className)} {...props}>
+      <div ref={ref} className={cn("font-md", "flex flex-col gap-2 text-md-on-surface", className)} {...props}>
         <div
           className={cn(
             "flex min-h-14 flex-wrap items-center gap-1.5 rounded-md-xs border border-md-outline bg-transparent px-3 py-2 text-base text-md-on-surface transition-colors",
@@ -692,7 +692,7 @@ export const Md3StructuredInputWizard = React.forwardRef<HTMLDivElement, Md3Stru
         variant="outlined"
         role="group"
         aria-labelledby={headingId}
-        className={cn("flex flex-col gap-3 rounded-md-lg p-4", className)}
+        className={cn("font-md", "flex flex-col gap-3 rounded-md-lg p-4", className)}
         {...props}
       >
         <div className="flex gap-1" aria-hidden="true">

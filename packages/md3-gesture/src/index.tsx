@@ -359,7 +359,7 @@ export const Md3GestureInput = React.forwardRef<HTMLDivElement, Md3GestureInputP
         : undefined;
 
     return (
-      <div ref={ref} className={cn("flex flex-col gap-2 text-md-on-surface", className)} data-variant={variant} {...props}>
+      <div ref={ref} className={cn("font-md", "flex flex-col gap-2 text-md-on-surface", className)} data-variant={variant} {...props}>
         <div
           ref={targetRef}
           role="group"

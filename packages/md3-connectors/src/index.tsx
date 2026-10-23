@@ -111,6 +111,7 @@ export const Md3Connector = React.forwardRef<HTMLDivElement, Md3ConnectorProps>(
           ref={ref}
           data-status={status}
           className={cn(
+            "font-md",
             "flex min-h-[72px] items-center gap-4 rounded-md-md border bg-md-surface-container-low py-2 pl-4 pr-2 text-md-on-surface",
             status === "expired" ? "border-md-tertiary" : status === "error" ? "border-md-error" : "border-md-outline-variant",
             className,
@@ -164,6 +165,7 @@ export const Md3Connector = React.forwardRef<HTMLDivElement, Md3ConnectorProps>(
         variant="outlined"
         data-status={status}
         className={cn(
+          "font-md",
           "flex flex-col gap-3 bg-md-surface-container-low p-4",
           "animate-nx-fade-in motion-reduce:animate-none",
           status === "expired" && "border-md-tertiary",
@@ -262,6 +264,7 @@ export const Md3ConnectorList = React.forwardRef<HTMLDivElement, Md3ConnectorLis
         aria-label={showLabel ? undefined : label}
         aria-labelledby={showLabel ? headingId : undefined}
         className={cn(
+          "font-md",
           "flex flex-col",
           grouped
             ? "divide-y divide-md-outline-variant overflow-hidden rounded-md-lg border border-md-outline-variant bg-md-surface-container-low [&>[role=listitem]>*]:rounded-none [&>[role=listitem]>*]:border-0"
@@ -277,7 +280,7 @@ export const Md3ConnectorList = React.forwardRef<HTMLDivElement, Md3ConnectorLis
     );
     if (!showLabel) return list;
     return (
-      <div ref={ref} className={cn("flex flex-col gap-2", className)} {...props}>
+      <div ref={ref} className={cn("font-md", "flex flex-col gap-2", className)} {...props}>
         <p id={headingId} className="text-sm leading-5 tracking-[0.25px] text-md-on-surface-variant">
           {label}
         </p>
@@ -328,6 +331,7 @@ export const Md3ConnectorScopePicker = React.forwardRef<HTMLDivElement, Md3Conne
         role="group"
         aria-labelledby={headingId}
         className={cn(
+          "font-md",
           "flex flex-col gap-1 text-md-on-surface",
           variant === "card" && "rounded-md-md border border-md-outline-variant bg-md-surface-container-low p-4",
           className,
@@ -394,6 +398,7 @@ export const Md3ConnectorLivePill = React.forwardRef<HTMLSpanElement, Md3Connect
       role="status"
       aria-live="polite"
       className={cn(
+        "font-md",
         "inline-flex h-8 items-center gap-2 rounded-md-sm bg-md-secondary-container px-3 text-sm font-medium tracking-[0.006em] text-md-on-secondary-container",
         className,
       )}

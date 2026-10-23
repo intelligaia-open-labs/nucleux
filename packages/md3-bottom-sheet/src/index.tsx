@@ -24,7 +24,7 @@ export const Md3BottomSheet = React.forwardRef<HTMLDivElement, Md3BottomSheetPro
     if (!open) return null;
 
     return (
-      <div className="fixed inset-0 z-50 flex items-end justify-center">
+      <div className="font-md fixed inset-0 z-50 flex items-end justify-center">
         <div aria-hidden className="absolute inset-0 bg-md-inverse-surface/40" onClick={dismissible ? close : undefined} />
         <div
           ref={ref}

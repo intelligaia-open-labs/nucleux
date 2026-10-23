@@ -119,7 +119,7 @@ export const Md3Iconography = React.forwardRef<HTMLButtonElement, Md3Iconography
     return (
       <>
         {iconOnly ? (
-          <span className="group/tip relative inline-flex">
+          <span className="group/tip relative inline-flex font-md">
             <Md3IconButton
               {...shared}
               {...props}

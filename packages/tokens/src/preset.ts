@@ -33,6 +33,8 @@ const preset: Config = {
           DEFAULT: "hsl(var(--nx-muted))",
           foreground: "hsl(var(--nx-muted-foreground))",
         },
+        // The site's lighter grey (#88887d) for hints, meta text, placeholders.
+        faint: "hsl(var(--nx-faint))",
         accent: {
           DEFAULT: "hsl(var(--nx-accent))",
           foreground: "hsl(var(--nx-accent-foreground))",
@@ -91,6 +93,12 @@ const preset: Config = {
           "inverse-on-surface": "hsl(var(--nx-md-inverse-on-surface))",
           "inverse-primary": "hsl(var(--nx-md-inverse-primary))",
         },
+      },
+      fontFamily: {
+        sans: ["var(--nx-font-sans)"],
+        mono: ["var(--nx-font-mono)"],
+        // Material 3 type family (Roboto) — on every @nucleux/md3-* component root.
+        md: ["var(--nx-font-md)"],
       },
       borderRadius: {
         lg: "var(--nx-radius)",

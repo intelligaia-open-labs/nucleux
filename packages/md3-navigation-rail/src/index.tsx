@@ -29,7 +29,7 @@ export const Md3NavigationRail = React.forwardRef<HTMLElement, Md3NavigationRail
     return (
       <nav
         ref={ref}
-        className={cn("flex w-20 flex-col items-center gap-3 bg-md-surface py-4", className)}
+        className={cn("font-md", "flex w-20 flex-col items-center gap-3 bg-md-surface py-4", className)}
         {...props}
       >
         {header && <div className="mb-2 flex flex-col items-center gap-3">{header}</div>}
@@ -58,7 +58,7 @@ export const Md3NavigationRailItem = React.forwardRef<HTMLButtonElement, Md3Navi
         type="button"
         aria-current={active ? "page" : undefined}
         onClick={() => ctx.setValue(value)}
-        className={cn("group flex w-full flex-col items-center gap-1 outline-none", className)}
+        className={cn("font-md", "group flex w-full flex-col items-center gap-1 outline-none", className)}
         {...props}
       >
         <span

@@ -343,7 +343,7 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
     ) : null;
 
   return (
-    <div ref={ref} data-state={pe.state} className={cn("flex w-full flex-col gap-3", className)} {...rest}>
+    <div ref={ref} data-state={pe.state} className={cn("font-md", "flex w-full flex-col gap-3", className)} {...rest}>
       {autoToggle}
       {review}
       {failed}

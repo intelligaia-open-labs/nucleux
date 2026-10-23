@@ -224,7 +224,7 @@ export const Md3SplitButton = React.forwardRef<HTMLDivElement, Md3SplitButtonPro
           else if (ref) ref.current = node;
         }}
         role="group"
-        className={cn("relative inline-flex items-center gap-0.5", className)}
+        className={cn("font-md", "relative inline-flex items-center gap-0.5", className)}
         {...props}
       >
         <button

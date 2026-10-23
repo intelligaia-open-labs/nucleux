@@ -119,7 +119,7 @@ export const Md3AiIcon = React.forwardRef<HTMLSpanElement, Md3AiIconProps>(
         data-ai-role={role}
         role={role === "agent-working" ? "status" : undefined}
         aria-live={role === "agent-working" ? "polite" : undefined}
-        className={cn("inline-flex items-center gap-1.5 text-sm", roleClasses[role], className)}
+        className={cn("font-md", "inline-flex items-center gap-1.5 text-sm", roleClasses[role], className)}
         {...props}
       >
         <Glyph />
@@ -160,6 +160,7 @@ export const Md3AiIcons = React.forwardRef<HTMLSpanElement, Md3AiIconsProps>(
           ref={ref}
           data-variant={variant}
           className={cn(
+            "font-md",
             base,
             sizeClasses[size],
             "rounded-full bg-md-primary ring-4 ring-md-primary-container",
@@ -184,6 +185,7 @@ export const Md3AiIcons = React.forwardRef<HTMLSpanElement, Md3AiIconsProps>(
           ref={ref}
           data-variant={variant}
           className={cn(
+            "font-md",
             base,
             sizeClasses[size],
             tone === "solid" ? "bg-md-primary text-md-on-primary" : toneClasses,
@@ -201,7 +203,7 @@ export const Md3AiIcons = React.forwardRef<HTMLSpanElement, Md3AiIconsProps>(
       <span
         ref={ref}
         data-variant={variant}
-        className={cn(base, sizeClasses[size], toneClasses, className)}
+        className={cn("font-md", base, sizeClasses[size], toneClasses, className)}
         {...a11y}
         {...props}
       >
@@ -234,7 +236,7 @@ export const Md3AiIconLegend = React.forwardRef<HTMLElement, Md3AiIconLegendProp
   ({ heading = "Icon language", terms = defaultAiIconLegendTerms, current, className, ...props }, ref) => {
     const headingId = React.useId();
     return (
-      <section ref={ref} aria-labelledby={headingId} className={cn("text-md-on-surface", className)} {...props}>
+      <section ref={ref} aria-labelledby={headingId} className={cn("font-md", "text-md-on-surface", className)} {...props}>
         <h3
           id={headingId}
           className="mb-3 mt-0 text-xs font-medium uppercase tracking-[1.5px] text-md-on-surface-variant"

@@ -75,13 +75,13 @@ export const Md3NudgeAction = React.forwardRef<HTMLButtonElement, Md3NudgeAction
     );
     if (asChild) {
       return (
-        <Slot ref={ref} className={classes} {...(props as React.HTMLAttributes<HTMLElement>)}>
+        <Slot ref={ref} className={cn("font-md", classes)} {...(props as React.HTMLAttributes<HTMLElement>)}>
           {children}
         </Slot>
       );
     }
     return (
-      <button ref={ref} type={type} className={classes} {...props}>
+      <button ref={ref} type={type} className={cn("font-md", classes)} {...props}>
         {leftIcon && <span className="relative inline-flex">{leftIcon}</span>}
         {children != null && <span className="relative">{children}</span>}
         {rightIcon && <span className="relative inline-flex">{rightIcon}</span>}
@@ -306,7 +306,7 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
       return (
         <div
           ref={rootRef}
-          className={cn("relative inline-flex items-center gap-2", className)}
+          className={cn("font-md", "relative inline-flex items-center gap-2", className)}
           onClickCapture={() => {
             if (visible) {
               remember("used");
@@ -349,7 +349,7 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
       const pos = tooltipSide[side];
       return (
         <NudgeContext.Provider value={{ onContainer: true }}>
-          <div ref={rootRef} className={cn("relative inline-flex", className)} onKeyDown={handleKeyDown} {...props}>
+          <div ref={rootRef} className={cn("font-md", "relative inline-flex", className)} onKeyDown={handleKeyDown} {...props}>
             {anchor}
             <div aria-live="polite" className={cn("absolute z-50 w-72", pos.box)}>
               {visible && (
@@ -387,6 +387,7 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
           onKeyDown={handleKeyDown}
           data-appearance={appearance}
           className={cn(
+            "font-md",
             "flex items-start text-sm text-md-on-surface animate-nx-fade-in motion-reduce:animate-none",
             quiet
               ? "gap-2.5 border-l-[3px] border-md-outline-variant py-1 pl-3 pr-2"

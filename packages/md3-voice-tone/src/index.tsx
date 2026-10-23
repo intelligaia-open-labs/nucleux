@@ -469,7 +469,7 @@ export const Md3VoiceTone = React.forwardRef<HTMLDivElement, Md3VoiceToneProps>(
         role="group"
         aria-label="Voice and tone"
         data-variant="settings"
-        className={cn("w-full max-w-[30rem] rounded-md-lg", className)}
+        className={cn("font-md", "w-full max-w-[30rem] rounded-md-lg", className)}
         {...rest}
       >
         <Settings vt={vt} />
@@ -479,7 +479,7 @@ export const Md3VoiceTone = React.forwardRef<HTMLDivElement, Md3VoiceToneProps>(
 
   if (vt.variant === "chip") {
     return (
-      <div ref={ref} data-variant="chip" className={cn("relative inline-flex flex-col gap-1", className)} {...rest}>
+      <div ref={ref} data-variant="chip" className={cn("font-md", "relative inline-flex flex-col gap-1", className)} {...rest}>
         <Notice vt={vt} />
         {settingsControl ? <ToneSettings vt={vt} /> : <ToneChip vt={vt} />}
       </div>
@@ -487,7 +487,7 @@ export const Md3VoiceTone = React.forwardRef<HTMLDivElement, Md3VoiceToneProps>(
   }
 
   return (
-    <div ref={ref} data-variant="composer" className={cn("relative flex w-full max-w-[42rem] flex-col", className)} {...rest}>
+    <div ref={ref} data-variant="composer" className={cn("font-md", "relative flex w-full max-w-[42rem] flex-col", className)} {...rest}>
       <Notice vt={vt} />
       <Md3AgentComposer
         value={vt.draft}

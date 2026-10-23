@@ -122,6 +122,7 @@ export const Md3InitialCta = React.forwardRef<HTMLTextAreaElement, Md3InitialCta
       <section
         aria-labelledby={hasHeadline ? headingId : description ? descriptionId : undefined}
         className={cn(
+          "font-md",
           "flex w-full flex-col gap-3 text-md-on-surface",
           hero && "mx-auto max-w-2xl items-center gap-6 text-center",
           gradient &&

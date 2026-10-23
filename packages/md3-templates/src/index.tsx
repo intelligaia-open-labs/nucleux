@@ -68,6 +68,7 @@ export const Md3Templates = React.forwardRef<HTMLFormElement, Md3TemplatesProps>
           onComplete?.(interpolate(), current);
         }}
         className={cn(
+          "font-md",
           "flex flex-col gap-4 rounded-md-lg border border-md-outline-variant bg-md-surface p-5 text-md-on-surface",
           className,
         )}
@@ -146,6 +147,7 @@ export const Md3TemplatesList = React.forwardRef<HTMLUListElement, Md3TemplatesL
         ref={ref}
         role="list"
         className={cn(
+          "font-md",
           "m-0 flex list-none flex-col p-0",
           grouped
             ? "overflow-hidden rounded-md-lg border border-md-outline-variant bg-md-surface py-2"
@@ -242,7 +244,7 @@ export const Md3TemplatesBrowser = React.forwardRef<HTMLDivElement, Md3Templates
     };
 
     return (
-      <div ref={ref} data-orientation="vertical" className={cn("flex gap-4 text-md-on-surface", className)} {...props}>
+      <div ref={ref} data-orientation="vertical" className={cn("font-md", "flex gap-4 text-md-on-surface", className)} {...props}>
         <div
           role="tablist"
           aria-orientation="vertical"

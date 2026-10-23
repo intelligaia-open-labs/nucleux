@@ -79,7 +79,7 @@ than hand-rolling one. The MCP server (`@nucleux/mcp`) names the shadcn equivale
 - `pnpm build` — tsup build all packages (ESM + CJS + .d.ts)
 - `pnpm validate` — full gate (typecheck → test → build → build-storybook)
 
-## Component catalog (181 packages)
+## Component catalog (182 packages)
 
 Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do not edit by hand.
 
@@ -290,7 +290,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **voice-tone** (`@nucleux/voice-tone`) — Voice & Tone — say how the reply should sound (named presets, a rules list, a sample line), as a Tone chip or a Tone row in Request settings, never editing the prompt.
   Exports: `VOICE_TONE_CUSTOM, defaultVoiceTones, defaultVoiceToneRules, useVoiceTone, VoiceTone, VoiceToneOption, VoiceToneRule, VoiceToneSetting, …`
 
-### Material 3 family (74)
+### Material 3 family (75)
 
 - **md3-action-confirmation** (`@nucleux/md3-action-confirmation`) — Material 3 agent action confirmation.
   Exports: `Md3ActionConfirmation, Md3ActionConfirmationVariant, Md3ActionConfirmationProps`
@@ -354,6 +354,8 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
   Exports: `Md3IconButton, Md3IconButtonVariant, Md3IconButtonProps`
 - **md3-iconography** (`@nucleux/md3-iconography`) — Material 3 Iconography — controls that run AI, drawn with the reserved AI mark for their intent.
   Exports: `Md3Iconography, Md3IconographyProps, Md3IconographyIntent`
+- **md3-icons** (`@nucleux/md3-icons`) — Material Symbols (Outlined, weight 400) as React icons — the glyphs nucleux.in's Material 3 previews draw.
+  Exports: `msIconPaths, msIconNames, MsIcon, MsAdd, MsArrowBack, MsArrowForward, MsArrowUpward, MsAttachFile, …`
 - **md3-initial-cta** (`@nucleux/md3-initial-cta`) — Material 3 Initial CTA — the large, inviting composer that anchors an empty workspace.
   Exports: `Md3InitialCta, Md3InitialCtaProps, Md3InitialCtaVariant, Md3InitialCtaHeadingLevel`
 - **md3-knowledge-base** (`@nucleux/md3-knowledge-base`) — Material 3 Knowledge Base — persistent, named sources the agent grounds in, with readiness and provenance.

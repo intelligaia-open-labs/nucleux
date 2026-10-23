@@ -95,14 +95,14 @@ export const Md3AiColor = React.forwardRef<HTMLDivElement, Md3AiColorProps>(
 
     if (asChild) {
       return (
-        <Slot ref={ref} data-variant={variant} aria-busy={working || undefined} className={classes} {...props}>
+        <Slot ref={ref} data-variant={variant} aria-busy={working || undefined} className={cn("font-md", classes)} {...props}>
           {children}
         </Slot>
       );
     }
 
     return (
-      <div ref={ref} data-variant={variant} aria-busy={working || undefined} className={classes} {...props}>
+      <div ref={ref} data-variant={variant} aria-busy={working || undefined} className={cn("font-md", classes)} {...props}>
         {working && (
           <Md3AiColorWorkingRing
             className={cn(variant === "accent-border" && "rounded-l-none", variant === "soft-glow" && "-inset-0.5")}
@@ -135,6 +135,7 @@ export const Md3AiColorHighlight = React.forwardRef<HTMLElement, Md3AiColorHighl
     <mark
       ref={ref}
       className={cn(
+        "font-md",
         "rounded-md-xs bg-md-primary-container px-0.5 font-medium text-md-on-primary-container",
         className,
       )}
@@ -155,6 +156,7 @@ export const Md3AiColorDot = React.forwardRef<HTMLSpanElement, Md3AiColorDotProp
       ref={ref}
       aria-hidden="true"
       className={cn(
+        "font-md",
         "inline-block size-2 shrink-0 rounded-full bg-md-primary",
         pulse && md3AiColorClasses.working,
         className,
@@ -179,6 +181,7 @@ export const Md3AiColorWorkingRing = React.forwardRef<HTMLSpanElement, Md3AiColo
       aria-hidden="true"
       data-slot="ai-working-ring"
       className={cn(
+        "font-md",
         "pointer-events-none absolute inset-0 rounded-[inherit] ring-2 ring-md-primary/50",
         md3AiColorClasses.working,
         className,
@@ -217,6 +220,7 @@ export const Md3AiColorStatus = React.forwardRef<HTMLSpanElement, Md3AiColorStat
       data-status={status}
       role={status === "working" ? "status" : undefined}
       className={cn(
+        "font-md",
         "inline-flex h-8 w-fit items-center gap-2 rounded-md-sm border px-2.5 text-sm font-medium tracking-[0.1px] [&_svg]:size-5 [&_svg]:shrink-0",
         statusClasses[status],
         className,

@@ -129,6 +129,7 @@ export const Md3McpConnection = React.forwardRef<HTMLElement, Md3McpConnectionPr
           aria-labelledby={titleId}
           data-status={status}
           className={cn(
+            "font-md",
             "flex flex-col overflow-hidden rounded-md-lg border border-md-outline-variant bg-md-surface text-md-on-surface",
             className,
           )}
@@ -313,7 +314,7 @@ export const Md3McpConnectionTool = React.forwardRef<HTMLLIElement, Md3McpConnec
         ref={ref}
         data-risk={risk}
         data-enabled={enabled}
-        className={cn("flex items-start gap-2 py-1 pl-1 pr-3", !enabled && "opacity-[0.72]", className)}
+        className={cn("font-md", "flex items-start gap-2 py-1 pl-1 pr-3", !enabled && "opacity-[0.72]", className)}
         {...props}
       >
         <div className="min-w-0 flex-1" data-state={open ? "open" : "closed"}>
@@ -413,7 +414,7 @@ export const Md3McpConnectionTools = React.forwardRef<HTMLDivElement, Md3McpConn
         ref={ref}
         role="group"
         aria-labelledby={headingId}
-        className={cn("overflow-hidden rounded-md-md bg-md-surface-container-low text-md-on-surface", className)}
+        className={cn("font-md", "overflow-hidden rounded-md-md bg-md-surface-container-low text-md-on-surface", className)}
         {...props}
       >
         <p id={headingId} className="px-4 pb-1 pt-3 text-sm font-medium tracking-[0.1px] text-md-on-surface">
@@ -504,6 +505,7 @@ export const Md3McpConnectionPermission = React.forwardRef<HTMLDivElement, Md3Mc
       <div
         ref={ref}
         className={cn(
+          "font-md",
           "flex flex-col gap-2 rounded-md-md border bg-md-surface p-3 text-md-on-surface",
           risk === "destructive" ? "border-md-error" : "border-md-outline-variant",
           className,
@@ -617,6 +619,7 @@ export const Md3McpConnectionActionPreview = React.forwardRef<HTMLElement, Md3Mc
         data-status={status}
         data-risk={risk}
         className={cn(
+          "font-md",
           "flex flex-col gap-3 rounded-md-lg p-4",
           gateEnter,
           destructive

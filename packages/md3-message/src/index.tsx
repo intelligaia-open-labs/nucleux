@@ -38,6 +38,7 @@ export const Md3Message = React.forwardRef<HTMLDivElement, Md3MessageProps>(
         ref={ref}
         data-role={role}
         className={cn(
+          "font-md",
           "flex w-full animate-nx-fade-in gap-3",
           isUser ? "flex-row-reverse" : "flex-row",
           className,

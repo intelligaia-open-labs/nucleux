@@ -21,6 +21,7 @@ export const Md3Card = React.forwardRef<HTMLDivElement, Md3CardProps>(
     <div
       ref={ref}
       className={cn(
+        "font-md",
         "relative overflow-hidden rounded-md-md",
         variants[variant],
         interactive && [

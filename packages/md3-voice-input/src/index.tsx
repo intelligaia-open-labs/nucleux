@@ -166,6 +166,7 @@ export const Md3VoiceInput = React.forwardRef<HTMLDivElement, Md3VoiceInputProps
         <div
           ref={ref}
           className={cn(
+            "font-md",
             "relative flex flex-col gap-2 overflow-hidden rounded-md-lg border bg-md-surface px-4 py-3 text-md-on-surface transition-colors duration-200",
             capturing ? "border-md-secondary" : "border-md-outline-variant",
             className,
@@ -246,6 +247,7 @@ export const Md3VoiceInput = React.forwardRef<HTMLDivElement, Md3VoiceInputProps
       <div
         ref={ref}
         className={cn(
+          "font-md",
           "relative flex items-center gap-3 overflow-hidden rounded-full border bg-md-surface px-3 py-2 text-md-on-surface transition-colors duration-200",
           capturing ? "border-md-secondary" : "border-md-outline-variant",
           className,

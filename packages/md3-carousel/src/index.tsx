@@ -196,6 +196,7 @@ export const Md3Carousel = React.forwardRef<HTMLDivElement, Md3CarouselProps>(
         data-layout={layout}
         onKeyDown={handleKeyDown}
         className={cn(
+          "font-md",
           "relative h-[200px] w-full rounded-md-xl outline-none",
           "focus-visible:ring-2 focus-visible:ring-md-primary focus-visible:ring-offset-2 focus-visible:ring-offset-md-surface",
           (layout === "multi-browse" || layout === "hero") && "px-4",
@@ -248,6 +249,7 @@ export const Md3CarouselItem = React.forwardRef<HTMLDivElement, Md3CarouselItemP
         aria-label={props["aria-labelledby"] ? undefined : `${ctx.index + 1} of ${ctx.count}`}
         data-md3-carousel-tile=""
         className={cn(
+          "font-md",
           "relative h-full w-full overflow-hidden bg-md-surface-container-high text-md-on-surface will-change-transform",
           ctx.layout === "full-screen" ? "rounded-none" : "rounded-md-xl",
           "[&>img]:h-full [&>img]:w-full [&>img]:object-cover",

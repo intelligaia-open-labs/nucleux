@@ -20,7 +20,7 @@ export const Md3LinearProgress = React.forwardRef<HTMLDivElement, Md3LinearProgr
         aria-valuenow={indeterminate ? undefined : pct}
         aria-valuemin={indeterminate ? undefined : 0}
         aria-valuemax={indeterminate ? undefined : 100}
-        className={cn("h-1 w-full overflow-hidden rounded-full bg-md-surface-variant", className)}
+        className={cn("font-md", "h-1 w-full overflow-hidden rounded-full bg-md-surface-variant", className)}
         {...props}
       >
         <div
@@ -59,7 +59,7 @@ export const Md3CircularProgress = React.forwardRef<HTMLDivElement, Md3CircularP
         aria-valuenow={indeterminate ? undefined : pct}
         aria-valuemin={indeterminate ? undefined : 0}
         aria-valuemax={indeterminate ? undefined : 100}
-        className={cn("inline-flex", indeterminate && "animate-spin motion-reduce:animate-none", className)}
+        className={cn("font-md", "inline-flex", indeterminate && "animate-spin motion-reduce:animate-none", className)}
         style={{ width: size, height: size }}
         {...props}
       >

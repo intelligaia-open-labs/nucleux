@@ -40,6 +40,7 @@ export const Md3NavigationDrawer = React.forwardRef<HTMLElement, Md3NavigationDr
       <nav
         ref={ref}
         className={cn(
+          "font-md",
           "flex w-80 flex-col gap-1 bg-md-surface-container-low p-3",
           modal ? "h-full rounded-r-md-xl" : "rounded-md-xl",
           className,
@@ -53,7 +54,7 @@ export const Md3NavigationDrawer = React.forwardRef<HTMLElement, Md3NavigationDr
     if (!modal) return panel;
     if (!open) return null;
     return (
-      <div className="fixed inset-0 z-50 flex">
+      <div className="font-md fixed inset-0 z-50 flex">
         <div aria-hidden className="absolute inset-0 bg-md-inverse-surface/40" onClick={() => onOpenChange?.(false)} />
         <div className="relative z-10 animate-nx-fade-in">{panel}</div>
       </div>
@@ -82,6 +83,7 @@ export const Md3NavigationDrawerItem = React.forwardRef<HTMLButtonElement, Md3Na
         aria-current={active ? "page" : undefined}
         onClick={() => ctx.setValue(value)}
         className={cn(
+          "font-md",
           "relative flex h-14 items-center gap-3 overflow-hidden rounded-full px-4 text-sm font-medium outline-none transition-colors [&_svg]:size-6",
           "before:absolute before:inset-0 before:bg-md-on-surface before:opacity-0 before:transition-opacity before:content-['']",
           "hover:before:opacity-[0.08] focus-visible:before:opacity-[0.12]",
@@ -102,7 +104,7 @@ Md3NavigationDrawerItem.displayName = "Md3NavigationDrawerItem";
 /** A titled section heading within a {@link Md3NavigationDrawer}. */
 export const Md3NavigationDrawerSection = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
   ({ className, ...props }, ref) => (
-    <h3 ref={ref} className={cn("px-4 pb-1 pt-4 text-sm font-medium text-md-on-surface-variant", className)} {...props} />
+    <h3 ref={ref} className={cn("font-md", "px-4 pb-1 pt-4 text-sm font-medium text-md-on-surface-variant", className)} {...props} />
   ),
 );
 Md3NavigationDrawerSection.displayName = "Md3NavigationDrawerSection";

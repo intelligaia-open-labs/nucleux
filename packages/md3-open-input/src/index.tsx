@@ -40,6 +40,7 @@ export const Md3OpenInputModelChip = React.forwardRef<HTMLButtonElement, Md3Open
       ref={ref}
       type={type}
       className={cn(
+        "font-md",
         "relative inline-flex h-10 shrink-0 items-center gap-1.5 overflow-hidden rounded-full px-3 text-sm tracking-[0.1px] text-md-primary outline-none focus-visible:ring-2 focus-visible:ring-md-primary before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-[''] hover:before:opacity-[0.08] active:before:opacity-[0.12] disabled:opacity-[0.38] disabled:before:opacity-0 motion-reduce:before:transition-none",
         className,
       )}
@@ -444,7 +445,7 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
     }
 
     return (
-      <div className={cn("flex flex-col gap-1.5", containerClassName)}>
+      <div className={cn("font-md", "flex flex-col gap-1.5", containerClassName)}>
         {label != null && (
           <label
             htmlFor={fieldId}

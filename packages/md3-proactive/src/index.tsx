@@ -284,7 +284,7 @@ export const Md3ProactiveSuggestion = React.forwardRef<HTMLElement, Md3Proactive
 
     // A persistent polite live region, so a suggestion appearing is announced without stealing focus.
     return (
-      <div aria-live="polite" className="contents">
+      <div aria-live="polite" className="font-md contents">
         {body}
       </div>
     );

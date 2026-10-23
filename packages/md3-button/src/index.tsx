@@ -27,6 +27,7 @@ export const Md3Button = React.forwardRef<HTMLButtonElement, Md3ButtonProps>(
       ref={ref}
       type={type}
       className={cn(
+        "font-md",
         // Shape, layout, typography
         "relative inline-flex h-10 items-center justify-center gap-2 overflow-hidden rounded-full text-sm font-medium transition-shadow",
         variant === "text" ? "px-3" : "px-6",
