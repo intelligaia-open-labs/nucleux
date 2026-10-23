@@ -290,7 +290,9 @@ export function createApp({ config, store, upstream, mobile = null, yantra = nul
       return;
     }
     try {
-      res.json(await yantra.plan({ prompt, patterns }));
+      const plan = await yantra.plan({ prompt, patterns });
+      console.log(`[nucleux-mcp] playground: ${plan.model}, ${plan.picks.length} picks`);
+      res.json(plan);
     } catch (err) {
       console.error(`[nucleux-mcp] playground: ${err.message}`);
       res.status(502).json({ error: "planner_failed" });

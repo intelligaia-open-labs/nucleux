@@ -154,7 +154,7 @@ that it has done so. After moving the box to Node 22 or later, bump to `better-s
 | `NUCLEUX_ADMIN_PASSWORD` | unset | HTTP Basic password for `/admin` (any user name). Unset = `/admin` is 404. |
 | `NUCLEUX_ISSUE_PER_HOUR` | `10` | Per-IP limit for `POST /tokens` and for `POST /tokens/prompt` (each). |
 | `NUCLEUX_SITE_URL` | `<origin>/mcp` | The site's MCP page: `/connect` redirects there (`#setup`), and prompts and errors link to it. |
-| `YANTRA_API_URL` | — | Yantra chat endpoint for the Playground planner (`POST /mcp/playground`), e.g. `https://yantra-be.intelligaia.com/v1/chat`. Unset = 503, and the Playground uses its built-in matching. |
+| `YANTRA_API_URL` | — | Yantra chat endpoint for the Playground planner (`POST /mcp/playground`), e.g. `https://yantra-be.intelligaia.com/v1/chat/completions` (OpenAI-compatible; honours `YANTRA_MODEL`). `/v1/chat` (Ollama-style) also works. Unset = 503, and the Playground uses its built-in matching. |
 | `YANTRA_API_KEY` | — | Yantra key (sent as `Authorization: Bearer …`). Server-side only. |
 | `YANTRA_MODEL` | `deepseek-v4-flash:cloud` | Model id from Yantra's `/v1/models`. |
 | `YANTRA_TIMEOUT_MS` | `25000` | Give up on Yantra after this long (the page falls back). |

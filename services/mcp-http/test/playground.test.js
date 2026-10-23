@@ -48,6 +48,7 @@ describe("POST /playground with Yantra", () => {
       reply: "A chat screen with a prompt box and starters.",
       title: "Chat",
       picks: [{ id: "open-input", why: "the input" }, { id: "suggestions", why: "" }],
+      model: "m1",
     });
   });
 
@@ -94,6 +95,24 @@ describe("POST /playground without Yantra, or when it fails", () => {
       }
     });
   }
+});
+
+describe("OpenAI-compatible endpoint (/v1/chat/completions)", () => {
+  test("sends response_format json_object, reads choices, reports the answering model", async () => {
+    const calls = [];
+    const fetchImpl = async (url, init) => {
+      calls.push(JSON.parse(init.body));
+      return new Response(JSON.stringify({ model: "deepseek-v4-flash:0731-cloud", choices: [{ message: { content: JSON.stringify({ reply: "ok", picks: ["consent"] }) } }] }));
+    };
+    const y = createYantra({ url: "https://yantra.test/v1/chat/completions", key: "k", model: "deepseek-v4-flash:0731-cloud", fetchImpl });
+    const plan = await y.plan({ prompt: "x", patterns: PATTERNS });
+    assert.deepEqual(calls[0].response_format, { type: "json_object" });
+    assert.equal(calls[0].stream, false);
+    assert.equal(calls[0].format, undefined);
+    assert.equal(calls[0].think, undefined);
+    assert.deepEqual(plan.picks, [{ id: "consent", why: "" }]);
+    assert.equal(plan.model, "deepseek-v4-flash:0731-cloud");
+  });
 });
 
 describe("reading Yantra's replies", () => {
