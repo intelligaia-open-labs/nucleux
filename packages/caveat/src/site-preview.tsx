@@ -7,7 +7,7 @@ export function SitePreview() {
   const [value, setValue] = useState("");
 
   return (
-    <div className="flex w-[28rem] max-w-full flex-col gap-2">
+    <div className="flex w-[30.1rem] max-w-full flex-col gap-2 rounded-[8px] border border-border bg-background p-4 shadow-[0_1px_2px_rgba(12,12,10,0.04),0_1px_3px_rgba(12,12,10,0.06)]">
       <OpenInput
         aria-label="Message the assistant"
         placeholder="Ask me Anything"

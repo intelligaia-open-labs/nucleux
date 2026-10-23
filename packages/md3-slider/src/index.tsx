@@ -60,7 +60,7 @@ export const Md3Slider = React.forwardRef<HTMLDivElement, Md3SliderProps>(
     return (
       <div
         ref={ref}
-        className={cn("relative flex w-full touch-none select-none items-center py-2", disabled && "pointer-events-none opacity-[0.38]", className)}
+        className={cn("font-md", "relative flex w-full touch-none select-none items-center py-2", disabled && "pointer-events-none opacity-[0.38]", className)}
         {...props}
       >
         <div

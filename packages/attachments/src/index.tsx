@@ -31,6 +31,8 @@ export interface AttachmentsFile {
   meta?: React.ReactNode;
   /** Image URL shown as the preview card's thumbnail. */
   thumbnail?: string;
+  /** Glyph shown in place of the type icon, e.g. an emoji (`"📄"`). */
+  icon?: React.ReactNode;
   /** Where the file is. Defaults to `"ready"`. */
   status?: AttachmentsStatus;
   /** Upload progress 0–100 while `"uploading"`. Omit when there is no real number. */
@@ -368,7 +370,7 @@ export const AttachmentsItem = React.forwardRef<HTMLDivElement, AttachmentsItemP
       isCard && file.thumbnail ? (
         <img src={file.thumbnail} alt="" className="size-full rounded-md object-cover" />
       ) : (
-        iconFor(file.type, file.name)
+        file.icon ?? iconFor(file.type, file.name)
       );
 
     return (
@@ -385,13 +387,17 @@ export const AttachmentsItem = React.forwardRef<HTMLDivElement, AttachmentsItemP
           onRemove={onRemove ? () => onRemove(file.id) : undefined}
           aria-busy={busy || undefined}
           className={cn(
+            // nucleux.in's type: 11.5px names, 10.5px faint meta, a faint × (line-height 1.55)
+            "leading-[1.55] [&>span:nth-child(2)>span]:leading-[1.55] [&>span:nth-child(2)>span:nth-child(2)]:text-[10.5px] [&>span:nth-child(2)>span:nth-child(2)]:text-faint [&>button]:text-faint",
             !isCard &&
-              "gap-2 rounded-full bg-muted/50 py-1 pl-1 pr-2 [&>span:first-child]:size-6 [&>span:first-child]:rounded-md [&>span:first-child]:border [&>span:first-child]:border-border [&>span:first-child]:bg-background [&>span:first-child>svg]:size-3.5",
+              "gap-[7px] rounded-full bg-[hsl(var(--nx-ink-25))] py-[5px] pl-1.5 pr-2.5 [&>span:first-child]:size-[22px] [&>span:first-child]:rounded-[5px] [&>span:first-child]:border [&>span:first-child]:border-border [&>span:first-child]:bg-background [&>span:first-child]:text-[11px] [&>span:first-child]:text-muted-foreground [&>span:first-child>svg]:size-3 [&>span:nth-child(2)>span:first-child]:text-[11.5px] [&>span:nth-child(2)>span:first-child]:font-normal [&>button]:-mr-0.5 [&>button]:ml-0.5 [&>button]:size-3 [&>button_svg]:size-2",
             !isCard &&
               quietReady &&
-              "max-w-80 gap-1.5 [&>span:nth-child(2)>span:first-child]:text-xs [&>span:nth-child(2)>span:last-child]:text-[0.6875rem] [&>span:nth-child(2)]:flex-row [&>span:nth-child(2)]:items-baseline [&>span:nth-child(2)]:gap-1.5",
-            isCard && "[&>span:nth-child(2)>span:first-child]:font-semibold [&>span:nth-child(2)]:flex-1",
-            isCard && "w-full max-w-none gap-3 rounded-xl p-2.5 [&>span:first-child]:size-12 [&>span:first-child]:overflow-hidden [&>span:first-child>svg]:size-5",
+              "max-w-80 [&>span:nth-child(2)]:flex-row [&>span:nth-child(2)]:items-baseline [&>span:nth-child(2)]:gap-[7px]",
+            isCard &&
+              "[&>span:nth-child(2)>span:first-child]:text-[12px] [&>span:nth-child(2)>span:first-child]:font-semibold [&>span:nth-child(2)>span:nth-child(2)]:mt-0.5 [&>span:nth-child(2)]:flex-1",
+            isCard &&
+              "w-full max-w-none gap-2.5 rounded-[10px] p-2.5 [&>span:first-child]:size-11 [&>span:first-child]:overflow-hidden [&>span:first-child]:rounded-[7px] [&>span:first-child]:text-xl [&>span:first-child>svg]:size-5 [&>button_svg]:size-2.5",
             status === "error" && "border-destructive/40 bg-destructive/5",
           )}
         />
@@ -501,6 +507,8 @@ export interface AttachmentsDropZoneProps extends Omit<React.HTMLAttributes<HTML
   description?: React.ReactNode;
   /** The link-style browse button in the idle box ("Drop files or browse"). Defaults to `"browse"`. */
   browseLabel?: React.ReactNode;
+  /** Glyph above the headline, e.g. an emoji (`"📎"`). Defaults to a paperclip icon. */
+  icon?: React.ReactNode;
 }
 
 /**
@@ -518,6 +526,7 @@ export const AttachmentsDropZone = React.forwardRef<HTMLDivElement, AttachmentsD
       title = "Drop to attach",
       description,
       browseLabel = "browse",
+      icon,
       className,
       children,
       onDragEnter,
@@ -547,13 +556,19 @@ export const AttachmentsDropZone = React.forwardRef<HTMLDivElement, AttachmentsD
     const overlay = (
       <div
         className={cn(
-          "flex flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed p-6 text-center",
-          lit ? "border-brand bg-brand-muted/60" : "border-border bg-muted/40",
+          "flex flex-col items-center justify-center rounded-[10px] border-2 border-dashed p-4 text-center leading-[1.55]",
+          lit ? "border-brand bg-brand-muted/60" : "border-border bg-[hsl(var(--nx-ink-25))]",
           children && "pointer-events-none absolute inset-0 z-10 bg-brand-muted/90",
         )}
       >
-        <Paperclip aria-hidden="true" className={cn("mb-1 size-6", lit ? "text-brand" : "text-muted-foreground")} />
-        <p className={cn("text-sm font-semibold", lit ? "text-brand" : "text-foreground")}>
+        {icon != null ? (
+          <span aria-hidden="true" className="mb-[5px] text-[22px] leading-[1.55]">
+            {icon}
+          </span>
+        ) : (
+          <Paperclip aria-hidden="true" className={cn("mb-[5px] size-[22px]", lit ? "text-brand" : "text-muted-foreground")} />
+        )}
+        <p className={cn("text-[12.5px] font-semibold", lit ? "text-brand" : "text-foreground")}>
           {lit ? (
             title
           ) : children ? (
@@ -565,14 +580,14 @@ export const AttachmentsDropZone = React.forwardRef<HTMLDivElement, AttachmentsD
                 type="button"
                 disabled={ctx?.disabled}
                 onClick={() => ctx?.openPicker()}
-                className="rounded-sm text-brand underline underline-offset-2 hover:text-brand/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                className="rounded-sm text-brand underline hover:text-brand/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
               >
                 {browseLabel}
               </button>
             </>
           )}
         </p>
-        <p className="text-xs text-muted-foreground">{hint}</p>
+        <p className="mt-[3px] text-[10.5px] text-faint">{hint}</p>
       </div>
     );
 

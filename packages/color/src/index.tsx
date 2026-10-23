@@ -29,8 +29,9 @@ export type AiColorToken = keyof typeof aiColorClasses;
 export type AiColorVariant = "accent-border" | "soft-glow" | "background-tint";
 
 const variantClasses: Record<AiColorVariant, string> = {
+  // nucleux.in: a bordered card whose leading edge carries the accent, over an 8% accent wash.
   "accent-border":
-    "rounded-r-md border-l-[3px] border-brand bg-gradient-to-r from-brand-muted to-transparent p-4",
+    "rounded-[8px] border border-l-[3px] border-border border-l-brand bg-gradient-to-r from-brand/[0.08] to-transparent p-4 shadow-[0_1px_2px_0_hsl(var(--nx-ink-800)/0.04),0_1px_3px_0_hsl(var(--nx-ink-800)/0.06)]",
   "soft-glow": "rounded-lg bg-background px-4 py-3 shadow-lg shadow-brand/20 ring-[3px] ring-brand/15",
   "background-tint": "rounded-lg bg-brand-muted px-4 py-3",
 };
@@ -76,7 +77,7 @@ export const AiColor = React.forwardRef<HTMLDivElement, AiColorProps>(
           role="status"
           className={cn(
             "flex items-center gap-1.5 font-semibold",
-            variant === "accent-border" ? "mt-2 text-[11px] text-brand" : "mb-1.5 text-xs tracking-wide text-foreground",
+            variant === "accent-border" ? "mt-2 text-[11px] leading-[1.55] text-brand" : "mb-1.5 text-xs tracking-wide text-foreground",
           )}
         >
           {variant !== "accent-border" && <AiColorDot pulse={working} />}

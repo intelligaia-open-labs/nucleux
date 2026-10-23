@@ -73,8 +73,8 @@ export const Md3SuggestedPrompt = React.forwardRef<HTMLButtonElement, Md3Suggest
           aria-pressed={pressed}
           data-state={state}
           className={cn(
-            "h-auto min-h-8 max-w-full gap-2 whitespace-normal py-1.5 text-left tracking-[0.1px] transition-[background-color,border-color] duration-200 motion-reduce:transition-none",
-            icon ? "pl-2 pr-4" : "px-4",
+            "font-md",
+            "h-auto min-h-8 max-w-full gap-1.5 whitespace-normal px-3 py-[5px] text-left tracking-[0.1px] transition-[background-color,border-color] duration-200 motion-reduce:transition-none",
             selected
               ? "[&_svg]:text-md-on-secondary-container"
               : "border-md-outline-variant hover:bg-md-surface-container-high hover:before:opacity-0 focus-visible:before:opacity-[0.10] active:before:opacity-[0.10] [&_svg]:text-md-primary",
@@ -95,6 +95,7 @@ export const Md3SuggestedPrompt = React.forwardRef<HTMLButtonElement, Md3Suggest
           aria-pressed={pressed}
           data-state={state}
           className={cn(
+            "font-md",
             "relative flex h-full w-full items-start gap-3 overflow-hidden rounded-md-md border p-3 text-left transition-colors duration-200 motion-reduce:transition-none",
             stateLayer,
             focusRing,
@@ -134,6 +135,7 @@ export const Md3SuggestedPrompt = React.forwardRef<HTMLButtonElement, Md3Suggest
           aria-pressed={pressed}
           data-state={state}
           className={cn(
+            "font-md",
             "relative flex w-full items-start gap-3 overflow-hidden rounded-md-md border px-4 py-3 text-left text-sm transition-colors duration-200 motion-reduce:transition-none [&_svg]:mt-0.5 [&_svg]:size-5 [&_svg]:shrink-0",
             stateLayer,
             focusRing,
@@ -164,6 +166,7 @@ export const Md3SuggestedPrompt = React.forwardRef<HTMLButtonElement, Md3Suggest
         aria-pressed={pressed}
         data-state={state}
         className={cn(
+          "font-md",
           "relative inline-flex h-8 items-center gap-1.5 overflow-hidden rounded-full px-3 text-sm font-medium tracking-[0.1px] text-md-primary [&_svg]:size-[18px]",
           stateLayer,
           focusRing,
@@ -306,6 +309,7 @@ export const Md3SuggestedPrompts = React.forwardRef<HTMLDivElement, Md3Suggested
             if (onDismiss && e.key === "Escape") onDismiss();
           }}
           className={cn(
+            "font-md",
             variant === "chip-row" && "flex flex-wrap items-center gap-2",
             variant === "card-list" && "flex flex-col gap-2",
             isGrid && "flex flex-col gap-3",

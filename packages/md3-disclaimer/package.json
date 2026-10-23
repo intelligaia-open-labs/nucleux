@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-disclaimer",
-  "version": "0.11.3",
+  "version": "0.12.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Disclaimer — a short, honest statement of what the agent can and can't do — Nucleux agentic UI for React.",

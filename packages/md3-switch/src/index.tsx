@@ -35,6 +35,7 @@ export const Md3Switch = React.forwardRef<HTMLButtonElement, Md3SwitchProps>(
         disabled={disabled}
         onClick={toggle}
         className={cn(
+          "font-md",
           "relative inline-flex h-8 w-[52px] shrink-0 items-center rounded-full border-2 transition-colors outline-none",
           "focus-visible:ring-2 focus-visible:ring-md-primary focus-visible:ring-offset-2 focus-visible:ring-offset-md-surface",
           "disabled:pointer-events-none disabled:opacity-[0.38]",

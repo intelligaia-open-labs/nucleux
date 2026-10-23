@@ -27,7 +27,7 @@ export const Md3NavigationBar = React.forwardRef<HTMLElement, Md3NavigationBarPr
     return (
       <nav
         ref={ref}
-        className={cn("flex h-20 items-stretch justify-around bg-md-surface-container px-2", className)}
+        className={cn("font-md", "flex h-20 items-stretch justify-around bg-md-surface-container px-2", className)}
         {...props}
       >
         <NavContext.Provider value={{ value: current, setValue }}>{children}</NavContext.Provider>
@@ -56,6 +56,7 @@ export const Md3NavigationBarItem = React.forwardRef<HTMLButtonElement, Md3Navig
         aria-current={active ? "page" : undefined}
         onClick={() => ctx.setValue(value)}
         className={cn(
+          "font-md",
           "group flex flex-1 flex-col items-center justify-center gap-1 pt-3 pb-2 outline-none",
           className,
         )}

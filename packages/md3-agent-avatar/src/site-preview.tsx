@@ -17,16 +17,18 @@ function AriaMark() {
 /** The agent avatar as nucleux.in's live preview shows it: Aria at rest, with the "AI agent" label. */
 export function SitePreview() {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 font-md">
       <Md3AgentAvatar name={AGENT.name} glyph={<AriaMark />} shape="circle" />
-      <div className="flex items-center gap-2 text-base text-md-on-surface">
+      <p className="m-0 flex gap-2 text-base font-medium leading-6 tracking-[0.15px] text-md-on-surface">
         {AGENT.name}
-        <Md3Disclosure
-          icon={null}
-          label={AGENT.descriptor}
-          className="h-6 !rounded-full border border-md-outline-variant bg-transparent px-2.5 text-sm font-medium tracking-[0.1px] text-md-tertiary"
-        />
-      </div>
+        <span className="block">
+          <Md3Disclosure
+            icon={null}
+            label={AGENT.descriptor}
+            className="h-6 !rounded-full border-0 bg-transparent px-2.5 py-1 text-xs leading-4 tracking-[0.15px] text-md-tertiary shadow-[inset_0_0_0_1px_hsl(var(--nx-md-outline-variant))]"
+          />
+        </span>
+      </p>
     </div>
   );
 }

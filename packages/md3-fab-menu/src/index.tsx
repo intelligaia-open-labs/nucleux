@@ -175,6 +175,7 @@ export const Md3FabMenu = React.forwardRef<HTMLDivElement, Md3FabMenuProps>(
       <div
         ref={setRefs}
         className={cn(
+          "font-md",
           "relative inline-flex flex-col gap-2",
           align === "end" ? "items-end" : "items-start",
           className,
@@ -241,6 +242,7 @@ export const Md3FabMenuItem = React.forwardRef<HTMLButtonElement, Md3FabMenuItem
         role="menuitem"
         tabIndex={-1}
         className={cn(
+          "font-md",
           "relative inline-flex h-14 items-center gap-2 overflow-hidden rounded-full pl-4 pr-6 text-base font-medium [&_svg]:size-6",
           "before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-['']",
           "hover:before:opacity-[0.08] focus-visible:before:opacity-[0.12] active:before:opacity-[0.12]",

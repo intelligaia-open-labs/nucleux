@@ -47,7 +47,8 @@ export type Md3PromptEnhancerController = PromptEnhancerController;
 const stateLayer =
   "before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-[''] hover:before:opacity-[0.08] focus-visible:before:opacity-[0.12] active:before:opacity-[0.12] motion-reduce:before:transition-none";
 
-const overline = "flex items-center gap-1.5 text-[11.5px] font-semibold uppercase leading-4 tracking-[0.06em]";
+/** nucleux.in sets the review's own copy in Inter (font-sans); its Material components stay in Roboto. */
+const overline = "flex items-center gap-1.5 font-sans text-[11.5px] font-semibold uppercase leading-4 tracking-[0.06em]";
 
 const textLink = cn(
   "relative inline-flex min-h-8 items-center gap-1 overflow-hidden rounded-full px-2.5 text-[13px] font-medium outline-none focus-visible:ring-2 focus-visible:ring-md-primary disabled:pointer-events-none disabled:opacity-[0.38] [&_svg]:size-4",
@@ -107,7 +108,7 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
       return (
         <ins
           key={i}
-          className="rounded-md-xs bg-md-primary/[0.08] px-0.5 text-md-primary underline decoration-md-primary/50 decoration-dotted underline-offset-4 [box-decoration-break:clone]"
+          className="rounded-md-xs bg-md-primary-container/75 px-0.5 py-px text-[rgb(79_55_138)] underline decoration-md-primary/50 dark:text-md-on-primary-container decoration-dotted underline-offset-4 [box-decoration-break:clone]"
         >
           <span className="sr-only">{PROMPT_ENHANCER_TEXT.added}</span>
           {s.text}
@@ -134,12 +135,12 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
       role="region"
       aria-label={PROMPT_ENHANCER_TEXT.regionLabel}
       onKeyDown={pe.onReviewKeyDown}
-      className="flex flex-col gap-3.5 rounded-md-lg bg-md-surface-container-lowest px-5 py-[18px] animate-nx-fade-in motion-reduce:animate-none"
+      className="flex flex-col gap-3.5 rounded-[16px] bg-md-surface-container-lowest px-5 py-[18px] animate-nx-fade-in motion-reduce:animate-none"
     >
       {listed && (
         <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <p className="text-base font-medium leading-6 text-md-on-surface">{heading}</p>
-          <span className="text-xs text-md-on-surface-variant">
+          <p className="font-sans text-base font-medium leading-6 text-md-on-surface">{heading}</p>
+          <span className="text-xs tracking-[0.4px] text-md-on-surface-variant">
             {kept} of {pe.changes.length} changes
           </span>
         </div>
@@ -161,19 +162,19 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
         </div>
       ) : diffStyle === "split" ? (
         <div className="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-2.5">
-          <div className="flex flex-col gap-2 rounded-md-md border border-transparent bg-md-on-surface/[0.04] px-3.5 py-3">
+          <div className="flex flex-col gap-2 rounded-[14px] border border-transparent bg-md-on-surface/[0.04] px-3.5 py-3">
             <p className={cn(overline, "text-md-on-surface-variant")}>{PROMPT_ENHANCER_TEXT.youWrote}</p>
-            <p className="text-[14.5px] leading-[22px] text-md-on-surface">{pe.original}</p>
+            <p className="font-sans text-[14.5px] leading-[22px] text-md-on-surface">{pe.original}</p>
           </div>
-          <div className="flex flex-col gap-2 rounded-md-md border border-md-primary/45 bg-md-primary/5 px-3.5 py-3">
+          <div className="flex flex-col gap-2 rounded-[14px] border border-md-primary/45 bg-md-primary/5 px-3.5 py-3">
             {improvedOverline}
-            <p className="text-[14.5px] leading-[22px] text-md-on-surface">{marked}</p>
+            <p className="font-sans text-[14.5px] leading-[22px] text-md-on-surface">{marked}</p>
           </div>
         </div>
       ) : (
         <div className="flex flex-col gap-2">
           {improvedOverline}
-          <p className="text-base leading-[26px] text-md-on-surface">{marked}</p>
+          <p className="font-sans text-base leading-[26px] text-md-on-surface">{marked}</p>
         </div>
       )}
 
@@ -184,7 +185,7 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
             const cb = `${uid}-c-${c.id}`;
             const desc = [explain && c.reason ? `${cb}-why` : null, c.assumption ? `${cb}-as` : null].filter(Boolean).join(" ");
             return (
-              <div key={c.id} className="flex items-start gap-2 border-b border-md-outline-variant py-2 last:border-b-0 last:pb-0">
+              <div key={c.id} className="flex items-start gap-2 border-b border-md-outline-variant pb-2 pt-2.5 last:border-b-0 last:pb-0">
                 <Md3Checkbox
                   id={cb}
                   checked={on}
@@ -193,7 +194,7 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
                   aria-describedby={desc || undefined}
                   className="-ml-2.5 shrink-0"
                 />
-                <div className="flex min-w-0 flex-col gap-0.5 pt-2.5">
+                <div className="flex min-w-0 flex-col gap-0.5 pt-2.5 font-sans">
                   <label
                     id={`${cb}-l`}
                     htmlFor={cb}
@@ -212,7 +213,7 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
                   {c.assumption && (
                     <span
                       id={`${cb}-as`}
-                      className="mt-1 inline-flex items-center gap-1 self-start rounded-md-sm bg-md-surface-container-high px-2 py-0.5 text-[11.5px] font-medium text-md-on-surface-variant"
+                      className="mt-1 inline-flex items-center gap-1 self-start rounded-md-sm bg-md-surface-container-high px-2 py-0.5 text-[11.5px] font-medium leading-[1.55] text-md-on-surface-variant"
                     >
                       <CircleHelp aria-hidden className="size-3.5" />
                       {c.assumption}
@@ -227,7 +228,7 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
 
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         {pe.state !== "editing" && allowEdit ? (
-          <Md3Button variant="text" icon={<Pencil aria-hidden />} onClick={pe.edit} className="-ml-1">
+          <Md3Button variant="text" icon={<Pencil aria-hidden />} onClick={pe.edit}>
             {PROMPT_ENHANCER_TEXT.edit}
           </Md3Button>
         ) : (
@@ -343,7 +344,7 @@ export const Md3PromptEnhancer = React.forwardRef<HTMLDivElement, Md3PromptEnhan
     ) : null;
 
   return (
-    <div ref={ref} data-state={pe.state} className={cn("flex w-full flex-col gap-3", className)} {...rest}>
+    <div ref={ref} data-state={pe.state} className={cn("font-md", "flex w-full flex-col gap-3", className)} {...rest}>
       {autoToggle}
       {review}
       {failed}

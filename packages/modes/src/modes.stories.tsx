@@ -52,11 +52,14 @@ const meta = {
   tags: ["autodocs"],
   parameters: { layout: "centered" },
   decorators: [
-    (Story) => (
-      <div className="flex min-h-[30rem] w-[34rem] items-end justify-center bg-background p-6">
+    (Story, { id }) =>
+      id.endsWith("--site-preview") ? (
         <Story />
-      </div>
-    ),
+      ) : (
+        <div className="flex min-h-[30rem] w-[34rem] items-end justify-center bg-background p-6">
+          <Story />
+        </div>
+      ),
   ],
   args: { modes: [], placeholder: "Ask Aria…", onValueChange: () => {}, onSubmit: () => {} },
 } satisfies Meta<typeof Modes>;

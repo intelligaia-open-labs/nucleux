@@ -14,13 +14,14 @@ export function SitePreview() {
   const [draft, setDraft] = useState("");
 
   return (
-    <Randomize
-      variant="random-card"
-      // In order, as on the site; an app can pass a shuffled `prompts` pool instead.
-      generate={(shown) => PROMPTS[shown.length % PROMPTS.length]}
-      draft={draft}
-      onSelect={(prompt, { mode }) => setDraft(mode === "append" ? `${draft}\n${prompt}` : prompt)}
-      className="w-[26.25rem] max-w-full"
-    />
+    <div className="w-[421px] max-w-full rounded-lg border border-border bg-background p-5 shadow-sm">
+      <Randomize
+        variant="random-card"
+        // In order, as on the site; an app can pass a shuffled `prompts` pool instead.
+        generate={(shown) => PROMPTS[shown.length % PROMPTS.length]}
+        draft={draft}
+        onSelect={(prompt, { mode }) => setDraft(mode === "append" ? `${draft}\n${prompt}` : prompt)}
+      />
+    </div>
   );
 }

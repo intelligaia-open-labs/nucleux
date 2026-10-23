@@ -1,5 +1,11 @@
 import * as React from "react";
-import { ChevronDown, ChevronRight, Lightbulb, Sparkles, X } from "lucide-react";
+import { Sparkles } from "lucide-react";
+import {
+  MsClose,
+  MsKeyboardArrowDown,
+  MsKeyboardArrowRight,
+  MsLightbulb,
+} from "@nucleux/md3-icons";
 import { cn, Slot } from "@nucleux/utils";
 import type { ButtonSize, ButtonVariant } from "@nucleux/button";
 import type {
@@ -37,9 +43,14 @@ const actionVariants = (onContainer: boolean): Record<ButtonVariant, string> => 
   primary: "bg-md-primary text-md-on-primary hover:shadow-md-1",
   cta: "bg-md-primary text-md-on-primary hover:shadow-md-1",
   secondary: "bg-md-secondary-container text-md-on-secondary-container",
-  ghost: onContainer ? "bg-transparent text-md-on-primary-container" : "bg-transparent text-md-primary",
+  ghost: onContainer
+    ? "bg-transparent text-md-on-primary-container"
+    : "bg-transparent text-md-primary",
   destructive: "bg-md-error text-md-on-error",
-  link: cn("h-auto bg-transparent px-0 underline underline-offset-2 before:hidden", onContainer ? "text-md-on-primary-container" : "text-md-primary"),
+  link: cn(
+    "h-auto bg-transparent px-0 underline underline-offset-2 before:hidden",
+    onContainer ? "text-md-on-primary-container" : "text-md-primary",
+  ),
 });
 const actionSizes: Record<ButtonSize, string> = {
   sm: "h-8 px-3 text-sm",
@@ -60,7 +71,18 @@ const actionSizes: Record<ButtonSize, string> = {
  */
 export const Md3NudgeAction = React.forwardRef<HTMLButtonElement, Md3NudgeActionProps>(
   (
-    { color, variant = color ?? "ghost", size = "sm", asChild = false, leftIcon, rightIcon, type = "button", className, children, ...props },
+    {
+      color,
+      variant = color ?? "ghost",
+      size = "sm",
+      asChild = false,
+      leftIcon,
+      rightIcon,
+      type = "button",
+      className,
+      children,
+      ...props
+    },
     ref,
   ) => {
     const { onContainer } = React.useContext(NudgeContext);
@@ -75,13 +97,17 @@ export const Md3NudgeAction = React.forwardRef<HTMLButtonElement, Md3NudgeAction
     );
     if (asChild) {
       return (
-        <Slot ref={ref} className={classes} {...(props as React.HTMLAttributes<HTMLElement>)}>
+        <Slot
+          ref={ref}
+          className={cn("font-md", classes)}
+          {...(props as React.HTMLAttributes<HTMLElement>)}
+        >
           {children}
         </Slot>
       );
     }
     return (
-      <button ref={ref} type={type} className={classes} {...props}>
+      <button ref={ref} type={type} className={cn("font-md", classes)} {...props}>
         {leftIcon && <span className="relative inline-flex">{leftIcon}</span>}
         {children != null && <span className="relative">{children}</span>}
         {rightIcon && <span className="relative inline-flex">{rightIcon}</span>}
@@ -98,7 +124,11 @@ const SESSION_KEY = "nucleux:nudge:session";
 
 function store(kind: "session" | "local"): Storage | null {
   try {
-    return typeof window === "undefined" ? null : kind === "session" ? window.sessionStorage : window.localStorage;
+    return typeof window === "undefined"
+      ? null
+      : kind === "session"
+        ? window.sessionStorage
+        : window.localStorage;
   } catch {
     return null;
   }
@@ -119,10 +149,22 @@ function write(kind: "session" | "local", key: string, value: string) {
 }
 
 const tooltipSide: Record<NudgeSide, { box: string; arrow: string }> = {
-  right: { box: "left-full top-1/2 ml-3 -translate-y-1/2", arrow: "-left-1.5 top-1/2 -translate-y-1/2" },
-  left: { box: "right-full top-1/2 mr-3 -translate-y-1/2", arrow: "-right-1.5 top-1/2 -translate-y-1/2" },
-  top: { box: "bottom-full left-1/2 mb-3 -translate-x-1/2", arrow: "-bottom-1.5 left-1/2 -translate-x-1/2" },
-  bottom: { box: "top-full left-1/2 mt-3 -translate-x-1/2", arrow: "-top-1.5 left-1/2 -translate-x-1/2" },
+  right: {
+    box: "left-full top-1/2 ml-3 -translate-y-1/2",
+    arrow: "-left-1.5 top-1/2 -translate-y-1/2",
+  },
+  left: {
+    box: "right-full top-1/2 mr-3 -translate-y-1/2",
+    arrow: "-right-1.5 top-1/2 -translate-y-1/2",
+  },
+  top: {
+    box: "bottom-full left-1/2 mb-3 -translate-x-1/2",
+    arrow: "-bottom-1.5 left-1/2 -translate-x-1/2",
+  },
+  bottom: {
+    box: "top-full left-1/2 mt-3 -translate-x-1/2",
+    arrow: "-top-1.5 left-1/2 -translate-x-1/2",
+  },
 };
 
 /**
@@ -248,21 +290,32 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
     const anchor =
       visible && React.isValidElement<{ "aria-describedby"?: string }>(children)
         ? React.cloneElement(children, {
-            "aria-describedby": [children.props["aria-describedby"], messageId].filter(Boolean).join(" "),
+            "aria-describedby": [children.props["aria-describedby"], messageId]
+              .filter(Boolean)
+              .join(" "),
           })
         : children;
 
     const onContainer = variant === "tooltip-nudge";
     const quiet = variant === "inline-tip-card" && appearance === "inline";
     const actionRow = (onTry || onSnooze || reason || actions) && (
-      <div className={cn("flex flex-wrap items-center", quiet ? "-ml-3 gap-0" : "gap-1")}>
+      <div className={cn("flex flex-wrap items-center", quiet ? "gap-0 pl-[18px]" : "gap-1")}>
         {onTry && (
-          <Md3NudgeAction variant={quiet ? "ghost" : "primary"} size={quiet ? "md" : "sm"} onClick={tryIt}>
+          <Md3NudgeAction
+            variant={quiet ? "ghost" : "primary"}
+            size={quiet ? "md" : "sm"}
+            onClick={tryIt}
+            className={quiet ? "px-3" : undefined}
+          >
             {tryLabel}
           </Md3NudgeAction>
         )}
         {onSnooze && (
-          <Md3NudgeAction size={quiet ? "md" : "sm"} onClick={snooze}>
+          <Md3NudgeAction
+            size={quiet ? "md" : "sm"}
+            onClick={snooze}
+            className={quiet ? "px-3" : undefined}
+          >
             {snoozeLabel}
           </Md3NudgeAction>
         )}
@@ -273,8 +326,8 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
             aria-expanded={whyOpen}
             aria-controls={reasonId}
             onClick={() => setWhyOpen((w) => !w)}
-            leftIcon={whyOpen ? <ChevronDown aria-hidden="true" /> : <ChevronRight aria-hidden="true" />}
-            className={quiet ? "pl-3 pr-4" : undefined}
+            leftIcon={whyOpen ? <MsKeyboardArrowDown /> : <MsKeyboardArrowRight />}
+            className={quiet ? "gap-2 px-3 [&_svg]:size-[18px]" : undefined}
           >
             Why this tip?
           </Md3NudgeAction>
@@ -285,7 +338,7 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
       <p
         id={reasonId}
         className={cn(
-          "text-xs tracking-[0.4px] animate-nx-fade-in motion-reduce:animate-none",
+          "animate-nx-fade-in text-xs tracking-[0.4px] motion-reduce:animate-none",
           onContainer ? "text-md-on-primary-container/80" : "text-md-on-surface-variant",
         )}
       >
@@ -296,9 +349,13 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
       <Md3IconButton
         aria-label={dismissLabel}
         onClick={dismiss}
-        className={cn("-mr-1 -mt-1 size-8 shrink-0 [&_svg]:size-[18px]", onContainer && "text-md-on-primary-container")}
+        className={cn(
+          "shrink-0",
+          quiet ? "-my-2 -mr-1.5 size-10 [&_svg]:size-6" : "-mr-1 -mt-1 size-8 [&_svg]:size-[18px]",
+          onContainer && "text-md-on-primary-container",
+        )}
       >
-        <X aria-hidden="true" />
+        <MsClose />
       </Md3IconButton>
     );
 
@@ -306,7 +363,7 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
       return (
         <div
           ref={rootRef}
-          className={cn("relative inline-flex items-center gap-2", className)}
+          className={cn("font-md", "relative inline-flex items-center gap-2", className)}
           onClickCapture={() => {
             if (visible) {
               remember("used");
@@ -349,17 +406,22 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
       const pos = tooltipSide[side];
       return (
         <NudgeContext.Provider value={{ onContainer: true }}>
-          <div ref={rootRef} className={cn("relative inline-flex", className)} onKeyDown={handleKeyDown} {...props}>
+          <div
+            ref={rootRef}
+            className={cn("font-md", "relative inline-flex", className)}
+            onKeyDown={handleKeyDown}
+            {...props}
+          >
             {anchor}
             <div aria-live="polite" className={cn("absolute z-50 w-72", pos.box)}>
               {visible && (
                 <div
                   role="note"
                   aria-label="Tip"
-                  className="relative flex flex-col gap-3 rounded-md-lg bg-md-primary-container px-4 pb-3 pt-3.5 text-sm text-md-on-primary-container shadow-md-2 animate-nx-fade-in motion-reduce:animate-none"
+                  className="relative flex animate-nx-fade-in flex-col gap-3 rounded-md-lg bg-md-primary-container px-4 pb-3 pt-3.5 text-sm text-md-on-primary-container shadow-md-2 motion-reduce:animate-none"
                 >
                   <div className="flex items-start gap-2.5">
-                    <Lightbulb aria-hidden="true" className="mt-0.5 size-[18px] shrink-0 text-md-primary" />
+                    <MsLightbulb className="mt-0.5 size-[18px] shrink-0 text-md-primary" />
                     <p id={messageId} className="min-w-0 flex-1 tracking-[0.25px]">
                       <span className="font-medium">Tip · </span>
                       {message}
@@ -368,7 +430,10 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
                   </div>
                   {actionRow}
                   {reasonNode}
-                  <span aria-hidden="true" className={cn("absolute size-3 rotate-45 bg-md-primary-container", pos.arrow)} />
+                  <span
+                    aria-hidden="true"
+                    className={cn("absolute size-3 rotate-45 bg-md-primary-container", pos.arrow)}
+                  />
                 </div>
               )}
             </div>
@@ -378,6 +443,48 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
     }
 
     if (!visible) return null;
+    if (quiet) {
+      // The site's quiet tip: a rule on the left, one row (bulb, message, ×), the reason, then text actions.
+      return (
+        <NudgeContext.Provider value={{ onContainer: false }}>
+          <div
+            ref={rootRef}
+            role="note"
+            aria-label="Tip"
+            onKeyDown={handleKeyDown}
+            data-appearance={appearance}
+            className={cn(
+              "font-md",
+              "flex animate-nx-fade-in flex-col gap-1 border-l-[3px] border-md-outline-variant py-1 pl-3 pr-2 text-sm text-md-on-surface motion-reduce:animate-none",
+              className,
+            )}
+            {...props}
+          >
+            <div className="flex items-start gap-2.5">
+              <span
+                aria-hidden="true"
+                className="mt-0.5 flex shrink-0 text-md-on-surface-variant [&_svg]:size-5"
+              >
+                {title ? <Sparkles /> : <MsLightbulb />}
+              </span>
+              <div className="flex min-w-0 flex-1 flex-col gap-1">
+                {title && (
+                  <p className="text-base font-medium leading-6 tracking-[0.15px] text-md-on-surface">
+                    {title}
+                  </p>
+                )}
+                <p id={messageId} className="pt-px tracking-[0.25px] text-md-on-surface">
+                  {message}
+                </p>
+              </div>
+              {dismissButton}
+            </div>
+            {reasonNode && <div className="pl-[30px]">{reasonNode}</div>}
+            {actionRow}
+          </div>
+        </NudgeContext.Provider>
+      );
+    }
     return (
       <NudgeContext.Provider value={{ onContainer: false }}>
         <div
@@ -387,27 +494,27 @@ export const Md3Nudge = React.forwardRef<HTMLDivElement, Md3NudgeProps>(
           onKeyDown={handleKeyDown}
           data-appearance={appearance}
           className={cn(
-            "flex items-start text-sm text-md-on-surface animate-nx-fade-in motion-reduce:animate-none",
-            quiet
-              ? "gap-2.5 border-l-[3px] border-md-outline-variant py-1 pl-3 pr-2"
-              : "gap-3 rounded-md-md bg-md-surface-container-high p-4",
+            "font-md",
+            "flex animate-nx-fade-in items-start text-sm text-md-on-surface motion-reduce:animate-none",
+            "gap-3 rounded-md-md bg-md-surface-container-high p-4",
             className,
           )}
           {...props}
         >
           <span
             aria-hidden="true"
-            className={cn("mt-0.5 flex shrink-0 [&_svg]:size-5", quiet ? "text-md-on-surface-variant" : "text-md-primary")}
+            className={"mt-0.5 flex shrink-0 text-md-primary [&_svg]:size-5"}
           >
-            {title ? <Sparkles /> : <Lightbulb />}
+            {title ? <Sparkles /> : <MsLightbulb />}
           </span>
-          <div className={cn("flex min-w-0 flex-1 flex-col", quiet ? "gap-1.5" : "gap-3")}>
+          <div className={"flex min-w-0 flex-1 flex-col gap-3"}>
             <div className="flex flex-col gap-1">
-              {title && <p className="text-base font-medium leading-6 tracking-[0.15px] text-md-on-surface">{title}</p>}
-              <p
-                id={messageId}
-                className={cn("pt-px tracking-[0.25px]", quiet ? "text-md-on-surface" : "text-md-on-surface-variant")}
-              >
+              {title && (
+                <p className="text-base font-medium leading-6 tracking-[0.15px] text-md-on-surface">
+                  {title}
+                </p>
+              )}
+              <p id={messageId} className={"pt-px tracking-[0.25px] text-md-on-surface-variant"}>
                 {message}
               </p>
             </div>

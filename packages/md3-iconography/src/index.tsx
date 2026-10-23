@@ -3,7 +3,7 @@ import { cn } from "@nucleux/utils";
 import type { IconographyIntent, IconographyProps } from "@nucleux/iconography";
 import { Md3Button, type Md3ButtonVariant } from "@nucleux/md3-button";
 import { Md3IconButton, type Md3IconButtonVariant } from "@nucleux/md3-icon-button";
-import { Md3AiRegenerateIcon, Md3AiWandIcon, Md3AiWorkingIcon, useAiGlyph } from "@nucleux/md3-ai-icons";
+import { Md3AiRegenerateIcon, Md3AiWandIcon, Md3AiWorkingIcon, useMd3AiGlyph } from "@nucleux/md3-ai-icons";
 
 export type Md3IconographyProps = IconographyProps;
 export type Md3IconographyIntent = IconographyIntent;
@@ -38,7 +38,7 @@ const variantExtra: Partial<Record<TwinVariant, string>> = {
 // The twin's Button sizes, on the M3 button heights (32 / 40 / 56).
 const sizeClasses: Record<TwinSize, string> = {
   sm: "h-8 px-4",
-  md: "",
+  md: "tracking-[0.1px]",
   lg: "h-14 px-7 text-base [&_svg]:size-6",
   "icon-sm": "size-8 [&_svg]:size-5",
   icon: "",
@@ -85,7 +85,7 @@ export const Md3Iconography = React.forwardRef<HTMLButtonElement, Md3Iconography
     },
     ref,
   ) => {
-    const ActionGlyph = useAiGlyph("ai-action");
+    const ActionGlyph = useMd3AiGlyph("ai-action");
     const Glyph = working
       ? Md3AiWorkingIcon
       : intent === "transform"
@@ -119,7 +119,7 @@ export const Md3Iconography = React.forwardRef<HTMLButtonElement, Md3Iconography
     return (
       <>
         {iconOnly ? (
-          <span className="group/tip relative inline-flex">
+          <span className="group/tip relative inline-flex font-md">
             <Md3IconButton
               {...shared}
               {...props}

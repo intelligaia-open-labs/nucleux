@@ -11,6 +11,7 @@ export const Md3Menu = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
       ref={ref}
       role="menu"
       className={cn(
+        "font-md",
         "min-w-[12rem] rounded-md-xs bg-md-surface-container py-2 text-md-on-surface shadow-md-2",
         className,
       )}
@@ -34,6 +35,7 @@ export const Md3MenuItem = React.forwardRef<HTMLButtonElement, Md3MenuItemProps>
       type={type}
       role="menuitem"
       className={cn(
+        "font-md",
         "relative flex h-12 w-full items-center gap-3 overflow-hidden px-3 text-left text-sm text-md-on-surface outline-none [&_svg]:size-6",
         "before:absolute before:inset-0 before:bg-md-on-surface before:opacity-0 before:transition-opacity before:content-['']",
         "hover:before:opacity-[0.08] focus-visible:before:opacity-[0.12]",
@@ -52,7 +54,7 @@ Md3MenuItem.displayName = "Md3MenuItem";
 
 export const Md3MenuDivider = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} role="separator" className={cn("my-2 h-px bg-md-surface-variant", className)} {...props} />
+    <div ref={ref} role="separator" className={cn("font-md", "my-2 h-px bg-md-surface-variant", className)} {...props} />
   ),
 );
 Md3MenuDivider.displayName = "Md3MenuDivider";

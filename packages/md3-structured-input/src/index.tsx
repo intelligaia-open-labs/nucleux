@@ -39,7 +39,8 @@ const stateLayer =
 
 /** MD3 outlined field chrome, shared by text inputs, selects and textareas. */
 const fieldClass = cn(
-  "w-full rounded-md-xs border border-md-outline bg-transparent px-4 text-base text-md-on-surface outline-none transition-colors",
+  // nucleux.in: a 44px field, 8px corners, on the surface colour.
+  "h-11 w-full min-w-0 rounded-md-sm border border-md-outline bg-md-surface px-3 text-[15px] leading-5 text-md-on-surface outline-none transition-colors",
   "placeholder:text-md-on-surface-variant hover:border-md-on-surface",
   "focus:border-md-primary focus:ring-1 focus:ring-inset focus:ring-md-primary",
   "disabled:cursor-not-allowed disabled:opacity-[0.38]",
@@ -96,7 +97,7 @@ export const Md3StructuredInput = React.forwardRef<HTMLDivElement, Md3Structured
       <Md3Card
         ref={ref}
         variant="outlined"
-        className={cn("flex flex-col gap-4 rounded-md-lg p-5 animate-nx-fade-in motion-reduce:animate-none", className)}
+        className={cn("font-md", "flex flex-col gap-4 rounded-md-lg p-5 animate-nx-fade-in motion-reduce:animate-none", className)}
         {...props}
       >
         <p id={questionId} className="text-base font-medium tracking-[0.15px] text-md-on-surface">
@@ -228,6 +229,7 @@ export const Md3StructuredInputSlots = React.forwardRef<HTMLFormElement, Md3Stru
       title,
       icon,
       aside,
+      headerClassName,
       showProgress = false,
       onCancel,
       cancelLabel = "Cancel",
@@ -262,7 +264,7 @@ export const Md3StructuredInputSlots = React.forwardRef<HTMLFormElement, Md3Stru
         ref={ref}
         aria-label={title == null ? label : undefined}
         aria-labelledby={title == null ? undefined : titleId}
-        className={cn("grid grid-cols-1 gap-4 text-md-on-surface sm:grid-cols-2", className)}
+        className={cn("font-md", "grid grid-cols-1 gap-x-4 gap-y-3.5 text-md-on-surface sm:grid-cols-2", className)}
         onSubmit={(e) => {
           e.preventDefault();
           if (canSubmit) onSubmit?.(values, extra);
@@ -270,16 +272,16 @@ export const Md3StructuredInputSlots = React.forwardRef<HTMLFormElement, Md3Stru
         {...props}
       >
         {(title != null || aside != null) && (
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 sm:col-span-2">
-            {icon != null && (
-              <span aria-hidden="true" className="inline-flex shrink-0 text-md-primary [&_svg]:size-6">
-                {icon}
-              </span>
-            )}
-            <h3 id={titleId} className="flex-1 text-[1.375rem] leading-7 text-md-on-surface">
+          <div className={cn("-mb-0.5 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 sm:col-span-2", headerClassName)}>
+            <h3 id={titleId} className="inline-flex items-center gap-2 text-base font-medium text-md-on-surface">
+              {icon != null && (
+                <span aria-hidden="true" className="inline-flex shrink-0 text-md-primary [&_svg]:size-5">
+                  {icon}
+                </span>
+              )}
               {title}
             </h3>
-            {aside != null && <div className="text-sm text-md-on-surface-variant">{aside}</div>}
+            {aside != null && <div className="text-xs text-md-on-surface-variant">{aside}</div>}
           </div>
         )}
         {slots.map((slot) => {
@@ -290,14 +292,14 @@ export const Md3StructuredInputSlots = React.forwardRef<HTMLFormElement, Md3Stru
           const describedBy = slot.helper || mark === "suggested" ? helperId : undefined;
           const type = structuredSlotType(slot);
           return (
-            <div key={slot.name} className={cn("flex flex-col gap-1.5", slot.wide && "sm:col-span-2")}>
-              <div className="flex min-h-6 items-center gap-2">
+            <div key={slot.name} className={cn("flex min-w-0 flex-col gap-1", slot.wide && "sm:col-span-2")}>
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                 <label
                   id={`${id}-label`}
                   htmlFor={id}
                   className={cn(
                     "tracking-[0.1px]",
-                    title != null ? "text-sm font-medium text-md-on-surface" : "text-xs font-medium tracking-[0.5px] text-md-on-surface-variant",
+                    title != null ? "text-[13px] font-medium leading-[18px] text-md-on-surface" : "text-xs font-medium tracking-[0.5px] text-md-on-surface-variant",
                   )}
                 >
                   {slot.label}
@@ -324,7 +326,7 @@ export const Md3StructuredInputSlots = React.forwardRef<HTMLFormElement, Md3Stru
                   aria-describedby={describedBy}
                   aria-required={slot.required || undefined}
                   onChange={(e) => setValue(slot.name, e.target.value)}
-                  className={cn(fieldClass, "h-14 cursor-pointer bg-md-surface", !values[slot.name] && "text-md-on-surface-variant")}
+                  className={cn(fieldClass, "cursor-pointer", !values[slot.name] && "text-md-on-surface-variant")}
                 >
                   <option value="" disabled>
                     {slot.placeholder ?? "Choose…"}
@@ -342,16 +344,16 @@ export const Md3StructuredInputSlots = React.forwardRef<HTMLFormElement, Md3Stru
                   aria-describedby={describedBy}
                   value={values[slot.name] ?? ""}
                   onValueChange={(v) => setValue(slot.name, typeof v === "string" ? v : (v[0] ?? ""))}
-                  className="h-14 w-fit max-w-full"
+                  className="h-11 w-full"
                 >
                   {slot.options.map((o) => (
-                    <Md3SegmentedButtonItem key={o.value} value={o.value} className="min-w-24 text-base">
+                    <Md3SegmentedButtonItem key={o.value} value={o.value} className="h-full flex-1 px-1.5 text-[13px] leading-[18px] [&_svg]:hidden">
                       {o.label}
                     </Md3SegmentedButtonItem>
                   ))}
                 </Md3SegmentedButton>
               ) : type === "tags" ? (
-                <div className={cn(fieldClass, "flex min-h-14 flex-wrap items-center gap-2 bg-md-surface px-2 py-2 focus-within:border-md-primary")}>
+                <div className={cn(fieldClass, "flex h-auto min-h-11 flex-wrap items-center gap-2 px-2 py-1.5 focus-within:border-md-primary")}>
                   {splitStructuredTags(values[slot.name]).map((t, _i, all) => (
                     <Md3Chip
                       key={t}
@@ -386,11 +388,11 @@ export const Md3StructuredInputSlots = React.forwardRef<HTMLFormElement, Md3Stru
                   aria-describedby={describedBy}
                   aria-required={slot.required || undefined}
                   onChange={(e) => setValue(slot.name, e.target.value)}
-                  className={cn(fieldClass, "h-14 bg-md-surface")}
+                  className={fieldClass}
                 />
               )}
               {describedBy && (
-                <p id={helperId} className="px-4 text-xs text-md-on-surface-variant">
+                <p id={helperId} className="text-xs text-md-on-surface-variant">
                   {mark === "suggested" ? `Suggested ${slot.suggested}. ` : ""}
                   {slot.helper}
                 </p>
@@ -412,25 +414,25 @@ export const Md3StructuredInputSlots = React.forwardRef<HTMLFormElement, Md3Stru
               value={extra}
               placeholder="Say it in your own words — this overrides the fields above"
               onChange={(e) => setExtra(e.target.value)}
-              className={cn(fieldClass, "resize-none py-3")}
+              className={cn(fieldClass, "h-auto resize-none py-3")}
             />
           </div>
         )}
         {(onSubmit || onCancel || showProgress) && (
-          <div className="flex items-center gap-2 sm:col-span-2">
+          <div className="-mt-0.5 flex flex-wrap items-center gap-1 sm:col-span-2">
             {showProgress && (
-              <span className="text-sm text-md-on-surface-variant" aria-live="polite">
+              <span className="text-xs text-md-on-surface-variant" aria-live="polite">
                 {filledCount} of {slots.length} filled
               </span>
             )}
             <span className="flex-1" />
             {onCancel && (
-              <Md3Button type="button" variant="text" onClick={onCancel}>
+              <Md3Button type="button" variant="text" onClick={onCancel} className="px-4">
                 {cancelLabel}
               </Md3Button>
             )}
             {onSubmit && (
-              <Md3Button type="submit" variant="filled" disabled={!canSubmit}>
+              <Md3Button type="submit" variant="filled" disabled={!canSubmit} className="px-4">
                 {submitLabel}
               </Md3Button>
             )}
@@ -535,7 +537,7 @@ export const Md3StructuredInputTags = React.forwardRef<HTMLDivElement, Md3Struct
     };
 
     return (
-      <div ref={ref} className={cn("flex flex-col gap-2 text-md-on-surface", className)} {...props}>
+      <div ref={ref} className={cn("font-md", "flex flex-col gap-2 text-md-on-surface", className)} {...props}>
         <div
           className={cn(
             "flex min-h-14 flex-wrap items-center gap-1.5 rounded-md-xs border border-md-outline bg-transparent px-3 py-2 text-base text-md-on-surface transition-colors",
@@ -692,7 +694,7 @@ export const Md3StructuredInputWizard = React.forwardRef<HTMLDivElement, Md3Stru
         variant="outlined"
         role="group"
         aria-labelledby={headingId}
-        className={cn("flex flex-col gap-3 rounded-md-lg p-4", className)}
+        className={cn("font-md", "flex flex-col gap-3 rounded-md-lg p-4", className)}
         {...props}
       >
         <div className="flex gap-1" aria-hidden="true">

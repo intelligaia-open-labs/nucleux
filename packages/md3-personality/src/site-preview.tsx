@@ -1,7 +1,7 @@
 import * as React from "react";
-import { RotateCcw } from "lucide-react";
 import { Md3AgentAvatar } from "@nucleux/md3-agent-avatar";
 import { Md3Button } from "@nucleux/md3-button";
+import { MsSettingsBackupRestore } from "@nucleux/md3-icons";
 import { Md3Message } from "@nucleux/md3-message";
 import { Md3Personality, type ToneOption } from "./index";
 
@@ -16,6 +16,9 @@ const SAMPLES: Record<string, string> = {
   warm: "Good news — the launch is now on Tuesday. There are three tasks left, and Maya has two of them covered.",
   direct: "Launch: Tuesday. Open tasks: 3 (Maya: 2).",
 };
+
+// nucleux.in renders this preview's text in its page font (Inter); only the locked note stays Roboto.
+const SITE_FONT = "font-sans [&>p]:font-md";
 
 /** Aria's approved mark: an abstract orbit, never a face. Swap in your own asset. */
 function AriaMark() {
@@ -32,7 +35,7 @@ function AriaMark() {
 export function SitePreview() {
   const [style, setStyle] = React.useState(RECOMMENDED);
   return (
-    <section className="flex w-[28rem] max-w-full flex-col gap-3">
+    <section className="flex w-[480px] max-w-[calc(100vw-2rem)] flex-col gap-3 font-md leading-[1.55]">
       <Md3Personality
         variant="list"
         label="Personality"
@@ -40,18 +43,20 @@ export function SitePreview() {
         options={STYLES}
         value={style}
         onValueChange={setStyle}
+        className={SITE_FONT}
       />
       <Md3Message
         role="assistant"
         avatar={<Md3AgentAvatar name="Aria" glyph={<AriaMark />} size="sm" shape="circle" />}
         content={SAMPLES[style]}
+        className="[&_*]:font-sans"
       />
       <Md3Button
         variant="text"
-        icon={<RotateCcw aria-hidden="true" />}
+        icon={<MsSettingsBackupRestore />}
         disabled={style === RECOMMENDED}
         onClick={() => setStyle(RECOMMENDED)}
-        className="self-start"
+        className="self-start font-sans tracking-normal"
       >
         Reset to recommended
       </Md3Button>

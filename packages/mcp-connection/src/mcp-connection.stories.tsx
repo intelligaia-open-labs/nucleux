@@ -34,7 +34,8 @@ const meta = {
   component: McpConnection,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[30rem]"><Story /></div>],
+  // SitePreview fills the canvas like the site's stage; the rest sit in a 30rem column.
+  decorators: [(Story, ctx) => (ctx.name === "Site Preview" ? <Story /> : <div className="w-[30rem]"><Story /></div>)],
   args: {
     name: "Linear MCP",
     address: "https://mcp.linear.app/sse",
@@ -53,7 +54,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** As nucleux.in's live preview shows it. */
-export const SitePreview: Story = { render: () => <SitePreviewDemo /> };
+export const SitePreview: Story = { parameters: { layout: "padded" }, render: () => <SitePreviewDemo /> };
 
 /** Right rail: what the server exposes, grouped by risk; each row inspectable and switchable. */
 export const ToolList: Story = {

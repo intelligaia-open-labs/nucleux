@@ -1,4 +1,4 @@
-import { ChevronRight, RefreshCw } from "lucide-react";
+import { MsKeyboardArrowRight, MsSync } from "@nucleux/md3-icons";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3Caveat } from "./index";
 
@@ -12,13 +12,18 @@ export function SitePreview() {
       variant="output-footer"
       aria-label="Caveat about this summary"
       detail={DETAIL}
-      className="mt-0 max-w-xl"
+      className="mt-0 w-[35rem] max-w-full"
       actions={
         <>
-          <Md3Button variant="text" icon={<ChevronRight aria-hidden="true" />} aria-expanded={false}>
+          <Md3Button
+            variant="text"
+            icon={<MsKeyboardArrowRight />}
+            aria-expanded={false}
+            className="tracking-[0.1px]"
+          >
             Review sources
           </Md3Button>
-          <Md3Button variant="text" icon={<RefreshCw aria-hidden="true" />}>
+          <Md3Button variant="text" icon={<MsSync />} className="tracking-[0.1px]">
             Reconnect
           </Md3Button>
         </>

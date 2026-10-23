@@ -4,7 +4,7 @@ import { cn } from "@nucleux/utils";
 /** A Material Design 3 list container. Compose with Md3ListItem. */
 export const Md3List = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} role="list" className={cn("bg-md-surface py-2 text-md-on-surface", className)} {...props} />
+    <div ref={ref} role="list" className={cn("font-md", "bg-md-surface py-2 text-md-on-surface", className)} {...props} />
   ),
 );
 Md3List.displayName = "Md3List";
@@ -37,6 +37,7 @@ export const Md3ListItem = React.forwardRef<HTMLDivElement, Md3ListItemProps>(
           : undefined
       }
       className={cn(
+        "font-md",
         "relative flex items-center gap-4 overflow-hidden px-4 py-3 text-left",
         interactive && [
           "cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-md-primary",

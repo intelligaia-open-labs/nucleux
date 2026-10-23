@@ -283,37 +283,39 @@ function ModelList({ models, current, select, label, headingId }: ModelListProps
             <label
               key={model.value}
               className={cn(
-                "flex cursor-pointer items-center gap-3 border-b border-border px-3.5 py-2.5 transition-colors last:border-b-0 hover:bg-accent/60",
-                active && "bg-accent/60",
+                "flex cursor-pointer items-center justify-between gap-3 border-b border-border px-3.5 py-2.5 leading-[1.55] transition-colors hover:bg-accent/60",
+                active && "bg-[rgb(99_102_241/0.05)] hover:bg-[rgb(99_102_241/0.05)]",
                 model.disabled && "cursor-not-allowed opacity-60 hover:bg-transparent",
               )}
             >
+              <span className="flex min-w-0 flex-1 items-center gap-2.5">
               <Radio
                 value={model.value}
                 disabled={model.disabled}
                 aria-labelledby={id}
-                className={cn("size-2 border-0 shadow-none [&>span]:hidden", active ? "bg-warning" : "bg-border")}
+                className={cn("size-2 border-0 shadow-none [&>span]:hidden", active ? "bg-brand" : "bg-border")}
               />
-              <span id={id} className="flex min-w-0 flex-1 flex-col gap-0.5">
+              <span id={id} className="flex min-w-0 flex-1 flex-col gap-px">
                 <span
                   className={cn(
-                    "flex items-center gap-2 text-sm",
-                    active ? "font-semibold text-foreground" : "text-foreground/80",
+                    "flex items-center gap-2 text-[12.5px]",
+                    active ? "font-semibold text-foreground" : "text-muted-foreground",
                   )}
                 >
                   {model.label}
                   {model.recommended && <RecommendedBadge />}
                 </span>
-                {sub && <span className="text-xs text-muted-foreground">{sub}</span>}
+                {sub && <span className="text-[10.5px] text-faint">{sub}</span>}
                 {model.disabled && model.unavailableReason && (
-                  <span className="text-xs text-foreground">{model.unavailableReason}</span>
+                  <span className="text-[10.5px] text-foreground">{model.unavailableReason}</span>
                 )}
               </span>
+              </span>
               {(model.speed || model.cost) && (
-                <span className="flex shrink-0 flex-col items-end gap-0.5 text-xs">
-                  {model.speed && <span className="text-muted-foreground">{model.speed}</span>}
+                <span className="flex shrink-0 flex-col items-end text-[11px] text-faint">
+                  {model.speed && <span>{model.speed}</span>}
                   {model.cost && (
-                    <span className={cn("font-semibold", active ? "text-warning" : "text-muted-foreground")}>
+                    <span className={cn("font-semibold", active && "text-brand")}>
                       {model.cost}
                     </span>
                   )}
@@ -404,12 +406,12 @@ export const ModelSelection = React.forwardRef<HTMLDivElement, ModelSelectionPro
     if (variant === "auto-route") {
       return (
         <div ref={ref} className={cn("flex flex-col gap-2.5", className)} {...props}>
-          <div className="flex items-center justify-between gap-3 rounded-lg border border-border bg-background px-3.5 py-2.5">
+          <div className="flex items-center justify-between gap-3 rounded-[10px] border border-border bg-background px-3.5 py-2.5 leading-[1.55]">
             <div className="flex min-w-0 flex-col gap-0.5">
-              <span id={autoLabelId} className="text-sm font-semibold text-foreground">
+              <span id={autoLabelId} className="text-[12.5px] font-semibold text-foreground">
                 Auto-route
               </span>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-[11px] text-faint">
                 {agentName} picks the model per task
                 {auto && routedModel && (
                   <>
@@ -419,7 +421,15 @@ export const ModelSelection = React.forwardRef<HTMLDivElement, ModelSelectionPro
                 )}
               </span>
             </div>
-            <Switch checked={auto} onCheckedChange={setAuto} aria-labelledby={autoLabelId} className="shrink-0" />
+            <Switch
+              checked={auto}
+              onCheckedChange={setAuto}
+              aria-labelledby={autoLabelId}
+              className={cn(
+                "h-[21px] w-9 shrink-0 border-0 p-0.5 [&>span]:size-[17px] [&>span]:shadow-none [&>span[data-state=checked]]:translate-x-[15px] [&>span[data-state=unchecked]]:translate-x-0",
+                auto && "bg-foreground",
+              )}
+            />
           </div>
           {picker === "list" ? (
             <ModelList

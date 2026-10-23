@@ -68,8 +68,7 @@ export interface ConsentRequestProps {
 }
 
 export interface ConsentProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "title">,
-    ConsentRequestProps {}
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "title">, ConsentRequestProps {}
 
 type ConsentControlsProps = Pick<
   ConsentProps,
@@ -101,7 +100,8 @@ function PolicyLink({ href, children }: { href: string; children: React.ReactNod
 }
 
 // Equal weight: both answers are the same size and type; only the fill differs.
-const actionClass = "px-4 text-xs font-medium";
+const actionClass =
+  "h-auto rounded-[8px] px-4 py-[7px] text-xs font-medium leading-[1.55] tracking-normal shadow-none";
 
 /** Permission list + equal-weight actions + policy link, shared by Consent and ConsentDialog. */
 function ConsentControls({
@@ -156,13 +156,18 @@ function ConsentControls({
             {scope.map((item, i) => (
               <li key={i} className="flex items-start gap-2.5 text-sm text-foreground">
                 {item.icon && (
-                  <span aria-hidden="true" className="mt-0.5 flex shrink-0 text-muted-foreground [&_svg]:size-4">
+                  <span
+                    aria-hidden="true"
+                    className="mt-0.5 flex shrink-0 text-muted-foreground [&_svg]:size-4"
+                  >
                     {item.icon}
                   </span>
                 )}
                 <span className="min-w-0">
                   {item.label}
-                  {item.description && <span className="block text-xs text-muted-foreground">{item.description}</span>}
+                  {item.description && (
+                    <span className="block text-xs text-muted-foreground">{item.description}</span>
+                  )}
                 </span>
               </li>
             ))}
@@ -170,7 +175,11 @@ function ConsentControls({
         </div>
       )}
 
-      {outcome && <p className="text-xs text-muted-foreground [&_b]:text-foreground [&_strong]:text-foreground">{outcome}</p>}
+      {outcome && (
+        <p className="text-xs text-muted-foreground [&_b]:text-foreground [&_strong]:text-foreground">
+          {outcome}
+        </p>
+      )}
 
       {details && (
         <div className="flex flex-col gap-1.5">
@@ -180,7 +189,9 @@ function ConsentControls({
             aria-expanded={detailsOpen}
             aria-controls={detailsId}
             onClick={() => setDetailsOpen((o) => !o)}
-            leftIcon={detailsOpen ? <ChevronDown aria-hidden="true" /> : <ChevronRight aria-hidden="true" />}
+            leftIcon={
+              detailsOpen ? <ChevronDown aria-hidden="true" /> : <ChevronRight aria-hidden="true" />
+            }
             className="h-auto self-start px-0 text-xs"
           >
             {detailsLabel}
@@ -193,15 +204,26 @@ function ConsentControls({
 
       {/* Allow first, then the equal-weight way out — as on nucleux.in. */}
       <div className="flex flex-wrap items-center gap-2">
-        <Button className={actionClass} onClick={() => done(() => onAllow?.(selectedIds))}>
+        <Button
+          className={cn(actionClass, "border-transparent")}
+          onClick={() => done(() => onAllow?.(selectedIds))}
+        >
           {allowLabel ?? (permissions.length > 0 ? "Allow selected" : "Allow")}
         </Button>
         {secondaryLabel && (
-          <Button variant="secondary" className={actionClass} onClick={() => done(() => onSecondary?.(selectedIds))}>
+          <Button
+            variant="secondary"
+            className={actionClass}
+            onClick={() => done(() => onSecondary?.(selectedIds))}
+          >
             {secondaryLabel}
           </Button>
         )}
-        <Button variant="secondary" className={actionClass} onClick={() => done(onDeny)}>
+        <Button
+          variant="secondary"
+          className={cn(actionClass, "bg-transparent text-muted-foreground")}
+          onClick={() => done(onDeny)}
+        >
           {denyLabel}
         </Button>
         {policyHref && (
@@ -253,7 +275,7 @@ export const Consent = React.forwardRef<HTMLDivElement, ConsentProps>(
       ref={ref}
       data-variant="inline-card"
       className={cn(
-        "flex w-full max-w-md flex-col gap-3.5 rounded-lg border border-border bg-background p-5 shadow-sm",
+        "flex w-full max-w-md flex-col gap-3.5 rounded-[8px] border border-border bg-background p-5 shadow-[0_1px_2px_rgba(12,12,10,0.04),0_1px_3px_rgba(12,12,10,0.06)]",
         className,
       )}
       {...props}
@@ -273,8 +295,8 @@ export const Consent = React.forwardRef<HTMLDivElement, ConsentProps>(
               {badge}
             </span>
           )}
-          <h2 className="text-[15px] font-semibold leading-snug text-foreground">{title}</h2>
-          {description && <p className="text-xs leading-[17px] text-muted-foreground">{description}</p>}
+          <h2 className="text-[15px] font-semibold leading-[1.55] text-foreground">{title}</h2>
+          {description && <p className="text-xs leading-[17px] text-faint">{description}</p>}
         </div>
       </div>
       <ConsentControls
@@ -342,8 +364,10 @@ export function ConsentDialog({
 }
 ConsentDialog.displayName = "ConsentDialog";
 
-export interface ConsentToggleProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "title" | "onChange" | "defaultChecked"> {
+export interface ConsentToggleProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "title" | "onChange" | "defaultChecked"
+> {
   /** What the setting allows ("Help improve Aria with my data"). The switch's accessible name. */
   title: React.ReactNode;
   /** Supporting line ("Anonymised. Opt out anytime."). The switch's description. */
@@ -365,7 +389,10 @@ export interface ConsentToggleProps
  * take it back.
  */
 export const ConsentToggle = React.forwardRef<HTMLDivElement, ConsentToggleProps>(
-  ({ title, description, checked, defaultChecked, onCheckedChange, disabled, className, ...props }, ref) => {
+  (
+    { title, description, checked, defaultChecked, onCheckedChange, disabled, className, ...props },
+    ref,
+  ) => {
     const id = React.useId();
     return (
       <div

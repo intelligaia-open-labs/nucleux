@@ -21,7 +21,7 @@ export function SitePreview() {
   const [value, setValue] = useState("");
 
   return (
-    <div className="relative w-[40rem] max-w-full">
+    <div className="relative w-full max-w-[40rem]">
       <Md3OpenInput
         ref={fieldRef}
         aria-label="Message Aria"

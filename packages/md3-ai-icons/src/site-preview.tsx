@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Link2, Paperclip } from "lucide-react";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3Card } from "@nucleux/md3-card";
 import { Md3IconButton } from "@nucleux/md3-icon-button";
+import { MsAttachFile, MsLink } from "@nucleux/md3-icons";
 import { Md3AiIconLegend, Md3AiSparkleIcon } from "./index";
 
 const DRAFT =
@@ -13,28 +13,40 @@ export function SitePreview() {
   const [draft, setDraft] = React.useState(DRAFT);
   const rewrite = () => {};
   return (
-    <div className="flex w-[37.5rem] max-w-full flex-col gap-7">
-      <Md3Card className="shadow-none">
-        <div role="toolbar" aria-label="Release note tools" className="flex items-center gap-1 border-b border-md-outline-variant py-3 pl-4 pr-2">
-          <span className="mr-auto text-base font-medium text-md-on-surface">Release note · September</span>
-          <Md3IconButton aria-label="Add a link">
-            <Link2 aria-hidden="true" />
-          </Md3IconButton>
-          <Md3IconButton aria-label="Attach a file">
-            <Paperclip aria-hidden="true" />
-          </Md3IconButton>
-          <span aria-hidden="true" className="mx-2 h-6 w-px bg-md-outline-variant" />
-          <Md3Button variant="tonal" icon={<Md3AiSparkleIcon />} onClick={rewrite} disabled={!draft.trim()}>
-            Rewrite
-          </Md3Button>
+    <div className="grid w-[600px] max-w-full gap-5 font-md leading-[1.55]">
+      <Md3Card variant="outlined" className="border-0 pb-4 pt-1">
+        <div
+          role="toolbar"
+          aria-label="Release note tools"
+          className="flex items-center gap-2 border-b border-md-outline-variant py-2 pl-4 pr-2"
+        >
+          <span className="flex-1 text-sm font-medium leading-5 text-md-on-surface">Release note · September</span>
+          <span className="inline-flex items-center gap-1">
+            <Md3IconButton aria-label="Add a link">
+              <MsLink />
+            </Md3IconButton>
+            <Md3IconButton aria-label="Attach a file">
+              <MsAttachFile />
+            </Md3IconButton>
+            <span aria-hidden="true" className="mx-1 h-6 w-px bg-md-outline-variant" />
+            <Md3Button
+              variant="tonal"
+              icon={<Md3AiSparkleIcon className="size-[18px] text-md-primary" />}
+              onClick={rewrite}
+              disabled={!draft.trim()}
+              className="tracking-[0.1px]"
+            >
+              Rewrite
+            </Md3Button>
+          </span>
         </div>
-        <label className="m-4 block rounded-t-md-xs border-b-2 border-md-on-surface-variant bg-md-surface-container-high px-4 pb-2 pt-2">
-          <span className="block text-xs tracking-[0.4px] text-md-on-surface-variant">What changed</span>
+        <label className="relative mx-4 mt-3 block">
+          <span className="absolute left-4 top-2 text-xs leading-4 text-md-on-surface-variant">What changed</span>
           <textarea
             rows={3}
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            className="block w-full resize-none bg-transparent text-base text-md-on-surface outline-none"
+            className="block w-full resize-none rounded-t-md-xs border-b-2 border-md-on-surface-variant bg-md-surface-container-highest px-4 pb-2 pt-6 text-base leading-6 text-md-on-surface outline-none"
           />
         </label>
       </Md3Card>

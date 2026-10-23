@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ArrowLeft, ArrowRight, Check, ChevronDown, CircleAlert, Plus, Sparkles, Undo2, X } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown, CircleAlert, Plus, Sparkles, Undo2, X } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import { CardContainer } from "@nucleux/card";
@@ -190,8 +190,8 @@ export function assembleMadlibsPrompt(parts: MadlibsTemplatePart[], values: Madl
  * Width of an inline blank: as wide as what is in it, plus room for its icon.
  * `perChar` scales the text width (in `ch`) for the family's font size.
  */
-export function madlibsBlankWidth(text: string, perChar = 1.05, padding = "2.25rem"): string {
-  return `calc(${Math.max(4, text.length * perChar).toFixed(1)}ch + ${padding})`;
+export function madlibsBlankWidth(text: string, perChar = 1.05, padding = "2.25rem", minChars = 4): string {
+  return `calc(${Math.max(minChars, text.length * perChar).toFixed(1)}ch + ${padding})`;
 }
 
 const lower = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
@@ -533,7 +533,10 @@ function BlankField({ ctl, id, blankStyle, inline, labelled }: BlankFieldProps) 
         aria-describedby={describedBy}
         style={inline ? { width: madlibsBlankWidth(value || placeholder, 0.95, "2.5rem") } : undefined}
         className={cn(
-          "h-[34px] min-w-0 max-w-full pl-2.5 pr-7 text-[13px] font-medium text-foreground outline-none transition-colors",
+          "min-w-0 max-w-full outline-none transition-colors",
+          inline && !underline
+            ? "h-9 pl-2.5 pr-[23px] text-[12.5px] font-medium supports-[field-sizing:content]:!w-auto supports-[field-sizing:content]:[field-sizing:content]"
+            : "h-[34px] pl-2.5 pr-7 text-[13px] font-medium text-foreground",
           "placeholder:font-normal placeholder:text-muted-foreground",
           "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background motion-reduce:transition-none",
           !inline && "w-full",
@@ -545,8 +548,12 @@ function BlankField({ ctl, id, blankStyle, inline, labelled }: BlankFieldProps) 
                 bad && "border-destructive",
               )
             : cn(
-                "rounded-md border",
-                set ? "border-warning bg-warning/10" : "border-dashed border-muted-foreground/50 bg-background",
+                "rounded-[6px] border",
+                set
+                  ? inline
+                    ? "border-brand bg-[rgb(99_102_241/0.08)] text-brand"
+                    : "border-warning bg-warning/10"
+                  : "border-dashed border-muted-foreground/50 bg-background",
                 isSug && "border-brand bg-brand/10 italic",
                 bad && "border-solid border-destructive bg-destructive/5 ring-1 ring-destructive",
               ),
@@ -556,11 +563,16 @@ function BlankField({ ctl, id, blankStyle, inline, labelled }: BlankFieldProps) 
       <span
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute right-2 top-1/2 inline-flex -translate-y-1/2",
-          isSug ? "text-brand" : set ? "text-warning" : "text-muted-foreground",
+          "pointer-events-none absolute top-1/2 inline-flex -translate-y-1/2",
+          inline && !underline ? "right-2.5" : "right-2",
+          isSug ? "text-brand" : set ? (inline && !underline ? "text-brand" : "text-warning") : "text-muted-foreground",
         )}
       >
-        {isSug ? <Sparkles className="size-3.5" /> : combo.hasList ? <ChevronDown className="size-3.5" /> : null}
+        {isSug ? (
+          <Sparkles className="size-3.5" />
+        ) : combo.hasList ? (
+          <ChevronDown className={inline && !underline ? "size-[9px]" : "size-3.5"} />
+        ) : null}
       </span>
       {combo.hasList && (
         <span
@@ -606,7 +618,7 @@ function Sentence({ ctl, blankStyle, compact }: { ctl: MadlibsController; blankS
       </React.Fragment>
     );
   return (
-    <div className={cn("text-[15px] text-foreground", compact ? "leading-9" : "leading-[38px]")}>
+    <div className={cn("text-[15px] text-foreground", compact ? "leading-9" : "leading-[30px]")}>
       {ctl.parts.map((p, i) => (p.kind === "clause" ? p.parts.map((q, j) => renderPart(q, `${i}-${j}`)) : renderPart(p, i)))}
     </div>
   );
@@ -773,14 +785,16 @@ export const Madlibs = React.forwardRef<HTMLDivElement, MadlibsProps>((props, re
       role="group"
       aria-labelledby={ctl.ids.heading}
       data-status={ctl.placed ? "placed" : ctl.status}
-      className={cn("flex w-full max-w-xl flex-col rounded-2xl", compact ? "gap-2.5 p-4" : "gap-3.5 p-5", className)}
+      className={cn(
+        "flex w-full max-w-xl flex-col rounded-[14px] shadow-[0_1px_2px_rgba(12,12,10,0.04),0_1px_3px_rgba(12,12,10,0.06)]",
+        compact ? "gap-2.5 p-4" : "gap-3.5 p-5", className)}
       {...rest}
     >
       <p
         id={ctl.ids.heading}
         className={cn(
-          "flex items-center gap-1.5 text-[10px] font-semibold uppercase leading-4 tracking-[0.1em]",
-          ctl.placed ? "text-foreground" : "text-muted-foreground",
+          "flex items-center gap-1.5 text-[10px] font-semibold uppercase leading-[1.55] tracking-[0.1em]",
+          ctl.placed ? "text-foreground" : "text-faint",
         )}
       >
         {ctl.placed && <Check aria-hidden="true" className="size-3.5 text-success" />}
@@ -843,9 +857,9 @@ export const Madlibs = React.forwardRef<HTMLDivElement, MadlibsProps>((props, re
           )}
 
           {showPreview && (
-            <p className="rounded-lg border border-border bg-muted px-3 py-2.5 text-xs leading-[18px] text-muted-foreground">
+            <p className="rounded-[8px] border border-border bg-[hsl(var(--nx-ink-25))] px-3 py-2.5 text-[11.5px] leading-[18px] text-faint">
               <span className="font-semibold text-foreground">{previewLabel}: </span>
-              <span data-madlibs-preview="">&ldquo;{ctl.prompt}&rdquo;</span>
+              <span data-madlibs-preview="">&quot;{ctl.prompt}&quot;</span>
             </p>
           )}
 
@@ -854,11 +868,11 @@ export const Madlibs = React.forwardRef<HTMLDivElement, MadlibsProps>((props, re
             <Button
               type="button"
               size="sm"
-              className="ml-auto px-[18px] text-xs font-medium"
-              rightIcon={<ArrowRight className="size-3.5" />}
+              className="ml-auto h-auto gap-0 rounded-[8px] border-0 px-[18px] py-[7px] text-xs font-medium leading-[1.55] tracking-normal shadow-none"
               onClick={ctl.use}
             >
               {submitLabel}
+              <span aria-hidden="true">{"\u00a0→"}</span>
             </Button>
           </div>
         </>

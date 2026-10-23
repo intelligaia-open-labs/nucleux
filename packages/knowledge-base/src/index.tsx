@@ -1,6 +1,5 @@
 import * as React from "react";
 import { cn } from "@nucleux/utils";
-import { Badge } from "@nucleux/badge";
 import { Button } from "@nucleux/button";
 import { Spinner } from "@nucleux/spinner";
 import { AlertTriangle, Check, CircleAlert, FileText, Info, Plus, RotateCw } from "lucide-react";
@@ -109,11 +108,11 @@ export const KnowledgeBase = React.forwardRef<HTMLDivElement, KnowledgeBaseProps
           role="group"
           aria-labelledby={heading ? headingId : undefined}
           aria-label={heading ? undefined : "Knowledge sources"}
-          className={cn("flex flex-col gap-2 rounded-xl border border-border bg-background p-3", className)}
+          className={cn("flex flex-col gap-2.5 rounded-xl border border-border bg-background p-3.5", className)}
           {...props}
         >
           {heading && (
-            <p id={headingId} className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+            <p id={headingId} className="text-[10px] font-semibold uppercase leading-[1.55] tracking-[0.1em] text-faint">
               {heading}
             </p>
           )}
@@ -128,20 +127,20 @@ export const KnowledgeBase = React.forwardRef<HTMLDivElement, KnowledgeBaseProps
                   aria-checked={active}
                   onClick={() => toggle(source.id)}
                   className={cn(
-                    "inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&_svg]:size-3",
+                    "inline-block rounded-lg border px-[11px] py-[5px] text-[11px] font-semibold leading-[1.55] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                     active
-                      ? "border-brand bg-brand/10 text-brand"
+                      ? "border-brand bg-[rgb(99_102_241/0.08)] text-brand"
                       : "border-border font-medium text-muted-foreground hover:bg-accent hover:text-foreground",
                   )}
                 >
                   {source.name}
                   {source.count != null ? (
-                    <span>· {source.count.toLocaleString()}</span>
+                    <> · {source.count.toLocaleString()}</>
                   ) : (
-                    source.meta != null && <span>· {source.meta}</span>
+                    source.meta != null && <> · {source.meta}</>
                   )}
                   {source.status && source.status !== "ready" && (
-                    <span className={cn("font-normal", statusTone[source.status])}>· {statusWord[source.status]}</span>
+                    <span className={cn("font-normal", statusTone[source.status])}> · {statusWord[source.status]}</span>
                   )}
                 </button>
               );
@@ -150,9 +149,9 @@ export const KnowledgeBase = React.forwardRef<HTMLDivElement, KnowledgeBaseProps
               <button
                 type="button"
                 onClick={onAdd}
-                className="inline-flex items-center gap-1 rounded-lg border border-dashed border-border bg-muted/50 px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&_svg]:size-3"
+                className="inline-block rounded-lg border border-dashed border-border bg-[hsl(var(--nx-ink-25))] px-[11px] py-[5px] text-[11px] leading-[1.55] text-faint transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <Plus aria-hidden="true" />
+                <span aria-hidden="true">+ </span>
                 {addLabel}
               </button>
             )}
@@ -304,7 +303,7 @@ export const KnowledgeBaseSources = React.forwardRef<HTMLDivElement, KnowledgeBa
           id={headingId}
           role="status"
           aria-live="polite"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+          className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase leading-[1.55] tracking-[0.06em] text-faint"
         >
           {reading && <Spinner aria-hidden="true" role={undefined} className="size-3 motion-reduce:animate-none" />}
           {title}
@@ -314,13 +313,15 @@ export const KnowledgeBaseSources = React.forwardRef<HTMLDivElement, KnowledgeBa
             {sources.map((s) => {
               const body = (
                 <>
-                  <FileText aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
-                  <span className="truncate">{s.name}</span>
-                  {s.section && <span className="shrink-0 text-muted-foreground">· {s.section}</span>}
+                  <span aria-hidden="true" className="shrink-0">📄</span>
+                  <span className="min-w-0 truncate">
+                    {s.name}
+                    {s.section && <> · {s.section}</>}
+                  </span>
                 </>
               );
               const cls =
-                "flex items-center gap-2 rounded-md bg-muted/60 px-2.5 py-1.5 text-xs text-foreground";
+                "flex items-center gap-1.5 rounded-md bg-[hsl(var(--nx-ink-25))] px-2.5 py-1.5 text-[11.5px] leading-[1.55] text-foreground";
               return (
                 <li key={s.id}>
                   {s.href ? (
@@ -354,7 +355,7 @@ export interface KnowledgeBaseCoverageProps extends React.HTMLAttributes<HTMLSpa
 }
 
 const coverage: Record<KnowledgeBaseCoverageLevel, { word: string; icon: React.ReactNode; cls: string }> = {
-  high: { word: "Well-covered", icon: <Check aria-hidden="true" className="size-2.5" />, cls: "bg-success text-success-foreground" },
+  high: { word: "Well-covered", icon: <span aria-hidden="true" className="text-[9px] leading-none">✓</span>, cls: "bg-success text-success-foreground" },
   partial: { word: "Partly covered", icon: <AlertTriangle aria-hidden="true" className="size-2.5" />, cls: "bg-warning text-warning-foreground" },
   low: { word: "Thin coverage", icon: <CircleAlert aria-hidden="true" className="size-2.5" />, cls: "bg-destructive text-destructive-foreground" },
 };
@@ -368,17 +369,21 @@ export const KnowledgeBaseCoverage = React.forwardRef<HTMLSpanElement, Knowledge
   ({ level, matches, label, className, ...props }, ref) => {
     const c = coverage[level];
     return (
-      <Badge
+      <span
         ref={ref}
-        variant="outline"
-        icon={<span className={cn("inline-flex size-[18px] items-center justify-center rounded-full", c.cls)}>{c.icon}</span>}
         data-level={level}
-        className={cn("gap-1.5 bg-muted/50 py-1 pl-1.5 pr-3", className)}
+        className={cn(
+          "inline-flex items-center gap-[7px] rounded-full border border-border bg-[hsl(var(--nx-ink-25))] px-3 py-1.5 text-[11.5px] font-medium leading-[1.55] text-foreground",
+          className,
+        )}
         {...props}
       >
-        {label ?? c.word}
-        {matches != null && <span>· {matches} {matches === 1 ? "match" : "matches"}</span>}
-      </Badge>
+        <span className={cn("inline-flex size-[18px] shrink-0 items-center justify-center rounded-full", c.cls)}>{c.icon}</span>
+        <span>
+          {label ?? c.word}
+          {matches != null && <> · {matches} {matches === 1 ? "match" : "matches"}</>}
+        </span>
+      </span>
     );
   },
 );

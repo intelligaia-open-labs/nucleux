@@ -38,6 +38,7 @@ export function SitePreview() {
       onAdd={() => {}}
       model={<Md3OpenInputModelChip name="Balanced" detail="High" />}
       onVoice={() => {}}
+      className="max-w-[620px]"
     />
   );
 }

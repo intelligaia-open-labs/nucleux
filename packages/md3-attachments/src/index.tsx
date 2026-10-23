@@ -172,7 +172,7 @@ export const Md3Attachments = React.forwardRef<HTMLDivElement, Md3AttachmentsPro
           role="group"
           aria-label={label}
           data-variant={variant}
-          className={cn("flex flex-col gap-2 text-md-on-surface", className)}
+          className={cn("font-md", "flex flex-col gap-2 text-md-on-surface", className)}
           {...props}
         >
           {children}
@@ -261,6 +261,7 @@ export const Md3AttachmentsItem = React.forwardRef<HTMLDivElement, Md3Attachment
         ref={ref}
         data-status={status}
         className={cn(
+          "font-md",
           "relative animate-nx-fade-in motion-reduce:animate-none",
           isCard ? "flex w-full" : "inline-flex",
           className,
@@ -386,6 +387,7 @@ export const Md3AttachmentsTray = React.forwardRef<HTMLDivElement, Md3Attachment
         role="list"
         aria-label="Attached files"
         className={cn(
+          "font-md",
           "flex gap-2",
           isCard ? "flex-col flex-nowrap items-stretch" : "flex-wrap items-start",
           className,
@@ -470,6 +472,7 @@ export const Md3AttachmentsTrigger = React.forwardRef<HTMLButtonElement, Md3Atta
           aria-label={ariaLabel}
           onClick={handleClick as unknown as React.MouseEventHandler<HTMLElement>}
           className={cn(
+            "font-md",
             "relative inline-flex h-10 items-center justify-center gap-2 rounded-full px-6 text-sm font-medium text-md-primary",
             className,
           )}
@@ -489,6 +492,7 @@ export const Md3AttachmentsTrigger = React.forwardRef<HTMLButtonElement, Md3Atta
           disabled={isDisabled}
           onClick={handleClick}
           className={cn(
+            "font-md",
             size === "icon-sm" || size === "sm" ? "h-8 w-8 [&_svg]:size-5" : undefined,
             size === "icon-lg" || size === "lg" ? "h-12 w-12" : undefined,
             danger,
@@ -509,7 +513,7 @@ export const Md3AttachmentsTrigger = React.forwardRef<HTMLButtonElement, Md3Atta
         disabled={isDisabled}
         onClick={handleClick}
         icon={leftIcon ?? <Plus aria-hidden="true" />}
-        className={cn(size === "sm" && "h-8 px-4", size === "lg" && "h-12", danger, className)}
+        className={cn("font-md", size === "sm" && "h-8 px-4", size === "lg" && "h-12", danger, className)}
         {...props}
       >
         {children}
@@ -593,7 +597,7 @@ export const Md3AttachmentsDropZone = React.forwardRef<HTMLDivElement, Md3Attach
       <div
         ref={ref}
         data-active={lit || undefined}
-        className={cn("relative", className)}
+        className={cn("font-md", "relative", className)}
         onDragEnter={(e) => {
           onDragEnter?.(e);
           if (!hasFiles(e) || ctx?.disabled) return;
@@ -637,7 +641,7 @@ Md3AttachmentsDropZone.displayName = "Md3AttachmentsDropZone";
  */
 export const Md3AttachmentsNote = React.forwardRef<HTMLParagraphElement, Md3AttachmentsNoteProps>(
   ({ className, children, ...props }, ref) => (
-    <p ref={ref} className={cn("text-xs tracking-[0.4px] text-md-on-surface-variant", className)} {...props}>
+    <p ref={ref} className={cn("font-md", "text-xs tracking-[0.4px] text-md-on-surface-variant", className)} {...props}>
       {children ??
         "Attached files stay with this conversation. Removing one takes it out of what comes next; it can't unwrite an answer it has already shaped."}
     </p>

@@ -57,7 +57,7 @@ export const Md3ModesSegmented = React.forwardRef<HTMLDivElement, Md3ModesSegmen
         role="radiogroup"
         aria-label={label}
         value={value ?? ""}
-        className={cn("divide-md-outline-variant border-md-outline-variant", className)}
+        className={cn("font-md", "divide-md-outline-variant border-md-outline-variant", className)}
         {...props}
       >
         {modes.map((m, i) => (
@@ -102,6 +102,7 @@ export const Md3ModesList = React.forwardRef<HTMLDivElement, Md3ModesListProps>(
         role="radiogroup"
         aria-label={label}
         className={cn(
+          "font-md",
           "flex flex-col gap-0.5",
           framed && "rounded-md-lg border border-md-outline-variant bg-md-surface p-2",
           className,
@@ -194,7 +195,7 @@ export const Md3ModesChip = React.forwardRef<HTMLButtonElement, Md3ModesChipProp
           aria-haspopup="dialog"
           aria-expanded={open}
           aria-label={modesLabels.chip(label, null)}
-          className={cn("shrink-0 border-md-outline-variant font-normal [&_svg]:size-4", open && "border-md-primary", className)}
+          className={cn("font-md", "shrink-0 border-md-outline-variant font-normal [&_svg]:size-4", open && "border-md-primary", className)}
           {...props}
         >
           <span className="inline-flex items-center gap-1.5">
@@ -207,6 +208,7 @@ export const Md3ModesChip = React.forwardRef<HTMLButtonElement, Md3ModesChipProp
     return (
       <span
         className={cn(
+          "font-md",
           "inline-flex h-8 shrink-0 items-center rounded-md-sm bg-md-secondary-container text-md-on-secondary-container animate-nx-fade-in motion-reduce:animate-none",
           className,
         )}
@@ -282,6 +284,7 @@ export const Md3ModesPicker = React.forwardRef<HTMLDivElement, Md3ModesPickerPro
         role="dialog"
         aria-label={modesLabels.picker(label)}
         className={cn(
+          "font-md",
           "min-w-[18rem] rounded-md-lg border border-md-outline-variant bg-md-surface p-2 shadow-md-2 animate-nx-fade-in motion-reduce:animate-none",
           className,
         )}
@@ -341,6 +344,7 @@ export const Md3ModesNote = React.forwardRef<HTMLDivElement, Md3ModesNoteProps>(
     <div
       ref={ref}
       className={cn(
+        "font-md",
         "flex items-center gap-2 px-2 text-[13px] leading-5 text-md-on-surface-variant animate-nx-fade-in motion-reduce:animate-none",
         className,
       )}
@@ -534,7 +538,7 @@ export const Md3Modes = React.forwardRef<HTMLDivElement, Md3ModesProps>(
 
     if (variant === "segmented" || variant === "list") {
       return (
-        <div ref={ref} className={cn("flex flex-col gap-2", variant === "segmented" && "items-start", className)} {...props}>
+        <div ref={ref} className={cn("font-md", "flex flex-col gap-2", variant === "segmented" && "items-start", className)} {...props}>
           {variant === "segmented" ? (
             <Md3ModesSegmented modes={modes} value={s.value} onSelect={s.select} label={label} />
           ) : (
@@ -556,7 +560,7 @@ export const Md3Modes = React.forwardRef<HTMLDivElement, Md3ModesProps>(
 
     if (variant === "chip") {
       return (
-        <div ref={ref} className={cn("relative inline-flex flex-col items-start gap-2", className)} {...props}>
+        <div ref={ref} className={cn("font-md", "relative inline-flex flex-col items-start gap-2", className)} {...props}>
           {control}
           {picker}
           {note}
@@ -566,7 +570,7 @@ export const Md3Modes = React.forwardRef<HTMLDivElement, Md3ModesProps>(
     }
 
     return (
-      <div ref={ref} className={cn("relative flex w-full max-w-[38rem] flex-col gap-2", className)} {...props}>
+      <div ref={ref} className={cn("font-md", "relative flex w-full max-w-[38rem] flex-col gap-2", className)} {...props}>
         {picker}
         {note}
         <Md3AgentComposer

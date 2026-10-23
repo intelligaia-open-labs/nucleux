@@ -8,6 +8,40 @@ The format is machine-readable: each version heading starts with `## ` followed
 by a version tag and date, and entries are grouped under `### Added`, `### Changed`,
 `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings.
 
+## [0.12.0] — 2026-10-23
+
+Every agentic pattern, in both families, now renders like nucleux.in's live
+preview — measured, not eyeballed.
+
+### Changed
+- **Visually exact agentic components.** Each of the 35 patterns × 2 families
+  was compared pixel by pixel with its nucleux.in live preview (same width,
+  2× DPR, sub-pixel aligned). 69 of 70 are within 2px of the site's size and
+  under 2.5% pixel mismatch (median 0.27%); the 70th differs only by the site's
+  stage glow. Component **defaults** carry the site's type scale, spacing,
+  radii, borders, shadows and colours.
+- **shadcn palette = nucleux.in's "ink" palette** (fg #050504, muted #f5f5f3,
+  muted-foreground #5d5d54, border #dcdcd5, input #c4c4bc, primary #0f172a),
+  replacing slate; new `faint` token (#88887d, the site's lighter grey); ink
+  dark scheme.
+- **Fonts:** Inter 4 (rsms.me, with the site's ss01/cv11 features and
+  rendering) for the shadcn family, JetBrains Mono for code, Roboto for every
+  Material 3 component (`font-sans` / `font-mono` / `font-md`). `get_setup`
+  gives the font links.
+- Material 3 uses Material Symbols (the glyphs the site uses); the site's
+  emoji, straight quotes and real brand logos (Google Drive, Slack, Notion,
+  GitHub) where the site shows them.
+- The shared composer bar is 56px in one row and 88px stacked, as on the site.
+
+### Added
+- `@nucleux/md3-icons`: the 96 Material Symbols (Outlined 400) glyphs the site
+  uses, as React components plus `MsIcon` (Apache-2.0).
+- Optional props: `OpenInput` `actionsPlacement`; Handwriting `sampleStrokes`,
+  `sampleLabel`, `recognizeLabel`, `typeToggle`; Gesture `overlayDismiss`,
+  `showKeys`; StructuredInput `headerClassName`; `ModeOption.shortIcon`;
+  `AttachmentsFile.icon`; `madlibsBlankWidth` `minChars`; Md3 AI icon helpers
+  (`md3AiGlyphs`, `useMd3AiGlyph`). The `nx-orb-pulse` animation.
+
 ## [0.11.3] — 2026-10-23
 
 ### Fixed

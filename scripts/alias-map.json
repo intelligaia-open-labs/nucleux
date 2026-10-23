@@ -177,5 +177,6 @@
   "@nucleux/preset-styles": "packages/preset-styles/src/index.tsx",
   "@nucleux/prompt-enhancer": "packages/prompt-enhancer/src/index.tsx",
   "@nucleux/suggestions": "packages/suggestions/src/index.tsx",
-  "@nucleux/voice-tone": "packages/voice-tone/src/index.tsx"
+  "@nucleux/voice-tone": "packages/voice-tone/src/index.tsx",
+  "@nucleux/md3-icons": "packages/md3-icons/src/index.tsx"
 }

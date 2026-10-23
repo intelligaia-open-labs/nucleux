@@ -238,6 +238,12 @@ const htmlSetup = [
   '<link rel="stylesheet" href="output.css" />',
   "```",
   "",
+  "Fonts (as on nucleux.in): Inter for text, JetBrains Mono for code, Roboto for Material 3 — add to `<head>`:",
+  "```html",
+  '<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />',
+  '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Roboto:wght@400;500;700&display=swap" />',
+  "```",
+  "",
   'Dark theme: add `class="dark"` on `<html>`. The static HTML carries styling only — for',
   'interactive behavior use the React packages (framework:"react").',
 ].join("\n");

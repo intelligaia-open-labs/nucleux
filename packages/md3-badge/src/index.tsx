@@ -23,6 +23,7 @@ export const Md3Badge = React.forwardRef<HTMLSpanElement, Md3BadgeProps>(
       <span
         ref={ref}
         className={cn(
+          "font-md",
           "z-10 inline-flex items-center justify-center rounded-full bg-md-error font-medium text-md-on-error",
           isDot ? "h-1.5 w-1.5" : "h-4 min-w-4 px-1 text-[11px] leading-none",
           children && "absolute -right-1 -top-1",
@@ -37,7 +38,7 @@ export const Md3Badge = React.forwardRef<HTMLSpanElement, Md3BadgeProps>(
 
     if (!children) return badge;
     return (
-      <span className="relative inline-flex">
+      <span className="font-md relative inline-flex">
         {children}
         {badge}
       </span>

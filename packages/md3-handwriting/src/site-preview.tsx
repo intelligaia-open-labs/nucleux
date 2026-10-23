@@ -1,8 +1,16 @@
 import { useState } from "react";
-import { PenLine } from "lucide-react";
+import { MsDraw } from "@nucleux/md3-icons";
 import { Md3IconButton } from "@nucleux/md3-icon-button";
 import { Md3OpenInput, Md3OpenInputModelChip } from "@nucleux/md3-open-input";
-import { Md3HandwritingInput } from "./index";
+import { Md3HandwritingInput, type HandwritingStroke } from "./index";
+
+/** Example ink for "Write a sample": one wavy line across the pad. */
+const SAMPLE: HandwritingStroke[] = [
+  {
+    pointerType: "mouse",
+    points: Array.from({ length: 90 }, (_, i) => ({ x: 24 + i * 5, y: 46 + Math.sin(i / 3) * 10, pressure: 0.5, t: i })),
+  },
+];
 
 /** Md3HandwritingInput as nucleux.in's live preview shows it: the pen open above the composer, ready to write. */
 export function SitePreview() {
@@ -10,7 +18,7 @@ export function SitePreview() {
   const [pen, setPen] = useState(true);
 
   return (
-    <div className="flex w-full max-w-2xl flex-col gap-3">
+    <div className="flex w-[39.75rem] max-w-full flex-col gap-2.5">
       {pen && (
         <Md3HandwritingInput
           compact
@@ -18,8 +26,10 @@ export function SitePreview() {
           placeholder="Write here"
           onRecognize={() => ({ text: "ship the export fix" })}
           onAccept={(text) => setValue((v) => `${v} ${text}`)}
+          recognizeLabel="Recognize"
+          sampleStrokes={SAMPLE}
+          typeToggle={false}
           onClose={() => setPen(false)}
-          className="rounded-md-xl border border-md-outline-variant bg-md-surface-container-lowest p-4"
         />
       )}
       <Md3OpenInput
@@ -30,6 +40,7 @@ export function SitePreview() {
         onSubmit={() => setValue("")}
         onAdd={() => {}}
         model={<Md3OpenInputModelChip name="Balanced" detail="High" />}
+        actionsPlacement="after-model"
         actions={
           <Md3IconButton
             aria-label="Write by hand"
@@ -37,7 +48,7 @@ export function SitePreview() {
             onClick={() => setPen(!pen)}
             className="text-md-primary [&_svg]:size-5"
           >
-            <PenLine aria-hidden="true" />
+            <MsDraw />
           </Md3IconButton>
         }
         onVoice={() => {}}

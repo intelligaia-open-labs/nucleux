@@ -54,7 +54,7 @@ const meta = {
   component: Md3ExampleGallery,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[34rem]"><Story /></div>],
+  decorators: [(Story) => <div className="w-[35rem]"><Story /></div>],
   args: { examples: [] },
 } satisfies Meta<typeof Md3ExampleGallery>;
 

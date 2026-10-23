@@ -13,7 +13,7 @@ const meta = {
   // The site preview sizes itself; the other stories sit in a 30rem column.
   decorators: [
     (Story, ctx) =>
-      ctx.id.endsWith("--site-preview") ? <div className="w-[40rem]"><Story /></div> : <div className="w-[30rem]"><Story /></div>,
+      ctx.id.endsWith("--site-preview") ? <div className="w-[40rem] max-w-full"><Story /></div> : <div className="w-[30rem]"><Story /></div>,
   ],
   args: { onSubmit: () => {}, "aria-label": "Message Aria" },
 } satisfies Meta<typeof Md3OpenInput>;

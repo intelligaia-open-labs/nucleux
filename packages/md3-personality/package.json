@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-personality",
-  "version": "0.11.3",
+  "version": "0.12.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Personality — choose how the agent writes while the trust language stays fixed — Nucleux agentic UI for React.",
@@ -41,6 +41,7 @@
   "dependencies": {
     "@nucleux/md3-agent-avatar": "workspace:*",
     "@nucleux/md3-button": "workspace:*",
+    "@nucleux/md3-icons": "workspace:*",
     "@nucleux/md3-message": "workspace:*",
     "@nucleux/personality": "workspace:*",
     "@nucleux/utils": "workspace:*",

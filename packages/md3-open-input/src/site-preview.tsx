@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sparkles } from "lucide-react";
+import { MsStarShine } from "@nucleux/md3-icons";
 import { Md3OpenInput, Md3OpenInputModelChip } from "./index";
 
 const TURNS = [
@@ -15,23 +15,23 @@ export function SitePreview() {
   const [value, setValue] = useState("");
 
   return (
-    <div className="flex w-full max-w-2xl flex-col gap-6">
-      <ol className="flex flex-col gap-5 px-2" aria-label="Conversation">
+    <div className="flex w-full flex-col gap-4 leading-[1.55]">
+      <ol className="flex flex-col gap-3.5 px-2 font-sans" aria-label="Conversation">
         {TURNS.map((turn) => (
-          <li key={turn.who} className="flex gap-3">
+          <li key={turn.who} className="flex items-start gap-[11px]">
             <span
               aria-hidden="true"
               className={
                 turn.who === "Aria"
-                  ? "grid size-7 shrink-0 place-items-center rounded-full bg-md-primary-container text-md-on-primary-container"
-                  : "grid size-7 shrink-0 place-items-center rounded-full bg-md-surface-variant text-xs text-md-on-surface-variant"
+                  ? "grid size-7 shrink-0 place-items-center rounded-full bg-md-primary-container text-md-primary"
+                  : "grid size-7 shrink-0 place-items-center rounded-full bg-md-surface-container-highest font-md text-xs font-medium text-md-on-surface-variant"
               }
             >
-              {turn.who === "Aria" ? <Sparkles className="size-4" /> : "P"}
+              {turn.who === "Aria" ? <MsStarShine className="size-[15px]" /> : "P"}
             </span>
-            <div className="flex flex-col gap-1">
-              <span className="text-sm font-semibold text-md-on-surface">{turn.who}</span>
-              <p className="text-[0.9375rem] leading-6 text-md-on-surface-variant">{turn.text}</p>
+            <div className="min-w-0 flex-1">
+              <span className="block text-[12.5px] font-[640] text-md-on-surface">{turn.who}</span>
+              <p className="mt-1.5 text-sm leading-[1.6] text-md-on-surface-variant">{turn.text}</p>
             </div>
           </li>
         ))}

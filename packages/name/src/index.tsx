@@ -40,11 +40,11 @@ export interface AgentNameProps extends React.HTMLAttributes<HTMLDivElement> {
 function WorkingDots() {
   return (
     <span aria-hidden="true" className="inline-flex items-center gap-[3px]">
-      {[0, 150, 300].map((delay) => (
+      {[0, 200, 400].map((delay) => (
         <span
           key={delay}
           style={{ animationDelay: `${delay}ms` }}
-          className="size-[5px] rounded-full bg-muted-foreground animate-nx-typing motion-reduce:animate-none"
+          className="size-[5px] rounded-full bg-muted-foreground animate-pulse [animation-duration:1.4s] motion-reduce:animate-none"
         />
       ))}
     </span>
@@ -127,12 +127,19 @@ export const AgentName = React.forwardRef<HTMLDivElement, AgentNameProps>(
           ref={ref}
           data-variant={variant}
           className={cn(
-            "inline-flex w-max items-center gap-2.5 rounded-full border border-border bg-background py-2.5 pl-3 pr-4 text-[13px] text-foreground shadow-sm",
+            "inline-flex w-max items-center gap-2.5 rounded-full border border-border bg-background px-4 py-2.5 text-[13px] leading-[1.55] text-foreground shadow-sm",
             className,
           )}
           {...props}
         >
-          <AgentAvatar name={name} src={avatarSrc} glyph={avatarGlyph} size="sm" decorative />
+          <AgentAvatar
+            name={name}
+            src={avatarSrc}
+            glyph={avatarGlyph}
+            size="sm"
+            decorative
+            className="[&>*]:size-[22px] [&>*]:bg-foreground [&>*]:bg-none [&>*]:text-[11px] [&>*]:text-background"
+          />
           <span role="status" aria-live="polite">
             {status ? `${name} is ${status}` : name}
             <span className="sr-only">, {descriptor}</span>

@@ -1,8 +1,9 @@
 import * as React from "react";
 import { cn } from "@nucleux/utils";
+import { MsInfo } from "@nucleux/md3-icons";
 import { Md3Button } from "@nucleux/md3-button";
 import { Md3Chip } from "@nucleux/md3-chip";
-import { AlertTriangle, Check, CircleAlert, FileText, Info, Plus, RotateCw } from "lucide-react";
+import { AlertTriangle, Check, CircleAlert, FileText, Plus, RotateCw } from "lucide-react";
 import { knowledgeBaseInitials } from "@nucleux/knowledge-base";
 import type {
   KnowledgeBaseProps,
@@ -103,6 +104,7 @@ export const Md3KnowledgeBase = React.forwardRef<HTMLDivElement, Md3KnowledgeBas
           aria-labelledby={heading ? headingId : undefined}
           aria-label={heading ? undefined : "Knowledge sources"}
           className={cn(
+            "font-md",
             "flex flex-col gap-3 rounded-md-md bg-md-surface-container-low p-4 text-md-on-surface shadow-md-1",
             className,
           )}
@@ -151,6 +153,7 @@ export const Md3KnowledgeBase = React.forwardRef<HTMLDivElement, Md3KnowledgeBas
       <div
         ref={ref}
         className={cn(
+          "font-md",
           "flex flex-col gap-1 rounded-md-md bg-md-surface-container-low py-3 text-md-on-surface shadow-md-1",
           className,
         )}
@@ -288,7 +291,7 @@ export const Md3KnowledgeBaseSources = React.forwardRef<HTMLDivElement, Md3Knowl
         count
       ));
     return (
-      <div ref={ref} className={cn("flex flex-col gap-2 text-md-on-surface", className)} {...props}>
+      <div ref={ref} className={cn("font-md", "flex flex-col gap-2 text-md-on-surface", className)} {...props}>
         <p
           id={headingId}
           role="status"
@@ -377,6 +380,7 @@ export const Md3KnowledgeBaseCoverage = React.forwardRef<HTMLSpanElement, Md3Kno
         ref={ref}
         data-level={level}
         className={cn(
+          "font-md",
           "inline-flex h-6 items-center gap-1 rounded-md-sm px-2 text-xs font-medium tracking-[0.5px]",
           c.cls,
           className,
@@ -410,6 +414,9 @@ const baseStatusWord: Record<KnowledgeBaseCardStatus, string> = {
  * outlined "Manage sources" with text buttons "Add sources" and "Stop using
  * here" (which deletes nothing). Shares the API of `@nucleux/knowledge-base`.
  */
+/** The card's small action buttons, as nucleux.in draws them (`.md-button--sm`). */
+const footButton = "h-8 px-4 tracking-[0.1px]";
+
 export const Md3KnowledgeBaseCard = React.forwardRef<HTMLElement, Md3KnowledgeBaseCardProps>(
   (
     {
@@ -438,32 +445,33 @@ export const Md3KnowledgeBaseCard = React.forwardRef<HTMLElement, Md3KnowledgeBa
         aria-labelledby={titleId}
         data-status={status}
         className={cn(
-          "flex flex-col gap-4 rounded-md-lg border border-md-outline-variant bg-md-surface-container-lowest p-4 text-md-on-surface",
+          "font-sans leading-[1.55]",
+          "flex flex-col gap-3 rounded-md-lg border border-md-outline-variant bg-md-surface-container-lowest p-4 text-md-on-surface",
           className,
         )}
         {...props}
       >
-        <div className="flex items-start gap-3">
+        <div className="flex items-center gap-2.5">
           <span
             aria-hidden="true"
-            className="inline-flex size-[34px] shrink-0 items-center justify-center rounded-md-md bg-md-primary-container text-xs font-semibold tracking-[0.5px] text-md-on-surface-variant"
+            className="inline-flex size-[34px] shrink-0 items-center justify-center rounded-[10px] bg-md-secondary-container text-[10.5px] font-bold tracking-[0.04em] text-md-on-secondary-container"
           >
             {monogram ?? knowledgeBaseInitials(name)}
           </span>
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-            <h3 id={titleId} className="truncate text-base font-semibold leading-6 tracking-[0.15px]">
+            <h3 id={titleId} className="truncate text-[14px] font-[650] leading-[1.55]">
               {name}
             </h3>
             {sourceCount != null && (
-              <p className="text-sm leading-5 tracking-[0.25px] text-md-on-surface-variant">
+              <p className="truncate text-[12px] leading-[1.55] text-md-on-surface-variant">
                 {sourceCount.toLocaleString()} {sourceCount === 1 ? "source" : "sources"}
               </p>
             )}
           </div>
           <span
             className={cn(
-              "inline-flex h-6 shrink-0 items-center gap-1.5 rounded-full px-2.5 text-sm font-medium tracking-[0.1px]",
-              active ? "bg-md-surface-container-high text-md-on-surface" : "border border-md-outline-variant text-md-on-surface-variant",
+              "inline-flex h-6 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 text-[11.5px] font-semibold",
+              active ? "bg-md-surface-container-highest text-md-on-surface" : "border border-md-outline-variant text-md-on-surface-variant",
             )}
           >
             <span aria-hidden="true" className="size-2 rounded-full border-2 border-current" />
@@ -471,25 +479,25 @@ export const Md3KnowledgeBaseCard = React.forwardRef<HTMLElement, Md3KnowledgeBa
           </span>
         </div>
         {scope && (
-          <p className="inline-flex items-center gap-2 text-sm font-medium leading-5 tracking-[0.1px] text-md-on-surface">
-            <Info aria-hidden="true" className="size-[18px] shrink-0" />
+          <p className="flex items-start gap-1.5 text-[11.5px] font-semibold leading-[1.5] text-md-on-surface">
+            <MsInfo className="mt-px size-3.5" />
             {scope}
           </p>
         )}
         {(onManage || onAdd || onActiveChange) && (
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-1.5">
             {onManage && (
-              <Md3Button variant="outlined" onClick={onManage}>
+              <Md3Button variant="outlined" onClick={onManage} className={footButton + " border-md-outline-variant"}>
                 {manageLabel}
               </Md3Button>
             )}
             {onAdd && (
-              <Md3Button variant="text" onClick={onAdd}>
+              <Md3Button variant="text" onClick={onAdd} className={footButton}>
                 {addLabel}
               </Md3Button>
             )}
             {onActiveChange && (
-              <Md3Button variant="text" onClick={() => onActiveChange(!active)}>
+              <Md3Button variant="text" onClick={() => onActiveChange(!active)} className={footButton}>
                 {active ? deactivateLabel : activateLabel}
               </Md3Button>
             )}

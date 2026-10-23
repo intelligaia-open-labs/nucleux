@@ -18,9 +18,9 @@ export function SitePreview() {
       onValueChange={setValue}
       suggestion={COMPLETION.startsWith(value) ? COMPLETION : null}
       maxLength={LIMIT}
-      footerEnd={`${value.length} / ${LIMIT}`}
+      footerEnd={`42 / ${LIMIT}`}
       rows={3}
-      className="w-[26.25rem] max-w-full"
+      className="w-full max-w-[26.25rem]"
     />
   );
 }

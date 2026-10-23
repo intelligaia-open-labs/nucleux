@@ -344,7 +344,7 @@ describe("behaviour", () => {
     const user = userEvent.setup();
     const pool = ["Alpha brief", "Beta brief", "Gamma brief"];
     render(<Randomize variant="random-card" prompts={pool} onSelect={() => {}} />);
-    const shown = () => pool.find((p) => screen.queryByText(`“${p}”`))!;
+    const shown = () => pool.find((p) => screen.queryByText(`"${p}"`))!;
     const first = shown();
     await user.click(screen.getByRole("button", { name: "Pick another" }));
     const second = shown();

@@ -18,7 +18,7 @@ const READ: KnowledgeBaseSourceRef[] = [
 export function SitePreview() {
   const [selected, setSelected] = useState(["docs", "playbook"]);
   return (
-    <div className="flex w-full max-w-[30rem] flex-col gap-2.5">
+    <div className="flex w-full max-w-[446px] flex-col gap-2.5">
       <KnowledgeBase
         variant="chips"
         heading="Grounded in"
@@ -27,10 +27,9 @@ export function SitePreview() {
         onValueChange={setSelected}
         onAdd={() => {}}
         addLabel="add base"
-        className="p-3.5"
       />
       <div className="rounded-xl border border-border bg-background p-3.5">
-        <p className="border-b border-border pb-3 text-sm text-foreground">{ANSWER}</p>
+        <p className="border-b border-border pb-3 text-[13px] leading-5 text-foreground">{ANSWER}</p>
         <KnowledgeBaseSources sources={READ} className="mt-2.5" />
       </div>
       <KnowledgeBaseCoverage level="high" matches={14} className="self-start" />

@@ -80,9 +80,10 @@ function BlankField({ ctl, id, blankStyle, inline, labelled }: BlankFieldProps) 
         aria-required={blank.required || undefined}
         aria-invalid={bad || undefined}
         aria-describedby={describedBy}
-        style={inline ? { width: madlibsBlankWidth(value || placeholder, 1.1, "3rem") } : undefined}
+        style={inline ? { width: madlibsBlankWidth(value || placeholder, 1.1, "50px", 6) } : undefined}
         className={cn(
-          "h-9 min-w-0 max-w-full pl-3 pr-[30px] text-[15px] font-medium text-md-on-surface outline-none transition-colors motion-reduce:transition-none",
+          "h-9 min-w-0 max-w-full pl-3 pr-[30px] text-[15px] font-medium text-md-on-surface outline-none",
+          " transition-colors motion-reduce:transition-none",
           "placeholder:font-normal placeholder:text-md-on-surface-variant",
           !inline && "w-full",
           underline
@@ -94,9 +95,9 @@ function BlankField({ ctl, id, blankStyle, inline, labelled }: BlankFieldProps) 
                 bad && "border-b-2 border-md-error",
               )
             : cn(
-                "rounded-md-md",
+                "rounded-[10px]",
                 set
-                  ? "border border-transparent bg-md-secondary-container text-md-on-secondary-container"
+                  ? "border border-transparent bg-md-secondary-container text-[rgb(74_68_89)] dark:text-md-on-secondary-container"
                   : "border border-dashed border-md-outline bg-transparent",
                 "focus:border-2 focus:border-solid focus:border-md-primary focus:pl-[11px] focus:pr-[29px]",
                 isSug && "border-dashed border-md-primary bg-md-primary/[0.06] italic text-md-primary",
@@ -109,7 +110,7 @@ function BlankField({ ctl, id, blankStyle, inline, labelled }: BlankFieldProps) 
         aria-hidden="true"
         className={cn(
           "pointer-events-none absolute right-2 top-1/2 inline-flex -translate-y-1/2 [&_svg]:size-[18px]",
-          isSug ? "text-md-primary" : set && !underline ? "text-md-on-secondary-container" : "text-md-on-surface-variant",
+          isSug ? "text-md-primary" : set && !underline ? "text-[rgb(74_68_89)] dark:text-md-on-secondary-container" : "text-md-on-surface-variant",
         )}
       >
         {isSug ? <Sparkles /> : combo.hasList ? <ChevronDown /> : null}
@@ -159,7 +160,7 @@ function Sentence({ ctl, blankStyle, compact }: { ctl: MadlibsController; blankS
       </React.Fragment>
     );
   return (
-    <div className={cn("text-md-on-surface", compact ? "text-base leading-10" : "text-[17px] leading-[44px]")}>
+    <div className={cn("font-sans text-md-on-surface", compact ? "text-base leading-10" : "text-[17px] leading-[44px]")}>
       {ctl.parts.map((p, i) => (p.kind === "clause" ? p.parts.map((q, j) => renderPart(q, `${i}-${j}`)) : renderPart(p, i)))}
     </div>
   );
@@ -325,7 +326,8 @@ export const Md3Madlibs = React.forwardRef<HTMLDivElement, Md3MadlibsProps>((pro
       aria-labelledby={ctl.ids.heading}
       data-status={ctl.placed ? "placed" : ctl.status}
       className={cn(
-        "flex w-full max-w-[620px] flex-col overflow-visible rounded-md-lg bg-md-surface-container-lowest",
+        "font-md",
+        "flex w-full max-w-[620px] flex-col overflow-visible rounded-[16px] bg-md-surface-container-lowest",
         "animate-nx-fade-in motion-reduce:animate-none",
         compact ? "gap-2.5 px-4 py-3.5" : "gap-3.5 px-5 py-[18px]",
         className,
@@ -335,7 +337,7 @@ export const Md3Madlibs = React.forwardRef<HTMLDivElement, Md3MadlibsProps>((pro
       <p
         id={ctl.ids.heading}
         className={cn(
-          "flex items-center gap-1.5 text-[11.5px] font-semibold uppercase leading-4 tracking-[0.06em]",
+          "flex items-center gap-1.5 font-sans text-[11.5px] font-semibold uppercase leading-4 tracking-[0.06em]",
           ctl.placed ? "text-md-primary" : "text-md-on-surface-variant",
         )}
       >
@@ -360,7 +362,7 @@ export const Md3Madlibs = React.forwardRef<HTMLDivElement, Md3MadlibsProps>((pro
         </>
       ) : (
         <>
-          {description != null && <p className="-mt-2.5 text-[13px] leading-5 text-md-on-surface-variant">{description}</p>}
+          {description != null && <p className="-mt-2.5 font-sans text-[13px] leading-5 text-md-on-surface-variant">{description}</p>}
 
           {variant === "form-rows" ? (
             <FormRows ctl={ctl} blankStyle={blankStyle} />
@@ -400,7 +402,7 @@ export const Md3Madlibs = React.forwardRef<HTMLDivElement, Md3MadlibsProps>((pro
           )}
 
           {showPreview && (
-            <p className="flex items-baseline gap-2 rounded-md-md bg-md-on-surface/[0.04] px-3.5 py-2.5 text-[13px] leading-5 text-md-on-surface">
+            <p className="flex items-baseline gap-2 rounded-[12px] bg-md-on-surface/[0.04] px-3.5 py-2.5 font-sans text-[13px] leading-5 text-md-on-surface">
               <span className="shrink-0 font-semibold text-md-on-surface-variant">{previewLabel}</span>
               <span data-madlibs-preview="">{ctl.prompt}</span>
             </p>

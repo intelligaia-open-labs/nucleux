@@ -69,7 +69,7 @@ export function SitePreview() {
       onAdd={() => {}}
       model={<Md3OpenInputModelChip name="Balanced" detail="High" />}
       onVoice={() => {}}
-      className="w-[38rem] max-w-full"
+      className="w-[620px] max-w-full"
     />
   );
 }

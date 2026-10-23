@@ -106,7 +106,11 @@ const SESSION_KEY = "nucleux:nudge:session";
 
 function store(kind: "session" | "local"): Storage | null {
   try {
-    return typeof window === "undefined" ? null : kind === "session" ? window.sessionStorage : window.localStorage;
+    return typeof window === "undefined"
+      ? null
+      : kind === "session"
+        ? window.sessionStorage
+        : window.localStorage;
   } catch {
     return null;
   }
@@ -127,10 +131,24 @@ function write(kind: "session" | "local", key: string, value: string) {
 }
 
 const tooltipSide: Record<NudgeSide, { box: string; arrow: string }> = {
-  right: { box: "left-full top-1/2 ml-3 -translate-y-1/2", arrow: "-left-1 top-1/2 -translate-y-1/2" },
-  left: { box: "right-full top-1/2 mr-3 -translate-y-1/2", arrow: "-right-1 top-1/2 -translate-y-1/2" },
-  top: { box: "bottom-full left-1/2 mb-3 -translate-x-1/2", arrow: "-bottom-1 left-1/2 -translate-x-1/2" },
-  bottom: { box: "top-full left-1/2 mt-3 -translate-x-1/2", arrow: "-top-1 left-1/2 -translate-x-1/2" },
+  right: {
+    box: "left-full top-0 ml-3",
+    arrow:
+      "-left-1.5 top-[18px] border-y-[6px] border-r-[6px] border-y-transparent border-r-foreground",
+  },
+  left: {
+    box: "right-full top-0 mr-3",
+    arrow:
+      "-right-1.5 top-[18px] border-y-[6px] border-l-[6px] border-y-transparent border-l-foreground",
+  },
+  top: {
+    box: "bottom-full left-1/2 mb-3 -translate-x-1/2",
+    arrow: "-bottom-1 left-1/2 size-2 -translate-x-1/2 rotate-45 bg-foreground",
+  },
+  bottom: {
+    box: "top-full left-1/2 mt-3 -translate-x-1/2",
+    arrow: "-top-1 left-1/2 size-2 -translate-x-1/2 rotate-45 bg-foreground",
+  },
 };
 
 /**
@@ -256,7 +274,9 @@ export const Nudge = React.forwardRef<HTMLDivElement, NudgeProps>(
     const anchor =
       visible && React.isValidElement<{ "aria-describedby"?: string }>(children)
         ? React.cloneElement(children, {
-            "aria-describedby": [children.props["aria-describedby"], messageId].filter(Boolean).join(" "),
+            "aria-describedby": [children.props["aria-describedby"], messageId]
+              .filter(Boolean)
+              .join(" "),
           })
         : children;
 
@@ -280,7 +300,15 @@ export const Nudge = React.forwardRef<HTMLDivElement, NudgeProps>(
             aria-expanded={whyOpen}
             aria-controls={reasonId}
             onClick={() => setWhyOpen((w) => !w)}
-            leftIcon={quiet ? whyOpen ? <ChevronDown aria-hidden="true" /> : <ChevronRight aria-hidden="true" /> : undefined}
+            leftIcon={
+              quiet ? (
+                whyOpen ? (
+                  <ChevronDown aria-hidden="true" />
+                ) : (
+                  <ChevronRight aria-hidden="true" />
+                )
+              ) : undefined
+            }
           >
             Why this tip?
           </NudgeAction>
@@ -288,7 +316,10 @@ export const Nudge = React.forwardRef<HTMLDivElement, NudgeProps>(
       </div>
     );
     const reasonNode = reason && whyOpen && (
-      <p id={reasonId} className={cn("text-xs", inverted ? "text-background/80" : "text-muted-foreground")}>
+      <p
+        id={reasonId}
+        className={cn("text-xs", inverted ? "text-background/80" : "text-muted-foreground")}
+      >
         {reason}
       </p>
     );
@@ -298,7 +329,10 @@ export const Nudge = React.forwardRef<HTMLDivElement, NudgeProps>(
         size="icon-sm"
         aria-label={dismissLabel}
         onClick={dismiss}
-        className={cn("size-6 shrink-0 [&_svg]:size-3.5", inverted && "text-background hover:bg-background/15")}
+        className={cn(
+          "size-6 shrink-0 [&_svg]:size-3.5",
+          inverted && "text-background hover:bg-background/15",
+        )}
       >
         <X aria-hidden="true" />
       </Button>
@@ -355,23 +389,22 @@ export const Nudge = React.forwardRef<HTMLDivElement, NudgeProps>(
             {...props}
           >
             {anchor}
-            <div aria-live="polite" className={cn("absolute z-50 w-64", pos.box)}>
+            <div aria-live="polite" className={cn("absolute z-50 w-[260px]", pos.box)}>
               {visible && (
                 <div
                   role="note"
                   aria-label="Tip"
-                  className="relative flex flex-col gap-2 rounded-[10px] bg-foreground px-3.5 py-2.5 text-xs leading-[17px] text-background shadow-lg animate-nx-fade-in motion-reduce:animate-none"
+                  className="relative flex animate-nx-fade-in flex-col gap-2 rounded-[10px] bg-foreground px-3.5 py-2.5 text-xs leading-[17px] text-background shadow-[0_4px_8px_rgba(12,12,10,0.05),0_8px_24px_rgba(12,12,10,0.06)] motion-reduce:animate-none"
                 >
                   <div className="flex items-start gap-2">
                     <p id={messageId} className="min-w-0 flex-1">
-                      <span className="text-background/70">Tip</span> ·{" "}
-                      {message}
+                      <span className="text-background/70">Tip</span> · {message}
                     </p>
                     {dismissButton}
                   </div>
                   {actionRow}
                   {reasonNode}
-                  <span aria-hidden="true" className={cn("absolute size-2 rotate-45 bg-foreground", pos.arrow)} />
+                  <span aria-hidden="true" className={cn("absolute size-0", pos.arrow)} />
                 </div>
               )}
             </div>
@@ -390,7 +423,7 @@ export const Nudge = React.forwardRef<HTMLDivElement, NudgeProps>(
           onKeyDown={handleKeyDown}
           data-appearance={appearance}
           className={cn(
-            "flex items-start gap-3 text-sm animate-nx-fade-in motion-reduce:animate-none",
+            "flex animate-nx-fade-in items-start gap-3 text-sm motion-reduce:animate-none",
             quiet
               ? "border-l-[3px] border-border py-1 pl-3 pr-2"
               : "rounded-lg border border-brand/30 bg-brand-muted/60 p-3",

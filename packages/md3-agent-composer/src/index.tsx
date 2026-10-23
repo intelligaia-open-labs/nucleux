@@ -72,7 +72,7 @@ export const Md3AgentComposer = React.forwardRef<HTMLTextAreaElement, Md3AgentCo
     },
     ref,
   ) => (
-    <div {...props}>
+    <div className="font-md" {...props}>
       <Md3OpenInput
         ref={ref}
         value={value}

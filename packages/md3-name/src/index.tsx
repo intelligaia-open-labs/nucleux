@@ -57,7 +57,7 @@ export const Md3AgentName = React.forwardRef<HTMLDivElement, Md3AgentNameProps>(
 
     if (variant === "wordmark") {
       return (
-        <div ref={ref} data-variant={variant} className={cn("flex flex-col", className)} {...props}>
+        <div ref={ref} data-variant={variant} className={cn("font-md", "flex flex-col", className)} {...props}>
           <span className="text-[28px] font-normal leading-9 text-md-on-surface">{name}</span>
           <span className="mt-0.5 text-xs tracking-[0.4px] text-md-on-surface-variant">
             {descriptor}
@@ -72,23 +72,29 @@ export const Md3AgentName = React.forwardRef<HTMLDivElement, Md3AgentNameProps>(
         <div
           ref={ref}
           data-variant={variant}
-          className={cn("rounded-md-lg bg-md-surface-container-low p-5 text-md-on-surface", className)}
+          className={cn(
+            "font-md",
+            "flex flex-col gap-4 rounded-md-md bg-md-surface p-5 leading-normal text-md-on-surface",
+            className,
+          )}
           {...props}
         >
           <div className="flex items-center gap-3">
-            <Md3AgentAvatar name={name} src={avatarSrc} glyph={avatarGlyph} size="lg" shape="rounded" decorative />
-            <div className="flex flex-col gap-0.5">
-              <span className="flex items-center gap-2">
-                <span className="text-base font-medium tracking-[0.15px]">{name}</span>
-                <span className="inline-flex h-6 items-center rounded-full border border-md-outline-variant px-2.5 text-sm font-medium tracking-[0.1px] text-md-tertiary">
-                  {aiLabel}
+            <Md3AgentAvatar name={name} src={avatarSrc} glyph={avatarGlyph} size="lg" shape="circle" decorative />
+            <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+              <p className="m-0 flex gap-2 text-base font-medium leading-6 tracking-[0.15px]">
+                {name}
+                <span className="block">
+                  <span className="inline-flex h-6 items-center rounded-full px-2.5 py-1 text-xs font-medium leading-4 tracking-[0.15px] text-md-tertiary shadow-[inset_0_0_0_1px_hsl(var(--nx-md-outline-variant))]">
+                    {aiLabel}
+                  </span>
                 </span>
                 {former}
-              </span>
-              <span className="text-sm tracking-[0.25px] text-md-on-surface-variant">{descriptor}</span>
+              </p>
+              <p className="m-0 text-xs leading-4 tracking-[0.4px] text-md-on-surface-variant">{descriptor}</p>
             </div>
           </div>
-          {children != null && <p className="mb-0 mt-4 text-base leading-6 tracking-[0.15px]">{children}</p>}
+          {children != null && <p className="m-0 text-sm leading-5 tracking-[0.25px]">{children}</p>}
         </div>
       );
     }
@@ -100,6 +106,7 @@ export const Md3AgentName = React.forwardRef<HTMLDivElement, Md3AgentNameProps>(
           ref={ref}
           data-variant={variant}
           className={cn(
+            "font-md",
             "inline-flex w-max items-center gap-2.5 rounded-full bg-md-surface-container-high py-2 pl-2 pr-4 text-sm font-medium tracking-[0.1px] text-md-on-surface",
             className,
           )}
@@ -120,6 +127,7 @@ export const Md3AgentName = React.forwardRef<HTMLDivElement, Md3AgentNameProps>(
         ref={ref}
         data-variant={variant}
         className={cn(
+          "font-md",
           "inline-flex w-max items-center gap-3 rounded-full border border-md-outline-variant bg-md-surface py-1.5 pl-1.5 pr-4",
           className,
         )}

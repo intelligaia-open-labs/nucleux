@@ -18,7 +18,6 @@ export function SitePreview() {
       onAdd={() => {}}
       model={<OpenInputModelChip name="5.5" detail="Instant" aria-haspopup="menu" />}
       onVoice={() => {}}
-      containerClassName="w-full max-w-md"
     />
   );
 }

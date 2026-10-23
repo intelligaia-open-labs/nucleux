@@ -94,6 +94,7 @@ export const Md3ButtonGroup = React.forwardRef<HTMLDivElement, Md3ButtonGroupPro
         ref={ref}
         role="group"
         className={cn(
+          "font-md",
           "inline-flex items-center",
           variant === "connected" ? "gap-0.5" : gaps[size],
           className,
@@ -243,6 +244,7 @@ export const Md3ButtonGroupItem = React.forwardRef<HTMLButtonElement, Md3ButtonG
           if (!e.defaultPrevented && toggleable) ctx.toggle(value);
         }}
         className={cn(
+          "font-md",
           // Layout + typography
           "relative inline-flex shrink-0 items-center justify-center overflow-hidden font-medium",
           s.base,

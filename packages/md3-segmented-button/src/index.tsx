@@ -39,7 +39,7 @@ export const Md3SegmentedButton = React.forwardRef<HTMLDivElement, Md3SegmentedB
       <div
         ref={ref}
         role="group"
-        className={cn("inline-flex h-10 divide-x divide-md-outline overflow-hidden rounded-full border border-md-outline", className)}
+        className={cn("font-md", "inline-flex h-10 divide-x divide-md-outline overflow-hidden rounded-full border border-md-outline", className)}
         {...props}
       >
         <SegmentedContext.Provider value={{ value: current, toggle, multiple }}>
@@ -70,6 +70,7 @@ export const Md3SegmentedButtonItem = React.forwardRef<HTMLButtonElement, Md3Seg
         aria-pressed={selected}
         onClick={() => ctx.toggle(value)}
         className={cn(
+          "font-md",
           "relative inline-flex items-center justify-center gap-2 overflow-hidden px-4 text-sm font-medium transition-colors [&_svg]:size-[18px]",
           "before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-['']",
           "hover:before:opacity-[0.08] focus-visible:before:opacity-[0.12]",

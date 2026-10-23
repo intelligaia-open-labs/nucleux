@@ -8,11 +8,11 @@ const MESSAGE =
 /** A message from the agent, marked as AI in its header. */
 export function SitePreview() {
   return (
-    <article className="w-[30rem] max-w-full rounded-lg border border-border bg-background p-4 shadow-sm">
+    <article className="w-full max-w-[30.1rem] rounded-[8px] border border-border bg-background p-4 shadow-[0_1px_2px_rgba(12,12,10,0.04),0_1px_3px_rgba(12,12,10,0.06)]">
       <header className="flex items-center gap-2.5">
         <Disclosure variant="header-badge" />
-        <span className="text-[13px] text-muted-foreground">{AGENT_NAME}</span>
-        <span className="ml-auto text-[11px] text-muted-foreground">{SENT_AT}</span>
+        <span className="text-[13px] leading-[1.55] text-muted-foreground">{AGENT_NAME}</span>
+        <span className="ml-auto text-[11px] leading-[1.55] text-faint">{SENT_AT}</span>
       </header>
       <p className="mt-2.5 text-[13px] leading-5 text-foreground">{MESSAGE}</p>
     </article>

@@ -1,8 +1,10 @@
 import * as React from "react";
-import { ArrowUp, ChevronDown, Maximize2, Mic, Minimize2, Plus, RotateCw, Send, Square } from "lucide-react";
+import { ChevronDown, Maximize2, Minimize2, RotateCw, Send, Square } from "lucide-react";
+import { MsAdd, MsArrowUpward, MsMic } from "@nucleux/md3-icons";
 import { cn } from "@nucleux/utils";
 import { useComposerHeight } from "@nucleux/open-input";
 import type {
+  OpenInputActionsPlacement,
   OpenInputLayout,
   OpenInputModelChipProps,
   OpenInputProps,
@@ -24,6 +26,8 @@ export type Md3OpenInputSendKey = OpenInputSendKey;
 export type Md3OpenInputSendVariant = OpenInputSendVariant;
 /** "auto", "inline" or "stacked" arrangement of the expanding-area composer. */
 export type Md3OpenInputLayout = OpenInputLayout;
+/** Where the extra `actions` go: "before-model" (default) or "after-model". */
+export type Md3OpenInputActionsPlacement = OpenInputActionsPlacement;
 /** Props of {@link Md3OpenInputModelChip} — identical to `OpenInputModelChipProps`. */
 export type Md3OpenInputModelChipProps = OpenInputModelChipProps;
 
@@ -40,12 +44,14 @@ export const Md3OpenInputModelChip = React.forwardRef<HTMLButtonElement, Md3Open
       ref={ref}
       type={type}
       className={cn(
-        "relative inline-flex h-10 shrink-0 items-center gap-1.5 overflow-hidden rounded-full px-3 text-sm tracking-[0.1px] text-md-primary outline-none focus-visible:ring-2 focus-visible:ring-md-primary before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-[''] hover:before:opacity-[0.08] active:before:opacity-[0.12] disabled:opacity-[0.38] disabled:before:opacity-0 motion-reduce:before:transition-none",
+        "font-md",
+        // The kit's Small text button: 40dp, 16dp sides, 8dp gap, Label Large (14/20, 500, 0.1px).
+        "relative inline-flex h-10 shrink-0 items-center gap-2 overflow-hidden rounded-full px-4 text-sm font-medium leading-5 tracking-[0.1px] text-md-primary outline-none focus-visible:ring-2 focus-visible:ring-md-primary before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity before:content-[''] hover:before:opacity-[0.08] active:before:opacity-[0.12] disabled:opacity-[0.38] disabled:before:opacity-0 motion-reduce:before:transition-none",
         className,
       )}
       {...props}
     >
-      <span className="relative font-semibold">{name}</span>
+      <span className="relative">{name}</span>
       {detail != null && <span className="relative font-normal">{detail}</span>}
       {chevron && <ChevronDown aria-hidden="true" className="relative size-4" />}
     </button>
@@ -57,6 +63,9 @@ Md3OpenInputModelChip.displayName = "Md3OpenInputModelChip";
 const DEFAULT_ERROR = "Couldn't send your message. It's still here — edit it or try again.";
 const isPromise = (v: unknown): v is Promise<unknown> =>
   !!v && typeof (v as { then?: unknown }).then === "function";
+
+// The site's icon buttons: 40dp, a 24dp Material Symbol centred (the wrapper span is tightened to the glyph).
+const ICON_BTN = "shrink-0 [&>span]:grid";
 
 // M3 emphasized easing for the shape change on focus and the line-by-line growth.
 const EMPHASIZED = "ease-[cubic-bezier(0.2,0,0,1)]";
@@ -95,6 +104,7 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
       sendLabel = "Send message",
       stopLabel = "Stop generating",
       actions,
+      actionsPlacement = "before-model",
       counterThreshold = 0.8,
       error,
       onRetry,
@@ -238,9 +248,14 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
         aria-keyshortcuts={sendShortcut}
         aria-busy={sending || undefined}
         className={cn(
-          "shrink-0 transition-[transform,background-color] duration-200 active:scale-95 motion-reduce:transition-none motion-reduce:active:scale-100 [&_svg]:size-5",
-          // Nothing to send: an empty, quiet container rather than a disabled primary blob.
-          !ghost && !canSend && !sending && "bg-md-on-surface/10 text-md-on-surface disabled:opacity-[0.38]",
+          ICON_BTN,
+          "transition-[transform,background-color] duration-200 active:scale-95 motion-reduce:transition-none motion-reduce:active:scale-100",
+          // Nothing to send: the kit's disabled filled icon button — a 10% on-surface
+          // container with the glyph at 38%, not a dimmed primary blob.
+          !ghost &&
+            !canSend &&
+            !sending &&
+            "bg-md-on-surface/10 text-md-on-surface/[0.38] disabled:opacity-100",
           ghost && "disabled:opacity-[0.38]",
           sendShape,
         )}
@@ -254,7 +269,7 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
         ) : ghost ? (
           <Send aria-hidden="true" />
         ) : (
-          <ArrowUp aria-hidden="true" />
+          <MsArrowUpward />
         )}
       </Md3IconButton>
     );
@@ -262,21 +277,27 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
     const addControl =
       add ??
       (onAdd ? (
-        <Md3IconButton aria-label={addLabel} onClick={onAdd} disabled={disabled} className="shrink-0">
-          <Plus aria-hidden="true" />
+        <Md3IconButton aria-label={addLabel} onClick={onAdd} disabled={disabled} className={ICON_BTN}>
+          <MsAdd />
         </Md3IconButton>
       ) : null);
 
     const voiceButton = onVoice ? (
-      <Md3IconButton aria-label={voiceLabel} onClick={onVoice} disabled={disabled} className="shrink-0">
-        <Mic aria-hidden="true" />
+      <Md3IconButton aria-label={voiceLabel} onClick={onVoice} disabled={disabled} className={ICON_BTN}>
+        <MsMic />
       </Md3IconButton>
     ) : null;
 
     // Model chip, mic, send: the right end of every arrangement.
+    // `actions` sit before the model chip by default; "after-model" puts them between it and the mic.
+    const afterModel = actionsPlacement === "after-model";
+    const leadActions = afterModel ? null : actions;
+    const modelActions = afterModel ? actions : null;
+
     const trailing = (
       <>
         {model}
+        {modelActions}
         {voiceButton}
         {sendButton}
       </>
@@ -331,8 +352,10 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
             ? "h-10 overflow-hidden"
             : cn("transition-[height] duration-150 motion-reduce:transition-none", EMPHASIZED),
           variant === "expanding-area" && "w-full",
-          // Stacked field: 6px 8px 2px, a 22px line (the site's 1.45 × 15px).
-          stacked && "pb-0.5 pt-1.5 leading-[1.375rem]",
+          // The site's field: 14.5px at 1.45 with no inset of its own; stacked, 6px 8px 2px around it.
+          // Its face is the page's (Inter on nucleux.in): the field inherits, only the kit's controls are Roboto.
+          variant === "expanding-area" && "p-0 font-sans text-[14.5px] leading-[1.45] tracking-normal",
+          stacked && "px-2 pb-0.5 pt-1.5",
           showToggle && "pr-10",
         )}
       />
@@ -369,10 +392,12 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
         </div>
       );
 
+    // nucleux.in's composer surface: lowest container at 88% over an 8px backdrop blur, an
+    // outline-variant hairline at 80%, and its two-layer soft shadow.
     const boxBase = cn(
-      "border bg-md-surface-container-lowest text-md-on-surface shadow-sm transition-[border-radius,border-color] duration-200 motion-reduce:transition-none",
+      "border bg-md-surface-container-lowest/[0.88] text-md-on-surface shadow-[0_1px_2px_rgba(16,14,24,0.04),0_10px_30px_-22px_rgba(16,14,24,0.5)] backdrop-blur-[8px] transition-[border-radius,border-color] duration-200 motion-reduce:transition-none",
       EMPHASIZED,
-      showError ? "border-md-error" : "border-md-outline-variant focus-within:border-md-primary",
+      showError ? "border-md-error" : "border-md-outline-variant/80 focus-within:border-md-primary",
     );
 
     let composer: React.ReactNode;
@@ -388,7 +413,7 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
         >
           {addControl}
           {field}
-          {actions}
+          {leadActions}
           {counter}
           {trailing}
         </div>
@@ -407,9 +432,10 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
           >
             {addControl}
             {fieldArea}
-            {actions}
+            {leadActions}
             {counter && <span className="self-center pr-2">{counter}</span>}
             {model}
+            {modelActions}
             {voiceButton}
           </div>
           {sendButton}
@@ -426,16 +452,20 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
           data-layout={stacked ? "stacked" : "inline"}
           className={cn(
             boxBase,
-            "flex flex-wrap items-center gap-x-1 rounded-md-xl focus-within:rounded-md-lg",
-            // Stacked, as on nucleux.in: 8px 8px 7px around, 2px between the text and the toolbar.
-            stacked ? "gap-y-0.5 px-2 pb-[7px] pt-2" : "min-h-14 p-2",
+            "flex flex-wrap items-center gap-x-2 focus-within:rounded-[20px]",
+            // As on nucleux.in: one 56px row (7px 8px around, a 26px corner); stacked, 8px 8px 7px
+            // around, a 24px corner and 2px between the request and the toolbar.
+            // Inline, a request that wraps keeps the controls on its bottom line (they align to the end).
+            stacked
+              ? "gap-y-0.5 rounded-[24px] px-2 pb-[7px] pt-2"
+              : "min-h-14 rounded-[26px] px-2 py-[7px] [&>button]:self-end",
             className,
           )}
         >
           {errorRow && <div className="order-first basis-full">{errorRow}</div>}
           {addControl}
           {fieldArea}
-          {actions}
+          {leadActions}
           {stacked && <span className="flex-1" />}
           {counter}
           {trailing}
@@ -444,7 +474,7 @@ export const Md3OpenInput = React.forwardRef<HTMLTextAreaElement, Md3OpenInputPr
     }
 
     return (
-      <div className={cn("flex flex-col gap-1.5", containerClassName)}>
+      <div className={cn("font-md", "flex flex-col gap-1.5", containerClassName)}>
         {label != null && (
           <label
             htmlFor={fieldId}

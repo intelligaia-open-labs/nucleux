@@ -223,6 +223,7 @@ const catalog = {
       'Import the theme once at your app root, before your own CSS: import "@nucleux/tokens/styles.css"; (CSS variables for light and .dark, plus the base reset).',
       "Your Tailwind build generates the component classes: the content globs must include ./node_modules/@nucleux/*/dist/**/*.{js,cjs}, or components render unstyled.",
       'Dark mode: add class="dark" to <html> (the preset sets darkMode: "class").',
+      'Fonts (as on nucleux.in): the tokens set Inter on html/body (font-sans), JetBrains Mono for code (font-mono) and Roboto on every Material 3 component (font-md). Load them in your HTML head: <link rel="stylesheet" href="https://rsms.me/inter/inter.css" /> (Inter 4, the build nucleux.in uses; the tokens turn on its ss01/cv11 features) and <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Roboto:wght@400;500;700&display=swap" /> (or self-host them); without them the stacks fall back to system fonts.',
     ],
     note: "Every component is also re-exported from the @nucleux/react umbrella. Icons in the examples come from lucide-react (optional; any icon set works).",
   },

@@ -21,7 +21,7 @@ export function SitePreview() {
       values={values}
       onValuesChange={setValues}
       showSubmit={false}
-      className="w-full max-w-[28rem]"
+      className="w-full max-w-[445.5px]"
     />
   );
 }

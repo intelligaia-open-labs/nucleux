@@ -22,7 +22,8 @@ describe("site previews", () => {
       expect(from, `${pkg} imports ${from}`).toMatch(/^@nucleux\//);
       expect(deps, `${pkg} must depend on ${from}`).toHaveProperty([from]);
     }
-    expect(src).not.toMatch(/@storybook|style=\{\{|#[0-9a-fA-F]{3,6}\b/);
+    // Brand marks (Google Drive, Slack…) keep their own colours as SVG fill/stroke attributes.
+    expect(src.replace(/(fill|stroke)="#[0-9a-fA-F]{3,6}"/g, "")).not.toMatch(/@storybook|style=\{\{|#[0-9a-fA-F]{3,6}\b/);
     const stories = readdirSync(resolve(root, pkg, "src")).find((f) => f.endsWith(".stories.tsx"));
     const first = readFileSync(resolve(root, pkg, "src", stories!), "utf8").match(/export const (\w+)/)?.[1];
     expect(first).toBe("SitePreview");

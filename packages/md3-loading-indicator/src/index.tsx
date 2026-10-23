@@ -119,6 +119,7 @@ export const Md3LoadingIndicator = React.forwardRef<HTMLDivElement, Md3LoadingIn
         role="progressbar"
         aria-label={ariaLabel}
         className={cn(
+          "font-md",
           "inline-flex shrink-0 items-center justify-center",
           variant === "contained"
             ? "rounded-full bg-md-primary-container text-md-on-primary-container"

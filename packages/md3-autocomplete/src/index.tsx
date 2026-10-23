@@ -297,6 +297,7 @@ export const Md3Autocomplete = React.forwardRef<HTMLTextAreaElement, Md3Autocomp
     return (
       <div
         className={cn(
+          "font-md",
           "flex w-full flex-col",
           shell
             ? "overflow-hidden rounded-md-md border border-md-outline-variant bg-md-surface transition-colors duration-150 focus-within:border-md-primary motion-reduce:transition-none"

@@ -15,6 +15,7 @@ export const Md3Banner = React.forwardRef<HTMLDivElement, Md3BannerProps>(
       ref={ref}
       role="region"
       className={cn(
+        "font-md",
         "flex flex-col gap-3 border-b border-md-outline-variant bg-md-surface px-4 py-3 text-md-on-surface sm:flex-row sm:items-center",
         className,
       )}

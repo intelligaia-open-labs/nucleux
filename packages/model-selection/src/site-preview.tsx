@@ -19,7 +19,7 @@ export function SitePreview() {
   };
 
   return (
-    <div className="flex w-[30rem] max-w-full flex-col gap-2.5">
+    <div className="flex w-[446px] max-w-full flex-col gap-2.5">
       <ModelSelection
         variant="auto-route"
         picker="list"

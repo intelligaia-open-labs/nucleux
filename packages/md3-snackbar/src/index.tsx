@@ -22,6 +22,7 @@ export const Md3Snackbar = React.forwardRef<HTMLDivElement, Md3SnackbarProps>(
         role="status"
         aria-live="polite"
         className={cn(
+          "font-md",
           "flex min-h-12 items-center gap-2 rounded-md-xs bg-md-inverse-surface px-4 py-3 text-sm text-md-inverse-on-surface shadow-md-3",
           className,
         )}

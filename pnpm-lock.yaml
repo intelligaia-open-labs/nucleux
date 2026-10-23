@@ -1854,6 +1854,9 @@ importers:
       '@nucleux/md3-icon-button':
         specifier: workspace:*
         version: link:../md3-icon-button
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
@@ -2134,6 +2137,9 @@ importers:
       '@nucleux/md3-button':
         specifier: workspace:*
         version: link:../md3-button
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
@@ -2212,6 +2218,9 @@ importers:
       '@nucleux/color':
         specifier: workspace:*
         version: link:../color
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
@@ -2292,6 +2301,9 @@ importers:
       '@nucleux/md3-dialog':
         specifier: workspace:*
         version: link:../md3-dialog
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/md3-switch':
         specifier: workspace:*
         version: link:../md3-switch
@@ -2481,18 +2493,18 @@ importers:
       '@nucleux/example-gallery':
         specifier: workspace:*
         version: link:../example-gallery
-      '@nucleux/md3-agent-composer':
-        specifier: workspace:*
-        version: link:../md3-agent-composer
       '@nucleux/md3-button':
         specifier: workspace:*
         version: link:../md3-button
       '@nucleux/md3-dialog':
         specifier: workspace:*
         version: link:../md3-dialog
-      '@nucleux/md3-icon-button':
+      '@nucleux/md3-icons':
         specifier: workspace:*
-        version: link:../md3-icon-button
+        version: link:../md3-icons
+      '@nucleux/md3-open-input':
+        specifier: workspace:*
+        version: link:../md3-open-input
       '@nucleux/md3-tabs':
         specifier: workspace:*
         version: link:../md3-tabs
@@ -2586,6 +2598,9 @@ importers:
       '@nucleux/md3-icon-button':
         specifier: workspace:*
         version: link:../md3-icon-button
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/md3-open-input':
         specifier: workspace:*
         version: link:../md3-open-input
@@ -2626,6 +2641,9 @@ importers:
       '@nucleux/md3-icon-button':
         specifier: workspace:*
         version: link:../md3-icon-button
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/md3-loading-indicator':
         specifier: workspace:*
         version: link:../md3-loading-indicator
@@ -2720,6 +2738,28 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/md3-icons:
+    dependencies:
+      '@nucleux/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.19)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/md3-initial-cta:
     dependencies:
       '@nucleux/initial-cta':
@@ -2774,6 +2814,9 @@ importers:
       '@nucleux/md3-chip':
         specifier: workspace:*
         version: link:../md3-chip
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/utils':
         specifier: workspace:*
         version: link:../utils
@@ -3186,6 +3229,9 @@ importers:
       '@nucleux/md3-icon-button':
         specifier: workspace:*
         version: link:../md3-icon-button
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/nudges':
         specifier: workspace:*
         version: link:../nudges
@@ -3220,6 +3266,9 @@ importers:
       '@nucleux/md3-icon-button':
         specifier: workspace:*
         version: link:../md3-icon-button
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/md3-loading-indicator':
         specifier: workspace:*
         version: link:../md3-loading-indicator
@@ -3257,6 +3306,9 @@ importers:
       '@nucleux/md3-button':
         specifier: workspace:*
         version: link:../md3-button
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/md3-message':
         specifier: workspace:*
         version: link:../md3-message
@@ -3485,6 +3537,9 @@ importers:
       '@nucleux/md3-icon-button':
         specifier: workspace:*
         version: link:../md3-icon-button
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/md3-loading-indicator':
         specifier: workspace:*
         version: link:../md3-loading-indicator
@@ -3684,6 +3739,9 @@ importers:
       '@nucleux/md3-chip':
         specifier: workspace:*
         version: link:../md3-chip
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/md3-open-input':
         specifier: workspace:*
         version: link:../md3-open-input
@@ -3724,6 +3782,9 @@ importers:
       '@nucleux/md3-icon-button':
         specifier: workspace:*
         version: link:../md3-icon-button
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/md3-open-input':
         specifier: workspace:*
         version: link:../md3-open-input
@@ -3857,6 +3918,9 @@ importers:
       '@nucleux/md3-button':
         specifier: workspace:*
         version: link:../md3-button
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/templates':
         specifier: workspace:*
         version: link:../templates
@@ -5016,6 +5080,9 @@ importers:
       '@nucleux/md3-iconography':
         specifier: workspace:*
         version: link:../md3-iconography
+      '@nucleux/md3-icons':
+        specifier: workspace:*
+        version: link:../md3-icons
       '@nucleux/md3-initial-cta':
         specifier: workspace:*
         version: link:../md3-initial-cta
@@ -5659,6 +5726,9 @@ importers:
       '@nucleux/button':
         specifier: workspace:*
         version: link:../button
+      '@nucleux/input':
+        specifier: workspace:*
+        version: link:../input
       '@nucleux/open-input':
         specifier: workspace:*
         version: link:../open-input

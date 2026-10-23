@@ -27,7 +27,11 @@ const SESSION_KEY = "nucleux:proactive:session";
 
 function getStore(kind: "session" | "local"): Storage | null {
   try {
-    return typeof window === "undefined" ? null : kind === "session" ? window.sessionStorage : window.localStorage;
+    return typeof window === "undefined"
+      ? null
+      : kind === "session"
+        ? window.sessionStorage
+        : window.localStorage;
   } catch {
     return null;
   }
@@ -50,7 +54,8 @@ function write(kind: "session" | "local", key: string, value: string) {
 // M3 small button (32dp) on top of Md3Button.
 const small = "h-8 gap-1.5 px-4 [&_svg]:size-4";
 // Arrives, does not interrupt: rises in on emphasized-decelerate; nothing moves under reduced motion.
-const rise = "animate-nx-fade-in [animation-duration:400ms] [animation-timing-function:cubic-bezier(0.05,0.7,0.1,1)] motion-reduce:animate-none";
+const rise =
+  "animate-nx-fade-in [animation-duration:400ms] [animation-timing-function:cubic-bezier(0.05,0.7,0.1,1)] motion-reduce:animate-none";
 
 /**
  * The Material 3 proactive suggestion — the same API and behaviour as
@@ -189,7 +194,11 @@ export const Md3ProactiveSuggestion = React.forwardRef<HTMLElement, Md3Proactive
           ref={ref}
           aria-label={label}
           onKeyDown={handleKeyDown}
-          className={cn("inline-flex items-center gap-1 text-md-on-surface-variant", rise, className)}
+          className={cn(
+            "inline-flex items-center gap-1 text-md-on-surface-variant",
+            rise,
+            className,
+          )}
           {...props}
         >
           <span id={titleId} className="sr-only">
@@ -248,9 +257,18 @@ export const Md3ProactiveSuggestion = React.forwardRef<HTMLElement, Md3Proactive
               <span className="sr-only">{label}: </span>
               {title}
             </p>
-            {description && <p className={toast ? "text-md-on-surface-variant" : undefined}>{description}</p>}
+            {description && (
+              <p className={toast ? "text-md-on-surface-variant" : undefined}>{description}</p>
+            )}
             {reason && (
-              <p className={cn("text-xs tracking-[0.4px]", toast ? "text-md-on-surface-variant" : "opacity-80")}>{reason}</p>
+              <p
+                className={cn(
+                  "text-xs tracking-[0.4px]",
+                  toast ? "text-md-on-surface-variant" : "opacity-80",
+                )}
+              >
+                {reason}
+              </p>
             )}
             {resolved ? (
               <p className="mt-1">{resolvedLine}</p>
@@ -265,12 +283,20 @@ export const Md3ProactiveSuggestion = React.forwardRef<HTMLElement, Md3Proactive
                   {pending ? pendingLabel : actionLabel}
                 </Md3Button>
                 {onSnooze && (
-                  <Md3Button variant="text" onClick={snooze} className={cn(small, "px-3", !toast && "text-current")}>
+                  <Md3Button
+                    variant="text"
+                    onClick={snooze}
+                    className={cn(small, "px-3", !toast && "text-current")}
+                  >
                     {snoozeLabel}
                   </Md3Button>
                 )}
                 {dismissInline && (
-                  <Md3Button variant="text" onClick={dismiss} className={cn(small, "px-3", !toast && "text-current")}>
+                  <Md3Button
+                    variant="text"
+                    onClick={dismiss}
+                    className={cn(small, "px-3", !toast && "text-current")}
+                  >
                     {dismissLabel}
                   </Md3Button>
                 )}
@@ -284,7 +310,7 @@ export const Md3ProactiveSuggestion = React.forwardRef<HTMLElement, Md3Proactive
 
     // A persistent polite live region, so a suggestion appearing is announced without stealing focus.
     return (
-      <div aria-live="polite" className="contents">
+      <div aria-live="polite" className="contents font-md">
         {body}
       </div>
     );

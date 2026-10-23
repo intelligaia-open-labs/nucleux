@@ -387,7 +387,7 @@ export const Md3ModelSelection = React.forwardRef<HTMLDivElement, Md3ModelSelect
 
     if (variant === "tradeoff") {
       return (
-        <div ref={ref} className={cn("flex flex-col gap-2", className)} {...props}>
+        <div ref={ref} className={cn("font-md", "flex flex-col gap-2", className)} {...props}>
           {list}
         </div>
       );
@@ -395,7 +395,7 @@ export const Md3ModelSelection = React.forwardRef<HTMLDivElement, Md3ModelSelect
 
     if (variant === "auto-route") {
       return (
-        <div ref={ref} className={cn("flex flex-col gap-2", className)} {...props}>
+        <div ref={ref} className={cn("font-md", "flex flex-col gap-2", className)} {...props}>
           <div className="flex items-center justify-between gap-4 rounded-md-md bg-md-surface-container-low px-4 py-3 text-md-on-surface">
             <div className="flex min-w-0 flex-col">
               <span id={autoLabelId} className="text-base font-medium leading-6 tracking-[0.15px]">
@@ -432,7 +432,7 @@ export const Md3ModelSelection = React.forwardRef<HTMLDivElement, Md3ModelSelect
     }
 
     return (
-      <div ref={ref} className={cn("relative inline-block", className)} {...props}>
+      <div ref={ref} className={cn("font-md", "relative inline-block", className)} {...props}>
         {dropdown}
       </div>
     );

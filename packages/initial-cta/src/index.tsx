@@ -156,7 +156,8 @@ export const InitialCta = React.forwardRef<HTMLTextAreaElement, InitialCtaProps>
         aria-labelledby={hasHeadline ? headingId : description ? descriptionId : undefined}
         className={cn(
           "flex w-full flex-col gap-3",
-          hero && "mx-auto max-w-2xl items-center gap-4 text-center",
+          // As on nucleux.in: 16px under the headline, 14px between the composer and the chips.
+          hero && "mx-auto max-w-2xl items-center gap-4 text-center [&>[data-initial-cta-suggestions]]:-mt-0.5",
           gradient &&
             "rounded-2xl border border-brand/40 bg-gradient-to-br from-brand-muted to-transparent p-4",
           className,
@@ -170,7 +171,7 @@ export const InitialCta = React.forwardRef<HTMLTextAreaElement, InitialCtaProps>
                 id={headingId}
                 className={cn(
                   "text-foreground",
-                  hero && "text-xl font-bold tracking-tight",
+                  hero && "text-xl font-bold leading-[1.55] tracking-[-0.02em]",
                   gradient && "text-xs font-semibold uppercase tracking-wider text-brand",
                   variant === "multi-modal-row" && "text-lg font-semibold",
                 )}
@@ -207,13 +208,15 @@ export const InitialCta = React.forwardRef<HTMLTextAreaElement, InitialCtaProps>
         />
         {showSuggestions && (
           <SuggestedPrompts
+            data-initial-cta-suggestions=""
             items={suggestions}
             label={suggestionsLabel}
             afterSelect="mark"
             selectedId={placed && value === placed.prompt ? placed.id : null}
             className={cn(
               // The site's quiet suggestion chips: hairline, faint fill, regular weight; the chosen one inverts.
-              "gap-1.5 [&_button]:min-h-8 [&_button]:border [&_button]:border-border [&_button]:bg-muted/40 [&_button]:px-3 [&_button]:py-1 [&_button]:text-[0.8125rem] [&_button]:font-normal [&_button]:text-muted-foreground [&_button:hover]:bg-accent [&_button:hover]:text-foreground [&_button[aria-pressed=true]]:border-primary [&_button[aria-pressed=true]]:bg-primary [&_button[aria-pressed=true]]:text-primary-foreground [&_ul]:gap-1.5",
+              // (5px 12px, an 8px corner, 11.5px type on --ink-25; an emoji icon sits a space before the label.)
+              "gap-1.5 [&_button]:min-h-0 [&_button]:gap-1 [&_button]:rounded-lg [&_button]:border [&_button]:border-border [&_button]:bg-[hsl(var(--nx-ink-25))] [&_button]:px-3 [&_button]:py-[5px] [&_button]:text-[11.5px] [&_button]:font-normal [&_button]:leading-[1.55] [&_button]:text-muted-foreground [&_button:hover]:bg-accent [&_button:hover]:text-foreground [&_button[aria-pressed=true]]:border-primary [&_button[aria-pressed=true]]:bg-primary [&_button[aria-pressed=true]]:text-primary-foreground [&_ul]:gap-1.5",
               hero && "justify-center [&_ul]:justify-center",
             )}
             onSelect={(prompt, item) => {

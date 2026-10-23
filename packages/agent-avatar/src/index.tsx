@@ -112,7 +112,8 @@ export const AgentAvatar = React.forwardRef<HTMLSpanElement, AgentAvatarProps>(
           alt={`${name}, ${descriptor}`}
           aria-hidden={decorative || undefined}
           className={cn(
-            "bg-gradient-to-br from-primary to-primary/75 font-semibold text-primary-foreground",
+            // nucleux.in: a 135° ink gradient (ink-950 → ink-600) carrying a white mark.
+            "bg-[linear-gradient(135deg,hsl(var(--nx-ink-950)),hsl(var(--nx-ink-600)))] font-semibold text-[hsl(var(--nx-ink-0))]",
             sizeClasses[size],
           )}
         >

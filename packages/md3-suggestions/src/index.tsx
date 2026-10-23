@@ -87,7 +87,7 @@ export const Md3Suggestions = React.forwardRef<HTMLDivElement, Md3SuggestionsPro
       <div
         ref={ref}
         role="status"
-        className={cn("flex items-center gap-2 px-1 text-sm text-md-on-surface-variant", className)}
+        className={cn("font-md", "flex items-center gap-2 px-1 text-sm text-md-on-surface-variant", className)}
         {...rest}
       >
         <Md3LoadingIndicator size={24} aria-hidden="true" />
@@ -102,6 +102,7 @@ export const Md3Suggestions = React.forwardRef<HTMLDivElement, Md3SuggestionsPro
         ref={ref}
         role="alert"
         className={cn(
+          "font-md",
           "flex flex-wrap items-center gap-2 rounded-md-md bg-md-error-container py-1 pl-3 pr-1 text-sm text-md-on-error-container",
           className,
         )}
@@ -125,6 +126,7 @@ export const Md3Suggestions = React.forwardRef<HTMLDivElement, Md3SuggestionsPro
         ref={ref}
         role="status"
         className={cn(
+          "font-md",
           "flex flex-wrap items-center gap-x-2 gap-y-1 px-1 text-sm text-md-on-surface-variant motion-safe:animate-nx-fade-in",
           className,
         )}
@@ -147,6 +149,7 @@ export const Md3Suggestions = React.forwardRef<HTMLDivElement, Md3SuggestionsPro
         ref={ref}
         {...s.rootProps}
         className={cn(
+          "font-md",
           "inline-flex items-center gap-0.5 rounded-md-md bg-md-inverse-surface p-1 text-md-inverse-on-surface shadow-md-2 motion-safe:animate-nx-fade-in",
           className,
         )}
@@ -182,7 +185,7 @@ export const Md3Suggestions = React.forwardRef<HTMLDivElement, Md3SuggestionsPro
   }
 
   return (
-    <div ref={ref} {...s.rootProps} className={cn("flex flex-col gap-2 motion-safe:animate-nx-fade-in", className)} {...rest}>
+    <div ref={ref} {...s.rootProps} className={cn("font-md", "flex flex-col gap-2 motion-safe:animate-nx-fade-in", className)} {...rest}>
       {s.showHeader && (
         <div className="flex min-h-8 items-center gap-2 px-0.5">
           {label != null && (
@@ -299,7 +302,7 @@ export const Md3SuggestionsComposer = React.forwardRef<HTMLDivElement, Md3Sugges
   } = props;
   const c = useSuggestionsComposer(props);
   return (
-    <div ref={ref} className={cn("flex w-full flex-col gap-3", className)} {...rest}>
+    <div ref={ref} className={cn("font-md", "flex w-full flex-col gap-3", className)} {...rest}>
       <Md3Suggestions
         suggestions={c.items}
         status={c.status}

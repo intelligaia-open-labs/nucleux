@@ -95,7 +95,7 @@ list is checked by `src/test/docs.test.ts`; never add a name the catalog lacks.
 - **React 18 + TypeScript** (strict), function components with `forwardRef`.
 - **Tailwind CSS v3** — tokens as CSS variables (`--nx-*`) in
   `packages/tokens/src/globals.css`, exposed via `@nucleux/tokens/preset`.
-  Palette is the shadcn/Tailwind "slate" system; accents: `info` (blue CTA),
+  Palette is nucleux.in's warm "ink" neutral scale (Inter / JetBrains Mono; Roboto via `font-md` on md3); accents: `info` (blue CTA),
   `brand` (orange, the AI accent as on nucleux.in), `success`, `warning`, `destructive`.
 - **tsup** builds each package → `dist/` (ESM + CJS + `.d.ts`). A post-build
   script adds a `"use client"` banner to every React (client) package.

@@ -94,28 +94,28 @@ export const Connector = React.forwardRef<HTMLDivElement, ConnectorProps>(
     const reconnect = onReconnect ?? onConnect;
     if (variant === "row") {
       const textBtn =
-        "shrink-0 rounded-md px-1 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+        "shrink-0 rounded-md text-[11px] font-semibold leading-[1.55] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
       return (
         <div
           ref={ref}
           data-status={status}
           className={cn(
-            "flex items-center gap-2.5 rounded-lg border bg-background px-3 py-2",
-            status === "connected" ? "border-success/60" : status === "expired" ? "border-warning/50" : status === "error" ? "border-destructive/50" : "border-border",
+            "flex items-center gap-2.5 rounded-[9px] border bg-background px-3 py-[9px]",
+            status === "connected" ? "border-[#4ade80]" : status === "expired" ? "border-warning/50" : status === "error" ? "border-destructive/50" : "border-border",
             className,
           )}
           {...props}
         >
-          <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-md border border-border bg-background text-foreground [&_svg]:size-4">
+          <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-[7px] border border-[#e8ecf0] bg-background text-foreground [&_svg]:max-h-[18px] [&_svg]:max-w-[18px]">
             {icon ?? <Plug aria-hidden="true" />}
           </span>
           <span className="flex min-w-0 flex-1 flex-col">
-            <span className="truncate text-sm font-medium text-foreground">{name}</span>
+            <span className="truncate text-[12.5px] font-medium leading-[1.55] text-foreground">{name}</span>
             {description && <span className="truncate text-xs text-muted-foreground">{description}</span>}
           </span>
           <span role="status" aria-live="polite" className="contents">
             {status === "connected" && (
-              <span className="shrink-0 text-xs font-semibold text-success">
+              <span className="shrink-0 text-[11px] font-semibold leading-[1.55] text-success">
                 {statusText.connected}
                 {detail ? <> · {detail}</> : null}
               </span>
@@ -291,7 +291,7 @@ export const ConnectorList = React.forwardRef<HTMLDivElement, ConnectorListProps
     if (!showLabel) return list;
     return (
       <div ref={ref} className={cn("flex flex-col gap-2.5", className)} {...props}>
-        <p id={headingId} className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+        <p id={headingId} className="text-[10px] font-semibold uppercase leading-[1.55] tracking-widest text-faint">
           {label}
         </p>
         {list}
@@ -377,20 +377,25 @@ export const ConnectorScopePicker = React.forwardRef<HTMLDivElement, ConnectorSc
         <p
           id={headingId}
           className={cn(
-            variant === "plain" ? "text-[10px] font-semibold uppercase tracking-widest text-muted-foreground" : "text-sm font-semibold text-foreground",
+            variant === "plain" ? "text-[10px] font-semibold uppercase leading-[1.55] tracking-widest text-faint" : "text-sm font-semibold text-foreground",
           )}
         >
           {title ?? <>{agentName} can read from:</>}
         </p>
-        <ul className="flex flex-col gap-1.5">
+        <ul className="flex flex-col gap-[5px]">
           {scopes.map((scope) => {
             const on = granted.includes(scope.id);
             const labelId = `${headingId}-${scope.id}`;
             return (
               <li key={scope.id}>
-                <label className="flex cursor-pointer items-center gap-2 text-sm">
-                  <Checkbox checked={on} onCheckedChange={(c) => set(scope.id, c)} aria-labelledby={labelId} />
-                  <span id={labelId} className={cn(on ? "text-foreground" : "text-muted-foreground")}>
+                <label className="flex cursor-pointer items-center gap-2 text-[11.5px] leading-[1.55]">
+                  <Checkbox
+                    checked={on}
+                    onCheckedChange={(c) => set(scope.id, c)}
+                    aria-labelledby={labelId}
+                    className="size-3.5 rounded-[3px] shadow-none data-[state=unchecked]:border-[1.5px] data-[state=unchecked]:border-border [&_svg]:size-[9px]"
+                  />
+                  <span id={labelId} className={cn(on ? "text-foreground" : "text-faint")}>
                     {scope.label}
                     {scope.description && <span className="text-xs text-muted-foreground"> · {scope.description}</span>}
                   </span>
@@ -439,12 +444,12 @@ export const ConnectorLivePill = React.forwardRef<HTMLSpanElement, ConnectorLive
       role="status"
       aria-live="polite"
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border border-brand/50 bg-brand-muted/50 px-3 py-1 text-xs font-semibold text-brand",
+        "inline-flex items-center gap-[7px] rounded-full border border-brand bg-[rgb(99_102_241/0.07)] px-3 py-1.5 text-[11.5px] font-semibold leading-[1.55] text-brand",
         className,
       )}
       {...props}
     >
-      <span aria-hidden="true" className="size-2 rounded-full bg-brand animate-pulse motion-reduce:animate-none" />
+      <span aria-hidden="true" className="size-[7px] shrink-0 rounded-full bg-brand animate-pulse motion-reduce:animate-none" />
       {children ?? (
         <>
           Reading{count != null ? ` ${count} ${noun}` : ""}

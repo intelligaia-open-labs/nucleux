@@ -189,6 +189,7 @@ export const Randomize = React.forwardRef<HTMLDivElement, RandomizeProps>(
         className={cn(
           "flex flex-col gap-2 rounded-lg border border-border bg-background p-3 text-sm shadow-md",
           variant === "dice-button" && "absolute left-0 top-full z-50 mt-2 w-72",
+          variant === "random-card" && "mt-2.5",
         )}
       >
         <p id={`${baseId}-confirm`} className="text-foreground">
@@ -316,45 +317,51 @@ export const Randomize = React.forwardRef<HTMLDivElement, RandomizeProps>(
       );
     }
 
+    // The random card's own look (nucleux.in): a dashed slate card with the 🎲 emoji.
+    const cardIcon = icon ?? <span aria-hidden="true">🎲</span>;
     return (
       <div
         ref={ref}
         role="group"
         aria-labelledby={`${baseId}-card`}
         className={cn(
-          "flex flex-col gap-2.5 rounded-xl border-[1.5px] border-dashed border-border bg-gradient-to-br from-muted to-muted/40 p-4",
+          "flex flex-col rounded-xl border-[1.5px] border-dashed border-[hsl(213_27%_84%)] from-[hsl(var(--nx-slate-100))] to-[hsl(var(--nx-slate-50))] px-[18px] pb-4 pt-[18px] [background-image:linear-gradient(140deg,var(--tw-gradient-stops))]",
           className,
         )}
         {...props}
       >
         <p
           id={`${baseId}-card`}
-          className="flex items-center gap-2 text-[0.625rem] font-bold uppercase tracking-[0.08em] text-muted-foreground [&_svg]:size-4 [&_svg]:text-foreground"
+          className="mb-2.5 flex items-center gap-1.5 text-[10px] font-bold uppercase leading-[1.55] tracking-[0.08em] text-[hsl(var(--nx-slate-500))] [&>:first-child]:text-[16px] [&>:first-child]:font-normal [&>:first-child]:tracking-normal [&_svg]:size-4 [&_svg]:text-foreground"
         >
-          {diceIcon}
+          {cardIcon}
           {cardLabel}
         </p>
         {loading ? (
-          <p className="text-sm text-muted-foreground">{loadingLabel}</p>
+          <p className="text-[13.5px] leading-[1.65] text-muted-foreground">{loadingLabel}</p>
         ) : current ? (
-          <p className="text-sm italic leading-relaxed text-foreground">“{current}”</p>
+          <p className="text-[13.5px] italic leading-[1.65] text-foreground">"{current}"</p>
         ) : null}
         {errorRow}
-        <div className="mt-1 flex flex-wrap items-center gap-2">
+        <div className="mt-3.5 flex flex-wrap items-center gap-2">
           {backButton}
           <Button
             size="sm"
             variant="secondary"
-            className="bg-muted/60 text-muted-foreground hover:text-foreground"
+            className="h-auto gap-[5px] rounded-lg border-[hsl(213_27%_84%)] bg-[hsl(var(--nx-slate-50))] px-3 py-1.5 text-[11.5px] font-medium leading-[1.55] tracking-normal text-[hsl(215_19%_35%)] shadow-none hover:bg-[hsl(var(--nx-slate-100))] [&_svg]:size-3.5"
             aria-busy={loading || undefined}
             disabled={disabled}
-            leftIcon={loading ? busyIcon : diceIcon}
+            leftIcon={loading ? busyIcon : icon ?? <span aria-hidden="true" className="text-[13px]">🎲</span>}
             onClick={() => next()}
           >
             Pick another
           </Button>
           {current && !loading && (
-            <Button size="sm" onClick={() => use(current)}>
+            <Button
+              size="sm"
+              className="h-auto gap-[5px] rounded-lg border-0 px-3.5 py-1.5 text-[11.5px] font-medium leading-[1.55] tracking-normal shadow-none hover:bg-[hsl(215_25%_27%)]"
+              onClick={() => use(current)}
+            >
               Use this
             </Button>
           )}

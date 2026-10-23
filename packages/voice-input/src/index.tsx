@@ -211,7 +211,7 @@ export const VoiceInput = React.forwardRef<HTMLDivElement, VoiceInputProps>(
         <div
           ref={ref}
           className={cn(
-            "flex flex-col overflow-hidden rounded-xl border border-border bg-background",
+            "flex flex-col overflow-hidden rounded-[14px] border border-border bg-background leading-[1.55]",
             (state === "idle" || state === "error") && "px-4 py-3",
             className,
           )}
@@ -232,22 +232,22 @@ export const VoiceInput = React.forwardRef<HTMLDivElement, VoiceInputProps>(
             <>
               <div className="px-[1.125rem] pb-3 pt-4">
                 {transcriptLabel != null && (
-                  <p className="mb-2 text-[0.625rem] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  <p className="mb-2 text-[0.625rem] font-semibold uppercase leading-[1.55] tracking-[0.1em] text-faint">
                     {transcriptLabel}
                   </p>
                 )}
-                <p className="min-h-5 text-sm leading-6 text-foreground">
+                <p className="min-h-5 text-[13px] leading-5 text-foreground">
                   {transcript}
                   {interimTranscript && (
                     <>
                       {transcript ? " " : null}
-                      <span className="italic text-muted-foreground">{interimTranscript}</span>
+                      <span className="italic text-faint">{interimTranscript}</span>
                     </>
                   )}
                   {capturing && (
                     <span
                       aria-hidden="true"
-                      className="ml-px inline-block h-3.5 w-0.5 translate-y-0.5 rounded-full bg-brand animate-nx-caret-blink motion-reduce:animate-none"
+                      className="ml-px inline-block h-[13px] w-0.5 rounded-[1px] bg-brand align-middle animate-nx-caret-blink motion-reduce:animate-none"
                     />
                   )}
                 </p>
@@ -275,7 +275,7 @@ export const VoiceInput = React.forwardRef<HTMLDivElement, VoiceInputProps>(
                         />
                       ))}
                     </div>
-                    {duration && <span className="shrink-0 text-xs tabular-nums text-muted-foreground">{duration}</span>}
+                    {duration && <span className="shrink-0 text-[11px] tabular-nums text-faint">{duration}</span>}
                     {pauseButton}
                     {onCancel && cancelButton}
                     <button
@@ -283,7 +283,7 @@ export const VoiceInput = React.forwardRef<HTMLDivElement, VoiceInputProps>(
                       aria-label="Stop and use recording"
                       onClick={onConfirm}
                       className={cn(
-                        "inline-flex size-10 shrink-0 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&_svg]:size-4",
+                        "inline-flex size-10 shrink-0 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&_svg]:size-3.5",
                         paused
                           ? "bg-muted text-foreground hover:bg-accent"
                           : "bg-destructive text-destructive-foreground ring-4 ring-destructive/20 hover:bg-destructive/90",
@@ -295,7 +295,7 @@ export const VoiceInput = React.forwardRef<HTMLDivElement, VoiceInputProps>(
                 )}
               </div>
               {state !== "transcribing" && (
-                <p className="flex items-center gap-1.5 border-t border-border bg-muted/40 px-[1.125rem] py-2 text-xs text-muted-foreground">
+                <p className="flex items-center gap-[5px] border-t border-border bg-[hsl(var(--nx-ink-25))] px-[1.125rem] py-2 text-[10.5px] leading-[1.55] text-faint">
                   <span
                     aria-hidden="true"
                     className={cn("size-2 shrink-0 rounded-full", paused ? "bg-muted-foreground/40" : "bg-destructive")}

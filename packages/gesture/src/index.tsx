@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import { Kbd } from "@nucleux/kbd";
-import { Check, Hand, Undo2, X } from "lucide-react";
+import { Check, Undo2, X } from "lucide-react";
 
 export type GestureInputVariant = "circle-to-select" | "swipe-action" | "pinch-context";
 
@@ -118,6 +118,10 @@ export interface GestureInputProps extends React.HTMLAttributes<HTMLDivElement> 
   showActions?: boolean;
   /** Classes for the inner content wrapper that moves/zooms with the gesture. */
   contentClassName?: string;
+  /** Overlay feedback: show its × button (Escape still dismisses). Defaults to `true`. */
+  overlayDismiss?: boolean;
+  /** Show each action button's keyboard key. The key always works and is announced (`aria-keyshortcuts`). Defaults to `true`. */
+  showKeys?: boolean;
   disabled?: boolean;
   /** The content the gesture acts on. */
   children?: React.ReactNode;
@@ -252,6 +256,8 @@ export const GestureInput = React.forwardRef<HTMLDivElement, GestureInputProps>(
       threshold = 40,
       showActions = true,
       contentClassName,
+      overlayDismiss = true,
+      showKeys = true,
       disabled = false,
       className,
       children,
@@ -465,7 +471,7 @@ export const GestureInput = React.forwardRef<HTMLDivElement, GestureInputProps>(
         : undefined;
 
     return (
-      <div ref={ref} className={cn("flex flex-col gap-2", className)} data-variant={variant} {...props}>
+      <div ref={ref} className={cn("flex flex-col gap-2.5", className)} data-variant={variant} {...props}>
         <div
           ref={targetRef}
           role="group"
@@ -536,7 +542,7 @@ export const GestureInput = React.forwardRef<HTMLDivElement, GestureInputProps>(
           {pending?.bounds && (
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute rounded-[50%] border-[2.5px] border-destructive bg-destructive/10 animate-nx-fade-in motion-reduce:animate-none"
+              className="pointer-events-none absolute rounded-[50%] border-[2.5px] border-destructive bg-destructive/[0.06] animate-nx-fade-in motion-reduce:animate-none"
               style={{
                 left: pending.bounds.x,
                 top: pending.bounds.y,
@@ -548,16 +554,19 @@ export const GestureInput = React.forwardRef<HTMLDivElement, GestureInputProps>(
           {pending && !overlay && (
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute bottom-2.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-background/95 px-3 py-1 text-xs font-semibold text-foreground shadow-md"
+              className="pointer-events-none absolute bottom-2.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-background/95 px-3 py-1 text-[10.5px] font-semibold leading-[1.55] text-foreground shadow-[0_2px_8px_rgb(0_0_0/0.12)]"
             >
-              <Hand className="size-3.5 text-warning" aria-hidden="true" />
+              <span aria-hidden="true">🤚</span>
               {describe(pending)}
             </span>
           )}
           {overlay && feedback && (
             <span
               data-slot="gesture-feedback"
-              className="absolute bottom-2.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-0.5 whitespace-nowrap rounded-full bg-background/95 py-0.5 pl-1 pr-0.5 text-xs font-semibold text-foreground shadow-md"
+              className={cn(
+                "absolute bottom-2.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-0.5 whitespace-nowrap rounded-full bg-background/95 py-1 text-[10.5px] font-semibold leading-[1.55] text-foreground shadow-[0_2px_8px_rgb(0_0_0/0.12)]",
+                overlayDismiss ? "pl-3 pr-1" : "px-3",
+              )}
             >
               {feedback.kind === "missed" ? (
                 <span className="px-2">Not recognised — try again</span>
@@ -573,16 +582,17 @@ export const GestureInput = React.forwardRef<HTMLDivElement, GestureInputProps>(
                         ? `${describe(feedback.event)} — undo`
                         : describe(feedback.event)
                   }
-                  className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="inline-flex items-center gap-1 rounded-full hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {feedback.kind === "done" && onUndo ? (
                     <Undo2 className="size-3.5" aria-hidden="true" />
                   ) : (
-                    <Hand className="size-3.5 text-warning" aria-hidden="true" />
+                    <span aria-hidden="true">🤚</span>
                   )}
                   {describe(feedback.event)}
                 </button>
               )}
+              {overlayDismiss && (
               <button
                 type="button"
                 aria-label={feedback.kind === "done" ? "Close" : "Dismiss"}
@@ -591,6 +601,7 @@ export const GestureInput = React.forwardRef<HTMLDivElement, GestureInputProps>(
               >
                 <X className="size-3" aria-hidden="true" />
               </button>
+              )}
             </span>
           )}
         </div>
@@ -651,17 +662,17 @@ export const GestureInput = React.forwardRef<HTMLDivElement, GestureInputProps>(
                   key={action.gesture}
                   variant="secondary"
                   disabled={disabled}
-                  className="h-auto min-w-0 flex-1 basis-40 justify-start gap-2.5 rounded-lg bg-muted/50 px-3 py-2.5 font-normal shadow-none"
+                  className="h-auto min-w-0 flex-1 basis-40 justify-start gap-2 rounded-lg bg-[hsl(var(--nx-ink-25))] px-3 py-2 text-[11.5px] font-normal leading-[1.55] tracking-normal shadow-none"
                   aria-keyshortcuts={k && /^[A-Za-z0-9]|^Arrow|^Enter$/.test(k) ? k : undefined}
                   onClick={() => runAction(action, "keyboard", true)}
                 >
                   {action.icon != null && (
-                    <span aria-hidden="true" className="inline-flex shrink-0 [&_svg]:size-4">
+                    <span aria-hidden="true" className="inline-flex shrink-0 text-sm leading-[1.55] [&_svg]:size-3.5">
                       {action.icon}
                     </span>
                   )}
                   <span className="truncate">{action.label}</span>
-                  {k && (
+                  {k && showKeys && (
                     <Kbd aria-hidden="true" className="ml-auto">
                       {KEY_GLYPHS[k] ?? k}
                     </Kbd>

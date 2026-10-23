@@ -1,7 +1,6 @@
 import * as React from "react";
 import { RefreshCw, WandSparkles, Wrench } from "lucide-react";
 import { cn } from "@nucleux/utils";
-import { aiColorClasses } from "@nucleux/color";
 
 /* -------------------------------------------------------------------------- */
 /* Glyphs                                                                      */
@@ -299,8 +298,9 @@ export const AiIcons = React.forwardRef<HTMLSpanElement, AiIconsProps>(
           data-variant={variant}
           className={cn(
             base,
-            "rounded-full bg-gradient-to-br from-primary/80 to-primary ring-4 ring-primary/10",
-            aiColorClasses.working,
+            // nucleux.in's orb: a lit slate sphere whose halo breathes outward.
+            "rounded-full bg-[radial-gradient(circle_at_30%_30%,hsl(215_19%_35%),hsl(var(--nx-primary)))]",
+            "motion-safe:animate-nx-orb-pulse",
             sizeClasses[size],
             className,
           )}

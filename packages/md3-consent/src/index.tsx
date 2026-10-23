@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { MsKeyboardArrowDown, MsKeyboardArrowRight } from "@nucleux/md3-icons";
 import { cn } from "@nucleux/utils";
 import type {
   ConsentDialogProps,
@@ -36,25 +36,38 @@ type ConsentControlsProps = Pick<
   | "outcome"
   | "details"
   | "detailsLabel"
-> & { groupLabel: string; onDone?: () => void };
+> & {
+  groupLabel: string;
+  onDone?: () => void;
+  /** Spaced for the inline card (one column at a 4dp rhythm, outcome as body-small). */
+  card?: boolean;
+};
 
 /** The scope as a read-only M3 list: a 20dp leading icon and a body-large line per item. */
 function ScopeList({ scope, label }: { scope: ConsentScopeItem[]; label?: React.ReactNode }) {
   return (
     <div className="flex flex-col">
-      {label && <p className="mb-0.5 text-xs font-semibold tracking-[0.5px] text-md-on-surface-variant">{label}</p>}
+      {label && <p className="text-xs font-semibold text-md-on-surface-variant">{label}</p>}
       <ul className="m-0 flex list-none flex-col p-0">
         {scope.map((item, i) => (
-          <li key={i} className="flex items-start gap-3 py-1.5 text-base tracking-[0.5px] text-md-on-surface">
+          <li
+            key={i}
+            className="flex items-start gap-3 py-1.5 text-base leading-[1.55] text-md-on-surface"
+          >
             {item.icon && (
-              <span aria-hidden="true" className="mt-0.5 flex shrink-0 text-md-on-surface-variant [&_svg]:size-5">
+              <span
+                aria-hidden="true"
+                className="mt-0.5 flex shrink-0 text-md-on-surface-variant [&_svg]:size-5"
+              >
                 {item.icon}
               </span>
             )}
             <span className="min-w-0">
               {item.label}
               {item.description && (
-                <span className="block text-sm tracking-[0.25px] text-md-on-surface-variant">{item.description}</span>
+                <span className="block text-sm tracking-[0.25px] text-md-on-surface-variant">
+                  {item.description}
+                </span>
               )}
             </span>
           </li>
@@ -86,11 +99,17 @@ function PermissionRow({
           className="-my-1.5 -ml-2.5 shrink-0"
         />
         <span className="min-w-0 flex-1 pt-0.5">
-          <span id={`${id}-label`} className="block text-sm font-medium tracking-[0.1px] text-md-on-surface">
+          <span
+            id={`${id}-label`}
+            className="block text-sm font-medium tracking-[0.1px] text-md-on-surface"
+          >
             {permission.label}
           </span>
           {permission.description && (
-            <span id={`${id}-desc`} className="block text-xs tracking-[0.4px] text-md-on-surface-variant">
+            <span
+              id={`${id}-desc`}
+              className="block text-xs tracking-[0.4px] text-md-on-surface-variant"
+            >
               {permission.description}
             </span>
           )}
@@ -123,6 +142,7 @@ function ConsentControls({
   detailsLabel = "Review details",
   groupLabel,
   onDone,
+  card = false,
 }: ConsentControlsProps) {
   const detailsId = React.useId();
   const [detailsOpen, setDetailsOpen] = React.useState(false);
@@ -140,49 +160,58 @@ function ConsentControls({
       {permissions.length > 0 && (
         <div role="group" aria-label={groupLabel}>
           <ul className="m-0 flex list-none flex-col p-0">
-          {permissions.map((p) => (
-            <PermissionRow
-              key={p.id}
-              permission={p}
-              checked={!!granted[p.id]}
-              onCheckedChange={(v) => setGranted((prev) => ({ ...prev, [p.id]: v }))}
-            />
+            {permissions.map((p) => (
+              <PermissionRow
+                key={p.id}
+                permission={p}
+                checked={!!granted[p.id]}
+                onCheckedChange={(v) => setGranted((prev) => ({ ...prev, [p.id]: v }))}
+              />
             ))}
           </ul>
         </div>
       )}
 
-      {scope.length > 0 && <ScopeList scope={scope} label={scopeLabel} />}
+      {scope.length > 0 && (
+        <div className={card ? "mt-1.5" : undefined}>
+          <ScopeList scope={scope} label={scopeLabel} />
+        </div>
+      )}
 
       {outcome && (
-        <p className="text-sm tracking-[0.25px] text-md-on-surface-variant [&_b]:font-semibold [&_b]:text-md-on-surface [&_strong]:font-semibold [&_strong]:text-md-on-surface">
+        <p
+          className={cn(
+            card ? "text-xs leading-4 tracking-[0.4px]" : "text-sm tracking-[0.25px]",
+            "text-md-on-surface-variant [&_b]:font-semibold [&_b]:text-md-on-surface [&_strong]:font-semibold [&_strong]:text-md-on-surface",
+          )}
+        >
           {outcome}
         </p>
       )}
 
       {details && (
-        <div className="flex flex-col gap-2">
+        <div className={cn("flex flex-col gap-2", card && "mt-0.5")}>
           <Md3Button
             variant="text"
             aria-expanded={detailsOpen}
             aria-controls={detailsId}
             onClick={() => setDetailsOpen((o) => !o)}
-            icon={detailsOpen ? <ChevronDown aria-hidden="true" /> : <ChevronRight aria-hidden="true" />}
-            className="-ml-3 self-start pl-3 pr-4"
+            icon={detailsOpen ? <MsKeyboardArrowDown /> : <MsKeyboardArrowRight />}
+            className="-ml-3 self-start px-3 tracking-[0.1px]"
           >
             {detailsLabel}
           </Md3Button>
           <div
             id={detailsId}
             hidden={!detailsOpen}
-            className="text-sm tracking-[0.25px] text-md-on-surface animate-nx-fade-in motion-reduce:animate-none"
+            className="animate-nx-fade-in text-sm tracking-[0.25px] text-md-on-surface motion-reduce:animate-none"
           >
             {details}
           </div>
         </div>
       )}
 
-      <div className="flex flex-wrap items-center justify-end gap-2">
+      <div className={cn("flex flex-wrap items-center justify-end gap-2", card && "mt-2")}>
         {policyHref && (
           <span className="mr-auto">
             <a
@@ -193,15 +222,27 @@ function ConsentControls({
             </a>
           </span>
         )}
-        <Md3Button variant="outlined" onClick={() => done(onDeny)} className="min-w-24">
+        <Md3Button
+          variant="outlined"
+          onClick={() => done(onDeny)}
+          className="min-w-24 px-5 tracking-[0.1px]"
+        >
           {denyLabel}
         </Md3Button>
         {secondaryLabel && (
-          <Md3Button variant="outlined" onClick={() => done(() => onSecondary?.(selectedIds))}>
+          <Md3Button
+            variant="outlined"
+            onClick={() => done(() => onSecondary?.(selectedIds))}
+            className="px-5 tracking-[0.1px]"
+          >
             {secondaryLabel}
           </Md3Button>
         )}
-        <Md3Button variant="filled" onClick={() => done(() => onAllow?.(selectedIds))} className="min-w-24">
+        <Md3Button
+          variant="filled"
+          onClick={() => done(() => onAllow?.(selectedIds))}
+          className="min-w-24 px-5 tracking-[0.1px]"
+        >
           {allowLabel ?? (permissions.length > 0 ? "Allow selected" : "Allow")}
         </Md3Button>
       </div>
@@ -251,7 +292,8 @@ export const Md3Consent = React.forwardRef<HTMLDivElement, Md3ConsentProps>(
       ref={ref}
       data-variant="inline-card"
       className={cn(
-        "flex w-full max-w-md items-start gap-3 rounded-md-xl bg-md-surface-container-high p-5 text-md-on-surface shadow-md-1 animate-nx-fade-in motion-reduce:animate-none",
+        "font-md",
+        "flex w-full max-w-md animate-nx-fade-in items-start gap-3 rounded-md-xl bg-md-surface-container-high p-5 text-md-on-surface motion-reduce:animate-none",
         className,
       )}
       {...props}
@@ -259,22 +301,24 @@ export const Md3Consent = React.forwardRef<HTMLDivElement, Md3ConsentProps>(
       {icon && (
         <span
           aria-hidden="true"
-          className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-md-surface text-md-on-surface [&_svg]:size-[18px]"
+          className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-md-surface-container-lowest text-md-on-surface [&_svg]:size-[18px]"
         >
           {icon}
         </span>
       )}
-      <div className="flex min-w-0 flex-1 flex-col gap-3">
-        <div className="flex flex-col gap-1">
-          {badge && (
-            <span className="mb-0.5 inline-flex w-fit items-center rounded-full bg-md-secondary-container px-2 py-0.5 text-[0.6875rem] font-medium uppercase tracking-wide text-md-on-secondary-container">
-              {badge}
-            </span>
-          )}
-          <h2 className="text-base font-semibold leading-6 text-md-on-surface">{title}</h2>
-          {description && <p className="text-sm tracking-[0.25px] text-md-on-surface-variant">{description}</p>}
-        </div>
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
+        {badge && (
+          <span className="inline-flex w-fit items-center rounded-full bg-md-secondary-container px-2 py-0.5 text-[0.6875rem] font-medium uppercase leading-[1.55] tracking-wide text-md-on-secondary-container">
+            {badge}
+          </span>
+        )}
+        {/* nucleux.in sets this one title in Inter, tightened. */}
+        <h2 className="font-sans text-base font-semibold leading-6 tracking-[-0.02em] text-md-on-surface">
+          {title}
+        </h2>
+        {description && <p className="text-sm text-md-on-surface-variant">{description}</p>}
         <ConsentControls
+          card
           permissions={permissions}
           denyLabel={denyLabel}
           onDeny={onDeny}
@@ -316,7 +360,13 @@ export function Md3ConsentDialog({
   ...rest
 }: Md3ConsentDialogProps) {
   return (
-    <Md3Dialog open={open} onOpenChange={onOpenChange} dismissible={false} headline={title} className={className}>
+    <Md3Dialog
+      open={open}
+      onOpenChange={onOpenChange}
+      dismissible={false}
+      headline={title}
+      className={className}
+    >
       <div className="flex flex-col gap-4">
         {description && <p className="tracking-[0.25px]">{description}</p>}
         <ConsentControls
@@ -337,16 +387,27 @@ Md3ConsentDialog.displayName = "Md3ConsentDialog";
  * described by its supporting line: one click to grant or take it back.
  */
 export const Md3ConsentToggle = React.forwardRef<HTMLDivElement, Md3ConsentToggleProps>(
-  ({ title, description, checked, defaultChecked, onCheckedChange, disabled, className, ...props }, ref) => {
+  (
+    { title, description, checked, defaultChecked, onCheckedChange, disabled, className, ...props },
+    ref,
+  ) => {
     const id = React.useId();
     return (
-      <div ref={ref} data-variant="settings-toggle" className={cn("flex items-center gap-4 py-3", className)} {...props}>
+      <div
+        ref={ref}
+        data-variant="settings-toggle"
+        className={cn("font-md", "flex items-center gap-4 py-3", className)}
+        {...props}
+      >
         <div className="min-w-0 flex-1">
           <div id={`${id}-title`} className="text-base tracking-[0.5px] text-md-on-surface">
             {title}
           </div>
           {description && (
-            <div id={`${id}-desc`} className="mt-0.5 text-sm tracking-[0.25px] text-md-on-surface-variant">
+            <div
+              id={`${id}-desc`}
+              className="mt-0.5 text-sm tracking-[0.25px] text-md-on-surface-variant"
+            >
               {description}
             </div>
           )}

@@ -17,6 +17,7 @@ export const Md3Search = React.forwardRef<HTMLInputElement, Md3SearchProps>(
   ({ value, onValueChange, leading, trailing, placeholder = "Search", className, ...props }, ref) => (
     <div
       className={cn(
+        "font-md",
         "flex h-14 w-full items-center gap-3 rounded-full bg-md-surface-container-high px-4 text-md-on-surface",
         className,
       )}

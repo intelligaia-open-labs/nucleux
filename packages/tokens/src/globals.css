@@ -5,19 +5,37 @@
 /**
  * Nucleux design tokens.
  *
- * These CSS variables define the default theme, mapped from the Figma design
- * system (a Tailwind "slate" palette). Override them anywhere in your app (on
- * :root, a wrapper element, or a `.dark` scope) to re-theme every Nucleux
- * component at once. Values are HSL channels (no `hsl()` wrapper) so Tailwind
- * can compose them with opacity modifiers, e.g. `bg-success/15`.
+ * These CSS variables define the default theme: nucleux.in's warm neutral
+ * "ink" scale (the palette every shadcn-family preview on the site uses), with
+ * Inter for text and JetBrains Mono for code. Override them anywhere in your
+ * app (on :root, a wrapper element, or a `.dark` scope) to re-theme every
+ * Nucleux component at once. Values are HSL channels (no `hsl()` wrapper) so
+ * Tailwind can compose them with opacity modifiers, e.g. `bg-success/15`.
  */
 @layer base {
   /**
-   * Primitive palette — theme-independent raw values (Tailwind slate /
-   * blue / violet / green / amber / red). Semantic tokens below reference
-   * these; re-theme by overriding the semantic mapping, not the raw values.
+   * Primitive palette — theme-independent raw values. The ink scale is
+   * nucleux.in's neutral ramp; semantic tokens below reference these.
+   * Re-theme by overriding the semantic mapping, not the raw values.
    */
   :root {
+    --nx-ink-0: 0 0% 100%; /* #ffffff */
+    --nx-ink-25: 60 11.1% 98.2%; /* #fbfbfa */
+    --nx-ink-50: 60 9.1% 95.7%; /* #f5f5f3 */
+    --nx-ink-100: 60 7% 91.6%; /* #ebebe8 */
+    --nx-ink-200: 60 7.1% 83.5%; /* #d8d8d2 */
+    --nx-ink-border: 60 9.1% 84.9%; /* #dcdcd5  the site's --border */
+    --nx-ink-border-strong: 60 6.3% 75.3%; /* #c4c4bc  the site's --border-strong */
+    --nx-ink-300: 60 5.8% 69.6%; /* #b6b6ad */
+    --nx-ink-400: 60 4.4% 51.2%; /* #88887d */
+    --nx-ink-500: 60 5.1% 34.7%; /* #5d5d54 */
+    --nx-ink-600: 60 5.9% 23.3%; /* #3f3f38 */
+    --nx-ink-700: 60 6.3% 15.5%; /* #2a2a25 */
+    --nx-ink-800: 60 8.3% 9.4%; /* #1a1a16 */
+    --nx-ink-900: 60 9.1% 4.3%; /* #0c0c0a */
+    --nx-ink-950: 60 11.1% 1.8%; /* #050504 */
+
+    /* Legacy slate ramp (kept for apps that still reference it). */
     --nx-slate-50: 210 40% 98%;
     --nx-slate-100: 210 40% 96%;
     --nx-slate-200: 214 32% 91%;
@@ -26,6 +44,7 @@
     --nx-slate-800: 217 33% 17%;
     --nx-slate-900: 222 47% 11%;
     --nx-slate-950: 222 47% 5%;
+    --nx-slate-800-s: 217 33% 20%;
 
     --nx-blue-500: 217 91% 60%;
 
@@ -42,7 +61,10 @@
     --nx-red-600: 0 72% 51%;
     --nx-red-700: 0 63% 45%;
 
-    --nx-slate-800-s: 217 33% 20%; /* borders/dividers in dark mode */
+    /* Type families. Apps load the web fonts (see the README / get_setup). */
+    --nx-font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --nx-font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    --nx-font-md: Roboto, "Helvetica Neue", Arial, sans-serif; /* Material 3 */
   }
 
   /**
@@ -51,77 +73,90 @@
    * border-*); apps re-theme by re-pointing them at different primitives.
    */
   :root {
-    --nx-background: 0 0% 100%;
-    --nx-foreground: var(--nx-slate-950); /* slate-950  #020617 */
+    --nx-background: var(--nx-ink-0); /* the site's --surface */
+    --nx-foreground: var(--nx-ink-950); /* --fg */
 
-    --nx-muted: var(--nx-slate-100);
-    --nx-muted-foreground: var(--nx-slate-500); /* slate-500  #64748b */
+    --nx-muted: var(--nx-ink-50);
+    --nx-muted-foreground: var(--nx-ink-500); /* --fg-mid #5d5d54 (AA on white) */
+    --nx-faint: var(--nx-ink-400); /* --fg-muted #88887d: hints, meta, placeholders */
 
-    --nx-primary: var(--nx-slate-900); /* slate-900  #0f172a */
-    --nx-primary-foreground: var(--nx-slate-50); /* slate-50   #f8fafc */
+    /* The agentic previews' primary button: #0f172a on #f8fafc (pattern.js uses it
+       for Approve / Allow / Enhance / Generate …; ink-950 is for marks and rings). */
+    --nx-primary: var(--nx-slate-900);
+    --nx-primary-foreground: var(--nx-slate-50);
 
-    --nx-accent: var(--nx-slate-100);
-    --nx-accent-foreground: var(--nx-slate-900);
+    --nx-accent: var(--nx-ink-50);
+    --nx-accent-foreground: var(--nx-ink-900);
 
     /* Blue CTA (e.g. the "Connect" button)  blue-500 #3b82f6 */
     --nx-info: var(--nx-blue-500);
-    --nx-info-foreground: var(--nx-slate-50);
+    --nx-info-foreground: var(--nx-ink-0);
 
-    /* Brand accent used for feature icons  violet-500 #8b5cf6 / violet-50 bg */
     --nx-brand: 32 95% 44%; /* nucleux.in's AI accent #d97706 */
     --nx-brand-foreground: 0 0% 100%;
     --nx-brand-muted: 48 96% 89%; /* #fef3c7 */
 
     --nx-destructive: var(--nx-red-600);
-    --nx-destructive-foreground: var(--nx-slate-50);
+    --nx-destructive-foreground: var(--nx-ink-0);
 
     /* Success  green-600 #16a34a */
     --nx-success: var(--nx-green-600);
-    --nx-success-foreground: var(--nx-slate-50);
+    --nx-success-foreground: var(--nx-ink-0);
 
     /* Warning  amber-500 #f59e0b */
     --nx-warning: var(--nx-amber-500);
     --nx-warning-foreground: var(--nx-amber-950);
 
-    --nx-border: var(--nx-slate-200); /* slate-200  #e2e8f0 */
-    --nx-input: var(--nx-slate-200);
-    --nx-ring: var(--nx-slate-900);
+    --nx-border: var(--nx-ink-border); /* #dcdcd5 */
+    --nx-input: var(--nx-ink-border-strong); /* #c4c4bc  field / outline-button edge */
+    --nx-ring: var(--nx-ink-950);
 
     --nx-radius: 0.75rem; /* rounded-xl (12px) card corners */
   }
 
   .dark {
-    --nx-background: var(--nx-slate-950);
-    --nx-foreground: var(--nx-slate-50);
+    --nx-background: var(--nx-ink-950);
+    --nx-foreground: var(--nx-ink-50);
 
-    --nx-muted: var(--nx-slate-800);
-    --nx-muted-foreground: var(--nx-slate-400); /* slate-400 */
+    --nx-muted: var(--nx-ink-800);
+    --nx-muted-foreground: var(--nx-ink-300);
+    --nx-faint: var(--nx-ink-400);
 
-    --nx-primary: var(--nx-slate-50);
-    --nx-primary-foreground: var(--nx-slate-900);
+    --nx-primary: var(--nx-ink-50);
+    --nx-primary-foreground: var(--nx-ink-900);
 
-    --nx-accent: var(--nx-slate-800);
-    --nx-accent-foreground: var(--nx-slate-50);
+    --nx-accent: var(--nx-ink-800);
+    --nx-accent-foreground: var(--nx-ink-50);
 
-    --nx-info: var(--nx-blue-500); /* blue-500 */
-    --nx-info-foreground: var(--nx-slate-50);
+    --nx-info: var(--nx-blue-500);
+    --nx-info-foreground: var(--nx-ink-0);
 
     --nx-brand: 38 92% 50%; /* #f59e0b: the accent, lifted for dark surfaces */
     --nx-brand-foreground: 48 96% 9%;
     --nx-brand-muted: 32 60% 14%;
 
     --nx-destructive: var(--nx-red-700);
-    --nx-destructive-foreground: var(--nx-slate-50);
+    --nx-destructive-foreground: var(--nx-ink-0);
 
     --nx-success: var(--nx-green-600-dark);
-    --nx-success-foreground: var(--nx-slate-50);
+    --nx-success-foreground: var(--nx-ink-0);
 
     --nx-warning: var(--nx-amber-400);
     --nx-warning-foreground: var(--nx-amber-950);
 
-    --nx-border: var(--nx-slate-800-s);
-    --nx-input: var(--nx-slate-800-s);
-    --nx-ring: 213 27% 84%;
+    --nx-border: var(--nx-ink-700);
+    --nx-input: var(--nx-ink-600);
+    --nx-ring: var(--nx-ink-300);
+  }
+
+  html,
+  body {
+    font-family: var(--nx-font-sans);
+    /* As nucleux.in renders text: Inter's ss01 (open digits) and cv11 (single-storey a). */
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 

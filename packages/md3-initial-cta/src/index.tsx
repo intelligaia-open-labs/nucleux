@@ -122,8 +122,10 @@ export const Md3InitialCta = React.forwardRef<HTMLTextAreaElement, Md3InitialCta
       <section
         aria-labelledby={hasHeadline ? headingId : description ? descriptionId : undefined}
         className={cn(
+          "font-md",
           "flex w-full flex-col gap-3 text-md-on-surface",
-          hero && "mx-auto max-w-2xl items-center gap-6 text-center",
+          // As on nucleux.in's empty workspace: 14px between the lead and the composer.
+          hero && "mx-auto max-w-2xl items-center gap-3.5 text-center",
           gradient &&
             "gap-4 rounded-md-xl bg-gradient-to-br from-md-primary-container to-md-surface-container-low p-5",
           className,
@@ -149,9 +151,9 @@ export const Md3InitialCta = React.forwardRef<HTMLTextAreaElement, Md3InitialCta
               <p
                 id={descriptionId}
                 className={cn(
-                  "max-w-[42ch]",
-                  // Without a headline the supporting line is the lead (the site's two-line intro).
-                  hasHeadline ? "text-sm tracking-[0.25px]" : "text-base leading-6 tracking-[0.15px]",
+                  // Without a headline the supporting line is the lead (the site's two-line intro:
+                  // 15px at 1.5, at most 46ch, balanced, in the page's face — Inter on nucleux.in).
+                  hasHeadline ? "max-w-[42ch] text-sm tracking-[0.25px]" : "max-w-[46ch] text-balance font-sans text-[15px] leading-normal",
                   gradient ? "text-md-on-primary-container" : "text-md-on-surface-variant",
                 )}
               >

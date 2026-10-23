@@ -35,7 +35,7 @@ export const Md3Chip = React.forwardRef<HTMLButtonElement, Md3ChipProps>(
     // Input chip: a container with a label and a nested remove button.
     if (variant === "input") {
       return (
-        <span ref={ref as React.Ref<HTMLElement> as never} className={cn(base, "pr-1", className)}>
+        <span ref={ref as React.Ref<HTMLElement> as never} className={cn("font-md", base, "pr-1", className)}>
           {icon && <span className="relative shrink-0">{icon}</span>}
           <span className="relative">{children}</span>
           <button
@@ -55,7 +55,7 @@ export const Md3Chip = React.forwardRef<HTMLButtonElement, Md3ChipProps>(
         ref={ref}
         type={type}
         aria-pressed={variant === "filter" ? selected : undefined}
-        className={cn(base, stateLayer, className)}
+        className={cn("font-md", base, stateLayer, className)}
         {...props}
       >
         {variant === "filter" && selected ? (

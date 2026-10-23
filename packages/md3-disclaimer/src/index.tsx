@@ -61,6 +61,7 @@ export const Md3Disclaimer = React.forwardRef<HTMLDivElement, Md3DisclaimerProps
           role="note"
           aria-label="Knowledge cutoff"
           className={cn(
+            "font-md",
             "inline-flex items-center gap-2 rounded-full bg-md-surface-container px-3.5 py-1.5 text-xs leading-4 tracking-[0.4px] text-md-on-surface-variant",
             className,
           )}
@@ -107,6 +108,7 @@ export const Md3Disclaimer = React.forwardRef<HTMLDivElement, Md3DisclaimerProps
         aria-labelledby={heading != null ? `${baseId}-title` : undefined}
         aria-label={heading == null ? `About ${agentName}` : undefined}
         className={cn(
+          "font-md",
           "flex flex-col gap-2 text-sm tracking-[0.25px]",
           limitations
             ? "rounded-l-md-xs rounded-r-md-md border-l-4 border-l-md-tertiary bg-md-surface-container-low px-4 py-3.5"

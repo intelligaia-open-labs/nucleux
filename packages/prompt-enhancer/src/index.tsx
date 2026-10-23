@@ -615,7 +615,10 @@ export function splitPromptEnhancerProps(props: PromptEnhancerProps) {
 // useLayoutEffect warns when rendered on the server; fall back to useEffect there.
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
-const overline = "flex items-center gap-1.5 text-[11px] font-bold uppercase leading-4 tracking-[0.08em]";
+/** The review's action buttons, sized as on nucleux.in (11.5px, 7px padding). */
+const actionBtn = "h-auto rounded-[8px] py-[7px] text-[11.5px] font-medium leading-[1.55] tracking-normal";
+
+const overline = "flex items-center gap-1.5 text-[9.5px] font-bold uppercase leading-[1.55] tracking-[0.08em]";
 
 /**
  * A prompt enhancer for the composer: an Enhance action expands a terse
@@ -706,8 +709,7 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
   );
 
   const enhancedOverline = (
-    <p className={cn(overline, "text-warning-foreground")}>
-      <Sparkles aria-hidden className="size-3.5 text-warning" />
+    <p className={cn(overline, "text-brand")}>
       {enhancedLabel}
     </p>
   );
@@ -744,17 +746,17 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
         </div>
       ) : diffStyle === "split" ? (
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-          <div className="rounded-[10px] border border-border bg-muted/50 px-3.5 py-3">
-            <p className={cn(overline, "mb-1.5 text-muted-foreground")}>{PROMPT_ENHANCER_TEXT.youWrote}</p>
-            <p className="text-sm leading-[22px] text-foreground">{pe.original}</p>
+          <div className="rounded-[10px] border border-border bg-[hsl(var(--nx-ink-25))] px-[13px] py-[11px]">
+            <p className={cn(overline, "mb-[5px] text-faint")}>{PROMPT_ENHANCER_TEXT.youWrote}</p>
+            <p className="text-[11.5px] leading-[17px] text-foreground">{pe.original}</p>
           </div>
-          <div className="rounded-[10px] border-[1.5px] border-warning bg-brand/5 px-3.5 py-3">
-            <div className="mb-1.5">{enhancedOverline}</div>
-            <p className="text-sm leading-[22px] text-foreground">{marked}</p>
+          <div className="rounded-[10px] border-[1.5px] border-brand bg-[rgb(99_102_241/0.05)] px-[13px] py-[11px]">
+            <div className="mb-[5px]">{enhancedOverline}</div>
+            <p className="text-[11.5px] leading-[17px] text-foreground">{marked}</p>
           </div>
         </div>
       ) : (
-        <div className="rounded-[10px] border-[1.5px] border-warning bg-brand/5 px-3.5 py-3">
+        <div className="rounded-[10px] border-[1.5px] border-brand bg-[rgb(99_102_241/0.05)] px-3.5 py-3">
           <div className="mb-1.5">{enhancedOverline}</div>
           <p className="text-[15px] leading-7 text-foreground">{marked}</p>
         </div>
@@ -805,22 +807,22 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
         </div>
       )}
 
-      <div className="flex flex-wrap gap-2">
-        <Button size="lg" onClick={pe.use} className="min-w-[10rem] flex-1">
+      <div className="flex flex-wrap gap-[7px]">
+        <Button size="lg" onClick={pe.use} className={cn(actionBtn, "min-w-[10rem] flex-1 border-0 px-[7px] text-primary-foreground shadow-none")}>
           {pe.state === "editing" ? PROMPT_ENHANCER_TEXT.useEdited : useLabel}
         </Button>
         {pe.state !== "editing" && allowEdit && (
-          <Button size="lg" variant="ghost" leftIcon={<Pencil aria-hidden className="size-3.5" />} onClick={pe.edit}>
+          <Button size="lg" variant="ghost" leftIcon={<Pencil aria-hidden className="size-3.5" />} onClick={pe.edit} className={actionBtn}>
             {PROMPT_ENHANCER_TEXT.edit}
           </Button>
         )}
         {pe.state === "editing" ? (
-          <Button size="lg" variant="secondary" onClick={pe.cancelEdit} className="text-muted-foreground">
+          <Button size="lg" variant="secondary" onClick={pe.cancelEdit} className={cn(actionBtn, "border-[rgb(203_213_225)] bg-transparent px-3.5 font-normal text-muted-foreground shadow-none")}>
             {PROMPT_ENHANCER_TEXT.cancelEdit}
           </Button>
         ) : (
           allowKeepOriginal && (
-            <Button size="lg" variant="secondary" onClick={pe.keep} className="text-muted-foreground">
+            <Button size="lg" variant="secondary" onClick={pe.keep} className={cn(actionBtn, "border-[rgb(203_213_225)] bg-transparent px-3.5 font-normal text-muted-foreground shadow-none")}>
               {PROMPT_ENHANCER_TEXT.keep}
             </Button>
           )
@@ -883,7 +885,7 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
             pe.submit();
           }
         }}
-        className="min-h-0 w-full flex-none px-3.5 py-3 text-sm leading-5"
+        className="min-h-0 w-full flex-none px-3.5 py-3 text-[13px] leading-5"
       />
       <InputGroupAddon align="block-end" className="cursor-default justify-between border-t border-border px-3.5 py-2 [&.border-t]:pt-2">
         {addControl != null || composerLeading != null || settingsControl ? (
@@ -896,10 +898,10 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
                 onSelect={(id) => selectPromptEnhancerSetting(pe, id, onSettingsSelect)}
               />
             )}
-            {hint != null && <InputGroupText className="text-xs font-normal">{hint}</InputGroupText>}
+            {hint != null && <InputGroupText className="py-0 text-[11px] font-normal text-faint">{hint}</InputGroupText>}
           </span>
         ) : hint != null ? (
-          <InputGroupText className="text-xs font-normal">{hint}</InputGroupText>
+          <InputGroupText className="py-0 text-[11px] font-normal text-faint">{hint}</InputGroupText>
         ) : (
           <span />
         )}
@@ -913,14 +915,16 @@ export const PromptEnhancer = React.forwardRef<HTMLDivElement, PromptEnhancerPro
               onClick={busy ? pe.cancel : pe.enhance}
               disabled={!busy && !pe.canEnhance}
               aria-label={busy ? PROMPT_ENHANCER_TEXT.cancel : `${actionLabel} this prompt with AI`}
-              className="h-8 px-3 text-sm font-medium"
+              className={busy ? "h-auto gap-[5px] rounded-[8px] px-3 py-[5px] text-[11.5px] font-medium leading-[1.55] tracking-normal" : "h-auto gap-[5px] rounded-[8px] border-0 px-3 tracking-normal py-[5px] text-[11.5px] font-medium leading-[1.55]"}
             >
               {busy ? (
-                <Spinner aria-hidden role={undefined} aria-label={undefined} className="size-3.5 motion-reduce:animate-none" />
+                <>
+                  <Spinner aria-hidden role={undefined} aria-label={undefined} className="size-3.5 motion-reduce:animate-none" />
+                  {PROMPT_ENHANCER_TEXT.busy}
+                </>
               ) : (
-                <Sparkles aria-hidden className="size-3.5 text-warning" />
+                `✨ ${actionLabel}`
               )}
-              {busy ? PROMPT_ENHANCER_TEXT.busy : actionLabel}
             </InputGroupButton>
           )}
           {onVoice && (

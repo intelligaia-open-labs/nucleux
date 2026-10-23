@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { OpenInput } from "@nucleux/open-input";
+import { Input } from "@nucleux/input";
 import { Suggestions, type SuggestionItem } from "./index";
 
 const ANSWER = "Three accounts are flagged for renewal risk this quarter. Acme Corp carries the highest ARR at $240k.";
@@ -22,9 +22,9 @@ export function SitePreview() {
   const [asking, setAsking] = useState<string>();
 
   return (
-    <div className="flex w-full max-w-[30rem] flex-col gap-2.5 rounded-xl border border-border bg-background p-4 shadow-sm">
+    <div className="flex w-full max-w-[30rem] flex-col gap-2.5 rounded-[8px] border border-border bg-background p-4 shadow-[0_1px_2px_rgba(12,12,10,0.04),0_1px_3px_rgba(12,12,10,0.06)]">
       <div className="rounded-xl border border-border bg-background p-3.5">
-        <p className="border-b border-border pb-3 text-sm leading-6 text-foreground">{ANSWER}</p>
+        <p className="border-b border-border pb-3 text-[13px] leading-5 text-foreground">{ANSWER}</p>
         <Suggestions
           variant="follow-up"
           aria-label="Suggested follow-ups"
@@ -38,16 +38,15 @@ export function SitePreview() {
         aria-label="Quick edits"
         suggestions={QUICK_EDITS}
         onSelect={(item) => setDraft((d) => (d ? `${d.trim()} ${item.label}.` : `${item.label}.`))}
+        className="mb-0.5"
       />
-      <OpenInput
-        variant="single-line"
+      <Input
         aria-label="Edit your draft"
         placeholder="Edit your draft…"
-        sendLabel="Send"
         value={draft}
-        onValueChange={setDraft}
-        onSubmit={() => setDraft("")}
-        className="rounded-xl"
+        onChange={(e) => setDraft(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && setDraft("")}
+        className="h-auto rounded-xl border-border px-4 py-[9px] text-[12.5px] leading-[1.55] shadow-none placeholder:text-faint"
       />
     </div>
   );

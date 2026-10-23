@@ -76,7 +76,7 @@ const chipClasses: Partial<Record<DisclosureVariant, string>> = {
   badge:
     "gap-1 rounded-full bg-background/90 px-2 py-1 text-xs font-medium text-foreground shadow-sm backdrop-blur [&_svg]:size-3.5 [&_svg]:text-brand",
   "header-badge":
-    "gap-1 rounded-[5px] bg-primary px-2 py-1 text-[10px] font-semibold uppercase leading-none tracking-[0.06em] text-primary-foreground [&_svg]:size-2.5",
+    "gap-1 rounded-[5px] bg-foreground px-2 py-[3px] text-[10px] font-semibold uppercase leading-[1.55] tracking-[0.06em] text-background [&_svg]:size-2.5",
   "input-chip":
     "gap-1.5 rounded-full border border-brand/40 bg-brand-muted px-2.5 py-0.5 text-xs font-semibold text-foreground",
   "footer-attribution": "gap-1.5 text-xs text-muted-foreground [&_svg]:size-3",
@@ -156,14 +156,17 @@ export const Disclosure = React.forwardRef<HTMLDivElement, DisclosureProps>(
           ref={ref}
           data-variant={variant}
           className={cn(
-            "rounded-lg border border-border border-l-[3px] border-l-brand bg-brand-muted/50 px-4 py-3.5",
+            "rounded-lg border border-l-[3px] border-border border-l-brand bg-brand-muted/50 px-4 py-3.5",
             className,
           )}
           {...props}
         >
           <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
             <AiChipMark />
-            <span>{heading ?? `You're chatting with ${agentName ?? "an AI assistant"}${agentName ? ", an AI assistant" : ""}.`}</span>
+            <span>
+              {heading ??
+                `You're chatting with ${agentName ?? "an AI assistant"}${agentName ? ", an AI assistant" : ""}.`}
+            </span>
             {dismissButton}
           </div>
           <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
@@ -200,7 +203,13 @@ export const Disclosure = React.forwardRef<HTMLDivElement, DisclosureProps>(
     // Chip-like variants.
     const chipGlyph = variant === "header-badge" || variant === "input-chip" ? null : glyph;
     const leading =
-      variant === "input-chip" ? <AiColorDot /> : variant === "header-badge" && icon ? icon : chipGlyph;
+      variant === "input-chip" ? (
+        <AiColorDot />
+      ) : variant === "header-badge" && icon ? (
+        icon
+      ) : (
+        chipGlyph
+      );
     const chipBody = (
       <>
         {leading}
@@ -209,7 +218,9 @@ export const Disclosure = React.forwardRef<HTMLDivElement, DisclosureProps>(
     );
     const chip = chipClasses[variant] ?? chipClasses.pill;
     const wrapper =
-      variant === "footer-attribution" ? "mt-2.5 flex border-t border-border pt-2.5" : "inline-flex w-fit";
+      variant === "footer-attribution"
+        ? "mt-2.5 flex border-t border-border pt-2.5"
+        : "inline-flex w-fit";
 
     if (details == null) {
       return (
