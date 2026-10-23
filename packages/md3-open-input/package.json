@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-open-input",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Open Input — the persistent free-form composer for any natural-language ask: grows to eight lines then Expand, with a Request settings menu (Mode, Tone, Style, Improve prompt) — Nucleux agentic UI for React.",

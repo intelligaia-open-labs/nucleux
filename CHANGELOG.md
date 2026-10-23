@@ -8,6 +8,26 @@ The format is machine-readable: each version heading starts with `## ` followed
 by a version tag and date, and entries are grouped under `### Added`, `### Changed`,
 `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings.
 
+## [0.11.0] — 2026-10-22
+
+### Added
+- **Signed-in hosted MCP.** `npx -y @nucleux/mcp add --code XXXX-XXXX` takes
+  the one-time line from https://nucleux.in/mcp/connect (Google or GitHub
+  sign-in), stores a personal token once on the machine (0600) and points every
+  detected coding agent at the hosted server through `npx -y @nucleux/mcp
+  remote`, so the token never goes into a chat or an agent config.
+- `npx -y @nucleux/mcp remote` (stdio proxy to the hosted server with the saved
+  token), `whoami`, `logout` (revokes the token on the server, then removes it)
+  and `add --local` (switch agents back to the open local catalog).
+- `services/mcp-http`: the nucleux.in/mcp bridge, now in the repo, with sign-in
+  (Google, GitHub), the Connect page, per-user tokens and usage, an admin page,
+  OAuth 2.1 for claude.ai and other MCP clients (discovery, dynamic client
+  registration, PKCE, refresh rotation, revocation) and a `NUCLEUX_AUTH`
+  gate (`off` / `optional` / `required`).
+
+The local package stays open: `npx -y @nucleux/mcp` and `add` without `--code`
+need no account.
+
 ## [0.10.0] — 2026-10-22
 
 Every agentic component now looks like nucleux.in out of the box, and coding

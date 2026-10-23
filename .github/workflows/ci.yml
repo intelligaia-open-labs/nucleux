@@ -31,3 +31,13 @@ jobs:
       # Full gate: typecheck -> vitest -> tsup build -> Storybook build.
       - name: Validate
         run: pnpm validate
+
+      # The nucleux.in/mcp bridge (sign-in, tokens, OAuth). It installs
+      # @nucleux/mcp from a vendored tarball that is not in git, so fetch it first.
+      - name: Hosted MCP server tests
+        working-directory: services/mcp-http
+        run: |
+          v=$(node -p 'require("./package.json").dependencies["@nucleux/mcp"].match(/mcp-(.+)\.tgz/)[1]')
+          mkdir -p vendor && (cd vendor && npm pack "@nucleux/mcp@$v")
+          npm ci
+          npm test
