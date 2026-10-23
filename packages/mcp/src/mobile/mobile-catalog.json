@@ -60,10 +60,10 @@
  "counts": {
   "components": 37,
   "examples": 136,
-  "swiftui": 2064,
-  "compose": 1481,
-  "flutter": 2696,
-  "react-native": 1519
+  "swiftui": 2080,
+  "compose": 1493,
+  "flutter": 2709,
+  "react-native": 1524
  },
  "components": [
   {
@@ -23788,16 +23788,22 @@
   },
   {
    "id": "nudges",
-   "name": "Nudges",
+   "name": "Nudges (Tips)",
    "aliases": [
     "nudge",
     "NucleuxNudges",
     "hint",
     "tip",
-    "NudgeCard"
+    "tips",
+    "Tip",
+    "NucleuxTip",
+    "useTips",
+    "NucleuxTipController",
+    "feature discovery",
+    "not now"
    ],
    "kind": "Pattern",
-   "description": "The pattern library's Nudges pattern. A small hint offering a capability at the moment it would have helped, anchored to the control it is about, and gone for good once refused.",
+   "description": "The pattern library's Nudges pattern as revised on 16 Oct 2026. A quiet, dismissible tip about a capability that would help right now, with a reason, and it doesn't come back once dismissed.",
    "status": {
     "swiftui": "Done",
     "compose": "Done",
@@ -23805,11 +23811,11 @@
     "react-native": "Done"
    },
    "tracker": [
-    "Nudges (the anchored hint, the quiet form)"
+    "Nudges as Tips (inline tip, Try it, Not now, Why this tip?, Undo)"
    ],
    "spec": "specs/nudges.md",
-   "specSummary": "The pattern library's **Nudges** pattern (branch-2: `material-patterns.js` → `nudges`, examples `nudge-anchored`, `nudge-quiet`; the expense-queue simulator in `material-sim.js`; CSS `.md-nudge`, `.md-hint`). A small hint offering a capability **at the moment it would have helped**, anchored to the control it is about, and **gone for good once refused**.\n\nThe ledger lives in `react-native/src/nudges.ts`; `npm run fixtures` writes `specs/nudges.fixtures.json` (9 event sequences, every step's state, reason held and announcement) and SwiftUI, Compose and Flutter are tested against it.",
-   "specText": "# Nudges\n\nThe pattern library's **Nudges** pattern (branch-2: `material-patterns.js` → `nudges`, examples `nudge-anchored`, `nudge-quiet`; the expense-queue simulator in `material-sim.js`; CSS `.md-nudge`, `.md-hint`). A small hint offering a capability **at the moment it would have helped**, anchored to the control it is about, and **gone for good once refused**.\n\nThe ledger lives in `react-native/src/nudges.ts`; `npm run fixtures` writes `specs/nudges.fixtures.json` (9 event sequences, every step's state, reason held and announcement) and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxNudgeController` (`@Observable`), `NucleuxNudge`, `NucleuxNudgeHint` |\n| Compose | `NucleuxNudgeController`, `rememberNucleuxNudgeController`, `NucleuxNudge`, `NucleuxNudgeHint` |\n| Flutter | `NucleuxNudgeController` (`ChangeNotifier`), `NucleuxNudge`, `NucleuxNudgeHint` |\n| React Native | `useNudges`, `Nudge`, `NudgeHint` |\n\n## What the host supplies\n\n| | Notes |\n|---|---|\n| The nudges | By id: `title` (what it does, one line: \"Aria can check these against the receipt first\"), `detail` (why now: \"You have approved 3 in a row without a change.\"), `action` (the inline action: \"Let it check them\") |\n| `retired` | Nudges already taken or refused, from storage. The host saves `retired` whenever it changes |\n| `cap` | How many one person sees in a session. Default **1** |\n| `earned(id, busy)` | Called when the person's behaviour is evidence the feature would help. `busy` while they are in an error, a payment or anything else they're concentrating on |\n| `withdraw()` | The anchor went away, or the evidence stopped holding |\n| `session()` | A new session: the cap starts again |\n| `onAccept` | Does the work **in place**. A nudge that leads to a settings page has wasted the moment it earned |\n\n## Rules\n\n- **Earned, never timed.** Nothing shows until the host calls `earned`. A nudge on a timer is an advertisement.\n- **Refusal is permanent.** \"No thanks\" and the close button retire the nudge: not on the next claim, not next session. Taking it retires it too.\n- **Never two at once.** While one shows, another earned nudge is held, not queued.\n- **A cap per session** (default 1). Withdrawn ones count: they were seen.\n- **Never while the person is busy** (an error, a payment).\n- **Withdrawn is not refused.** It can be earned again.\n- **Dismiss leaves at once,** with no confirmation.\n\nThe held reasons, for hosts and tests: `retired`, `busy`, `stacked`, `capped`.\n\n## Components\n\n| | |\n|---|---|\n| `Nudge` | The anchored card: hint icon, title, detail, close button; then the action and **No thanks**. Renders only while its id is showing. The host places it next to its anchor (directly above it by default) |\n| `NudgeHint` | The quiet form, for surfaces where a floating card is too much: a dot, the title, the action as a text button, and a close button, in one pill riding on the control |\n\n## Look\n\n- Card: `brandMuted` fill, `foreground` text, corner 16, padding 14 / 16 / 12, max width 340, a soft shadow.\n- **The tail** (12 square, rotated 45°, same fill) points at the anchor: `tail: bottom` (default; the card sits above its anchor) or `top`, and `tailInset` from the leading edge (default 20). The tail is what makes it a nudge rather than a notification.\n- Lucide `lightbulb`, 18, `brand`. Title 14 semibold; detail 13 at 86% opacity, 4 below.\n- Close: Lucide `x` in an icon button with a 44pt / 48dp target. Actions 12 below: the action as a small primary Button, **No thanks** as a small ghost Button.\n- Entry: rises 6pt with a small settle (from 97% scale), fading in, 320 ms. None with Reduce Motion. Leaves at once.\n- Quiet form: `muted` pill, a 6 `brand` dot, the title 13 `mutedForeground`, the action as a small ghost Button.\n\n## Accessibility\n\n- It appears without taking focus, and is announced politely: \"Hint: {title}. {detail}\"\n- The card is a group named \"Hint\"; its buttons stay separately reachable. The close button is \"Dismiss this hint\".\n- Dismissing announces \"Hint dismissed. It won’t come back.\"\n- Accepting announces nothing from the nudge: the host's work says what it did.\n- Every control has a 44pt / 48dp target.\n\n## Ours, not the pattern's\n\n- **\"No thanks\", not \"Not now\".** The pattern's static example offers \"Not now\", but its rules (and its simulator) make refusal permanent; \"Not now\" would promise a return.\n- **The quiet form gets a close button.** The pattern's quiet example has none, which would leave it no way to be refused for good.\n- **Default cap of 1 per session.** The pattern says to cap it but gives no number.\n- **Look:** Nucleux `brandMuted` and `brand` in place of Material's primary-container, and Lucide `lightbulb` rather than Material's spark, so a hint is not mistaken for an AI mark.\n\n## Not in scope (later)\n\n- Deciding what counts as evidence; the host knows its own behaviour signals.\n- Measuring the anchor and placing the card automatically: the host places it, as with Proactive Suggestions.\n",
+   "specSummary": "The pattern library's **Nudges** pattern as revised on 16 Oct 2026 (branch-2: `material-patterns.js` → `nudges`; the Huddle transcript simulator in `material-sim.js`). **A quiet, dismissible tip about a capability that would help right now, with a reason, and it doesn't come back once dismissed.** Inline in the flow, never floating over the work. It offers a capability; it never claims something happened. Different from a Proactive Suggestion, which reports something the agent noticed in the work (`specs/proactive-suggestions.md`).\n\nThe ledger lives in `react-native/src/tips.ts`; `npm run fixtures` writes `specs/nudges.fixtures.json` (14 event sequences, every step's state, reason held and announcement) and SwiftUI, Compose and Flutter are tested against it.",
+   "specText": "# Nudges (Tips)\n\nThe pattern library's **Nudges** pattern as revised on 16 Oct 2026 (branch-2: `material-patterns.js` → `nudges`; the Huddle transcript simulator in `material-sim.js`). **A quiet, dismissible tip about a capability that would help right now, with a reason, and it doesn't come back once dismissed.** Inline in the flow, never floating over the work. It offers a capability; it never claims something happened. Different from a Proactive Suggestion, which reports something the agent noticed in the work (`specs/proactive-suggestions.md`).\n\nThe ledger lives in `react-native/src/tips.ts`; `npm run fixtures` writes `specs/nudges.fixtures.json` (14 event sequences, every step's state, reason held and announcement) and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxTipController` (`@Observable`), `NucleuxTip` |\n| Compose | `NucleuxTipController`, `rememberNucleuxTipController`, `NucleuxTip` |\n| Flutter | `NucleuxTipController` (`ChangeNotifier`), `NucleuxTip` |\n| React Native | `useTips`, `Tip` |\n\n## What the host supplies\n\n| | Notes |\n|---|---|\n| The tips | By id: `title` (what they can do, one line: \"You can ask Aria about text you select in a transcript.\"), `why` (why it appeared, behind **Why this tip?**: \"You selected transcript text twice in this meeting.\"), `action` (optional; **Try it** by default) |\n| `retired`, `snoozed` | Tips tried or dismissed, and tips put off (until when), from storage. The host saves both whenever they change |\n| `cap` | How many one person sees in a session. Default **1** |\n| `earned(id, busy)` | When the person's behaviour is evidence the capability would help (they selected text twice). `busy` while they are in an error, a payment or anything else they're concentrating on |\n| `withdraw()` | The reason went away (the selection was cleared) |\n| `session()` | A new session: the cap starts again |\n| `onTry` | Opens the capability **where they are** (the selection goes into the composer as context) |\n\n## Rules\n\n- **Earned, never timed.** Nothing shows until the host calls `earned`. Not on page load, not as an advert.\n- **Try it and Dismiss are permanent.** Neither comes back, not next session either.\n- **Not now** hides it for a week (`TIP_SNOOZE_MS`); after that it may be earned again.\n- **Dismiss and Not now are confirmed with Undo** in the tip's place: \"Tip dismissed. It won’t show again.\" / \"OK — you won’t see this tip for a week.\" Undo brings the tip back as it was. The line goes when anything else happens.\n- **Never two at once;** a cap per session (default 1; withdrawn ones count, they were seen); never while busy.\n- **It withdraws on its own** when the reason goes. Withdrawn is not refused: it can be earned again.\n\nThe held reasons, for hosts and tests: `retired`, `snoozed`, `busy`, `stacked`, `capped`.\n\n## Look\n\n- Inline, beside what it is about: a `muted` card, radius 12, no shadow, no tail. Lucide `lightbulb` 18 in `brand`; the line 14 `foreground`; a close button (`x`, 44 / 48 target) at its end.\n- Then three small ghost buttons: **Try it**, **Not now**, **Why this tip?** (with a chevron). The reason opens under the line, 13 `mutedForeground`.\n- The notice: hairline rules above and below, 13 `mutedForeground`, a ghost **Undo**.\n- It appears and leaves without motion beyond what the platform does.\n\n## Accessibility\n\n- It appears without taking focus, announced politely: \"Tip: You can ask Aria about text you select in a transcript.\"\n- The card is a group named \"Tip\"; the line is read with \"Tip:\" in front. The close button is \"Dismiss tip\". Why this tip? says whether it is open.\n- Dismiss, Not now and Undo are announced (\"Tip back.\" on Undo). Trying it announces nothing from the tip: the capability says what it did.\n\n## Ours, not the pattern's\n\n- \"Tip back.\" when Undo restores it, and the notice going when anything else happens (the simulator clears it on the next selection).\n- **Default cap of 1 per session.** The pattern says to cap it but gives no number.\n- `brand` for the lightbulb (Material's primary). Lucide `lightbulb`, so a tip is never mistaken for an AI mark.\n- **Before 23 Oct** a nudge floated above its control with a tail (\"Hint\"), offered the action and **No thanks**, had a quiet pill form, and had no Not now, no Undo and no reason on request.\n\n## Not in scope\n\n- Deciding what counts as evidence; the host knows its own behaviour signals.\n- Ending a snooze while the app is closed: the host passes the stored `snoozed` back, and the ledger compares it with the time.\n",
    "fixtures": [
     "specs/nudges.fixtures.json"
    ],
@@ -23817,38 +23823,48 @@
     "specs/nudges.fixtures.json": {
      "constants": {
       "texts": {
-       "check-receipts": {
-        "title": "Aria can check these against the receipt first",
-        "detail": "You have approved 3 in a row without a change."
+       "ask-selection": {
+        "title": "You can ask Aria about text you select in a transcript.",
+        "why": "You selected transcript text twice in this meeting."
        },
        "summarise": {
         "title": "Aria can summarise this thread",
-        "detail": "It has 40 replies since you last read it."
+        "why": "It has 40 replies since you last read it."
        }
       },
       "labels": {
-       "dismiss": "Dismiss this hint",
-       "decline": "No thanks",
-       "dismissed": "Hint dismissed. It won’t come back."
+       "tip": "Tip",
+       "try": "Try it",
+       "notNow": "Not now",
+       "why": "Why this tip?",
+       "dismiss": "Dismiss tip",
+       "undo": "Undo",
+       "dismissed": "Tip dismissed. It won’t show again.",
+       "snoozed": "OK — you won’t see this tip for a week.",
+       "back": "Tip back."
       }
      },
      "inCases": [
-      "earned, then taken: it never returns",
-      "Hint: Aria can check these against the receipt first. You have approved 3 in a row without a change.",
-      "refused is for good, next session too",
-      "Hint dismissed. It won’t come back.",
+      "earned, then tried: it never returns",
+      "Tip: You can ask Aria about text you select in a transcript.",
+      "dismissed is for good, next session too",
+      "Tip dismissed. It won’t show again.",
+      "dismissed, then Undo: back as it was",
+      "Tip back.",
+      "Not now: a week, then it may come back",
+      "OK — you won’t see this tip for a week.",
+      "Not now, then Undo",
       "retired before this session (the host persisted it)",
+      "snoozed before this session (the host persisted it)",
       "busy: never during an error or a payment",
       "never two at once",
-      "Hint: Aria can summarise this thread. It has 40 replies since you last read it.",
+      "Tip: Aria can summarise this thread.",
       "one per session by default",
-      "withdrawn is not refused: earned again next session",
+      "withdrawn when the reason goes: earned again next session",
+      "the notice goes when something else happens",
       "earned again while showing: no second announcement",
-      "nothing showing: accept and dismiss do nothing",
-      "Aria can draft this reply",
-      "Hint: Aria can draft this reply. You have written three of these by hand this week.",
-      "Aria can summarise this thread.",
-      "Hint: Aria can summarise this thread. It has 40 replies…"
+      "nothing showing: try, dismiss, snooze and undo do nothing",
+      "  Aria can summarise this thread  "
      ]
     }
    },
@@ -23861,55 +23877,60 @@
       "swiftui/Sources/Nucleux/NucleuxNudges.swift"
      ],
      "import": "import Nucleux",
-     "primary": "NucleuxNudge",
+     "primary": "NucleuxTip",
      "symbols": [
       {
-       "name": "NucleuxNudgeContent",
+       "name": "NucleuxTipContent",
        "kind": "struct",
-       "signature": "public struct NucleuxNudgeContent: Sendable, Equatable",
-       "doc": "What a nudge says. See specs/nudges.md.",
+       "signature": "public struct NucleuxTipContent: Sendable, Equatable",
+       "doc": "What a tip says. See specs/nudges.md.",
        "file": "swiftui/Sources/Nucleux/NucleuxNudges.swift",
        "line": 4,
        "members": [
         {
          "signature": "public var title: String",
-         "doc": "What it does, in one line: \"Aria can check these against the receipt first\".",
+         "doc": "What they can do, in one line: \"You can ask Aria about text you select in a transcript.\"",
          "name": "title"
         },
         {
-         "signature": "public var detail: String",
-         "doc": "Why now: \"You have approved 3 in a row without a change.\"",
-         "name": "detail"
+         "signature": "public var why: String",
+         "doc": "Why it appeared, behind \"Why this tip?\": \"You selected transcript text twice in this meeting.\"",
+         "name": "why"
         },
         {
          "signature": "public var action: String",
-         "doc": "The inline action: \"Let it check them\".",
+         "doc": "The action; \"Try it\" unless the capability needs its own verb.",
          "name": "action"
         },
         {
-         "signature": "public init(title: String, detail: String, action: String)",
+         "signature": "public init(title: String, why: String, action: String = NucleuxTipState.tryLabel)",
          "doc": "",
          "name": "init"
         }
        ]
       },
       {
-       "name": "NucleuxNudgeState",
+       "name": "NucleuxTipState",
        "kind": "struct",
-       "signature": "public struct NucleuxNudgeState: Sendable, Equatable",
-       "doc": "The nudge ledger. Must reproduce specs/nudges.fixtures.json (reference: react-native/src/nudges.ts).",
+       "signature": "public struct NucleuxTipState: Sendable, Equatable",
+       "doc": "The tip ledger (Nudges, library revision of 16 Oct). Must reproduce specs/nudges.fixtures.json (reference:\nreact-native/src/tips.ts).",
        "file": "swiftui/Sources/Nucleux/NucleuxNudges.swift",
-       "line": 20,
+       "line": 19,
        "members": [
         {
          "signature": "public private(set) var showing: String?",
-         "doc": "The nudge on screen, by id. Never more than one.",
+         "doc": "The tip on screen, by id. Never more than one.",
          "name": "showing"
         },
         {
          "signature": "public private(set) var retired: [String]",
-         "doc": "Nudges taken or refused. Neither comes back: the host persists this list.",
+         "doc": "Tips tried or dismissed. Neither comes back: the host persists this list.",
          "name": "retired"
+        },
+        {
+         "signature": "public private(set) var snoozed: [String: Double]",
+         "doc": "Tips put off with Not now, until when (ms since the epoch). The host persists this too.",
+         "name": "snoozed"
         },
         {
          "signature": "public private(set) var seen = 0",
@@ -23917,19 +23938,54 @@
          "name": "seen"
         },
         {
-         "signature": "public static let dismissLabel = \"Dismiss this hint\"",
+         "signature": "public private(set) var notice: Notice?",
+         "doc": "The line confirming a dismissal or a snooze, with Undo, until the next thing happens.",
+         "name": "notice"
+        },
+        {
+         "signature": "public static let label = \"Tip\"",
+         "doc": "",
+         "name": "label"
+        },
+        {
+         "signature": "public static let tryLabel = \"Try it\"",
+         "doc": "",
+         "name": "tryLabel"
+        },
+        {
+         "signature": "public static let notNow = \"Not now\"",
+         "doc": "",
+         "name": "notNow"
+        },
+        {
+         "signature": "public static let why = \"Why this tip?\"",
+         "doc": "",
+         "name": "why"
+        },
+        {
+         "signature": "public static let dismissLabel = \"Dismiss tip\"",
          "doc": "",
          "name": "dismissLabel"
         },
         {
-         "signature": "public static let decline = \"No thanks\"",
-         "doc": "Permanent, so not \"Not now\".",
-         "name": "decline"
+         "signature": "public static let undo = \"Undo\"",
+         "doc": "",
+         "name": "undo"
         },
         {
-         "signature": "public static let dismissed = \"Hint dismissed. It won’t come back.\"",
+         "signature": "public static let dismissed = \"Tip dismissed. It won’t show again.\"",
          "doc": "",
          "name": "dismissed"
+        },
+        {
+         "signature": "public static let snoozedText = \"OK — you won’t see this tip for a week.\"",
+         "doc": "",
+         "name": "snoozedText"
+        },
+        {
+         "signature": "public static let back = \"Tip back.\"",
+         "doc": "",
+         "name": "back"
         },
         {
          "signature": "public static let defaultCap = 1",
@@ -23937,53 +23993,97 @@
          "name": "defaultCap"
         },
         {
-         "signature": "public init(retired: [String] = [])",
+         "signature": "public static let snoozeMs: Double = 7 * 24 * 60 * 60 * 1000",
+         "doc": "",
+         "name": "snoozeMs"
+        },
+        {
+         "signature": "public init(retired: [String] = [], snoozed: [String: Double] = [:])",
          "doc": "",
          "name": "init"
         },
         {
-         "signature": "public func held(_ id: String, busy: Bool = false, cap: Int = defaultCap) -> Held?",
+         "signature": "public func held(_ id: String, busy: Bool = false, cap: Int = defaultCap, now: Double = 0) -> Held?",
          "doc": "",
          "name": "held"
         },
         {
-         "signature": "public static func announcement(title: String, detail: String) -> String",
-         "doc": "What VoiceOver hears when a nudge appears. It takes no focus.",
+         "signature": "public static func announcement(title: String) -> String",
+         "doc": "What VoiceOver hears when a tip appears. It takes no focus.",
          "name": "announcement"
         },
         {
-         "signature": "public mutating func reduce(_ event: Event, text: (String) -> (title: String, detail: String), cap: Int = defaultCap) -> String?",
+         "signature": "public mutating func reduce(_ event: Event, title: (String) -> String, cap: Int = defaultCap) -> String?",
          "doc": "Applies an event; returns what to announce, if anything.",
          "name": "reduce"
         }
        ]
       },
       {
-       "name": "NucleuxNudgeState.Event",
+       "name": "NucleuxTipState.Notice",
+       "kind": "struct",
+       "signature": "public struct Notice: Sendable, Equatable",
+       "doc": "",
+       "file": "swiftui/Sources/Nucleux/NucleuxNudges.swift",
+       "line": 20,
+       "members": [
+        {
+         "signature": "public let kind: Kind",
+         "doc": "",
+         "name": "kind"
+        },
+        {
+         "signature": "public let id: String",
+         "doc": "",
+         "name": "id"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxTipState.Notice.Kind",
+       "kind": "enum",
+       "signature": "public enum Kind: String, Sendable { case dismissed, snoozed }",
+       "doc": "",
+       "file": "swiftui/Sources/Nucleux/NucleuxNudges.swift",
+       "line": 21,
+       "members": []
+      },
+      {
+       "name": "NucleuxTipState.Event",
        "kind": "enum",
        "signature": "public enum Event: Sendable, Equatable",
        "doc": "",
        "file": "swiftui/Sources/Nucleux/NucleuxNudges.swift",
-       "line": 28,
+       "line": 37,
        "members": [
         {
-         "signature": "case earned(String, busy: Bool = false)",
-         "doc": "The host has evidence for this nudge. `busy`: an error, a payment, anything the person is concentrating on.",
+         "signature": "case earned(String, busy: Bool = false, now: Double = 0)",
+         "doc": "The host has evidence for this tip. `busy`: an error, a payment, anything the person is concentrating on.",
          "name": "earned"
         },
         {
-         "signature": "case accept",
-         "doc": "Taken: the work happens in place, and it never returns.",
-         "name": "accept"
+         "signature": "case tryIt",
+         "doc": "Try it: the capability opens where they are, and it never returns.",
+         "name": "tryIt"
         },
         {
          "signature": "case dismiss",
-         "doc": "\"No thanks\" or the close button: permanent for that nudge.",
+         "doc": "The close button: permanent for that tip.",
          "name": "dismiss"
         },
         {
+         "signature": "case snooze(now: Double = 0)",
+         "doc": "Not now: gone for a week.",
+         "name": "snooze"
+        },
+        {
+         "signature": "case undo",
+         "doc": "Undo on the notice: back as it was.",
+         "name": "undo"
+        },
+        {
          "signature": "case withdraw",
-         "doc": "The anchor went away or the evidence stopped holding. Not a refusal.",
+         "doc": "The reason went away. Not a refusal.",
          "name": "withdraw"
         },
         {
@@ -23994,31 +24094,31 @@
        ]
       },
       {
-       "name": "NucleuxNudgeState.Held",
+       "name": "NucleuxTipState.Held",
        "kind": "enum",
-       "signature": "public enum Held: String, Sendable { case retired, busy, stacked, capped }",
-       "doc": "Why a nudge did not show.",
+       "signature": "public enum Held: String, Sendable { case retired, snoozed, busy, stacked, capped }",
+       "doc": "Why a tip did not show.",
        "file": "swiftui/Sources/Nucleux/NucleuxNudges.swift",
-       "line": 42,
+       "line": 55,
        "members": []
       },
       {
-       "name": "NucleuxNudgeController",
+       "name": "NucleuxTipController",
        "kind": "class",
-       "signature": "public final class NucleuxNudgeController",
-       "doc": "The nudge ledger for one surface. Call `earned(_:)` when the person's behaviour is evidence the feature would\nhelp; save `state.retired` whenever it changes, and pass it back as `retired`.",
+       "signature": "public final class NucleuxTipController",
+       "doc": "The tip ledger for one surface. Call `earned(_:)` when the person's behaviour is evidence the capability would\nhelp, and `withdraw()` when the reason goes away; save `state.retired` and `state.snoozed` whenever they change.",
        "file": "swiftui/Sources/Nucleux/NucleuxNudges.swift",
-       "line": 101,
+       "line": 130,
        "members": [
         {
-         "signature": "public private(set) var state: NucleuxNudgeState",
+         "signature": "public private(set) var state: NucleuxTipState",
          "doc": "",
          "name": "state"
         },
         {
-         "signature": "public var nudges: [String: NucleuxNudgeContent]",
+         "signature": "public var tips: [String: NucleuxTipContent]",
          "doc": "By id. Update the text before calling `earned`, so the announcement matches what shows.",
-         "name": "nudges"
+         "name": "tips"
         },
         {
          "signature": "public var cap: Int",
@@ -24026,29 +24126,44 @@
          "name": "cap"
         },
         {
-         "signature": "public init(_ nudges: [String: NucleuxNudgeContent], retired: [String] = [], cap: Int = NucleuxNudgeState.defaultCap)",
+         "signature": "public var now: () -> Double =",
+         "doc": "The time, in ms since the epoch; replace it in tests.",
+         "name": "now"
+        },
+        {
+         "signature": "public init(_ tips: [String: NucleuxTipContent], retired: [String] = [], snoozed: [String: Double] = [:], cap: Int = NucleuxTipState.defaultCap)",
          "doc": "",
          "name": "init"
         },
         {
-         "signature": "public func send(_ event: NucleuxNudgeState.Event)",
+         "signature": "public func send(_ event: NucleuxTipState.Event)",
          "doc": "",
          "name": "send"
         },
         {
-         "signature": "public func earned(_ id: String, busy: Bool = false) -> NucleuxNudgeState.Held?",
-         "doc": "Shows the nudge if it may show; otherwise returns why it was held.",
+         "signature": "public func earned(_ id: String, busy: Bool = false) -> NucleuxTipState.Held?",
+         "doc": "Shows the tip if it may show; otherwise returns why it was held.",
          "name": "earned"
         },
         {
-         "signature": "public func accept()",
+         "signature": "public func tryIt()",
          "doc": "",
-         "name": "accept"
+         "name": "tryIt"
         },
         {
          "signature": "public func dismiss()",
          "doc": "",
          "name": "dismiss"
+        },
+        {
+         "signature": "public func snooze()",
+         "doc": "",
+         "name": "snooze"
+        },
+        {
+         "signature": "public func undo()",
+         "doc": "",
+         "name": "undo"
         },
         {
          "signature": "public func withdraw()",
@@ -24063,42 +24178,15 @@
        ]
       },
       {
-       "name": "NucleuxNudge",
+       "name": "NucleuxTip",
        "kind": "struct",
-       "signature": "public struct NucleuxNudge: View",
-       "doc": "The anchored card. Shows only while its id is showing; the host places it next to its anchor.",
+       "signature": "public struct NucleuxTip: View",
+       "doc": "The tip, inline in the flow beside what it is about, never floating over the work: a lightbulb, the line, a\nclose button, then Try it, Not now and Why this tip?. After Dismiss or Not now it leaves a line with Undo in its\nplace. Renders nothing otherwise.",
        "file": "swiftui/Sources/Nucleux/NucleuxNudges.swift",
-       "line": 151,
+       "line": 170,
        "members": [
         {
-         "signature": "public init(_ controller: NucleuxNudgeController, id: String, tail: Tail = .bottom, tailInset: CGFloat = 20, onAccept: @escaping () -> Void)",
-         "doc": "- Parameters:\n  - tailInset: From the card's leading edge to the tail's, so it points at the anchor.\n  - onAccept: Does the work in place. The nudge is retired after it.",
-         "paramDocs": {
-          "onAccept": "Does the work in place. The nudge is retired after it."
-         },
-         "name": "init"
-        }
-       ]
-      },
-      {
-       "name": "NucleuxNudge.Tail",
-       "kind": "enum",
-       "signature": "public enum Tail: Sendable { case top, bottom }",
-       "doc": "Which edge the tail is on: `bottom` when the card sits above its anchor, `top` when below.",
-       "file": "swiftui/Sources/Nucleux/NucleuxNudges.swift",
-       "line": 153,
-       "members": []
-      },
-      {
-       "name": "NucleuxNudgeHint",
-       "kind": "struct",
-       "signature": "public struct NucleuxNudgeHint: View",
-       "doc": "The quiet form: the same offer riding on the control, costing one line and no attention.",
-       "file": "swiftui/Sources/Nucleux/NucleuxNudges.swift",
-       "line": 220,
-       "members": [
-        {
-         "signature": "public init(_ controller: NucleuxNudgeController, id: String, onAccept: @escaping () -> Void)",
+         "signature": "public init(_ controller: NucleuxTipController, id: String, onTry: @escaping () -> Void)",
          "doc": "",
          "name": "init"
         }
@@ -24112,55 +24200,85 @@
       "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt"
      ],
      "import": "import com.intelligaia.nucleux.*",
-     "primary": "NucleuxNudge",
+     "primary": "NucleuxTip",
      "symbols": [
       {
-       "name": "NucleuxNudgeContent",
+       "name": "NucleuxTipContent",
        "kind": "class",
-       "signature": "public data class NucleuxNudgeContent(val title: String, val detail: String, val action: String)",
-       "doc": "What a nudge says. See specs/nudges.md.",
+       "signature": "public data class NucleuxTipContent(val title: String, val why: String, val action: String = NucleuxTipState.TRY)",
+       "doc": "What a tip says. See specs/nudges.md.",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
-       "line": 51,
+       "line": 36,
        "members": [],
        "paramDocs": {
-        "title": "What it does, in one line: \"Aria can check these against the receipt first\".",
-        "detail": "Why now: \"You have approved 3 in a row without a change.\"",
-        "action": "The inline action: \"Let it check them\"."
+        "title": "What they can do, in one line: \"You can ask Aria about text you select in a transcript.\"",
+        "why": "Why it appeared, behind \"Why this tip?\": \"You selected transcript text twice in this meeting.\"",
+        "action": "The action; \"Try it\" unless the capability needs its own verb."
        }
       },
       {
-       "name": "NucleuxNudgeState",
+       "name": "NucleuxTipState",
        "kind": "class",
-       "signature": "public data class NucleuxNudgeState(val showing: String? = null, val retired: List<String> = emptyList(), val seen: Int = 0)",
-       "doc": "The nudge ledger. Must reproduce specs/nudges.fixtures.json (reference: react-native/src/nudges.ts).",
+       "signature": "public data class NucleuxTipState(val showing: String? = null, val retired: List<String> = emptyList(), val snoozed: Map<String, Long> = emptyMap(), val seen: Int = 0, val notice: Notice? = null)",
+       "doc": "The tip ledger (Nudges, library revision of 16 Oct). Must reproduce specs/nudges.fixtures.json (reference:\nreact-native/src/tips.ts).",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
-       "line": 61,
+       "line": 49,
        "members": [
         {
          "name": "held",
-         "signature": "public fun held(id: String, busy: Boolean = false, cap: Int = DEFAULT_CAP): Held? = when",
+         "signature": "public fun held(id: String, busy: Boolean = false, cap: Int = DEFAULT_CAP, now: Long = 0): Held? = when",
          "doc": ""
         },
         {
          "name": "reduce",
-         "signature": "public fun reduce(event: Event, text: (String) -> Pair<String, String>, cap: Int = DEFAULT_CAP): Result = when (event)",
+         "signature": "public fun reduce(event: Event, title: (String) -> String, cap: Int = DEFAULT_CAP): Result = when (event)",
+         "doc": ""
+        },
+        {
+         "name": "LABEL",
+         "signature": "public const val LABEL: String = \"Tip\"",
+         "doc": ""
+        },
+        {
+         "name": "TRY",
+         "signature": "public const val TRY: String = \"Try it\"",
+         "doc": ""
+        },
+        {
+         "name": "NOT_NOW",
+         "signature": "public const val NOT_NOW: String = \"Not now\"",
+         "doc": ""
+        },
+        {
+         "name": "WHY",
+         "signature": "public const val WHY: String = \"Why this tip?\"",
          "doc": ""
         },
         {
          "name": "DISMISS_LABEL",
-         "signature": "public const val DISMISS_LABEL: String = \"Dismiss this hint\"",
+         "signature": "public const val DISMISS_LABEL: String = \"Dismiss tip\"",
          "doc": ""
         },
         {
-         "name": "DECLINE",
-         "signature": "public const val DECLINE: String = \"No thanks\"",
-         "doc": "Permanent, so not \"Not now\"."
+         "name": "UNDO",
+         "signature": "public const val UNDO: String = \"Undo\"",
+         "doc": ""
         },
         {
          "name": "DISMISSED",
-         "signature": "public const val DISMISSED: String = \"Hint dismissed. It won’t come back.\"",
+         "signature": "public const val DISMISSED: String = \"Tip dismissed. It won’t show again.\"",
+         "doc": ""
+        },
+        {
+         "name": "SNOOZED",
+         "signature": "public const val SNOOZED: String = \"OK — you won’t see this tip for a week.\"",
+         "doc": ""
+        },
+        {
+         "name": "BACK",
+         "signature": "public const val BACK: String = \"Tip back.\"",
          "doc": ""
         },
         {
@@ -24169,69 +24287,116 @@
          "doc": ""
         },
         {
+         "name": "SNOOZE_MS",
+         "signature": "public const val SNOOZE_MS: Long = 7L * 24 * 60 * 60 * 1000",
+         "doc": ""
+        },
+        {
          "name": "announcement",
-         "signature": "public fun announcement(title: String, detail: String): String = \"Hint: ${sentence(title)} ${sentence(detail)}\"",
-         "doc": "What TalkBack hears when a nudge appears. It takes no focus."
+         "signature": "public fun announcement(title: String): String = \"$LABEL: \" + title.trim().let { if (it.lastOrNull() in listOf('.', '!', '?', '…')) it else \"$it.\" }",
+         "doc": "What TalkBack hears when a tip appears. It takes no focus."
         }
        ],
        "paramDocs": {
-        "showing": "The nudge on screen, by id. Never more than one.",
-        "retired": "Nudges taken or refused. Neither comes back: the host persists this list.",
-        "seen": "How many have been shown this session."
+        "showing": "The tip on screen, by id. Never more than one.",
+        "retired": "Tips tried or dismissed. Neither comes back: the host persists this list.",
+        "snoozed": "Tips put off with Not now, until when (ms since the epoch). The host persists this too.",
+        "seen": "How many have been shown this session.",
+        "notice": "The line confirming a dismissal or a snooze, with Undo, until the next thing happens."
        }
       },
       {
-       "name": "NucleuxNudgeState.Event",
+       "name": "NucleuxTipState.Notice",
+       "kind": "class",
+       "signature": "public data class Notice(val kind: Kind, val id: String)",
+       "doc": "",
+       "annotations": [],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
+       "line": 61,
+       "members": []
+      },
+      {
+       "name": "NucleuxTipState.Notice.Kind",
+       "kind": "enum",
+       "signature": "public enum class Kind(public val key: String) { Dismissed(\"dismissed\"), Snoozed(\"snoozed\") }",
+       "doc": "",
+       "annotations": [],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
+       "line": 62,
+       "members": []
+      },
+      {
+       "name": "NucleuxTipState.Event",
        "kind": "interface",
        "signature": "public sealed interface Event",
        "doc": "",
+       "annotations": [],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
+       "line": 65,
+       "members": []
+      },
+      {
+       "name": "NucleuxTipState.Event.Earned",
+       "kind": "class",
+       "signature": "public data class Earned(val id: String, val busy: Boolean = false, val now: Long = 0) : Event",
+       "doc": "The host has evidence for this tip. [busy]: an error, a payment, anything the person is concentrating on.",
+       "annotations": [],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
+       "line": 67,
+       "members": []
+      },
+      {
+       "name": "NucleuxTipState.Event.Try",
+       "kind": "object",
+       "signature": "public data object Try : Event",
+       "doc": "Try it: the capability opens where they are, and it never returns.",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
        "line": 69,
        "members": []
       },
       {
-       "name": "NucleuxNudgeState.Event.Earned",
-       "kind": "class",
-       "signature": "public data class Earned(val id: String, val busy: Boolean = false) : Event",
-       "doc": "The host has evidence for this nudge. [busy]: an error, a payment, anything the person is concentrating on.",
+       "name": "NucleuxTipState.Event.Dismiss",
+       "kind": "object",
+       "signature": "public data object Dismiss : Event",
+       "doc": "The close button: permanent for that tip.",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
        "line": 71,
        "members": []
       },
       {
-       "name": "NucleuxNudgeState.Event.Accept",
-       "kind": "object",
-       "signature": "public data object Accept : Event",
-       "doc": "Taken: the work happens in place, and it never returns.",
+       "name": "NucleuxTipState.Event.Snooze",
+       "kind": "class",
+       "signature": "public data class Snooze(val now: Long = 0) : Event",
+       "doc": "Not now: gone for a week.",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
        "line": 73,
        "members": []
       },
       {
-       "name": "NucleuxNudgeState.Event.Dismiss",
+       "name": "NucleuxTipState.Event.Undo",
        "kind": "object",
-       "signature": "public data object Dismiss : Event",
-       "doc": "\"No thanks\" or the close button: permanent for that nudge.",
+       "signature": "public data object Undo : Event",
+       "doc": "Undo on the notice: back as it was.",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
        "line": 75,
        "members": []
       },
       {
-       "name": "NucleuxNudgeState.Event.Withdraw",
+       "name": "NucleuxTipState.Event.Withdraw",
        "kind": "object",
        "signature": "public data object Withdraw : Event",
-       "doc": "The anchor went away or the evidence stopped holding. Not a refusal.",
+       "doc": "The reason went away. Not a refusal.",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
        "line": 77,
        "members": []
       },
       {
-       "name": "NucleuxNudgeState.Event.Session",
+       "name": "NucleuxTipState.Event.Session",
        "kind": "object",
        "signature": "public data object Session : Event",
        "doc": "A new session: the cap starts again.",
@@ -24241,19 +24406,19 @@
        "members": []
       },
       {
-       "name": "NucleuxNudgeState.Held",
+       "name": "NucleuxTipState.Held",
        "kind": "enum",
-       "signature": "public enum class Held(public val key: String) { Retired(\"retired\"), Busy(\"busy\"), Stacked(\"stacked\"), Capped(\"capped\") }",
-       "doc": "Why a nudge did not show.",
+       "signature": "public enum class Held(public val key: String) { Retired(\"retired\"), Snoozed(\"snoozed\"), Busy(\"busy\"), Stacked(\"stacked\"), Capped(\"capped\") }",
+       "doc": "Why a tip did not show.",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
        "line": 83,
        "members": []
       },
       {
-       "name": "NucleuxNudgeState.Result",
+       "name": "NucleuxTipState.Result",
        "kind": "class",
-       "signature": "public data class Result(val state: NucleuxNudgeState, val announcement: String?)",
+       "signature": "public data class Result(val state: NucleuxTipState, val announcement: String?)",
        "doc": "",
        "annotations": [],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
@@ -24261,103 +24426,91 @@
        "members": []
       },
       {
-       "name": "NucleuxNudgeController",
+       "name": "NucleuxTipController",
        "kind": "class",
-       "signature": "public class NucleuxNudgeController(nudges: Map<String, NucleuxNudgeContent>, retired: List<String> = emptyList(), public var cap: Int = NucleuxNudgeState.DEFAULT_CAP)",
-       "doc": "The nudge ledger for one surface. Call [earned] when the person's behaviour is evidence the feature would help;\nsave `state.retired` whenever it changes, and pass it back as `retired`.",
+       "signature": "public class NucleuxTipController(tips: Map<String, NucleuxTipContent>, retired: List<String> = emptyList(), snoozed: Map<String, Long> = emptyMap(), public var cap: Int = NucleuxTipState.DEFAULT_CAP, public var now: () -> Long = { System.currentTimeMillis() })",
+       "doc": "The tip ledger for one surface. Call [earned] when the person's behaviour is evidence the capability would help,\nand [withdraw] when the reason goes away; save `state.retired` and `state.snoozed` whenever they change.",
        "annotations": [
         "@Stable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
-       "line": 124,
+       "line": 138,
        "members": [
         {
-         "name": "nudges",
-         "signature": "public val nudges: MutableMap<String, NucleuxNudgeContent> = mutableStateMapOf<String, NucleuxNudgeContent>().apply",
+         "name": "tips",
+         "signature": "public val tips: MutableMap<String, NucleuxTipContent> = mutableStateMapOf<String, NucleuxTipContent>().apply",
          "doc": "By id. Update the text before calling [earned], so the announcement matches what shows."
         },
         {
          "name": "state",
-         "signature": "public var state: NucleuxNudgeState by mutableStateOf(NucleuxNudgeState(retired = retired))",
+         "signature": "public var state: NucleuxTipState by mutableStateOf(NucleuxTipState(retired = retired, snoozed = snoozed))",
          "doc": ""
         },
         {
          "name": "send",
-         "signature": "public fun send(event: NucleuxNudgeState.Event)",
+         "signature": "public fun send(event: NucleuxTipState.Event)",
          "doc": ""
         },
         {
          "name": "earned",
-         "signature": "public fun earned(id: String, busy: Boolean = false): NucleuxNudgeState.Held?",
-         "doc": "Shows the nudge if it may show; otherwise returns why it was held."
+         "signature": "public fun earned(id: String, busy: Boolean = false): NucleuxTipState.Held?",
+         "doc": "Shows the tip if it may show; otherwise returns why it was held."
         },
         {
-         "name": "accept",
-         "signature": "public fun accept(): Unit = send(NucleuxNudgeState.Event.Accept)",
+         "name": "tryIt",
+         "signature": "public fun tryIt(): Unit = send(NucleuxTipState.Event.Try)",
          "doc": ""
         },
         {
          "name": "dismiss",
-         "signature": "public fun dismiss(): Unit = send(NucleuxNudgeState.Event.Dismiss)",
+         "signature": "public fun dismiss(): Unit = send(NucleuxTipState.Event.Dismiss)",
+         "doc": ""
+        },
+        {
+         "name": "snooze",
+         "signature": "public fun snooze(): Unit = send(NucleuxTipState.Event.Snooze(now()))",
+         "doc": ""
+        },
+        {
+         "name": "undo",
+         "signature": "public fun undo(): Unit = send(NucleuxTipState.Event.Undo)",
          "doc": ""
         },
         {
          "name": "withdraw",
-         "signature": "public fun withdraw(): Unit = send(NucleuxNudgeState.Event.Withdraw)",
+         "signature": "public fun withdraw(): Unit = send(NucleuxTipState.Event.Withdraw)",
          "doc": ""
         },
         {
          "name": "session",
-         "signature": "public fun session(): Unit = send(NucleuxNudgeState.Event.Session)",
+         "signature": "public fun session(): Unit = send(NucleuxTipState.Event.Session)",
          "doc": ""
         }
        ]
       },
       {
-       "name": "rememberNucleuxNudgeController",
+       "name": "rememberNucleuxTipController",
        "kind": "composable",
-       "signature": "public fun rememberNucleuxNudgeController(nudges: Map<String, NucleuxNudgeContent>, retired: List<String> = emptyList(), cap: Int = NucleuxNudgeState.DEFAULT_CAP): NucleuxNudgeController",
+       "signature": "public fun rememberNucleuxTipController(tips: Map<String, NucleuxTipContent>, retired: List<String> = emptyList(), snoozed: Map<String, Long> = emptyMap(), cap: Int = NucleuxTipState.DEFAULT_CAP): NucleuxTipController",
        "doc": "",
        "annotations": [
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
-       "line": 155,
+       "line": 175,
        "members": []
       },
       {
-       "name": "NucleuxNudgeTail",
-       "kind": "enum",
-       "signature": "public enum class NucleuxNudgeTail { Top, Bottom }",
-       "doc": "Which edge the tail is on: [Bottom] when the card sits above its anchor, [Top] when below.",
-       "annotations": [],
-       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
-       "line": 165,
-       "members": []
-      },
-      {
-       "name": "NucleuxNudge",
+       "name": "NucleuxTip",
        "kind": "composable",
-       "signature": "public fun NucleuxNudge(controller: NucleuxNudgeController, id: String, onAccept: () -> Unit, modifier: Modifier = Modifier, tail: NucleuxNudgeTail = NucleuxNudgeTail.Bottom, tailInset: Dp = 20.dp)",
-       "doc": "The anchored card. Shows only while [id] is showing; the host places it next to its anchor.\n\n@param tailInset From the card's leading edge to the tail's, so it points at the anchor.\n@param onAccept Does the work in place. The nudge is retired after it.",
+       "signature": "public fun NucleuxTip(controller: NucleuxTipController, id: String, onTry: () -> Unit, modifier: Modifier = Modifier)",
+       "doc": "The tip, inline in the flow beside what it is about, never floating over the work: a lightbulb, the line, a close\nbutton, then Try it, Not now and Why this tip?. After Dismiss or Not now it leaves a line with Undo in its place.\nRenders nothing otherwise.",
        "annotations": [
         "@OptIn(ExperimentalLayoutApi::class)",
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
-       "line": 193,
-       "members": []
-      },
-      {
-       "name": "NucleuxNudgeHint",
-       "kind": "composable",
-       "signature": "public fun NucleuxNudgeHint(controller: NucleuxNudgeController, id: String, onAccept: () -> Unit, modifier: Modifier = Modifier)",
-       "doc": "The quiet form: the same offer riding on the control, costing one line and no attention.",
-       "annotations": [
-        "@Composable"
-       ],
-       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxNudges.kt",
-       "line": 247,
+       "line": 192,
        "members": []
       }
      ],
@@ -24368,20 +24521,20 @@
       "flutter/lib/src/nudges.dart"
      ],
      "import": "import 'package:nucleux/nucleux.dart';",
-     "primary": "NucleuxNudge",
+     "primary": "NucleuxTip",
      "symbols": [
       {
-       "name": "NucleuxNudgeContent",
+       "name": "NucleuxTipContent",
        "kind": "class",
-       "signature": "class NucleuxNudgeContent",
-       "doc": "What a nudge says. See specs/nudges.md.",
+       "signature": "class NucleuxTipContent",
+       "doc": "What a tip says. See specs/nudges.md.",
        "file": "flutter/lib/src/nudges.dart",
        "line": 10,
        "members": [
         {
-         "name": "NucleuxNudgeContent",
+         "name": "NucleuxTipContent",
          "kind": "constructor",
-         "signature": "const NucleuxNudgeContent({ required this.title, required this.detail, required this.action, })",
+         "signature": "const NucleuxTipContent({ required this.title, required this.why, this.action = NucleuxTipState.tryLabel, })",
          "doc": "",
          "params": [
           {
@@ -24389,21 +24542,22 @@
            "type": "String",
            "named": true,
            "required": true,
-           "doc": "What it does, in one line: \"Aria can check these against the receipt first\"."
+           "doc": "What they can do, in one line: \"You can ask Aria about text you select in a transcript.\""
           },
           {
-           "name": "detail",
+           "name": "why",
            "type": "String",
            "named": true,
            "required": true,
-           "doc": "Why now: \"You have approved 3 in a row without a change.\""
+           "doc": "Why it appeared, behind \"Why this tip?\": \"You selected transcript text twice in this meeting.\""
           },
           {
            "name": "action",
            "type": "String",
            "named": true,
-           "required": true,
-           "doc": "The inline action: \"Let it check them\"."
+           "required": false,
+           "default": "NucleuxTipState.tryLabel",
+           "doc": "The action; \"Try it\" unless the capability needs its own verb."
           }
          ]
         },
@@ -24411,51 +24565,51 @@
          "name": "title",
          "kind": "field",
          "signature": "final String title",
-         "doc": "What it does, in one line: \"Aria can check these against the receipt first\"."
+         "doc": "What they can do, in one line: \"You can ask Aria about text you select in a transcript.\""
         },
         {
-         "name": "detail",
+         "name": "why",
          "kind": "field",
-         "signature": "final String detail",
-         "doc": "Why now: \"You have approved 3 in a row without a change.\""
+         "signature": "final String why",
+         "doc": "Why it appeared, behind \"Why this tip?\": \"You selected transcript text twice in this meeting.\""
         },
         {
          "name": "action",
          "kind": "field",
          "signature": "final String action",
-         "doc": "The inline action: \"Let it check them\"."
+         "doc": "The action; \"Try it\" unless the capability needs its own verb."
         }
        ]
       },
       {
-       "name": "NucleuxNudgeEvent",
+       "name": "NucleuxTipEvent",
        "kind": "class",
-       "signature": "sealed class NucleuxNudgeEvent",
+       "signature": "sealed class NucleuxTipEvent",
        "doc": "",
        "file": "flutter/lib/src/nudges.dart",
        "line": 27,
        "members": [
         {
-         "name": "NucleuxNudgeEvent",
+         "name": "NucleuxTipEvent",
          "kind": "constructor",
-         "signature": "const NucleuxNudgeEvent()",
+         "signature": "const NucleuxTipEvent()",
          "doc": "",
          "params": []
         }
        ]
       },
       {
-       "name": "NudgeEarned",
+       "name": "TipEarned",
        "kind": "class",
-       "signature": "class NudgeEarned extends NucleuxNudgeEvent",
-       "doc": "The host has evidence for this nudge. [busy]: an error, a payment, anything the person is concentrating on.",
+       "signature": "class TipEarned extends NucleuxTipEvent",
+       "doc": "The host has evidence for this tip. [busy]: an error, a payment, anything the person is concentrating on.",
        "file": "flutter/lib/src/nudges.dart",
        "line": 32,
        "members": [
         {
-         "name": "NudgeEarned",
+         "name": "TipEarned",
          "kind": "constructor",
-         "signature": "const NudgeEarned(this.id, {this.busy = false})",
+         "signature": "const TipEarned(this.id, {this.busy = false, this.now = 0})",
          "doc": "",
          "params": [
           {
@@ -24471,6 +24625,13 @@
            "named": true,
            "required": false,
            "default": "false"
+          },
+          {
+           "name": "now",
+           "type": "int",
+           "named": true,
+           "required": false,
+           "default": "0"
           }
          ]
         },
@@ -24485,103 +24646,180 @@
          "kind": "field",
          "signature": "final bool busy",
          "doc": ""
+        },
+        {
+         "name": "now",
+         "kind": "field",
+         "signature": "final int now",
+         "doc": ""
         }
        ]
       },
       {
-       "name": "NudgeAccept",
+       "name": "TipTry",
        "kind": "class",
-       "signature": "class NudgeAccept extends NucleuxNudgeEvent",
-       "doc": "Taken: the work happens in place, and it never returns.",
+       "signature": "class TipTry extends NucleuxTipEvent",
+       "doc": "Try it: the capability opens where they are, and it never returns.",
        "file": "flutter/lib/src/nudges.dart",
-       "line": 39,
+       "line": 40,
        "members": [
         {
-         "name": "NudgeAccept",
+         "name": "TipTry",
          "kind": "constructor",
-         "signature": "const NudgeAccept()",
+         "signature": "const TipTry()",
          "doc": "",
          "params": []
         }
        ]
       },
       {
-       "name": "NudgeDismiss",
+       "name": "TipDismiss",
        "kind": "class",
-       "signature": "class NudgeDismiss extends NucleuxNudgeEvent",
-       "doc": "\"No thanks\" or the close button: permanent for that nudge.",
+       "signature": "class TipDismiss extends NucleuxTipEvent",
+       "doc": "The close button: permanent for that tip.",
        "file": "flutter/lib/src/nudges.dart",
-       "line": 44,
+       "line": 45,
        "members": [
         {
-         "name": "NudgeDismiss",
+         "name": "TipDismiss",
          "kind": "constructor",
-         "signature": "const NudgeDismiss()",
+         "signature": "const TipDismiss()",
          "doc": "",
          "params": []
         }
        ]
       },
       {
-       "name": "NudgeWithdraw",
+       "name": "TipSnooze",
        "kind": "class",
-       "signature": "class NudgeWithdraw extends NucleuxNudgeEvent",
-       "doc": "The anchor went away or the evidence stopped holding. Not a refusal.",
+       "signature": "class TipSnooze extends NucleuxTipEvent",
+       "doc": "Not now: gone for a week.",
        "file": "flutter/lib/src/nudges.dart",
-       "line": 49,
+       "line": 50,
        "members": [
         {
-         "name": "NudgeWithdraw",
+         "name": "TipSnooze",
          "kind": "constructor",
-         "signature": "const NudgeWithdraw()",
+         "signature": "const TipSnooze({this.now = 0})",
+         "doc": "",
+         "params": [
+          {
+           "name": "now",
+           "type": "int",
+           "named": true,
+           "required": false,
+           "default": "0"
+          }
+         ]
+        },
+        {
+         "name": "now",
+         "kind": "field",
+         "signature": "final int now",
+         "doc": ""
+        }
+       ]
+      },
+      {
+       "name": "TipUndo",
+       "kind": "class",
+       "signature": "class TipUndo extends NucleuxTipEvent",
+       "doc": "Undo on the notice: back as it was.",
+       "file": "flutter/lib/src/nudges.dart",
+       "line": 56,
+       "members": [
+        {
+         "name": "TipUndo",
+         "kind": "constructor",
+         "signature": "const TipUndo()",
          "doc": "",
          "params": []
         }
        ]
       },
       {
-       "name": "NudgeSession",
+       "name": "TipWithdraw",
        "kind": "class",
-       "signature": "class NudgeSession extends NucleuxNudgeEvent",
+       "signature": "class TipWithdraw extends NucleuxTipEvent",
+       "doc": "The reason went away. Not a refusal.",
+       "file": "flutter/lib/src/nudges.dart",
+       "line": 61,
+       "members": [
+        {
+         "name": "TipWithdraw",
+         "kind": "constructor",
+         "signature": "const TipWithdraw()",
+         "doc": "",
+         "params": []
+        }
+       ]
+      },
+      {
+       "name": "TipSession",
+       "kind": "class",
+       "signature": "class TipSession extends NucleuxTipEvent",
        "doc": "A new session: the cap starts again.",
        "file": "flutter/lib/src/nudges.dart",
-       "line": 54,
+       "line": 66,
        "members": [
         {
-         "name": "NudgeSession",
+         "name": "TipSession",
          "kind": "constructor",
-         "signature": "const NudgeSession()",
+         "signature": "const TipSession()",
          "doc": "",
          "params": []
         }
        ]
       },
       {
-       "name": "NucleuxNudgeHeld",
+       "name": "NucleuxTipHeld",
        "kind": "enum",
-       "signature": "enum NucleuxNudgeHeld",
-       "doc": "Why a nudge did not show.",
+       "signature": "enum NucleuxTipHeld",
+       "doc": "Why a tip did not show.",
        "file": "flutter/lib/src/nudges.dart",
-       "line": 59,
+       "line": 71,
        "members": [
         {
          "name": "values",
-         "signature": "retired, busy, stacked, capped"
+         "signature": "retired, snoozed, busy, stacked, capped"
         }
        ]
       },
       {
-       "name": "NucleuxNudgeState",
-       "kind": "class",
-       "signature": "class NucleuxNudgeState",
-       "doc": "The nudge ledger. Must reproduce specs/nudges.fixtures.json (reference: react-native/src/nudges.ts).",
+       "name": "NucleuxTipNoticeKind",
+       "kind": "enum",
+       "signature": "enum NucleuxTipNoticeKind",
+       "doc": "",
        "file": "flutter/lib/src/nudges.dart",
-       "line": 62,
+       "line": 73,
        "members": [
         {
-         "name": "NucleuxNudgeState",
+         "name": "values",
+         "signature": "dismissed, snoozed"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxTipNotice",
+       "kind": "typedef",
+       "signature": "typedef NucleuxTipNotice = ({NucleuxTipNoticeKind kind, String id})",
+       "doc": "",
+       "file": "flutter/lib/src/nudges.dart",
+       "line": 75,
+       "members": []
+      },
+      {
+       "name": "NucleuxTipState",
+       "kind": "class",
+       "signature": "class NucleuxTipState",
+       "doc": "The tip ledger (Nudges, library revision of 16 Oct). Must reproduce specs/nudges.fixtures.json (reference:\nreact-native/src/tips.ts).",
+       "file": "flutter/lib/src/nudges.dart",
+       "line": 79,
+       "members": [
+        {
+         "name": "NucleuxTipState",
          "kind": "constructor",
-         "signature": "const NucleuxNudgeState({ this.showing, this.retired = const [], this.seen = 0, })",
+         "signature": "const NucleuxTipState({ this.showing, this.retired = const [], this.snoozed = const {}, this.seen = 0, this.notice, })",
          "doc": "",
          "params": [
           {
@@ -24589,7 +24827,7 @@
            "type": "String?",
            "named": true,
            "required": false,
-           "doc": "The nudge on screen, by id. Never more than one."
+           "doc": "The tip on screen, by id. Never more than one."
           },
           {
            "name": "retired",
@@ -24597,7 +24835,15 @@
            "named": true,
            "required": false,
            "default": "const []",
-           "doc": "Nudges taken or refused. Neither comes back: the host persists this list."
+           "doc": "Tips tried or dismissed. Neither comes back: the host persists this list."
+          },
+          {
+           "name": "snoozed",
+           "type": "Map<String, int>",
+           "named": true,
+           "required": false,
+           "default": "const {}",
+           "doc": "Tips put off with Not now, until when (ms since the epoch). The host persists this too."
           },
           {
            "name": "seen",
@@ -24606,6 +24852,13 @@
            "required": false,
            "default": "0",
            "doc": "How many have been shown this session."
+          },
+          {
+           "name": "notice",
+           "type": "NucleuxTipNotice?",
+           "named": true,
+           "required": false,
+           "doc": "The line confirming a dismissal or a snooze, with Undo, until the next thing happens."
           }
          ]
         },
@@ -24613,13 +24866,19 @@
          "name": "showing",
          "kind": "field",
          "signature": "final String? showing",
-         "doc": "The nudge on screen, by id. Never more than one."
+         "doc": "The tip on screen, by id. Never more than one."
         },
         {
          "name": "retired",
          "kind": "field",
          "signature": "final List<String> retired",
-         "doc": "Nudges taken or refused. Neither comes back: the host persists this list."
+         "doc": "Tips tried or dismissed. Neither comes back: the host persists this list."
+        },
+        {
+         "name": "snoozed",
+         "kind": "field",
+         "signature": "final Map<String, int> snoozed",
+         "doc": "Tips put off with Not now, until when (ms since the epoch). The host persists this too."
         },
         {
          "name": "seen",
@@ -24628,21 +24887,63 @@
          "doc": "How many have been shown this session."
         },
         {
-         "name": "dismissLabel",
+         "name": "notice",
+         "kind": "field",
+         "signature": "final NucleuxTipNotice? notice",
+         "doc": "The line confirming a dismissal or a snooze, with Undo, until the next thing happens."
+        },
+        {
+         "name": "label",
          "kind": "static",
-         "signature": "static const dismissLabel = 'Dismiss this hint'",
+         "signature": "static const label = 'Tip'",
          "doc": ""
         },
         {
-         "name": "decline",
+         "name": "tryLabel",
          "kind": "static",
-         "signature": "static const decline = 'No thanks'",
-         "doc": "Permanent, so not \"Not now\"."
+         "signature": "static const tryLabel = 'Try it'",
+         "doc": ""
+        },
+        {
+         "name": "notNow",
+         "kind": "static",
+         "signature": "static const notNow = 'Not now'",
+         "doc": ""
+        },
+        {
+         "name": "why",
+         "kind": "static",
+         "signature": "static const why = 'Why this tip?'",
+         "doc": ""
+        },
+        {
+         "name": "dismissLabel",
+         "kind": "static",
+         "signature": "static const dismissLabel = 'Dismiss tip'",
+         "doc": ""
+        },
+        {
+         "name": "undo",
+         "kind": "static",
+         "signature": "static const undo = 'Undo'",
+         "doc": ""
         },
         {
          "name": "dismissed",
          "kind": "static",
-         "signature": "static const dismissed = 'Hint dismissed. It won’t come back.'",
+         "signature": "static const dismissed = 'Tip dismissed. It won’t show again.'",
+         "doc": ""
+        },
+        {
+         "name": "snoozedText",
+         "kind": "static",
+         "signature": "static const snoozedText = 'OK — you won’t see this tip for a week.'",
+         "doc": ""
+        },
+        {
+         "name": "back",
+         "kind": "static",
+         "signature": "static const back = 'Tip back.'",
          "doc": ""
         },
         {
@@ -24652,42 +24953,48 @@
          "doc": ""
         },
         {
+         "name": "snoozeMs",
+         "kind": "static",
+         "signature": "static const snoozeMs = 7 * 24 * 60 * 60 * 1000",
+         "doc": ""
+        },
+        {
          "name": "announcement",
          "kind": "static",
-         "signature": "static String announcement(String title, String detail) => 'Hint: ${_sentence(title)} ${_sentence(detail)}'",
-         "doc": "What a screen reader hears when a nudge appears. It takes no focus."
+         "signature": "static String announcement(String title)",
+         "doc": "What a screen reader hears when a tip appears. It takes no focus."
         },
         {
          "name": "held",
          "kind": "method",
-         "signature": "NucleuxNudgeHeld? held(String id, {bool busy = false, int cap = defaultCap})",
+         "signature": "NucleuxTipHeld? held(String id, { bool busy = false, int cap = defaultCap, int now = 0, })",
          "doc": ""
         },
         {
          "name": "reduce",
          "kind": "method",
-         "signature": "(NucleuxNudgeState, String?) reduce(NucleuxNudgeEvent e, ({String title, String detail}) Function(String id) text, { int cap = defaultCap, })",
-         "doc": "The next state, and what to announce."
+         "signature": "(NucleuxTipState, String?) reduce(NucleuxTipEvent e, String Function(String id) title, { int cap = defaultCap, })",
+         "doc": "Applies an event; returns the next state and what to announce, if anything."
         }
        ]
       },
       {
-       "name": "NucleuxNudgeController",
+       "name": "NucleuxTipController",
        "kind": "class",
-       "signature": "class NucleuxNudgeController extends ChangeNotifier",
-       "doc": "The nudge ledger for one surface. Call [earned] when the person's behaviour is evidence the feature would help;\nsave `state.retired` whenever it changes, and pass it back as `retired`.\n\nThe nudge announces itself when it appears, and its own buttons announce a refusal.",
+       "signature": "class NucleuxTipController extends ChangeNotifier",
+       "doc": "The tip ledger for one surface. Call [earned] when the person's behaviour is evidence the capability would\nhelp, and [withdraw] when the reason goes away; save `state.retired` and `state.snoozed` whenever they change.",
        "file": "flutter/lib/src/nudges.dart",
-       "line": 141,
+       "line": 223,
        "members": [
         {
-         "name": "NucleuxNudgeController",
+         "name": "NucleuxTipController",
          "kind": "constructor",
-         "signature": "NucleuxNudgeController(Map<String, NucleuxNudgeContent> nudges, { List<String> retired = const [], this.cap = NucleuxNudgeState.defaultCap, })",
+         "signature": "NucleuxTipController(Map<String, NucleuxTipContent> tips, { List<String> retired = const [], Map<String, int> snoozed = const {}, this.cap = NucleuxTipState.defaultCap, int Function()? now, })",
          "doc": "",
          "params": [
           {
-           "name": "nudges",
-           "type": "Map<String, NucleuxNudgeContent>",
+           "name": "tips",
+           "type": "Map<String, NucleuxTipContent>",
            "named": false,
            "required": true,
            "position": 0
@@ -24700,89 +25007,107 @@
            "default": "const []"
           },
           {
+           "name": "snoozed",
+           "type": "Map<String, int>",
+           "named": true,
+           "required": false,
+           "default": "const {}"
+          },
+          {
            "name": "cap",
            "type": "dynamic",
            "named": true,
            "required": false,
-           "default": "NucleuxNudgeState.defaultCap"
+           "default": "NucleuxTipState.defaultCap"
+          },
+          {
+           "name": "now",
+           "type": "int Function()?",
+           "named": true,
+           "required": false,
+           "doc": "The time, in ms since the epoch."
           }
          ]
         },
         {
+         "name": "now",
+         "kind": "field",
+         "signature": "final int Function() now",
+         "doc": "The time, in ms since the epoch."
+        },
+        {
          "name": "state",
          "kind": "method",
-         "signature": "NucleuxNudgeState get state => _state",
+         "signature": "NucleuxTipState get state => _state",
          "doc": ""
         },
         {
          "name": "send",
          "kind": "method",
-         "signature": "String? send(NucleuxNudgeEvent e)",
-         "doc": "Applies an event; returns what the pure ledger would announce."
+         "signature": "String? send(NucleuxTipEvent e)",
+         "doc": "Applies an event; returns what the pure ledger would announce. The tip on screen says it."
         },
         {
          "name": "earned",
          "kind": "method",
-         "signature": "NucleuxNudgeHeld? earned(String id, {bool busy = false})",
-         "doc": "Shows the nudge if it may show; otherwise returns why it was held."
+         "signature": "NucleuxTipHeld? earned(String id, {bool busy = false})",
+         "doc": "Shows the tip if it may show; otherwise returns why it was held."
         },
         {
-         "name": "accept",
+         "name": "tryIt",
          "kind": "method",
-         "signature": "void accept() => send(const NudgeAccept())",
+         "signature": "void tryIt() => send(const TipTry())",
          "doc": ""
         },
         {
          "name": "dismiss",
          "kind": "method",
-         "signature": "void dismiss() => send(const NudgeDismiss())",
+         "signature": "void dismiss() => send(const TipDismiss())",
+         "doc": ""
+        },
+        {
+         "name": "snooze",
+         "kind": "method",
+         "signature": "void snooze() => send(TipSnooze(now: now()))",
+         "doc": ""
+        },
+        {
+         "name": "undo",
+         "kind": "method",
+         "signature": "void undo() => send(const TipUndo())",
          "doc": ""
         },
         {
          "name": "withdraw",
          "kind": "method",
-         "signature": "void withdraw() => send(const NudgeWithdraw())",
+         "signature": "void withdraw() => send(const TipWithdraw())",
          "doc": ""
         },
         {
          "name": "session",
          "kind": "method",
-         "signature": "void session() => send(const NudgeSession())",
+         "signature": "void session() => send(const TipSession())",
          "doc": ""
         }
        ]
       },
       {
-       "name": "NucleuxNudgeTail",
-       "kind": "enum",
-       "signature": "enum NucleuxNudgeTail",
-       "doc": "Which edge the tail is on: [bottom] when the card sits above its anchor, [top] when below.",
-       "file": "flutter/lib/src/nudges.dart",
-       "line": 196,
-       "members": [
-        {
-         "name": "values",
-         "signature": "top, bottom"
-        }
-       ]
-      },
-      {
-       "name": "NucleuxNudge",
+       "name": "NucleuxTip",
        "kind": "class",
-       "signature": "class NucleuxNudge extends StatelessWidget",
-       "doc": "The anchored card. Shows only while [id] is showing; the host places it next to its anchor.",
+       "signature": "class NucleuxTip extends StatefulWidget",
+       "doc": "The tip, inline in the flow beside what it is about, never floating over the work: a lightbulb, the line, a\nclose button, then Try it, Not now and Why this tip?. After Dismiss or Not now it leaves a line with Undo in its\nplace. Renders nothing otherwise.",
        "file": "flutter/lib/src/nudges.dart",
-       "line": 295,
+       "line": 294,
        "members": [
         {
-         "name": "NucleuxNudge",
+         "name": "NucleuxTip",
          "kind": "constructor",
-         "signature": "const NucleuxNudge({ super.key, required this.controller, required this.id, required this.onAccept, this.tail = NucleuxNudgeTail.bottom, this.tailInset = 20, })",
+         "signature": "const NucleuxTip({ super.key, required this.controller, required this.id, required this.onTry, })",
          "doc": "",
          "params": [
           {
            "name": "controller",
-           "type": "NucleuxNudgeController",
+           "type": "NucleuxTipController",
            "named": true,
            "required": true
           },
@@ -24793,33 +25118,18 @@
            "required": true
           },
           {
-           "name": "onAccept",
+           "name": "onTry",
            "type": "VoidCallback",
            "named": true,
            "required": true,
-           "doc": "Does the work in place. The nudge is retired after it."
-          },
-          {
-           "name": "tail",
-           "type": "NucleuxNudgeTail",
-           "named": true,
-           "required": false,
-           "default": "NucleuxNudgeTail.bottom"
-          },
-          {
-           "name": "tailInset",
-           "type": "double",
-           "named": true,
-           "required": false,
-           "default": "20",
-           "doc": "From the card's leading edge to the tail's, so it points at the anchor."
+           "doc": "Opens the capability where they are. The tip is retired after it."
           }
          ]
         },
         {
          "name": "controller",
          "kind": "field",
-         "signature": "final NucleuxNudgeController controller",
+         "signature": "final NucleuxTipController controller",
          "doc": ""
         },
         {
@@ -24829,76 +25139,10 @@
          "doc": ""
         },
         {
-         "name": "onAccept",
+         "name": "onTry",
          "kind": "field",
-         "signature": "final VoidCallback onAccept",
-         "doc": "Does the work in place. The nudge is retired after it."
-        },
-        {
-         "name": "tail",
-         "kind": "field",
-         "signature": "final NucleuxNudgeTail tail",
-         "doc": ""
-        },
-        {
-         "name": "tailInset",
-         "kind": "field",
-         "signature": "final double tailInset",
-         "doc": "From the card's leading edge to the tail's, so it points at the anchor."
-        }
-       ]
-      },
-      {
-       "name": "NucleuxNudgeHint",
-       "kind": "class",
-       "signature": "class NucleuxNudgeHint extends StatelessWidget",
-       "doc": "The quiet form: the same offer riding on the control, costing one line and no attention.",
-       "file": "flutter/lib/src/nudges.dart",
-       "line": 434,
-       "members": [
-        {
-         "name": "NucleuxNudgeHint",
-         "kind": "constructor",
-         "signature": "const NucleuxNudgeHint({ super.key, required this.controller, required this.id, required this.onAccept, })",
-         "doc": "",
-         "params": [
-          {
-           "name": "controller",
-           "type": "NucleuxNudgeController",
-           "named": true,
-           "required": true
-          },
-          {
-           "name": "id",
-           "type": "String",
-           "named": true,
-           "required": true
-          },
-          {
-           "name": "onAccept",
-           "type": "VoidCallback",
-           "named": true,
-           "required": true
-          }
-         ]
-        },
-        {
-         "name": "controller",
-         "kind": "field",
-         "signature": "final NucleuxNudgeController controller",
-         "doc": ""
-        },
-        {
-         "name": "id",
-         "kind": "field",
-         "signature": "final String id",
-         "doc": ""
-        },
-        {
-         "name": "onAccept",
-         "kind": "field",
-         "signature": "final VoidCallback onAccept",
-         "doc": ""
+         "signature": "final VoidCallback onTry",
+         "doc": "Opens the capability where they are. The tip is retired after it."
         }
        ]
       }
@@ -24907,57 +25151,91 @@
     },
     "react-native": {
      "files": [
-      "react-native/src/nudges.ts",
-      "react-native/src/NudgeCard.tsx"
+      "react-native/src/tips.ts",
+      "react-native/src/Tip.tsx"
      ],
-     "import": "import { Nudge, NudgeHint } from '@intelligaia/nucleux';",
-     "primary": "Nudge",
+     "import": "import { Tip } from '@intelligaia/nucleux';",
+     "primary": "Tip",
      "symbols": [
       {
-       "name": "NudgeState",
+       "name": "TipNotice",
        "kind": "interface",
-       "signature": "export interface NudgeState",
+       "signature": "export interface TipNotice",
        "doc": "",
-       "file": "react-native/src/nudges.ts",
-       "line": 8,
+       "file": "react-native/src/tips.ts",
+       "line": 10,
+       "members": [
+        {
+         "name": "kind",
+         "optional": false,
+         "type": "'dismissed' | 'snoozed'",
+         "doc": ""
+        },
+        {
+         "name": "id",
+         "optional": false,
+         "type": "string",
+         "doc": ""
+        }
+       ]
+      },
+      {
+       "name": "TipState",
+       "kind": "interface",
+       "signature": "export interface TipState",
+       "doc": "",
+       "file": "react-native/src/tips.ts",
+       "line": 15,
        "members": [
         {
          "name": "showing",
          "optional": false,
          "type": "string | null",
-         "doc": "The nudge on screen, by id. Never more than one."
+         "doc": "The tip on screen, by id. Never more than one."
         },
         {
          "name": "retired",
          "optional": false,
          "type": "string[]",
-         "doc": "Nudges taken or refused. Neither comes back: the host persists this list."
+         "doc": "Tips tried or dismissed. Neither comes back: the host persists this list."
+        },
+        {
+         "name": "snoozed",
+         "optional": false,
+         "type": "Record<string, number>",
+         "doc": "Tips put off with Not now, until when (ms since the epoch). The host persists this too."
         },
         {
          "name": "seen",
          "optional": false,
          "type": "number",
          "doc": "How many have been shown this session."
+        },
+        {
+         "name": "notice",
+         "optional": false,
+         "type": "TipNotice | null",
+         "doc": "The line confirming a dismissal or a snooze, with Undo, until the next thing happens."
         }
        ]
       },
       {
-       "name": "NudgeEvent",
+       "name": "TipEvent",
        "kind": "type",
-       "signature": "export type NudgeEvent =\n  /**",
+       "signature": "export type TipEvent =\n  /**",
        "doc": "",
-       "file": "react-native/src/nudges.ts",
-       "line": 17,
+       "file": "react-native/src/tips.ts",
+       "line": 28,
        "members": [],
-       "body": "export type NudgeEvent =\n  /**"
+       "body": "export type TipEvent =\n  /**"
       },
       {
-       "name": "NudgeOptions",
+       "name": "TipOptions",
        "kind": "interface",
-       "signature": "export interface NudgeOptions",
+       "signature": "export interface TipOptions",
        "doc": "",
-       "file": "react-native/src/nudges.ts",
-       "line": 32,
+       "file": "react-native/src/tips.ts",
+       "line": 47,
        "members": [
         {
          "name": "cap",
@@ -24968,203 +25246,219 @@
        ]
       },
       {
-       "name": "NUDGE_DISMISS_LABEL",
+       "name": "TIP_LABEL",
        "kind": "const",
-       "signature": "export const NUDGE_DISMISS_LABEL = 'Dismiss this hint'",
-       "doc": "The close button's name.",
-       "file": "react-native/src/nudges.ts",
-       "line": 38,
+       "signature": "export const TIP_LABEL = 'Tip'",
+       "doc": "",
+       "file": "react-native/src/tips.ts",
+       "line": 52,
        "members": []
       },
       {
-       "name": "NUDGE_DECLINE",
+       "name": "TIP_TRY",
        "kind": "const",
-       "signature": "export const NUDGE_DECLINE = 'No thanks'",
-       "doc": "The refusal beside the action. Permanent, so not \"Not now\".",
-       "file": "react-native/src/nudges.ts",
-       "line": 40,
+       "signature": "export const TIP_TRY = 'Try it'",
+       "doc": "",
+       "file": "react-native/src/tips.ts",
+       "line": 53,
        "members": []
       },
       {
-       "name": "NUDGE_DISMISSED",
+       "name": "TIP_NOT_NOW",
        "kind": "const",
-       "signature": "export const NUDGE_DISMISSED = 'Hint dismissed. It won’t come back.'",
+       "signature": "export const TIP_NOT_NOW = 'Not now'",
        "doc": "",
-       "file": "react-native/src/nudges.ts",
-       "line": 41,
+       "file": "react-native/src/tips.ts",
+       "line": 54,
        "members": []
       },
       {
-       "name": "NUDGE_DEFAULT_CAP",
+       "name": "TIP_WHY",
        "kind": "const",
-       "signature": "export const NUDGE_DEFAULT_CAP = 1",
+       "signature": "export const TIP_WHY = 'Why this tip?'",
        "doc": "",
-       "file": "react-native/src/nudges.ts",
-       "line": 42,
+       "file": "react-native/src/tips.ts",
+       "line": 55,
        "members": []
       },
       {
-       "name": "initialNudges",
-       "kind": "function",
-       "signature": "export function initialNudges(retired: string[] = []): NudgeState",
+       "name": "TIP_DISMISS_LABEL",
+       "kind": "const",
+       "signature": "export const TIP_DISMISS_LABEL = 'Dismiss tip'",
        "doc": "",
-       "file": "react-native/src/nudges.ts",
-       "line": 44,
+       "file": "react-native/src/tips.ts",
+       "line": 56,
        "members": []
       },
       {
-       "name": "NudgeHeld",
-       "kind": "type",
-       "signature": "export type NudgeHeld = 'retired' | 'busy' | 'stacked' | 'capped'",
-       "doc": "Why a nudge did not show, for hosts and tests. Null when it may show.",
-       "file": "react-native/src/nudges.ts",
-       "line": 49,
-       "members": [],
-       "body": "export type NudgeHeld = 'retired' | 'busy' | 'stacked' | 'capped';"
-      },
-      {
-       "name": "nudgeHeld",
-       "kind": "function",
-       "signature": "export function nudgeHeld(s: NudgeState, id: string, busy = false, options: NudgeOptions = {}): NudgeHeld | null",
+       "name": "TIP_UNDO",
+       "kind": "const",
+       "signature": "export const TIP_UNDO = 'Undo'",
        "doc": "",
-       "file": "react-native/src/nudges.ts",
-       "line": 51,
+       "file": "react-native/src/tips.ts",
+       "line": 57,
        "members": []
       },
       {
-       "name": "nudgeAnnouncement",
-       "kind": "function",
-       "signature": "export function nudgeAnnouncement(title: string, detail: string): string",
-       "doc": "What a screen reader hears when a nudge appears. It takes no focus.",
-       "file": "react-native/src/nudges.ts",
+       "name": "TIP_DISMISSED",
+       "kind": "const",
+       "signature": "export const TIP_DISMISSED = 'Tip dismissed. It won’t show again.'",
+       "doc": "",
+       "file": "react-native/src/tips.ts",
+       "line": 58,
+       "members": []
+      },
+      {
+       "name": "TIP_SNOOZED",
+       "kind": "const",
+       "signature": "export const TIP_SNOOZED = 'OK — you won’t see this tip for a week.'",
+       "doc": "",
+       "file": "react-native/src/tips.ts",
+       "line": 59,
+       "members": []
+      },
+      {
+       "name": "TIP_BACK",
+       "kind": "const",
+       "signature": "export const TIP_BACK = 'Tip back.'",
+       "doc": "",
+       "file": "react-native/src/tips.ts",
        "line": 60,
        "members": []
       },
       {
-       "name": "NudgeText",
-       "kind": "interface",
-       "signature": "export interface NudgeText",
+       "name": "TIP_DEFAULT_CAP",
+       "kind": "const",
+       "signature": "export const TIP_DEFAULT_CAP = 1",
        "doc": "",
-       "file": "react-native/src/nudges.ts",
-       "line": 69,
-       "members": [
-        {
-         "name": "title",
-         "optional": false,
-         "type": "string",
-         "doc": ""
-        },
-        {
-         "name": "detail",
-         "optional": false,
-         "type": "string",
-         "doc": ""
-        }
-       ]
-      },
-      {
-       "name": "nudgeReduce",
-       "kind": "function",
-       "signature": "export function nudgeReduce(s: NudgeState, e: NudgeEvent, text: (id: string) => NudgeText, options: NudgeOptions = {}):",
-       "doc": "",
-       "file": "react-native/src/nudges.ts",
-       "line": 74,
+       "file": "react-native/src/tips.ts",
+       "line": 61,
        "members": []
       },
       {
-       "name": "NudgeContent",
-       "kind": "interface",
-       "signature": "export interface NudgeContent",
+       "name": "TIP_SNOOZE_MS",
+       "kind": "const",
+       "signature": "export const TIP_SNOOZE_MS = 7 * 24 * 60 * 60 * 1000",
        "doc": "",
-       "file": "react-native/src/NudgeCard.tsx",
-       "line": 19,
+       "file": "react-native/src/tips.ts",
+       "line": 62,
+       "members": []
+      },
+      {
+       "name": "initialTips",
+       "kind": "function",
+       "signature": "export function initialTips(retired: string[] = [], snoozed: Record<string, number> = {}): TipState",
+       "doc": "",
+       "file": "react-native/src/tips.ts",
+       "line": 64,
+       "members": []
+      },
+      {
+       "name": "TipHeld",
+       "kind": "type",
+       "signature": "export type TipHeld = 'retired' | 'snoozed' | 'busy' | 'stacked' | 'capped'",
+       "doc": "Why a tip did not show, for hosts and tests. Null when it may show.",
+       "file": "react-native/src/tips.ts",
+       "line": 69,
+       "members": [],
+       "body": "export type TipHeld = 'retired' | 'snoozed' | 'busy' | 'stacked' | 'capped';"
+      },
+      {
+       "name": "tipHeld",
+       "kind": "function",
+       "signature": "export function tipHeld(s: TipState, id: string, busy = false, options: TipOptions = {}, now = 0): TipHeld | null",
+       "doc": "",
+       "file": "react-native/src/tips.ts",
+       "line": 71,
+       "members": []
+      },
+      {
+       "name": "tipAnnouncement",
+       "kind": "function",
+       "signature": "export function tipAnnouncement(title: string): string",
+       "doc": "What a screen reader hears when a tip appears. It takes no focus.",
+       "file": "react-native/src/tips.ts",
+       "line": 81,
+       "members": []
+      },
+      {
+       "name": "tipReduce",
+       "kind": "function",
+       "signature": "export function tipReduce(s: TipState, e: TipEvent, title: (id: string) => string, options: TipOptions = {}):",
+       "doc": "",
+       "file": "react-native/src/tips.ts",
+       "line": 95,
+       "members": []
+      },
+      {
+       "name": "TipContent",
+       "kind": "interface",
+       "signature": "export interface TipContent",
+       "doc": "",
+       "file": "react-native/src/Tip.tsx",
+       "line": 25,
        "members": [
         {
          "name": "title",
          "optional": false,
          "type": "string",
-         "doc": "What it does, in one line: \"Aria can check these against the receipt first\"."
+         "doc": "What they can do, in one line: \"You can ask Aria about text you select in a transcript.\""
         },
         {
-         "name": "detail",
+         "name": "why",
          "optional": false,
          "type": "string",
-         "doc": "Why now: \"You have approved 3 in a row without a change.\""
+         "doc": "Why it appeared, behind \"Why this tip?\": \"You selected transcript text twice in this meeting.\""
         },
         {
          "name": "action",
-         "optional": false,
+         "optional": true,
          "type": "string",
-         "doc": "The inline action: \"Let it check them\"."
+         "doc": "The action; \"Try it\" unless the capability needs its own verb."
         }
        ]
       },
       {
-       "name": "useNudges",
+       "name": "useTips",
        "kind": "hook",
-       "signature": "export function useNudges(nudges: Record<string, NudgeContent>, options: { retired?: string[]; cap?: number } = {})",
-       "doc": "The nudge ledger for one surface. Call `earned(id)` when the person's behaviour is evidence the feature would\nhelp; save `state.retired` whenever it changes, and pass it back as `retired`. See specs/nudges.md.",
-       "file": "react-native/src/NudgeCard.tsx",
-       "line": 32,
+       "signature": "export function useTips(tips: Record<string, TipContent>, options: { retired?: string[]; snoozed?: Record<string, number>; cap?: number; now?: () => number } = {})",
+       "doc": "The tip ledger for one surface. Call `earned(id)` when the person's behaviour is evidence the capability would\nhelp, and `withdraw()` when the reason goes away. Save `state.retired` and `state.snoozed` whenever they change,\nand pass them back. See specs/nudges.md.",
+       "file": "react-native/src/Tip.tsx",
+       "line": 39,
        "members": []
       },
       {
-       "name": "NudgesHandle",
+       "name": "TipsHandle",
        "kind": "type",
-       "signature": "export type NudgesHandle = ReturnType<typeof useNudges>",
+       "signature": "export type TipsHandle = ReturnType<typeof useTips>",
        "doc": "",
-       "file": "react-native/src/NudgeCard.tsx",
-       "line": 77,
+       "file": "react-native/src/Tip.tsx",
+       "line": 90,
        "members": [],
-       "body": "export type NudgesHandle = ReturnType<typeof useNudges>;"
+       "body": "export type TipsHandle = ReturnType<typeof useTips>;"
       },
       {
-       "name": "NudgeProps",
-       "kind": "interface",
-       "signature": "export interface NudgeProps extends NudgeBaseProps",
-       "doc": "",
-       "file": "react-native/src/NudgeCard.tsx",
-       "line": 86,
-       "members": [
-        {
-         "name": "tail",
-         "optional": true,
-         "type": "'top' | 'bottom'",
-         "doc": "Which edge the tail is on: `bottom` when the card sits above its anchor (default), `top` when below."
-        },
-        {
-         "name": "tailInset",
-         "optional": true,
-         "type": "number",
-         "doc": "From the card's leading edge to the tail's, so it points at the anchor. Default 20."
-        }
-       ]
-      },
-      {
-       "name": "Nudge",
+       "name": "Tip",
        "kind": "component",
-       "signature": "export function Nudge(props: NudgeProps)",
-       "doc": "The anchored card. Renders only while its id is showing; the host places it next to its anchor.",
-       "file": "react-native/src/NudgeCard.tsx",
-       "line": 126,
-       "members": []
-      },
-      {
-       "name": "NudgeHint",
-       "kind": "component",
-       "signature": "export function NudgeHint(props: NudgeBaseProps)",
-       "doc": "The quiet form: the same offer riding on the control, costing one line and no attention.",
-       "file": "react-native/src/NudgeCard.tsx",
-       "line": 166,
+       "signature": "export function Tip({ tips, id, onTry }: { tips: TipsHandle; id: string; onTry: () => void })",
+       "doc": "The tip, inline in the flow beside what it is about, never floating over the work: a lightbulb, the line, a\nclose button, then Try it, Not now and Why this tip?. After Dismiss or Not now it leaves a line with Undo in its\nplace. Renders nothing otherwise.",
+       "file": "react-native/src/Tip.tsx",
+       "line": 97,
        "members": []
       }
      ],
      "constants": {
-      "NUDGE_DISMISS_LABEL": "Dismiss this hint",
-      "NUDGE_DECLINE": "No thanks",
-      "NUDGE_DISMISSED": "Hint dismissed. It won’t come back."
+      "TIP_LABEL": "Tip",
+      "TIP_TRY": "Try it",
+      "TIP_NOT_NOW": "Not now",
+      "TIP_WHY": "Why this tip?",
+      "TIP_DISMISS_LABEL": "Dismiss tip",
+      "TIP_UNDO": "Undo",
+      "TIP_DISMISSED": "Tip dismissed. It won’t show again.",
+      "TIP_SNOOZED": "OK — you won’t see this tip for a week.",
+      "TIP_BACK": "Tip back."
      },
-     "example": "Test host from Nudges.test.tsx"
+     "example": "Test host from Tips.test.tsx"
     }
    }
   },
@@ -58229,7 +58523,7 @@
    "component": "icons",
    "framework": "swiftui",
    "title": "AgentColorScreen (iOS catalog app, SCREEN=agent-color)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:940",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:919",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct AgentColorScreen: View {\n    @State private var drafting = true\n\n    var body: some View {\n        ScrollView {\n            VStack(alignment: .leading, spacing: 20) {\n                Text(\"Ticket 5512\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                VStack(alignment: .leading, spacing: 0) {\n                    row(\"Draft a reply\", ai: true)\n                    row(\"Summarise this thread\", ai: true)\n                    Divider().overlay(NucleuxColor.border).padding(.vertical, 4)\n                    row(\"Add a note\", ai: false)\n                    row(\"Assign to someone\", ai: false)\n                }\n                .padding(.vertical, 6)\n                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(NucleuxColor.border))\n                HStack(spacing: 16) {\n                    ForEach(NucleuxIdentity.GlyphContainer.allCases, id: \\.self) { k in\n                        VStack(spacing: 6) {\n                            NucleuxAgentGlyph(k, size: 44, glyph: 22)\n                            Text(k.rawValue.capitalized).font(.system(size: 11, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                        }\n                    }\n                }\n                VStack(spacing: 10) {\n                    NucleuxMessageBubble(\"Where did Q2 renewals land?\")\n                    NucleuxMessageBubble(\"£4.1m, 6% ahead of plan — almost all of it enterprise renewals.\", agent: \"Aria\")\n                }\n                NucleuxAgentPresence(agent: \"Aria\", activity: \"drafting in this document\",\n                                     detail: \"Nothing is saved until you accept it.\", active: drafting) {\n                    Text(\"Q2 renewal summary\").font(.system(size: 15, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                    Text(\"Renewals closed at 94%, up four points.\").font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                }\n                NucleuxButton(drafting ? \"Stop Aria\" : \"Let Aria draft\", variant: .secondary, size: .sm) { drafting.toggle() }\n            }\n            .padding(16)\n        }\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func row(_ label: String, ai: Bool) -> some View {\n        HStack(spacing: 12) {\n            if ai {\n                NucleuxAgentGlyph(.quiet, size: 28, glyph: 16)\n            } else {\n                NucleuxIconView(.fileText, size: 18).foregroundStyle(NucleuxColor.mutedForeground).frame(width: 28, height: 28)\n                    .accessibilityHidden(true)\n            }\n            Text(label).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n            Spacer()\n        }\n        .padding(.horizontal, 12).frame(minHeight: 44)\n        .accessibilityElement(children: .combine)\n        .accessibilityAddTraits(.isButton)\n    }\n}",
    "lines": 60
   },
@@ -58769,7 +59063,7 @@
    "component": "caveat",
    "framework": "swiftui",
    "title": "CaveatScreen (iOS catalog app, SCREEN=caveat)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1898",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1877",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct CaveatScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    @State private var text = \"\"\n    @State private var updated = Self.env[\"STATE\"] == \"resolved\"\n    private static let content = NucleuxCaveatRules.Content(\n        message: \"2 of 8 interviews could not be opened, so this summary reflects 6.\",\n        why: \"Themes raised only in those two calls are missing, not just under-counted.\",\n        short: \"2 of 8 interviews could not be opened.\", noun: \"summary\",\n        sources: [\n            .init(name: \"6 interviews read\", note: \"Ana, Bo, Chen, Dee, Femi, Ines\", ok: true),\n            .init(name: \"Hana Kim · Oct 3\", note: \"Not opened — the file was moved\", ok: false),\n            .init(name: \"Marcus Lee · Oct 9\", note: \"Not opened — sharing was removed\", ok: false),\n        ],\n        recover: .init(label: \"Reconnect\", busy: \"Reconnecting to Research › October…\", ready: \"Both interviews are available again.\"))\n    private static let points = [\n        \"Onboarding takes too long for teams that import from spreadsheets (5 of 6 interviews).\",\n        \"Shared links expiring early is the most frequent complaint.\",\n        \"Two teams asked for a weekly digest instead of real-time alerts.\",\n    ]\n    private static let added = \"Invoice exports confuse finance teams (2 of 8 interviews).\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    Text(\"Summarize customer feedback from this month.\").font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                    NucleuxMessage(agent: \"Aria\", text: \"Customer feedback · October\")\n                    VStack(alignment: .leading, spacing: 6) {\n                        ForEach(Self.points + (updated ? [Self.added] : []), id: \\.self) { p in\n                            HStack(alignment: .top, spacing: 6) {\n                                Text(\"•\").foregroundStyle(NucleuxColor.mutedForeground)\n                                VStack(alignment: .leading, spacing: 2) {\n                                    Text(p).font(.system(size: 14)).foregroundStyle(NucleuxColor.foreground).fixedSize(horizontal: false, vertical: true)\n                                    if updated && p == Self.added { NucleuxCaveatUpdatedMark() }\n                                }\n                            }\n                        }\n                    }\n                    .padding(.leading, 4)\n                    NucleuxCaveat(Self.content, onRecover: {\n                        try? await Task.sleep(for: .seconds(1.5))\n                        return Self.env[\"RECOVER\"] != \"fails\"\n                    }, onUpdate: {\n                        try? await Task.sleep(for: .seconds(1.5))\n                        updated = true\n                        return .init(message: \"All 8 interviews read — summary updated\",\n                                     why: \"One theme was added from the two calls that were missing.\",\n                                     announcement: \"All 8 interviews read. Summary updated: one theme added.\")\n                    })\n                    Text(\"Sources: \\(updated ? 8 : 6) interview notes · Research › October\").font(.system(size: 12))\n                        .foregroundStyle(NucleuxColor.mutedForeground).accessibilityIdentifier(\"sources-line\")\n                }\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask about the interviews…\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 64
   },
@@ -58878,8 +59172,8 @@
    "framework": "swiftui",
    "title": "NudgesScreen (iOS catalog app, SCREEN=nudges)",
    "source": "catalog-apps/ios/Sources/CatalogApp.swift:795",
-   "code": "import SwiftUI\nimport Nucleux\n\nstruct NudgesScreen: View {\n    static let claims: [(title: String, amount: String, who: String)] = [\n        (\"Rail, Leeds → London\", \"£48.20\", \"M. Diaz\"), (\"Client lunch\", \"£34.00\", \"P. Nair\"), (\"Taxi, airport\", \"£41.50\", \"J. Okafor\"),\n        (\"Rail, return\", \"£46.80\", \"M. Diaz\"), (\"Coworking day pass\", \"£29.00\", \"A. Bell\"), (\"Parking\", \"£12.00\", \"P. Nair\"),\n    ]\n    @State private var nudges = NucleuxNudgeController([\n        \"check-receipts\": .init(title: \"Aria can check these against the receipt first\", detail: \"\", action: \"Let it check them\"),\n        \"summarise\": .init(title: \"Aria can summarise this thread\", detail: \"It has 40 replies since you last read it.\", action: \"Show me\"),\n    ])\n    @State private var done = 0\n    @State private var checked = false\n    @State private var summary = false\n    private let quiet = ProcessInfo.processInfo.environment[\"QUIET\"] == \"1\"\n\n    var body: some View {\n        Group { if quiet { thread } else { queue } }\n            .padding(.horizontal, 16).padding(.bottom, 8)\n            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)\n            .background(NucleuxColor.background)\n    }\n\n    private var queue: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            HStack {\n                Text(\"Expenses · awaiting your approval\").font(.system(size: 17, weight: .semibold))\n                Spacer()\n                Text(\"\\(Self.claims.count - done) left\").font(.system(size: 12, weight: .medium))\n                    .padding(.horizontal, 8).padding(.vertical, 3).background(NucleuxColor.muted, in: Capsule())\n            }\n            .foregroundStyle(NucleuxColor.foreground)\n            .padding(.top, 12)\n            Text(\"\\(done) approved by you\\(checked ? \" · 3 checked by Aria\" : \"\")\")\n                .font(.system(size: 13)).foregroundStyle(NucleuxColor.mutedForeground)\n            Spacer()\n            if done < Self.claims.count {\n                let c = Self.claims[done]\n                HStack(alignment: .top) {\n                    VStack(alignment: .leading, spacing: 2) {\n                        Text(c.title).font(.system(size: 15, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                        Text(\"\\(c.who) · receipt attached\").font(.system(size: 13)).foregroundStyle(NucleuxColor.mutedForeground)\n                    }\n                    Spacer()\n                    Text(c.amount).font(.system(size: 15, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                }\n                .padding(14)\n                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(NucleuxColor.border))\n                Spacer()\n                // Anchored to the control that earned it: the tail points at Approve.\n                NucleuxNudge(nudges, id: \"check-receipts\", tailInset: 28) {\n                    checked = true\n                    done = Self.claims.count\n                }\n                HStack(spacing: 8) {\n                    NucleuxButton(\"Approve\") {\n                        done += 1\n                        nudges.nudges[\"check-receipts\"]?.detail = \"You have approved \\(done) in a row without a change.\"\n                        if done >= 3 { nudges.earned(\"check-receipts\") }\n                    }\n                    NucleuxButton(\"Query it\", variant: .secondary) {}\n                }\n            } else {\n                VStack(spacing: 6) {\n                    Text(\"Queue clear\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                    Text(checked ? \"Three of those were checked by Aria against the receipt and the policy. You approved them; it did the reading.\"\n                                 : \"All six by hand, as usual.\")\n                        .font(.system(size: 14)).foregroundStyle(NucleuxColor.mutedForeground).multilineTextAlignment(.center)\n                }\n                .frame(maxWidth: .infinity)\n                Spacer()\n            }\n        }\n    }\n\n    private var thread: some View {\n        VStack(alignment: .leading, spacing: 10) {\n            Text(\"Launch plan\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground).padding(.top, 12)\n            Text(\"40 new replies\").font(.system(size: 13)).foregroundStyle(NucleuxColor.mutedForeground)\n            NucleuxNudgeHint(nudges, id: \"summarise\") { summary = true }\n            if summary {\n                Text(\"Summary: the date moves to 4 November; design owns the landing page.\")\n                    .font(.system(size: 14)).foregroundStyle(NucleuxColor.foreground)\n            }\n            Spacer()\n        }\n        .onAppear { nudges.earned(\"summarise\") }\n    }\n}",
-   "lines": 90
+   "code": "import SwiftUI\nimport Nucleux\n\nstruct NudgesScreen: View {\n    static let lines: [(who: String, at: String, say: String)] = [\n        (\"Maya\", \"02:14\", \"We ship the pricing page Thursday, not Monday.\"),\n        (\"Jordan\", \"05:40\", \"Legal still needs the beta invite list.\"),\n        (\"Maya\", \"06:02\", \"Agreed. I’ll send the list by Monday.\"),\n        (\"Priya\", \"11:27\", \"The export timeout is fixed in 2.4.\"),\n        (\"Jordan\", \"14:55\", \"Then the retro is the week after launch.\"),\n    ]\n    @State private var tips = NucleuxTipController([\n        \"ask-selection\": .init(title: \"You can ask Aria about text you select in a transcript.\",\n                               why: \"You selected transcript text twice in this meeting.\"),\n    ])\n    @State private var selected: [Int] = []\n    @State private var text = \"\"\n    @State private var context: String?\n\n    var body: some View {\n        VStack(alignment: .leading, spacing: 10) {\n            HStack {\n                Text(\"Launch sync · transcript\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                Spacer()\n                if !selected.isEmpty {\n                    NucleuxButton(\"Clear selection\", variant: .ghost, size: .sm) { selected = []; tips.withdraw() }\n                }\n            }\n            .padding(.top, 12)\n            NucleuxTip(tips, id: \"ask-selection\") {\n                context = \"Transcript · \\(selected.count) passages\"\n                text = \"What did they agree about these?\"\n            }\n            ScrollView {\n                VStack(alignment: .leading, spacing: 4) {\n                    ForEach(Array(Self.lines.enumerated()), id: \\.offset) { i, l in\n                        let on = selected.contains(i)\n                        Button {\n                            if on { selected.removeAll { $0 == i } } else { selected.append(i) }\n                            if selected.count >= 2 { tips.earned(\"ask-selection\") }\n                            if selected.isEmpty { tips.withdraw() }\n                        } label: {\n                            VStack(alignment: .leading, spacing: 2) {\n                                Text(\"\\(l.who) · \\(l.at)\").font(.system(size: 12, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                                Text(l.say).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground).multilineTextAlignment(.leading)\n                            }\n                            .padding(10)\n                            .frame(maxWidth: .infinity, alignment: .leading)\n                            .background(on ? NucleuxColor.accent : Color.clear, in: RoundedRectangle(cornerRadius: 10))\n                        }\n                        .buttonStyle(.plain)\n                        .accessibilityAddTraits(on ? .isSelected : [])\n                        .accessibilityIdentifier(\"line-\\(i)\")\n                    }\n                }\n            }\n            if let context {\n                Text(context).font(.system(size: 13, weight: .medium)).foregroundStyle(NucleuxColor.foreground)\n                    .padding(.horizontal, 10).padding(.vertical, 6)\n                    .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(NucleuxColor.border))\n                    .accessibilityIdentifier(\"composer-context\")\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask about this meeting…\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)\n        .background(NucleuxColor.background)\n    }\n}",
+   "lines": 69
   },
   {
    "name": "nudges",
@@ -58887,15 +59181,15 @@
    "framework": "compose",
    "title": "Test host from NucleuxNudgesTest.kt",
    "source": "compose/nucleux/src/test/kotlin/com/intelligaia/nucleux/NucleuxNudgesTest.kt:106",
-   "code": "private val said = mutableListOf<String>()\nprivate var controller: NucleuxNudgeController? = null\nprivate val claims = listOf(\"Rail, Leeds → London\" to \"£48.20\", \"Client lunch\" to \"£34.00\", \"Taxi, airport\" to \"£41.50\", \"Rail, return\" to \"£46.80\")\n\nprivate fun setQueue(dark: Boolean = false, approved: Int = 0) {\n    compose.setContent {\n        CompositionLocalProvider(LocalNucleuxAnnounce provides { said += it }) {\n            NucleuxTheme(darkTheme = dark) {\n                val c = Nucleux.colors\n                val nudges = rememberNucleuxNudgeController(\n                    mapOf(\"check-receipts\" to NucleuxNudgeContent(\"Aria can check these against the receipt first\", \"\", \"Let it check them\")),\n                ).also { controller = it }\n                var done by remember { mutableIntStateOf(0) }\n                var checked by remember { mutableStateOf(false) }\n                fun approve() {\n                    done++\n                    nudges.nudges[\"check-receipts\"] = nudges.nudges.getValue(\"check-receipts\").copy(detail = \"You have approved $done in a row without a change.\")\n                    if (done >= 3) nudges.earned(\"check-receipts\")\n                }\n                LaunchedEffect(Unit) { repeat(approved) { approve() } }\n                Column(Modifier.fillMaxSize().background(c.background).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {\n                    BasicText(\"Expenses · awaiting your approval\", style = TextStyle(color = c.foreground, fontSize = 17.sp, fontWeight = FontWeight.SemiBold))\n                    BasicText(if (checked) \"Queue clear\" else \"$done approved by you\", style = TextStyle(color = c.mutedForeground, fontSize = 13.sp))\n                    Spacer(Modifier.weight(1f))\n                    if (!checked) {\n                        val (title, amount) = claims[done.coerceAtMost(claims.size - 1)]\n                        Row(Modifier.fillMaxWidth().border(1.dp, c.border, RoundedCornerShape(12.dp)).padding(14.dp)) {\n                            BasicText(title, Modifier.weight(1f), style = TextStyle(color = c.foreground, fontSize = 15.sp, fontWeight = FontWeight.SemiBold))\n                            BasicText(amount, style = TextStyle(color = c.foreground, fontSize = 15.sp, fontWeight = FontWeight.SemiBold))\n                        }\n                    }\n                    Spacer(Modifier.weight(1f))\n                    NucleuxNudge(nudges, \"check-receipts\", onAccept = { checked = true }, tailInset = 28.dp)\n                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {\n                        NucleuxButton(\"Approve\", onClick = ::approve, modifier = Modifier.testTag(\"approve\"))\n                        NucleuxButton(\"Query it\", onClick = {}, variant = NucleuxButtonVariant.Secondary)\n                    }\n                }\n            }\n        }\n    }\n}",
-   "lines": 42
+   "code": "private val said = mutableListOf<String>()\nprivate var context: String? = null\n\nprivate fun setTranscript(dark: Boolean = false) {\n    val lines = listOf(\"Maya: We ship the pricing page Thursday.\", \"Jordan: Legal still needs the beta list.\", \"Maya: Agreed, list by Monday.\")\n    compose.setContent {\n        CompositionLocalProvider(LocalNucleuxAnnounce provides { said += it }) {\n            NucleuxTheme(darkTheme = dark) {\n                tips = rememberNucleuxTipController(\n                    mapOf(\"ask-selection\" to NucleuxTipContent(\"You can ask Aria about text you select in a transcript.\", \"You selected transcript text twice in this meeting.\")),\n                ).also { it.now = { 0L } }\n                val sel = remember { mutableStateListOf<Int>() }\n                Column(Modifier.fillMaxSize().background(Nucleux.colors.background).padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                    NucleuxTip(tips, \"ask-selection\", onTry = { context = \"Transcript · ${sel.size} passages\" })\n                    lines.forEachIndexed { i, l ->\n                        NucleuxButton(l, onClick = {\n                            if (i in sel) sel.remove(i) else sel.add(i)\n                            if (sel.size >= 2) tips.earned(\"ask-selection\")\n                            if (sel.isEmpty()) tips.withdraw()\n                        }, variant = if (i in sel) NucleuxButtonVariant.Secondary else NucleuxButtonVariant.Ghost)\n                    }\n                    NucleuxButton(\"Clear selection\", onClick = { sel.clear(); tips.withdraw() }, variant = NucleuxButtonVariant.Ghost)\n                }\n            }\n        }\n    }\n}",
+   "lines": 27
   },
   {
    "name": "nudges",
    "component": "nudges",
    "framework": "flutter",
    "title": "Test host from nudges_test.dart",
-   "source": "flutter/test/nudges_test.dart:128",
+   "source": "flutter/test/nudges_test.dart:180",
    "code": "import 'package:flutter/material.dart';\nimport 'package:flutter_test/flutter_test.dart';\nimport 'package:nucleux/nucleux.dart';\n\nFuture<void> phone(WidgetTester tester, Widget child) async {\n  tester.view.physicalSize = const Size(402, 874);\n  tester.view.devicePixelRatio = 1;\n  addTearDown(tester.view.reset);\n  await tester.pumpWidget(\n    MaterialApp(\n      home: Scaffold(\n        body: Padding(padding: const EdgeInsets.all(16), child: child),\n      ),\n    ),\n  );\n}",
    "lines": 16
   },
@@ -58903,17 +59197,17 @@
    "name": "nudges",
    "component": "nudges",
    "framework": "react-native",
-   "title": "Test host from Nudges.test.tsx",
-   "source": "react-native/src/__tests__/Nudges.test.tsx:154",
-   "code": "import React, { useState } from 'react';\nimport { AccessibilityInfo, StyleSheet, Text, View } from 'react-native';\nimport { act, fireEvent, render, screen } from '@testing-library/react-native';\nimport {\n  Button,\n  NUDGE_DECLINE,\n  NUDGE_DEFAULT_CAP,\n  NUDGE_DISMISSED,\n  NUDGE_DISMISS_LABEL,\n  Nudge,\n  NudgeHint,\n  initialNudges,\n  nudgeAnnouncement,\n  nudgeHeld,\n  nudgeReduce,\n  useNudges,\n  type NudgeEvent,\n  type NudgeState,\n  type NudgesHandle,\n} from '@intelligaia/nucleux';\nimport fixtures from 'nucleux-mobile/specs/nudges.fixtures.json';\n\nit('rides on the control: title, the action, and a close button', async () => {\n  const accept = jest.fn();\n  function Thread() {\n    const nudges = useNudges({ summarise: { title: 'Aria can summarise this thread', detail: 'It has 40 replies since you last read it.', action: 'Show me' } });\n    return (\n      <>\n        <Button label=\"Earn\" onPress={() => nudges.earned('summarise')} />\n        <NudgeHint nudges={nudges} id=\"summarise\" onAccept={accept} />\n      </>\n    );\n  }\n  await render(<Thread />);\n  expect(screen.queryByText('Aria can summarise this thread')).toBeNull();\n  await fireEvent.press(screen.getByText('Earn'));\n  expect(screen.getByLabelText('Hint')).toBeTruthy();\n  expect(screen.getByRole('button', { name: 'Dismiss this hint' })).toBeTruthy();\n  await fireEvent.press(screen.getByText('Show me'));\n  expect(accept).toHaveBeenCalled();\n  expect(screen.queryByText('Aria can summarise this thread')).toBeNull();\n});",
-   "lines": 42
+   "title": "Test host from Tips.test.tsx",
+   "source": "react-native/src/__tests__/Tips.test.tsx:86",
+   "code": "import React, { useState } from 'react';\nimport { AccessibilityInfo, Text, View } from 'react-native';\nimport { fireEvent, render, screen } from '@testing-library/react-native';\nimport {\n  Button,\n  TIP_BACK,\n  TIP_DEFAULT_CAP,\n  TIP_DISMISSED,\n  TIP_DISMISS_LABEL,\n  TIP_LABEL,\n  TIP_NOT_NOW,\n  TIP_SNOOZED,\n  TIP_SNOOZE_MS,\n  TIP_TRY,\n  TIP_UNDO,\n  TIP_WHY,\n  Tip,\n  initialTips,\n  tipAnnouncement,\n  tipHeld,\n  tipReduce,\n  useTips,\n  type TipEvent,\n  type TipState,\n} from '@intelligaia/nucleux';\nimport fixtures from 'nucleux-mobile/specs/nudges.fixtures.json';\n\nconst texts = fixtures.texts as Record<string, { title: string; why: string }>;\nconst lines = ['Maya: We ship the pricing page Thursday.', 'Jordan: Legal still needs the beta list.', 'Maya: Agreed, list by Monday.'];\nlet announce: jest.SpyInstance;\n\nit('earned by a real behaviour, inline, with its reason on request; Try it opens it in place and it is gone for good', async () => {\n  await render(<Transcript />);\n  await fireEvent.press(screen.getByText(lines[0]!));\n  expect(screen.queryByTestId('tip-ask-selection')).toBeNull();\n  await fireEvent.press(screen.getByText(lines[1]!));\n  expect(screen.getByLabelText(TIP_LABEL)).toBeTruthy();\n  expect(announce).toHaveBeenLastCalledWith('Tip: You can ask Aria about text you select in a transcript.');\n  expect(screen.queryByText(texts['ask-selection']!.why)).toBeNull();\n  await fireEvent.press(screen.getByText(TIP_WHY));\n  expect(screen.getByText(texts['ask-selection']!.why)).toBeTruthy();\n  await fireEvent.press(screen.getByText(TIP_TRY));\n  expect(screen.getByText('Transcript · 2 passages')).toBeTruthy();\n  expect(screen.queryByTestId('tip-ask-selection')).toBeNull();\n  await fireEvent.press(screen.getByText(lines[2]!));\n  expect(screen.queryByTestId('tip-ask-selection')).toBeNull();\n});",
+   "lines": 47
   },
   {
    "name": "identity",
    "component": "identity",
    "framework": "swiftui",
    "title": "IdentityScreen (iOS catalog app, SCREEN=identity)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:884",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:863",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct IdentityScreen: View {\n    @State private var seen = false\n    @State private var history = false\n\n    var body: some View {\n        ScrollView {\n            VStack(alignment: .leading, spacing: 20) {\n                Text(\"Migration cutover\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                VStack(alignment: .leading, spacing: 14) {\n                    NucleuxIdentityRow(agent: \"Aria\", detail: \"Assistant · answers from your pipeline\")\n                    NucleuxIdentityRow(person: \"Dana Khoury\", detail: \"Revenue operations\")\n                }\n                NucleuxAgentIdentityCard(agent: \"Aria\", role: NucleuxIdentity.roleLine(\"Helpdesk\"),\n                                         actionLabel: \"What Aria can see\") { seen = true }\n                if seen { Text(\"Aria can see: the pipeline, the Q2 board pack.\").font(.system(size: 13)).foregroundStyle(NucleuxColor.mutedForeground) }\n                VStack(alignment: .leading, spacing: 10) {\n                    Text(\"State on the mark\").font(.system(size: 13, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                    HStack(spacing: 28) {\n                        specimen(\"Ready\") { NucleuxAgentAvatar(\"Aria\") }\n                        specimen(\"Working\") { NucleuxAgentAvatar(\"Aria\", state: .working) }\n                        specimen(\"Off\") { NucleuxAgentAvatar(\"Aria\", state: .off, standalone: true) }\n                    }\n                    Text(\"One silhouette, three sizes\").font(.system(size: 13, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                        .padding(.top, 6)\n                    HStack(alignment: .bottom, spacing: 28) {\n                        specimen(\"28\") { NucleuxAgentAvatar(\"Aria\", size: .sm) }\n                        specimen(\"40\") { NucleuxAgentAvatar(\"Aria\", size: .md) }\n                        specimen(\"56\") { NucleuxAgentAvatar(\"Aria\", size: .lg) }\n                        specimen(\"Person\") { NucleuxPersonAvatar(\"Dana Khoury\") }\n                    }\n                }\n                VStack(alignment: .leading, spacing: 6) {\n                    Text(\"Account summary\").font(.system(size: 12)).foregroundStyle(NucleuxColor.mutedForeground)\n                    Text(\"Renewal risk moved to medium after two support escalations in March.\")\n                        .font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                    NucleuxAgentByline(agent: \"Aria\", when: \"14 March, 10:24\", actionLabel: \"History\") { history = true }\n                }\n                .padding(12)\n                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(NucleuxColor.border))\n            }\n            .padding(16)\n        }\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func specimen(_ label: String, @ViewBuilder mark: () -> some View) -> some View {\n        VStack(spacing: 8) {\n            mark()\n            Text(label).font(.system(size: 11, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n        }\n    }\n}",
    "lines": 56
   },
@@ -58949,7 +59243,7 @@
    "component": "example-gallery",
    "framework": "swiftui",
    "title": "GalleryScreen (iOS catalog app, SCREEN=gallery)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:999",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:978",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct GalleryScreen: View {\n    static let examples = [\n        NucleuxGalleryExample(id: \"risk\", category: \"Analysis\", ask: \"Which renewals are at risk this quarter?\",\n                              out: \"Seven accounts, ranked, with the signal behind each.\",\n                              full: \"Seven accounts are at risk by weighted value. Northwind and Contoso are the two that matter: both have an open escalation and lost their champion this quarter.\",\n                              title: \"Renewal risk, ranked\"),\n        NucleuxGalleryExample(id: \"note\", category: \"Drafting\", ask: \"Draft the renewal note to Dana\",\n                              out: \"A three-line message with the figures attached, ready to edit.\",\n                              full: \"Thanks Dana — the Q3 figures are attached. Enterprise is 6% ahead of plan; the two gaps are Northwind and Contoso. I can walk you through it on Thursday.\"),\n        NucleuxGalleryExample(id: \"moves\", category: \"Analysis\", ask: \"What moved in the pipeline this week?\",\n                              out: \"Movements over £50k, with what caused each one.\",\n                              full: \"Four movements over £50k. Two closed, one slipped a quarter, and one was re-scoped downwards after the security review.\"),\n    ]\n    @State private var text = ProcessInfo.processInfo.environment[\"COMPOSER_TEXT\"] ?? \"\"\n    @State private var placed: String?\n    @State private var open: NucleuxGalleryExample?\n    @State private var turns: [String] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 14) {\n                    if turns.isEmpty {\n                        Text(\"Nothing here yet. These are things people on your team actually asked, with what came back.\")\n                            .font(.system(size: 14)).foregroundStyle(NucleuxColor.mutedForeground)\n                        if let e = open {\n                            NucleuxExampleDetail(e, text: text, placed: placed, onUse: { ask in\n                                text = ask\n                                placed = ask\n                                open = nil\n                                AccessibilityNotification.Announcement(NucleuxGallery.announcement(ask: ask)).post()\n                            }, onBack: { open = nil })\n                        } else {\n                            NucleuxExampleGallery(Self.examples) { open = $0 }\n                        }\n                    }\n                    ForEach(Array(turns.enumerated()), id: \\.offset) { _, t in\n                        Text(\"You: \\(t)\").foregroundStyle(NucleuxColor.foreground).frame(maxWidth: .infinity, alignment: .leading)\n                    }\n                }\n                .padding(.top, 16)\n            }\n            if open == nil {\n                NucleuxPromptComposer(\n                    text: $text, label: \"Message Aria\", placeholder: \"Or describe what you want to know\",\n                    onAddContext: {}, onVoice: {},\n                    onSend: { turns.append($0); text = \"\" }\n                )\n            }\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 58
   },
@@ -58985,7 +59279,7 @@
    "component": "templates",
    "framework": "swiftui",
    "title": "TemplatesScreen (iOS catalog app, SCREEN=templates)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1057",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1036",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct TemplatesScreen: View {\n    static let templates: [NucleuxTemplates.Template] = [\n        .init(id: \"competitive\", name: \"Competitive analysis\", description: \"Compare competitors on the criteria you choose, from their public pages.\",\n              sections: [.init(heading: \"Sources\", items: [\"Competitors’ public pages\", \"Your workspace files\"]),\n                         .init(heading: \"Competitors\", items: [\"You list them\"]),\n                         .init(heading: \"Evaluation criteria\", items: [\"Suggested from your last analysis\"]),\n                         .init(heading: \"Output format\", items: [\"Comparison table\", \"One-page summary\"])],\n              produces: \"comparison table and summary\", uses: [\"Uses web access to read competitors’ public pages.\"],\n              fields: [.init(id: \"comp\", label: \"Competitors\", required: true, requiredHint: \"Required — add at least two\"),\n                       .init(id: \"crit\", label: \"Evaluation criteria\"), .init(id: \"fmt\", label: \"Output format\")],\n              requirements: [.init(id: \"web\", name: \"web access\", why: \"It reads each competitor’s pricing and docs pages.\",\n                                   connect: \"Turn on web access\", fallback: \"Use workspace files only\",\n                                   fallbackNote: \"Using workspace files only — public pages won’t be read.\")]),\n        .init(id: \"interviews\", name: \"Interview synthesis\", description: \"Themes and quotes across uploaded interviews.\",\n              sections: [.init(heading: \"Sources\", items: [\"Your uploaded interviews\"]), .init(heading: \"Output format\", items: [\"Themes with quotes\"])],\n              produces: \"themes with quotes\", fields: [.init(id: \"focus\", label: \"Focus\", required: true)]),\n        .init(id: \"sizing\", name: \"Market sizing\", description: \"A bottom-up estimate with stated assumptions.\",\n              sections: [.init(heading: \"Output format\", items: [\"Estimate with assumptions\"])],\n              produces: \"an estimate with assumptions\", fields: [.init(id: \"market\", label: \"Market\", required: true)]),\n    ]\n    @State private var report: String?\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 16) {\n                    NucleuxTemplateFlow(templates: Self.templates, suggest: { t in\n                        t.id == \"competitive\"\n                            ? [\"crit\": .init(\"Pricing, onboarding, integrations\", suggested: \"from your last analysis\"), \"fmt\": .init(\"Comparison table\")]\n                            : [:]\n                    }, onConnect: { _ in\n                        try? await Task.sleep(for: .seconds(0.6))\n                        return true\n                    }, onRun: { t, values in\n                        try? await Task.sleep(for: .seconds(1))\n                        report = \"\\(t.name) · \\(values[\"comp\"] ?? \"\"): a comparison table and a one-page summary.\"\n                    })\n                    if let report { NucleuxMessage(agent: \"Aria\", text: report).accessibilityIdentifier(\"report\") }\n                }\n                .padding(.top, 16)\n            }\n            .scrollDismissesKeyboard(.immediately)\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask about this research…\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 53
   },
@@ -59021,7 +59315,7 @@
    "component": "randomize",
    "framework": "swiftui",
    "title": "RandomizeScreen (iOS catalog app, SCREEN=randomize)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1109",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1088",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct RandomizeScreen: View {\n    nonisolated static let items = [\n        NucleuxDirection(title: \"Launch through customer stories\", line: \"Lead with three teams who halved their onboarding time, in their own words.\"),\n        NucleuxDirection(title: \"Turn onboarding failures into a challenge campaign\", line: \"Invite teams to beat their old setup time, and publish the leaderboard.\"),\n        NucleuxDirection(title: \"The 15-minute workspace\", line: \"Every asset shows a real team going from sign-up to a first plan in fifteen minutes.\"),\n    ]\n    @State private var text = ProcessInfo.processInfo.environment[\"COMPOSER_TEXT\"] ?? \"\"\n    @State private var turns: [String] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 14) {\n                    Text(\"Planboard 3.0 launch · campaign directions\")\n                        .font(.system(size: 14)).foregroundStyle(NucleuxColor.mutedForeground)\n                    ForEach(Array(turns.enumerated()), id: \\.offset) { _, t in\n                        Text(\"You: \\(t)\").foregroundStyle(NucleuxColor.foreground).frame(maxWidth: .infinity, alignment: .leading)\n                    }\n                }\n                .padding(.top, 16)\n                .frame(maxWidth: .infinity, alignment: .leading)\n            }\n            NucleuxPromptComposer(\n                text: $text, label: \"Message Aria\", placeholder: \"Describe the campaign direction\",\n                onAddContext: {}, onVoice: {},\n                onSend: { turns.append($0); text = \"\" }\n            )\n            .nucleuxRandomize(generate: { seen in\n                try await Task.sleep(for: .milliseconds(ProcessInfo.processInfo.environment[\"SLOW\"] == \"1\" ? 3000 : 600))\n                return NucleuxRandomize.next(from: RandomizeScreen.items, seen: seen, pick: { $0[0] })!\n            }, prompt: { \"Draft launch messaging for Planboard 3.0 around this direction: \\($0.title). \\($0.line)\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 40
   },
@@ -59057,7 +59351,7 @@
    "component": "ai-marks",
    "framework": "swiftui",
    "title": "AIMarksScreen (iOS catalog app, SCREEN=ai-marks)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1149",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1128",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct AIMarksScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static let words = NucleuxAIActionWords(verb: \"Rewrite\", doing: \"Rewriting\", status: \"Rewriting release note\", done: \"Release note rewritten.\")\n    static let draft = \"We fixed a bunch of stuff in onboarding and the export thing should work better now.\"\n    @State private var run = NucleuxAIRun()\n    @State private var text = AIMarksScreen.env[\"EMPTY\"] == \"1\" ? \"\" : AIMarksScreen.draft\n    @State private var original = \"\"\n    @State private var job: Task<Void, Never>?\n\n    var body: some View {\n        ScrollView {\n            VStack(alignment: .leading, spacing: 16) {\n                HStack(spacing: 8) {\n                    NucleuxButton(\"Preview\", variant: .ghost, size: .sm) {}\n                    HStack(spacing: 4) {\n                        NucleuxButton(\"Import changelog\", variant: .ghost, size: .sm) {}\n                        Text(\"New\").font(.system(size: 11, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            .padding(.horizontal, 6).padding(.vertical, 2)\n                            .overlay(Capsule().strokeBorder(NucleuxColor.border))\n                    }\n                    Spacer(minLength: 0)\n                    NucleuxAIActionButton(Self.words, working: run.phase == .working,\n                                          disabledReason: text.trimmingCharacters(in: .whitespaces).isEmpty ? \"Write something first\" : nil,\n                                          iconOnly: Self.env[\"ICON_ONLY\"] == \"1\") { start() }\n                }\n                Text(\"What changed\").font(.system(size: 12, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                Text(text.isEmpty ? \"Nothing written yet.\" : text)\n                    .font(.system(size: 15)).foregroundStyle(text.isEmpty ? NucleuxColor.mutedForeground : NucleuxColor.foreground)\n                    .accessibilityIdentifier(\"doc\")\n                // Disclosure: the action explains itself before it runs; the result says what was done and not checked.\n                if run.phase == .idle && !text.isEmpty {\n                    NucleuxAIActionNote(verb: Self.words.verb, sentence: \"Aria rewrites this release note. You review the result before it replaces your text.\")\n                }\n                if run.phase == .done {\n                    NucleuxGeneratedResult(details: .init(\n                        did: \"Rewrote your note to be shorter and clearer. It named the three changes and added nothing that is not in the changelog.\",\n                        used: \"Your draft, the Orbit style guide (14 terms) and the 2.4 changelog.\",\n                        notChecked: \"Whether the changes are shipped: “no longer times out” comes from changelog entry EXP-210.\",\n                        original: original), agent: \"Aria\", noun: \"release note\") { send(.undo); text = original }\n                }\n                if run.phase == .working { NucleuxAIWorkingStatus(Self.words) { job?.cancel(); send(.stop) } }\n                ForEach(Array(run.tools.enumerated()), id: \\.offset) { _, t in NucleuxToolUseLine(t) }\n            }\n            .padding(16)\n        }\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func send(_ e: NucleuxAIRun.Event) {\n        if let said = run.reduce(e, words: Self.words) { AccessibilityNotification.Announcement(said).post() }\n    }\n\n    private func start() {\n        send(.start)\n        job = Task {\n            try? await Task.sleep(for: .milliseconds(1500)); guard !Task.isCancelled else { return }\n            send(.toolStarted(\"Checking the style guide…\"))\n            try? await Task.sleep(for: .milliseconds(1500)); guard !Task.isCancelled else { return }\n            send(.toolDone(\"Style guide checked\", detail: \"Checked 14 terms against the Orbit style guide: “a bunch of stuff” named as three changes, “the export thing” → “CSV export”.\"))\n            try? await Task.sleep(for: .milliseconds(1000)); guard !Task.isCancelled else { return }\n            original = text\n            text = \"Onboarding is quicker to finish, CSV export no longer times out on large projects, and three small layout fixes are in.\"\n            send(.finish)\n        }\n    }\n}",
    "lines": 70
   },
@@ -59093,7 +59387,7 @@
    "component": "model-fallback",
    "framework": "swiftui",
    "title": "ModelFallbackScreen (iOS catalog app, SCREEN=model-fallback)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1219",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1198",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ModelFallbackScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    @State private var model = \"Deep reasoning\"\n    @State private var withdrawn = true\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 16) {\n                    NucleuxMessage(person: \"Priya\", text: \"What is the riskiest part of moving billing off the shared database?\")\n                    NucleuxMessage(agent: \"Aria\", credit: NucleuxModelCredit(answeredBy: \"Deep reasoning\"),\n                                   text: \"Dual ownership during the parallel run: if both systems can write a billing row you get double charges.\")\n                    NucleuxMessage(person: \"Priya\", text: \"And what would you do first?\")\n                    NucleuxMessage(agent: \"Aria\", credit: NucleuxModelCredit(answeredBy: \"Fast\", asked: \"Deep reasoning\"),\n                                   text: \"Make every write idempotent, then cut over behind a flag.\")\n                }\n                .padding(.top, 16)\n            }\n            if withdrawn {\n                NucleuxModelFallback(\"Deep reasoning\",\n                                     reason: Self.env[\"REASON\"] == \"restricted\" ? .restricted : .unavailable,\n                                     onUseAuto: Self.env[\"NO_AUTO\"] == \"1\" ? nil : {\n                                         model = \"Auto\"; withdrawn = false\n                                         AccessibilityNotification.Announcement(NucleuxModelFallbackText.autoChosen).post()\n                                     },\n                                     onChoose: { model = \"Balanced\"; withdrawn = false })\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask a follow-up\",\n                                  model: model, effort: \"High\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 39
   },
@@ -59129,7 +59423,7 @@
    "component": "knowledge-base",
    "framework": "swiftui",
    "title": "KnowledgeScreen (iOS catalog app, SCREEN=knowledge)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1257",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1236",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct KnowledgeScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static func base() -> [NucleuxKnowledgeSource] {\n        [(\"interviews-sept\", \"Customer interviews — Sept\", NucleuxKnowledgeSource.Kind.pdf, NucleuxKnowledgeSource.Origin.upload, \"Uploaded 2 days ago\"),\n         (\"interviews-june\", \"Customer interviews — June\", .pdf, .upload, \"Uploaded in June\"),\n         (\"analytics\", \"Onboarding analytics\", .sheet, .link, \"Linked · follows the original\"),\n         (\"funnel\", \"Activation funnel — Q3\", .sheet, .link, \"Linked · follows the original\"),\n         (\"brief\", \"Product brief v4\", .doc, .upload, \"Uploaded 3 weeks ago\"),\n         (\"notes\", \"Usability session notes\", .note, .upload, \"Uploaded 9 days ago\"),\n         (\"schema\", \"Schema definitions\", .code, .link, \"Linked · follows the original\"),\n         (\"spec\", \"Onboarding spec v2\", .drive, .link, \"Linked · follows the original\")]\n            .map { NucleuxKnowledgeSource(id: $0.0, name: $0.1, kind: $0.2, origin: $0.3, fresh: $0.4, state: .ready) }\n    }\n    static func start() -> [NucleuxKnowledgeSource] {\n        var l = base()\n        switch env[\"KB\"] {\n        case \"mixed\":\n            l[0].state = .failed; l[0].note = \"The file is password protected, so it could not be read.\"\n            l[2].state = .unavailable; l[2].note = \"The linked file is no longer shared with this project.\"\n            l[3].state = .stale; l[3].fresh = \"Linked · the original changed since it was read\"\n        case \"preparing\": l = Array(l.prefix(4)).map { var x = $0; x.state = .preparing; return x }\n        case \"empty\": l = []\n        default: break\n        }\n        return l\n    }\n    @State private var sources = KnowledgeScreen.start()\n    @State private var moment: NucleuxKnowledge.Moment? = env[\"KB\"] == \"inactive\" ? .inactive : env[\"KB\"] == \"none\" ? .nothingFound : nil\n    @State private var activity: String?\n    @State private var used: [NucleuxKnowledgeSource] = []\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 16) {\n                    NucleuxKnowledgeBasePanel(\n                        \"Product Research\", mark: \"PR\", where: \"in this project\", sources: sources, moment: moment, activity: activity,\n                        noneTopic: \"pricing\", manage: true, remove: true, switchable: true, deletable: true,\n                        onAskWithout: { moment = nil },\n                        onAction: { a in\n                            switch a {\n                            case .activate: moment = nil; say(NucleuxKnowledge.Said.active(\"Product Research\", where: \"in this project\"))\n                            case .deactivate: moment = .inactive; say(NucleuxKnowledge.Said.inactive(\"Product Research\", where: \"in this project\"))\n                            default: break\n                            }\n                        },\n                        onSourceAction: { id, a in\n                            guard let i = sources.firstIndex(where: { $0.id == id }) else { return }\n                            switch a {\n                            case .remove: sources.remove(at: i)\n                            case .retry, .reconnect, .refresh:\n                                sources[i].state = .ready; sources[i].note = nil\n                                if a == .refresh { sources[i].fresh = \"Linked · follows the original\" }\n                                say(a == .reconnect ? NucleuxKnowledge.Said.back(sources[i].name) : NucleuxKnowledge.Said.ready(sources[i].name))\n                            case .replace: break\n                            }\n                        })\n                    if !used.isEmpty {\n                        NucleuxMessage(agent: \"Aria\", text: \"Onboarding drop-off is mostly at the workspace step: 41% of new teams stop there.\")\n                        NucleuxKnowledgeProvenance(base: \"Product Research\", used: used, onOpen: { _ in })\n                    }\n                }\n                .padding(.top, 16)\n            }\n            if moment != .inactive && !sources.isEmpty {\n                HStack {\n                    NucleuxKnowledgeChip(\"Product Research\", mark: \"PR\", sources: sources, moment: moment) {}\n                    Spacer()\n                    NucleuxButton(\"Ask about onboarding\", variant: .secondary, size: .sm) { ask() }.accessibilityIdentifier(\"ask\")\n                }\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask about this project\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func say(_ s: String) { AccessibilityNotification.Announcement(s).post() }\n\n    private func ask() {\n        used = []\n        moment = .using\n        activity = NucleuxKnowledge.searching(\"Product Research\")\n        say(NucleuxKnowledge.Said.searching(\"Product Research\"))\n        Task {\n            try? await Task.sleep(for: .milliseconds(2500))\n            activity = NucleuxKnowledge.reading(4)\n            say(NucleuxKnowledge.Said.reading(4))\n            try? await Task.sleep(for: .milliseconds(2500))\n            used = Array(sources.filter { $0.state == .ready }.prefix(4))\n            moment = nil; activity = nil\n            say(NucleuxKnowledge.Said.used(used.count, base: \"Product Research\"))\n        }\n    }\n}",
    "lines": 100
   },
@@ -59165,7 +59459,7 @@
    "component": "mcp-server",
    "framework": "swiftui",
    "title": "MCPScreen (iOS catalog app, SCREEN=mcp)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1357",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1336",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct MCPScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static let jira = NucleuxMCPServer(\n        name: \"Jira MCP\", mark: \"JR\", url: \"https://mcp.atlassian.com/v1/mcp\", auth: \"OAuth 2.1\", resources: 3, prompts: 1,\n        tools: [\n            .init(name: \"search_issues\", label: \"Search issues\", what: \"Find issues by project, status or text\",\n                  does: \"Runs a JQL query against the projects your account can see and returns matching issues.\",\n                  data: \"Reads issue summaries, statuses and assignees. Writes nothing.\", risk: .read),\n            .init(name: \"get_issue\", label: \"Read issue\", what: \"Read one issue and its comments\",\n                  does: \"Fetches a single issue by key, with its description, comments and linked items.\",\n                  data: \"Reads one issue and everything attached to it. Writes nothing.\", risk: .read),\n            .init(name: \"create_issue\", label: \"Create issue\", what: \"Create a new issue in a selected project\",\n                  does: \"Opens a new issue in a project you choose, with a summary, description and type.\",\n                  data: \"Writes a new issue. Nothing existing is changed.\", risk: .write),\n            .init(name: \"update_issue\", label: \"Update issue\", what: \"Change summary, status, labels or assignee\",\n                  does: \"Edits fields on an existing issue, including moving it through the workflow.\",\n                  data: \"Overwrites fields on an issue that already exists.\", risk: .write),\n        ])\n    static let github = NucleuxMCPServer(\n        name: \"GitHub MCP\", mark: \"GH\", url: \"https://api.githubcopilot.com/mcp/\", auth: \"OAuth 2.1\", resources: 2, prompts: 0,\n        tools: [\n            .init(name: \"search_code\", label: \"Search code\", what: \"Find code across the repositories you can see\",\n                  does: \"Runs a code search scoped to the repositories your account has access to.\",\n                  data: \"Reads file contents and paths. Writes nothing.\", risk: .read),\n            .init(name: \"create_issue\", label: \"Create issue\", what: \"Open an issue on a repository\",\n                  does: \"Opens a new issue with a title, body and labels on a repository you choose.\",\n                  data: \"Writes a new issue. Nothing existing is changed.\", risk: .write),\n            .init(name: \"merge_pull_request\", label: \"Merge pull request\", what: \"Merge a pull request into its base branch\",\n                  does: \"Merges the pull request and, where the repository is set up for it, deletes the source branch.\",\n                  data: \"Changes the base branch. This can’t be undone from here.\", risk: .destroy),\n        ])\n    static let fileIt = NucleuxMCPAsk(tool: \"create_issue\", args: [(\"project\", \"WEB\"), (\"type\", \"Bug\"), (\"summary\", \"Checkout regression\"), (\"priority\", \"High\")])\n    static let failed = NucleuxMCPRun(tool: \"update_issue\", state: .failed,\n                                      why: \"WEB-482 could not be updated. Its workflow does not allow that transition from its current status.\",\n                                      raw: \"HTTP 400 · transition_not_allowed\")\n\n    private let server = env[\"MCP\"] == \"destroy\" ? MCPScreen.github : MCPScreen.jira\n    @State private var status: NucleuxMCP.Status = Self.startStatus()\n    private static func startStatus() -> NucleuxMCP.Status {\n        switch env[\"MCP\"] {\n        case \"validating\": .validating\n        case \"ready\", \"gate\", \"toolfail\", \"destroy\": .ready\n        case \"expired\": .expired\n        default: .notConnected\n        }\n    }\n    @State private var enabled: [String] = NucleuxMCP.initialEnabled(env[\"MCP\"] == \"destroy\" ? MCPScreen.github.tools : MCPScreen.jira.tools)\n        + (env[\"MCP\"] == \"destroy\" ? [\"merge_pull_request\"] : [])\n    @State private var always: [String] = []\n    @State private var ask: NucleuxMCPAsk? = Self.startAsk()\n    private static func startAsk() -> NucleuxMCPAsk? {\n        switch env[\"MCP\"] {\n        case \"gate\": MCPScreen.fileIt\n        case \"destroy\": NucleuxMCPAsk(tool: \"merge_pull_request\", args: [(\"repository\", \"signal/web\"), (\"pull\", \"#311\"), (\"method\", \"squash\")])\n        default: nil\n        }\n    }\n    @State private var run: NucleuxMCPRun? = env[\"MCP\"] == \"toolfail\" ? MCPScreen.failed : nil\n    @State private var reply = \"\"\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    NucleuxMessage(person: \"Priya\", text: \"File a bug for the checkout regression and set it to high priority.\")\n                    NucleuxMessage(agent: \"Aria\", text: \"I can write it, but there’s no issue tracker connected. Add one and I’ll file it.\")\n                    NucleuxMCPPanel(\n                        server: server, status: status, enabled: enabled, always: always, ask: ask, run: run, agent: \"Aria\",\n                        technical: Self.env[\"TECHNICAL\"] == \"1\",\n                        onConnect: { _, _ in connect(then: nil) },\n                        onCancel: { status = .notConnected },\n                        onToggle: { t, on in enabled = on ? enabled + [t] : enabled.filter { $0 != t } },\n                        onDecide: { d in\n                            guard let a = ask else { return }\n                            ask = nil\n                            if d == .deny { reply = \"Left it alone. Nothing was sent to \\(server.name).\"; return }\n                            if d == .always { always.append(a.tool) }\n                            run = NucleuxMCPRun(tool: a.tool, state: .running)\n                            Task {\n                                try? await Task.sleep(for: .milliseconds(1000))\n                                run = NucleuxMCPRun(tool: a.tool, state: .done, detail: \"WEB-482\")\n                                reply = \"Filed as WEB-482 in WEB, priority High.\"\n                            }\n                        },\n                        onRetry: {\n                            run = NucleuxMCPRun(tool: \"update_issue\", state: .running)\n                            Task {\n                                try? await Task.sleep(for: .milliseconds(800))\n                                run = nil\n                                status = .expired\n                            }\n                        },\n                        onReconnect: { connect(then: NucleuxMCPRun(tool: \"update_issue\", state: .done, detail: \"WEB-482\")) },\n                        onDisconnect: { status = .disconnected; run = nil; ask = nil })\n                    if !reply.isEmpty { NucleuxMessage(agent: \"Aria\", text: reply) }\n                }\n                .padding(.top, 16)\n            }\n            if status == .ready {\n                HStack {\n                    NucleuxMCPChip(server.name, mark: server.mark, enabled: enabled.count, status: status) {}\n                    Spacer()\n                    if ask == nil && run == nil {\n                        NucleuxButton(\"Let it file the bug\", variant: .secondary, size: .sm) { ask = Self.fileIt }.accessibilityIdentifier(\"use\")\n                    } else if run?.state == .done && run?.tool == \"create_issue\" {\n                        NucleuxButton(\"Now let a call fail\", variant: .secondary, size: .sm) { breakOne() }.accessibilityIdentifier(\"break\")\n                    }\n                }\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask Aria\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func connect(then: NucleuxMCPRun?) {\n        status = .reaching\n        Task {\n            try? await Task.sleep(for: .milliseconds(900))\n            status = .validating\n            try? await Task.sleep(for: .milliseconds(900))\n            status = .discovering\n            try? await Task.sleep(for: .milliseconds(900))\n            status = .ready\n            if let then { run = then; reply = \"Signed back in and the update went through.\" }\n        }\n    }\n\n    private func breakOne() {\n        reply = \"\"\n        run = NucleuxMCPRun(tool: \"update_issue\", state: .running)\n        Task {\n            try? await Task.sleep(for: .milliseconds(900))\n            run = Self.failed\n        }\n    }\n}",
    "lines": 142
   },
@@ -59201,7 +59495,7 @@
    "component": "connect-source",
    "framework": "swiftui",
    "title": "ConnectScreen (iOS catalog app, SCREEN=connect)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1499",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1478",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ConnectScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static func svc(_ id: String, _ name: String, _ mark: String, _ purpose: String, _ account: String, _ what: String,\n                    _ benefits: [NucleuxConnectService.Benefit], _ canSee: [String]) -> NucleuxConnectService {\n        NucleuxConnectService(id: id, name: name, mark: mark, purpose: purpose,\n                              blurb: \"Use the \\(what) you already have access to when answering relevant questions.\", account: account,\n                              benefits: benefits + [.init(icon: .shield, title: \"You stay in control\", what: \"Disconnect \\(name) whenever you want.\")],\n                              canSee: canSee, useLine: \"The agent can use \\(what) you can access.\")\n    }\n    static let drive = NucleuxConnectService(\n        id: \"googledrive\", name: \"Google Drive\", mark: \"GD\", purpose: \"Files and documents\",\n        blurb: \"Use the files and folders you already have access to when answering relevant questions.\", account: \"j.rivera@northwind.example\",\n        benefits: [.init(icon: .search, title: \"Search your files\", what: \"files and folders you can already open\"),\n                   .init(icon: .doc, title: \"Read file contents\", what: \"documents, sheets and slides you have access to\"),\n                   .init(icon: .shield, title: \"You stay in control\", what: \"Disconnect Google Drive whenever you want.\")],\n        canSee: [\"Files and folders you can access\", \"Document contents\", \"Relevant shared drives\"],\n        useLine: \"The agent can use files and folders you can access, including their contents.\")\n    static let others = [\n        svc(\"slack\", \"Slack\", \"SL\", \"Messages and channels\", \"Northwind · @jordan\", \"messages in the channels\",\n            [.init(icon: .search, title: \"Search channels you’re in\", what: \"public and private channels you already belong to\"),\n             .init(icon: .chat, title: \"Read messages and threads\", what: \"text you can already see in those channels\")],\n            [\"Channels you belong to\", \"Messages and threads\"]),\n        svc(\"github\", \"GitHub\", \"GH\", \"Issues and pull requests\", \"jordan-work\", \"issues and pull requests\",\n            [.init(icon: .search, title: \"Search repositories\", what: \"the repositories your GitHub account can already access\"),\n             .init(icon: .code, title: \"Read issues and pull requests\", what: \"titles, status, labels, comments and history\")],\n            [\"Repositories you can access\", \"Issues and pull requests\"]),\n        svc(\"notion\", \"Notion\", \"NO\", \"Docs and wikis\", \"Northwind workspace\", \"pages and databases\",\n            [.init(icon: .search, title: \"Search shared pages\", what: \"pages and databases shared with your account\")],\n            [\"Pages and databases you can access\"]),\n    ]\n    static let wall = \"The research you’re asking about is in files I’ve never been given. Connecting Google Drive lets me read the ones you can already open.\"\n\n    @State private var state: NucleuxConnect.State = Self.startState()\n    private static func startState() -> NucleuxConnect.State {\n        switch env[\"CONN\"] {\n        case \"authorise\": .authorise\n        case \"connecting\": .connecting\n        case \"connected\", \"sources\", \"manage\": .connected\n        case \"active\": .active\n        case \"stale\": .stale\n        case \"error\": .error\n        case \"blocked\": .blocked\n        default: .available\n        }\n    }\n    @State private var phase: NucleuxConnect.Phase = .reading\n    @State private var answered = false\n    @State private var sheet: String? = Self.startSheet()\n    private static func startSheet() -> String? {\n        switch env[\"CONN\"] {\n        case \"sources\": \"sources\"\n        case \"manage\": \"manage\"\n        default: nil\n        }\n    }\n    @State private var slackOn = false\n    @State private var text = \"\"\n\n    private var items: [NucleuxConnect.Item] {\n        [NucleuxConnect.Item(service: Self.drive, connected: state != .available && state != .authorise && state != .connecting && state != .error && state != .blocked,\n                             state: state == .stale ? .stale : nil),\n         NucleuxConnect.Item(service: Self.others[0], connected: true, enabled: slackOn),\n         NucleuxConnect.Item(service: Self.others[1], connected: false, state: .error),\n         NucleuxConnect.Item(service: Self.others[2], connected: false, state: .blocked)]\n    }\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    NucleuxMessage(person: \"Jordan\", text: \"Summarise the main onboarding problems from our latest customer research.\")\n                    NucleuxMessage(agent: \"Aria\") {\n                        NucleuxConnectCard(Self.drive, state: state, inline: true, wall: Self.wall,\n                                           activity: state == .active ? (phase, phase == .searching ? 0 : 5) : nil) { act($0) }\n                    }\n                    if answered {\n                        NucleuxMessage(agent: \"Aria\", text: \"Three problems come up in most sessions: the workspace step, invite emails landing in spam, and an unclear first project.\")\n                    }\n                }\n                .padding(.top, 16)\n            }\n            HStack {\n                if NucleuxConnect.states[state]!.live && state != .limited {\n                    NucleuxConnectChip(Self.drive, state: .connected) { sheet = \"manage\" }\n                }\n                Spacer()\n                NucleuxButton(\"Sources\", variant: .ghost, size: .sm) { sheet = \"sources\" }.accessibilityIdentifier(\"open-sources\")\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask Aria\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .sheet(isPresented: Binding(get: { sheet != nil }, set: { if !$0 { sheet = nil } })) {\n            ScrollView {\n                Group {\n                    if sheet == \"manage\" {\n                        NucleuxConnectManage(Self.drive, state: state == .stale ? .stale : .connected, onReconnect: { state = .connected; sheet = nil },\n                                             onDisconnect: { state = .available; sheet = nil }, onDone: { sheet = nil })\n                    } else {\n                        VStack(alignment: .leading, spacing: 12) {\n                            Text(\"Your data sources\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                            NucleuxConnectSources(items, headings: true, onAction: { id, _ in if id == \"googledrive\" { sheet = nil; state = .authorise } },\n                                                  onToggle: { id, on in if id == \"slack\" { slackOn = on } }, onOpen: { _ in sheet = \"manage\" })\n                        }\n                    }\n                }\n                .padding(20)\n            }\n            .background(NucleuxColor.background)\n            .presentationDetents([.medium, .large])\n        }\n    }\n\n    private func act(_ a: NucleuxConnect.Action) {\n        switch a {\n        case .connect: state = .authorise\n        case .allow, .retry:\n            state = .connecting\n            Task {\n                try? await Task.sleep(for: .milliseconds(1500))\n                guard state == .connecting else { return }\n                state = .active\n                phase = .searching\n                try? await Task.sleep(for: .milliseconds(1000))\n                phase = .reading\n                try? await Task.sleep(for: .milliseconds(1000))\n                phase = .done\n                answered = true\n                try? await Task.sleep(for: .milliseconds(600))\n                state = .connected\n            }\n        case .cancel: state = .available\n        case .reconnect: state = .connecting; Task { try? await Task.sleep(for: .milliseconds(1200)); state = .connected }\n        case .manage: sheet = \"manage\"\n        case .ask: break\n        }\n    }\n}",
    "lines": 142
   },
@@ -59237,7 +59531,7 @@
    "component": "modes",
    "framework": "swiftui",
    "title": "ModesScreen (iOS catalog app, SCREEN=modes)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1640",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1619",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ModesScreen: View {\n    @State private var control = NucleuxModeControl(mode: ProcessInfo.processInfo.environment[\"MODE\"])\n    @State private var text = \"Help me prepare the October release.\"\n    @State private var sent: [(String, NucleuxModeOption?)] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, s in\n                        HStack(spacing: 6) {\n                            if let m = s.1 {\n                                Text(NucleuxModes.tag(m)).font(.system(size: 11, weight: .semibold)).padding(.horizontal, 6).padding(.vertical, 2)\n                                    .background(NucleuxColor.muted, in: Capsule())\n                            }\n                            Text(s.0).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                        }\n                        .accessibilityElement(children: .combine)\n                        Text(NucleuxModes.agentLine(\"Aria\", s.1)).font(.system(size: 12, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            .accessibilityIdentifier(\"agent-line\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe the task…\", onSend: { t in\n                sent.append((t, control.current))\n                control.sent()\n                text = \"\"\n            })\n            .nucleuxComposerSettings([control.setting(agent: \"Aria\")])\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 40
   },
@@ -59273,7 +59567,7 @@
    "component": "voice-tone",
    "framework": "swiftui",
    "title": "ToneScreen (iOS catalog app, SCREEN=tone)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1678",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1657",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ToneScreen: View {\n    @State private var mode = NucleuxModeControl()\n    @State private var tone = NucleuxToneControl(choice: .init(tone: ProcessInfo.processInfo.environment[\"TONE\"]),\n                                                 recommended: .init(id: \"professional\", reason: \"Recommended for stakeholders\"))\n    @State private var text = \"Write a short update about the onboarding improvements.\"\n    @State private var sent: [(String, NucleuxTone.Choice)] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, s in\n                        HStack(spacing: 6) {\n                            if let tag = NucleuxTone.tag(tone.tones, s.1) {\n                                Text(tag).font(.system(size: 11, weight: .semibold)).padding(.horizontal, 6).padding(.vertical, 2)\n                                    .background(NucleuxColor.muted, in: Capsule())\n                            }\n                            Text(s.0).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                        }\n                        .accessibilityElement(children: .combine)\n                        Text(NucleuxTone.agentLine(\"Aria\", tone.tones, s.1)).font(.system(size: 12, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            .accessibilityIdentifier(\"agent-line\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe the task…\", onSend: { t in\n                sent.append((t, tone.choice))\n                mode.sent()\n                tone.sent()\n                text = \"\"\n            })\n            .nucleuxComposerSettings([mode.setting(agent: \"Aria\"), tone.setting()])\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 43
   },
@@ -59309,7 +59603,7 @@
    "component": "preset-styles",
    "framework": "swiftui",
    "title": "StylesScreen (iOS catalog app, SCREEN=styles)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1719",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1698",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct StylesScreen: View {\n    @State private var mode = NucleuxModeControl()\n    @State private var tone = NucleuxToneControl()\n    @State private var style = NucleuxStyleControl(style: ProcessInfo.processInfo.environment[\"STYLE\"] ?? NucleuxStyles.normal, replies: true)\n    @State private var creator: NucleuxStyleCreateControl?\n    @State private var text = \"Now draft the customer email about it.\"\n    @State private var turns: [(String, String)] = [(\"Summarize the October release.\", NucleuxStyles.normal)]\n\n    static let house = NucleuxStyleDraft(\n        name: \"Release notes voice\", description: \"One line per change, the benefit first, plain verbs, no marketing words.\",\n        instructions: \"Write one short line per change. Start each line with New, Faster, Fixed or Next month. Lead with what the reader can now do. Use plain verbs; avoid marketing words and exclamation marks.\")\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(turns.enumerated()), id: \\.offset) { _, t in\n                        Text(t.0).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                        Text(NucleuxStyles.agentLine(\"Aria\", style.styles, t.1)).font(.system(size: 12, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            .accessibilityIdentifier(\"agent-line\")\n                    }\n                    if let creator {\n                        NucleuxStyleCreator(control: creator, preview: NucleuxStylePreviews(question: \"Summarize the October release.\",\n                            answers: [\"house\": \"New: shared dashboards — your whole team sees the same numbers. Faster: exports take half the time.\"]))\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            .scrollDismissesKeyboard(.immediately)\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe the task…\", onSend: { t in\n                turns.append((t, style.style))\n                mode.sent(); tone.sent(); style.sent()\n                text = \"\"\n            })\n            .nucleuxComposerSettings([mode.setting(agent: \"Aria\"), tone.setting(), style.setting()])\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .onAppear {\n            style.onCreate = {\n                let c = NucleuxStyleCreateControl(\n                    taken: { style.styles.map(\\.id) },\n                    // The demo's stand-in for the host's AI step.\n                    generate: { _, _ in try? await Task.sleep(for: .seconds(1)); return Self.house },\n                    onSave: { saved, use in style.add(saved, use: use); creator = nil })\n                c.open()\n                creator = c\n            }\n        }\n        .onChange(of: creator?.isOpen) { _, open in if open == false { creator = nil } }\n    }\n}",
    "lines": 57
   },
@@ -59345,7 +59639,7 @@
    "component": "additions",
    "framework": "swiftui",
    "title": "AdditionsScreen (iOS catalog app, SCREEN=additions)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1774",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1753",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct AdditionsScreen: View {\n    @State private var text = ProcessInfo.processInfo.environment[\"TEXT\"] ?? \"\"\n    @State private var sent: [String] = []\n\n    static let offer = NucleuxAdditionOffer(\n        items: [\"Include unresolved blockers\", \"Group the work by owner\", \"Compare with the August release\"],\n        why: \"Release summaries are read to decide what still needs attention — 3 blockers are open.\")\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, t in\n                        Text(t).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground).accessibilityIdentifier(\"sent\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe what you need…\", onSend: { t in\n                sent.append(t)\n                text = \"\"\n            })\n            .nucleuxOpenInput(agentName: \"Aria\")\n            // The demo's stand-in for the host: it fits a release summary that doesn't ask for blockers yet.\n            .nucleuxAdditions { t in\n                t.localizedCaseInsensitiveContains(\"release\") && !t.localizedCaseInsensitiveContains(\"blocker\") ? Self.offer : nil\n            }\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 37
   },
@@ -59381,7 +59675,7 @@
    "component": "prompt-enhancer",
    "framework": "swiftui",
    "title": "EnhancerScreen (iOS catalog app, SCREEN=enhancer)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1809",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1788",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct EnhancerScreen: View {\n    @State private var text = \"Analyze onboarding feedback.\"\n    @State private var sent: [String] = []\n    @State private var failNext = ProcessInfo.processInfo.environment[\"FAIL\"] == \"1\"\n\n    static let changes = [\n        NucleuxEnhancerChange(id: \"time\", add: \" from the last 30 days\", why: \"Keeps it to the feedback since the new flow shipped.\", assumption: \"Assumes the last 30 days.\"),\n        NucleuxEnhancerChange(id: \"step\", add: \", grouped by onboarding step\", why: \"Shows where in the flow people struggle.\"),\n        NucleuxEnhancerChange(id: \"exp\", add: \", and propose three experiments\", why: \"Turns findings into next steps — more than you asked for.\"),\n    ]\n    struct Down: Error {}\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, t in\n                        Text(t).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground).accessibilityIdentifier(\"sent\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe what you need…\", onSend: { t in\n                sent.append(t)\n                text = \"\"\n            })\n            .nucleuxOpenInput(agentName: \"Aria\")\n            // The demo's stand-in for the host's AI step.\n            .nucleuxEnhance { _ in\n                try await Task.sleep(for: .seconds(2))\n                if failNext { failNext = false; throw Down() }\n                return Self.changes\n            }\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 43
   },
@@ -59417,7 +59711,7 @@
    "component": "madlibs",
    "framework": "swiftui",
    "title": "MadlibsScreen (iOS catalog app, SCREEN=madlibs)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1850",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1829",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct MadlibsScreen: View {\n    static let madlib = NucleuxMadlib(\n        id: \"stakeholder-summary\", sentence: \"Create a summary of {project} for {audience}[, focusing on {topic}].\",\n        blanks: [\n            .init(id: \"project\", label: \"Project\", required: true, suggestions: [\"Checkout redesign\", \"Mobile onboarding\", \"Pricing v2\"]),\n            .init(id: \"audience\", label: \"Audience\", required: true, suggestions: [\"leadership\", \"sales\", \"customer success\"]),\n            .init(id: \"topic\", label: \"Topic\", required: false, suggestions: [\"risks\", \"the timeline\", \"customer impact\"]),\n        ])\n    @State private var text = \"\"\n    @State private var placed: String?\n    @State private var sent: [String] = []\n    @State private var control: NucleuxMadlibControl?\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    Text(\"I need a summary for stakeholders.\").font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                    Text(\"Tell me which project, who it’s for and what to focus on:\").font(.system(size: 15)).foregroundStyle(NucleuxColor.mutedForeground)\n                    if let control { NucleuxMadlibCard(control: control, useLabel: NucleuxMadlibs.useLabel(composerText: text, placed: placed)) }\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, t in\n                        Text(t).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground).accessibilityIdentifier(\"sent\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Or write your own request…\", onSend: { t in\n                sent.append(t)\n                text = \"\"\n            })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .onAppear {\n            guard control == nil else { return }\n            let c = NucleuxMadlibControl(Self.madlib) { t in text = t; placed = t }\n            // The demo's stand-in for a value the host can infer from the page.\n            if ProcessInfo.processInfo.environment[\"INFER\"] == \"1\" { c.send(.suggest(\"project\", \"Checkout redesign\")) }\n            control = c\n        }\n    }\n}",
    "lines": 47
   },
@@ -60804,52 +61098,6 @@
    "NucleuxModes.tuneRowLabel",
    "NucleuxModes.tuneRowValue",
    "NucleuxModes.unavailableText",
-   "NucleuxNudge",
-   "NucleuxNudge.Tail",
-   "NucleuxNudge.Tail.bottom",
-   "NucleuxNudge.Tail.top",
-   "NucleuxNudge.init",
-   "NucleuxNudgeContent",
-   "NucleuxNudgeContent.action",
-   "NucleuxNudgeContent.detail",
-   "NucleuxNudgeContent.init",
-   "NucleuxNudgeContent.title",
-   "NucleuxNudgeController",
-   "NucleuxNudgeController.accept",
-   "NucleuxNudgeController.cap",
-   "NucleuxNudgeController.dismiss",
-   "NucleuxNudgeController.earned",
-   "NucleuxNudgeController.init",
-   "NucleuxNudgeController.nudges",
-   "NucleuxNudgeController.send",
-   "NucleuxNudgeController.session",
-   "NucleuxNudgeController.state",
-   "NucleuxNudgeController.withdraw",
-   "NucleuxNudgeHint",
-   "NucleuxNudgeHint.init",
-   "NucleuxNudgeState",
-   "NucleuxNudgeState.Event",
-   "NucleuxNudgeState.Event.accept",
-   "NucleuxNudgeState.Event.dismiss",
-   "NucleuxNudgeState.Event.earned",
-   "NucleuxNudgeState.Event.session",
-   "NucleuxNudgeState.Event.withdraw",
-   "NucleuxNudgeState.Held",
-   "NucleuxNudgeState.Held.busy",
-   "NucleuxNudgeState.Held.capped",
-   "NucleuxNudgeState.Held.retired",
-   "NucleuxNudgeState.Held.stacked",
-   "NucleuxNudgeState.announcement",
-   "NucleuxNudgeState.decline",
-   "NucleuxNudgeState.defaultCap",
-   "NucleuxNudgeState.dismissLabel",
-   "NucleuxNudgeState.dismissed",
-   "NucleuxNudgeState.held",
-   "NucleuxNudgeState.init",
-   "NucleuxNudgeState.reduce",
-   "NucleuxNudgeState.retired",
-   "NucleuxNudgeState.seen",
-   "NucleuxNudgeState.showing",
    "NucleuxOpenInput",
    "NucleuxOpenInput.KeyAction",
    "NucleuxOpenInput.KeyAction.newline",
@@ -61297,6 +61545,68 @@
    "NucleuxTemplates.unresolved",
    "NucleuxTemplates.use",
    "NucleuxTemplates.visible",
+   "NucleuxTip",
+   "NucleuxTip.init",
+   "NucleuxTipContent",
+   "NucleuxTipContent.action",
+   "NucleuxTipContent.init",
+   "NucleuxTipContent.title",
+   "NucleuxTipContent.why",
+   "NucleuxTipController",
+   "NucleuxTipController.cap",
+   "NucleuxTipController.dismiss",
+   "NucleuxTipController.earned",
+   "NucleuxTipController.init",
+   "NucleuxTipController.now",
+   "NucleuxTipController.send",
+   "NucleuxTipController.session",
+   "NucleuxTipController.snooze",
+   "NucleuxTipController.state",
+   "NucleuxTipController.tips",
+   "NucleuxTipController.tryIt",
+   "NucleuxTipController.undo",
+   "NucleuxTipController.withdraw",
+   "NucleuxTipState",
+   "NucleuxTipState.Event",
+   "NucleuxTipState.Event.dismiss",
+   "NucleuxTipState.Event.earned",
+   "NucleuxTipState.Event.session",
+   "NucleuxTipState.Event.snooze",
+   "NucleuxTipState.Event.tryIt",
+   "NucleuxTipState.Event.undo",
+   "NucleuxTipState.Event.withdraw",
+   "NucleuxTipState.Held",
+   "NucleuxTipState.Held.busy",
+   "NucleuxTipState.Held.capped",
+   "NucleuxTipState.Held.retired",
+   "NucleuxTipState.Held.snoozed",
+   "NucleuxTipState.Held.stacked",
+   "NucleuxTipState.Notice",
+   "NucleuxTipState.Notice.Kind",
+   "NucleuxTipState.Notice.Kind.dismissed",
+   "NucleuxTipState.Notice.Kind.snoozed",
+   "NucleuxTipState.Notice.id",
+   "NucleuxTipState.Notice.kind",
+   "NucleuxTipState.announcement",
+   "NucleuxTipState.back",
+   "NucleuxTipState.defaultCap",
+   "NucleuxTipState.dismissLabel",
+   "NucleuxTipState.dismissed",
+   "NucleuxTipState.held",
+   "NucleuxTipState.init",
+   "NucleuxTipState.label",
+   "NucleuxTipState.notNow",
+   "NucleuxTipState.notice",
+   "NucleuxTipState.reduce",
+   "NucleuxTipState.retired",
+   "NucleuxTipState.seen",
+   "NucleuxTipState.showing",
+   "NucleuxTipState.snoozeMs",
+   "NucleuxTipState.snoozed",
+   "NucleuxTipState.snoozedText",
+   "NucleuxTipState.tryLabel",
+   "NucleuxTipState.undo",
+   "NucleuxTipState.why",
    "NucleuxTone",
    "NucleuxTone.Choice",
    "NucleuxTone.Choice.custom",
@@ -62493,41 +62803,6 @@
    "NucleuxModes.tuneRowLabel",
    "NucleuxModes.tuneRowValue",
    "NucleuxModes.unavailableText",
-   "NucleuxNudge",
-   "NucleuxNudgeContent",
-   "NucleuxNudgeController",
-   "NucleuxNudgeController.accept",
-   "NucleuxNudgeController.dismiss",
-   "NucleuxNudgeController.earned",
-   "NucleuxNudgeController.nudges",
-   "NucleuxNudgeController.send",
-   "NucleuxNudgeController.session",
-   "NucleuxNudgeController.state",
-   "NucleuxNudgeController.withdraw",
-   "NucleuxNudgeHint",
-   "NucleuxNudgeState",
-   "NucleuxNudgeState.DECLINE",
-   "NucleuxNudgeState.DEFAULT_CAP",
-   "NucleuxNudgeState.DISMISSED",
-   "NucleuxNudgeState.DISMISS_LABEL",
-   "NucleuxNudgeState.Event",
-   "NucleuxNudgeState.Event.Accept",
-   "NucleuxNudgeState.Event.Dismiss",
-   "NucleuxNudgeState.Event.Earned",
-   "NucleuxNudgeState.Event.Session",
-   "NucleuxNudgeState.Event.Withdraw",
-   "NucleuxNudgeState.Held",
-   "NucleuxNudgeState.Held.Busy",
-   "NucleuxNudgeState.Held.Capped",
-   "NucleuxNudgeState.Held.Retired",
-   "NucleuxNudgeState.Held.Stacked",
-   "NucleuxNudgeState.Result",
-   "NucleuxNudgeState.announcement",
-   "NucleuxNudgeState.held",
-   "NucleuxNudgeState.reduce",
-   "NucleuxNudgeTail",
-   "NucleuxNudgeTail.Bottom",
-   "NucleuxNudgeTail.Top",
    "NucleuxOpenInput",
    "NucleuxOpenInput.KeyAction",
    "NucleuxOpenInput.KeyAction.Newline",
@@ -62845,6 +63120,53 @@
    "NucleuxTemplates.unresolved",
    "NucleuxTemplates.visible",
    "NucleuxTheme",
+   "NucleuxTip",
+   "NucleuxTipContent",
+   "NucleuxTipController",
+   "NucleuxTipController.dismiss",
+   "NucleuxTipController.earned",
+   "NucleuxTipController.send",
+   "NucleuxTipController.session",
+   "NucleuxTipController.snooze",
+   "NucleuxTipController.state",
+   "NucleuxTipController.tips",
+   "NucleuxTipController.tryIt",
+   "NucleuxTipController.undo",
+   "NucleuxTipController.withdraw",
+   "NucleuxTipState",
+   "NucleuxTipState.BACK",
+   "NucleuxTipState.DEFAULT_CAP",
+   "NucleuxTipState.DISMISSED",
+   "NucleuxTipState.DISMISS_LABEL",
+   "NucleuxTipState.Event",
+   "NucleuxTipState.Event.Dismiss",
+   "NucleuxTipState.Event.Earned",
+   "NucleuxTipState.Event.Session",
+   "NucleuxTipState.Event.Snooze",
+   "NucleuxTipState.Event.Try",
+   "NucleuxTipState.Event.Undo",
+   "NucleuxTipState.Event.Withdraw",
+   "NucleuxTipState.Held",
+   "NucleuxTipState.Held.Busy",
+   "NucleuxTipState.Held.Capped",
+   "NucleuxTipState.Held.Retired",
+   "NucleuxTipState.Held.Snoozed",
+   "NucleuxTipState.Held.Stacked",
+   "NucleuxTipState.LABEL",
+   "NucleuxTipState.NOT_NOW",
+   "NucleuxTipState.Notice",
+   "NucleuxTipState.Notice.Kind",
+   "NucleuxTipState.Notice.Kind.Dismissed",
+   "NucleuxTipState.Notice.Kind.Snoozed",
+   "NucleuxTipState.Result",
+   "NucleuxTipState.SNOOZED",
+   "NucleuxTipState.SNOOZE_MS",
+   "NucleuxTipState.TRY",
+   "NucleuxTipState.UNDO",
+   "NucleuxTipState.WHY",
+   "NucleuxTipState.announcement",
+   "NucleuxTipState.held",
+   "NucleuxTipState.reduce",
    "NucleuxTone",
    "NucleuxTone.CHIP_HINT",
    "NucleuxTone.CUSTOM",
@@ -62992,8 +63314,8 @@
    "rememberLimitControl",
    "rememberMadlibControl",
    "rememberModeControl",
-   "rememberNucleuxNudgeController",
    "rememberNucleuxProactiveController",
+   "rememberNucleuxTipController",
    "rememberNucleuxVoiceController",
    "rememberStyleControl",
    "rememberStyleCreateControl",
@@ -64725,54 +65047,6 @@
    "NucleuxModes.unavailableText",
    "NucleuxNoProgress",
    "NucleuxNoProgress.NucleuxNoProgress",
-   "NucleuxNudge",
-   "NucleuxNudge.NucleuxNudge",
-   "NucleuxNudge.controller",
-   "NucleuxNudge.id",
-   "NucleuxNudge.onAccept",
-   "NucleuxNudge.tail",
-   "NucleuxNudge.tailInset",
-   "NucleuxNudgeContent",
-   "NucleuxNudgeContent.NucleuxNudgeContent",
-   "NucleuxNudgeContent.action",
-   "NucleuxNudgeContent.detail",
-   "NucleuxNudgeContent.title",
-   "NucleuxNudgeController",
-   "NucleuxNudgeController.NucleuxNudgeController",
-   "NucleuxNudgeController.accept",
-   "NucleuxNudgeController.dismiss",
-   "NucleuxNudgeController.earned",
-   "NucleuxNudgeController.send",
-   "NucleuxNudgeController.session",
-   "NucleuxNudgeController.state",
-   "NucleuxNudgeController.withdraw",
-   "NucleuxNudgeEvent",
-   "NucleuxNudgeEvent.NucleuxNudgeEvent",
-   "NucleuxNudgeHeld",
-   "NucleuxNudgeHeld.busy",
-   "NucleuxNudgeHeld.capped",
-   "NucleuxNudgeHeld.retired",
-   "NucleuxNudgeHeld.stacked",
-   "NucleuxNudgeHint",
-   "NucleuxNudgeHint.NucleuxNudgeHint",
-   "NucleuxNudgeHint.controller",
-   "NucleuxNudgeHint.id",
-   "NucleuxNudgeHint.onAccept",
-   "NucleuxNudgeState",
-   "NucleuxNudgeState.NucleuxNudgeState",
-   "NucleuxNudgeState.announcement",
-   "NucleuxNudgeState.decline",
-   "NucleuxNudgeState.defaultCap",
-   "NucleuxNudgeState.dismissLabel",
-   "NucleuxNudgeState.dismissed",
-   "NucleuxNudgeState.held",
-   "NucleuxNudgeState.reduce",
-   "NucleuxNudgeState.retired",
-   "NucleuxNudgeState.seen",
-   "NucleuxNudgeState.showing",
-   "NucleuxNudgeTail",
-   "NucleuxNudgeTail.bottom",
-   "NucleuxNudgeTail.top",
    "NucleuxOpenInput",
    "NucleuxOpenInput.errorAnnouncement",
    "NucleuxOpenInput.errorText",
@@ -65277,6 +65551,61 @@
    "NucleuxTheme.NucleuxTheme",
    "NucleuxTheme.colors",
    "NucleuxTheme.of",
+   "NucleuxTip",
+   "NucleuxTip.NucleuxTip",
+   "NucleuxTip.controller",
+   "NucleuxTip.id",
+   "NucleuxTip.onTry",
+   "NucleuxTipContent",
+   "NucleuxTipContent.NucleuxTipContent",
+   "NucleuxTipContent.action",
+   "NucleuxTipContent.title",
+   "NucleuxTipContent.why",
+   "NucleuxTipController",
+   "NucleuxTipController.NucleuxTipController",
+   "NucleuxTipController.dismiss",
+   "NucleuxTipController.earned",
+   "NucleuxTipController.now",
+   "NucleuxTipController.send",
+   "NucleuxTipController.session",
+   "NucleuxTipController.snooze",
+   "NucleuxTipController.state",
+   "NucleuxTipController.tryIt",
+   "NucleuxTipController.undo",
+   "NucleuxTipController.withdraw",
+   "NucleuxTipEvent",
+   "NucleuxTipEvent.NucleuxTipEvent",
+   "NucleuxTipHeld",
+   "NucleuxTipHeld.busy",
+   "NucleuxTipHeld.capped",
+   "NucleuxTipHeld.retired",
+   "NucleuxTipHeld.snoozed",
+   "NucleuxTipHeld.stacked",
+   "NucleuxTipNotice",
+   "NucleuxTipNoticeKind",
+   "NucleuxTipNoticeKind.dismissed",
+   "NucleuxTipNoticeKind.snoozed",
+   "NucleuxTipState",
+   "NucleuxTipState.NucleuxTipState",
+   "NucleuxTipState.announcement",
+   "NucleuxTipState.back",
+   "NucleuxTipState.defaultCap",
+   "NucleuxTipState.dismissLabel",
+   "NucleuxTipState.dismissed",
+   "NucleuxTipState.held",
+   "NucleuxTipState.label",
+   "NucleuxTipState.notNow",
+   "NucleuxTipState.notice",
+   "NucleuxTipState.reduce",
+   "NucleuxTipState.retired",
+   "NucleuxTipState.seen",
+   "NucleuxTipState.showing",
+   "NucleuxTipState.snoozeMs",
+   "NucleuxTipState.snoozed",
+   "NucleuxTipState.snoozedText",
+   "NucleuxTipState.tryLabel",
+   "NucleuxTipState.undo",
+   "NucleuxTipState.why",
    "NucleuxTone",
    "NucleuxTone.agentLine",
    "NucleuxTone.chipHint",
@@ -65491,18 +65820,6 @@
    "NucleuxWorkingMark.NucleuxWorkingMark",
    "NucleuxWorkingMark.color",
    "NucleuxWorkingMark.size",
-   "NudgeAccept",
-   "NudgeAccept.NudgeAccept",
-   "NudgeDismiss",
-   "NudgeDismiss.NudgeDismiss",
-   "NudgeEarned",
-   "NudgeEarned.NudgeEarned",
-   "NudgeEarned.busy",
-   "NudgeEarned.id",
-   "NudgeSession",
-   "NudgeSession.NudgeSession",
-   "NudgeWithdraw",
-   "NudgeWithdraw.NudgeWithdraw",
    "ProactiveCancel",
    "ProactiveCancel.ProactiveCancel",
    "ProactiveConfirmed",
@@ -65637,6 +65954,24 @@
    "TemplateRunRequest.values",
    "TemplateUndo",
    "TemplateUndo.TemplateUndo",
+   "TipDismiss",
+   "TipDismiss.TipDismiss",
+   "TipEarned",
+   "TipEarned.TipEarned",
+   "TipEarned.busy",
+   "TipEarned.id",
+   "TipEarned.now",
+   "TipSession",
+   "TipSession.TipSession",
+   "TipSnooze",
+   "TipSnooze.TipSnooze",
+   "TipSnooze.now",
+   "TipTry",
+   "TipTry.TipTry",
+   "TipUndo",
+   "TipUndo.TipUndo",
+   "TipWithdraw",
+   "TipWithdraw.TipWithdraw",
    "ToneClose",
    "ToneClose.ToneClose",
    "ToneDescribe",
@@ -66508,35 +66843,10 @@
    "ModelOption.name",
    "ModelOption.purpose",
    "NORMAL_STYLE",
-   "NUDGE_DECLINE",
-   "NUDGE_DEFAULT_CAP",
-   "NUDGE_DISMISSED",
-   "NUDGE_DISMISS_LABEL",
    "NucleuxColorName",
    "NucleuxColors",
    "NucleuxIconName",
    "NucleuxProvider",
-   "Nudge",
-   "NudgeContent",
-   "NudgeContent.action",
-   "NudgeContent.detail",
-   "NudgeContent.title",
-   "NudgeEvent",
-   "NudgeHeld",
-   "NudgeHint",
-   "NudgeOptions",
-   "NudgeOptions.cap",
-   "NudgeProps",
-   "NudgeProps.tail",
-   "NudgeProps.tailInset",
-   "NudgeState",
-   "NudgeState.retired",
-   "NudgeState.seen",
-   "NudgeState.showing",
-   "NudgeText",
-   "NudgeText.detail",
-   "NudgeText.title",
-   "NudgesHandle",
    "OPEN_INPUT_SENT",
    "OPEN_INPUT_STOPPED",
    "PICKER_CLOSE",
@@ -66762,6 +67072,17 @@
    "TEMPLATE_RUN",
    "TEMPLATE_UNDO",
    "TEMPLATE_USE",
+   "TIP_BACK",
+   "TIP_DEFAULT_CAP",
+   "TIP_DISMISSED",
+   "TIP_DISMISS_LABEL",
+   "TIP_LABEL",
+   "TIP_NOT_NOW",
+   "TIP_SNOOZED",
+   "TIP_SNOOZE_MS",
+   "TIP_TRY",
+   "TIP_UNDO",
+   "TIP_WHY",
    "TONE_CHIP_HINT",
    "TONE_CUSTOM_VALUE",
    "TONE_DEFAULT_VOICE",
@@ -66825,6 +67146,25 @@
    "TemplateValue",
    "TemplateValue.suggested",
    "TemplateValue.text",
+   "Tip",
+   "TipContent",
+   "TipContent.action",
+   "TipContent.title",
+   "TipContent.why",
+   "TipEvent",
+   "TipHeld",
+   "TipNotice",
+   "TipNotice.id",
+   "TipNotice.kind",
+   "TipOptions",
+   "TipOptions.cap",
+   "TipState",
+   "TipState.notice",
+   "TipState.retired",
+   "TipState.seen",
+   "TipState.showing",
+   "TipState.snoozed",
+   "TipsHandle",
    "ToneChoice",
    "ToneChoice.custom",
    "ToneChoice.tone",
@@ -67060,12 +67400,12 @@
    "initialLimitState",
    "initialMadlibState",
    "initialModeState",
-   "initialNudges",
    "initialProactive",
    "initialRandomize",
    "initialStyleCreateState",
    "initialStyleState",
    "initialTemplateState",
+   "initialTips",
    "initialToneState",
    "initialVoiceSession",
    "initials",
@@ -67105,9 +67445,6 @@
    "modelChipLabel",
    "nextFromList",
    "noneText",
-   "nudgeAnnouncement",
-   "nudgeHeld",
-   "nudgeReduce",
    "offLabel",
    "personHeaderLabel",
    "presenceEnded",
@@ -67179,6 +67516,9 @@
    "templateReduce",
    "templateRemoveLabel",
    "templateRowLabel",
+   "tipAnnouncement",
+   "tipHeld",
+   "tipReduce",
    "toggleLabel",
    "toneNote",
    "toneOptionLabel",
@@ -67202,9 +67542,9 @@
    "useMadlib",
    "useModeSetting",
    "useNucleuxColors",
-   "useNudges",
    "useProactiveSuggestion",
    "useStyleSetting",
+   "useTips",
    "useToneSetting",
    "useVoiceSession",
    "usedHeading",

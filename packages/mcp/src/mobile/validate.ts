@@ -202,6 +202,20 @@ export const USAGE_RULES: Rule[] = [
     },
   },
   {
+    code: "removed-api",
+    severity: "error",
+    patterns: {
+      all: [/\bNucleuxNudgeHint\b/, /\bNudgeHint\b/, /\bNucleuxNudgeController\b/, /\bNucleuxNudgeContent\b/, /\buseNudges\b/, /\bNucleuxNudgeTail\b/, /<Nudge\b/, /\bNucleuxNudge\s*\(/, /\brememberNucleuxNudgeController\b/],
+    },
+    message: "The anchored nudge (a floating card with a tail, \"No thanks\", and the quiet pill) was replaced on 23 Oct 2026 by an inline Tip: the line, Try it, Not now (a week), Why this tip? and Dismiss, with Undo after Dismiss or Not now. Never floating over the work.",
+    fix: {
+      swiftui: "let tips = NucleuxTipController([\"ask-selection\": .init(title: …, why: …)]); NucleuxTip(tips, id: \"ask-selection\") { … }; tips.earned(\"ask-selection\") on real behaviour, tips.withdraw() when the reason goes",
+      compose: "val tips = rememberNucleuxTipController(mapOf(\"ask-selection\" to NucleuxTipContent(title, why))); NucleuxTip(tips, \"ask-selection\", onTry = { … })",
+      flutter: "final tips = NucleuxTipController({'ask-selection': NucleuxTipContent(title: …, why: …)}); NucleuxTip(controller: tips, id: 'ask-selection', onTry: …)",
+      "react-native": "const tips = useTips({ 'ask-selection': { title, why } }); <Tip tips={tips} id=\"ask-selection\" onTry={…} />",
+    },
+  },
+  {
     code: "ai-glyph-by-name",
     severity: "warning",
     patterns: {
