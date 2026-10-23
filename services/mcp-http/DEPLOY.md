@@ -16,6 +16,35 @@ behind nginx at `https://nucleux.in/mcp`. The node version there is 21.
 - Authorization callback URL: `https://nucleux.in/mcp/auth/callback/github`
 - Scopes are requested at sign-in: `read:user user:email`. The primary verified email is used.
 
+**Email codes** (Google Workspace SMTP). This is optional; without it, the email form is hidden:
+1. Pick the sending account, e.g. a `no-reply@` or `auth@` user in the Workspace. Mail goes
+   out as that account, so use one nobody signs in to day to day.
+2. On that account, turn on **2-Step Verification** (myaccount.google.com → Security).
+   App passwords only exist for accounts with 2SV.
+3. myaccount.google.com → Security → **App passwords** (or myaccount.google.com/apppasswords),
+   then create one named "Nucleux MCP". Copy the 16 characters without spaces; that is `SMTP_PASS`.
+   - If App passwords is missing, a Workspace admin has to allow it: Admin console →
+     Security → Authentication → 2-Step Verification → *Allow users to turn on 2-Step
+     Verification* (and the account must be enrolled). Some orgs block app passwords
+     outright (Advanced Protection, or "less secure apps" policies). In that case use the
+     **SMTP relay service** (Admin console → Apps → Google Workspace → Gmail → Routing →
+     SMTP relay service: allow the box's IP, require TLS, `SMTP_HOST=smtp-relay.gmail.com`,
+     `SMTP_PORT=587`) instead.
+   - Changing the account's password revokes its app passwords; create a new one if that happens.
+4. **Deliverability.** Codes in spam are the usual failure. Check these:
+   - **SPF.** The domain's TXT record includes Google: `v=spf1 include:_spf.google.com ~all`
+     (merge with any existing SPF record; only one per domain).
+   - **DKIM.** Admin console → Apps → Google Workspace → Gmail → **Authenticate email** →
+     generate a key, add the `google._domainkey` TXT record at the DNS host, then click
+     *Start authentication*.
+   - **DMARC.** At least `_dmarc` TXT `v=DMARC1; p=none; rua=mailto:dmarc@<domain>`, tightened later.
+   - `MAIL_FROM` has to use the sending account's address (or a verified alias) on that same
+     domain, or Gmail rewrites it and alignment fails.
+   - Send yourself a code at a Gmail and an Outlook address. In Gmail, *Show original* should
+     say SPF, DKIM and DMARC: PASS.
+5. Gmail limits sending to about 2,000 messages a day per Workspace user. Each address can
+   receive at most 5 codes an hour, so this is plenty.
+
 ## 2. Ship the code
 
 ```bash
@@ -70,6 +99,12 @@ GOOGLE_CLIENT_SECRET=...
 GITHUB_CLIENT_ID=...
 GITHUB_CLIENT_SECRET=...
 NUCLEUX_ADMINS=neeraj@intelligaia.com
+# Email sign-in (optional; omit SMTP_USER/SMTP_PASS to hide it)
+SMTP_USER=no-reply@intelligaia.com
+SMTP_PASS=<16-character app password, no spaces>
+# SMTP_HOST=smtp.gmail.com
+# SMTP_PORT=465
+# MAIL_FROM=Nucleux <no-reply@intelligaia.com>
 # NUCLEUX_ALLOWED_DOMAINS=intelligaia.com     # optional; empty = anyone
 EOF
 chmod 600 ~/nucleux-mcp/.env
@@ -83,8 +118,11 @@ curl -s http://127.0.0.1:8118/health                  # "auth":"optional"
 curl -s https://nucleux.in/mcp/.well-known/oauth-authorization-server | head -c 200
 ```
 
-Open `https://nucleux.in/mcp/connect`, sign in with both providers, generate a connect
-line, and run it on a laptop. Then check `/admin`.
+The boot log says `email sign-in: SMTP smtp.gmail.com:465 ok`, or that the check failed
+with an SMTP code: `EAUTH 535` means a wrong app password or that app passwords aren't allowed.
+
+Open `https://nucleux.in/mcp/connect`, sign in with each method (Google, GitHub, emailed
+code), generate a connect line, and run it on a laptop. Then check `/admin`.
 
 ## 4. nginx (needs an admin with sudo)
 

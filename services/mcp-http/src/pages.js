@@ -26,7 +26,8 @@ const ICONS = {
 export function createPages(config) {
   const p = (path) => `${config.basePath}${path}`;
   // "Google", "GitHub" or "Google or GitHub": only the providers that are configured.
-  const signInWith = [config.providers.google && "Google", config.providers.github && "GitHub"].filter(Boolean).join(" or ") || "same";
+  const methods = [config.providers.google && "Google", config.providers.github && "GitHub", config.email && "email"].filter(Boolean);
+  const signInWith = methods.length > 1 ? `${methods.slice(0, -1).join(", ")} or ${methods.at(-1)}` : methods[0] || "same";
   const csrfField = (csrf) => `<input type="hidden" name="_csrf" value="${e(csrf)}">`;
 
   function layout({ title, body, user, csrf, narrow = false }) {
@@ -60,7 +61,28 @@ ${body}
 </html>`;
   }
 
-  function signIn({ providers, next, error }) {
+  const nextField = (next) => (next ? `<input type="hidden" name="next" value="${e(next)}">` : "");
+  const connectHref = (next) => p(next && next !== "/connect" ? `/connect?next=${encodeURIComponent(next)}` : "/connect");
+
+  // Email sign-in form. `email` = { csrf, value, error } or null when SMTP is not configured.
+  function emailForm({ email, next, divider }) {
+    if (!email) return "";
+    const err = email.error;
+    return `
+    ${divider ? '<div class="or-divider" role="separator"><span>or</span></div>' : ""}
+    <form method="post" action="${p("/auth/email/start")}" class="stack" novalidate>
+      ${csrfField(email.csrf)}${nextField(next)}
+      <div class="field">
+        <label for="email" class="label">Email address</label>
+        <input id="email" class="input" type="email" name="email" value="${e(email.value)}" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" required maxlength="254"
+          ${err ? 'aria-invalid="true" aria-describedby="email-error" autofocus' : ""}>
+      </div>
+      <div id="email-error" class="field-error" role="alert" aria-live="assertive">${err ? e(err) : ""}</div>
+      <button class="btn btn-outline btn-block" type="submit">Email me a code</button>
+    </form>`;
+  }
+
+  function signIn({ providers, next, error, email }) {
     const qs = (id) => {
       const u = new URLSearchParams({ provider: id });
       if (next) u.set("next", next);
@@ -80,7 +102,7 @@ ${body}
   </div>
   <div class="card-content">
     ${error ? `<div class="alert alert-destructive" role="alert">${e(error)}</div>` : ""}
-    ${buttons || '<div class="alert alert-warning" role="status">Sign-in is not configured on this server yet.</div>'}
+    ${buttons || email ? `${buttons}${emailForm({ email, next, divider: !!buttons })}` : '<div class="alert alert-warning" role="status">Sign-in is not configured on this server yet.</div>'}
     <p class="muted small">No account needed for the open package: <code class="inline">npx -y @nucleux/mcp add</code> runs the catalog locally.</p>
   </div>
 </section>`;
@@ -298,5 +320,61 @@ ${notice ? `<div class="alert alert-success" role="status">${e(notice)}</div>` :
     return layout({ title: "Admin", body, user, csrf });
   }
 
-  return { signIn, connect, consent, message, admin };
+  // "Check your email": the code form, resend, and a way back.
+  function emailCheck({ email, csrf, next, error, notice, warning, locked }) {
+    const body = `
+<section class="card" aria-labelledby="check-title">
+  <div class="card-header">
+    <h1 class="card-title" id="check-title">Check your email</h1>
+    <p class="card-description">We sent a 6-digit code to <strong>${e(email)}</strong>. It expires in 10 minutes. You can also use the sign-in link in the email.</p>
+  </div>
+  <div class="card-content">
+    <div class="alert alert-success" role="status" aria-live="polite"${notice ? "" : " hidden"}>${notice ? e(notice) : ""}</div>
+    ${warning ? `<div class="alert alert-warning" role="alert">${e(warning)}</div>` : ""}
+    ${
+      locked
+        ? `<div class="alert alert-destructive" role="alert">${e(error || "Too many wrong codes. Request a new one.")}</div>`
+        : `<form method="post" action="${p("/auth/email/verify")}" class="stack" novalidate>
+      ${csrfField(csrf)}
+      <div class="field">
+        <label for="code" class="label">6-digit code</label>
+        <input id="code" class="input input-code" type="text" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="7" required autofocus
+          aria-describedby="code-hint${error ? " code-error" : ""}"${error ? ' aria-invalid="true"' : ""}>
+        <p id="code-hint" class="muted small">Can't find it? Check your spam folder.</p>
+      </div>
+      <div id="code-error" class="field-error" role="alert" aria-live="assertive">${error ? e(error) : ""}</div>
+      <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+    </form>`
+    }
+  </div>
+  <div class="card-footer">
+    <form method="post" action="${p("/auth/email/resend")}">${csrfField(csrf)}
+      <button class="btn ${locked ? "btn-primary" : "btn-outline"}" type="submit">${locked ? "Send a new code" : "Resend code"}</button>
+    </form>
+    <a class="btn btn-ghost" href="${connectHref(next)}">Use a different email</a>
+  </div>
+</section>`;
+    return layout({ title: "Check your email", body, narrow: true });
+  }
+
+  // Opened the emailed link in a browser that didn't ask for it (another device,
+  // or a mail scanner prefetching links): confirm with a POST instead of signing in on GET.
+  function emailLinkConfirm({ email, link, csrf }) {
+    const body = `
+<section class="card" aria-labelledby="link-title">
+  <div class="card-header">
+    <h1 class="card-title" id="link-title">Sign in as ${e(email)}?</h1>
+    <p class="card-description">You opened a Nucleux sign-in link. Continue only if you asked for it.</p>
+  </div>
+  <form method="post" action="${p("/auth/email/link")}" class="card-footer">
+    ${csrfField(csrf)}
+    <input type="hidden" name="t" value="${e(link)}">
+    <button class="btn btn-primary" type="submit">Sign in</button>
+    <a class="btn btn-ghost" href="${p("/connect")}">Cancel</a>
+  </form>
+</section>`;
+    return layout({ title: "Sign in", body, narrow: true });
+  }
+
+  return { signIn, connect, consent, message, admin, emailCheck, emailLinkConfirm };
 }

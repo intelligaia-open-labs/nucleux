@@ -108,7 +108,7 @@ export const fakeProvider = {
   },
 };
 
-export async function startServer(env = {}, { limits, upstream = fakeUpstream, mobile = null } = {}) {
+export async function startServer(env = {}, { limits, upstream = fakeUpstream, mobile = null, mailer = null } = {}) {
   const clock = { t: Date.UTC(2026, 9, 22, 12, 0, 0) };
   const config = loadConfig({
     NUCLEUX_PUBLIC_URL: "https://nucleux.test/mcp",
@@ -118,7 +118,7 @@ export async function startServer(env = {}, { limits, upstream = fakeUpstream, m
   });
   const db = openDb(":memory:");
   const store = createStore(db, { now: () => clock.t });
-  const app = createApp({ config, store, upstream, mobile, providers: { fake: fakeProvider }, limits });
+  const app = createApp({ config, store, upstream, mobile, providers: { fake: fakeProvider }, mailer, limits });
   const server = await new Promise((resolve) => {
     const s = app.listen(0, "127.0.0.1", () => resolve(s));
   });
@@ -224,4 +224,51 @@ export async function rpc(srv, method, params = {}, token) {
     body = data ? JSON.parse(data.slice(6)) : null;
   }
   return { status: res.status, headers: res.headers, body };
+}
+
+// Captures sign-in emails instead of sending them. `fail = true` makes send throw.
+export function fakeMailer() {
+  const sent = [];
+  const mailer = {
+    sent,
+    fail: false,
+    async send(message) {
+      if (mailer.fail) throw Object.assign(new Error("smtp down"), { code: "ECONNECTION" });
+      sent.push(message);
+    },
+    last: () => sent.at(-1),
+    codeOf: (m = sent.at(-1)) => /code is: (\d{6})/.exec(m.text)[1],
+    linkOf: (m = sent.at(-1)) => /^(https:\/\/\S+\/auth\/email\/link\?t=\S+)$/m.exec(m.text)[1],
+  };
+  return mailer;
+}
+
+// A browser with a cookie jar (cookies are keyed by name; paths are ignored).
+export function browser(srv) {
+  const jar = new Map();
+  const store = (res) => {
+    for (const c of res.headers.getSetCookie()) {
+      const [pair, ...attrs] = c.split(";");
+      const i = pair.indexOf("=");
+      const name = pair.slice(0, i).trim();
+      const value = pair.slice(i + 1);
+      if (attrs.some((a) => /max-age=0\b/i.test(a.trim())) || value === "") jar.delete(name);
+      else jar.set(name, value);
+    }
+    return res;
+  };
+  const cookie = () => [...jar].map(([k, v]) => `${k}=${v}`).join("; ");
+  return {
+    jar,
+    get: async (path, headers = {}) => store(await fetch(srv.url + path, { redirect: "manual", headers: { cookie: cookie(), ...headers } })),
+    post: async (path, form, headers = {}) =>
+      store(
+        await fetch(srv.url + path, {
+          method: "POST",
+          redirect: "manual",
+          headers: { cookie: cookie(), "content-type": "application/x-www-form-urlencoded", ...headers },
+          body: new URLSearchParams(form),
+        })
+      ),
+  };
 }

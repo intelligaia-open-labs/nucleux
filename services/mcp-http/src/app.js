@@ -14,6 +14,7 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { createPages } from "./pages.js";
 import { createSurface } from "./surface.js";
+import { signInEmail } from "./mailer.js";
 import {
   sign,
   verify,
@@ -27,6 +28,9 @@ import {
   appendSetCookie,
   normalizeCliCode,
   formatCliCode,
+  normalizeEmail,
+  normalizeEmailCode,
+  hmac,
 } from "./security.js";
 
 const require = createRequire(import.meta.url);
@@ -36,6 +40,10 @@ const TOKENS_CSS = require.resolve("@nucleux/tokens/styles.css");
 const SESSION_COOKIE = "nx_session";
 const LOGIN_COOKIE = "nx_login";
 const LOGIN_TTL = 10 * 60 * 1000;
+const PRE_COOKIE = "nx_pre"; // signed-out CSRF (double submit, HMAC-bound)
+const EMAIL_COOKIE = "nx_email"; // which emailed code this browser is waiting for
+const EMAIL_SENDS_PER_HOUR = 5;
+const HOUR = 3600 * 1000;
 
 const DEFAULT_LIMITS = {
   signin: { windowMs: 10 * 60 * 1000, max: 30 },
@@ -43,11 +51,13 @@ const DEFAULT_LIMITS = {
   register: { windowMs: 60 * 60 * 1000, max: 20 },
   token: { windowMs: 60 * 1000, max: 60 },
   code: { windowMs: 10 * 60 * 1000, max: 20 },
+  emailSend: { windowMs: 60 * 60 * 1000, max: 20 }, // per IP; per address is EMAIL_SENDS_PER_HOUR
+  emailVerify: { windowMs: 10 * 60 * 1000, max: 50 },
 };
 
 const jsonRpcError = (code, message) => ({ jsonrpc: "2.0", error: { code, message }, id: null });
 
-export function createApp({ config, store, upstream, mobile = null, providers = {}, limits = {} }) {
+export function createApp({ config, store, upstream, mobile = null, providers = {}, mailer = null, limits = {} }) {
   // Web for everyone; web + Nucleux Mobile for signed-in requests (surface.js).
   const surface = createSurface({ web: upstream, mobile });
   const pages = createPages(config);
@@ -318,6 +328,191 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
   });
 
   // -------------------------------------------------------------------------
+  // Sign-in with an emailed one-time code (only when SMTP is configured)
+  // -------------------------------------------------------------------------
+
+  // Signed-out forms have no session to hold a CSRF token, so the browser gets
+  // a random `nx_pre` cookie and forms carry HMAC(secret, cookie). A cross-site
+  // page can neither read the cookie nor forge the HMAC.
+  function preCsrf(req, res) {
+    let pre = parseCookies(req.headers.cookie)[PRE_COOKIE];
+    if (typeof pre !== "string" || !/^[0-9A-Za-z]{32}$/.test(pre)) {
+      pre = newOpaque(32);
+      appendSetCookie(res, serializeCookie(PRE_COOKIE, pre, { path: config.basePath || "/", secure: config.secureCookies, maxAge: 24 * HOUR }));
+    }
+    return hmac(config.sessionSecret, `pre:${pre}`);
+  }
+  function preCsrfOk(req) {
+    const origin = req.headers.origin;
+    if (origin && origin !== config.origin) return false; // includes "null"
+    const pre = parseCookies(req.headers.cookie)[PRE_COOKIE];
+    const token = req.body?._csrf;
+    return typeof pre === "string" && typeof token === "string" && safeEqual(token, hmac(config.sessionSecret, `pre:${pre}`));
+  }
+
+  function renderSignIn(req, res, { next, error, emailValue = "", emailError, status = 200 } = {}) {
+    const email = mailer ? { csrf: preCsrf(req, res), value: emailValue, error: emailError } : null;
+    sendPage(res, pages.signIn({ providers, next, error, email }), status);
+  }
+
+  const emailCookie = (flow, maxAge) =>
+    serializeCookie(EMAIL_COOKIE, flow, { path: p("/auth/email"), secure: config.secureCookies, maxAge });
+
+  // Same session as the OAuth providers, then on to the preserved `next`.
+  function finishEmailSignIn(req, res, row) {
+    const fail = (text, status) => sendPage(res, pages.message({ title: "Sign-in failed", text }), status);
+    appendSetCookie(res, emailCookie("", 0));
+    if (!allowedEmail(row.email)) return fail(`${row.email} is not allowed to use this server.`, 403);
+    const user = store.upsertUser({ provider: "email", providerId: row.email, email: row.email, name: row.email.split("@")[0], avatar: null });
+    if (user.disabled) return fail("This account has been disabled.", 403);
+    const session = store.createSession(user.id);
+    appendSetCookie(res, sessionCookie(session.id, 30 * 24 * 3600 * 1000));
+    res.setHeader("Cache-Control", "no-store");
+    res.redirect(303, abs(safeNext(row.next)));
+  }
+
+  // Creates a code, emails it, points this browser at it. Returns { error, status } or null.
+  async function sendEmailCode(res, email, next) {
+    if (store.emailCodesSentSince(email, store.now() - HOUR) >= EMAIL_SENDS_PER_HOUR) {
+      return { error: "Too many codes were sent to this address. Try again in an hour.", status: 429 };
+    }
+    const { flow, code, link, expires } = store.createEmailCode(email, next);
+    const message = signInEmail({ code, link: abs(`/auth/email/link?t=${encodeURIComponent(link)}`), base: config.base });
+    try {
+      await mailer.send({ to: email, ...message });
+    } catch (err) {
+      // Never log the code, the link or the address: the SMTP error code is enough to debug.
+      console.error(`[nucleux-mcp] sign-in email failed: ${[err?.code ?? "error", err?.responseCode].filter(Boolean).join(" ")}`);
+      store.retireEmailFlow(store.emailFlow(flow).id);
+      return { error: "We couldn't send the email just now. Try again in a minute.", status: 503 };
+    }
+    appendSetCookie(res, emailCookie(flow, expires - store.now() + 20 * 60 * 1000));
+    return null;
+  }
+
+  const currentEmailFlow = (req) => {
+    const flow = parseCookies(req.headers.cookie)[EMAIL_COOKIE];
+    const row = flow ? store.emailFlow(flow) : null;
+    return row ? { flow, row } : null;
+  };
+
+  if (mailer) {
+    const sendLimit = limit("emailSend");
+    const verifyLimit = limit("emailVerify");
+    const expired = (req, res, next) =>
+      renderSignIn(req, res, { next, emailError: "That code has expired or was already used. Enter your email to get a new one.", status: 400 });
+
+    app.post(
+      "/auth/email/start",
+      sendLimit,
+      asyncRoute(async (req, res) => {
+        const next = safeNext(req.body?.next);
+        if (!preCsrfOk(req)) {
+          return renderSignIn(req, res, { next, emailError: "This page expired. Please try again.", status: 403 });
+        }
+        const raw = typeof req.body?.email === "string" ? req.body.email.slice(0, 300) : "";
+        const email = normalizeEmail(raw);
+        if (!email) {
+          return renderSignIn(req, res, { next, emailValue: raw, emailError: "Enter a valid email address, like name@example.com.", status: 400 });
+        }
+        if (!allowedEmail(email)) {
+          return renderSignIn(req, res, { next, emailValue: raw, emailError: "This email address can't sign in to this server.", status: 403 });
+        }
+        const failed = await sendEmailCode(res, email, next);
+        if (failed) return renderSignIn(req, res, { next, emailValue: raw, emailError: failed.error, status: failed.status });
+        res.redirect(303, abs("/auth/email/verify"));
+      })
+    );
+
+    // The "Check your email" page. Reads the flow from this browser's cookie.
+    app.get("/auth/email/verify", (req, res) => {
+      const current = currentEmailFlow(req);
+      if (!current) return res.redirect(302, abs("/connect"));
+      const { row } = current;
+      const state = store.emailFlowState(row);
+      if (state === "used" || state === "expired") return expired(req, res, row.next);
+      sendPage(
+        res,
+        pages.emailCheck({
+          email: row.email,
+          csrf: preCsrf(req, res),
+          next: row.next,
+          locked: state === "locked",
+          notice: req.query.sent ? "We sent a new code. Use the newest one." : undefined,
+        })
+      );
+    });
+
+    app.post("/auth/email/verify", verifyLimit, (req, res) => {
+      const current = currentEmailFlow(req);
+      if (!current) return expired(req, res);
+      const { flow, row } = current;
+      const page = (props, status) =>
+        sendPage(res, pages.emailCheck({ email: row.email, csrf: preCsrf(req, res), next: row.next, ...props }), status);
+      if (!preCsrfOk(req)) return page({ error: "This page expired. Please try again." }, 403);
+      const code = normalizeEmailCode(req.body?.code);
+      if (!code) return page({ error: "Enter the 6-digit code from the email." }, 400);
+      const result = store.verifyEmailCode(flow, code);
+      if (result.ok) return finishEmailSignIn(req, res, result.ok);
+      if (result.error === "wrong") {
+        return page({ error: `That code isn't right. ${result.left} ${result.left === 1 ? "try" : "tries"} left.` }, 400);
+      }
+      if (result.error === "locked") return page({ locked: true, error: "Too many wrong codes. Request a new one." }, 429);
+      return expired(req, res, row.next);
+    });
+
+    app.post(
+      "/auth/email/resend",
+      sendLimit,
+      asyncRoute(async (req, res) => {
+        const current = currentEmailFlow(req);
+        if (!current) return expired(req, res);
+        const { row } = current;
+        if (!preCsrfOk(req)) {
+          return sendPage(res, pages.emailCheck({ email: row.email, csrf: preCsrf(req, res), next: row.next, error: "This page expired. Please try again." }), 403);
+        }
+        const failed = await sendEmailCode(res, row.email, row.next);
+        if (failed) {
+          // The current code (if still live) keeps working; say why no new one came.
+          const locked = store.emailFlowState(row) !== "live";
+          const props = locked ? { locked, error: failed.error } : { warning: failed.error };
+          return sendPage(res, pages.emailCheck({ email: row.email, csrf: preCsrf(req, res), next: row.next, ...props }), failed.status);
+        }
+        store.retireEmailFlow(row.id); // only the newest code works
+        res.redirect(303, abs("/auth/email/verify?sent=1"));
+      })
+    );
+
+    // The emailed link. Signs in straight away in the browser that asked for
+    // the code; anywhere else (another device, or a mail scanner fetching the
+    // link) it asks for a click first, so a prefetch can't burn or use it.
+    app.get("/auth/email/link", verifyLimit, (req, res) => {
+      const link = typeof req.query.t === "string" ? req.query.t : "";
+      const row = store.emailFlowByLink(link);
+      if (store.emailFlowState(row) !== "live") {
+        return sendPage(res, pages.message({ title: "Link expired", text: "This sign-in link has expired or was already used. Request a new code." }), 400);
+      }
+      const current = currentEmailFlow(req);
+      if (current && current.row.id === row.id) {
+        const result = store.consumeEmailLink(link);
+        if (result.ok) return finishEmailSignIn(req, res, result.ok);
+      }
+      sendPage(res, pages.emailLinkConfirm({ email: row.email, link, csrf: preCsrf(req, res) }));
+    });
+
+    app.post("/auth/email/link", verifyLimit, (req, res) => {
+      if (!preCsrfOk(req)) {
+        return sendPage(res, pages.message({ title: "Request expired", text: "Open the link from the email again." }), 403);
+      }
+      const result = store.consumeEmailLink(req.body?.t);
+      if (!result.ok) {
+        return sendPage(res, pages.message({ title: "Link expired", text: "This sign-in link has expired or was already used. Request a new code." }), 400);
+      }
+      finishEmailSignIn(req, res, result.ok);
+    });
+  }
+
+  // -------------------------------------------------------------------------
   // Connect page
   // -------------------------------------------------------------------------
 
@@ -343,7 +538,7 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
   app.get("/connect", (req, res) => {
     const auth = currentSession(req);
     if (!auth) {
-      sendPage(res, pages.signIn({ providers, next: req.query.next ? safeNext(req.query.next) : undefined }));
+      renderSignIn(req, res, { next: req.query.next ? safeNext(req.query.next) : undefined });
       return;
     }
     if (req.query.next) {

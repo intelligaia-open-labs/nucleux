@@ -134,6 +134,23 @@ const MIGRATIONS = [
   `
   ALTER TABLE usage ADD COLUMN upstream TEXT;
   `,
+  // 3: email sign-in. One row per code sent; the flow id (a cookie in the browser
+  // that asked) and the link token are stored as hashes, the code salted with the flow.
+  `
+  CREATE TABLE email_codes (
+    id         INTEGER PRIMARY KEY,
+    email      TEXT NOT NULL,
+    flow_hash  TEXT NOT NULL UNIQUE,
+    code_hash  TEXT NOT NULL,
+    link_hash  TEXT NOT NULL UNIQUE,
+    next       TEXT NOT NULL,
+    created    INTEGER NOT NULL,
+    expires    INTEGER NOT NULL,
+    attempts   INTEGER NOT NULL DEFAULT 0,
+    used       INTEGER
+  );
+  CREATE INDEX email_codes_email ON email_codes (email, created);
+  `,
 ];
 
 export function openDb(file = ":memory:") {
