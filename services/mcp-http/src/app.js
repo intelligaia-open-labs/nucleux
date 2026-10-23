@@ -47,11 +47,12 @@ const DEFAULT_LIMITS = {
   // Self-serve issuance; `max` comes from config.issuePerHour unless a test overrides it.
   issueToken: { windowMs: HOUR },
   issuePrompt: { windowMs: HOUR },
+  playground: { windowMs: HOUR },
 };
 
 const jsonRpcError = (code, message) => ({ jsonrpc: "2.0", error: { code, message }, id: null });
 
-export function createApp({ config, store, upstream, mobile = null, limits = {} }) {
+export function createApp({ config, store, upstream, mobile = null, yantra = null, limits = {} }) {
   // Web for everyone; web + Nucleux Mobile for any valid token (surface.js).
   const surface = createSurface({ web: upstream, mobile });
   const pages = createPages(config);
@@ -237,7 +238,7 @@ export function createApp({ config, store, upstream, mobile = null, limits = {} 
   function sameOriginJson(req, res, next) {
     res.setHeader("Cache-Control", "no-store");
     if (req.headers.origin !== config.origin) {
-      res.status(403).json({ error: "forbidden_origin", error_description: `Only ${config.origin} may request tokens.` });
+      res.status(403).json({ error: "forbidden_origin", error_description: `Only ${config.origin} may call this.` });
       return;
     }
     next();
@@ -264,6 +265,36 @@ export function createApp({ config, store, upstream, mobile = null, limits = {} 
     const user = store.createAnonUser();
     const { token } = store.createToken(user.id, `web · ${today()}`);
     res.json({ token });
+  });
+
+  // -------------------------------------------------------------------------
+  // Playground planner: nucleux.in/playground asks Yantra which patterns to use
+  // -------------------------------------------------------------------------
+
+  // Same origin and per-IP limits as token issuance. The page sends the prompt
+  // and its own catalog (ids, names, one-line summaries); the reply only ever
+  // names ids from that catalog. Any failure is a 502/503 and the page falls
+  // back to its built-in matching.
+  app.post("/playground", sameOriginJson, rateLimiter({ name: "playground", max: config.playgroundPerHour, ...DEFAULT_LIMITS.playground, ...limits.playground, now: store.now }), async (req, res) => {
+    if (!yantra) {
+      res.status(503).json({ error: "unavailable" });
+      return;
+    }
+    const prompt = typeof req.body?.prompt === "string" ? req.body.prompt.trim().slice(0, 2000) : "";
+    const patterns = (Array.isArray(req.body?.patterns) ? req.body.patterns : [])
+      .filter((p) => p && typeof p.id === "string" && p.id.length <= 80)
+      .slice(0, 400)
+      .map((p) => ({ id: p.id, name: String(p.name ?? p.id).slice(0, 80), summary: String(p.summary ?? "").slice(0, 160) }));
+    if (!prompt || !patterns.length) {
+      res.status(400).json({ error: "invalid_request", error_description: "prompt and patterns are required." });
+      return;
+    }
+    try {
+      res.json(await yantra.plan({ prompt, patterns }));
+    } catch (err) {
+      console.error(`[nucleux-mcp] playground: ${err.message}`);
+      res.status(502).json({ error: "planner_failed" });
+    }
   });
 
   // -------------------------------------------------------------------------
