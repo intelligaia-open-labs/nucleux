@@ -1,5 +1,5 @@
 // Test harness: the real app on an ephemeral port, an in-memory database,
-// fake upstreams (no child process) and a fake sign-in provider (no network).
+// fake upstreams (no child process); no network.
 
 import crypto from "node:crypto";
 import { loadConfig } from "../src/config.js";
@@ -90,35 +90,17 @@ export function fakeMobileUpstream() {
   };
 }
 
-// Profiles keyed by the `code` the fake provider "returns".
-export const PROFILES = {
-  alice: { providerId: "1", email: "alice@example.com", name: "Alice Doe", avatar: null },
-  bob: { providerId: "2", email: "bob@other.org", name: "Bob", avatar: null },
-  admin: { providerId: "3", email: "root@example.com", name: "Root", avatar: null },
-};
-
-export const fakeProvider = {
-  id: "fake",
-  label: "Fake",
-  authorizeUrl: ({ state, redirectUri }) =>
-    `https://provider.test/authorize?${new URLSearchParams({ state, redirect_uri: redirectUri })}`,
-  profile: async ({ code }) => {
-    if (!PROFILES[code]) throw new Error("bad code");
-    return PROFILES[code];
-  },
-};
-
-export async function startServer(env = {}, { limits, upstream = fakeUpstream, mobile = null, mailer = null } = {}) {
+export async function startServer(env = {}, { limits, upstream = fakeUpstream, mobile = null } = {}) {
   const clock = { t: Date.UTC(2026, 9, 22, 12, 0, 0) };
   const config = loadConfig({
     NUCLEUX_PUBLIC_URL: "https://nucleux.test/mcp",
     NUCLEUX_SESSION_SECRET: "test-secret",
-    NUCLEUX_ADMINS: "root@example.com",
+    NUCLEUX_ADMIN_PASSWORD: "admin-secret",
     ...env,
   });
   const db = openDb(":memory:");
   const store = createStore(db, { now: () => clock.t });
-  const app = createApp({ config, store, upstream, mobile, providers: { fake: fakeProvider }, mailer, limits });
+  const app = createApp({ config, store, upstream, mobile, limits });
   const server = await new Promise((resolve) => {
     const s = app.listen(0, "127.0.0.1", () => resolve(s));
   });
@@ -154,44 +136,28 @@ const cookieValue = (res, name) => {
   return undefined;
 };
 
-// Runs the full sign-in round trip; returns a browser-like helper.
-export async function signIn(srv, who = "alice", next) {
-  const qs = new URLSearchParams({ provider: "fake" });
-  if (next) qs.set("next", next);
-  const start = await fetch(`${srv.url}/auth/login?${qs}`, { redirect: "manual" });
-  if (start.status !== 302) throw new Error(`login start ${start.status}`);
-  const state = new URL(start.headers.get("location")).searchParams.get("state");
-  const nonce = cookieValue(start, "nx_login");
-  const cb = await fetch(`${srv.url}/auth/callback/fake?code=${who}&state=${encodeURIComponent(state)}`, {
-    redirect: "manual",
-    headers: { cookie: `nx_login=${nonce}` },
-  });
-  const session = cookieValue(cb, "nx_session");
-  return {
-    status: cb.status,
-    location: cb.headers.get("location"),
-    setCookie: cb.headers.getSetCookie(),
-    session,
-    get: (path) => fetch(`${srv.url}${path}`, { redirect: "manual", headers: { cookie: `nx_session=${session}` } }),
-    post: (path, form, headers = {}) =>
-      fetch(`${srv.url}${path}`, {
-        method: "POST",
-        redirect: "manual",
-        headers: { cookie: `nx_session=${session}`, "content-type": "application/x-www-form-urlencoded", ...headers },
-        body: new URLSearchParams(form),
-      }),
-  };
-}
-
 export const csrfFrom = (html) => /name="_csrf" value="([^"]+)"/.exec(html)?.[1];
 
-export async function newCliCode(browser) {
-  const page = await (await browser.get("/connect")).text();
-  const res = await browser.post("/connect/code", { _csrf: csrfFrom(page) });
-  const html = await res.text();
-  const m = /add --code ([A-Z0-9]{4}-[A-Z0-9]{4})/.exec(html);
-  if (!m) throw new Error(`no code in page (${res.status})`);
-  return m[1];
+// What the site's MCP page does: POST with our Origin.
+export const issue = (srv, path, origin = srv.config.origin) =>
+  fetch(`${srv.url}${path}`, {
+    method: "POST",
+    headers: { "content-type": "application/json", ...(origin ? { origin } : {}) },
+    body: "{}",
+  });
+
+/** A fresh one-time connect code from POST /tokens/prompt. */
+export async function newCliCode(srv) {
+  const res = await issue(srv, "/tokens/prompt");
+  if (res.status !== 200) throw new Error(`/tokens/prompt ${res.status}`);
+  return (await res.json()).code;
+}
+
+/** A fresh bearer token from POST /tokens. */
+export async function newToken(srv) {
+  const res = await issue(srv, "/tokens");
+  if (res.status !== 200) throw new Error(`/tokens ${res.status}`);
+  return (await res.json()).token;
 }
 
 export const exchange = (srv, code, label = "test-host") =>
@@ -224,23 +190,6 @@ export async function rpc(srv, method, params = {}, token) {
     body = data ? JSON.parse(data.slice(6)) : null;
   }
   return { status: res.status, headers: res.headers, body };
-}
-
-// Captures sign-in emails instead of sending them. `fail = true` makes send throw.
-export function fakeMailer() {
-  const sent = [];
-  const mailer = {
-    sent,
-    fail: false,
-    async send(message) {
-      if (mailer.fail) throw Object.assign(new Error("smtp down"), { code: "ECONNECTION" });
-      sent.push(message);
-    },
-    last: () => sent.at(-1),
-    codeOf: (m = sent.at(-1)) => /code is: (\d{6})/.exec(m.text)[1],
-    linkOf: (m = sent.at(-1)) => /^(https:\/\/\S+\/auth\/email\/link\?t=\S+)$/m.exec(m.text)[1],
-  };
-  return mailer;
 }
 
 // A browser with a cookie jar (cookies are keyed by name; paths are ignored).

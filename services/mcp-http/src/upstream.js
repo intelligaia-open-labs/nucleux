@@ -127,7 +127,7 @@ export function createUpstream({ callTimeoutMs = 30_000 } = {}) {
 // Nucleux Mobile (SwiftUI, Compose, Flutter, React Native): the private kit's
 // MCP server, bundled into one file in the private GitHub repo
 // intelligaia/nucleux-mobile-mcp and dropped into vendor/ on deploy (never
-// committed, never on npm). Served to signed-in users only (see surface.js).
+// committed, never on npm). Served to requests with a valid token only (see surface.js).
 // A missing file is not an error: the server runs web-only.
 export const DEFAULT_MOBILE_FILE = "vendor/nucleux-mobile-mcp.cjs";
 

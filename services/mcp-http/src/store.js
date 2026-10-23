@@ -1,5 +1,9 @@
-// Data access. Every secret (session id, token, code) is stored as its SHA-256;
-// the plaintext exists only in the response that hands it out.
+// Data access. Every secret (token, code) is stored as its SHA-256; the
+// plaintext exists only in the response that hands it out.
+//
+// Principals are rows in `users`. New ones are anonymous (provider "anon"): one
+// per self-serve token, connect code or OAuth grant. Rows from the sign-in era
+// (provider "google", "github", "email") and their tokens keep working.
 
 import {
   sha256,
@@ -9,14 +13,10 @@ import {
   newAccessToken,
   newRefreshToken,
   newOpaque,
-  newEmailCode,
   PAT_RE,
 } from "./security.js";
 
-export const SESSION_TTL = 30 * 24 * 3600 * 1000;
 export const CLI_CODE_TTL = 10 * 60 * 1000;
-export const EMAIL_CODE_TTL = 10 * 60 * 1000;
-export const EMAIL_MAX_ATTEMPTS = 5;
 export const OAUTH_CODE_TTL = 5 * 60 * 1000;
 export const ACCESS_TTL = 3600 * 1000;
 export const REFRESH_TTL = 60 * 24 * 3600 * 1000;
@@ -26,38 +26,19 @@ export function createStore(db, { now = () => Date.now() } = {}) {
   const store = {
     now,
 
-    // ---- users ------------------------------------------------------------
-    upsertUser({ provider, providerId, email, name, avatar }) {
+    // ---- principals --------------------------------------------------------
+    createAnonUser() {
       const t = now();
-      const existing = db.get("SELECT * FROM users WHERE provider = @provider AND provider_id = @providerId", {
-        provider,
-        providerId: String(providerId),
-      });
-      if (existing) {
-        db.run(
-          "UPDATE users SET email = @email, name = @name, avatar = @avatar, last_seen = @t WHERE id = @id",
-          { email, name: name ?? null, avatar: avatar ?? null, t, id: existing.id }
-        );
-        return store.userById(existing.id);
-      }
       const info = db.run(
         `INSERT INTO users (provider, provider_id, email, name, avatar, created, last_seen)
-         VALUES (@provider, @providerId, @email, @name, @avatar, @t, @t)`,
-        { provider, providerId: String(providerId), email, name: name ?? null, avatar: avatar ?? null, t }
+         VALUES ('anon', @pid, '', 'anonymous', NULL, @t, NULL)`,
+        { pid: newOpaque(24), t }
       );
       return store.userById(Number(info.lastInsertRowid));
     },
     userById: (id) => db.get("SELECT * FROM users WHERE id = @id", { id }),
-    touchUser(id) {
-      db.run("UPDATE users SET last_seen = @t WHERE id = @id", { t: now(), id });
-    },
     setUserDisabled(id, disabled) {
-      db.tx(() => {
-        db.run("UPDATE users SET disabled = @d WHERE id = @id", { d: disabled ? 1 : 0, id });
-        if (disabled) {
-          db.run("DELETE FROM sessions WHERE user_id = @id", { id });
-        }
-      });
+      db.run("UPDATE users SET disabled = @d WHERE id = @id", { d: disabled ? 1 : 0, id });
     },
     revokeAllForUser(id) {
       const t = now();
@@ -65,33 +46,6 @@ export function createStore(db, { now = () => Date.now() } = {}) {
         db.run("UPDATE tokens SET revoked = @t WHERE user_id = @id AND revoked IS NULL", { t, id });
         db.run("UPDATE oauth_tokens SET revoked = @t WHERE user_id = @id AND revoked IS NULL", { t, id });
       });
-    },
-
-    // ---- sessions ---------------------------------------------------------
-    createSession(userId) {
-      const id = newOpaque(43);
-      const csrf = newOpaque(32);
-      const t = now();
-      db.run(
-        "INSERT INTO sessions (id_hash, user_id, csrf, created, expires) VALUES (@h, @u, @csrf, @t, @e)",
-        { h: sha256(id), u: userId, csrf, t, e: t + SESSION_TTL }
-      );
-      return { id, csrf };
-    },
-    // Returns { session, user } for a live session of an enabled user.
-    getSession(id) {
-      if (!id || typeof id !== "string" || id.length > 100) return null;
-      const row = db.get(
-        `SELECT s.csrf, s.expires, s.id_hash, u.* FROM sessions s JOIN users u ON u.id = s.user_id
-         WHERE s.id_hash = @h`,
-        { h: sha256(id) }
-      );
-      if (!row || row.expires < now() || row.disabled) return null;
-      const { csrf, expires, id_hash, ...user } = row;
-      return { session: { csrf, expires, idHash: id_hash }, user };
-    },
-    deleteSession(id) {
-      if (id) db.run("DELETE FROM sessions WHERE id_hash = @h", { h: sha256(id) });
     },
 
     // ---- personal access tokens -------------------------------------------
@@ -103,17 +57,8 @@ export function createStore(db, { now = () => Date.now() } = {}) {
       );
       return { token, id: Number(info.lastInsertRowid) };
     },
-    listTokens: (userId) =>
-      db.all(
-        "SELECT id, label, created, last_used FROM tokens WHERE user_id = @u AND revoked IS NULL ORDER BY created DESC",
-        { u: userId }
-      ),
-    revokeToken(userId, tokenId) {
-      return db.run("UPDATE tokens SET revoked = @t WHERE id = @id AND user_id = @u AND revoked IS NULL", {
-        t: now(),
-        id: tokenId,
-        u: userId,
-      }).changes;
+    revokeTokenById(tokenId) {
+      return db.run("UPDATE tokens SET revoked = @t WHERE id = @id AND revoked IS NULL", { t: now(), id: tokenId }).changes;
     },
 
     // `nx_` token revoking itself (CLI logout). Returns true if it was live.
@@ -123,70 +68,6 @@ export function createStore(db, { now = () => Date.now() } = {}) {
       const row = db.get("SELECT id, hash, revoked FROM tokens WHERE hash = @h", { h });
       if (!row || !safeEqual(row.hash, h) || row.revoked) return false;
       return db.run("UPDATE tokens SET revoked = @t WHERE id = @id AND revoked IS NULL", { t: now(), id: row.id }).changes === 1;
-    },
-
-    // ---- email sign-in codes -----------------------------------------------
-    // One row per email sent. Returns the plaintext flow id (for the browser's
-    // cookie), code and link token; only their hashes are stored.
-    createEmailCode(email, next) {
-      const flow = newOpaque(32);
-      const code = newEmailCode();
-      const link = newOpaque(43);
-      const t = now();
-      db.run(
-        `INSERT INTO email_codes (email, flow_hash, code_hash, link_hash, next, created, expires)
-         VALUES (@email, @f, @c, @l, @next, @t, @e)`,
-        { email, f: sha256(flow), c: sha256(`${flow}:${code}`), l: sha256(link), next, t, e: t + EMAIL_CODE_TTL }
-      );
-      db.run("DELETE FROM email_codes WHERE created < @old", { old: t - DAY });
-      return { flow, code, link, expires: t + EMAIL_CODE_TTL };
-    },
-    emailCodesSentSince: (email, since) =>
-      db.get("SELECT COUNT(*) AS n FROM email_codes WHERE email = @email AND created >= @since", { email, since }).n,
-    emailFlow(flow) {
-      if (typeof flow !== "string" || flow.length > 100) return null;
-      return db.get("SELECT * FROM email_codes WHERE flow_hash = @h", { h: sha256(flow) }) ?? null;
-    },
-    emailFlowByLink(link) {
-      if (typeof link !== "string" || link.length > 100) return null;
-      return db.get("SELECT * FROM email_codes WHERE link_hash = @h", { h: sha256(link) }) ?? null;
-    },
-    // Live = unused, unexpired, not locked by wrong guesses.
-    emailFlowState(row) {
-      if (!row || row.used) return "used";
-      if (row.attempts >= EMAIL_MAX_ATTEMPTS) return "locked";
-      if (row.expires < now()) return "expired";
-      return "live";
-    },
-    // Checks a code against the flow. Every wrong guess counts, atomically.
-    // Returns { ok: row } | { error: "wrong", left } | { error: "locked"|"expired"|"used" }.
-    verifyEmailCode(flow, code) {
-      const h = sha256(flow);
-      return db.tx(() => {
-        const row = db.get("SELECT * FROM email_codes WHERE flow_hash = @h", { h });
-        const state = store.emailFlowState(row);
-        if (state !== "live") return { error: state };
-        if (!safeEqual(sha256(`${flow}:${code}`), row.code_hash)) {
-          db.run("UPDATE email_codes SET attempts = attempts + 1 WHERE id = @id", { id: row.id });
-          const left = EMAIL_MAX_ATTEMPTS - row.attempts - 1;
-          return left > 0 ? { error: "wrong", left } : { error: "locked" };
-        }
-        db.run("UPDATE email_codes SET used = @t WHERE id = @id", { t: now(), id: row.id });
-        return { ok: row };
-      });
-    },
-    // The emailed link: single use, same expiry and lock as the code.
-    consumeEmailLink(link) {
-      return db.tx(() => {
-        const row = store.emailFlowByLink(link);
-        const state = store.emailFlowState(row);
-        if (state !== "live") return { error: state };
-        db.run("UPDATE email_codes SET used = @t WHERE id = @id", { t: now(), id: row.id });
-        return { ok: row };
-      });
-    },
-    retireEmailFlow(id) {
-      db.run("UPDATE email_codes SET used = COALESCE(used, @t) WHERE id = @id", { t: now(), id });
     },
 
     // ---- CLI connect codes -------------------------------------------------
@@ -370,20 +251,6 @@ export function createStore(db, { now = () => Date.now() } = {}) {
         f: row.family,
       }).changes;
     },
-    listConnectedApps: (userId) =>
-      db.all(
-        `SELECT c.id AS client_id, c.name, MIN(t.created) AS created, MAX(t.last_used) AS last_used
-         FROM oauth_tokens t JOIN oauth_clients c ON c.id = t.client_id
-         WHERE t.user_id = @u AND t.revoked IS NULL AND t.refresh_expires >= @now
-         GROUP BY c.id ORDER BY created DESC`,
-        { u: userId, now: now() }
-      ),
-    revokeApp(userId, clientId) {
-      return db.run(
-        "UPDATE oauth_tokens SET revoked = @t WHERE user_id = @u AND client_id = @c AND revoked IS NULL",
-        { t: now(), u: userId, c: clientId }
-      ).changes;
-    },
 
     // ---- usage ------------------------------------------------------------------
     // `upstream`: which catalog answered — "web", "mobile" or "web+mobile".
@@ -402,34 +269,38 @@ export function createStore(db, { now = () => Date.now() } = {}) {
         }
       );
     },
-    usageSummary(userId) {
-      const t = now();
-      const count = (since) =>
-        db.get("SELECT COUNT(*) AS n FROM usage WHERE user_id = @u AND ts >= @s", { u: userId, s: since }).n;
-      return {
-        last7: count(t - 7 * DAY),
-        last30: count(t - 30 * DAY),
-        topTools: db.all(
-          `SELECT tool, COUNT(*) AS n FROM usage WHERE user_id = @u AND ts >= @s
-           GROUP BY tool ORDER BY n DESC, tool LIMIT 5`,
-          { u: userId, s: t - 30 * DAY }
-        ),
-      };
-    },
+    // Principals with their access and usage. Anonymous principals that never
+    // got a live credential or made a call (an unused connect code, say) are
+    // counted, not listed.
     adminOverview() {
       const t = now();
-      const users = db.all(
+      const rows = db.all(
         `SELECT u.id, u.provider, u.email, u.name, u.created, u.last_seen, u.disabled,
            (SELECT COUNT(*) FROM usage x WHERE x.user_id = u.id AND x.ts >= @d7) AS calls7,
            (SELECT COUNT(*) FROM usage x WHERE x.user_id = u.id AND x.ts >= @d30) AS calls30,
+           (SELECT COUNT(*) FROM usage x WHERE x.user_id = u.id) AS callsAll,
            (SELECT COUNT(*) FROM tokens k WHERE k.user_id = u.id AND k.revoked IS NULL) AS tokens,
-           (SELECT COUNT(DISTINCT o.client_id) FROM oauth_tokens o WHERE o.user_id = u.id AND o.revoked IS NULL AND o.refresh_expires >= @now) AS apps
+           (SELECT COUNT(*) FROM tokens k WHERE k.user_id = u.id) AS tokensEver,
+           (SELECT COUNT(DISTINCT o.client_id) FROM oauth_tokens o WHERE o.user_id = u.id AND o.revoked IS NULL AND o.refresh_expires >= @now) AS apps,
+           (SELECT COUNT(*) FROM oauth_tokens o WHERE o.user_id = u.id) AS appsEver
          FROM users u ORDER BY COALESCE(u.last_seen, u.created) DESC`,
         { d7: t - 7 * DAY, d30: t - 30 * DAY, now: t }
       );
+      const unused = (u) => u.provider === "anon" && !u.tokensEver && !u.appsEver && !u.callsAll;
+      const tokens = db.all(
+        `SELECT k.id, k.label, k.created, k.last_used, k.user_id, u.provider, u.email
+         FROM tokens k JOIN users u ON u.id = k.user_id
+         WHERE k.revoked IS NULL ORDER BY COALESCE(k.last_used, k.created) DESC LIMIT 500`
+      );
       const anon = (since) =>
         db.get("SELECT COUNT(*) AS n FROM usage WHERE user_id IS NULL AND ts >= @s", { s: since }).n;
-      return { users, anonymous7: anon(t - 7 * DAY), anonymous30: anon(t - 30 * DAY) };
+      return {
+        users: rows.filter((u) => !unused(u)),
+        unusedAnon: rows.filter(unused).length,
+        tokens,
+        anonymous7: anon(t - 7 * DAY),
+        anonymous30: anon(t - 30 * DAY),
+      };
     },
   };
   return store;

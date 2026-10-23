@@ -27,7 +27,7 @@ contracts, then write code.
    Flutter; a `package.json` with `react-native` → React Native; a React,
    Next.js or Vite web app → web. Record it once in AGENTS.md or CLAUDE.md
    (`Nucleux platform: SwiftUI`). **Mobile** uses Nucleux Mobile from the
-   hosted Nucleux MCP server (sign in at https://nucleux.in/mcp/connect): pass
+   hosted Nucleux MCP server (get a token at https://nucleux.in/mcp): pass
    `framework` (`swiftui`, `compose`, `flutter` or `react-native`) to
    `get_component` and `get_example`, take the exact strings from
    `get_mobile_words`, check your code with `validate_mobile_usage`, and follow

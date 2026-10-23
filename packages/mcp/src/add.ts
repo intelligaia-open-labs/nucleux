@@ -24,12 +24,12 @@ Connects Nucleux to every coding agent installed on this machine, and adds the
 nucleux-design guidance to the current project. Safe to run again: anything
 already set up is left alone.
 
-  --code <code>    sign in to the hosted server (https://nucleux.in/mcp) with the
-                   one-time code from https://nucleux.in/mcp/connect, and connect
+  --code <code>    connect to the hosted server (https://nucleux.in/mcp) with the
+                   one-time code from https://nucleux.in/mcp, and connect
                    every agent directly to it over HTTP. Your token is saved in
                    ~/.config/nucleux/credentials.json and in each agent's MCP
-                   config (both readable only by you); revoke it on the Connect
-                   page. Replaces any existing nucleux entry (re-run with a new
+                   config (both readable only by you); revoke it with
+                   \`npx -y @nucleux/mcp logout\`. Replaces any existing nucleux entry (re-run with a new
                    code to rotate the token). Claude Desktop runs the local
                    \`npx -y @nucleux/mcp remote\` proxy instead. Without --code,
                    agents run the open local server.
@@ -421,7 +421,7 @@ export function runAdd(args: string[], env: AddEnv = defaultEnv()): number | Pro
       const raw = a === "--code" ? rest[++i] : a.slice(7);
       code = raw === undefined ? undefined : normalizeCode(raw);
       if (!code) {
-        console.error(`--code needs the code from https://nucleux.in/mcp/connect, like ABCD-2345.\n\n${USAGE}`);
+        console.error(`--code needs the code from https://nucleux.in/mcp, like ABCD-2345.\n\n${USAGE}`);
         return 1;
       }
       continue;
@@ -562,7 +562,7 @@ function connectAgents(env: AddEnv, chosen: Agent[], o: { dryRun: boolean; noPro
   }
 
   if (remote && !dryRun && chosen.some((a) => a.id !== "claude-desktop")) {
-    env.log(`  (Your token is in each agent's MCP config, readable only by you. Revoke it at https://nucleux.in/mcp/connect.)`);
+    env.log(`  (Your token is in each agent's MCP config, readable only by you. Revoke it with \`npx -y @nucleux/mcp logout\`.)`);
   }
   if (manual.length) env.log(`\nOne step left:\n${manual.join("\n")}`);
   env.log(

@@ -4,8 +4,9 @@ import { dirname, join } from "node:path";
 
 /** The hosted server. `NUCLEUX_MCP_URL` overrides it (staging, tests). */
 export const DEFAULT_SERVER = "https://nucleux.in/mcp";
-export const CONNECT_URL = "https://nucleux.in/mcp/connect";
-export const SIGN_IN_HINT = `Run \`npx -y @nucleux/mcp add --code …\` with the line from ${CONNECT_URL}`;
+/** The site page that hands out connect codes and tokens for the hosted server. */
+export const CONNECT_URL = "https://nucleux.in/mcp";
+export const SIGN_IN_HINT = `Run \`npx -y @nucleux/mcp add --code …\` with a connect code from ${CONNECT_URL}`;
 
 export interface Credentials {
   server: string;
@@ -101,11 +102,11 @@ export async function exchangeCode(env: AuthEnv, code: string): Promise<Credenti
   }
   const body = (await res.json().catch(() => ({}))) as { token?: string; email?: string; name?: string; error?: string };
   if (res.status === 400 && body.error === "invalid_code") {
-    throw new AuthError(`That code is unknown, expired or already used. Get a new line from ${CONNECT_URL} (codes work once, for 10 minutes).`);
+    throw new AuthError(`That code is unknown, expired or already used. Get a new code from ${CONNECT_URL} (codes work once, for 10 minutes).`);
   }
   if (res.status === 429) throw new AuthError("Too many attempts. Wait a minute and try again.");
   if (!res.ok || typeof body.token !== "string" || !body.token.startsWith("nx_")) {
-    throw new AuthError(`${server} couldn't exchange the code (HTTP ${res.status}). Try again with a new line from ${CONNECT_URL}.`);
+    throw new AuthError(`${server} couldn't exchange the code (HTTP ${res.status}). Try again with a new code from ${CONNECT_URL}.`);
   }
   return { server, token: body.token, email: body.email, name: body.name, created: new Date().toISOString() };
 }
@@ -173,7 +174,7 @@ export async function forgetCredentials(env: AuthEnv): Promise<void> {
         ? `Revoked the token on ${server}.`
         : r === "rejected"
           ? `The server no longer accepts this token (already revoked or expired).`
-          : `Couldn't revoke the token on ${server} (offline?). Revoke it at ${CONNECT_URL}.`,
+          : `Couldn't revoke the token on ${server} (offline?). Run logout again when online, or ask the Nucleux team to revoke it (${CONNECT_URL}).`,
     );
   }
   if (existsSync(file)) {

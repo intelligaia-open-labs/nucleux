@@ -397,7 +397,7 @@ describe("credentials", () => {
 
     validTokens.clear();
     expect(await runWhoami([], authEnv())).toBe(1);
-    expect(out.pop()).toMatch(/rejected .*nucleux\.in\/mcp\/connect/);
+    expect(out.pop()).toMatch(/rejected .*https:\/\/nucleux\.in\/mcp\b/);
   });
 
   it("logout revokes the token on the server, then deletes the credentials file", async () => {
@@ -425,7 +425,7 @@ describe("credentials", () => {
       throw new TypeError("fetch failed");
     };
     expect(await runLogout([], env({ fetch: offline }))).toBe(0);
-    expect(out.join("\n")).toMatch(/Couldn't revoke the token .*Revoke it at https:\/\/nucleux\.in\/mcp\/connect/);
+    expect(out.join("\n")).toMatch(/Couldn't revoke the token .*ask the Nucleux team to revoke it \(https:\/\/nucleux\.in\/mcp\b\)/);
     expect(existsSync(credsFile())).toBe(false);
   });
 
@@ -492,13 +492,13 @@ describe("remote proxy", () => {
 
   it("a rejected token says how to sign in (stderr + tool error) and never falls back to local", async () => {
     const { client, call, warnings } = await connect("nx_revoked");
-    expect(warnings.join("\n")).toMatch(/rejected the saved token.*add --code.*nucleux\.in\/mcp\/connect/);
+    expect(warnings.join("\n")).toMatch(/rejected the saved token.*add --code.*https:\/\/nucleux\.in\/mcp\b/);
     expect(client.getInstructions()).toMatch(/not connected/);
     const tools = (await client.listTools()).tools.map((t) => t.name);
     expect(tools).toEqual(["nucleux_sign_in"]);
     const r = await call("list_components");
     expect(r.isError).toBe(true);
-    expect(r.text).toMatch(/Run `npx -y @nucleux\/mcp add --code …` with the line from https:\/\/nucleux\.in\/mcp\/connect/);
+    expect(r.text).toMatch(/Run `npx -y @nucleux\/mcp add --code …` with a connect code from https:\/\/nucleux\.in\/mcp\b/);
     await client.close();
   });
 

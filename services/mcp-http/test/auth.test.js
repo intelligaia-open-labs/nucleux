@@ -4,13 +4,14 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import {
   startServer,
-  signIn,
   csrfFrom,
   newCliCode,
+  newToken,
+  issue,
   exchange,
   pkce,
   rpc,
-  local,
+  browser as newBrowser,
 } from "./helpers.js";
 
 const INIT = { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "t", version: "1" } };
@@ -69,133 +70,77 @@ describe("discovery documents", () => {
   });
 });
 
-describe("sign-in and pages", () => {
+describe("no sign-in: the old Connect page points at the site", () => {
   let srv;
-  before(async () => (srv = await startServer({ NUCLEUX_ALLOWED_DOMAINS: "example.com" })));
+  before(async () => (srv = await startServer()));
   after(() => srv.close());
 
-  test("signed-out connect page offers configured providers only", async () => {
-    const res = await fetch(`${srv.url}/connect`);
-    const html = await res.text();
-    assert.equal(res.status, 200);
-    assert.match(html, /Connect Nucleux to your coding agent/);
-    assert.match(html, /Continue with Fake/);
-    assert.doesNotMatch(html, /Continue with Google/);
-    assert.match(res.headers.get("content-security-policy"), /frame-ancestors 'none'/);
-    assert.equal(res.headers.get("access-control-allow-origin"), null);
-  });
-
-  test("callback sets a hardened session cookie and redirects to next", async () => {
-    const b = await signIn(srv, "alice", "/connect");
-    assert.equal(b.status, 302);
-    assert.equal(b.location, "https://nucleux.test/mcp/connect");
-    const cookie = b.setCookie.find((c) => c.startsWith("nx_session="));
-    assert.match(cookie, /Path=\/mcp/);
-    assert.match(cookie, /HttpOnly/);
-    assert.match(cookie, /Secure/);
-    assert.match(cookie, /SameSite=Lax/);
-    assert.match(cookie, /Max-Age=2592000/);
-    const page = await (await b.get("/connect")).text();
-    assert.match(page, /Signed in as alice@example.com/);
-  });
-
-  test("pages keep the Origin header on their own form posts", async () => {
-    // With "no-referrer", Chrome sends `Origin: null` on same-origin form posts and
-    // the CSRF check rejects every button (Generate, Revoke, Allow, Sign out).
-    const b = await signIn(srv, "alice", "/connect");
-    const res = await b.get("/connect");
-    assert.equal(res.headers.get("referrer-policy"), "same-origin");
-  });
-
-  test("next must be same-origin", async () => {
-    for (const next of ["//evil.test/x", "https://evil.test/", "/\\evil.test"]) {
-      const b = await signIn(srv, "alice", next);
-      assert.equal(b.location, "https://nucleux.test/mcp/connect", next);
-    }
-  });
-
-  test("state is bound to the browser that started sign-in", async () => {
-    const start = await fetch(`${srv.url}/auth/login?provider=fake`, { redirect: "manual" });
-    const state = new URL(start.headers.get("location")).searchParams.get("state");
-    const res = await fetch(`${srv.url}/auth/callback/fake?code=alice&state=${encodeURIComponent(state)}`, {
-      redirect: "manual",
-      headers: { cookie: "nx_login=someone-else" },
+  for (const path of ["/connect", "/connect/", "/connect/code", "/connect/tokens/1/revoke", "/login", "/connect?next=%2Fadmin"]) {
+    test(`GET ${path} -> 301 to the site's setup section`, async () => {
+      const res = await fetch(srv.url + path, { redirect: "manual" });
+      assert.equal(res.status, 301);
+      assert.equal(res.headers.get("location"), "https://nucleux.test/mcp#setup");
     });
-    assert.equal(res.status, 400);
-  });
+  }
 
-  test("allowlist rejects other domains", async () => {
-    const b = await signIn(srv, "bob");
-    assert.equal(b.status, 403);
-    assert.equal(b.session, undefined);
-  });
-
-  test("POST forms need the CSRF token", async () => {
-    const b = await signIn(srv);
-    assert.equal((await b.post("/connect/code", {})).status, 403);
-    assert.equal((await b.post("/connect/code", { _csrf: "wrong" })).status, 403);
-    const csrf = csrfFrom(await (await b.get("/connect")).text());
-    assert.equal((await b.post("/connect/code", { _csrf: csrf }, { origin: "https://evil.test" })).status, 403);
-    assert.equal((await b.post("/connect/code", { _csrf: csrf })).status, 200);
-  });
-
-  test("logout ends the session", async () => {
-    const b = await signIn(srv);
-    const csrf = csrfFrom(await (await b.get("/connect")).text());
-    const res = await b.post("/auth/logout", { _csrf: csrf });
-    assert.equal(res.status, 303);
-    assert.doesNotMatch(await (await b.get("/connect")).text(), /Signed in as/);
-  });
-
-  test("admin page is admins-only", async () => {
-    const alice = await signIn(srv, "alice");
-    assert.equal((await alice.get("/admin")).status, 403);
-    const root = await signIn(srv, "admin");
-    const res = await root.get("/admin");
-    assert.equal(res.status, 200);
-    assert.match(await res.text(), /alice@example.com/);
-  });
-
-  test("admin disable kills sessions and tokens", async () => {
-    const alice = await signIn(srv, "alice");
-    const { token } = await (await exchange(srv, await newCliCode(alice))).json();
-    const root = await signIn(srv, "admin");
-    const csrf = csrfFrom(await (await root.get("/admin")).text());
-    const aliceId = srv.db.get("SELECT id FROM users WHERE email = 'alice@example.com'").id;
-    assert.equal((await root.post(`/admin/users/${aliceId}/disable`, { _csrf: csrf })).status, 303);
-    assert.equal((await fetch(`${srv.url}/cli/whoami`, { headers: { authorization: `Bearer ${token}` } })).status, 401);
-    assert.doesNotMatch(await (await alice.get("/connect")).text(), /Signed in as/);
-    await root.post(`/admin/users/${aliceId}/enable`, { _csrf: csrf });
+  test("sign-in routes are gone", async () => {
+    for (const path of ["/auth/login?provider=google", "/auth/callback/google", "/auth/email/verify"]) {
+      assert.equal((await fetch(srv.url + path, { redirect: "manual" })).status, 404, path);
+    }
+    assert.equal((await fetch(`${srv.url}/auth/email/start`, { method: "POST" })).status, 404);
   });
 });
 
-describe("CLI code exchange", () => {
-  let srv, browser;
-  before(async () => {
-    srv = await startServer();
-    browser = await signIn(srv);
-  });
+describe("self-serve issuance for the site's MCP page", () => {
+  let srv;
+  before(async () => (srv = await startServer()));
   after(() => srv.close());
 
+  test("POST /tokens/prompt -> code + prompt; the code exchanges via /cli/exchange", async () => {
+    const res = await issue(srv, "/tokens/prompt");
+    assert.equal(res.status, 200);
+    assert.equal(res.headers.get("cache-control"), "no-store");
+    assert.match(res.headers.get("content-type"), /application\/json/);
+    const body = await res.json();
+    assert.deepEqual(Object.keys(body).sort(), ["code", "expires", "prompt"]);
+    assert.match(body.code, /^[A-HJKMNP-Z2-9]{4}-[A-HJKMNP-Z2-9]{4}$/);
+    assert.equal(body.expires, new Date(srv.clock.t + 10 * 60 * 1000).toISOString());
+
+    const principal = srv.db.get("SELECT u.* FROM users u ORDER BY id DESC LIMIT 1");
+    assert.equal(principal.provider, "anon");
+    assert.equal(principal.name, "anonymous");
+    assert.equal(srv.db.get("SELECT COUNT(*) n FROM tokens").n, 0, "no token until the code is exchanged");
+
+    const ex = await exchange(srv, body.code, "jaswant-mbp");
+    assert.equal(ex.status, 200);
+    const { token, email, name } = await ex.json();
+    assert.match(token, /^nx_[0-9A-Za-z]{40}$/);
+    assert.equal(email, "");
+    assert.equal(name, "anonymous");
+    const row = srv.db.get("SELECT * FROM tokens ORDER BY id DESC LIMIT 1");
+    assert.equal(row.label, "jaswant-mbp · 2026-10-22");
+    assert.equal(row.user_id, principal.id);
+    assert.equal((await rpc(srv, "tools/list", {}, token)).status, 200);
+  });
+
   test("the connect prompt is self-contained and covers the edge cases", async () => {
-    const page = await (await browser.get("/connect")).text();
-    const html = await (await browser.post("/connect/code", { _csrf: page.match(/name="_csrf" value="([^"]+)"/)[1] })).text();
-    const prompt = html.match(/<pre id="connect-line"[^>]*>([\s\S]*?)<\/pre>/)[1].replace(/&quot;/g, '"').replace(/&#39;/g, "'");
-    const code = prompt.match(/add --code ([A-Z0-9]{4}-[A-Z0-9]{4})/)[1];
+    const { code, prompt } = await (await issue(srv, "/tokens/prompt")).json();
     for (const needle of [
       `npx -y @nucleux/mcp@latest add --code ${code}`,
-      "signed in as alice@example.com",
+      "hosted at https://nucleux.test/mcp",
       "works once and expires 10 minutes",
       "unknown, expired or already used",
+      "ask me for a new prompt from https://nucleux.test/mcp",
       "Node.js 18",
       "HTTPS_PROXY",
       "ask me to run the command myself",
       "--only",
       "--no-project",
-      "whoami",
+      'whoami`. It should print "Signed in to https://nucleux.test/mcp"',
       "restarted",
       "Never print, paste, log or commit it",
       "npx -y @nucleux/mcp logout",
+      "ask the Nucleux team to revoke it",
       "first work out the platform from the project",
       "Package.swift or an .xcodeproj is SwiftUI",
       "build.gradle(.kts) with Compose is Jetpack Compose",
@@ -208,40 +153,183 @@ describe("CLI code exchange", () => {
     ]) {
       assert.ok(prompt.includes(needle), `prompt mentions ${needle}`);
     }
+    assert.doesNotMatch(prompt, /signed in as|sign in|\/mcp\/connect/i);
     assert.doesNotMatch(prompt, /nx_[0-9A-Za-z]{10}/, "the prompt carries the one-time code, never a token");
   });
 
+  test("POST /tokens -> a working bearer, labelled web · date, shown once", async () => {
+    const res = await issue(srv, "/tokens");
+    assert.equal(res.status, 200);
+    assert.equal(res.headers.get("cache-control"), "no-store");
+    const body = await res.json();
+    assert.deepEqual(Object.keys(body), ["token"]);
+    assert.match(body.token, /^nx_[0-9A-Za-z]{40}$/);
+    const row = srv.db.get("SELECT t.*, u.provider FROM tokens t JOIN users u ON u.id = t.user_id ORDER BY t.id DESC LIMIT 1");
+    assert.equal(row.label, "web · 2026-10-22");
+    assert.equal(row.provider, "anon");
+    assert.notEqual(row.hash, body.token);
+    const call = await rpc(srv, "tools/call", { name: "echo", arguments: { a: 1 } }, body.token);
+    assert.equal(call.status, 200);
+    const who = await fetch(`${srv.url}/cli/whoami`, { headers: { authorization: `Bearer ${body.token}` } });
+    assert.deepEqual(await who.json(), { email: "", name: "anonymous" });
+    // Each request is its own principal.
+    const other = await newToken(srv);
+    const owners = srv.db.all("SELECT user_id FROM tokens WHERE label LIKE 'web%'").map((r) => r.user_id);
+    assert.equal(new Set(owners).size, owners.length);
+    assert.notEqual(other, body.token);
+  });
+
+  test("other origins (or none) are refused", async () => {
+    for (const path of ["/tokens", "/tokens/prompt"]) {
+      for (const origin of ["https://evil.test", "null", "http://nucleux.test", "https://nucleux.test.evil.com", null]) {
+        const res = await issue(srv, path, origin);
+        assert.equal(res.status, 403, `${path} ${origin}`);
+        assert.equal((await res.json()).error, "forbidden_origin");
+      }
+    }
+    // No CORS grant either, so a cross-site page can't read a response.
+    const res = await issue(srv, "/tokens", "https://evil.test");
+    assert.equal(res.headers.get("access-control-allow-origin"), null);
+  });
+
+  test("rate limited per IP, separately for each endpoint", async () => {
+    const limited = await startServer({ NUCLEUX_ISSUE_PER_HOUR: "2" });
+    try {
+      const t = [];
+      for (let i = 0; i < 3; i++) t.push((await issue(limited, "/tokens")).status);
+      const p = [];
+      for (let i = 0; i < 3; i++) p.push((await issue(limited, "/tokens/prompt")).status);
+      assert.deepEqual(t, [200, 200, 429]);
+      assert.deepEqual(p, [200, 200, 429]);
+      limited.advance(3600 * 1000 + 1);
+      assert.equal((await issue(limited, "/tokens")).status, 200);
+    } finally {
+      await limited.close();
+    }
+  });
+
+  test("tokens issued before this change still work", async () => {
+    // A principal and token from the sign-in era.
+    const id = Number(
+      srv.db.run(
+        "INSERT INTO users (provider, provider_id, email, name, created) VALUES ('google', 'g-1', 'old@example.com', 'Old User', 1)"
+      ).lastInsertRowid
+    );
+    const { token } = srv.store.createToken(id, "laptop · 2026-10-01");
+    const res = await rpc(srv, "tools/list", {}, token);
+    assert.equal(res.status, 200);
+    const who = await fetch(`${srv.url}/cli/whoami`, { headers: { authorization: `Bearer ${token}` } });
+    assert.deepEqual(await who.json(), { email: "old@example.com", name: "Old User" });
+  });
+});
+
+describe("admin (HTTP Basic)", () => {
+  const basic = (pw, user = "admin") => `Basic ${Buffer.from(`${user}:${pw}`).toString("base64")}`;
+
+  test("404 when NUCLEUX_ADMIN_PASSWORD is unset", async () => {
+    const srv = await startServer({ NUCLEUX_ADMIN_PASSWORD: "" });
+    try {
+      assert.equal((await fetch(`${srv.url}/admin`, { headers: { authorization: basic("x") } })).status, 404);
+      assert.equal((await fetch(`${srv.url}/admin/users/1/disable`, { method: "POST" })).status, 404);
+    } finally {
+      await srv.close();
+    }
+  });
+
+  describe("with a password", () => {
+    let srv;
+    before(async () => (srv = await startServer()));
+    after(() => srv.close());
+
+    test("401 without or with wrong credentials", async () => {
+      const none = await fetch(`${srv.url}/admin`);
+      assert.equal(none.status, 401);
+      assert.match(none.headers.get("www-authenticate"), /^Basic realm="Nucleux admin"/);
+      assert.equal((await fetch(`${srv.url}/admin`, { headers: { authorization: basic("wrong") } })).status, 401);
+      assert.equal((await fetch(`${srv.url}/admin`, { headers: { authorization: "Basic !!!" } })).status, 401);
+      assert.equal((await fetch(`${srv.url}/admin`, { headers: { authorization: "Bearer admin-secret" } })).status, 401);
+    });
+
+    test("200 lists principals with provider, tokens and usage; revoke and disable work", async () => {
+      const token = await newToken(srv);
+      await rpc(srv, "tools/call", { name: "echo", arguments: {} }, token);
+      await issue(srv, "/tokens/prompt"); // unused anonymous principal: counted, not listed
+      const oldId = Number(
+        srv.db.run("INSERT INTO users (provider, provider_id, email, name, created) VALUES ('email', 'x@example.com', 'x@example.com', 'x', 1)").lastInsertRowid
+      );
+      const oldToken = srv.store.createToken(oldId, "old-laptop · 2026-10-01").token;
+
+      const b = newBrowser(srv);
+      const auth = { authorization: basic("admin-secret", "anyone") };
+      const res = await b.get("/admin", auth);
+      assert.equal(res.status, 200);
+      assert.match(res.headers.get("content-security-policy"), /frame-ancestors 'none'/);
+      const html = await res.text();
+      assert.match(html, /anonymous #\d+/);
+      assert.match(html, /x@example.com/);
+      assert.match(html, /anonymous · since/);
+      assert.match(html, /email · since/);
+      assert.match(html, /1 unused anonymous/);
+      assert.match(html, /web · 2026-10-22/);
+      assert.match(html, /old-laptop · 2026-10-01/);
+
+      const csrf = csrfFrom(html);
+      const oldTokenId = srv.db.get("SELECT id FROM tokens WHERE label LIKE 'old-laptop%'").id;
+      // CSRF required, and the Origin must be ours.
+      assert.equal((await b.post(`/admin/tokens/${oldTokenId}/revoke`, {}, auth)).status, 403);
+      assert.equal((await b.post(`/admin/tokens/${oldTokenId}/revoke`, { _csrf: csrf }, { ...auth, origin: "https://evil.test" })).status, 403);
+      // Basic auth required too.
+      assert.equal((await b.post(`/admin/tokens/${oldTokenId}/revoke`, { _csrf: csrf })).status, 401);
+
+      const rev = await b.post(`/admin/tokens/${oldTokenId}/revoke`, { _csrf: csrf }, auth);
+      assert.equal(rev.status, 303);
+      assert.equal(rev.headers.get("location"), "https://nucleux.test/mcp/admin?done=revoked");
+      assert.equal((await rpc(srv, "tools/list", {}, oldToken)).status, 401);
+
+      const anonId = srv.db.get("SELECT user_id FROM tokens WHERE label LIKE 'web%' ORDER BY id DESC LIMIT 1").user_id;
+      assert.equal((await b.post(`/admin/users/${anonId}/disable`, { _csrf: csrf }, auth)).status, 303);
+      assert.equal((await rpc(srv, "tools/list", {}, token)).status, 401);
+      assert.match(await (await b.get("/admin", auth)).text(), /Disabled/);
+      assert.equal((await b.post(`/admin/users/${anonId}/enable`, { _csrf: csrf }, auth)).status, 303);
+      assert.equal((await b.post(`/admin/users/${anonId}/nonsense`, { _csrf: csrf }, auth)).status, 404);
+    });
+  });
+});
+
+describe("CLI code exchange", () => {
+  let srv;
+  before(async () => {
+    srv = await startServer();
+  });
+  after(() => srv.close());
+
   test("valid code -> token, whoami, label", async () => {
-    const code = await newCliCode(browser);
+    const code = await newCliCode(srv);
     assert.match(code, /^[A-HJKMNP-Z2-9]{4}-[A-HJKMNP-Z2-9]{4}$/);
     const res = await exchange(srv, code, "jaswant-mbp");
     assert.equal(res.status, 200);
     const body = await res.json();
     assert.match(body.token, /^nx_[0-9A-Za-z]{40}$/);
-    assert.equal(body.email, "alice@example.com");
-    assert.equal(body.name, "Alice Doe");
+    assert.equal(body.name, "anonymous");
 
     const who = await fetch(`${srv.url}/cli/whoami`, { headers: { authorization: `Bearer ${body.token}` } });
     assert.equal(who.status, 200);
-    assert.deepEqual(await who.json(), { email: "alice@example.com", name: "Alice Doe" });
+    assert.deepEqual(await who.json(), { email: "", name: "anonymous" });
 
     // Stored hashed only, labelled hostname · date.
     const row = srv.db.get("SELECT * FROM tokens ORDER BY id DESC LIMIT 1");
     assert.equal(row.label, "jaswant-mbp · 2026-10-22");
     assert.notEqual(row.hash, body.token);
     assert.equal(srv.db.get("SELECT COUNT(*) n FROM tokens WHERE hash = @h", { h: body.token }).n, 0);
-
-    const page = await (await browser.get("/connect")).text();
-    assert.match(page, /jaswant-mbp · 2026-10-22/);
   });
 
   test("code accepted without dash and in lower case", async () => {
-    const code = await newCliCode(browser);
+    const code = await newCliCode(srv);
     assert.equal((await exchange(srv, code.replace("-", "").toLowerCase())).status, 200);
   });
 
   test("reused code is rejected", async () => {
-    const code = await newCliCode(browser);
+    const code = await newCliCode(srv);
     assert.equal((await exchange(srv, code)).status, 200);
     const again = await exchange(srv, code);
     assert.equal(again.status, 400);
@@ -249,7 +337,7 @@ describe("CLI code exchange", () => {
   });
 
   test("expired code is rejected", async () => {
-    const code = await newCliCode(browser);
+    const code = await newCliCode(srv);
     srv.advance(10 * 60 * 1000 + 1);
     const res = await exchange(srv, code);
     assert.equal(res.status, 400);
@@ -272,8 +360,8 @@ describe("CLI code exchange", () => {
   });
 
   test("POST /cli/revoke revokes exactly that token", async () => {
-    const a = (await (await exchange(srv, await newCliCode(browser), "a")).json()).token;
-    const b = (await (await exchange(srv, await newCliCode(browser), "b")).json()).token;
+    const a = (await (await exchange(srv, await newCliCode(srv), "a")).json()).token;
+    const b = (await (await exchange(srv, await newCliCode(srv), "b")).json()).token;
     const revoke = (t) => fetch(`${srv.url}/cli/revoke`, { method: "POST", headers: t ? { authorization: `Bearer ${t}` } : {} });
 
     const res = await revoke(a);
@@ -285,15 +373,6 @@ describe("CLI code exchange", () => {
     assert.equal((await revoke(a)).status, 401); // already revoked
     assert.equal((await revoke()).status, 401); // missing
     assert.equal((await revoke("nx_nope")).status, 401); // invalid
-  });
-
-  test("revoke from the Connect page", async () => {
-    const t = (await (await exchange(srv, await newCliCode(browser), "page-revoke")).json()).token;
-    const id = srv.db.get("SELECT id FROM tokens WHERE label LIKE 'page-revoke%'").id;
-    const csrf = csrfFrom(await (await browser.get("/connect")).text());
-    const res = await browser.post(`/connect/tokens/${id}/revoke`, { _csrf: csrf });
-    assert.equal(res.status, 303);
-    assert.equal((await fetch(`${srv.url}/cli/whoami`, { headers: { authorization: `Bearer ${t}` } })).status, 401);
   });
 
   test("exchange is rate limited per IP", async () => {
@@ -314,7 +393,7 @@ describe("bearer gate on the MCP endpoint", () => {
       let srv, token;
       before(async () => {
         srv = await startServer({ NUCLEUX_AUTH: mode });
-        token = (await (await exchange(srv, await newCliCode(await signIn(srv)))).json()).token;
+        token = await newToken(srv);
       });
       after(() => srv.close());
 
@@ -363,7 +442,7 @@ describe("usage logging", () => {
   let srv, token;
   before(async () => {
     srv = await startServer({ NUCLEUX_AUTH: "optional" });
-    token = (await (await exchange(srv, await newCliCode(await signIn(srv)))).json()).token;
+    token = (await (await exchange(srv, await newCliCode(srv))).json()).token;
   });
   after(() => srv.close());
 
@@ -375,7 +454,7 @@ describe("usage logging", () => {
 
     const rows = srv.db.all("SELECT * FROM usage ORDER BY id");
     assert.equal(rows.length, 3);
-    const userId = srv.db.get("SELECT id FROM users").id;
+    const userId = srv.db.get("SELECT user_id FROM tokens").user_id;
     assert.deepEqual(
       rows.map((r) => [r.user_id, r.token_kind, r.tool, r.ok]),
       [
@@ -391,9 +470,9 @@ describe("usage logging", () => {
     const tok = srv.db.get("SELECT last_used FROM tokens");
     assert.equal(tok.last_used, srv.clock.t);
 
-    const summary = srv.store.usageSummary(userId);
-    assert.equal(summary.last7, 2);
-    assert.deepEqual(summary.topTools.map((t) => t.tool), ["echo", "fail"]);
+    const row = srv.store.adminOverview().users.find((u) => u.id === userId);
+    assert.equal(row.calls7, 2);
+    assert.equal(row.last_seen, srv.clock.t);
   });
 });
 
@@ -444,24 +523,24 @@ describe("OAuth 2.1 for MCP clients", () => {
       resource: "https://nucleux.test/mcp",
     });
 
-    // No session: bounce through sign-in, then come back to authorize.
-    const anon = await fetch(`${srv.url}/oauth/authorize?${q}`, { redirect: "manual" });
-    assert.equal(anon.status, 302);
-    const toSignIn = local(srv, anon.headers.get("location"));
-    assert.ok(toSignIn.startsWith("/connect?next="));
-    const next = new URL(toSignIn, "http://x").searchParams.get("next");
-    const browser = await signIn(srv, "alice", next);
-    assert.equal(browser.location, `https://nucleux.test/mcp/oauth/authorize?${q}`);
-
-    const consentRes = await browser.get(local(srv, browser.location));
+    // No session, no sign-in: straight to the consent page.
+    const browser = newBrowser(srv);
+    const consentRes = await browser.get(`/oauth/authorize?${q}`);
     assert.equal(consentRes.status, 200);
     assert.match(consentRes.headers.get("content-security-policy"), /form-action 'self' https:\/\/claude.test/);
+    assert.ok(browser.jar.has("nx_pre"), "consent sets the CSRF cookie");
     const consent = await consentRes.text();
-    assert.match(consent, /Allow Claude to use Nucleux as alice@example.com\?/);
+    assert.match(consent, /Allow Claude to use Nucleux\?/);
+    assert.doesNotMatch(consent, /sign in|@/i);
+    const usersBefore = srv.db.get("SELECT COUNT(*) n FROM users").n;
 
-    // Missing CSRF is refused.
+    // Missing CSRF, a token minted for another browser, or a foreign Origin are refused.
     const form = Object.fromEntries(q);
     assert.equal((await browser.post("/oauth/authorize", { ...form, decision: "allow" })).status, 403);
+    const elsewhere = csrfFrom(await (await newBrowser(srv).get(`/oauth/authorize?${q}`)).text());
+    assert.equal((await browser.post("/oauth/authorize", { ...form, _csrf: elsewhere, decision: "allow" })).status, 403);
+    assert.equal((await browser.post("/oauth/authorize", { ...form, _csrf: csrfFrom(consent), decision: "allow" }, { origin: "https://evil.test" })).status, 403);
+    assert.equal(srv.db.get("SELECT COUNT(*) n FROM users").n, usersBefore, "nothing created without consent");
 
     const allow = await browser.post("/oauth/authorize", { ...form, _csrf: csrfFrom(consent), decision: "allow" });
     assert.equal(allow.status, 302);
@@ -470,6 +549,9 @@ describe("OAuth 2.1 for MCP clients", () => {
     assert.equal(back.searchParams.get("state"), "st-123");
     assert.equal(back.searchParams.get("iss"), "https://nucleux.test/mcp");
     const code = back.searchParams.get("code");
+    // Allow created one anonymous principal for this grant.
+    assert.equal(srv.db.get("SELECT COUNT(*) n FROM users").n, usersBefore + 1);
+    assert.equal(srv.db.get("SELECT provider FROM users ORDER BY id DESC LIMIT 1").provider, "anon");
 
     // Wrong verifier fails (and burns the code).
     const bad = await token({ grant_type: "authorization_code", code, redirect_uri: redirectUri, client_id: client.client_id, code_verifier: pkce().verifier });
@@ -515,8 +597,9 @@ describe("OAuth 2.1 for MCP clients", () => {
     assert.equal(usage.token_kind, "oauth");
     assert.equal(usage.tool, "echo");
 
-    // Connected app shows on the Connect page.
-    assert.match(await (await browser.get("/connect")).text(), /Claude <span class="badge">OAuth<\/span>/);
+    // The grant shows up in /admin as an anonymous principal with one app.
+    const granted = srv.store.adminOverview().users.find((u) => u.apps === 1);
+    assert.equal(granted.provider, "anon");
 
     // Access tokens expire after an hour.
     srv.advance(3600 * 1000 + 1);
@@ -544,7 +627,7 @@ describe("OAuth 2.1 for MCP clients", () => {
   test("refresh token reuse revokes the family", async () => {
     const redirectUri = "https://claude.test/cb";
     const client = await (await register({ client_name: "Reuse", redirect_uris: [redirectUri] })).json();
-    const browser = await signIn(srv);
+    const browser = newBrowser(srv);
     const { verifier, challenge } = pkce();
     const form = { response_type: "code", client_id: client.client_id, redirect_uri: redirectUri, code_challenge: challenge, code_challenge_method: "S256" };
     const consent = await (await browser.get(`/oauth/authorize?${new URLSearchParams(form)}`)).text();
@@ -559,7 +642,7 @@ describe("OAuth 2.1 for MCP clients", () => {
   test("deny, bad redirect and missing PKCE", async () => {
     const redirectUri = "https://claude.test/cb";
     const client = await (await register({ client_name: "X", redirect_uris: [redirectUri] })).json();
-    const browser = await signIn(srv);
+    const browser = newBrowser(srv);
     const { challenge } = pkce();
     const form = { response_type: "code", client_id: client.client_id, redirect_uri: redirectUri, code_challenge: challenge, code_challenge_method: "S256", state: "s" };
 

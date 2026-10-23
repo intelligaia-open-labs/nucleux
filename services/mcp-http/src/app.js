@@ -1,7 +1,9 @@
-// The HTTP app: MCP proxy (gated + tracked), sign-in, Connect/admin pages,
-// CLI token exchange and an OAuth 2.1 authorization server for MCP clients.
+// The HTTP app, token only: MCP proxy (bearer-gated + tracked), self-serve
+// tokens and connect codes for the site's MCP page, CLI code exchange, an
+// OAuth 2.1 authorization server for MCP clients (consent, no login), and a
+// Basic-auth /admin. There is no sign-in and no session.
 //
-// nginx strips the public `/mcp` prefix, so routes here are `/`, `/connect`,
+// nginx strips the public `/mcp` prefix, so routes here are `/`, `/tokens`,
 // `/cli/exchange`… while every URL we hand to a browser or client is built
 // from `config.base` (https://nucleux.in/mcp).
 
@@ -14,10 +16,8 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { createPages } from "./pages.js";
 import { createSurface } from "./surface.js";
-import { signInEmail } from "./mailer.js";
+import { connectPrompt } from "./prompt.js";
 import {
-  sign,
-  verify,
   sha256,
   safeEqual,
   pkceS256,
@@ -28,8 +28,6 @@ import {
   appendSetCookie,
   normalizeCliCode,
   formatCliCode,
-  normalizeEmail,
-  normalizeEmailCode,
   hmac,
 } from "./security.js";
 
@@ -37,35 +35,31 @@ const require = createRequire(import.meta.url);
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const TOKENS_CSS = require.resolve("@nucleux/tokens/styles.css");
 
-const SESSION_COOKIE = "nx_session";
-const LOGIN_COOKIE = "nx_login";
-const LOGIN_TTL = 10 * 60 * 1000;
-const PRE_COOKIE = "nx_pre"; // signed-out CSRF (double submit, HMAC-bound)
-const EMAIL_COOKIE = "nx_email"; // which emailed code this browser is waiting for
-const EMAIL_SENDS_PER_HOUR = 5;
+const PRE_COOKIE = "nx_pre"; // CSRF for the consent and admin forms (double submit, HMAC-bound)
 const HOUR = 3600 * 1000;
 
 const DEFAULT_LIMITS = {
-  signin: { windowMs: 10 * 60 * 1000, max: 30 },
+  admin: { windowMs: 10 * 60 * 1000, max: 30 },
   exchange: { windowMs: 10 * 60 * 1000, max: 20 },
   register: { windowMs: 60 * 60 * 1000, max: 20 },
   token: { windowMs: 60 * 1000, max: 60 },
-  code: { windowMs: 10 * 60 * 1000, max: 20 },
-  emailSend: { windowMs: 60 * 60 * 1000, max: 20 }, // per IP; per address is EMAIL_SENDS_PER_HOUR
-  emailVerify: { windowMs: 10 * 60 * 1000, max: 50 },
+  consent: { windowMs: 10 * 60 * 1000, max: 30 },
+  // Self-serve issuance; `max` comes from config.issuePerHour unless a test overrides it.
+  issueToken: { windowMs: HOUR },
+  issuePrompt: { windowMs: HOUR },
 };
 
 const jsonRpcError = (code, message) => ({ jsonrpc: "2.0", error: { code, message }, id: null });
 
-export function createApp({ config, store, upstream, mobile = null, providers = {}, mailer = null, limits = {} }) {
-  // Web for everyone; web + Nucleux Mobile for signed-in requests (surface.js).
+export function createApp({ config, store, upstream, mobile = null, limits = {} }) {
+  // Web for everyone; web + Nucleux Mobile for any valid token (surface.js).
   const surface = createSurface({ web: upstream, mobile });
   const pages = createPages(config);
   const p = (route) => `${config.basePath}${route}`;
   const abs = (route) => `${config.base}${route}`;
   const resourceMetadataUrl = abs("/.well-known/oauth-protected-resource");
-  const limit = (name) => rateLimiter({ name, ...DEFAULT_LIMITS[name], ...limits[name], now: store.now });
-  const isAdmin = (user) => !!user && config.admins.includes(String(user.email).toLowerCase());
+  const limit = (name) =>
+    rateLimiter({ name, max: config.issuePerHour, ...DEFAULT_LIMITS[name], ...limits[name], now: store.now });
 
   const app = express();
   app.disable("x-powered-by");
@@ -100,40 +94,34 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
   app.use(express.urlencoded({ extended: false, limit: "64kb" }));
 
   // -------------------------------------------------------------------------
-  // Helpers: sessions, CSRF, page headers, `next` handling
+  // Helpers: CSRF and page headers
   // -------------------------------------------------------------------------
 
-  function currentSession(req) {
-    if (req._nx === undefined) {
-      const id = parseCookies(req.headers.cookie)[SESSION_COOKIE];
-      req._nx = id ? store.getSession(id) : null;
-      if (req._nx) req._nx.rawId = id;
+  // The consent and admin forms have no session to hold a CSRF token, so the
+  // browser gets a random `nx_pre` cookie and forms carry HMAC(secret, cookie).
+  // A cross-site page can neither read the cookie nor forge the HMAC, and the
+  // Origin check below rejects cross-site posts outright.
+  function preCsrf(req, res) {
+    let pre = parseCookies(req.headers.cookie)[PRE_COOKIE];
+    if (typeof pre !== "string" || !/^[0-9A-Za-z]{32}$/.test(pre)) {
+      pre = newOpaque(32);
+      appendSetCookie(res, serializeCookie(PRE_COOKIE, pre, { path: config.basePath || "/", secure: config.secureCookies, maxAge: 24 * HOUR }));
     }
-    return req._nx;
+    return hmac(config.sessionSecret, `pre:${pre}`);
   }
-
-  function sessionCookie(value, maxAge) {
-    return serializeCookie(SESSION_COOKIE, value, {
-      path: config.basePath || "/",
-      secure: config.secureCookies,
-      maxAge,
-    });
-  }
-
-  // Same-origin POST with the session's CSRF token.
-  function csrfOk(req, auth) {
+  function preCsrfOk(req) {
     const origin = req.headers.origin;
-    if (origin && origin !== "null" && origin !== config.origin) return false;
-    if (origin === "null") return false;
+    if (origin && origin !== config.origin) return false; // includes "null"
+    const pre = parseCookies(req.headers.cookie)[PRE_COOKIE];
     const token = req.body?._csrf;
-    return typeof token === "string" && safeEqual(token, auth.session.csrf);
+    return typeof pre === "string" && typeof token === "string" && safeEqual(token, hmac(config.sessionSecret, `pre:${pre}`));
   }
 
   function pageHeaders(res, { formAction = [] } = {}) {
     const forms = ["'self'", ...formAction].join(" ");
     res.setHeader(
       "Content-Security-Policy",
-      `default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' https: data:; connect-src 'self'; form-action ${forms}; frame-ancestors 'none'; base-uri 'none'`
+      `default-src 'none'; style-src 'self'; script-src 'none'; img-src 'self' data:; connect-src 'none'; form-action ${forms}; frame-ancestors 'none'; base-uri 'none'`
     );
     res.setHeader("X-Frame-Options", "DENY");
     // "no-referrer" would make Chrome send `Origin: null` on our own form posts, which the
@@ -147,25 +135,6 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
   function sendPage(res, html, status = 200, opts) {
     pageHeaders(res, opts);
     res.status(status).type("html").send(html);
-  }
-
-  // Only same-origin paths, expressed relative to base ("/connect").
-  function safeNext(input) {
-    if (typeof input !== "string" || !input || input.length > 4096) return "/connect";
-    let s = input;
-    if (s.startsWith(`${config.origin}/`)) s = s.slice(config.origin.length);
-    if (config.basePath && (s === config.basePath || s.startsWith(`${config.basePath}/`) || s.startsWith(`${config.basePath}?`))) {
-      s = s.slice(config.basePath.length) || "/";
-    }
-    if (!s.startsWith("/") || s.startsWith("//") || s.includes("\\") || /[\u0000-\u001f\u007f]/.test(s)) return "/connect";
-    return s;
-  }
-
-  function allowedEmail(email) {
-    const { allowedEmails, allowedDomains } = config;
-    if (!allowedEmails.length && !allowedDomains.length) return true;
-    const lower = String(email).toLowerCase();
-    return allowedEmails.includes(lower) || allowedDomains.includes(lower.split("@")[1]);
   }
 
   const asyncRoute = (fn) => (req, res, next) => {
@@ -206,7 +175,6 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
   };
   app.get("/assets/tokens.css", asset(TOKENS_CSS, "css"));
   app.get("/assets/app.css", asset(path.join(HERE, "assets/app.css"), "css"));
-  app.get("/assets/app.js", asset(path.join(HERE, "assets/app.js"), "js"));
 
   // -------------------------------------------------------------------------
   // OAuth discovery documents (also under the path-suffixed RFC 8414/9728
@@ -221,7 +189,7 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
       bearer_methods_supported: ["header"],
       scopes_supported: ["mcp"],
       resource_name: "Nucleux MCP",
-      resource_documentation: abs("/connect"),
+      resource_documentation: config.site,
     });
   };
   const authServerMetadata = (_req, res) => {
@@ -240,7 +208,7 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
       revocation_endpoint_auth_methods_supported: ["none", "client_secret_post"],
       scopes_supported: ["mcp"],
       authorization_response_iss_parameter_supported: true,
-      service_documentation: abs("/connect"),
+      service_documentation: config.site,
     });
   };
   for (const suffix of ["", "/mcp"]) {
@@ -250,389 +218,127 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
   }
 
   // -------------------------------------------------------------------------
-  // Sign-in with Google / GitHub
+  // The old Connect page now lives on the site
   // -------------------------------------------------------------------------
 
-  const signinLimit = limit("signin");
+  const setupUrl = `${config.site}#setup`;
+  const toSite = (_req, res) => res.redirect(301, setupUrl);
+  app.get("/connect", toSite);
+  app.get("/connect/*rest", toSite);
+  app.get("/login", toSite);
 
-  app.get("/auth/login", signinLimit, (req, res) => {
-    const provider = providers[req.query.provider];
-    if (!provider) {
-      sendPage(res, pages.message({ title: "Sign-in unavailable", text: "That sign-in provider is not configured." }), 400);
+  // -------------------------------------------------------------------------
+  // Self-serve issuance for the site's MCP page (same origin only)
+  // -------------------------------------------------------------------------
+
+  // Browsers always send Origin on POST, and a cross-site page can't forge it,
+  // so requiring our own origin keeps other sites from minting tokens through a
+  // visitor's browser. (A script can send any Origin; the per-IP limit covers that.)
+  function sameOriginJson(req, res, next) {
+    res.setHeader("Cache-Control", "no-store");
+    if (req.headers.origin !== config.origin) {
+      res.status(403).json({ error: "forbidden_origin", error_description: `Only ${config.origin} may request tokens.` });
       return;
     }
-    const nonce = newOpaque(24);
-    const state = sign(config.sessionSecret, {
-      p: provider.id,
-      n: safeNext(req.query.next),
-      c: sha256(nonce),
-      exp: store.now() + LOGIN_TTL,
+    next();
+  }
+
+  const today = () => new Date(store.now()).toISOString().slice(0, 10);
+
+  // A one-time connect code for `npx -y @nucleux/mcp add --code …`, plus the
+  // prompt that tells a coding agent how to run it. /cli/exchange turns the
+  // code into a token labelled with the machine's hostname.
+  app.post("/tokens/prompt", sameOriginJson, limit("issuePrompt"), (_req, res) => {
+    const user = store.createAnonUser();
+    const { code, expires } = store.createCliCode(user.id);
+    const shown = formatCliCode(code);
+    res.json({
+      code: shown,
+      expires: new Date(expires).toISOString(),
+      prompt: connectPrompt({ code: shown, base: config.base, site: config.site }),
     });
-    // Binds the round trip to this browser (login CSRF).
-    appendSetCookie(
-      res,
-      serializeCookie(LOGIN_COOKIE, nonce, { path: p("/auth"), secure: config.secureCookies, maxAge: LOGIN_TTL })
-    );
-    res.setHeader("Cache-Control", "no-store");
-    res.redirect(302, provider.authorizeUrl({ state, redirectUri: abs(`/auth/callback/${provider.id}`) }));
   });
 
-  app.get(
-    "/auth/callback/:provider",
-    signinLimit,
-    asyncRoute(async (req, res) => {
-      const provider = providers[req.params.provider];
-      const fail = (text, status = 400) => sendPage(res, pages.message({ title: "Sign-in failed", text }), status);
-      appendSetCookie(res, serializeCookie(LOGIN_COOKIE, "", { path: p("/auth"), secure: config.secureCookies, maxAge: 0 }));
-      if (!provider) return fail("That sign-in provider is not configured.");
-      if (req.query.error) return fail("Sign-in was cancelled.");
+  // A token to paste into an agent's config as `Authorization: Bearer …`. Shown once.
+  app.post("/tokens", sameOriginJson, limit("issueToken"), (_req, res) => {
+    const user = store.createAnonUser();
+    const { token } = store.createToken(user.id, `web · ${today()}`);
+    res.json({ token });
+  });
 
-      const state = verify(config.sessionSecret, req.query.state, store.now());
-      const nonce = parseCookies(req.headers.cookie)[LOGIN_COOKIE];
-      if (!state || state.p !== provider.id || !nonce || !safeEqual(sha256(nonce), state.c)) {
-        return fail("This sign-in link has expired. Please start again.");
-      }
-      if (typeof req.query.code !== "string" || !req.query.code) return fail("The provider did not return a code.");
+  // -------------------------------------------------------------------------
+  // Admin: HTTP Basic against NUCLEUX_ADMIN_PASSWORD (any user name); 404 if unset
+  // -------------------------------------------------------------------------
 
-      let profile;
-      try {
-        profile = await provider.profile({ code: req.query.code, redirectUri: abs(`/auth/callback/${provider.id}`) });
-      } catch (err) {
-        console.error(`[nucleux-mcp] ${provider.id} sign-in failed:`, err.message);
-        return fail(`Could not sign you in with ${provider.label}. Make sure your account has a verified email.`, 502);
-      }
-      if (!allowedEmail(profile.email)) {
-        return fail(`${profile.email} is not allowed to use this server.`, 403);
-      }
-      const user = store.upsertUser({ provider: provider.id, ...profile });
-      if (user.disabled) return fail("This account has been disabled.", 403);
-
-      const session = store.createSession(user.id);
-      appendSetCookie(res, sessionCookie(session.id, 30 * 24 * 3600 * 1000));
+  const adminLimit = limit("admin");
+  function adminAuth(req, res, next) {
+    if (!config.adminPassword) {
+      res.status(404).json({ error: "not_found" });
+      return;
+    }
+    const m = /^Basic\s+(\S+)$/i.exec(req.headers.authorization ?? "");
+    const decoded = m ? Buffer.from(m[1], "base64").toString("utf8") : "";
+    const password = decoded.includes(":") ? decoded.slice(decoded.indexOf(":") + 1) : null;
+    // Compare hashes so the comparison is constant-time whatever the lengths.
+    if (password === null || !safeEqual(sha256(password), sha256(config.adminPassword))) {
+      res.setHeader("WWW-Authenticate", 'Basic realm="Nucleux admin", charset="UTF-8"');
       res.setHeader("Cache-Control", "no-store");
-      res.redirect(302, abs(safeNext(state.n)));
-    })
-  );
-
-  app.post("/auth/logout", (req, res) => {
-    const auth = currentSession(req);
-    if (auth) {
-      if (!csrfOk(req, auth)) {
-        sendPage(res, pages.message({ title: "Request expired", text: "Reload the page and try again." }), 403);
-        return;
-      }
-      store.deleteSession(auth.rawId);
-    }
-    appendSetCookie(res, sessionCookie("", 0));
-    res.redirect(303, abs("/connect"));
-  });
-
-  // -------------------------------------------------------------------------
-  // Sign-in with an emailed one-time code (only when SMTP is configured)
-  // -------------------------------------------------------------------------
-
-  // Signed-out forms have no session to hold a CSRF token, so the browser gets
-  // a random `nx_pre` cookie and forms carry HMAC(secret, cookie). A cross-site
-  // page can neither read the cookie nor forge the HMAC.
-  function preCsrf(req, res) {
-    let pre = parseCookies(req.headers.cookie)[PRE_COOKIE];
-    if (typeof pre !== "string" || !/^[0-9A-Za-z]{32}$/.test(pre)) {
-      pre = newOpaque(32);
-      appendSetCookie(res, serializeCookie(PRE_COOKIE, pre, { path: config.basePath || "/", secure: config.secureCookies, maxAge: 24 * HOUR }));
-    }
-    return hmac(config.sessionSecret, `pre:${pre}`);
-  }
-  function preCsrfOk(req) {
-    const origin = req.headers.origin;
-    if (origin && origin !== config.origin) return false; // includes "null"
-    const pre = parseCookies(req.headers.cookie)[PRE_COOKIE];
-    const token = req.body?._csrf;
-    return typeof pre === "string" && typeof token === "string" && safeEqual(token, hmac(config.sessionSecret, `pre:${pre}`));
-  }
-
-  function renderSignIn(req, res, { next, error, emailValue = "", emailError, status = 200 } = {}) {
-    const email = mailer ? { csrf: preCsrf(req, res), value: emailValue, error: emailError } : null;
-    sendPage(res, pages.signIn({ providers, next, error, email }), status);
-  }
-
-  const emailCookie = (flow, maxAge) =>
-    serializeCookie(EMAIL_COOKIE, flow, { path: p("/auth/email"), secure: config.secureCookies, maxAge });
-
-  // Same session as the OAuth providers, then on to the preserved `next`.
-  function finishEmailSignIn(req, res, row) {
-    const fail = (text, status) => sendPage(res, pages.message({ title: "Sign-in failed", text }), status);
-    appendSetCookie(res, emailCookie("", 0));
-    if (!allowedEmail(row.email)) return fail(`${row.email} is not allowed to use this server.`, 403);
-    const user = store.upsertUser({ provider: "email", providerId: row.email, email: row.email, name: row.email.split("@")[0], avatar: null });
-    if (user.disabled) return fail("This account has been disabled.", 403);
-    const session = store.createSession(user.id);
-    appendSetCookie(res, sessionCookie(session.id, 30 * 24 * 3600 * 1000));
-    res.setHeader("Cache-Control", "no-store");
-    res.redirect(303, abs(safeNext(row.next)));
-  }
-
-  // Creates a code, emails it, points this browser at it. Returns { error, status } or null.
-  async function sendEmailCode(res, email, next) {
-    if (store.emailCodesSentSince(email, store.now() - HOUR) >= EMAIL_SENDS_PER_HOUR) {
-      return { error: "Too many codes were sent to this address. Try again in an hour.", status: 429 };
-    }
-    const { flow, code, link, expires } = store.createEmailCode(email, next);
-    const message = signInEmail({ code, link: abs(`/auth/email/link?t=${encodeURIComponent(link)}`), base: config.base });
-    try {
-      await mailer.send({ to: email, ...message });
-    } catch (err) {
-      // Never log the code, the link or the address: the SMTP error code is enough to debug.
-      console.error(`[nucleux-mcp] sign-in email failed: ${[err?.code ?? "error", err?.responseCode].filter(Boolean).join(" ")}`);
-      store.retireEmailFlow(store.emailFlow(flow).id);
-      return { error: "We couldn't send the email just now. Try again in a minute.", status: 503 };
-    }
-    appendSetCookie(res, emailCookie(flow, expires - store.now() + 20 * 60 * 1000));
-    return null;
-  }
-
-  const currentEmailFlow = (req) => {
-    const flow = parseCookies(req.headers.cookie)[EMAIL_COOKIE];
-    const row = flow ? store.emailFlow(flow) : null;
-    return row ? { flow, row } : null;
-  };
-
-  if (mailer) {
-    const sendLimit = limit("emailSend");
-    const verifyLimit = limit("emailVerify");
-    const expired = (req, res, next) =>
-      renderSignIn(req, res, { next, emailError: "That code has expired or was already used. Enter your email to get a new one.", status: 400 });
-
-    app.post(
-      "/auth/email/start",
-      sendLimit,
-      asyncRoute(async (req, res) => {
-        const next = safeNext(req.body?.next);
-        if (!preCsrfOk(req)) {
-          return renderSignIn(req, res, { next, emailError: "This page expired. Please try again.", status: 403 });
-        }
-        const raw = typeof req.body?.email === "string" ? req.body.email.slice(0, 300) : "";
-        const email = normalizeEmail(raw);
-        if (!email) {
-          return renderSignIn(req, res, { next, emailValue: raw, emailError: "Enter a valid email address, like name@example.com.", status: 400 });
-        }
-        if (!allowedEmail(email)) {
-          return renderSignIn(req, res, { next, emailValue: raw, emailError: "This email address can't sign in to this server.", status: 403 });
-        }
-        const failed = await sendEmailCode(res, email, next);
-        if (failed) return renderSignIn(req, res, { next, emailValue: raw, emailError: failed.error, status: failed.status });
-        res.redirect(303, abs("/auth/email/verify"));
-      })
-    );
-
-    // The "Check your email" page. Reads the flow from this browser's cookie.
-    app.get("/auth/email/verify", (req, res) => {
-      const current = currentEmailFlow(req);
-      if (!current) return res.redirect(302, abs("/connect"));
-      const { row } = current;
-      const state = store.emailFlowState(row);
-      if (state === "used" || state === "expired") return expired(req, res, row.next);
-      sendPage(
-        res,
-        pages.emailCheck({
-          email: row.email,
-          csrf: preCsrf(req, res),
-          next: row.next,
-          locked: state === "locked",
-          notice: req.query.sent ? "We sent a new code. Use the newest one." : undefined,
-        })
-      );
-    });
-
-    app.post("/auth/email/verify", verifyLimit, (req, res) => {
-      const current = currentEmailFlow(req);
-      if (!current) return expired(req, res);
-      const { flow, row } = current;
-      const page = (props, status) =>
-        sendPage(res, pages.emailCheck({ email: row.email, csrf: preCsrf(req, res), next: row.next, ...props }), status);
-      if (!preCsrfOk(req)) return page({ error: "This page expired. Please try again." }, 403);
-      const code = normalizeEmailCode(req.body?.code);
-      if (!code) return page({ error: "Enter the 6-digit code from the email." }, 400);
-      const result = store.verifyEmailCode(flow, code);
-      if (result.ok) return finishEmailSignIn(req, res, result.ok);
-      if (result.error === "wrong") {
-        return page({ error: `That code isn't right. ${result.left} ${result.left === 1 ? "try" : "tries"} left.` }, 400);
-      }
-      if (result.error === "locked") return page({ locked: true, error: "Too many wrong codes. Request a new one." }, 429);
-      return expired(req, res, row.next);
-    });
-
-    app.post(
-      "/auth/email/resend",
-      sendLimit,
-      asyncRoute(async (req, res) => {
-        const current = currentEmailFlow(req);
-        if (!current) return expired(req, res);
-        const { row } = current;
-        if (!preCsrfOk(req)) {
-          return sendPage(res, pages.emailCheck({ email: row.email, csrf: preCsrf(req, res), next: row.next, error: "This page expired. Please try again." }), 403);
-        }
-        const failed = await sendEmailCode(res, row.email, row.next);
-        if (failed) {
-          // The current code (if still live) keeps working; say why no new one came.
-          const locked = store.emailFlowState(row) !== "live";
-          const props = locked ? { locked, error: failed.error } : { warning: failed.error };
-          return sendPage(res, pages.emailCheck({ email: row.email, csrf: preCsrf(req, res), next: row.next, ...props }), failed.status);
-        }
-        store.retireEmailFlow(row.id); // only the newest code works
-        res.redirect(303, abs("/auth/email/verify?sent=1"));
-      })
-    );
-
-    // The emailed link. Signs in straight away in the browser that asked for
-    // the code; anywhere else (another device, or a mail scanner fetching the
-    // link) it asks for a click first, so a prefetch can't burn or use it.
-    app.get("/auth/email/link", verifyLimit, (req, res) => {
-      const link = typeof req.query.t === "string" ? req.query.t : "";
-      const row = store.emailFlowByLink(link);
-      if (store.emailFlowState(row) !== "live") {
-        return sendPage(res, pages.message({ title: "Link expired", text: "This sign-in link has expired or was already used. Request a new code." }), 400);
-      }
-      const current = currentEmailFlow(req);
-      if (current && current.row.id === row.id) {
-        const result = store.consumeEmailLink(link);
-        if (result.ok) return finishEmailSignIn(req, res, result.ok);
-      }
-      sendPage(res, pages.emailLinkConfirm({ email: row.email, link, csrf: preCsrf(req, res) }));
-    });
-
-    app.post("/auth/email/link", verifyLimit, (req, res) => {
-      if (!preCsrfOk(req)) {
-        return sendPage(res, pages.message({ title: "Request expired", text: "Open the link from the email again." }), 403);
-      }
-      const result = store.consumeEmailLink(req.body?.t);
-      if (!result.ok) {
-        return sendPage(res, pages.message({ title: "Link expired", text: "This sign-in link has expired or was already used. Request a new code." }), 400);
-      }
-      finishEmailSignIn(req, res, result.ok);
-    });
-  }
-
-  // -------------------------------------------------------------------------
-  // Connect page
-  // -------------------------------------------------------------------------
-
-  const NOTICES = { revoked: "Access revoked.", disconnected: "App disconnected." };
-
-  function renderConnect(req, res, auth, extra = {}) {
-    const user = auth.user;
-    sendPage(
-      res,
-      pages.connect({
-        user,
-        csrf: auth.session.csrf,
-        tokens: store.listTokens(user.id),
-        apps: store.listConnectedApps(user.id),
-        usage: store.usageSummary(user.id),
-        isAdmin: isAdmin(user),
-        notice: NOTICES[req.query.done],
-        ...extra,
-      })
-    );
-  }
-
-  app.get("/connect", (req, res) => {
-    const auth = currentSession(req);
-    if (!auth) {
-      renderSignIn(req, res, { next: req.query.next ? safeNext(req.query.next) : undefined });
+      res.status(401).type("text").send("Authentication required.");
       return;
     }
-    if (req.query.next) {
-      const next = safeNext(req.query.next);
-      if (next !== "/connect") {
-        res.redirect(302, abs(next));
-        return;
-      }
-    }
-    store.touchUser(auth.user.id);
-    renderConnect(req, res, auth);
-  });
-  app.get("/login", (req, res) => {
-    const qs = req.query.next ? `?next=${encodeURIComponent(safeNext(req.query.next))}` : "";
-    res.redirect(302, abs(`/connect${qs}`));
+    next();
+  }
+
+  const ADMIN_NOTICES = { revoked: "Revoked.", disabled: "Principal disabled and its access revoked.", enabled: "Principal enabled." };
+  app.get("/admin", adminLimit, adminAuth, (req, res) => {
+    sendPage(res, pages.admin({ csrf: preCsrf(req, res), overview: store.adminOverview(), notice: ADMIN_NOTICES[req.query.done] }));
   });
 
-  // Every POST below needs a session + CSRF.
-  function sessionPost(handler) {
-    return (req, res, next) => {
-      const auth = currentSession(req);
-      if (!auth) {
-        res.redirect(303, abs("/connect"));
+  function adminPost(handler) {
+    return (req, res) => {
+      if (!preCsrfOk(req)) {
+        sendPage(res, pages.message({ title: "Request expired", text: "Reload the admin page and try again." }), 403);
         return;
       }
-      if (!csrfOk(req, auth)) {
-        sendPage(res, pages.message({ title: "Request expired", text: "Reload the page and try again.", user: auth.user, csrf: auth.session.csrf }), 403);
+      const done = handler(req);
+      if (!done) {
+        res.status(404).json({ error: "not_found" });
         return;
       }
-      return handler(req, res, auth, next);
+      res.redirect(303, abs(`/admin?done=${done}`));
     };
   }
 
   app.post(
-    "/connect/code",
-    limit("code"),
-    sessionPost((req, res, auth) => {
-      const { code } = store.createCliCode(auth.user.id);
-      renderConnect({ query: {} }, res, auth, { code: formatCliCode(code) });
-    })
-  );
-
-  app.post(
-    "/connect/tokens/:id/revoke",
-    sessionPost((req, res, auth) => {
-      store.revokeToken(auth.user.id, Number(req.params.id));
-      res.redirect(303, abs("/connect?done=revoked"));
-    })
-  );
-
-  app.post(
-    "/connect/apps/:clientId/revoke",
-    sessionPost((req, res, auth) => {
-      store.revokeApp(auth.user.id, String(req.params.clientId));
-      res.redirect(303, abs("/connect?done=disconnected"));
-    })
-  );
-
-  // -------------------------------------------------------------------------
-  // Admin
-  // -------------------------------------------------------------------------
-
-  app.get("/admin", (req, res) => {
-    const auth = currentSession(req);
-    if (!auth) {
-      res.redirect(302, abs(`/connect?next=${encodeURIComponent("/admin")}`));
-      return;
-    }
-    if (!isAdmin(auth.user)) {
-      sendPage(res, pages.message({ title: "Not allowed", text: "Admins only.", user: auth.user, csrf: auth.session.csrf }), 403);
-      return;
-    }
-    sendPage(res, pages.admin({ user: auth.user, csrf: auth.session.csrf, overview: store.adminOverview() }));
-  });
-
-  app.post(
     "/admin/users/:id/:action",
-    sessionPost((req, res, auth) => {
-      if (!isAdmin(auth.user)) {
-        sendPage(res, pages.message({ title: "Not allowed", text: "Admins only.", user: auth.user, csrf: auth.session.csrf }), 403);
-        return;
-      }
+    adminLimit,
+    adminAuth,
+    adminPost((req) => {
       const id = Number(req.params.id);
-      const action = req.params.action;
-      if (action === "disable") {
-        store.setUserDisabled(id, true);
-        store.revokeAllForUser(id);
-      } else if (action === "enable") store.setUserDisabled(id, false);
-      else if (action === "revoke") store.revokeAllForUser(id);
-      else {
-        res.status(404).end();
-        return;
+      switch (req.params.action) {
+        case "disable":
+          store.setUserDisabled(id, true);
+          store.revokeAllForUser(id);
+          return "disabled";
+        case "enable":
+          store.setUserDisabled(id, false);
+          return "enabled";
+        case "revoke":
+          store.revokeAllForUser(id);
+          return "revoked";
+        default:
+          return null;
       }
-      res.redirect(303, abs("/admin"));
+    })
+  );
+
+  app.post(
+    "/admin/tokens/:id/revoke",
+    adminLimit,
+    adminAuth,
+    adminPost((req) => {
+      store.revokeTokenById(Number(req.params.id));
+      return "revoked";
     })
   );
 
@@ -794,28 +500,24 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
     res.redirect(302, u.toString());
   }
 
+  // No login: anyone may connect an MCP client. The consent page is what stops
+  // a site from silently minting grants (CSRF + Origin on the POST).
   app.get("/oauth/authorize", (req, res) => {
     const check = checkAuthorize(req.query);
-    const auth = currentSession(req);
     if (check.fatal) {
-      sendPage(res, pages.message({ title: "Cannot connect", text: check.fatal, user: auth?.user, csrf: auth?.session.csrf }), 400);
+      sendPage(res, pages.message({ title: "Cannot connect", text: check.fatal }), 400);
       return;
     }
     if (check.redirectError) {
       const { uri, state, error, description } = check.redirectError;
       return redirectBack(res, uri, { error, error_description: description, state });
     }
-    if (!auth) {
-      res.redirect(302, abs(`/connect?next=${encodeURIComponent(req.originalUrl)}`));
-      return;
-    }
     const redirect = new URL(check.params.redirect_uri);
     sendPage(
       res,
       pages.consent({
         client: check.client,
-        user: auth.user,
-        csrf: auth.session.csrf,
+        csrf: preCsrf(req, res),
         params: check.params,
         redirectHost: redirect.host,
       }),
@@ -825,19 +527,14 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
     );
   });
 
-  app.post("/oauth/authorize", (req, res) => {
-    const auth = currentSession(req);
-    if (!auth) {
-      sendPage(res, pages.message({ title: "Signed out", text: "Your session ended. Start connecting again from your app." }), 401);
-      return;
-    }
-    if (!csrfOk(req, auth)) {
-      sendPage(res, pages.message({ title: "Request expired", text: "Reload the page and try again.", user: auth.user, csrf: auth.session.csrf }), 403);
+  app.post("/oauth/authorize", limit("consent"), (req, res) => {
+    if (!preCsrfOk(req)) {
+      sendPage(res, pages.message({ title: "Request expired", text: "Go back to your app and connect again." }), 403);
       return;
     }
     const check = checkAuthorize(req.body ?? {});
     if (check.fatal) {
-      sendPage(res, pages.message({ title: "Cannot connect", text: check.fatal, user: auth.user, csrf: auth.session.csrf }), 400);
+      sendPage(res, pages.message({ title: "Cannot connect", text: check.fatal }), 400);
       return;
     }
     if (check.redirectError) {
@@ -848,9 +545,11 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
     if (req.body.decision !== "allow") {
       return redirectBack(res, params.redirect_uri, { error: "access_denied", state: params.state });
     }
+    // One anonymous principal per grant: its usage and revocation stay separate.
+    const user = store.createAnonUser();
     const code = store.createAuthCode({
       clientId: client.id,
-      userId: auth.user.id,
+      userId: user.id,
       redirectUri: params.redirect_uri,
       codeChallenge: params.code_challenge,
       scope: params.scope,
@@ -960,7 +659,7 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
       if (!principal) {
         return unauthorized(res, {
           invalid: true,
-          body: jsonRpcError(-32001, `Invalid or revoked token. Reconnect at ${abs("/connect")}`),
+          body: jsonRpcError(-32001, `Invalid or revoked token. Get a new one at ${config.site}`),
         });
       }
       req.principal = principal;
@@ -968,20 +667,20 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
     }
     if (config.authMode === "required") {
       return unauthorized(res, {
-        body: jsonRpcError(-32001, `Authentication required. Sign in at ${abs("/connect")}`),
+        body: jsonRpcError(-32001, `A Nucleux token is required. Get one at ${config.site}`),
       });
     }
     next();
   }
 
   function buildServer(instructions, principal) {
-    // Signed in = a valid bearer token. Only then is Nucleux Mobile merged in.
-    const signedIn = !!principal;
+    // A valid bearer token gets Nucleux Mobile merged in.
+    const hasToken = !!principal;
     const server = new Server(
       { name: "nucleux", version: upstream.version },
       { capabilities: { tools: {} }, instructions }
     );
-    server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: await surface.listTools(signedIn) }));
+    server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: await surface.listTools(hasToken) }));
     server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const started = performance.now();
       let ok = false;
@@ -990,7 +689,7 @@ export function createApp({ config, store, upstream, mobile = null, providers = 
         const { result, upstream: by } = await surface.callTool(
           request.params.name,
           request.params.arguments ?? {},
-          signedIn
+          hasToken
         );
         answeredBy = by;
         ok = !result?.isError;
