@@ -8,6 +8,19 @@ The format is machine-readable: each version heading starts with `## ` followed
 by a version tag and date, and entries are grouped under `### Added`, `### Changed`,
 `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings.
 
+## [0.11.3] — 2026-10-23
+
+### Fixed
+- `add` no longer reports Gemini CLI when only a `~/.gemini` folder exists
+  (Gemini Code Assist and other Google tools create it); the `gemini` command
+  must be installed.
+- Claude Desktop from the Microsoft Store (Windows) reads its config from
+  `%LOCALAPPDATA%\Packages\Claude_*\LocalCache\Roaming\Claude`; `add` now
+  writes there when that folder exists.
+- Claude Desktop gets `npx` by absolute path (the one next to the node running
+  `add`): GUI apps don't inherit the shell's PATH (nvm, Homebrew), so a bare
+  `npx` could fail to start.
+
 ## [0.11.2] — 2026-10-23
 
 ### Added

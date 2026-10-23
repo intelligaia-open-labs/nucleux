@@ -144,3 +144,34 @@ describe("nucleux-mcp add", () => {
     expect(out.join("\n")).toMatch(/not in a project folder/);
   });
 });
+
+describe("nucleux-mcp add: agent detection edge cases", () => {
+  it("doesn't treat a ~/.gemini folder as the Gemini CLI (other Google tools create it)", () => {
+    mkdirSync(join(home, ".gemini"));
+    mkdirSync(join(home, ".cursor"));
+    expect(runAdd(["--no-project"], env())).toBe(0);
+    expect(out.join("\n")).not.toMatch(/Gemini/);
+    expect(existsSync(join(home, ".gemini/settings.json"))).toBe(false);
+    out = [];
+    expect(runAdd(["--no-project"], env({ has: (c) => c === "gemini" }))).toBe(0);
+    expect(json(join(home, ".gemini/settings.json")).mcpServers.nucleux.command).toBe("npx");
+  });
+
+  it("writes Claude Desktop's config where the Microsoft Store build reads it", () => {
+    const localAppData = join(home, "AppData/Local");
+    const storeDir = join(localAppData, "Packages/Claude_pzs8sxrjxfjjc/LocalCache/Roaming/Claude");
+    mkdirSync(storeDir, { recursive: true });
+    expect(runAdd(["--no-project"], env({ platform: "win32", appData: join(home, "AppData/Roaming"), localAppData }))).toBe(0);
+    expect(json(join(storeDir, "claude_desktop_config.json")).mcpServers.nucleux.args).toEqual(["/c", "npx", "-y", "@nucleux/mcp"]);
+    expect(existsSync(join(home, "AppData/Roaming/Claude/claude_desktop_config.json"))).toBe(false);
+  });
+
+  it("gives Claude Desktop npx by absolute path (it doesn't get the shell's PATH)", () => {
+    mkdirSync(join(home, "Library/Application Support/Claude"), { recursive: true });
+    expect(runAdd(["--no-project"], env({ npxPath: "/opt/node/bin/npx" }))).toBe(0);
+    expect(json(join(home, "Library/Application Support/Claude/claude_desktop_config.json")).mcpServers.nucleux).toEqual({
+      command: "/opt/node/bin/npx",
+      args: ["-y", "@nucleux/mcp"],
+    });
+  });
+});

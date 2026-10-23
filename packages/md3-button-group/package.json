@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-button-group",
-  "version": "0.11.2",
+  "version": "0.11.3",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 button group — Nucleux agentic UI for React.",

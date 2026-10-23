@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-tooltip",
-  "version": "0.11.2",
+  "version": "0.11.3",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 tooltip (plain, rich) — Nucleux agentic UI for React.",
