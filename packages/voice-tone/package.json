@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/voice-tone",
-  "version": "0.11.2",
+  "version": "0.11.3",
   "type": "module",
   "sideEffects": false,
   "description": "Voice & Tone — say how the reply should sound (named presets, a rules list, a sample line), as a Tone chip or a Tone row in Request settings, never editing the prompt — Nucleux agentic UI for React.",

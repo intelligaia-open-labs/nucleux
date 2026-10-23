@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir, hostname } from "node:os";
 import { dirname, join } from "node:path";
 
@@ -48,6 +48,10 @@ export interface AddEnv {
   platform: NodeJS.Platform;
   /** %APPDATA% on Windows. */
   appData?: string;
+  /** %LOCALAPPDATA% on Windows (where the Microsoft Store build of Claude Desktop keeps its config). */
+  localAppData?: string;
+  /** Absolute path of the npx that ships with the node running this command, if it exists. */
+  npxPath?: string;
   /** Is this command on PATH? */
   has: (cmd: string) => boolean;
   /** Runs a command; returns its exit status. */
@@ -68,6 +72,11 @@ function defaultEnv(): AddEnv {
     cwd: process.cwd(),
     platform,
     appData: process.env.APPDATA,
+    localAppData: process.env.LOCALAPPDATA,
+    npxPath: (() => {
+      const p = join(dirname(process.execPath), platform === "win32" ? "npx.cmd" : "npx");
+      return existsSync(p) ? p : undefined;
+    })(),
     has: (cmd) => spawnSync(platform === "win32" ? "where" : "which", [cmd], { stdio: "ignore" }).status === 0,
     run: (cmd, args) =>
       spawnSync(cmd, args, { stdio: "ignore", shell: platform === "win32" }).status ?? 1,
@@ -86,6 +95,35 @@ function defaultEnv(): AddEnv {
 function serverCommand(platform: NodeJS.Platform, remote = false) {
   const pkg = ["-y", "@nucleux/mcp", ...(remote ? ["remote"] : [])];
   return platform === "win32" ? { command: "cmd", args: ["/c", "npx", ...pkg] } : { command: "npx", args: pkg };
+}
+
+/**
+ * Claude Desktop's settings folder. The Microsoft Store (MSIX) build on Windows
+ * reads a virtualised copy under %LOCALAPPDATA%\\Packages\\Claude_*\\LocalCache\\Roaming\\Claude,
+ * not %APPDATA%\\Claude, so prefer that one when it exists.
+ */
+function claudeDesktopDir(env: AddEnv) {
+  if (env.platform === "win32") {
+    const packages = join(env.localAppData ?? join(env.home, "AppData", "Local"), "Packages");
+    try {
+      for (const name of readdirSync(packages)) {
+        if (!/^Claude_/i.test(name)) continue;
+        const dir = join(packages, name, "LocalCache", "Roaming", "Claude");
+        if (existsSync(dir)) return dir;
+      }
+    } catch {
+      /* no Packages folder: the regular installer */
+    }
+  }
+  return appSupport(env, "Claude");
+}
+
+/** Claude Desktop's command with npx by absolute path when we know it (it doesn't inherit the shell's PATH). */
+function desktopCommand(env: AddEnv, cmd: { command: string; args: string[] }) {
+  if (!env.npxPath) return cmd;
+  return env.platform === "win32"
+    ? { command: "cmd", args: ["/c", env.npxPath, ...cmd.args.slice(2)] }
+    : { command: env.npxPath, args: cmd.args };
 }
 
 /** Where each editor keeps its user settings folder. */
@@ -230,7 +268,7 @@ function agents(env: AddEnv, mode: Mode): Agent[] {
   const codexDir = join(env.home, ".codex");
   const codexFile = join(codexDir, "config.toml");
   const vscodeUser = join(appSupport(env, "Code"), "User");
-  const desktopDir = appSupport(env, "Claude");
+  const desktopDir = claudeDesktopDir(env);
   const files = {
     cursor: join(env.home, ".cursor", "mcp.json"),
     vscode: join(vscodeUser, "mcp.json"),
@@ -345,14 +383,16 @@ function agents(env: AddEnv, mode: Mode): Agent[] {
       name: "Claude Desktop",
       detected: existsSync(desktopDir),
       reads: "none",
+      // Claude Desktop is a GUI app: it doesn't get the shell's PATH (nvm, Homebrew), so point at npx by absolute path.
       // Its config file can't send headers to a remote server, so it keeps the stdio proxy (token read from credentials.json).
-      connect: (dryRun) => jsonServer(env, files.desktop, "mcpServers", hosted ? proxy : local, dryRun, mode, hosted ? "proxy" : undefined),
+      connect: (dryRun) => jsonServer(env, files.desktop, "mcpServers", desktopCommand(env, hosted ? proxy : local), dryRun, mode, hosted ? "proxy" : undefined),
       disconnect: (server) => jsonRemove(files.desktop, "mcpServers", server),
     },
     {
       id: "gemini",
       name: "Gemini CLI",
-      detected: existsSync(join(env.home, ".gemini")) || env.has("gemini"),
+      // Only the CLI counts: other Google tools (Gemini Code Assist) also create ~/.gemini.
+      detected: env.has("gemini"),
       reads: "agents-md",
       connect: (dryRun) => jsonServer(env, files.gemini, "mcpServers", hosted ? { httpUrl: hosted.server, headers } : local, dryRun, mode, via),
       disconnect: (server) => jsonRemove(files.gemini, "mcpServers", server),

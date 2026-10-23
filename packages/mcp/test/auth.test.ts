@@ -172,7 +172,7 @@ describe("add --code (direct connection)", () => {
     allAgents();
     writeFileSync(join(home, ".gemini/settings.json"), JSON.stringify({ theme: "dark" }));
 
-    expect(await runAdd(["--code", "abcd-2345", "--no-project"], env({ has: (c) => c === "claude" }))).toBe(0);
+    expect(await runAdd(["--code", "abcd-2345", "--no-project"], env({ has: (c) => c === "claude" || c === "gemini" }))).toBe(0);
 
     expect(exchanges).toEqual([{ code: "ABCD-2345", label: "ada-laptop" }]);
     const creds = json(credsFile());
@@ -221,7 +221,7 @@ describe("add --code (direct connection)", () => {
       'model = "o4"\n\n[mcp_servers.nucleux]\ncommand = "npx"\nargs = ["-y","@nucleux/mcp"]\n\n[mcp_servers.other]\ncommand = "y"\n',
     );
     const run = (cmd: string, args: string[]) => (runs.push([cmd, ...args]), 0);
-    const e = env({ has: (c) => c === "claude", run, output: () => "Args: -y @nucleux/mcp" });
+    const e = env({ has: (c) => c === "claude" || c === "gemini", run, output: () => "Args: -y @nucleux/mcp" });
 
     expect(await runAdd(["--code", CODE, "--no-project"], e)).toBe(0);
 
