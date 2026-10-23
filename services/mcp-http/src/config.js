@@ -35,6 +35,22 @@ export function loadConfig(env = process.env) {
     providers.github = { clientId: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET };
   }
 
+  // Email one-time codes, sent over SMTP (Google Workspace by default). Enabled only
+  // when there is an account to send from.
+  let email = null;
+  if (env.SMTP_USER && env.SMTP_PASS) {
+    const port = Number(env.SMTP_PORT || 465);
+    email = {
+      host: env.SMTP_HOST || "smtp.gmail.com",
+      port,
+      // 465 is implicit TLS; 587/25 upgrade with STARTTLS (nodemailer requires it when secure is false).
+      secure: env.SMTP_SECURE ? env.SMTP_SECURE === "true" : port === 465,
+      user: env.SMTP_USER,
+      pass: env.SMTP_PASS,
+      from: env.MAIL_FROM || `Nucleux <${env.SMTP_USER}>`,
+    };
+  }
+
   return {
     base, // e.g. https://nucleux.in/mcp — public URL of what this process serves at "/"
     origin: url.origin,
@@ -43,6 +59,7 @@ export function loadConfig(env = process.env) {
     authMode,
     sessionSecret,
     providers,
+    email,
     allowedEmails: list(env.NUCLEUX_ALLOWED_EMAILS),
     allowedDomains: list(env.NUCLEUX_ALLOWED_DOMAINS).map((d) => d.replace(/^@/, "")),
     admins: list(env.NUCLEUX_ADMINS),

@@ -9,11 +9,14 @@ import {
   newAccessToken,
   newRefreshToken,
   newOpaque,
+  newEmailCode,
   PAT_RE,
 } from "./security.js";
 
 export const SESSION_TTL = 30 * 24 * 3600 * 1000;
 export const CLI_CODE_TTL = 10 * 60 * 1000;
+export const EMAIL_CODE_TTL = 10 * 60 * 1000;
+export const EMAIL_MAX_ATTEMPTS = 5;
 export const OAUTH_CODE_TTL = 5 * 60 * 1000;
 export const ACCESS_TTL = 3600 * 1000;
 export const REFRESH_TTL = 60 * 24 * 3600 * 1000;
@@ -120,6 +123,70 @@ export function createStore(db, { now = () => Date.now() } = {}) {
       const row = db.get("SELECT id, hash, revoked FROM tokens WHERE hash = @h", { h });
       if (!row || !safeEqual(row.hash, h) || row.revoked) return false;
       return db.run("UPDATE tokens SET revoked = @t WHERE id = @id AND revoked IS NULL", { t: now(), id: row.id }).changes === 1;
+    },
+
+    // ---- email sign-in codes -----------------------------------------------
+    // One row per email sent. Returns the plaintext flow id (for the browser's
+    // cookie), code and link token; only their hashes are stored.
+    createEmailCode(email, next) {
+      const flow = newOpaque(32);
+      const code = newEmailCode();
+      const link = newOpaque(43);
+      const t = now();
+      db.run(
+        `INSERT INTO email_codes (email, flow_hash, code_hash, link_hash, next, created, expires)
+         VALUES (@email, @f, @c, @l, @next, @t, @e)`,
+        { email, f: sha256(flow), c: sha256(`${flow}:${code}`), l: sha256(link), next, t, e: t + EMAIL_CODE_TTL }
+      );
+      db.run("DELETE FROM email_codes WHERE created < @old", { old: t - DAY });
+      return { flow, code, link, expires: t + EMAIL_CODE_TTL };
+    },
+    emailCodesSentSince: (email, since) =>
+      db.get("SELECT COUNT(*) AS n FROM email_codes WHERE email = @email AND created >= @since", { email, since }).n,
+    emailFlow(flow) {
+      if (typeof flow !== "string" || flow.length > 100) return null;
+      return db.get("SELECT * FROM email_codes WHERE flow_hash = @h", { h: sha256(flow) }) ?? null;
+    },
+    emailFlowByLink(link) {
+      if (typeof link !== "string" || link.length > 100) return null;
+      return db.get("SELECT * FROM email_codes WHERE link_hash = @h", { h: sha256(link) }) ?? null;
+    },
+    // Live = unused, unexpired, not locked by wrong guesses.
+    emailFlowState(row) {
+      if (!row || row.used) return "used";
+      if (row.attempts >= EMAIL_MAX_ATTEMPTS) return "locked";
+      if (row.expires < now()) return "expired";
+      return "live";
+    },
+    // Checks a code against the flow. Every wrong guess counts, atomically.
+    // Returns { ok: row } | { error: "wrong", left } | { error: "locked"|"expired"|"used" }.
+    verifyEmailCode(flow, code) {
+      const h = sha256(flow);
+      return db.tx(() => {
+        const row = db.get("SELECT * FROM email_codes WHERE flow_hash = @h", { h });
+        const state = store.emailFlowState(row);
+        if (state !== "live") return { error: state };
+        if (!safeEqual(sha256(`${flow}:${code}`), row.code_hash)) {
+          db.run("UPDATE email_codes SET attempts = attempts + 1 WHERE id = @id", { id: row.id });
+          const left = EMAIL_MAX_ATTEMPTS - row.attempts - 1;
+          return left > 0 ? { error: "wrong", left } : { error: "locked" };
+        }
+        db.run("UPDATE email_codes SET used = @t WHERE id = @id", { t: now(), id: row.id });
+        return { ok: row };
+      });
+    },
+    // The emailed link: single use, same expiry and lock as the code.
+    consumeEmailLink(link) {
+      return db.tx(() => {
+        const row = store.emailFlowByLink(link);
+        const state = store.emailFlowState(row);
+        if (state !== "live") return { error: state };
+        db.run("UPDATE email_codes SET used = @t WHERE id = @id", { t: now(), id: row.id });
+        return { ok: row };
+      });
+    },
+    retireEmailFlow(id) {
+      db.run("UPDATE email_codes SET used = COALESCE(used, @t) WHERE id = @id", { t: now(), id });
     },
 
     // ---- CLI connect codes -------------------------------------------------

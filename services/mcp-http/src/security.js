@@ -50,6 +50,34 @@ export function normalizeCliCode(input) {
   return code;
 }
 
+// Email sign-in: a 6-digit code (uniform, crypto random) and address checks.
+export const newEmailCode = () => String(crypto.randomInt(0, 1_000_000)).padStart(6, "0");
+export function normalizeEmailCode(input) {
+  if (typeof input !== "string") return null;
+  const code = input.replace(/[\s-]/g, "");
+  return /^[0-9]{6}$/.test(code) ? code : null;
+}
+
+// A practical check, not RFC 5322: one @, a sane local part, a dotted ASCII
+// (or punycode) domain. Lower-cased: providers treat addresses that way in practice.
+const LOCAL_RE = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]{1,64}$/;
+const LABEL_RE = /^(?!-)[a-z0-9-]{1,63}(?<!-)$/;
+export function normalizeEmail(input) {
+  if (typeof input !== "string") return null;
+  const email = input.trim().toLowerCase();
+  if (email.length > 254) return null;
+  const at = email.lastIndexOf("@");
+  if (at < 1 || email.indexOf("@") !== at) return null;
+  const local = email.slice(0, at);
+  const domain = email.slice(at + 1);
+  if (!LOCAL_RE.test(local) || local.startsWith(".") || local.endsWith(".") || local.includes("..")) return null;
+  const labels = domain.split(".");
+  if (labels.length < 2 || !labels.every((l) => LABEL_RE.test(l)) || /^[0-9]+$/.test(labels.at(-1))) return null;
+  return email;
+}
+
+export const hmac = (secret, value) => crypto.createHmac("sha256", secret).update(value).digest("base64url");
+
 // HMAC-signed, expiring payloads (OAuth `state` for sign-in).
 export function sign(secret, payload) {
   const body = Buffer.from(JSON.stringify(payload)).toString("base64url");
