@@ -14,6 +14,8 @@ document.addEventListener("click", (event) => {
     .writeText(source.textContent.trim())
     .then(() => done("Copied"))
     .catch(() => {
+      // Clipboard blocked (permissions, older browser): show the text so it can be copied by hand.
+      if (button.hasAttribute("data-reveal-on-fail")) source.hidden = false;
       const range = document.createRange();
       range.selectNodeContents(source);
       const sel = window.getSelection();
