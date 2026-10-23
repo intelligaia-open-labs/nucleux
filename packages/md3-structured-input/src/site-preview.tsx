@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ListTodo } from "lucide-react";
+import { MsEditNote } from "@nucleux/md3-icons";
 import { Md3OpenInput, Md3OpenInputModelChip } from "@nucleux/md3-open-input";
 import { Md3StructuredInputSlots, type StructuredInputSlot } from "./index";
 
@@ -22,25 +22,25 @@ const SLOTS: StructuredInputSlot[] = [
   },
 ];
 
-const SUGGESTED = { task: "Fix export timeout", owner: "maya", due: "2026-12-10", priority: "high" };
+const SUGGESTED = { task: "Fix export timeout", owner: "maya", due: "2026-10-12", priority: "high" };
 
 /** Md3StructuredInputSlots as nucleux.in's live preview shows it: Aria's follow-up task form, filled from the blocker, above the composer. */
 export function SitePreview() {
   const [value, setValue] = useState("");
 
   return (
-    <div className="flex w-full max-w-2xl flex-col gap-3 text-md-on-surface">
-      <p className="ml-auto max-w-[80%] rounded-md-xl bg-md-primary-container/60 px-4 py-3">
-        <span className="block text-xs text-md-on-surface-variant">You</span>
+    <div className="flex w-[39.75rem] max-w-full flex-col gap-3 text-md-on-surface">
+      <p className="ml-auto flex max-w-[88%] flex-col gap-1 rounded-[18px_18px_6px_18px] bg-md-secondary-container px-3.5 py-2.5 text-sm text-md-on-secondary-container">
+        <span className="text-[11px] font-medium leading-4 opacity-80">You</span>
         Create a follow-up task for this blocker
       </p>
-      <p className="mr-12 rounded-md-xl bg-md-surface-container px-4 py-3">
-        <span className="block text-xs text-md-on-surface-variant">Aria</span>
+      <p className="mr-auto flex max-w-[92%] flex-col gap-1 rounded-[18px_18px_18px_6px] bg-md-surface-container-low px-3.5 py-2.5 text-sm">
+        <span className="text-[11px] font-medium leading-4 opacity-80">Aria</span>
         Here’s a follow-up task. I suggested some values from the blocker — check them before I create it.
       </p>
       <Md3StructuredInputSlots
         title="Follow-up task"
-        icon={<ListTodo />}
+        icon={<MsEditNote />}
         aside={
           <>
             For blocker <b className="font-semibold text-md-on-surface">EXP-210</b> · CSV export times out
@@ -52,7 +52,7 @@ export function SitePreview() {
         onCancel={() => {}}
         onSubmit={() => {}}
         submitLabel="Review"
-        className="rounded-md-xl border border-md-outline-variant bg-md-surface-container-lowest p-4"
+        className="rounded-md-lg border border-md-outline-variant bg-md-surface-container-lowest px-4 py-3.5"
       />
       <Md3OpenInput
         aria-label="Message Aria"

@@ -4,6 +4,17 @@ import { Button } from "@nucleux/button";
 import { Attachment, AttachmentGroup } from "@nucleux/attachment";
 import { AlertCircle, Camera, ImageIcon, Paperclip, RotateCcw, Trash2, X } from "lucide-react";
 
+/** nucleux.in's picture glyph (a rounded frame, sun and hills), drawn in `currentColor`. */
+function PictureGlyph({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>
+      <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="1.7" />
+      <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+      <path d="M3 15l5-5 4 4 3-3 6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export type VisualInputVariant = "drag-drop" | "paste-chip" | "camera-capture";
 
 /** Where a visual can come from. Only the sources you list are offered. */
@@ -341,6 +352,8 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
               icon={
                 f.previewUrl ? (
                   <img src={f.previewUrl} alt="" className="size-full rounded-md object-cover" />
+                ) : isDrop ? (
+                  <PictureGlyph />
                 ) : (
                   <ImageIcon aria-hidden="true" />
                 )
@@ -350,7 +363,7 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
               className={cn(
                 variant === "paste-chip" && "rounded-full py-1 pl-1",
                 isDrop &&
-                  "w-full max-w-none gap-3 rounded-full bg-muted/50 py-1.5 pl-1.5 pr-3 [&>span:first-child]:size-8 [&>span:first-child]:overflow-hidden [&>span:first-child]:bg-info/15 [&>span:first-child]:text-info [&>span:nth-child(2)>span:first-child]:font-normal [&>span:nth-child(2)]:flex-1 [&>span:nth-child(2)]:flex-row [&>span:nth-child(2)]:items-baseline [&>span:nth-child(2)]:justify-between [&>span:nth-child(2)]:gap-3",
+                  "w-full max-w-none gap-2 rounded-full bg-[hsl(var(--nx-ink-25))] px-3 py-2 leading-[1.55] [&>span:first-child]:size-7 [&>span:first-child]:overflow-hidden [&>span:first-child]:rounded-md [&>span:first-child]:bg-gradient-to-br [&>span:first-child]:from-info/15 [&>span:first-child]:to-info/[.35] [&>span:first-child]:text-info [&>span:first-child_svg]:size-3 [&>span:nth-child(2)>span]:leading-[1.55] [&>span:nth-child(2)>span:first-child]:text-[12px] [&>span:nth-child(2)>span:first-child]:font-normal [&>span:nth-child(2)>span:nth-child(2)]:text-[11px] [&>span:nth-child(2)>span:nth-child(2)]:text-faint [&>span:nth-child(2)]:flex-1 [&>span:nth-child(2)]:flex-row [&>span:nth-child(2)]:items-center [&>span:nth-child(2)]:justify-between [&>span:nth-child(2)]:gap-2 [&>button]:h-4 [&>button]:w-2.5 [&>button]:text-faint [&>button_svg]:size-2.5",
                 f.status === "error" && "border-destructive/60",
                 f.status === "reading" && "animate-pulse motion-reduce:animate-none",
               )}
@@ -604,7 +617,7 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
               }
             : {})}
           className={cn(
-            "flex flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-border bg-muted/40 px-5 py-6 text-center transition-colors",
+            "flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-[hsl(var(--nx-ink-25))] px-[18px] py-[22px] text-center leading-[1.55] transition-colors",
             canUpload && !disabled && "cursor-pointer hover:bg-muted/70",
             zoneIsButton &&
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
@@ -612,15 +625,15 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
             disabled && "opacity-50",
           )}
         >
-          <span className="mb-1.5 inline-flex size-10 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground [&_svg]:size-[1.125rem]">
-            <ImageIcon aria-hidden="true" />
+          <span className="mb-2.5 inline-flex size-10 items-center justify-center rounded-[10px] border border-border bg-background text-faint [&_svg]:size-[1.125rem]">
+            <PictureGlyph />
           </span>
-          <p className="text-sm font-semibold text-foreground">
+          <p className="mb-[3px] text-[12.5px] font-semibold text-foreground">
             {dragging
               ? "Drop to attach"
               : (label ?? (canPaste ? "Drop an image or paste a screenshot" : "Drop an image"))}
           </p>
-          <p className="text-xs text-muted-foreground">{hintText}</p>
+          <p className="text-[11px] text-faint">{hintText}</p>
           {zoneIsButton && <span className="sr-only">{browseLabel}</span>}
           {canCamera && (
             <div className="mt-1 flex flex-wrap items-center justify-center gap-2">
@@ -649,8 +662,17 @@ export const VisualInput = React.forwardRef<HTMLDivElement, VisualInputProps>(
             </div>
           )}
         </div>
-        {chips}
-        {children}
+        {chips && children ? (
+          <div className="flex flex-col gap-1.5">
+            {chips}
+            {children}
+          </div>
+        ) : (
+          <>
+            {chips}
+            {children}
+          </>
+        )}
         {status}
         {hiddenInputs}
       </div>

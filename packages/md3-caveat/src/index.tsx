@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Info } from "lucide-react";
+import { MsInfo } from "@nucleux/md3-icons";
 import { cn } from "@nucleux/utils";
 import type { CaveatProps, CaveatTooltipProps, CaveatVariant } from "@nucleux/caveat";
 
@@ -23,7 +23,7 @@ const DEFAULT_TEXT = "AI can make mistakes. Verify important information.";
  */
 export const Md3Caveat = React.forwardRef<HTMLParagraphElement, Md3CaveatProps>(
   ({ variant = "below-input", icon, actions, detail, className, children, ...props }, ref) => {
-    const glyph = icon === undefined ? <Info aria-hidden="true" /> : icon;
+    const glyph = icon === undefined ? <MsInfo /> : icon;
     if (detail != null) {
       // The tonal card: limitation (body-large), why it matters (body-medium), then text-button next steps.
       return (
@@ -35,19 +35,25 @@ export const Md3Caveat = React.forwardRef<HTMLParagraphElement, Md3CaveatProps>(
             "font-md",
             "flex w-full flex-col gap-1.5 text-md-on-surface [&_svg]:shrink-0",
             variant === "output-footer" &&
-              "mt-3.5 rounded-md-md bg-md-surface-container-highest px-4 pb-1.5 pt-3.5 animate-nx-fade-in motion-reduce:animate-none",
+              "mt-3.5 animate-nx-fade-in rounded-md-md bg-md-surface-container-high px-4 pb-1.5 pt-3.5 motion-reduce:animate-none",
             className,
           )}
           {...props}
         >
-          <span className="flex items-start gap-2.5 [&>svg]:mt-0.5 [&>svg]:size-5 [&>svg]:text-md-on-surface-variant">
+          <span className="flex items-start gap-2.5 [&>svg]:mt-0.5 [&>svg]:size-5">
             {glyph}
             <span className="flex min-w-0 flex-col gap-0.5">
-              <span className="text-base leading-6 tracking-[0.15px]">{children ?? DEFAULT_TEXT}</span>
-              <span className="text-sm leading-5 tracking-[0.25px] text-md-on-surface-variant">{detail}</span>
+              <span className="text-base leading-[1.55]">{children ?? DEFAULT_TEXT}</span>
+              <span className="text-sm leading-5 tracking-[0.25px] text-md-on-surface-variant">
+                {detail}
+              </span>
             </span>
           </span>
-          {actions && <span className="ml-4 inline-flex flex-wrap items-center gap-1 [&_svg]:size-[1.125rem]">{actions}</span>}
+          {actions && (
+            <span className="ml-[18px] inline-flex flex-wrap items-center gap-1 [&_svg]:size-[1.125rem]">
+              {actions}
+            </span>
+          )}
         </p>
       );
     }
@@ -60,7 +66,7 @@ export const Md3Caveat = React.forwardRef<HTMLParagraphElement, Md3CaveatProps>(
           "font-md",
           "items-center gap-2 text-xs leading-4 tracking-[0.4px] text-md-on-surface-variant [&_svg]:size-3.5 [&_svg]:shrink-0",
           variant === "output-footer"
-            ? "mt-3.5 flex w-full flex-wrap rounded-md-sm bg-md-surface-container px-3 py-2.5 animate-nx-fade-in motion-reduce:animate-none"
+            ? "mt-3.5 flex w-full animate-nx-fade-in flex-wrap rounded-md-sm bg-md-surface-container px-3 py-2.5 motion-reduce:animate-none"
             : "inline-flex",
           className,
         )}
@@ -68,7 +74,9 @@ export const Md3Caveat = React.forwardRef<HTMLParagraphElement, Md3CaveatProps>(
       >
         {glyph}
         <span>{children ?? DEFAULT_TEXT}</span>
-        {actions && <span className="ml-auto inline-flex flex-wrap items-center gap-1">{actions}</span>}
+        {actions && (
+          <span className="ml-auto inline-flex flex-wrap items-center gap-1">{actions}</span>
+        )}
       </p>
     );
   },
@@ -90,25 +98,39 @@ const tipSides: Record<TipSide, string> = {
  * the control through `aria-describedby` so screen readers hear it too.
  */
 export const Md3CaveatTooltip = React.forwardRef<HTMLSpanElement, Md3CaveatTooltipProps>(
-  ({ content = "Output may be inaccurate", side = "top", showIcon = true, children, className, ...props }, ref) => {
+  (
+    {
+      content = "Output may be inaccurate",
+      side = "top",
+      showIcon = true,
+      children,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
     const id = React.useId();
     const childProps = children.props as { "aria-describedby"?: string };
     const trigger = React.cloneElement(children, {
       "aria-describedby": [childProps["aria-describedby"], id].filter(Boolean).join(" "),
     } as Record<string, unknown>);
     return (
-      <span ref={ref} className={cn("font-md", "group/caveat relative inline-flex", className)} {...props}>
+      <span
+        ref={ref}
+        className={cn("font-md", "group/caveat relative inline-flex", className)}
+        {...props}
+      >
         {trigger}
         <span
           role="tooltip"
           className={cn(
             "pointer-events-none invisible absolute z-50 whitespace-nowrap rounded-md-xs bg-md-inverse-surface px-2 py-1 text-xs tracking-[0.4px] text-md-inverse-on-surface opacity-0 transition-opacity duration-150 motion-reduce:transition-none",
-            "group-hover/caveat:visible group-hover/caveat:opacity-100 group-focus-within/caveat:visible group-focus-within/caveat:opacity-100",
+            "group-focus-within/caveat:visible group-focus-within/caveat:opacity-100 group-hover/caveat:visible group-hover/caveat:opacity-100",
             tipSides[side],
           )}
         >
           <span id={id} className="inline-flex items-center gap-1.5 [&_svg]:size-3">
-            {showIcon && <Info aria-hidden="true" />}
+            {showIcon && <MsInfo />}
             {content}
           </span>
         </span>

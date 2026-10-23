@@ -80,6 +80,9 @@ function StatusWord({ tone, children }: { tone: "primary" | "tertiary" | "error"
  * tertiary or error role for expired and failed sign-ins. `variant="row"` is
  * the compact list row: logo, name and description, and a text-button Connect.
  */
+/** The row's trailing action: a small text button (28px, 13px label), as on nucleux.in. */
+const rowAction = "h-7 shrink-0 px-2.5 text-[13px] tracking-[0.1px]";
+
 export const Md3Connector = React.forwardRef<HTMLDivElement, Md3ConnectorProps>(
   (
     {
@@ -111,19 +114,20 @@ export const Md3Connector = React.forwardRef<HTMLDivElement, Md3ConnectorProps>(
           ref={ref}
           data-status={status}
           className={cn(
-            "font-md",
-            "flex min-h-[72px] items-center gap-4 rounded-md-md border bg-md-surface-container-low py-2 pl-4 pr-2 text-md-on-surface",
+            // nucleux.in's source row: a 24px mark, a 14/18 name over a 12/16 hint, a small text action.
+            "font-sans",
+            "flex min-h-[52px] items-center gap-3 rounded-md-md border bg-md-surface-container-low px-3.5 py-[9px] text-md-on-surface",
             status === "expired" ? "border-md-tertiary" : status === "error" ? "border-md-error" : "border-md-outline-variant",
             className,
           )}
           {...props}
         >
-          <span className="inline-flex size-10 shrink-0 items-center justify-center text-md-on-surface [&_svg]:size-7">
+          <span className="inline-flex size-6 shrink-0 items-center justify-center text-md-on-surface [&_svg]:size-6">
             {icon ?? <Plug aria-hidden="true" />}
           </span>
           <div className="flex min-w-0 flex-1 flex-col">
-            <span className="truncate text-base leading-6 tracking-[0.009em]">{name}</span>
-            {description && <span className="truncate text-sm leading-5 text-md-on-surface-variant">{description}</span>}
+            <span className="truncate text-[14px] font-medium leading-[18px] text-md-on-surface">{name}</span>
+            {description && <span className="mt-px truncate text-xs leading-4 text-md-on-surface-variant">{description}</span>}
           </div>
           <span role="status" aria-live="polite" className="contents">
             {status === "connected" && (
@@ -142,17 +146,17 @@ export const Md3Connector = React.forwardRef<HTMLDivElement, Md3ConnectorProps>(
             {status === "error" && <StatusWord tone="error">{statusText.error}</StatusWord>}
           </span>
           {status === "connected" && onDisconnect && (
-            <Md3Button variant="text" onClick={onDisconnect} className="shrink-0">
+            <Md3Button variant="text" onClick={onDisconnect} className={rowAction}>
               {disconnectLabel}
             </Md3Button>
           )}
           {status === "disconnected" && (
-            <Md3Button variant="text" onClick={onConnect} className="shrink-0">
+            <Md3Button variant="text" onClick={onConnect} className={rowAction}>
               {connectLabel}
             </Md3Button>
           )}
           {(status === "expired" || status === "error") && reconnect && (
-            <Md3Button variant="text" onClick={reconnect} className="shrink-0">
+            <Md3Button variant="text" onClick={reconnect} className={rowAction}>
               {status === "expired" ? "Reconnect" : "Try again"}
             </Md3Button>
           )}
@@ -267,7 +271,7 @@ export const Md3ConnectorList = React.forwardRef<HTMLDivElement, Md3ConnectorLis
           "font-md",
           "flex flex-col",
           grouped
-            ? "divide-y divide-md-outline-variant overflow-hidden rounded-md-lg border border-md-outline-variant bg-md-surface-container-low [&>[role=listitem]>*]:rounded-none [&>[role=listitem]>*]:border-0"
+            ? "divide-y divide-md-outline-variant overflow-hidden rounded-md-lg border border-md-primary/[0.18] bg-[color-mix(in_srgb,hsl(var(--nx-md-primary))_4%,hsl(var(--nx-md-surface-container-lowest)))] [&>[role=listitem]>*]:rounded-none [&>[role=listitem]>*]:border-0 [&>[role=listitem]>*]:bg-transparent"
             : "gap-2",
           !showLabel && className,
         )}
@@ -280,8 +284,8 @@ export const Md3ConnectorList = React.forwardRef<HTMLDivElement, Md3ConnectorLis
     );
     if (!showLabel) return list;
     return (
-      <div ref={ref} className={cn("font-md", "flex flex-col gap-2", className)} {...props}>
-        <p id={headingId} className="text-sm leading-5 tracking-[0.25px] text-md-on-surface-variant">
+      <div ref={ref} className={cn("font-sans", "flex flex-col gap-1.5", className)} {...props}>
+        <p id={headingId} className="text-xs leading-[1.4] text-md-on-surface-variant">
           {label}
         </p>
         {list}

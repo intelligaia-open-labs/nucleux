@@ -212,12 +212,16 @@ export const PersonalityVoiceCard = React.forwardRef<HTMLElement, PersonalityVoi
       ref={ref}
       aria-label={label}
       data-variant="voice-card"
-      className={cn("m-0 rounded-xl border border-border bg-background p-4 shadow-sm", className)}
+      className={cn(
+        "m-0 rounded-[8px] border border-border bg-background p-4 leading-[1.55] shadow-[0_1px_2px_0_hsl(var(--nx-ink-800)/0.04),0_1px_3px_0_hsl(var(--nx-ink-800)/0.06)]",
+        className,
+      )}
       {...props}
     >
-      <blockquote className="m-0 text-[13px] leading-5 text-foreground/80">“{quote}”</blockquote>
+      {/* Straight quotes and the ink-700 voice colour, as on nucleux.in. */}
+      <blockquote className="m-0 text-[13px] leading-5 text-[hsl(var(--nx-ink-700))]">&quot;{quote}&quot;</blockquote>
       {tags.length > 0 && (
-        <figcaption className="mt-2.5 text-[11px] font-medium text-muted-foreground">
+        <figcaption className="mt-2.5 text-[11px] font-medium text-faint">
           {[label, ...tags].join(" · ")}
         </figcaption>
       )}

@@ -13,7 +13,7 @@ const TOOLS: McpConnectionToolInfo[] = [
 export function SitePreview() {
   const [status, setStatus] = useState<McpConnectionActionStatus>("pending");
   return (
-    <div className="flex w-full max-w-[30rem] flex-col gap-2.5">
+    <div className="flex w-full max-w-[30rem] flex-col gap-2.5 antialiased [font-feature-settings:'ss01','cv11']">
       <McpConnectionActionPreview
         tool="linear.create_issue"
         args={CALL}
@@ -23,9 +23,8 @@ export function SitePreview() {
         onDeny={() => {}}
         denyLabel="Don't allow"
         result="Filed APO-412 in Apollo."
-        className="p-3.5"
       />
-      <McpConnectionTools variant="compact" title="Linear · 4 actions available" tools={TOOLS} trustNote={null} className="rounded-xl" />
+      <McpConnectionTools variant="compact" title="Linear · 4 actions available" tools={TOOLS} trustNote={null} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Check, Lock } from "lucide-react";
+import { MsLock } from "@nucleux/md3-icons";
 import { cn } from "@nucleux/utils";
 import { defaultTones } from "@nucleux/personality";
 import type {
@@ -28,7 +29,7 @@ const stateLayer =
  * Tone changes how the agent writes, never what it may do — keep
  * permission, caveat and refusal strings outside it. `variant="list"` is
  * the settings-page picker: M3 radio rows with each description visible, a
- * primary-container "Recommended" `badge` and a locked `note`.
+ * secondary-container "Recommended" `badge` and a locked `note`.
  */
 export const Md3Personality = React.forwardRef<HTMLDivElement, Md3PersonalityProps>(
   (
@@ -66,14 +67,14 @@ export const Md3Personality = React.forwardRef<HTMLDivElement, Md3PersonalityPro
         ref={ref}
         data-variant="tone-matrix"
         data-layout={variant}
-        className={cn("font-md", "flex flex-col gap-2", className)}
+        className={cn("font-md", "flex flex-col", list ? "gap-3 leading-[1.55]" : "gap-2", className)}
         {...props}
       >
         {label && (
           <span
             className={
               list
-                ? "text-lg font-semibold text-md-on-surface"
+                ? "text-[18.72px] font-semibold leading-[1.55] tracking-[-0.02em] text-md-on-surface"
                 : "text-xs font-medium tracking-[0.5px] text-md-on-surface-variant"
             }
           >
@@ -81,15 +82,15 @@ export const Md3Personality = React.forwardRef<HTMLDivElement, Md3PersonalityPro
           </span>
         )}
         {note && (
-          <p className="m-0 mt-2 flex items-center gap-1.5 text-sm tracking-[0.25px] text-md-on-surface-variant">
-            <Lock aria-hidden="true" className="size-4 shrink-0" />
+          <p className="m-0 flex items-center gap-1 text-xs leading-4 tracking-[0.4px] text-md-on-surface-variant">
+            <MsLock className="size-3.5" />
             {note}
           </p>
         )}
         <div
           role="radiogroup"
           aria-label={typeof label === "string" ? label : "Tone"}
-          className={list ? "mt-2 flex flex-col" : "flex flex-wrap gap-2"}
+          className={list ? "flex flex-col gap-1" : "flex flex-wrap gap-2"}
         >
           {options.map((option, index) => {
             const active = current === option.value;
@@ -108,31 +109,39 @@ export const Md3Personality = React.forwardRef<HTMLDivElement, Md3PersonalityPro
                   onClick={() => select(option.value)}
                   onKeyDown={(e) => onKeyDown(e, index)}
                   className={cn(
-                    "flex items-start gap-4 rounded-md-md py-2 pl-2.5 pr-3 text-left outline-none focus-visible:ring-2 focus-visible:ring-md-primary",
-                    stateLayer,
+                    "group/row flex items-start gap-1 rounded-md-md text-left outline-none focus-visible:ring-2 focus-visible:ring-md-primary",
                   )}
                 >
+                  {/* The M3 radio: a 20px ring in a 40px state-layer target. */}
                   <span
                     aria-hidden="true"
                     className={cn(
-                      "relative mt-0.5 grid size-5 shrink-0 place-items-center rounded-full border-2 transition-colors motion-reduce:transition-none",
-                      active ? "border-md-primary" : "border-md-on-surface-variant",
+                      "grid size-10 shrink-0 place-items-center rounded-full",
+                      stateLayer,
+                      "group-hover/row:before:opacity-[0.08] group-active/row:before:opacity-[0.12]",
                     )}
                   >
-                    {active && <span className="size-2.5 rounded-full bg-md-primary" />}
+                    <span
+                      className={cn(
+                        "relative grid size-5 place-items-center rounded-full border-2 transition-colors motion-reduce:transition-none",
+                        active ? "border-md-primary" : "border-md-on-surface-variant",
+                      )}
+                    >
+                      {active && <span className="size-2.5 rounded-full bg-md-primary" />}
+                    </span>
                   </span>
-                  <span className="relative flex flex-col gap-1">
-                    <span className="flex items-center gap-2 text-base text-md-on-surface">
+                  <span className="relative flex flex-col gap-0.5 pt-[9px]">
+                    <span className="flex items-center gap-2 text-base leading-[1.55] text-md-on-surface">
                       {option.icon}
                       {option.label}
                       {option.badge != null && (
-                        <span className="rounded-md-sm bg-md-primary-container px-1.5 py-0.5 text-xs font-semibold tracking-[0.5px] text-md-on-primary-container">
+                        <span className="rounded-[6px] bg-md-secondary-container px-1.5 text-[11px] font-semibold leading-[18px] text-md-on-secondary-container">
                           {option.badge}
                         </span>
                       )}
                     </span>
                     {option.description && (
-                      <span id={`${descId}-${index}`} className="text-sm tracking-[0.25px] text-md-on-surface-variant">
+                      <span id={`${descId}-${index}`} className="text-[13px] leading-[18px] text-md-on-surface-variant">
                         {option.description}
                       </span>
                     )}

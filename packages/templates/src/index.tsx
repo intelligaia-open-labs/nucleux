@@ -93,10 +93,13 @@ export const Templates = React.forwardRef<HTMLFormElement, TemplatesProps>(
           if (missing > 0) return;
           onComplete?.(interpolate(), current);
         }}
-        className={cn("flex flex-col gap-4 rounded-xl border border-border bg-background p-4 shadow-sm", className)}
+        className={cn(
+          "flex flex-col gap-4 rounded-[8px] border border-border bg-background p-4 shadow-[0_1px_2px_rgba(12,12,10,0.04),0_1px_3px_rgba(12,12,10,0.06)]",
+          className,
+        )}
         {...props}
       >
-        <p className="text-sm leading-8 text-foreground">
+        <p className="text-sm leading-[22px] text-[hsl(var(--nx-ink-700))]">
           {segments.map((segment, i) => {
             if (typeof segment === "string") return <React.Fragment key={i}>{segment}</React.Fragment>;
             const val = current[segment.slot] ?? "";
@@ -116,7 +119,9 @@ export const Templates = React.forwardRef<HTMLFormElement, TemplatesProps>(
                   // Fit the field to its text (`size` alone under-measures once padding is added).
                   style={{ width: `calc(${Math.max((val || segment.placeholder).length, 4) * 0.8}ch + ${listId ? 2.25 : 1.125}rem)` }}
                   className={cn(
-                    "mx-0.5 inline-block rounded-sm border border-dashed [&::-webkit-calendar-picker-indicator]:hidden border-brand bg-brand/5 px-2 py-0.5 text-center text-xs font-medium leading-5 text-brand placeholder:text-brand focus:border-solid focus:outline-none focus:ring-1 focus:ring-brand",
+                    "inline-block rounded-[5px] border border-dashed [&::-webkit-calendar-picker-indicator]:hidden border-brand bg-brand/[0.08] px-[9px] py-[2px] text-center text-xs font-medium leading-[22px] text-brand placeholder:text-brand focus:border-solid focus:outline-none focus:ring-1 focus:ring-brand",
+                    // Size to the text exactly where the browser can.
+                    "supports-[field-sizing:content]:!w-auto supports-[field-sizing:content]:[field-sizing:content]",
                     val && "border-solid bg-brand-muted",
                   )}
                 />

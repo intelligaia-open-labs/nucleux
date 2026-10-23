@@ -7,7 +7,7 @@ const REASON = "You selected transcript text twice today.";
 export function SitePreview() {
   return (
     <Md3Nudge
-      className="w-[34rem] max-w-full"
+      className="w-[35rem] max-w-full"
       appearance="inline"
       message={MESSAGE}
       reason={REASON}

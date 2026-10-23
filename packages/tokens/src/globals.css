@@ -152,6 +152,11 @@
   html,
   body {
     font-family: var(--nx-font-sans);
+    /* As nucleux.in renders text: Inter's ss01 (open digits) and cv11 (single-storey a). */
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 

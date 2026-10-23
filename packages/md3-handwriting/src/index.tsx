@@ -15,7 +15,8 @@ import type {
   HandwritingStroke,
   HandwritingWord,
 } from "@nucleux/handwriting";
-import { AlertCircle, Eraser, Keyboard, PenLine, RotateCcw, ScanText, Undo2, X } from "lucide-react";
+import { AlertCircle, Eraser, Keyboard, PenLine, RotateCcw, ScanText, Undo2 } from "lucide-react";
+import { MsClose, MsInkEraser, MsStylus, MsUndo } from "@nucleux/md3-icons";
 
 // Same API as the shadcn twin: the props and data shapes are the twin's own types.
 export type Md3HandwritingInputProps = HandwritingInputProps;
@@ -178,6 +179,10 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
       padLabel,
       compact = false,
       onClose,
+      recognizeLabel = "Recognise",
+      sampleStrokes,
+      sampleLabel = "Write a sample",
+      typeToggle = true,
       className,
       children,
       ...props
@@ -463,13 +468,32 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
         aria-label={isAnnotation ? "Annotation input" : "Handwriting input"}
         data-variant={variant}
         data-status={status}
-        className={cn("font-md", "flex flex-col gap-3 text-md-on-surface", className)}
+        className={cn(
+          "font-md",
+          "flex flex-col text-md-on-surface",
+          // The compact pad is its own white panel, as on nucleux.in.
+          compact
+            ? "gap-2 rounded-md-lg border border-md-outline-variant bg-md-surface-container-lowest px-2.5 pb-2.5 pt-2"
+            : "gap-3",
+          className,
+        )}
         {...props}
       >
         {(padLabel != null || (compact && (inputMode === "draw" || onClose))) && (
-          <div className="-mb-1 flex items-center gap-2">
-            <PenLine aria-hidden="true" className="size-5 shrink-0 text-md-primary" />
-            <p className="flex-1 text-sm font-medium tracking-[0.1px] text-md-on-surface-variant">{padLabel}</p>
+          <div className={cn("flex items-center", compact ? "gap-0.5" : "-mb-1 gap-2")}>
+            <p
+              className={cn(
+                "flex flex-1 items-center gap-2 font-medium text-md-on-surface-variant",
+                compact ? "pl-px text-[12.5px] leading-[18px]" : "text-sm tracking-[0.1px]",
+              )}
+            >
+              {compact ? (
+                <MsStylus className="size-[18px] text-md-primary" />
+              ) : (
+                <PenLine aria-hidden="true" className="size-5 shrink-0 text-md-primary" />
+              )}
+              {padLabel}
+            </p>
             {compact && inputMode === "draw" && (
               <>
                 <Md3IconButton
@@ -478,7 +502,7 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
                   disabled={disabled || strokes.length === 0 || status === "recognizing"}
                   className="[&_svg]:size-5"
                 >
-                  <Undo2 aria-hidden="true" />
+                  <MsUndo />
                 </Md3IconButton>
                 <Md3IconButton
                   aria-label="Clear"
@@ -486,13 +510,13 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
                   disabled={disabled || strokes.length === 0}
                   className="[&_svg]:size-5"
                 >
-                  <Eraser aria-hidden="true" />
+                  <MsInkEraser />
                 </Md3IconButton>
               </>
             )}
             {compact && onClose && (
               <Md3IconButton aria-label="Close handwriting" onClick={onClose} className="[&_svg]:size-5">
-                <X aria-hidden="true" />
+                <MsClose />
               </Md3IconButton>
             )}
           </div>
@@ -520,7 +544,7 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
               isAnnotation
                 ? "min-h-40 border border-md-outline-variant"
                 : compact
-                  ? "h-28 rounded-b-md-xs border-b border-md-outline-variant bg-md-surface-container-low"
+                  ? "h-28 rounded-md-md bg-md-surface-container-low"
                   : "h-44 border-[1.5px] border-dashed border-md-outline bg-md-surface-container-low",
               variant === "live-ocr" && "h-36 border border-solid border-md-outline-variant",
               disabled && "opacity-[0.38]",
@@ -543,7 +567,11 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
               )}
             />
             {compact && !isAnnotation && (
-              <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-[49%] border-t border-md-outline-variant" />
+              <>
+                {/* Ruled like paper: a line under each 56px row. */}
+                <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-[55px] border-t border-md-outline-variant/70" />
+                <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-[111px] border-t border-md-outline-variant/70" />
+              </>
             )}
             {strokes.length === 0 && (
               <p
@@ -553,7 +581,7 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
                   isAnnotation
                     ? "bottom-2 right-2 rounded-full bg-md-surface-container-high px-2.5 py-1 text-xs font-medium"
                     : compact
-                      ? "left-4 top-[23%] text-base"
+                      ? "left-4 top-[31px] text-sm opacity-80"
                       : "inset-x-0 bottom-3 text-center text-xs",
                 )}
               >
@@ -695,6 +723,7 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
               </Md3Button>
             </>
           )}
+          {typeToggle && (
           <Md3Button
             variant="text"
             icon={inputMode === "draw" ? <Keyboard aria-hidden="true" /> : <PenLine aria-hidden="true" />}
@@ -703,15 +732,26 @@ export const Md3HandwritingInput = React.forwardRef<HTMLDivElement, Md3Handwriti
           >
             {inputMode === "draw" ? "Type instead" : "Write instead"}
           </Md3Button>
+          )}
           <span className="flex-1" />
+          {inputMode === "draw" && sampleStrokes && sampleStrokes.length > 0 && strokes.length === 0 && (
+            <Md3Button variant="tonal" onClick={() => setStrokes(sampleStrokes)} disabled={disabled} className={cn(compact && "px-4")}>
+              {sampleLabel}
+            </Md3Button>
+          )}
           {inputMode === "draw" && onRecognize && (status !== "recognized" || mode === "review") && (
             <Md3Button
               variant={compact ? "filled" : "tonal"}
-              icon={<ScanText aria-hidden="true" />}
+              // Compact: a small text-only button, as on nucleux.in.
+              icon={compact ? undefined : <ScanText aria-hidden="true" />}
               onClick={() => void recognize()}
               disabled={disabled || strokes.length === 0 || status === "recognizing"}
+              className={cn(
+                compact &&
+                  "px-4 disabled:bg-md-on-surface/[0.12] disabled:text-md-on-surface/[0.38] disabled:opacity-100",
+              )}
             >
-              Recognise
+              {recognizeLabel}
             </Md3Button>
           )}
           {!(compact && inputMode === "draw" && status !== "recognized") && (

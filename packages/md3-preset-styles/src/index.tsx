@@ -85,7 +85,7 @@ const stateLayer =
 const focusRing = "outline-none focus-visible:ring-2 focus-visible:ring-md-primary focus-visible:ring-offset-2 focus-visible:ring-offset-md-surface";
 const overline = "text-[11.5px] font-semibold uppercase leading-4 tracking-[0.06em] text-md-on-surface-variant";
 const link = cn(
-  "relative inline-flex min-h-8 items-center gap-1 rounded-full px-2.5 text-[13px] font-medium text-md-primary [&_svg]:size-[18px]",
+  "relative inline-flex min-h-8 items-center gap-1 rounded-full px-2.5 py-1.5 text-[13px] font-medium leading-[1.55] text-md-primary [&_svg]:size-[18px]",
   stateLayer,
   "outline-none focus-visible:ring-2 focus-visible:ring-md-primary",
 );
@@ -176,7 +176,7 @@ function Preview({ style, prompt, id, fill }: {
     <div
       id={id}
       aria-live={id ? "polite" : undefined}
-      className={cn("flex flex-col gap-2.5 rounded-md-lg bg-md-on-surface/[0.04] px-4 py-3.5", fill && "self-stretch")}
+      className={cn("flex flex-col gap-2.5 rounded-[14px] bg-md-on-surface/[0.04] px-4 py-3.5", fill && "self-stretch")}
     >
       <p className={overline}>Preview · {style?.name}</p>
       {prompt && (
@@ -278,7 +278,7 @@ function Menu({ s, label, description, showPreview, previewPrompt, showClose }: 
         onFocus={() => s.setPeek(st.id)}
         onClick={() => s.select(st.id)}
         className={cn(
-          "relative flex min-h-[52px] w-full items-center gap-3 rounded-md-lg px-3 py-2 text-left",
+          "relative flex min-h-[52px] w-full items-center gap-3 rounded-[14px] px-3 py-2 text-left",
           "outline-none focus-visible:ring-2 focus-visible:ring-md-primary",
           on
             ? "bg-md-secondary-container text-md-on-secondary-container"
@@ -311,11 +311,11 @@ function Menu({ s, label, description, showPreview, previewPrompt, showClose }: 
       role="dialog"
       aria-labelledby={titleId}
       aria-describedby={descId}
-      className="absolute bottom-full left-0 z-50 mb-2 flex w-full min-w-[min(36rem,calc(100vw-2rem))] flex-col rounded-md-lg border border-md-outline-variant bg-md-surface-container-lowest p-2 text-md-on-surface shadow-md-2 animate-nx-fade-in motion-reduce:animate-none"
+      className="absolute bottom-full left-px z-50 mb-[9px] flex w-[calc(100%-2px)] min-w-[min(36rem,calc(100vw-2rem))] flex-col rounded-[20px] border border-md-outline-variant bg-md-surface-container-lowest p-2 font-sans text-md-on-surface shadow-[0_2px_6px_rgba(16,14,24,0.08),0_18px_44px_-22px_rgba(16,14,24,0.6)] animate-nx-fade-in motion-reduce:animate-none"
     >
       <div className={cn("relative flex flex-col gap-0.5 px-3 pb-2 pt-2.5", showClose && "pr-12")}>
         {showClose && (
-          <Md3IconButton aria-label="Close" onClick={() => s.closeMenu()} className="absolute right-0 top-0">
+          <Md3IconButton aria-label="Close" onClick={() => s.closeMenu()} className="absolute right-1 top-1 h-8 w-8 [&_svg]:size-5">
             <X aria-hidden="true" />
           </Md3IconButton>
         )}
@@ -345,7 +345,7 @@ function Menu({ s, label, description, showPreview, previewPrompt, showClose }: 
         {showPreview && <Preview id={prevId} style={s.previewStyle} prompt={previewPrompt} fill />}
       </div>
       {s.canCreate && (
-        <div className="mx-2 mt-2 border-t border-md-outline-variant pt-1.5">
+        <div className="mx-2 mb-0.5 mt-2 border-t border-md-outline-variant pt-1.5">
           <button type="button" onClick={s.startCreate} className={link}>
             <Plus aria-hidden="true" className="relative" />
             <span className="relative">{presetStylesCopy.create}</span>

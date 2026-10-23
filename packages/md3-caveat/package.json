@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@nucleux/caveat": "workspace:*",
+    "@nucleux/md3-icons": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0",
     "@nucleux/md3-button": "workspace:*"

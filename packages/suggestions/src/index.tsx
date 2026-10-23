@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Check, CornerDownRight, Info, RotateCw, X } from "lucide-react";
+import { Check, Info, RotateCw, X } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import { Spinner } from "@nucleux/spinner";
@@ -212,13 +212,13 @@ export function useSuggestions(props: SuggestionsProps) {
  * ──────────────────────────────────────────────────────────────────────────── */
 
 const chipBase =
-  "h-auto min-h-8 rounded-sm px-3 py-1.5 text-sm font-normal shadow-none transition-colors motion-reduce:transition-none";
+  "h-auto min-h-0 rounded-[8px] px-3 py-[5px] text-[11.5px] font-normal leading-[1.55] tracking-normal shadow-none transition-colors motion-reduce:transition-none";
 const chipVariant: Record<SuggestionsVariant, string> = {
   compose: "border border-border bg-background text-foreground hover:border-foreground hover:bg-background",
   "follow-up":
-    "border border-border bg-muted text-muted-foreground hover:border-foreground hover:bg-background hover:text-foreground",
+    "border border-border bg-[hsl(var(--nx-ink-25))] text-muted-foreground hover:border-foreground hover:bg-background hover:text-foreground",
   selection:
-    "min-h-7 rounded-md border-0 bg-transparent px-2.5 py-1 text-xs font-medium text-background hover:bg-background/15 focus-visible:ring-background focus-visible:ring-offset-foreground",
+    "min-h-7 rounded-md border-0 bg-transparent px-2.5 py-1 text-xs font-medium leading-4 text-background hover:bg-background/15 focus-visible:ring-background focus-visible:ring-offset-foreground",
 };
 
 /**
@@ -316,21 +316,23 @@ export const Suggestions = React.forwardRef<HTMLDivElement, SuggestionsProps>((p
     const marker = pending ? (
       <Spinner aria-hidden="true" role={undefined} aria-label={undefined} className="size-3.5 motion-reduce:animate-none" />
     ) : (
-      item.icon ?? (variant === "follow-up" ? <CornerDownRight aria-hidden="true" className="size-3.5" /> : null)
+      item.icon
     );
+    // Follow-ups are marked with a "↳ " lead, set in the label's own text as on nucleux.in.
+    const arrow = variant === "follow-up" && !pending && item.icon == null;
     return (
       <Button
         key={key}
         variant="secondary"
         size="sm"
         data-suggestion=""
-        aria-label={s.chipName(item)}
+        aria-label={s.chipName(item) ?? (arrow ? item.label : undefined)}
         aria-busy={pending || undefined}
         leftIcon={marker ?? undefined}
         onClick={() => onSelect?.(item, i)}
         className={cn(chipBase, chipVariant[variant])}
       >
-        {item.label}
+        {arrow ? `↳ ${item.label}` : item.label}
       </Button>
     );
   });

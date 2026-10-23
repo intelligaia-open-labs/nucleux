@@ -206,7 +206,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **model-selection** (`@nucleux/model-selection`) — Model Selection — choose which model handles the request.
   Exports: `ModelSelection, ModelSelectionVariant, ModelSelectionTrigger, ModelSelectionPicker, ModelOption, ModelSelectionProps`
 - **modes** (`@nucleux/modes`) — Modes — choose how the agent works on a request (Fast, Balanced, Deep research), as a chip in the composer or a Mode row in Request settings, switchable before sending.
-  Exports: `useModes, useModesRoving, useModesDismiss, modesLabels, modesSettingsItem, modeSupportingText, ModesSegmented, ModesList, …`
+  Exports: `modeShortIcon, useModes, useModesRoving, useModesDismiss, modesLabels, modesSettingsItem, modeSupportingText, ModesSegmented, …`
 - **name** (`@nucleux/name`) — Name — a consistent name and role for the AI so it can be referred to and remembered.
   Exports: `AgentName, AgentNameVariant, AgentNameProps`
 - **native-select** (`@nucleux/native-select`) — Styled native <select>.
@@ -299,7 +299,7 @@ Generated from `packages/mcp/src/catalog.json` by `scripts/gen-llms.mjs` — do 
 - **md3-agent-composer** (`@nucleux/md3-agent-composer`) — Material 3 agent task composer — grows to eight lines, then scrolls with Expand.
   Exports: `Md3AgentComposer, Md3AgentComposerProps`
 - **md3-ai-icons** (`@nucleux/md3-ai-icons`) — Material 3 AI Icons — one reserved mark per AI meaning, always with words.
-  Exports: `Md3AiSparkleIcon, Md3AiGeneratedIcon, Md3AiWorkingIcon, Md3AiWandIcon, Md3AiRegenerateIcon, Md3AiToolIcon, Md3AiIconProvider, Md3AiIcon, …`
+  Exports: `Md3AiSparkleIcon, Md3AiGeneratedIcon, Md3AiWandIcon, Md3AiRegenerateIcon, Md3AiToolIcon, Md3AiWorkingIcon, md3AiGlyphs, useMd3AiGlyph, …`
 - **md3-attachments** (`@nucleux/md3-attachments`) — Material 3 Attachments — hand the agent the files this request depends on.
   Exports: `Md3Attachments, Md3AttachmentsItem, Md3AttachmentsTray, Md3AttachmentsTrigger, Md3AttachmentsDropZone, Md3AttachmentsNote, Md3AttachmentsProps, Md3AttachmentsItemProps, …`
 - **md3-autocomplete** (`@nucleux/md3-autocomplete`) — Material 3 Autocomplete — ghost text that anticipates and completes user actions.

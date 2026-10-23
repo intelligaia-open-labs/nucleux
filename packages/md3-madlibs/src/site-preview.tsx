@@ -17,7 +17,7 @@ export function SitePreview() {
   const [previous, setPrevious] = useState("");
 
   return (
-    <div className="flex w-full max-w-[38rem] flex-col gap-3">
+    <div className="flex w-full max-w-[620px] flex-col gap-3">
       <Md3Madlibs
         template={TEMPLATE}
         blanks={BLANKS}

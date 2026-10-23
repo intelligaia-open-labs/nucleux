@@ -15,7 +15,7 @@ export function SitePreview() {
       allowLabel={answer === "allowed" ? "✓ Allowed" : "Allow"}
       onAllow={() => setAnswer("allowed")}
       onDeny={() => setAnswer("declined")}
-      className={answer === "declined" ? "w-[26rem] opacity-40" : "w-[26rem]"}
+      className={answer === "declined" ? "w-[26.3375rem] opacity-40" : "w-[26.3375rem]"}
     />
   );
 }

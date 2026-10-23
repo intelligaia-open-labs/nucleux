@@ -150,7 +150,7 @@ export const Md3TemplatesList = React.forwardRef<HTMLUListElement, Md3TemplatesL
           "font-md",
           "m-0 flex list-none flex-col p-0",
           grouped
-            ? "overflow-hidden rounded-md-lg border border-md-outline-variant bg-md-surface py-2"
+            ? "overflow-hidden rounded-[12px] border border-md-outline-variant bg-md-surface py-1"
             : "gap-2",
           className,
         )}
@@ -165,7 +165,7 @@ export const Md3TemplatesList = React.forwardRef<HTMLUListElement, Md3TemplatesL
                 "relative flex w-full items-center gap-4 overflow-hidden text-left text-md-on-surface",
                 stateLayer,
                 grouped
-                  ? "px-4 py-4 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-md-secondary"
+                  ? "px-4 py-3 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-md-secondary"
                   : ["rounded-md-md border border-md-outline-variant bg-md-surface px-4 py-3", focusRing],
               )}
             >
@@ -174,15 +174,15 @@ export const Md3TemplatesList = React.forwardRef<HTMLUListElement, Md3TemplatesL
                   {item.icon}
                 </span>
               )}
-              <span className={cn("relative flex min-w-0 flex-1 flex-col", grouped ? "gap-1" : "gap-0.5")}>
-                <span className={cn(grouped ? "text-base leading-6 tracking-[0.15px]" : "text-sm font-medium leading-5 tracking-[0.1px]")}>
+              <span className={cn("relative flex min-w-0 flex-1 flex-col", grouped ? "gap-0" : "gap-0.5")}>
+                <span className={cn(grouped ? "text-base leading-[1.55] tracking-normal" : "text-sm font-medium leading-5 tracking-[0.1px]")}>
                   {item.title}
                 </span>
                 {item.description && (
                   <span
                     className={cn(
                       "text-md-on-surface-variant",
-                      grouped ? "text-sm leading-5 tracking-[0.25px]" : "text-xs leading-4 tracking-[0.4px]",
+                      grouped ? "text-sm leading-5 tracking-normal" : "text-xs leading-4 tracking-[0.4px]",
                     )}
                   >
                     {item.description}
@@ -192,7 +192,7 @@ export const Md3TemplatesList = React.forwardRef<HTMLUListElement, Md3TemplatesL
                   <span
                     className={cn(
                       "text-md-on-surface-variant",
-                      grouped ? "text-sm leading-5 tracking-[0.25px]" : "text-xs leading-4 tracking-[0.4px]",
+                      grouped ? "text-sm leading-5 tracking-normal" : "text-xs leading-4 tracking-[0.4px]",
                     )}
                   >
                     {item.meta}

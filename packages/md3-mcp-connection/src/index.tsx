@@ -129,18 +129,19 @@ export const Md3McpConnection = React.forwardRef<HTMLElement, Md3McpConnectionPr
           aria-labelledby={titleId}
           data-status={status}
           className={cn(
-            "font-md",
-            "flex flex-col overflow-hidden rounded-md-lg border border-md-outline-variant bg-md-surface text-md-on-surface",
+            // nucleux.in's panel: white card, outline-variant hairline, 16px corners, text in the page's sans.
+            "font-sans",
+            "flex flex-col overflow-hidden rounded-md-lg border border-md-outline-variant bg-md-surface-container-lowest text-md-on-surface",
             className,
           )}
           {...props}
         >
-          <div className="flex items-center gap-3 px-4 py-4">
-            <span className="inline-flex size-[34px] shrink-0 items-center justify-center rounded-md-md bg-md-surface-container-high text-xs font-semibold text-md-on-surface-variant [&_svg]:size-5">
+          <div className={cn("flex items-center gap-2.5 px-4 pt-4", empty ? "pb-3" : "pb-4")}>
+            <span className="inline-flex size-[34px] shrink-0 items-center justify-center rounded-[10px] bg-md-surface-container-high text-[10.5px] font-bold tracking-[0.04em] text-md-on-surface-variant [&_svg]:size-5">
               {icon ?? <Server aria-hidden="true" />}
             </span>
             <div className="flex min-w-0 flex-1 flex-col">
-              <h3 id={titleId} className="truncate text-base font-semibold tracking-[0.15px]">
+              <h3 id={titleId} className="truncate text-[14px] font-[650] leading-[1.55]">
                 {name}
               </h3>
               {(address || meta) && (
@@ -155,7 +156,7 @@ export const Md3McpConnection = React.forwardRef<HTMLElement, Md3McpConnectionPr
               role="status"
               aria-live="polite"
               className={cn(
-                "inline-flex h-6 shrink-0 items-center gap-1.5 rounded-full bg-md-surface-container-high px-2.5 text-sm font-medium tracking-[0.1px]",
+                "inline-flex h-6 shrink-0 items-center gap-1.5 rounded-full bg-md-surface-container-highest px-2.5 text-[11.5px] font-semibold",
                 usable && "text-md-primary",
                 status === "error" && "text-md-error",
                 (status === "disconnected" || status === "connecting") && "text-md-on-surface",
@@ -217,13 +218,13 @@ export const Md3McpConnection = React.forwardRef<HTMLElement, Md3McpConnectionPr
           )}
 
           {empty && (
-            <div className="flex flex-col items-start gap-1.5 px-4 pb-4">
-              {emptyTitle != null && <p className="text-base font-semibold leading-6 tracking-[0.15px]">{emptyTitle}</p>}
+            <div className="flex flex-col items-start gap-1 px-4 pb-4">
+              {emptyTitle != null && <p className="text-[13px] font-semibold leading-[1.55]">{emptyTitle}</p>}
               {emptyDescription != null && (
-                <p className="text-sm leading-5 tracking-[0.25px] text-md-on-surface-variant">{emptyDescription}</p>
+                <p className="text-[12.5px] leading-[1.55] text-md-on-surface-variant">{emptyDescription}</p>
               )}
               {onConnect && (
-                <Md3Button onClick={onConnect} className="mt-2.5">
+                <Md3Button onClick={onConnect} className="mt-2 h-8 px-4 tracking-[0.1px]">
                   {connectLabel}
                 </Md3Button>
               )}

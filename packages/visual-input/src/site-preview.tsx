@@ -14,7 +14,7 @@ export function SitePreview() {
   const [question, setQuestion] = useState("");
 
   return (
-    <div className="w-full max-w-[30rem] rounded-xl border border-border bg-background p-4 shadow-sm">
+    <div className="w-full max-w-[30rem] rounded-lg border border-border bg-background p-4 shadow-sm">
       <VisualInput
         variant="drag-drop"
         accept="image/png,image/jpeg,.pdf"
@@ -29,7 +29,7 @@ export function SitePreview() {
           placeholder="What's causing the dip in this chart?"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          className="h-auto rounded-lg px-3.5 py-2.5 shadow-none"
+          className="h-auto rounded-[10px] border-border px-3.5 py-2.5 text-[12.5px] leading-[1.55] shadow-none placeholder:text-faint"
         />
       </VisualInput>
     </div>

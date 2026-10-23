@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@nucleux/md3-button": "workspace:*",
+    "@nucleux/md3-icons": "workspace:*",
     "@nucleux/templates": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0"

@@ -13,7 +13,7 @@ const enhance = () => Promise.resolve(SUGGESTION);
 /** PromptEnhancer as nucleux.in's live preview shows it: what you wrote beside the enhanced prompt, then Use enhanced or Keep original. */
 export function SitePreview() {
   return (
-    <CardContainer className="w-full max-w-[30rem] p-4">
+    <CardContainer className="w-full max-w-[30rem] rounded-[8px] p-4 shadow-[0_1px_2px_rgba(12,12,10,0.04),0_1px_3px_rgba(12,12,10,0.06)]">
       <PromptEnhancer
         defaultValue={PROMPT}
         hint="Aria will expand this prompt"

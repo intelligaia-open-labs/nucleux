@@ -1,6 +1,13 @@
 import * as React from "react";
 import { cn, Slot } from "@nucleux/utils";
-import { aiColorStatusIcon } from "@nucleux/color";
+import {
+  MsCheckCircle,
+  MsError,
+  MsHelp,
+  MsProgressActivity,
+  MsSmartToy,
+  MsWarning,
+} from "@nucleux/md3-icons";
 import type {
   AiColorDotProps,
   AiColorHighlightProps,
@@ -192,6 +199,25 @@ export const Md3AiColorWorkingRing = React.forwardRef<HTMLSpanElement, Md3AiColo
 );
 Md3AiColorWorkingRing.displayName = "Md3AiColorWorkingRing";
 
+/** The Material Symbol for each status, as nucleux.in's Material 3 pages draw it. */
+function md3StatusIcon(status: AiColorStatusTone): React.ReactNode {
+  switch (status) {
+    case "available":
+    case "assigned":
+      return <MsSmartToy />;
+    case "working":
+      return <MsProgressActivity className="animate-spin motion-reduce:animate-none" />;
+    case "attention":
+      return <MsHelp />;
+    case "success":
+      return <MsCheckCircle />;
+    case "warning":
+      return <MsWarning />;
+    case "error":
+      return <MsError />;
+  }
+}
+
 // The site's status roles: neutral-high for idle, the agent's primary-container
 // ground for its own states, tertiary for attention, error-container for errors.
 const statusClasses: Record<AiColorStatusTone, string> = {
@@ -221,13 +247,13 @@ export const Md3AiColorStatus = React.forwardRef<HTMLSpanElement, Md3AiColorStat
       role={status === "working" ? "status" : undefined}
       className={cn(
         "font-md",
-        "inline-flex h-8 w-fit items-center gap-2 rounded-md-sm border px-2.5 text-sm font-medium tracking-[0.1px] [&_svg]:size-5 [&_svg]:shrink-0",
+        "inline-flex w-fit items-center gap-1.5 rounded-[8px] border py-1 pl-2 pr-2.5 text-[13px] font-medium leading-5 [&_svg]:size-[18px] [&_svg]:shrink-0",
         statusClasses[status],
         className,
       )}
       {...props}
     >
-      {icon === undefined ? aiColorStatusIcon(status) : icon}
+      {icon === undefined ? md3StatusIcon(status) : icon}
       <span>{label}</span>
     </span>
   ),

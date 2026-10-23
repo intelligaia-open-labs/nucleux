@@ -259,6 +259,8 @@ export interface StructuredInputSlotsProps
   icon?: React.ReactNode;
   /** Right side of the title row, e.g. a "Template" badge or what the form is for. */
   aside?: React.ReactNode;
+  /** Classes for the title row, e.g. to run it edge to edge when the form is its own card. */
+  headerClassName?: string;
   /** Shows “3 of 4 filled” beside the buttons. */
   showProgress?: boolean;
   /** Shows a Cancel button beside submit. */
@@ -288,6 +290,7 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
       title,
       icon,
       aside,
+      headerClassName,
       showProgress = false,
       onCancel,
       cancelLabel = "Cancel",
@@ -330,16 +333,16 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
         {...props}
       >
         {(title != null || aside != null) && (
-          <div className="mb-1 flex items-center gap-3 border-b border-border pb-4 sm:col-span-2">
+          <div className={cn("mb-1 flex items-center gap-2 border-b border-border pb-3.5 sm:col-span-2", headerClassName)}>
             {icon != null && (
               <span
                 aria-hidden="true"
-                className="inline-flex size-[1.625rem] shrink-0 items-center justify-center rounded-md bg-foreground text-background [&_svg]:size-3.5"
+                className="inline-flex size-[1.625rem] shrink-0 items-center justify-center rounded-[6px] bg-foreground text-background [&_svg]:size-3"
               >
                 {icon}
               </span>
             )}
-            <h3 id={titleId} className="flex-1 text-base font-semibold text-foreground">
+            <h3 id={titleId} className="flex-1 text-[12.5px] font-semibold leading-[1.55] text-foreground">
               {title}
             </h3>
             {aside}
@@ -356,12 +359,12 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
           const describedBy = slot.helper || (mark && !edited[slot.name]) ? helperId : undefined;
           const type = structuredSlotType(slot);
           return (
-            <Field key={slot.name} className={cn("gap-1.5", slot.wide && "sm:col-span-2")}>
+            <Field key={slot.name} className={cn(type === "tags" ? "gap-1.5" : "gap-1", slot.wide && "sm:col-span-2")}>
               <div className="flex items-center gap-2">
                 <FieldLabel
                   id={`${id}-label`}
                   htmlFor={id}
-                  className="text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground"
+                  className="text-[10px] font-semibold uppercase leading-[1.55] tracking-[0.06em] text-faint"
                 >
                   {slot.label}
                   {slot.required && <span aria-hidden="true"> *</span>}
@@ -375,7 +378,8 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
                     aria-labelledby={`${id}-label ${id}`}
                     aria-describedby={describedBy}
                     aria-required={slot.required || undefined}
-                    className="h-11 rounded-lg px-3.5"
+                    // nucleux.in: a compact field with a ▾ caret.
+                    className="h-auto rounded-[7px] border-border px-2.5 py-[7px] text-[11.5px] leading-[1.55] shadow-none after:text-faint after:content-['▾'] [&>svg]:hidden"
                   >
                     <SelectValue placeholder={slot.placeholder ?? "Choose…"} />
                   </SelectTrigger>
@@ -431,7 +435,7 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
                   aria-describedby={describedBy}
                   aria-required={slot.required || undefined}
                   onChange={(e) => setValue(slot.name, e.target.value)}
-                  className="h-11 rounded-lg px-3.5 text-base shadow-none"
+                  className="h-auto rounded-lg border-[1.5px] border-primary px-3 py-[9px] text-xs leading-[1.55] shadow-none"
                 />
               )}
               {describedBy && (
@@ -471,7 +475,12 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
               </Button>
             )}
             {onSubmit && (
-              <Button type="submit" variant="primary" disabled={!canSubmit} className="h-10 rounded-lg px-5 text-base">
+              <Button
+                type="submit"
+                variant="primary"
+                disabled={!canSubmit}
+                className="h-auto rounded-lg border-0 px-[18px] py-[7px] text-[13px] font-medium leading-[1.55] tracking-normal shadow-none"
+              >
                 {submitLabel}
               </Button>
             )}
@@ -483,7 +492,13 @@ export const StructuredInputSlots = React.forwardRef<HTMLFormElement, Structured
 );
 StructuredInputSlots.displayName = "StructuredInputSlots";
 
-const SLOT_TAG_TONES = ["bg-destructive/10 text-destructive", "bg-info/10 text-info", "bg-success/10 text-success", "bg-warning/10 text-warning"];
+// nucleux.in's tag tints (rose, blue, green); dark mode falls back to the semantic tokens.
+const SLOT_TAG_TONES = [
+  "bg-[hsl(0_88%_94%)] text-[hsl(343_80%_35%)] dark:bg-destructive/10 dark:text-destructive",
+  "bg-[hsl(223_100%_93%)] text-[hsl(224_76%_48%)] dark:bg-info/10 dark:text-info",
+  "bg-[hsl(149_80%_90%)] text-[hsl(164_86%_20%)] dark:bg-success/10 dark:text-success",
+  "bg-warning/10 text-warning",
+];
 
 /** The `"tags"` slot: tinted tags (press one to remove it) and a field that adds on Enter or comma. */
 function StructuredTagsField({
@@ -507,7 +522,7 @@ function StructuredTagsField({
     setDraft("");
   };
   return (
-    <div className="flex min-h-11 flex-wrap items-center gap-1.5 rounded-lg border border-input bg-background px-2.5 py-1.5 focus-within:ring-2 focus-within:ring-ring">
+    <div className="flex flex-wrap items-center gap-[5px] rounded-[7px] border border-border bg-background px-2.5 py-2 text-[11px] leading-[1.55] focus-within:ring-2 focus-within:ring-ring">
       {tags.map((t, i) => (
         <button
           key={t}
@@ -515,7 +530,7 @@ function StructuredTagsField({
           aria-label={`Remove ${t}`}
           onClick={() => onChange(tags.filter((x) => x !== t).join(", "))}
           className={cn(
-            "rounded-md px-2 py-0.5 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "rounded-[5px] px-2 py-0.5 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
             SLOT_TAG_TONES[i % SLOT_TAG_TONES.length],
           )}
         >
@@ -541,7 +556,7 @@ function StructuredTagsField({
           }
         }}
         onBlur={() => add()}
-        className="min-w-16 flex-1 bg-transparent px-1 text-sm text-foreground outline-none placeholder:text-muted-foreground"
+        className="min-w-16 flex-1 bg-transparent text-foreground outline-none placeholder:text-faint placeholder:opacity-60"
       />
     </div>
   );

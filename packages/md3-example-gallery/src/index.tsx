@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Info } from "lucide-react";
+import { MsInfo } from "@nucleux/md3-icons";
 import { cn } from "@nucleux/utils";
 import type {
   ExampleGalleryExample,
@@ -86,7 +86,7 @@ export const Md3ExampleGalleryItem = React.forwardRef<HTMLButtonElement, Md3Exam
           aria-pressed={selected === undefined ? undefined : selected}
           className={cn(
             "font-md",
-            "relative flex w-full items-center gap-4 overflow-hidden px-4 py-4 text-left",
+            "relative flex w-full items-center gap-4 overflow-hidden px-4 py-3 text-left",
             "outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-md-primary",
             stateLayer,
             selected && "bg-md-secondary-container/60 ring-2 ring-inset ring-md-primary",
@@ -99,12 +99,12 @@ export const Md3ExampleGalleryItem = React.forwardRef<HTMLButtonElement, Md3Exam
               {icon}
             </span>
           )}
-          <span className="relative flex min-w-0 flex-col gap-1">
-            <span className="text-base leading-6 tracking-[0.15px] text-md-on-surface">{title}</span>
-            {description && <span className="text-sm leading-5 tracking-[0.25px] text-md-on-surface-variant">{description}</span>}
+          <span className="relative flex min-w-0 flex-col">
+            <span className="text-base leading-[1.55] text-md-on-surface">{title}</span>
+            {description && <span className="text-sm leading-5 text-md-on-surface-variant">{description}</span>}
             {needs && (
-              <span className="inline-flex items-center gap-1.5 text-[13px] leading-[18px] text-md-on-surface-variant">
-                <Info aria-hidden="true" className="size-4 shrink-0" />
+              <span className="mb-1 inline-flex items-center gap-1.5 text-[13px] leading-[18px] text-md-on-surface-variant">
+                <MsInfo aria-hidden="true" className="size-4 shrink-0" />
                 {needs}
               </span>
             )}
@@ -258,7 +258,7 @@ export const Md3ExampleGallery = React.forwardRef<HTMLElement, Md3ExampleGallery
             : variant === "tiles"
               ? "grid grid-cols-2 gap-2"
               : variant === "grouped-list"
-                ? "overflow-hidden rounded-md-lg border border-md-outline-variant bg-md-surface py-2"
+                ? "overflow-hidden rounded-[12px] border border-md-outline-variant bg-md-surface py-1"
                 : "grid grid-cols-2 gap-3 sm:grid-cols-3",
         )}
       >
@@ -340,7 +340,7 @@ export const Md3ExampleGallery = React.forwardRef<HTMLElement, Md3ExampleGallery
               id={headingId}
               className={cn(
                 variant === "grouped-list"
-                  ? "text-[22px] font-medium leading-7 text-md-on-surface"
+                  ? "font-sans text-[18.72px] font-semibold leading-[1.55] tracking-[-0.02em] text-md-on-surface"
                   : "text-sm font-medium tracking-[0.1px] text-md-on-surface-variant",
               )}
             >

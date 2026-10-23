@@ -3,7 +3,7 @@
   "version": "0.11.2",
   "type": "module",
   "sideEffects": false,
-  "description": "Material 3 Suggested Prompts — a few ready-made requests that place editable text in the composer — Nucleux agentic UI for React.",
+  "description": "Material 3 Suggested Prompts \u2014 a few ready-made requests that place editable text in the composer \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -46,7 +46,8 @@
     "@nucleux/suggested-prompts": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0",
-    "@nucleux/md3-open-input": "workspace:*"
+    "@nucleux/md3-open-input": "workspace:*",
+    "@nucleux/md3-icons": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

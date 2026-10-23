@@ -125,6 +125,17 @@ export interface HandwritingInputProps
   compact?: boolean;
   /** Shows a close control on the pad (in `compact`), e.g. to put the pen away. */
   onClose?: () => void;
+  /** Label of the button that reads the ink. Defaults to "Recognise" (`Md3HandwritingInput` on nucleux.in: "Recognize"). */
+  recognizeLabel?: React.ReactNode;
+  /**
+   * Example ink. While the pad is empty, a "Write a sample" button puts it on
+   * the pad, so people can try recognition without a pen.
+   */
+  sampleStrokes?: HandwritingStroke[];
+  /** Label of the sample button. Defaults to "Write a sample". */
+  sampleLabel?: React.ReactNode;
+  /** Shows the Type instead / Write instead switch. Set false where the composer is the typing path. Defaults to true. */
+  typeToggle?: boolean;
   /** Content the ink is drawn over (`"annotation-stroke"`). */
   children?: React.ReactNode;
 }
@@ -164,6 +175,10 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
       padLabel,
       compact = false,
       onClose,
+      recognizeLabel = "Recognise",
+      sampleStrokes,
+      sampleLabel = "Write a sample",
+      typeToggle: showTypeToggle = true,
       className,
       children,
       ...props
@@ -442,7 +457,7 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
     const emptyHint =
       placeholder ?? (isAnnotation ? "Draw on the content to mark what you mean" : "Draw or write…");
 
-    const typeToggle = (
+    const typeToggle = showTypeToggle && (
       <Button
         variant="ghost"
         size="sm"
@@ -467,7 +482,7 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
         aria-label={isAnnotation ? "Annotation input" : "Handwriting input"}
         data-variant={variant}
         data-status={status}
-        className={cn("flex flex-col gap-3", className)}
+        className={cn("flex flex-col", compact ? "gap-2.5" : "gap-3", className)}
         {...props}
       >
         {inputMode === "type" ? (
@@ -487,7 +502,7 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
               isAnnotation
                 ? "min-h-40 border border-border"
                 : compact
-                  ? "h-[7.75rem] border border-border bg-background"
+                  ? "h-[125.5px] border border-border bg-background"
                   : "h-44 border border-dashed border-border bg-background",
               variant === "live-ocr" && "h-36 border-solid",
               disabled && "opacity-50",
@@ -496,7 +511,7 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
           >
             {isAnnotation && children}
             {padLabel != null && (
-              <p className="pointer-events-none absolute left-[1.125rem] top-[1.125rem] text-[0.625rem] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+              <p className="pointer-events-none absolute left-[1.125rem] top-[1.125rem] text-[10px] font-semibold uppercase leading-[1.55] tracking-[0.1em] text-faint">
                 {padLabel}
               </p>
             )}
@@ -558,7 +573,7 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
                 size="sm"
                 onClick={reset}
                 disabled={disabled}
-                className="absolute bottom-3 right-3.5 h-7 rounded-md bg-muted/50 px-2.5 text-xs font-normal text-muted-foreground shadow-none"
+                className="absolute bottom-3 right-3.5 h-auto rounded-md bg-[hsl(var(--nx-ink-25))] px-[9px] py-[3px] text-[10.5px] font-normal leading-[1.55] tracking-normal text-faint shadow-none"
               >
                 Clear
               </Button>
@@ -600,17 +615,17 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
           <div
             id={resultId}
             data-slot="handwriting-result"
-            className="flex items-center gap-2.5 rounded-lg border border-brand bg-brand-muted/40 py-2 pl-3.5 pr-2"
+            className="flex items-center gap-2.5 rounded-lg border border-brand bg-brand/[0.08] px-3.5 py-2.5"
           >
             <ArrowRight className="size-3.5 shrink-0 text-brand" aria-hidden="true" />
-            <p className="min-w-0 flex-1 text-sm font-medium text-brand">
-              {isAnnotation ? "Read as" : "Recognised"}: “{resultText}”
+            <p className="min-w-0 flex-1 text-[12.5px] font-medium leading-[1.55] text-brand">
+              {isAnnotation ? "Read as" : "Recognised"}: "{resultText}"
             </p>
             <Button
               size="sm"
               onClick={accept}
               disabled={disabled || !resultText.trim()}
-              className="h-7 border-transparent bg-brand px-2.5 text-xs font-semibold text-brand-foreground hover:bg-brand/90"
+              className="h-auto rounded-md border-0 bg-brand px-[9px] py-[3px] text-[10.5px] font-semibold leading-[1.55] tracking-normal text-brand-foreground shadow-none hover:bg-brand/90"
             >
               {acceptLabel}
             </Button>
@@ -724,6 +739,11 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
           )}
           {typeToggle}
           <span className="flex-1" />
+          {inputMode === "draw" && sampleStrokes && sampleStrokes.length > 0 && strokes.length === 0 && (
+            <Button variant="secondary" size="sm" onClick={() => setStrokes(sampleStrokes)} disabled={disabled}>
+              {sampleLabel}
+            </Button>
+          )}
           {inputMode === "draw" && onRecognize && (status !== "recognized" || mode === "review") && (
             <Button
               variant="secondary"
@@ -732,7 +752,7 @@ export const HandwritingInput = React.forwardRef<HTMLDivElement, HandwritingInpu
               onClick={() => void recognize()}
               disabled={disabled || strokes.length === 0 || status === "recognizing"}
             >
-              Recognise
+              {recognizeLabel}
             </Button>
           )}
           {!(compact && inputMode === "draw" && status !== "recognized") && (

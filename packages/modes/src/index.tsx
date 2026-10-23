@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Check, ChevronDown, Info, Mic, Plus, RefreshCw, Send, SlidersHorizontal, X } from "lucide-react";
+import { Check, Info, RefreshCw, SlidersHorizontal, X } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import {
@@ -33,8 +33,15 @@ export interface ModeOption {
   meta?: string;
   /** Leading icon or emoji. */
   icon?: React.ReactNode;
+  /** Icon for the segmented control and the composer chip, when it differs from `icon`; `null` shows none there. Defaults to `icon`. */
+  shortIcon?: React.ReactNode | null;
   /** When set, the mode is listed but can't be applied here; this says why. */
   unavailable?: string;
+}
+
+/** The icon a mode shows in the segmented control and the chip: `shortIcon` when set (null hides it), else `icon`. */
+export function modeShortIcon(m: ModeOption): React.ReactNode {
+  return m.shortIcon !== undefined ? m.shortIcon : m.icon;
 }
 
 /** Transient feedback after a choice: the mode changed (with Undo) or the chosen mode is unavailable. */
@@ -304,15 +311,15 @@ export const ModesSegmented = React.forwardRef<HTMLDivElement, ModesSegmentedPro
               {...roving.getItemProps(i)}
               onClick={() => onSelect(m.id)}
               className={cn(
-                "inline-flex items-center gap-1.5 rounded-lg px-4 py-1.5 text-xs transition-colors motion-reduce:transition-none",
+                "inline-block whitespace-nowrap rounded-[8px] px-4 py-1.5 text-[11.5px] leading-[1.55] transition-colors motion-reduce:transition-none",
                 "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background",
                 on
-                  ? "bg-primary font-medium text-primary-foreground shadow-sm"
-                  : "text-foreground/70 hover:bg-accent hover:text-foreground",
+                  ? "bg-primary font-medium text-primary-foreground"
+                  : "text-muted-foreground hover:bg-accent hover:text-foreground",
                 m.unavailable && "cursor-not-allowed opacity-50",
               )}
             >
-              {m.icon != null && <span aria-hidden="true">{m.icon}</span>}
+              {modeShortIcon(m) != null && <span aria-hidden="true">{modeShortIcon(m)} </span>}
               {m.shortName ?? m.name}
             </button>
           );
@@ -376,7 +383,7 @@ export const ModesList = React.forwardRef<HTMLDivElement, ModesListProps>(
                 "flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left transition-colors motion-reduce:transition-none",
                 "outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
                 !framed && "rounded-lg",
-                on ? "bg-brand/[0.06]" : "hover:bg-muted/50",
+                on ? "bg-[rgb(99_102_241/0.06)]" : "hover:bg-muted/50",
                 m.unavailable && "cursor-not-allowed",
               )}
             >
@@ -384,7 +391,7 @@ export const ModesList = React.forwardRef<HTMLDivElement, ModesListProps>(
                 aria-hidden="true"
                 className={cn(
                   "grid size-7 shrink-0 place-items-center rounded-[7px] text-[13px] [&_svg]:size-4",
-                  on ? "bg-primary text-primary-foreground" : "bg-muted/60 text-muted-foreground",
+                  on ? "bg-foreground text-background" : "bg-[hsl(var(--nx-ink-25))] text-faint",
                   m.unavailable && "opacity-50",
                 )}
               >
@@ -394,8 +401,8 @@ export const ModesList = React.forwardRef<HTMLDivElement, ModesListProps>(
                 <span
                   id={`${descId}-n`}
                   className={cn(
-                    "text-[13px] leading-5",
-                    on ? "font-semibold text-foreground" : "text-foreground/70",
+                    "text-[12.5px] leading-[1.55]",
+                    on ? "font-semibold text-foreground" : "text-muted-foreground",
                     m.unavailable && "opacity-60",
                   )}
                 >
@@ -403,7 +410,7 @@ export const ModesList = React.forwardRef<HTMLDivElement, ModesListProps>(
                   {on && <span aria-hidden="true"> · active</span>}
                 </span>
                 {(support || m.unavailable) && (
-                  <span id={descId} className="flex flex-col text-[11px] leading-4 text-muted-foreground">
+                  <span id={descId} className="flex flex-col text-[10.5px] leading-[1.55] text-faint">
                     {support && <span className={cn(m.unavailable && "opacity-60")}>{support}</span>}
                     {m.unavailable && (
                       <span className="mt-0.5 inline-flex items-center gap-1 text-foreground">
@@ -444,7 +451,7 @@ export const ModesChip = React.forwardRef<HTMLButtonElement, ModesChipProps>(
   ({ mode, label = "Mode", open = false, onRemove, className, type = "button", ...props }, ref) => (
     <span
       className={cn(
-        "inline-flex h-7 shrink-0 items-center rounded-md border border-border bg-muted/40 text-xs text-foreground transition-colors",
+        "inline-flex shrink-0 items-center rounded-[6px] border border-border bg-[hsl(0_0%_98%)] text-[11px] leading-[1.55] text-foreground transition-colors",
         open && "border-ring",
         className,
       )}
@@ -456,25 +463,22 @@ export const ModesChip = React.forwardRef<HTMLButtonElement, ModesChipProps>(
         aria-expanded={open}
         aria-label={modesLabels.chip(label, mode)}
         className={cn(
-          "inline-flex h-full items-center gap-1 whitespace-nowrap rounded-md px-2 outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring",
+          "inline-block h-full whitespace-nowrap rounded-[6px] px-2 py-[3px] outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring",
           onRemove && mode && "rounded-r-none pr-1",
           !mode && "text-muted-foreground",
         )}
         {...props}
       >
-        {mode?.icon != null && <span aria-hidden="true">{mode.icon}</span>}
-        <span className={cn(mode && "font-medium")}>{mode ? (mode.shortName ?? mode.name) : label}</span>
-        <ChevronDown
-          aria-hidden="true"
-          className={cn("size-3 transition-transform motion-reduce:transition-none", open && "rotate-180")}
-        />
+        {mode && modeShortIcon(mode) != null && <span aria-hidden="true">{modeShortIcon(mode)} </span>}
+        {mode ? (mode.shortName ?? mode.name) : label}
+        <span aria-hidden="true"> ▾</span>
       </button>
       {onRemove && mode && (
         <button
           type="button"
           aria-label={modesLabels.remove(label, mode)}
           onClick={onRemove}
-          className="inline-flex h-full items-center rounded-r-md px-1 text-muted-foreground outline-none hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+          className="inline-flex h-full items-center self-stretch rounded-r-[6px] px-1 text-muted-foreground outline-none hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
         >
           <X aria-hidden="true" className="size-3" />
         </button>
@@ -752,8 +756,10 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
     const addControl =
       add ??
       (onAdd ? (
-        <InputGroupButton size="icon-sm" aria-label={addLabel} onClick={onAdd}>
-          <Plus className="size-4" />
+        <InputGroupButton size="icon-sm" aria-label={addLabel} onClick={onAdd} className="size-[26px] rounded-[6px] text-muted-foreground">
+          <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" className="size-3">
+            <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+          </svg>
         </InputGroupButton>
       ) : null);
     const s = useModes({
@@ -937,9 +943,9 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
         <ModesList modes={modes} value={s.value} onSelect={s.select} label={label} showDescriptions={showDescriptions} />
         {inlineAlert}
         {note}
-        <InputGroup className="h-10 rounded-[10px] bg-background pl-0.5 pr-1 shadow-sm">
+        <InputGroup className="h-10 gap-2 rounded-[10px] border-border bg-background pl-2 pr-2.5 shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
           {(addControl != null || composerLeading != null || trigger === "settings") && (
-            <InputGroupAddon align="inline-start" className="gap-1">
+            <InputGroupAddon align="inline-start" className="gap-1 p-0 has-[>button]:ml-0">
               {addControl}
               {composerLeading}
               {trigger === "settings" && settings}
@@ -956,15 +962,18 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
                 submit();
               }
             }}
-            className="h-full px-2 text-[13px]"
+            className="h-full min-w-0 !px-0 text-[13px] leading-[1.55] placeholder:text-[rgb(156_163_175)]"
           />
-          <InputGroupAddon align="inline-end" className="gap-1 text-muted-foreground">
+          <InputGroupAddon align="inline-end" className="gap-2 p-0 text-faint has-[>button]:mr-0">
             {trigger === "chip" && chip}
             {composerActions}
             {model}
             {onVoice && (
-              <InputGroupButton size="icon-sm" aria-label={voiceLabel} onClick={onVoice} className="text-muted-foreground">
-                <Mic className="size-3.5" />
+              <InputGroupButton size="icon-sm" aria-label={voiceLabel} onClick={onVoice} className="size-7 text-faint">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" className="size-3.5">
+                  <rect x="9" y="2" width="6" height="12" rx="3" stroke="currentColor" strokeWidth="1.8" />
+                  <path d="M5 11a7 7 0 0014 0M12 19v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
               </InputGroupButton>
             )}
             <InputGroupButton
@@ -973,9 +982,11 @@ export const Modes = React.forwardRef<HTMLDivElement, ModesProps>(
               aria-keyshortcuts="Enter"
               disabled={!draft.trim()}
               onClick={submit}
-              className="text-muted-foreground"
+              className="size-7 text-faint disabled:opacity-100"
             >
-              <Send className="size-3.5" />
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" className="size-3.5">
+                <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </InputGroupButton>
           </InputGroupAddon>
         </InputGroup>

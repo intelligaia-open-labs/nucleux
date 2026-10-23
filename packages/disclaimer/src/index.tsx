@@ -101,9 +101,13 @@ export const Disclaimer = React.forwardRef<HTMLDivElement, DisclaimerProps>(
           {...props}
         >
           <Clock aria-hidden="true" className="size-3" />
-          {children ?? (cutoff ? `${Agent} knows up to ${cutoff}` : `${Agent} may not know recent events`)}
+          {children ??
+            (cutoff ? `${Agent} knows up to ${cutoff}` : `${Agent} may not know recent events`)}
           {learnMoreHref && (
-            <a href={learnMoreHref} className="font-medium text-foreground underline underline-offset-2">
+            <a
+              href={learnMoreHref}
+              className="font-medium text-foreground underline underline-offset-2"
+            >
               {learnMoreLabel}
             </a>
           )}
@@ -113,7 +117,9 @@ export const Disclaimer = React.forwardRef<HTMLDivElement, DisclaimerProps>(
 
     const limitations = variant === "limitations-card";
     const heading =
-      title === null ? null : (title ?? (limitations ? `${Agent} won't` : `What ${agentName} can do`));
+      title === null
+        ? null
+        : (title ?? (limitations ? `${Agent} won't` : `What ${agentName} can do`));
     const visibleItems = items && !expanded ? items.slice(0, Math.max(0, maxItems)) : items;
     const mark = icon ? (
       <span aria-hidden="true" className="mt-px flex shrink-0 text-muted-foreground [&_svg]:size-4">
@@ -133,13 +139,16 @@ export const Disclaimer = React.forwardRef<HTMLDivElement, DisclaimerProps>(
           "flex flex-col gap-2 text-xs leading-[18px]",
           limitations
             ? "rounded-r-lg border border-l-[3px] border-border border-l-warning bg-background px-3.5 py-3"
-            : "rounded-lg border border-border bg-background p-4 shadow-sm",
+            : "rounded-[8px] border border-border bg-[hsl(var(--nx-ink-25))] p-4 shadow-[0_1px_2px_rgba(12,12,10,0.04),0_1px_3px_rgba(12,12,10,0.06)]",
           className,
         )}
         {...props}
       >
         {heading != null ? (
-          <p id={`${baseId}-title`} className="flex items-center gap-1.5 text-[13px] font-semibold leading-5 text-foreground">
+          <p
+            id={`${baseId}-title`}
+            className="flex items-center gap-1.5 text-[13px] font-semibold leading-[1.55] text-foreground"
+          >
             {mark}
             {heading}
           </p>
@@ -181,14 +190,20 @@ export const Disclaimer = React.forwardRef<HTMLDivElement, DisclaimerProps>(
             aria-expanded={detailsOpen}
             aria-controls={groupsId}
             onClick={() => setDetailsOpen((o) => !o)}
-            leftIcon={detailsOpen ? <ChevronDown aria-hidden="true" /> : <ChevronRight aria-hidden="true" />}
+            leftIcon={
+              detailsOpen ? <ChevronDown aria-hidden="true" /> : <ChevronRight aria-hidden="true" />
+            }
             className="h-7 self-start px-2 text-xs font-medium"
           >
             {detailsOpen ? detailsCloseLabel : detailsLabel}
           </Button>
         )}
         {groups && groups.length > 0 && (
-          <dl id={groupsId} hidden={groupsHidden} className={cn("m-0 flex flex-col gap-2", groupsHidden && "hidden")}>
+          <dl
+            id={groupsId}
+            hidden={groupsHidden}
+            className={cn("m-0 flex flex-col gap-2", groupsHidden && "hidden")}
+          >
             {groups.map((g) => (
               <div key={g.label} className="flex flex-col gap-0.5">
                 <dt className="font-semibold text-foreground">{g.label}</dt>
@@ -202,7 +217,7 @@ export const Disclaimer = React.forwardRef<HTMLDivElement, DisclaimerProps>(
           </dl>
         )}
         {(cutoff || learnMoreHref) && (
-          <div className="mt-1 flex items-center gap-3 text-[11px] text-muted-foreground">
+          <div className="mt-1 flex items-center gap-3 text-[11px] leading-[1.55] text-faint">
             {cutoff && <span>Knowledge cutoff · {cutoff}</span>}
             {learnMoreHref && (
               <a

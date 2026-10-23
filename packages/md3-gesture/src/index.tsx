@@ -146,6 +146,8 @@ export const Md3GestureInput = React.forwardRef<HTMLDivElement, Md3GestureInputP
       threshold = 40,
       showActions = true,
       contentClassName,
+      overlayDismiss = true,
+      showKeys = true,
       disabled = false,
       className,
       children,
@@ -475,6 +477,7 @@ export const Md3GestureInput = React.forwardRef<HTMLDivElement, Md3GestureInputP
                   {describe(feedback.event)}
                 </button>
               )}
+              {overlayDismiss && (
               <button
                 type="button"
                 aria-label={feedback.kind === "done" ? "Close" : "Dismiss"}
@@ -483,6 +486,7 @@ export const Md3GestureInput = React.forwardRef<HTMLDivElement, Md3GestureInputP
               >
                 <X className="size-3" aria-hidden="true" />
               </button>
+              )}
             </span>
           )}
         </div>
@@ -532,7 +536,7 @@ export const Md3GestureInput = React.forwardRef<HTMLDivElement, Md3GestureInputP
                   icon={action.icon}
                 >
                   {action.label}
-                  {k && <KeyHint>{KEY_GLYPHS[k] ?? k}</KeyHint>}
+                  {k && showKeys && <KeyHint>{KEY_GLYPHS[k] ?? k}</KeyHint>}
                 </Md3Chip>
               );
             })}

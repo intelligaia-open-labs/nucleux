@@ -72,7 +72,11 @@ const SESSION_KEY = "nucleux:proactive:session";
 
 function getStore(kind: "session" | "local"): Storage | null {
   try {
-    return typeof window === "undefined" ? null : kind === "session" ? window.sessionStorage : window.localStorage;
+    return typeof window === "undefined"
+      ? null
+      : kind === "session"
+        ? window.sessionStorage
+        : window.localStorage;
   } catch {
     return null;
   }
@@ -205,7 +209,12 @@ export const ProactiveSuggestion = React.forwardRef<HTMLElement, ProactiveSugges
 
     const label = `Suggestion from ${agentName}`;
     const spinner = (
-      <Spinner aria-hidden="true" role={undefined} aria-label={undefined} className="size-3.5 motion-reduce:animate-none" />
+      <Spinner
+        aria-hidden="true"
+        role={undefined}
+        aria-label={undefined}
+        className="size-3.5 motion-reduce:animate-none"
+      />
     );
     const dismissButton = (
       <Button
@@ -226,7 +235,10 @@ export const ProactiveSuggestion = React.forwardRef<HTMLElement, ProactiveSugges
           ref={ref}
           aria-label={label}
           onKeyDown={handleKeyDown}
-          className={cn("inline-flex items-center gap-1 animate-nx-fade-in motion-reduce:animate-none", className)}
+          className={cn(
+            "inline-flex animate-nx-fade-in items-center gap-1 motion-reduce:animate-none",
+            className,
+          )}
           {...props}
         >
           <span id={titleId} className="sr-only">
@@ -264,10 +276,10 @@ export const ProactiveSuggestion = React.forwardRef<HTMLElement, ProactiveSugges
           aria-labelledby={titleId}
           onKeyDown={handleKeyDown}
           className={cn(
-            "flex items-start gap-3 text-sm animate-nx-fade-in motion-reduce:animate-none",
+            "flex animate-nx-fade-in items-start gap-3 text-sm motion-reduce:animate-none",
             toast
               ? "fixed bottom-4 right-4 z-50 w-80 max-w-[calc(100vw-2rem)] rounded-xl border border-border bg-background p-3.5 shadow-lg"
-              : "rounded-xl border border-border bg-muted/40 px-4 py-3.5",
+              : "gap-[11px] rounded-xl border border-[#cbd5e1] bg-[hsl(var(--nx-slate-50))] px-4 py-3.5",
             className,
           )}
           {...props}
@@ -275,23 +287,34 @@ export const ProactiveSuggestion = React.forwardRef<HTMLElement, ProactiveSugges
           {!toast && (
             <span
               aria-hidden="true"
-              className="mt-px grid size-7 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground [&_svg]:size-3.5"
+              className="mt-px grid size-7 shrink-0 place-items-center rounded-[8px] bg-primary text-primary-foreground"
             >
-              <Sparkles />
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5z M19 15l0.75 2.25L22 18l-2.25 0.75L19 21l-0.75-2.25L16 18l2.25-0.75z" />
+              </svg>
             </span>
           )}
-          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <div className={cn("flex min-w-0 flex-1 flex-col", toast && "gap-0.5")}>
             {toast && (
               <p className="flex items-center gap-1.5 text-xs font-semibold text-brand">
                 <Sparkles aria-hidden="true" className="size-3.5" />
                 Worth a look
               </p>
             )}
-            <p id={titleId} className="text-[13px] font-semibold leading-snug text-foreground">
+            <p id={titleId} className="text-[13px] font-semibold leading-[1.4] text-foreground">
               <span className="sr-only">{label}: </span>
               {title}
             </p>
-            {description && <p className="text-xs leading-normal text-muted-foreground">{description}</p>}
+            {description && (
+              <p
+                className={cn(
+                  "text-xs leading-normal",
+                  toast ? "text-muted-foreground" : "mt-[3px] text-faint",
+                )}
+              >
+                {description}
+              </p>
+            )}
             {reason && <p className="text-xs text-muted-foreground">{reason}</p>}
             {resolved ? (
               <p className="mt-1 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -299,18 +322,23 @@ export const ProactiveSuggestion = React.forwardRef<HTMLElement, ProactiveSugges
                 Resolved
               </p>
             ) : (
-              <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+              <div className="mt-[11px] flex flex-wrap items-center gap-[7px]">
                 <Button
                   size="sm"
                   onClick={act}
                   aria-busy={pending || undefined}
                   leftIcon={pending ? spinner : undefined}
-                  className="px-3.5 text-xs font-medium"
+                  className="h-auto rounded-[8px] border-0 px-3.5 py-1.5 text-xs font-medium leading-[1.55] tracking-normal shadow-none"
                 >
                   {pending ? pendingLabel : actionLabel}
                 </Button>
                 {onSnooze && (
-                  <Button size="sm" variant="ghost" onClick={snooze} className="px-3.5 text-xs font-medium">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={snooze}
+                    className="h-auto rounded-[8px] px-3.5 py-1.5 text-xs font-medium leading-[1.55] tracking-normal"
+                  >
                     {snoozeLabel}
                   </Button>
                 )}
@@ -319,7 +347,7 @@ export const ProactiveSuggestion = React.forwardRef<HTMLElement, ProactiveSugges
                     size="sm"
                     variant="secondary"
                     onClick={dismiss}
-                    className="bg-transparent px-3.5 text-xs font-medium text-muted-foreground shadow-none"
+                    className="h-auto rounded-[8px] border-[#cbd5e1] bg-transparent px-3.5 py-1.5 text-xs font-normal leading-[1.55] tracking-normal text-faint shadow-none hover:bg-[hsl(var(--nx-ink-25))]"
                   >
                     {dismissLabel}
                   </Button>

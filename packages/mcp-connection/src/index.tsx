@@ -434,21 +434,21 @@ export const McpConnectionTools = React.forwardRef<HTMLDivElement, McpConnection
         ref={ref}
         role="group"
         aria-labelledby={headingId}
-        className={cn("overflow-hidden rounded-lg border border-border", className)}
+        className={cn("overflow-hidden rounded-xl border border-border bg-background", className)}
         {...props}
       >
-        <p id={headingId} className="border-b border-border bg-muted/50 px-3 py-2 text-xs font-semibold text-foreground">
+        <p id={headingId} className="border-b border-border bg-[hsl(var(--nx-ink-25))] px-[13px] py-[9px] text-[11px] font-semibold leading-[1.55] text-foreground">
           {title ?? (name ? <>{name} · {count}</> : `Tools · ${count}`)}
         </p>
         {variant === "compact" && (
-          <ul aria-labelledby={headingId} className="py-1">
+          <ul aria-labelledby={headingId}>
             {tools.map((tool) => {
               const enabled = tool.enabled ?? true;
               const titleText = typeof tool.title === "string" ? tool.title : tool.id;
               return (
-                <li key={tool.id} data-risk={tool.risk ?? "read"} className={cn("flex items-center gap-2 px-3 py-2", !enabled && "opacity-70")}>
-                  <code className="shrink-0 rounded bg-brand/10 px-1.5 py-0.5 font-mono text-xs text-brand">{tool.id}</code>
-                  {tool.description && <span className="min-w-0 flex-1 text-xs text-muted-foreground">{tool.description}</span>}
+                <li key={tool.id} data-risk={tool.risk ?? "read"} className={cn("flex items-center gap-[3px] px-[13px] pb-[9px] pt-[7px]", !enabled && "opacity-70")}>
+                  <code className="shrink-0 rounded bg-[rgb(99_102_241/0.08)] px-[7px] py-0.5 font-mono text-[10.5px] leading-[14px] text-brand">{tool.id}</code>
+                  {tool.description && <span className="min-w-0 flex-1 text-[11.5px] leading-[1.55] text-faint">{tool.description}</span>}
                   {onToolEnabledChange && (
                     <Switch
                       size="sm"
@@ -619,7 +619,7 @@ function CallCode({ tool, args }: { tool: string; args?: Record<string, unknown>
           {call.args.map(([k, v], i) => (
             <React.Fragment key={k}>
               {"\n  "}
-              <span className="text-warning">{k}</span>: <span className="text-success">{v}</span>
+              <span className="text-[#fcd34d]">{k}</span>: <span className="text-[#86efac]">{v}</span>
               {i < call.args.length - 1 ? "," : ""}
             </React.Fragment>
           ))}
@@ -629,6 +629,9 @@ function CallCode({ tool, args }: { tool: string; args?: Record<string, unknown>
     </>
   );
 }
+
+/** The action preview's compact buttons (nucleux.in: 6×14 padding, 11.5px, 7px corners, flat). */
+const actionButton = "h-auto rounded-[7px] px-3.5 py-1.5 text-[11.5px] leading-[1.55] tracking-normal shadow-none";
 
 export interface McpConnectionActionPreviewProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
   /** Qualified tool name, e.g. `"linear.create_issue"`. */
@@ -697,23 +700,26 @@ export const McpConnectionActionPreview = React.forwardRef<HTMLElement, McpConne
         data-status={status}
         data-risk={risk}
         className={cn(
-          "flex flex-col gap-2 rounded-lg border p-3 animate-nx-fade-in motion-reduce:animate-none",
-          destructive ? "border-destructive/50 bg-destructive/5" : "border-brand/40 bg-brand-muted/40",
+          "flex flex-col gap-2.5 rounded-xl border-[1.5px] p-3.5 animate-nx-fade-in motion-reduce:animate-none",
+          destructive ? "border-destructive/50 bg-destructive/5" : "border-brand bg-[rgb(99_102_241/0.05)]",
           className,
         )}
         {...props}
       >
         <h4
           id={titleId}
-          className={cn("text-xs font-semibold uppercase tracking-wide", destructive ? "text-destructive" : "text-brand")}
+          className={cn(
+            "-mb-0.5 text-[10px] font-bold uppercase leading-[1.55] tracking-[0.1em]",
+            destructive ? "text-destructive" : "text-brand",
+          )}
         >
           {title ?? (destructive ? "Destructive action" : "Proposed action")}
         </h4>
-        <code className="block whitespace-pre-wrap break-words rounded-md border border-border bg-background p-2.5 font-mono text-xs leading-[18px] text-foreground">
+        <code className="block whitespace-pre-wrap break-words rounded-[7px] border border-border bg-background p-2.5 font-mono text-[11.5px] leading-[18px] text-foreground">
           <CallCode tool={tool} args={args} />
         </code>
-        {effect && <p className="text-xs text-muted-foreground">{effect}</p>}
-        <div role="status" aria-live="polite" className="text-xs empty:hidden">
+        {effect && <p className="text-[11.5px] leading-[1.55] text-muted-foreground">{effect}</p>}
+        <div role="status" aria-live="polite" className="text-[11.5px] leading-[1.55] empty:hidden">
           {status === "running" && (
             <span className="inline-flex items-center gap-1.5 text-muted-foreground">
               <Spinner aria-hidden="true" role={undefined} className="size-3.5 motion-reduce:animate-none" />
@@ -733,19 +739,24 @@ export const McpConnectionActionPreview = React.forwardRef<HTMLElement, McpConne
           )}
         </div>
         {(status === "pending" || status === "error") && (onApprove || onEdit || onDeny) && (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5">
             {onApprove && (
-              <Button size="sm" variant={destructive ? "destructive" : "primary"} onClick={onApprove}>
+              <Button
+                size="sm"
+                variant={destructive ? "destructive" : "primary"}
+                onClick={onApprove}
+                className={cn(actionButton, "font-medium", !destructive && "border-0")}
+              >
                 {status === "error" ? "Try again" : approveLabel}
               </Button>
             )}
             {onEdit && (
-              <Button size="sm" variant="secondary" onClick={onEdit}>
+              <Button size="sm" variant="secondary" onClick={onEdit} className={cn(actionButton, "font-normal text-muted-foreground")}>
                 {editLabel}
               </Button>
             )}
             {onDeny && (
-              <Button size="sm" variant="secondary" onClick={onDeny} className="text-muted-foreground">
+              <Button size="sm" variant="secondary" onClick={onDeny} className={cn(actionButton, "font-normal text-faint")}>
                 {denyLabel}
               </Button>
             )}

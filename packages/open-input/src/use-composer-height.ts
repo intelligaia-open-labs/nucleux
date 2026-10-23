@@ -52,6 +52,9 @@ export function useComposerHeight(
   const [overflows, setOverflows] = React.useState(false);
   const [viewport, setViewport] = React.useState(0);
   const [wrappedState, setWrapped] = React.useState(false);
+  // Bumped when the field's width or the loaded fonts change, so the height is measured again
+  // (a webfont arriving after the first paint re-wraps the text without a new value).
+  const [layoutTick, setLayoutTick] = React.useState(0);
 
   const empty = value.trim().length === 0;
   const expanded = expandedState && enabled && expandable && !empty;
@@ -68,6 +71,32 @@ export function useComposerHeight(
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, [enabled]);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el || !enabled || typeof window === "undefined") return;
+    let cancelled = false;
+    const bump = () => {
+      if (!cancelled) setLayoutTick((t) => t + 1);
+    };
+    document.fonts?.ready.then(bump, () => {});
+    let width = el.getBoundingClientRect().width;
+    const ro =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => {
+            const w = el.getBoundingClientRect().width;
+            if (Math.abs(w - width) > 0.5) {
+              width = w;
+              bump();
+            }
+          })
+        : null;
+    ro?.observe(el);
+    return () => {
+      cancelled = true;
+      ro?.disconnect();
+    };
+  }, [ref, enabled]);
 
   useIsomorphicLayoutEffect(() => {
     const el = ref.current;
@@ -94,7 +123,7 @@ export function useComposerHeight(
       el.style.maxHeight = `${cap}px`;
       el.style.height = `${Math.min(natural, cap)}px`;
     }
-  }, [value, maxLines, maxHeight, enabled, expanded, viewport, fallbackLineHeight]);
+  }, [value, maxLines, maxHeight, enabled, expanded, viewport, fallbackLineHeight, layoutTick]);
 
   const toggle = React.useCallback(() => {
     setExpanded((x) => !x);

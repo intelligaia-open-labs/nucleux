@@ -3,7 +3,7 @@
   "version": "0.11.2",
   "type": "module",
   "sideEffects": false,
-  "description": "Material 3 Randomize — a surprise-me control that places a random, editable starter in the composer — Nucleux agentic UI for React.",
+  "description": "Material 3 Randomize \u2014 a surprise-me control that places a random, editable starter in the composer \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -47,7 +47,8 @@
     "@nucleux/randomize": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0",
-    "@nucleux/md3-open-input": "workspace:*"
+    "@nucleux/md3-open-input": "workspace:*",
+    "@nucleux/md3-icons": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

@@ -30,19 +30,22 @@ export interface SuggestedPromptItem {
   tone?: SuggestedPromptTone;
 }
 
+// nucleux.in's card grid: a light tint tile with a deep glyph, and the tag in
+// the same deep shade (Tailwind's 100 / 700–800 steps). Dark mode falls back to
+// the semantic tokens.
 const toneTile: Record<SuggestedPromptTone, string> = {
-  brand: "bg-brand/15 text-brand",
-  info: "bg-info/15 text-info",
-  success: "bg-success/15 text-success",
-  warning: "bg-warning/15 text-warning",
-  destructive: "bg-destructive/10 text-destructive",
+  brand: "bg-brand-muted text-[hsl(23_83%_31%)] dark:bg-brand/15 dark:text-brand",
+  info: "bg-[hsl(214_95%_93%)] text-[hsl(224_76%_48%)] dark:bg-info/15 dark:text-info",
+  success: "bg-[hsl(149_80%_90%)] text-[hsl(164_86%_20%)] dark:bg-success/15 dark:text-success",
+  warning: "bg-[hsl(48_96%_89%)] text-[hsl(23_83%_31%)] dark:bg-warning/15 dark:text-warning",
+  destructive: "bg-[hsl(0_93%_94%)] text-[hsl(0_70%_35%)] dark:bg-destructive/10 dark:text-destructive",
 };
 const toneText: Record<SuggestedPromptTone, string> = {
-  brand: "text-brand",
-  info: "text-info",
-  success: "text-success",
-  warning: "text-warning",
-  destructive: "text-destructive",
+  brand: "text-[hsl(26_90%_37%)] dark:text-brand",
+  info: "text-[hsl(224_76%_48%)] dark:text-info",
+  success: "text-[hsl(164_86%_20%)] dark:text-success",
+  warning: "text-[hsl(26_90%_37%)] dark:text-warning",
+  destructive: "text-[hsl(0_70%_35%)] dark:text-destructive",
 };
 
 const VariantContext = React.createContext<SuggestedPromptsVariant>("chip-row");
@@ -55,7 +58,7 @@ const promptClasses: Record<SuggestedPromptsVariant, string> = {
   "contextual-tooltip":
     "inline-flex items-center gap-1.5 rounded-md px-1.5 py-0.5 text-xs font-medium text-background hover:bg-background/15 [&_svg]:size-3.5",
   "card-grid":
-    "flex h-full w-full items-start gap-2.5 rounded-xl border-[1.5px] border-border bg-muted/40 p-2.5 text-left transition hover:-translate-y-px hover:border-muted-foreground hover:bg-background hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+    "flex h-full w-full items-start gap-[9px] rounded-[11px] border-[1.5px] border-border bg-[hsl(var(--nx-ink-25))] px-[11px] py-2.5 text-left leading-[1.55] transition hover:-translate-y-px hover:border-muted-foreground hover:bg-background hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0",
 };
 
 /** A single suggestion — a secondary-styled action button. */
@@ -95,7 +98,7 @@ export const SuggestedPrompt = React.forwardRef<HTMLButtonElement, SuggestedProm
           className={cn(
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
             promptClasses["card-grid"],
-            selected && "border-foreground bg-background shadow-sm",
+            selected && "border-primary bg-background shadow-[0_1px_4px_rgb(0_0_0/0.1)]",
             className,
           )}
           {...props}
@@ -108,11 +111,11 @@ export const SuggestedPrompt = React.forwardRef<HTMLButtonElement, SuggestedProm
               {icon}
             </span>
           )}
-          <span className="flex min-w-0 flex-col">
-            <span className="text-xs leading-4 text-foreground">{children}</span>
-            {description != null && <span className="mt-0.5 text-xs text-muted-foreground">{description}</span>}
+          <span className="block min-w-0">
+            <span className="block text-[11px] leading-[15px] text-foreground">{children}</span>
+            {description != null && <span className="mt-0.5 block text-xs text-muted-foreground">{description}</span>}
             {tag != null && (
-              <span className={cn("mt-1 text-[0.625rem] font-bold uppercase tracking-[0.07em]", toneText[tone])}>
+              <span className={cn("mt-1 inline-block text-[9px] font-bold uppercase tracking-[0.07em]", toneText[tone])}>
                 {tag}
               </span>
             )}
@@ -236,7 +239,7 @@ export const SuggestedPrompts = React.forwardRef<HTMLDivElement, SuggestedPrompt
             isTooltip
               ? "sr-only"
               : isGrid
-                ? "text-[0.625rem] font-semibold uppercase tracking-widest text-muted-foreground"
+                ? "text-[10px] font-semibold uppercase leading-[1.55] tracking-[0.1em] text-faint"
                 : "text-sm text-muted-foreground",
             variant === "chip-row" && "self-center",
           )}
@@ -263,7 +266,7 @@ export const SuggestedPrompts = React.forwardRef<HTMLDivElement, SuggestedPrompt
           "m-0 list-none p-0",
           variant === "chip-row" && "flex flex-wrap gap-2",
           variant === "card-list" && "flex flex-col gap-1.5",
-          isGrid && "grid grid-cols-1 gap-2 sm:grid-cols-2",
+          isGrid && "grid grid-cols-1 gap-[7px] sm:grid-cols-2",
           isTooltip && "flex flex-wrap items-center gap-1",
         )}
       >

@@ -50,11 +50,12 @@ const tints = [
 ];
 
 // Compact tiles: four distinct hues, so each tile reads as a different task at a glance.
+// Light: nucleux.in's own rose / blue / emerald / amber tiles. Dark: token tints.
 const tileTints = [
-  "from-destructive/10 to-destructive/15 text-destructive",
-  "from-info/15 to-info/25 text-info",
-  "from-success/15 to-success/25 text-success",
-  "from-warning/25 to-warning/45 text-warning-foreground",
+  "bg-[linear-gradient(135deg,#fde2e2,#fcd5d5)] text-[#9f1239] dark:bg-gradient-to-br dark:from-destructive/10 dark:to-destructive/15 dark:text-destructive",
+  "bg-[linear-gradient(135deg,#dde7ff,#c4d5ff)] text-[#1d4ed8] dark:bg-gradient-to-br dark:from-info/15 dark:to-info/25 dark:text-info",
+  "bg-[linear-gradient(135deg,#d1fae5,#a7f3d0)] text-[#065f46] dark:bg-gradient-to-br dark:from-success/15 dark:to-success/25 dark:text-success",
+  "bg-[linear-gradient(135deg,#fde68a,#fcd34d)] text-[#92400e] dark:bg-gradient-to-br dark:from-warning/25 dark:to-warning/45 dark:text-warning-foreground",
 ];
 
 export interface ExampleGalleryItemProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "title"> {
@@ -90,7 +91,7 @@ export const ExampleGalleryItem = React.forwardRef<HTMLButtonElement, ExampleGal
           type={type}
           aria-pressed={selected === undefined ? undefined : selected}
           className={cn(
-            "grid h-11 w-full place-items-center rounded-md bg-gradient-to-br px-3 text-center text-xs font-semibold transition-[filter,box-shadow] hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            "grid h-11 w-full place-items-center rounded-[6px] px-3 text-center text-xs font-semibold transition-[filter,box-shadow] hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
             !preview && tileTints[tint % tileTints.length],
             selected && "ring-2 ring-brand",
             className,
@@ -354,7 +355,11 @@ export const ExampleGallery = React.forwardRef<HTMLElement, ExampleGalleryProps>
             <h2
               id={headingId}
               className={cn(
-                variant === "grouped-list" ? "text-lg font-semibold text-foreground" : "text-xs font-semibold text-muted-foreground",
+                variant === "grouped-list"
+                  ? "text-lg font-semibold text-foreground"
+                  : variant === "tiles"
+                    ? "text-[11px] font-semibold leading-[1.55] text-faint"
+                    : "text-xs font-semibold text-muted-foreground",
               )}
             >
               {label}

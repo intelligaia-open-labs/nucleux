@@ -32,6 +32,14 @@ export interface CaveatProps extends React.HTMLAttributes<HTMLParagraphElement> 
 
 const DEFAULT_TEXT = "AI can make mistakes. Verify important information.";
 
+/** nucleux.in's caveat mark: an "i" in a circle. */
+const InfoMark = () => (
+  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+    <path d="M12 8v5M12 16h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+  </svg>
+);
+
 /**
  * A short, calm reminder that AI output can be wrong and should be checked —
  * or, better, the specific limitation of this result ("2 of 8 interviews
@@ -43,7 +51,7 @@ const DEFAULT_TEXT = "AI can make mistakes. Verify important information.";
  */
 export const Caveat = React.forwardRef<HTMLParagraphElement, CaveatProps>(
   ({ variant = "below-input", icon, actions, detail, className, children, ...props }, ref) => {
-    const glyph = icon === undefined ? <Info aria-hidden="true" /> : icon;
+    const glyph = icon === undefined ? <InfoMark /> : icon;
     if (detail != null) {
       return (
         <p
@@ -52,7 +60,8 @@ export const Caveat = React.forwardRef<HTMLParagraphElement, CaveatProps>(
           data-variant={variant}
           className={cn(
             "flex w-full flex-col gap-2 text-sm [&_svg]:shrink-0",
-            variant === "output-footer" && "mt-2.5 rounded-lg border border-border bg-muted/60 px-3.5 py-3",
+            variant === "output-footer" &&
+              "mt-2.5 rounded-lg border border-border bg-muted/60 px-3.5 py-3",
             className,
           )}
           {...props}
@@ -64,7 +73,11 @@ export const Caveat = React.forwardRef<HTMLParagraphElement, CaveatProps>(
               <span className="text-muted-foreground">{detail}</span>
             </span>
           </span>
-          {actions && <span className="ml-5 inline-flex flex-wrap items-center gap-1.5 [&_svg]:size-3.5">{actions}</span>}
+          {actions && (
+            <span className="ml-5 inline-flex flex-wrap items-center gap-1.5 [&_svg]:size-3.5">
+              {actions}
+            </span>
+          )}
         </p>
       );
     }
@@ -74,17 +87,19 @@ export const Caveat = React.forwardRef<HTMLParagraphElement, CaveatProps>(
         role="note"
         data-variant={variant}
         className={cn(
-          "items-center gap-1.5 text-xs text-muted-foreground [&_svg]:size-3.5 [&_svg]:shrink-0",
+          "items-center [&_svg]:shrink-0",
           variant === "output-footer"
-            ? "mt-2.5 flex w-full flex-wrap rounded-md border border-border bg-muted/60 px-2.5 py-2 text-foreground/80"
-            : "inline-flex",
+            ? "mt-2.5 flex w-full flex-wrap gap-1.5 rounded-md border border-border bg-muted/60 px-2.5 py-2 text-xs text-foreground/80 [&_svg]:size-3.5"
+            : "inline-flex gap-[5px] text-[11px] leading-[1.55] text-faint [&_svg]:size-[11px]",
           className,
         )}
         {...props}
       >
         {glyph}
         <span>{children ?? DEFAULT_TEXT}</span>
-        {actions && <span className="ml-auto inline-flex flex-wrap items-center gap-1.5">{actions}</span>}
+        {actions && (
+          <span className="ml-auto inline-flex flex-wrap items-center gap-1.5">{actions}</span>
+        )}
       </p>
     );
   },
@@ -108,7 +123,10 @@ export interface CaveatTooltipProps extends Omit<React.HTMLAttributes<HTMLSpanEl
  * linked to the control with `aria-describedby` so screen readers hear it too.
  */
 export const CaveatTooltip = React.forwardRef<HTMLSpanElement, CaveatTooltipProps>(
-  ({ content = "Output may be inaccurate", side = "top", showIcon = true, children, ...props }, ref) => {
+  (
+    { content = "Output may be inaccurate", side = "top", showIcon = true, children, ...props },
+    ref,
+  ) => {
     const id = React.useId();
     const childProps = children.props as { "aria-describedby"?: string };
     const trigger = React.cloneElement(children, {

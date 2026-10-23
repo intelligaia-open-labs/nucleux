@@ -12,7 +12,7 @@ export function SitePreview() {
   // Place the chosen prompt in your composer; never send it.
   const placeInComposer = (_prompt: string) => {};
   return (
-    <div className="w-full max-w-[25rem] rounded-xl border border-border bg-background p-4 shadow-sm">
+    <div className="w-full max-w-[397.3px] rounded-[8px] border border-border bg-background p-4 shadow-[0_1px_2px_rgba(12,12,10,0.04),0_1px_3px_rgba(12,12,10,0.06)]">
       <ExampleGallery variant="tiles" label="Try one" examples={EXAMPLES} onSelect={placeInComposer} />
     </div>
   );

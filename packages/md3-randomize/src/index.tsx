@@ -211,7 +211,7 @@ export const Md3Randomize = React.forwardRef<HTMLDivElement, Md3RandomizeProps>(
 
     if (variant === "dice-button") {
       return (
-        <div ref={ref} className={cn("font-md", "relative inline-flex flex-wrap items-center gap-x-4 gap-y-2", className)} {...props}>
+        <div ref={ref} className={cn("font-md", "relative inline-flex flex-wrap items-center gap-3", className)} {...props}>
           {showLabel ? (
             <Md3Button
               variant="tonal"
@@ -219,7 +219,7 @@ export const Md3Randomize = React.forwardRef<HTMLDivElement, Md3RandomizeProps>(
               disabled={disabled}
               icon={loading ? busyIcon : diceIcon}
               onClick={() => next(true)}
-              className="[&_svg]:size-[18px]"
+              className="tracking-[0.1px] [&_svg]:size-[18px] [&_svg]:text-md-primary"
             >
               {label}
             </Md3Button>
@@ -236,7 +236,7 @@ export const Md3Randomize = React.forwardRef<HTMLDivElement, Md3RandomizeProps>(
             </Md3IconButton>
           )}
           {showLabel && (loading || supportingText != null) && (
-            <span className="text-sm tracking-[0.25px] text-md-on-surface-variant">{loading ? loadingLabel : supportingText}</span>
+            <span className="flex-[1_1_200px] text-xs text-md-on-surface-variant">{loading ? loadingLabel : supportingText}</span>
           )}
           {errorRow}
           {confirmPanel}

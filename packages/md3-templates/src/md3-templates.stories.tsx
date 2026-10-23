@@ -7,7 +7,7 @@ const meta = {
   component: Md3Templates,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story) => <div className="w-[34rem]"><Story /></div>],
+  decorators: [(Story) => <div className="w-[35rem]"><Story /></div>],
   args: { segments: [] },
 } satisfies Meta<typeof Md3Templates>;
 

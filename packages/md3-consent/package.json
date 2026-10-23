@@ -43,6 +43,7 @@
     "@nucleux/md3-button": "workspace:*",
     "@nucleux/md3-checkbox": "workspace:*",
     "@nucleux/md3-dialog": "workspace:*",
+    "@nucleux/md3-icons": "workspace:*",
     "@nucleux/md3-switch": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0"

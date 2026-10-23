@@ -3,7 +3,7 @@
   "version": "0.11.2",
   "type": "module",
   "sideEffects": false,
-  "description": "Material 3 Gesture Input — swipes, circles and pinches as named, confirmable signals — Nucleux agentic UI for React.",
+  "description": "Material 3 Gesture Input \u2014 swipes, circles and pinches as named, confirmable signals \u2014 Nucleux agentic UI for React.",
   "keywords": [
     "nucleux",
     "react",
@@ -48,7 +48,8 @@
     "@nucleux/md3-chip": "workspace:*",
     "@nucleux/md3-icon-button": "workspace:*",
     "@nucleux/utils": "workspace:*",
-    "lucide-react": "^0.469.0"
+    "lucide-react": "^0.469.0",
+    "@nucleux/md3-icons": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

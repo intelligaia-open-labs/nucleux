@@ -13,7 +13,7 @@ const meta = {
   // would strip the element) and injected via `render`; hide its control.
   argTypes: { icon: { control: false } },
   render: (args) => <Md3Connector {...args} icon={<Github />} />,
-  decorators: [(Story, { id }) => <div className={id.endsWith("--site-preview") ? "w-[30rem] p-4" : "w-[28rem] bg-md-surface p-4"}><Story /></div>],
+  decorators: [(Story, { id }) => <div className={id.endsWith("--site-preview") ? "w-[460px]" : "w-[28rem] bg-md-surface p-4"}><Story /></div>],
 } satisfies Meta<typeof Md3Connector>;
 
 export default meta;

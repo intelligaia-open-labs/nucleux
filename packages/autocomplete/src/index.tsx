@@ -311,13 +311,19 @@ export const Autocomplete = React.forwardRef<HTMLTextAreaElement, AutocompletePr
     const shell = heading != null || badge != null;
     const showHints = shown && !hideHints && variant !== "ghost-suffix";
     const headingId = `${autoId}-heading`;
-    const hintChip =
-      "inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 font-medium transition-colors hover:bg-accent hover:text-foreground";
-    const keyCap = shell ? "h-auto min-w-0 border-0 bg-transparent p-0 font-sans font-bold text-foreground" : "bg-background";
+    const hintChip = cn(
+      "inline-flex items-center gap-1 font-medium transition-colors hover:text-foreground",
+      shell
+        ? "rounded-[5px] bg-[hsl(var(--nx-slate-100))] px-2 py-[3px] leading-[1.55] hover:bg-[hsl(var(--nx-slate-200))]"
+        : "rounded-md bg-muted px-2 py-0.5 hover:bg-accent",
+    );
+    const keyCap = shell
+      ? "h-auto min-w-0 border-0 bg-transparent p-0 font-sans text-[length:inherit] font-bold leading-[inherit] text-primary"
+      : "bg-background";
     // Shared box metrics so the overlay lines up with the field's text exactly.
     const metrics = cn(
-      "whitespace-pre-wrap break-words border border-transparent text-sm",
-      shell ? "p-3.5" : "px-3 py-2",
+      "whitespace-pre-wrap break-words border border-transparent",
+      shell ? "border-0 p-3.5 text-[13px]" : "px-3 py-2 text-sm",
       isBlock && "font-mono leading-6",
       !isBlock && "leading-5",
     );
@@ -335,12 +341,12 @@ export const Autocomplete = React.forwardRef<HTMLTextAreaElement, AutocompletePr
         data-state={state}
       >
         {shell && (
-          <div className="flex items-center justify-between gap-2 border-b border-border bg-muted/40 px-3.5 py-2">
-            <span id={headingId} className="text-xs font-semibold text-muted-foreground">
+          <div className="flex items-center justify-between gap-2 border-b border-border bg-[hsl(var(--nx-ink-25))] px-[13px] py-[9px] leading-[1.55]">
+            <span id={headingId} className="text-[11px] font-semibold text-faint">
               {heading}
             </span>
             {badge != null && (
-              <span className="rounded-md bg-muted px-2 py-0.5 text-[0.6875rem] font-semibold text-muted-foreground">
+              <span className="rounded-[5px] bg-[hsl(var(--nx-slate-100))] px-[7px] py-0.5 text-[10px] font-semibold text-muted-foreground">
                 {badge}
               </span>
             )}
@@ -379,6 +385,8 @@ export const Autocomplete = React.forwardRef<HTMLTextAreaElement, AutocompletePr
               shell
                 ? "resize-none rounded-none border-0 bg-transparent shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
                 : "border-input resize-y",
+              // In the shell the caret is drawn in the overlay, right before the suggestion (as on nucleux.in).
+              shell && shown && "caret-transparent",
               fieldClassName,
             )}
           />
@@ -388,6 +396,12 @@ export const Autocomplete = React.forwardRef<HTMLTextAreaElement, AutocompletePr
             className={cn(metrics, "pointer-events-none absolute inset-0 overflow-hidden text-transparent")}
           >
             {value}
+            {shell && shown && (
+              <span
+                data-slot="autocomplete-caret"
+                className="ml-px inline-block h-3.5 w-0.5 rounded-[1px] bg-primary align-middle animate-nx-caret-blink motion-reduce:animate-none"
+              />
+            )}
             {shown && (
               <span
                 data-slot="autocomplete-ghost"
@@ -395,7 +409,7 @@ export const Autocomplete = React.forwardRef<HTMLTextAreaElement, AutocompletePr
                   e.preventDefault();
                   accept(shown);
                 }}
-                className="pointer-events-auto cursor-pointer italic text-muted-foreground/80 animate-nx-fade-in motion-reduce:animate-none"
+                className="pointer-events-auto cursor-pointer italic text-[hsl(var(--nx-slate-400))] animate-nx-fade-in motion-reduce:animate-none"
               >
                 {shown}
                 {variant === "ghost-suffix" && (
@@ -411,11 +425,17 @@ export const Autocomplete = React.forwardRef<HTMLTextAreaElement, AutocompletePr
           <div
             className={cn(
               "flex items-center justify-between gap-2",
-              shell && "min-h-10 border-t border-border px-3.5 py-2",
+              shell && "border-t border-border px-[13px] py-2",
             )}
           >
             {showHints ? (
-              <div id={hintId} className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+              <div
+                id={hintId}
+                className={cn(
+                  "flex flex-wrap items-center text-muted-foreground",
+                  shell ? "gap-[5px] text-[10.5px]" : "gap-1.5 text-xs",
+                )}
+              >
                 <button
                   type="button"
                   tabIndex={-1}
@@ -439,7 +459,7 @@ export const Autocomplete = React.forwardRef<HTMLTextAreaElement, AutocompletePr
               <span />
             )}
             {shell && footerEnd != null && (
-              <span className="shrink-0 text-xs tabular-nums text-muted-foreground">{footerEnd}</span>
+              <span className="shrink-0 text-[10.5px] leading-[1.55] tabular-nums text-faint">{footerEnd}</span>
             )}
           </div>
         )}

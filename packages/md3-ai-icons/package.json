@@ -45,6 +45,7 @@
     "@nucleux/md3-card": "workspace:*",
     "@nucleux/md3-color": "workspace:*",
     "@nucleux/md3-icon-button": "workspace:*",
+    "@nucleux/md3-icons": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0"
   },

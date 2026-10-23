@@ -41,6 +41,7 @@
   "dependencies": {
     "@nucleux/md3-agent-avatar": "workspace:*",
     "@nucleux/md3-button": "workspace:*",
+    "@nucleux/md3-icons": "workspace:*",
     "@nucleux/md3-message": "workspace:*",
     "@nucleux/personality": "workspace:*",
     "@nucleux/utils": "workspace:*",

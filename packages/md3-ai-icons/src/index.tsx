@@ -1,16 +1,16 @@
 import * as React from "react";
 import { cn } from "@nucleux/utils";
+import { AiIconProvider, aiGlyphs, defaultAiIconLegendTerms, useAiGlyph } from "@nucleux/ai-icons";
+import type { AiGlyphName } from "@nucleux/ai-icons";
 import {
-  AiGeneratedIcon,
-  AiIconProvider,
-  defaultAiIconLegendTerms,
-  AiRegenerateIcon,
-  AiSparkleIcon,
-  AiToolIcon,
-  AiWandIcon,
-  AiWorkingIcon,
-  useAiGlyph,
-} from "@nucleux/ai-icons";
+  MsBuild,
+  MsChatInfo,
+  MsProgressActivity,
+  MsRefresh,
+  MsStarShine,
+  MsWandShine,
+  type MsIconProps,
+} from "@nucleux/md3-icons";
 import type {
   AiGlyphProps,
   AiIconLegendProps,
@@ -48,34 +48,77 @@ export type Md3AiIconLegendProps = AiIconLegendProps;
 export type { AiIconLegendTerm } from "@nucleux/ai-icons";
 export { defaultAiIconLegendTerms } from "@nucleux/ai-icons";
 
-function md3Glyph<P extends Md3AiGlyphProps>(
-  Glyph: React.ComponentType<P & React.RefAttributes<SVGSVGElement>>,
-  displayName: string,
-) {
-  const Md3Glyph = React.forwardRef<SVGSVGElement, P>((props, ref) => (
-    <Glyph {...(props as P)} ref={ref} />
-  ));
+type MsGlyph = React.ForwardRefExoticComponent<MsIconProps & React.RefAttributes<SVGSVGElement>>;
+
+/** A Material Symbol drawn as one of the reserved AI marks: decorative unless named. */
+function md3Glyph(Icon: MsGlyph, name: AiGlyphName, displayName: string) {
+  const Md3Glyph = React.forwardRef<SVGSVGElement, Md3AiGlyphProps>(({ className, ...props }, ref) => {
+    const named = props["aria-label"] != null || props["aria-labelledby"] != null;
+    return (
+      <Icon
+        ref={ref}
+        data-ai-glyph={name}
+        className={cn("size-4 shrink-0", className)}
+        {...props}
+        {...(named ? { role: "img", "aria-hidden": undefined, focusable: undefined } : {})}
+      />
+    );
+  });
   Md3Glyph.displayName = displayName;
   return Md3Glyph;
 }
 
 /**
- * The four-point AI sparkle (Material's star_shine role) — the reserved mark
- * for "this runs AI". It draws `AiSparkleIcon`, so the agent mark, the
- * disclosure chip and every AI control show it byte-for-byte alike in both
- * families. Decorative unless given an `aria-label`.
+ * The AI-action mark — Material's `star_shine`, as nucleux.in's Material 3
+ * pages draw it. Decorative unless given an `aria-label`.
  */
-export const Md3AiSparkleIcon = md3Glyph<Md3AiGlyphProps>(AiSparkleIcon, "Md3AiSparkleIcon");
-/** The "generated with AI" mark (Material's chat_info role) — only on content AI wrote or changed. */
-export const Md3AiGeneratedIcon = md3Glyph<Md3AiGlyphProps>(AiGeneratedIcon, "Md3AiGeneratedIcon");
-/** The "agent working" mark (Material's progress_activity role): the only mark that turns, only while work happens, and still under reduced motion. */
-export const Md3AiWorkingIcon = md3Glyph<Md3AiWorkingIconProps>(AiWorkingIcon, "Md3AiWorkingIcon");
-/** The "transform" mark (wand_shine): AI actions that change something the user already has. */
-export const Md3AiWandIcon = md3Glyph<Md3AiGlyphProps>(AiWandIcon, "Md3AiWandIcon");
-/** The "regenerate" mark: run the same AI action again. */
-export const Md3AiRegenerateIcon = md3Glyph<Md3AiGlyphProps>(AiRegenerateIcon, "Md3AiRegenerateIcon");
-/** The "tool use" mark (Material's build role): on the lines that say which tool the agent used. */
-export const Md3AiToolIcon = md3Glyph<Md3AiGlyphProps>(AiToolIcon, "Md3AiToolIcon");
+export const Md3AiSparkleIcon = md3Glyph(MsStarShine, "sparkle", "Md3AiSparkleIcon");
+/** The "generated with AI" mark (Material's `chat_info`) — only on content AI wrote or changed. */
+export const Md3AiGeneratedIcon = md3Glyph(MsChatInfo, "generated", "Md3AiGeneratedIcon");
+/** The "transform" mark (`wand_shine`): AI actions that change something the user already has. */
+export const Md3AiWandIcon = md3Glyph(MsWandShine, "wand", "Md3AiWandIcon");
+/** The "regenerate" mark (`refresh`): run the same AI action again. */
+export const Md3AiRegenerateIcon = md3Glyph(MsRefresh, "regenerate", "Md3AiRegenerateIcon");
+/** The "tool use" mark (Material's `build`): on the lines that say which tool the agent used. */
+export const Md3AiToolIcon = md3Glyph(MsBuild, "tool", "Md3AiToolIcon");
+
+const Md3ProgressGlyph = md3Glyph(MsProgressActivity, "working", "Md3ProgressGlyph");
+
+/**
+ * The "agent working" mark (Material's `progress_activity`): the only mark
+ * that turns, only while work happens, and still under reduced motion.
+ */
+export const Md3AiWorkingIcon = React.forwardRef<SVGSVGElement, Md3AiWorkingIconProps>(
+  ({ still = false, className, ...props }, ref) => (
+    <Md3ProgressGlyph
+      ref={ref}
+      className={cn(!still && "animate-spin motion-reduce:animate-none", className)}
+      {...props}
+    />
+  ),
+);
+Md3AiWorkingIcon.displayName = "Md3AiWorkingIcon";
+
+/** The Material 3 glyph for each reserved mark. */
+export const md3AiGlyphs: Record<AiGlyphName, React.ComponentType<Md3AiGlyphProps>> = {
+  sparkle: Md3AiSparkleIcon,
+  wand: Md3AiWandIcon,
+  regenerate: Md3AiRegenerateIcon,
+  generated: Md3AiGeneratedIcon,
+  working: Md3AiWorkingIcon,
+  tool: Md3AiToolIcon,
+};
+
+/**
+ * The Material 3 glyph the nearest `AiIconProvider` / `Md3AiIconProvider`
+ * approved for a role (the same choice as the shadcn family, drawn as a
+ * Material Symbol).
+ */
+export function useMd3AiGlyph(role: AiIconRole): React.ComponentType<Md3AiGlyphProps> {
+  const chosen = useAiGlyph(role);
+  const name = (Object.keys(aiGlyphs) as AiGlyphName[]).find((n) => aiGlyphs[n] === chosen) ?? "sparkle";
+  return md3AiGlyphs[name];
+}
 
 /**
  * Sets the approved glyph for each AI role once for the whole product. It
@@ -112,7 +155,7 @@ const roleClasses: Record<AiIconRole, string> = {
  */
 export const Md3AiIcon = React.forwardRef<HTMLSpanElement, Md3AiIconProps>(
   ({ role, label, showLabel = true, className, ...props }, ref) => {
-    const Glyph = useAiGlyph(role);
+    const Glyph = useMd3AiGlyph(role);
     return (
       <span
         ref={ref}
@@ -150,7 +193,7 @@ const sizeClasses: Record<AiIconsSize, string> = {
  */
 export const Md3AiIcons = React.forwardRef<HTMLSpanElement, Md3AiIconsProps>(
   ({ variant = "sparkle", size = "md", tone = "solid", label, glyph, className, ...props }, ref) => {
-    const Sparkle = useAiGlyph("ai-action");
+    const Sparkle = useMd3AiGlyph("ai-action");
     const a11y = label ? { role: "img" as const, "aria-label": label } : { "aria-hidden": true as const };
     const base = "inline-grid shrink-0 place-items-center font-medium";
 
@@ -221,29 +264,34 @@ Md3AiIcons.displayName = "Md3AiIcons";
 // Copied from @nucleux/ai-icons (internal there): the approved glyph for a
 // role, drawn still — the legend never animates.
 function AiLegendGlyph({ role, className }: { role: AiIconRole; className?: string }) {
-  const Glyph = useAiGlyph(role);
-  return role === "agent-working" ? <AiWorkingIcon still className={className} /> : <Glyph className={className} />;
+  const Glyph = useMd3AiGlyph(role);
+  return role === "agent-working" ? <Md3AiWorkingIcon still className={className} /> : <Glyph className={className} />;
 }
 
 /**
  * The product's icon language in Material 3 — the twin of `AiIconLegend`.
  * An overline heading, then one row per AI meaning: its mark in md-primary
- * at 24, 20 and 16 px, the name in body-large and what it tells people in
- * on-surface-variant, between outline-variant rules. The meaning in use
- * (`current`) sits on surface-container with a primary leading edge.
+ * at 24, 20 and 16 px, the name in title-small and what it tells people in
+ * body-small on-surface-variant, between outline-variant rules. The meaning
+ * in use (`current`) sits on surface-container-low with a primary leading edge.
  */
 export const Md3AiIconLegend = React.forwardRef<HTMLElement, Md3AiIconLegendProps>(
   ({ heading = "Icon language", terms = defaultAiIconLegendTerms, current, className, ...props }, ref) => {
     const headingId = React.useId();
     return (
-      <section ref={ref} aria-labelledby={headingId} className={cn("font-md", "text-md-on-surface", className)} {...props}>
+      <section
+        ref={ref}
+        aria-labelledby={headingId}
+        className={cn("font-md", "grid gap-2 leading-normal text-md-on-surface", className)}
+        {...props}
+      >
         <h3
           id={headingId}
-          className="mb-3 mt-0 text-xs font-medium uppercase tracking-[1.5px] text-md-on-surface-variant"
+          className="m-0 text-[11px] font-medium uppercase leading-4 tracking-[0.08em] text-md-on-surface-variant"
         >
           {heading}
         </h3>
-        <ul className="m-0 list-none border-t border-md-outline-variant p-0">
+        <ul className="m-0 grid list-none p-0">
           {terms.map((term) => {
             const here = term.role === current;
             return (
@@ -251,17 +299,17 @@ export const Md3AiIconLegend = React.forwardRef<HTMLElement, Md3AiIconLegendProp
                 key={term.role}
                 aria-current={here || undefined}
                 className={cn(
-                  "flex items-center gap-3 border-b border-l-4 border-b-md-outline-variant py-3 pl-3 pr-2",
-                  here ? "border-l-md-primary bg-md-surface-container" : "border-l-transparent",
+                  "flex items-center gap-3 border-t border-md-outline-variant px-3 py-2 last:border-b",
+                  here && "bg-md-surface-container-low shadow-[inset_3px_0_0_0_hsl(var(--nx-md-primary))]",
                 )}
               >
-                <span aria-hidden="true" className="flex w-[5rem] shrink-0 items-center gap-2 text-md-primary">
+                <span aria-hidden="true" className="inline-flex w-[76px] shrink-0 items-center gap-1.5 text-md-primary">
                   <AiLegendGlyph role={term.role} className="size-6" />
                   <AiLegendGlyph role={term.role} className="size-5" />
                   <AiLegendGlyph role={term.role} className="size-4" />
                 </span>
-                <span className="w-44 shrink-0 text-base tracking-[0.15px]">{term.name}</span>
-                <span className="text-sm tracking-[0.25px] text-md-on-surface-variant">{term.meaning}</span>
+                <span className="w-[180px] shrink-0 text-sm font-medium leading-5 text-md-on-surface">{term.name}</span>
+                <span className="min-w-0 flex-1 text-xs leading-4 text-md-on-surface-variant">{term.meaning}</span>
               </li>
             );
           })}

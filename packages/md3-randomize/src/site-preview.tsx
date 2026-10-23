@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sparkles } from "lucide-react";
+import { MsStarShine } from "@nucleux/md3-icons";
 import { Md3OpenInput, Md3OpenInputModelChip } from "@nucleux/md3-open-input";
 import { Md3Randomize } from "./index";
 
@@ -16,17 +16,18 @@ export function SitePreview() {
   const [value, setValue] = useState("");
 
   return (
-    <div className="flex w-[40rem] max-w-full flex-col gap-4">
-      <p className="text-center text-sm font-medium tracking-[0.1px] text-md-on-surface-variant">
+    <div className="flex w-[39.75rem] max-w-full flex-col gap-3">
+      <p className="text-center font-md text-xs font-medium tracking-[0.3px] text-md-on-surface-variant">
         Campaign · Planboard 3.0 launch · directions
       </p>
       <Md3Randomize
         label="Try a direction"
-        icon={<Sparkles aria-hidden="true" />}
+        icon={<MsStarShine />}
         supportingText="A random starting point for the launch — edit it before you use it."
         prompts={DIRECTIONS}
         draft={value}
         onSelect={(prompt, { mode }) => setValue(mode === "append" ? `${value}\n${prompt}` : prompt)}
+        className="mb-3"
       />
       <Md3OpenInput
         aria-label="Message Aria"

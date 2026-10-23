@@ -5,5 +5,12 @@ const CUTOFF = "Apr 2026";
 
 /** What the assistant can do, with its knowledge cutoff — shown at the start of the experience. */
 export function SitePreview() {
-  return <Disclaimer className="w-[23rem]" title="What this can do" items={CAPABILITIES} cutoff={CUTOFF} />;
+  return (
+    <Disclaimer
+      className="w-[23.325rem]"
+      title="What this can do"
+      items={CAPABILITIES}
+      cutoff={CUTOFF}
+    />
+  );
 }

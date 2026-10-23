@@ -21,7 +21,7 @@ export function SitePreview() {
       rules={RULES}
       defaultValue="professional"
       defaultRuleValues={["no-emojis", "uk-english"]}
-      className="w-[30rem] max-w-full"
+      className="w-[30rem] max-w-full p-4"
     />
   );
 }

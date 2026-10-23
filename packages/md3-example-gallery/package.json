@@ -42,10 +42,10 @@
   },
   "dependencies": {
     "@nucleux/example-gallery": "workspace:*",
-    "@nucleux/md3-agent-composer": "workspace:*",
     "@nucleux/md3-button": "workspace:*",
     "@nucleux/md3-dialog": "workspace:*",
-    "@nucleux/md3-icon-button": "workspace:*",
+    "@nucleux/md3-icons": "workspace:*",
+    "@nucleux/md3-open-input": "workspace:*",
     "@nucleux/md3-tabs": "workspace:*",
     "@nucleux/utils": "workspace:*",
     "lucide-react": "^0.469.0"

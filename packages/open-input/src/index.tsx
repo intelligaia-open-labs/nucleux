@@ -1,15 +1,5 @@
 import * as React from "react";
-import {
-  ArrowUp,
-  ChevronDown,
-  Maximize2,
-  Mic,
-  Minimize2,
-  Plus,
-  RotateCw,
-  Send,
-  Square,
-} from "lucide-react";
+import { ArrowUp, Maximize2, Minimize2, RotateCw, Square } from "lucide-react";
 import { cn } from "@nucleux/utils";
 import { Button } from "@nucleux/button";
 import { Spinner } from "@nucleux/spinner";
@@ -20,6 +10,9 @@ export type { ComposerHeightOptions, ComposerHeightState } from "./use-composer-
 
 /** Layout of the composer, from the spec's variants. */
 export type OpenInputVariant = "expanding-area" | "single-line" | "input-with-send";
+
+/** Where the composer's extra `actions` go: before the model chip (default) or right after it. */
+export type OpenInputActionsPlacement = "before-model" | "after-model";
 
 /** Which key sends: plain Enter (Shift+Enter is a newline), or ⌘/Ctrl+Enter (Enter is a newline). */
 export type OpenInputSendKey = "enter" | "mod-enter";
@@ -94,6 +87,13 @@ export interface OpenInputProps extends Omit<
   /** Secondary controls (add context, voice, model…) placed beside the send button. They never touch the text. */
   actions?: React.ReactNode;
   /**
+   * Where `actions` sit in the toolbar: "before-model" (default) — after the
+   * field (stacked: after the +), before the model chip; or "after-model" —
+   * between the model chip and the mic, as the site's Handwriting composer
+   * places its pen toggle.
+   */
+  actionsPlacement?: OpenInputActionsPlacement;
+  /**
    * With `maxLength`, the character counter appears once the text reaches this
    * fraction of the limit. Defaults to 0.8. Set 0 to always show it.
    */
@@ -140,6 +140,35 @@ export interface OpenInputProps extends Omit<
   layout?: OpenInputLayout;
 }
 
+// The nucleux.in composer's own glyphs (its inline SVGs, stroke widths and all).
+const PlusGlyph = () => (
+  <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0">
+    <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+  </svg>
+);
+const MicGlyph = () => (
+  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0">
+    <rect x="9" y="2" width="6" height="12" rx="3" stroke="currentColor" strokeWidth="1.8" />
+    <path d="M5 11a7 7 0 0014 0M12 19v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+);
+const SendGlyph = () => (
+  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0">
+    <path
+      d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+const ChevronGlyph = () => (
+  <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" fill="none" className="shrink-0">
+    <path d="M2.5 3.5l2.5 3 2.5-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 /** Props of {@link OpenInputModelChip} (and `Md3OpenInputModelChip`). */
 export interface OpenInputModelChipProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "name"> {
   /** The model, e.g. "5.5" (shadcn) or "Balanced" (Material 3). Shown with emphasis. */
@@ -163,14 +192,15 @@ export const OpenInputModelChip = React.forwardRef<HTMLButtonElement, OpenInputM
       ref={ref}
       type={type}
       className={cn(
-        "inline-flex h-7 shrink-0 items-center gap-1 rounded-md border border-border bg-muted/40 px-2 text-xs transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+        // The site's chip: 3px 8px, 6px corner, hairline, #fafafa fill, 11px type.
+        "inline-flex shrink-0 items-center gap-1 rounded-md border border-border bg-[hsl(var(--nx-ink-25))] px-2 py-[3px] text-[11px] leading-[1.55] text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
         className,
       )}
       {...props}
     >
       <span className="font-semibold text-foreground">{name}</span>
-      {detail != null && <span className="text-muted-foreground">{detail}</span>}
-      {chevron && <ChevronDown aria-hidden="true" className="size-3 text-foreground" />}
+      {detail != null && <span className="text-faint">{detail}</span>}
+      {chevron && <ChevronGlyph />}
     </button>
   ),
 );
@@ -214,6 +244,7 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
       sendLabel = "Send message",
       stopLabel = "Stop generating",
       actions,
+      actionsPlacement = "before-model",
       counterThreshold = 0.8,
       error,
       onRetry,
@@ -339,7 +370,9 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
     const iconSize = variant === "input-with-send" ? "icon-lg" : "icon-sm";
     const roundClass = variant === "input-with-send" ? "rounded-xl" : "rounded-full";
     const ghost = sendVariant === "ghost";
-    const quietIcon = "shrink-0 text-muted-foreground hover:text-foreground";
+    // The site's quiet toolbar buttons: a 26px + in --fg-mid, 28px mic and send in --fg-muted.
+    const addIcon = "size-[26px] shrink-0 rounded-md text-muted-foreground hover:text-foreground";
+    const quietIcon = "size-7 shrink-0 rounded-md text-faint hover:text-foreground";
     const sendButton = loading ? (
       <Button
         type="button"
@@ -361,8 +394,9 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
         aria-keyshortcuts={sendShortcut}
         aria-busy={sending || undefined}
         className={cn(
-          "shrink-0 disabled:opacity-40",
-          ghost ? quietIcon : roundClass,
+          "shrink-0",
+          // The site's ghost send keeps its quiet colour while there is nothing to send.
+          ghost ? cn(quietIcon, "disabled:opacity-100") : cn("disabled:opacity-40", roundClass),
         )}
       >
         {sending ? (
@@ -373,7 +407,7 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
             className="motion-reduce:animate-none"
           />
         ) : ghost ? (
-          <Send aria-hidden="true" className="size-4" />
+          <SendGlyph />
         ) : (
           <ArrowUp className="size-4" />
         )}
@@ -390,9 +424,9 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
           aria-label={addLabel}
           onClick={onAdd}
           disabled={disabled}
-          className={quietIcon}
+          className={addIcon}
         >
-          <Plus aria-hidden="true" className="size-4" />
+          <PlusGlyph />
         </Button>
       ) : null);
 
@@ -406,14 +440,20 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
         disabled={disabled}
         className={quietIcon}
       >
-        <Mic aria-hidden="true" className="size-4" />
+        <MicGlyph />
       </Button>
     ) : null;
 
     // Model chip, mic, send: the right end of every arrangement.
+    // `actions` sit before the model chip by default; "after-model" puts them between it and the mic.
+    const afterModel = actionsPlacement === "after-model";
+    const leadActions = afterModel ? null : actions;
+    const modelActions = afterModel ? actions : null;
+
     const trailing = (
       <>
         {model}
+        {modelActions}
         {voiceButton}
         {sendButton}
       </>
@@ -466,7 +506,9 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
         className={cn(
           "min-w-0 flex-1 resize-none bg-transparent px-2 py-1.5 text-sm leading-5 text-foreground outline-none placeholder:truncate placeholder:text-muted-foreground disabled:opacity-50",
           variant === "single-line" && "h-8 overflow-hidden",
-          !stacked && variant === "expanding-area" && "px-1",
+          // The site composer: 13px / 20px type with no inset of its own; its placeholder is gray-400.
+          variant === "expanding-area" && "p-0 text-[13px] leading-5 placeholder:text-[#9ca3af]",
+          stacked && "min-h-10",
           variant === "expanding-area" && "w-full",
           showToggle && "pr-10",
         )}
@@ -527,7 +569,7 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
         >
           {addControl}
           {field}
-          {actions}
+          {leadActions}
           {counter}
           {trailing}
         </div>
@@ -546,9 +588,10 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
           >
             {addControl}
             {fieldArea}
-            {actions}
+            {leadActions}
             {counter && <span className="self-center">{counter}</span>}
             {model}
+            {modelActions}
             {voiceButton}
           </div>
           {sendButton}
@@ -565,8 +608,11 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
           data-layout={stacked ? "stacked" : "inline"}
           className={cn(
             boxBase,
-            "flex flex-wrap items-center rounded-xl",
-            stacked ? "gap-x-1.5 gap-y-2 px-3 pb-2 pt-2.5" : "min-h-10 gap-1 px-1.5 py-0.5",
+            // As on nucleux.in: a 10px corner and a soft 0 1px 4px shadow. Inline, one 40px row
+            // (8px / 10px insets, 8px gaps); stacked, 12px / 14px insets and a hairline 10px
+            // below the request and 10px above the toolbar.
+            "flex flex-wrap items-center rounded-[10px] shadow-[0_1px_4px_rgba(0,0,0,0.06)]",
+            stacked ? "gap-x-1.5 px-3.5 py-3" : "min-h-10 gap-2 pl-2 pr-2.5",
             className,
           )}
         >
@@ -574,9 +620,9 @@ export const OpenInput = React.forwardRef<HTMLTextAreaElement, OpenInputProps>(
           {addControl}
           {fieldArea}
           {stacked && (
-            <span aria-hidden="true" className="-order-1 -mx-0.5 basis-full border-t border-border" />
+            <span aria-hidden="true" className="-order-1 my-2.5 basis-full border-t border-border" />
           )}
-          {actions}
+          {leadActions}
           {stacked && <span className="flex-1" />}
           {counter}
           {trailing}

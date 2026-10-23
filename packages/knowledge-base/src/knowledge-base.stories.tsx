@@ -7,7 +7,7 @@ const meta = {
   component: KnowledgeBase,
   tags: ["autodocs"],
   parameters: { layout: "centered" },
-  decorators: [(Story, { id }) => <div className={id.endsWith("--site-preview") ? "w-[30rem]" : "w-[26rem]"}><Story /></div>],
+  decorators: [(Story, { id }) => <div className={id.endsWith("--site-preview") ? "w-[446px]" : "w-[26rem]"}><Story /></div>],
   args: {
     defaultValue: ["claude"],
     onValueChange: () => {},

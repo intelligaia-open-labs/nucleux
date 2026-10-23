@@ -74,8 +74,7 @@ export const Md3SuggestedPrompt = React.forwardRef<HTMLButtonElement, Md3Suggest
           data-state={state}
           className={cn(
             "font-md",
-            "h-auto min-h-8 max-w-full gap-2 whitespace-normal py-1.5 text-left tracking-[0.1px] transition-[background-color,border-color] duration-200 motion-reduce:transition-none",
-            icon ? "pl-2 pr-4" : "px-4",
+            "h-auto min-h-8 max-w-full gap-1.5 whitespace-normal px-3 py-[5px] text-left tracking-[0.1px] transition-[background-color,border-color] duration-200 motion-reduce:transition-none",
             selected
               ? "[&_svg]:text-md-on-secondary-container"
               : "border-md-outline-variant hover:bg-md-surface-container-high hover:before:opacity-0 focus-visible:before:opacity-[0.10] active:before:opacity-[0.10] [&_svg]:text-md-primary",

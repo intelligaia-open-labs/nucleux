@@ -5,7 +5,6 @@ import {
   ChevronRight,
   FileText,
   ImageIcon,
-  Palette,
   PenLine,
   Plus,
   RotateCcw,
@@ -54,7 +53,7 @@ const dot: Record<PresetStyleSwatch, string> = {
 
 const focusRing =
   "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
-const overline = "text-[10px] font-semibold uppercase tracking-[0.1em] text-muted-foreground";
+const overline = "text-[10px] font-semibold uppercase leading-[1.55] tracking-[0.1em] text-faint";
 
 function Swatch({ style, on }: { style: PresetStyle; on: boolean }) {
   return (
@@ -63,7 +62,7 @@ function Swatch({ style, on }: { style: PresetStyle; on: boolean }) {
       className={cn(
         "block aspect-square w-full overflow-hidden rounded-[9px] bg-gradient-to-br transition-[border-color,border-width] motion-reduce:transition-none",
         tile[style.swatch ?? "neutral"],
-        on ? "border-[2.5px] border-foreground" : "border-[1.5px] border-border group-hover:border-muted-foreground/50",
+        on ? "border-2 border-primary" : "border border-[hsl(var(--nx-slate-200))] group-hover:border-muted-foreground/50",
       )}
     >
       {style.image && <img src={style.image} alt="" className="size-full object-cover" />}
@@ -94,14 +93,14 @@ function ReferenceZone({ s }: { s: PresetStylesState }) {
           {ref?.src ? (
             <img src={ref.src} alt="" className="size-full object-cover" />
           ) : (
-            <ImageIcon className="size-4 text-muted-foreground" />
+            <ImageIcon className="size-4 text-foreground" />
           )}
         </span>
         <span className="flex min-w-0 flex-col">
-          <span className="text-xs font-semibold text-foreground">
+          <span className="text-xs font-semibold leading-[1.55] text-foreground">
             {ref ? presetStylesCopy.matchAttached : presetStylesCopy.matchTitle}
           </span>
-          <span className="truncate text-[11px] text-muted-foreground">
+          <span className="truncate text-[10.5px] leading-[1.55] text-faint">
             {ref ? `${ref.name} · drop to replace` : presetStylesCopy.matchSub}
           </span>
         </span>
@@ -122,10 +121,10 @@ function ReferenceZone({ s }: { s: PresetStylesState }) {
 }
 
 function LockLine({ s, scope }: { s: PresetStylesState; scope: string }) {
-  const name = <strong className="font-semibold text-foreground">{s.currentStyle?.name}</strong>;
+  const name = <strong className="font-bold text-foreground">{s.currentStyle?.name}</strong>;
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-border bg-muted/50 px-3 py-2 text-[11px] text-muted-foreground">
-      <Palette aria-hidden="true" className="size-3.5 shrink-0 text-brand" />
+    <div className="flex items-center gap-2 rounded-[8px] border border-border bg-[hsl(var(--nx-ink-25))] px-3 py-2 text-[11px] leading-[1.55] text-faint">
+      <span aria-hidden="true" className="shrink-0">🎨</span>
       <span className="min-w-0 flex-1" aria-live="polite">
         {s.locked ? (
           <>
@@ -685,12 +684,12 @@ export const PresetStyles = React.forwardRef<HTMLDivElement, PresetStylesProps>(
         };
         if (variant === "grid") {
           return (
-            <button key={st.id} {...common} className={cn("group flex min-w-0 flex-col items-center gap-1.5 rounded-[11px]", focusRing)}>
+            <button key={st.id} {...common} className={cn("group flex min-w-0 flex-col items-center gap-[5px] rounded-[11px]", focusRing)}>
               <Swatch style={st} on={on} />
               <span
                 className={cn(
-                  "max-w-full truncate text-[11px]",
-                  on ? "font-semibold text-foreground" : "text-muted-foreground",
+                  "max-w-full truncate text-[10.5px] leading-[1.55]",
+                  on ? "font-semibold text-foreground" : "text-faint",
                 )}
               >
                 {st.name}
@@ -726,7 +725,12 @@ export const PresetStyles = React.forwardRef<HTMLDivElement, PresetStylesProps>(
   );
 
   return (
-    <CardContainer ref={ref} className={cn("flex w-full max-w-[30rem] flex-col gap-3 p-4", className)} {...rest}>
+    <CardContainer
+      ref={ref}
+      className={cn(
+        "flex w-full max-w-[30rem] flex-col gap-3 rounded-[8px] p-4 shadow-[0_1px_2px_rgba(12,12,10,0.04),0_1px_3px_rgba(12,12,10,0.06)]",
+        className,
+      )} {...rest}>
       <p id={labelId} className={overline}>
         {label}
       </p>

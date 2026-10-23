@@ -474,6 +474,8 @@ export type VoiceToneState = ReturnType<typeof useVoiceTone>;
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 const overline = "text-[11px] font-semibold uppercase leading-4 tracking-[0.1em] text-muted-foreground";
+/** The settings panel's overlines, sized as on nucleux.in. */
+const panelOverline = "text-[10px] font-semibold uppercase leading-[1.55] tracking-[0.1em] text-faint";
 
 function Recommended() {
   return (
@@ -578,7 +580,13 @@ function ToneChoices({ vt }: { vt: VoiceToneState }) {
   }
 
   return (
-    <div {...group} className="grid grid-cols-[repeat(auto-fit,minmax(8.5rem,1fr))] gap-1.5">
+    <div
+      {...group}
+      className={cn(
+        "grid gap-1.5",
+        inPicker ? "grid-cols-[repeat(auto-fit,minmax(8.5rem,1fr))]" : "grid-cols-[repeat(auto-fit,minmax(7.5rem,1fr))]",
+      )}
+    >
       {tones.map((t, i) => {
         const on = t.id === vt.tone;
         return (
@@ -586,26 +594,32 @@ function ToneChoices({ vt }: { vt: VoiceToneState }) {
             key={t.id}
             {...vt.radioProps(t, i)}
             className={cn(
-              "flex flex-col rounded-lg border px-2 py-2.5 transition-colors",
+              "flex flex-col border transition-colors",
               focusRing,
-              inPicker ? "min-h-[4.5rem] items-start gap-1 px-3 text-left" : "items-center gap-0.5 text-center",
-              on
-                ? "border-primary bg-muted/50 ring-[0.5px] ring-inset ring-primary"
-                : "border-border bg-transparent hover:bg-accent/50",
+              inPicker
+                ? "min-h-[4.5rem] items-start gap-1 rounded-lg px-3 py-2.5 text-left"
+                : "items-center gap-0.5 rounded-[8px] px-2 py-[9px] text-center",
+              inPicker && on && "border-primary bg-muted/50 ring-[0.5px] ring-inset ring-primary",
+              !inPicker && on && "border-[1.5px] border-primary bg-[hsl(var(--nx-slate-50))]",
+              !on && "border-border bg-transparent hover:bg-accent/50",
             )}
           >
             <span
               className={cn(
-                "flex w-full items-center gap-1.5 text-[13px] leading-5",
-                !inPicker && "justify-center",
-                on ? "font-semibold text-foreground" : "text-foreground/75",
+                "flex w-full items-center gap-1.5",
+                inPicker ? "text-[13px] leading-5" : "justify-center text-[12px] leading-[1.55]",
+                on ? "font-semibold text-foreground" : inPicker ? "text-foreground/75" : "text-muted-foreground",
                 inPicker && "font-semibold text-foreground",
               )}
             >
               {t.name}
               {inPicker && on && <Check className="ml-auto size-4 shrink-0" aria-hidden="true" />}
             </span>
-            {t.description && <span className="text-[11px] leading-4 text-muted-foreground">{t.description}</span>}
+            {t.description && (
+              <span className={inPicker ? "text-[11px] leading-4 text-muted-foreground" : "text-[9.5px] leading-[1.55] text-faint"}>
+                {t.description}
+              </span>
+            )}
             {t.recommended && <Recommended />}
           </button>
         );
@@ -650,12 +664,12 @@ function Sample({ vt, framed }: { vt: VoiceToneState; framed?: boolean }) {
     <div
       className={cn(
         "flex flex-col gap-1",
-        framed ? "rounded-lg bg-muted/50 px-3 py-2.5" : "bg-muted/40 px-[18px] pb-3.5 pt-3",
+        framed ? "rounded-lg bg-muted/50 px-3 py-2.5" : "gap-[5px] bg-[hsl(var(--nx-ink-25))] px-[18px] py-3",
       )}
     >
-      <p className={overline}>{framed && t ? `Sample · ${t.name}` : "Sample output"}</p>
-      <p className="text-[13px] italic leading-5 text-foreground" aria-live="polite">
-        {text ? `“${text}”` : `${vt.agentName} will match “${vt.customTone}” as closely as it can.`}
+      <p className={framed ? overline : panelOverline}>{framed && t ? `Sample · ${t.name}` : "Sample output"}</p>
+      <p className={cn("italic text-foreground", framed ? "text-[13px] leading-5" : "text-[12px] leading-[17px]")} aria-live="polite">
+        {text ? (framed ? `“${text}”` : `"${text}"`) : `${vt.agentName} will match “${vt.customTone}” as closely as it can.`}
       </p>
     </div>
   );
@@ -800,10 +814,10 @@ function Settings({ vt }: { vt: VoiceToneState }) {
   const ruleList = vt.ruleList;
   return (
     <>
-      <div className="flex flex-col gap-3.5 px-[18px] pb-4 pt-4">
+      <div className="flex flex-col gap-3.5 border-b border-border px-[18px] py-3.5">
         {vt.tones.length > 0 && (
           <div className="flex flex-col gap-2.5">
-            <p id={vt.ids.presets} className={overline}>
+            <p id={vt.ids.presets} className={panelOverline}>
               {vt.label} preset
             </p>
             <ToneChoices vt={vt} />
@@ -812,19 +826,19 @@ function Settings({ vt }: { vt: VoiceToneState }) {
         {vt.allowCustom && <CustomRow vt={vt} />}
         {ruleList.length > 0 && (
           <div role="group" aria-labelledby={vt.ids.rules} className="flex flex-col gap-2">
-            <p id={vt.ids.rules} className={overline}>
+            <p id={vt.ids.rules} className={panelOverline}>
               Rules
             </p>
             <div className="flex flex-col gap-1.5">
               {ruleList.map((r) => {
                 const on = vt.rules.includes(r.id);
                 return (
-                  <label key={r.id} className="flex w-fit cursor-pointer items-center gap-2.5 text-[13px] text-foreground">
+                  <label key={r.id} className="flex w-fit cursor-pointer items-center gap-[9px] text-[12px] leading-[1.55] text-foreground">
                     <Checkbox
                       checked={on}
                       onCheckedChange={(next) => vt.toggleRule(r.id, next)}
                       aria-labelledby={vt.ids.rule(r.id)}
-                      className="size-[15px]"
+                      className={cn("size-[15px] border-[1.5px] shadow-none [&_svg]:size-[9px]", !on && "border-border bg-transparent")}
                     />
                     <span id={vt.ids.rule(r.id)}>{r.label}</span>
                   </label>
@@ -910,7 +924,7 @@ export const VoiceTone = React.forwardRef<HTMLDivElement, VoiceToneProps>((props
         aria-label="Voice and tone"
         data-variant="settings"
         className={cn(
-          "w-full max-w-[30rem] overflow-hidden rounded-xl border border-border bg-background text-foreground",
+          "w-full max-w-[30rem] overflow-hidden rounded-[14px] border border-border bg-background text-foreground shadow-[0_1px_2px_rgba(12,12,10,0.04),0_1px_3px_rgba(12,12,10,0.06)]",
           className,
         )}
         {...rest}

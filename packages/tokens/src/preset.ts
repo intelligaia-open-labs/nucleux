@@ -120,6 +120,11 @@ const preset: Config = {
         "md-5": "0 8px 12px 6px rgb(0 0 0 / 0.15), 0 4px 4px 0 rgb(0 0 0 / 0.30)",
       },
       keyframes: {
+        // The thinking orb's soft ring, as on nucleux.in.
+        "nx-orb-pulse": {
+          "0%,100%": { boxShadow: "0 0 0 0 hsl(var(--nx-primary) / 0.2)" },
+          "50%": { boxShadow: "0 0 0 8px hsl(var(--nx-primary) / 0)" },
+        },
         "nx-caret-blink": {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
@@ -134,6 +139,7 @@ const preset: Config = {
         },
       },
       animation: {
+        "nx-orb-pulse": "nx-orb-pulse 2.4s ease-in-out infinite",
         "nx-caret-blink": "nx-caret-blink 1.1s steps(1) infinite",
         "nx-typing": "nx-typing 1.2s ease-in-out infinite",
         "nx-fade-in": "nx-fade-in 0.2s ease-out",
