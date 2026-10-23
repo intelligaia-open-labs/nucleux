@@ -121,12 +121,12 @@ ${body}
 
     const codeBlock = line
       ? `<div class="stack" aria-live="polite">
-           <p class="small"><strong>Copy this prompt and paste it into your coding agent</strong> (Claude Code, Cursor, Codex…). It walks the agent through the setup, including what to do if something goes wrong. Your code is <code class="inline">${e(code)}</code>.</p>
-           <div class="connect-line">
-             <pre id="connect-line" class="connect-prompt" tabindex="0" aria-label="Connect prompt">${e(line)}</pre>
-             <button class="btn btn-outline" type="button" data-copy-target="connect-line">${ICONS.copy}<span data-copy-label aria-live="polite">Copy</span></button>
+           <p class="small"><strong>Your connect prompt is ready.</strong> Copy it and paste it into your coding agent (Claude Code, Cursor, Codex…). The agent sets everything up and knows what to do if something goes wrong.</p>
+           <div>
+             <button class="btn btn-primary btn-lg" type="button" data-copy-target="connect-line" data-reveal-on-fail>${ICONS.copy}<span data-copy-label aria-live="polite">Copy prompt</span></button>
            </div>
-           <p class="muted small">Expires in 10 minutes and works once. It connects every detected agent directly to the hosted server with your personal token (saved in each agent's MCP settings, readable only by you) — the token itself never appears in a chat. Revoke a machine below at any time.</p>
+           <pre id="connect-line" class="connect-prompt" hidden>${e(line)}</pre>
+           <p class="muted small">Works once, within 10 minutes. It connects your agents directly to Nucleux with your personal token, which never appears in the chat. You can revoke a machine below at any time.</p>
          </div>`
       : `<p class="muted small">Generates a single-use code and a prompt to paste into your coding agent.</p>`;
 
@@ -181,7 +181,7 @@ ${notice ? `<div class="alert alert-success" role="status">${e(notice)}</div>` :
   </div>
   <div class="card-footer">
     <form method="post" action="${p("/connect/code")}">${csrfField(csrf)}
-      <button class="btn btn-primary" type="submit">${line ? "Generate a new prompt" : "Generate connect prompt"}</button>
+      <button class="btn ${line ? "btn-outline" : "btn-primary"}" type="submit">${line ? "Generate a new prompt" : "Get connect prompt"}</button>
     </form>
   </div>
 </section>
