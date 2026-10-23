@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/chart",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "type": "module",
   "sideEffects": false,
   "description": "Composable chart primitives — Nucleux agentic UI for React.",

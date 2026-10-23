@@ -1,4 +1,6 @@
-// Upstream: one child process running the published stdio @nucleux/mcp server.
+// Upstreams: long-lived child processes running stdio MCP servers — the
+// published @nucleux/mcp (web) and, when its bundle is present, the private
+// Nucleux Mobile server.
 //
 // `@nucleux/mcp` on npm speaks stdio only, so remote clients (Claude Desktop
 // custom connectors, claude.ai, anything that takes a URL) cannot reach it.
@@ -6,11 +8,16 @@
 // rather than re-implementing the catalog — bumping the dependency is then the
 // whole upgrade.
 
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 
 const require = createRequire(import.meta.url);
+// services/mcp-http — relative vendor paths resolve against it.
+const SERVICE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 // Fallback only. The package has carried its own `instructions` since 0.1.3 —
 // including the ShadCN-as-base policy for components Nucleux does not ship —
@@ -22,10 +29,10 @@ Design-first workflow: search_patterns, then get_pattern for the curated composi
 
 Note that the unrelated npm package "nucleux" (a state-management library) is not this library.`;
 
-export function createUpstream({ callTimeoutMs = 30_000 } = {}) {
-  const entry = require.resolve("@nucleux/mcp");
-  const version = require("@nucleux/mcp/package.json").version;
-
+// One long-lived stdio child speaking MCP: respawned on the next request after
+// it dies, with its tool list and instructions cached (both are fixed for a
+// given build of the server it runs).
+function createStdioUpstream({ label, entry, fallbackInstructions, callTimeoutMs }) {
   let upstream = null; // Promise<Client> while connecting or connected
   let pending = null;
 
@@ -44,12 +51,13 @@ export function createUpstream({ callTimeoutMs = 30_000 } = {}) {
     };
     client.onclose = drop;
     client.onerror = (err) => {
-      console.error("[nucleux-mcp] upstream error:", err);
+      console.error(`[nucleux-mcp] ${label} upstream error:`, err);
       drop();
     };
 
     await client.connect(transport);
-    console.log(`[nucleux-mcp] upstream @nucleux/mcp@${version} connected`);
+    const v = client.getServerVersion();
+    console.log(`[nucleux-mcp] upstream ${label} (${v?.name ?? "?"}@${v?.version ?? "?"}) connected`);
     return client;
   }
 
@@ -70,19 +78,25 @@ export function createUpstream({ callTimeoutMs = 30_000 } = {}) {
   // Instructions are fixed per package version too, and are read off the
   // client handshake, so one successful connect is enough.
   let instructionsCache = null;
+  let serverVersion = null;
 
   return {
-    version,
+    async serverVersion() {
+      if (serverVersion) return serverVersion;
+      const client = await get();
+      serverVersion = client.getServerVersion() ?? { name: label, version: "unknown" };
+      return serverVersion;
+    },
     async instructions() {
       if (instructionsCache) return instructionsCache;
       try {
         const client = await get();
-        instructionsCache = client.getInstructions() || FALLBACK_INSTRUCTIONS;
+        instructionsCache = client.getInstructions() || fallbackInstructions;
       } catch (err) {
         // A dead child must not fail initialize — serve the local copy and let
         // the next request try again.
-        console.error("[nucleux-mcp] could not read upstream instructions:", err);
-        return FALLBACK_INSTRUCTIONS;
+        console.error(`[nucleux-mcp] could not read ${label} upstream instructions:`, err);
+        return fallbackInstructions;
       }
       return instructionsCache;
     },
@@ -96,6 +110,59 @@ export function createUpstream({ callTimeoutMs = 30_000 } = {}) {
     async callTool(name, args) {
       const client = await get();
       return client.callTool({ name, arguments: args ?? {} }, undefined, { timeout: callTimeoutMs });
+    },
+  };
+}
+
+// The web catalog: the published @nucleux/mcp package (a dependency).
+export function createUpstream({ callTimeoutMs = 30_000 } = {}) {
+  const entry = require.resolve("@nucleux/mcp");
+  const version = require("@nucleux/mcp/package.json").version;
+  return {
+    version,
+    ...createStdioUpstream({ label: "web", entry, fallbackInstructions: FALLBACK_INSTRUCTIONS, callTimeoutMs }),
+  };
+}
+
+// Nucleux Mobile (SwiftUI, Compose, Flutter, React Native): the private kit's
+// MCP server, bundled into one file in the private GitHub repo
+// intelligaia/nucleux-mobile-mcp and dropped into vendor/ on deploy (never
+// committed, never on npm). Served to signed-in users only (see surface.js).
+// A missing file is not an error: the server runs web-only.
+export const DEFAULT_MOBILE_FILE = "vendor/nucleux-mobile-mcp.cjs";
+
+export function createMobileUpstream({ file = DEFAULT_MOBILE_FILE, callTimeoutMs = 30_000 } = {}) {
+  const entry = path.resolve(SERVICE_ROOT, file);
+  if (!fs.existsSync(entry)) {
+    return {
+      available: false,
+      entry,
+      async info() {
+        return null;
+      },
+    };
+  }
+  const child = createStdioUpstream({ label: "mobile", entry, fallbackInstructions: "", callTimeoutMs });
+  let infoCache = null;
+  return {
+    available: true,
+    entry,
+    ...child,
+    // { version, components } for /health; null when the child cannot answer.
+    async info() {
+      if (infoCache) return infoCache;
+      try {
+        const { version } = await child.serverVersion();
+        const list = await child.callTool("list_components", {});
+        const text = (list?.content ?? []).map((c) => c.text ?? "").join("\n");
+        const m = /(\d+) components/.exec(text);
+        const components = m ? Number(m[1]) : (text.match(/^- \*\*/gm) ?? []).length;
+        infoCache = { version, components };
+        return infoCache;
+      } catch (err) {
+        console.error("[nucleux-mcp] mobile upstream unavailable:", err);
+        return null;
+      }
     },
   };
 }

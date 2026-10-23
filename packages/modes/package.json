@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/modes",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "type": "module",
   "sideEffects": false,
   "description": "Modes — choose how the agent works on a request (Fast, Balanced, Deep research), as a chip in the composer or a Mode row in Request settings, switchable before sending — Nucleux agentic UI for React.",

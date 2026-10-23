@@ -21,8 +21,21 @@ contracts, then write code.
 3. Read the contract (`get_component`) before using a component. Use only the
    imports, props and variant values it lists. Never guess a Nucleux export,
    prop or variant. If it is not in the catalog, it does not exist.
-4. **Ask which family first.** Before writing any UI, ask the user: *"Material 3
-   or shadcn?"* (nucleux.in shows both: its Material 3.0 pages are the `Md3*`
+4. **Web or mobile first.** Work out the platform from the project, and ask
+   only when you can't tell: `Package.swift` or an `.xcodeproj` → SwiftUI;
+   `build.gradle(.kts)` with Compose → Jetpack Compose; `pubspec.yaml` →
+   Flutter; a `package.json` with `react-native` → React Native; a React,
+   Next.js or Vite web app → web. Record it once in AGENTS.md or CLAUDE.md
+   (`Nucleux platform: SwiftUI`). **Mobile** uses Nucleux Mobile from the
+   hosted Nucleux MCP server (sign in at https://nucleux.in/mcp/connect): pass
+   `framework` (`swiftui`, `compose`, `flutter` or `react-native`) to
+   `get_component` and `get_example`, take the exact strings from
+   `get_mobile_words`, check your code with `validate_mobile_usage`, and follow
+   the mobile conventions in the server's instructions; the web rules below
+   (families, patterns, Tailwind tokens) do not apply. **Web** follows the rest
+   of these rules.
+5. **Ask which family first.** On the web, before writing any UI, ask the
+   user: *"Material 3 or shadcn?"* (nucleux.in shows both: its Material 3.0 pages are the `Md3*`
    components, its ShadCN pages the plain ones). Skip the question only when
    the user already said, or the project already records or uses one (an
    `@nucleux/md3-*` import means Material 3). Record the answer in the
@@ -32,7 +45,7 @@ contracts, then write code.
    one's `Md3` twin, and where Material 3 has none (e.g. `DataTable`), the
    shadcn component under the `md3-theme` class. Agentic components have the
    same props in both families.
-5. For AI features use the agentic components (nucleux.in's patterns):
+6. For AI features use the agentic components (nucleux.in's patterns):
    `Disclosure` and `Caveat` for AI output, `Consent` before acting,
    `OpenInput`/`InitialCta`/`SuggestedPrompts` for asking, the Prompt Scaffolds
    (`Suggestions`, `Madlibs`, `PromptEnhancer`, `Modes`, `VoiceTone`,
@@ -44,24 +57,24 @@ contracts, then write code.
    the chosen family; start from that, change the content (names, copy, data,
    handlers) and keep the composition, variants and classes, so it looks like
    the site.
-6. Do not rebuild something Nucleux already ships (navigation, tables, cards,
+7. Do not rebuild something Nucleux already ships (navigation, tables, cards,
    dialogs, sheets, form controls, empty/error states). If you must, say why
    in your summary.
-7. Style with the semantic token classes (`bg-background`, `text-foreground`,
+8. Style with the semantic token classes (`bg-background`, `text-foreground`,
    `text-muted-foreground`, `border-border`, `bg-primary`, `text-destructive`…;
    in a Material 3 app the `md-*` roles: `bg-md-surface`, `text-md-on-surface`,
    `bg-md-primary-container`…).
    No hex colors, no arbitrary color values. Use the same variant for the same
    meaning everywhere (one `cta` primary action per page, `destructive` only
    for destructive actions).
-8. Every page must work from 360px wide: follow each pattern's responsive rules.
-9. Accessibility is part of done: labels for every control, `aria-label` on
+9. Every page must work from 360px wide: follow each pattern's responsive rules.
+10. Accessibility is part of done: labels for every control, `aria-label` on
    icon-only buttons, visible focus, status not conveyed by color alone.
-10. Every data view handles loading, empty and error (the `page-states` pattern).
-11. When Nucleux has no pattern or component for a need, build it from Nucleux
+11. Every data view handles loading, empty and error (the `page-states` pattern).
+12. When Nucleux has no pattern or component for a need, build it from Nucleux
    primitives (or the ShadCN equivalent the tools name), keep it on Nucleux
    tokens, and report the gap. Never present an invented component as Nucleux.
-12. Nucleux is not mandatory. If the project already uses another component
+13. Nucleux is not mandatory. If the project already uses another component
     system and the user did not ask to switch, extend that system and say so.
 
 ### Workflow
@@ -69,10 +82,11 @@ contracts, then write code.
 **A. Inspect the project.** Find the framework (Vite, Next.js, Remix…), package
 manager (lockfile), TypeScript, Tailwind version and config, router, existing
 component system, and any installed `@nucleux/*` packages. If Nucleux is not set
-up, call `get_setup` and follow it exactly.
+up, call `get_setup` and follow it exactly. A native app is mobile (rule 4).
 
-**B. Choose the family.** Ask "Material 3 or shadcn?" unless it is already
-known (rule 4), and record the answer in the project.
+**B. Choose the platform and family.** Web or mobile and the framework from the
+project (rule 4); for web, ask "Material 3 or shadcn?" unless it is already
+known (rule 5). Record the answers in the project.
 
 **C. Analyse the request.** List the pages, the main user journeys, the key
 interactions on each page, and what matters most on each screen. Ask only about

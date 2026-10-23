@@ -278,6 +278,25 @@ describe("MCP server", () => {
     const { resolve } = await import("node:path");
     const skill = readFileSync(resolve(__dirname, "../skills/nucleux-design/SKILL.md"), "utf8");
     expect(skill).toMatch(/Ask which family first/);
-    expect(skill).toMatch(/\*\*B\. Choose the family\.\*\*/);
+    expect(skill).toMatch(/\*\*B\. Choose the platform and family\.\*\*/);
+  });
+
+  it("the skill decides web vs mobile from the project before the family", async () => {
+    const { readFileSync } = await import("node:fs");
+    const { resolve } = await import("node:path");
+    const skill = readFileSync(resolve(__dirname, "../skills/nucleux-design/SKILL.md"), "utf8");
+    expect(skill.indexOf("Web or mobile first")).toBeGreaterThan(-1);
+    expect(skill.indexOf("Web or mobile first")).toBeLessThan(skill.indexOf("Ask which family first"));
+    for (const needle of ["Package.swift", "pubspec.yaml", "react-native", "Nucleux platform: SwiftUI", "validate_mobile_usage", "https://nucleux.in/mcp/connect"]) {
+      expect(skill).toContain(needle);
+    }
+  });
+
+  it("server instructions point native apps at the signed-in hosted server, with no mobile catalog here", async () => {
+    const instr = client.getInstructions() ?? "";
+    expect(instr).toMatch(/SwiftUI, Jetpack Compose, Flutter, React Native\) use Nucleux Mobile, which only the signed-in hosted server/);
+    expect(instr).toMatch(/npx -y @nucleux\/mcp add --code/);
+    const { tools } = await client.listTools();
+    expect(tools.map((t) => t.name).filter((n) => /mobile/.test(n))).toEqual([]);
   });
 });

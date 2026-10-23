@@ -130,6 +130,10 @@ const MIGRATIONS = [
   CREATE INDEX usage_user_ts ON usage (user_id, ts);
   CREATE INDEX usage_ts ON usage (ts);
   `,
+  // 2: which upstream answered a call ("web", "mobile", "web+mobile"); NULL for older rows.
+  `
+  ALTER TABLE usage ADD COLUMN upstream TEXT;
+  `,
 ];
 
 export function openDb(file = ":memory:") {

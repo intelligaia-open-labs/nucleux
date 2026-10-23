@@ -12,6 +12,10 @@ per-user tokens for coding agents, OAuth 2.1 for claude.ai, and per-user usage t
 The open package keeps working without an account: `npx -y @nucleux/mcp` runs the
 catalog locally over stdio.
 
+**Signed-in users also get Nucleux Mobile** (SwiftUI, Jetpack Compose, Flutter, React
+Native), served from the private kit's MCP bundle when it is present in `vendor/`.
+Anonymous callers (`NUCLEUX_AUTH=optional|off`) and the public npm package stay web-only.
+
 ## How it works
 
 `src/upstream.js` runs the published package as one long-lived child process and
@@ -20,12 +24,39 @@ The catalog is not re-implemented, so upgrading is just bumping the `@nucleux/mc
 dependency. Each POST gets its own proxy `Server` + `StreamableHTTPServerTransport`
 (stateless) sharing that single child, and the tool list is cached per version.
 
+### Nucleux Mobile (signed-in only)
+
+`createMobileUpstream` (`src/upstream.js`) runs a second child the same way: the private
+mobile bundle at `NUCLEUX_MOBILE_MCP` (default `vendor/nucleux-mobile-mcp.cjs`). If the
+file is missing, the server runs web-only and `/health` reports `"mobile": "unavailable"`;
+a mobile child that dies or fails is respawned on the next request and, meanwhile, signed-in
+users get the web surface.
+
+`src/surface.js` merges the two for requests with a valid token:
+
+- **Shared names** (`list_components`, `get_component`, `search_components`, `get_setup`,
+  `list_examples`, `get_example`): one tool each. Its `framework` takes the web values
+  (`react`/`html`, or `react` where the web tool has none) plus `swiftui | compose | flutter |
+  react-native`. A mobile value goes to the mobile child, anything else to web (arguments a
+  side does not declare are dropped). Without `framework`: `list_components` returns the web
+  list followed by a short "Mobile … pass framework" section; `search_components` searches
+  both, labelled by platform; `get_component` answers from web and notes a mobile namesake,
+  or, for a mobile-only name, answers from mobile.
+- **Mobile-only** (`get_mobile_spec`, `get_mobile_words`, `validate_mobile_usage`) and
+  **web-only** tools (`search_patterns`, `get_pattern`, `validate_design`…) pass through.
+- **Instructions:** a short platform preamble (detect web vs mobile and the framework from
+  the project, ask only when unclear, record it in AGENTS.md/CLAUDE.md), then the web
+  instructions and the mobile instructions verbatim, each under a heading.
+- **Anonymous requests:** the web tools and instructions exactly as the package serves them.
+
+Usage rows record which side answered (`usage.upstream`: `web`, `mobile` or `web+mobile`).
+
 In front of that (`src/app.js`):
 
 | Route (public path under `/mcp`) | What |
 |---|---|
 | `POST /` | MCP endpoint. Bearer gate per `NUCLEUX_AUTH`; every `tools/call` is logged (user, tool, ms, ok — never arguments). `GET`/`DELETE` → 405. |
-| `GET /health` | Public health check. |
+| `GET /health` | Public health check: web upstream and tools, and `mobile: { version, components }` or `"unavailable"`. |
 | `GET /connect` | Sign in; generate the one-line connect command; claude.ai instructions; your tokens and connected apps (revoke); your usage. |
 | `GET /admin` | Admins only: users, last seen, calls 7/30 days, revoke all, disable/enable. |
 | `GET /auth/login?provider=google\|github&next=…`, `GET /auth/callback/:provider`, `POST /auth/logout` | Sign-in. |
@@ -53,7 +84,7 @@ Only SHA-256 hashes of tokens, codes and session ids are stored. Tokens never ap
 
 SQLite at `NUCLEUX_DB` (WAL, file mode 0600), migrated at boot (`PRAGMA user_version`).
 Tables: `users`, `sessions`, `tokens`, `cli_codes`, `oauth_clients`, `oauth_codes`,
-`oauth_tokens` and `usage`.
+`oauth_tokens` and `usage` (migration 2 adds `usage.upstream`).
 
 The driver is `better-sqlite3`, pinned to **10.1.0** because that is the last release
 with a prebuilt binary for Node 21 (ABI v120), the box's Node. If the native module
@@ -75,6 +106,7 @@ that it has done so. After moving the box to Node 22 or later, bump to `better-s
 | `NUCLEUX_TRUST_PROXY` | `loopback` | Express `trust proxy` (nginx on the same host). |
 | `NUCLEUX_MCP_HOST` / `NUCLEUX_MCP_PORT` | `127.0.0.1` / `8118` | |
 | `NUCLEUX_MCP_TIMEOUT_MS` | `30000` | Upstream call timeout. |
+| `NUCLEUX_MOBILE_MCP` | `vendor/nucleux-mobile-mcp.cjs` | The private Nucleux Mobile MCP bundle (relative to this folder, or absolute). Missing = web only. Shown to signed-in users only. |
 
 Deployment, OAuth app registration, nginx and rollout: see [DEPLOY.md](DEPLOY.md).
 
@@ -82,15 +114,21 @@ Deployment, OAuth app registration, nginx and rollout: see [DEPLOY.md](DEPLOY.md
 
 ```bash
 cd vendor && npm pack @nucleux/mcp@0.10.0 && cd ..   # the dependency is a vendored tarball
+# optional, private (needs read access to intelligaia/nucleux-mobile-mcp): Nucleux Mobile
+gh api repos/intelligaia/nucleux-mobile-mcp/contents/nucleux-mobile-mcp.cjs \
+  -H "Accept: application/vnd.github.raw" > vendor/nucleux-mobile-mcp.cjs
 npm install
 npm test                                              # node --test, no network
 NUCLEUX_PUBLIC_URL=http://localhost:8118 NUCLEUX_MCP_HOST=127.0.0.1 npm start
 ```
 
-The tests run the real app on an ephemeral port with an in-memory database, a fake
-upstream and a fake sign-in provider. They cover code exchange, the bearer gate in each
-`NUCLEUX_AUTH` mode, the full OAuth flow (DCR → authorize → PKCE token → MCP call →
-refresh → revoke), metadata documents, CSRF and usage logging.
+The tests run the real app on an ephemeral port with an in-memory database, fake
+upstreams (web and mobile) and a fake sign-in provider. They cover code exchange, the bearer
+gate in each `NUCLEUX_AUTH` mode, the full OAuth flow (DCR → authorize → PKCE token → MCP
+call → refresh → revoke), metadata documents, CSRF, usage logging, and the web + mobile
+merge (`test/mobile.test.js`: routing by `framework`, merged list/search/get, schema enum,
+instruction order, anonymous = web only, no bundle or a broken child = web only).
+The mobile bundle is never needed for `npm test`.
 
 ## Client setup
 

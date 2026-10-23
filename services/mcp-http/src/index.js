@@ -3,13 +3,15 @@
 // Serves the stdio-only `@nucleux/mcp` package at https://nucleux.in/mcp (see
 // upstream.js), and adds sign-in (Google/GitHub), per-user tokens for coding
 // agents, an OAuth 2.1 authorization server for claude.ai, and per-user usage
-// tracking (see app.js). Configuration is all environment; see README.md.
+// tracking (see app.js). Signed-in users also get Nucleux Mobile when its
+// private bundle is in vendor/ (see surface.js). Configuration is all
+// environment; see README.md.
 
 import { loadEnvFile } from "./env.js";
 import { loadConfig } from "./config.js";
 import { openDb } from "./db.js";
 import { createStore } from "./store.js";
-import { createUpstream } from "./upstream.js";
+import { createUpstream, createMobileUpstream } from "./upstream.js";
 import { providersFromConfig } from "./providers.js";
 import { createApp } from "./app.js";
 
@@ -21,8 +23,9 @@ const config = loadConfig();
 const db = openDb(config.dbFile);
 const store = createStore(db);
 const upstream = createUpstream({ callTimeoutMs: config.callTimeoutMs });
+const mobile = createMobileUpstream({ file: config.mobileFile, callTimeoutMs: config.callTimeoutMs });
 const providers = providersFromConfig(config);
-const app = createApp({ config, store, upstream, providers });
+const app = createApp({ config, store, upstream, mobile, providers });
 
 app.listen(config.port, config.host, () => {
   console.log(
@@ -34,6 +37,19 @@ app.listen(config.port, config.host, () => {
     .listTools()
     .then((tools) => console.log(`[nucleux-mcp] ${tools.length} tools: ${tools.map((t) => t.name).join(", ")}`))
     .catch((err) => console.error("[nucleux-mcp] upstream unavailable at boot:", err));
+  if (!mobile.available) {
+    console.log(`[nucleux-mcp] mobile: no bundle at ${mobile.entry}; serving web only`);
+  } else {
+    mobile
+      .info()
+      .then((info) =>
+        console.log(
+          info
+            ? `[nucleux-mcp] mobile: Nucleux Mobile ${info.version}, ${info.components} components (signed-in users)`
+            : "[nucleux-mcp] mobile: bundle present but not answering; serving web only"
+        )
+      );
+  }
 });
 
 for (const signal of ["SIGINT", "SIGTERM"]) {

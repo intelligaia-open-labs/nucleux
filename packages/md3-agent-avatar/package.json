@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/md3-agent-avatar",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "type": "module",
   "sideEffects": false,
   "description": "Material 3 Agent Avatar — one non-photographic mark for the agent, with its working state on the mark — Nucleux agentic UI for React.",

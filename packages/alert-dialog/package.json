@@ -1,6 +1,6 @@
 {
   "name": "@nucleux/alert-dialog",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "type": "module",
   "sideEffects": false,
   "description": "Modal confirmation dialog — Nucleux agentic UI for React.",
