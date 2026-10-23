@@ -8,6 +8,24 @@ The format is machine-readable: each version heading starts with `## ` followed
 by a version tag and date, and entries are grouped under `### Added`, `### Changed`,
 `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings.
 
+## [0.11.1] — 2026-10-23
+
+### Changed
+- `npx -y @nucleux/mcp add --code …` now connects each agent **directly** to the
+  hosted server (`https://nucleux.in/mcp` + `Authorization: Bearer` header):
+  Claude Code, Cursor, VS Code, Windsurf, Gemini CLI and Codex. Nothing runs
+  locally afterwards. Only Claude Desktop, whose config can't hold a remote server
+  with headers, keeps the `remote` relay. Config files holding the token are
+  made owner-only; the token is never printed.
+- `logout` also removes the hosted `nucleux` entries from every agent;
+  `add --local` switches direct entries back to the local catalog; a new `--code`
+  rotates the token everywhere.
+
+### Fixed
+- `services/mcp-http`: the server loads its `.env` itself (pm2 dropped
+  `--env-file`, leaving the OAuth secrets unset) and keeps its SQLite files
+  owner-only.
+
 ## [0.11.0] — 2026-10-22
 
 ### Added

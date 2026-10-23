@@ -96,7 +96,7 @@ ${body}
              <code id="connect-line">${e(line)}</code>
              <button class="btn btn-outline" type="button" data-copy-target="connect-line">${ICONS.copy}<span data-copy-label aria-live="polite">Copy</span></button>
            </div>
-           <p class="muted small">Expires in 10 minutes and works once. It stores a token on that machine and points every detected agent at the hosted server — the token never goes into a chat or an agent config.</p>
+           <p class="muted small">Expires in 10 minutes and works once. It connects every detected agent directly to the hosted server with your personal token (saved in each agent's MCP settings, readable only by you) — the token itself never appears in a chat. Revoke a machine below at any time.</p>
          </div>`
       : `<p class="muted small">Generates a single-use code and the line to paste into your agent.</p>`;
 

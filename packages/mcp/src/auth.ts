@@ -161,12 +161,8 @@ export async function revokeToken(env: AuthEnv, server: string, token: string): 
   }
 }
 
-/** `nucleux-mcp logout`: revoke the saved token on the server (best effort), then forget it on this machine. */
-export async function runLogout(args: string[], env: AuthEnv = defaultAuthEnv()): Promise<number> {
-  if (args.length) {
-    console.error("Usage: npx -y @nucleux/mcp logout");
-    return 1;
-  }
+/** Revokes the saved token on the server (best effort), then deletes the credentials file. Used by `logout`. */
+export async function forgetCredentials(env: AuthEnv): Promise<void> {
   const file = credentialsPath(env);
   const creds = readCredentials(env);
   if (creds) {
@@ -187,5 +183,4 @@ export async function runLogout(args: string[], env: AuthEnv = defaultAuthEnv())
     env.log("Not signed in on this machine (no credentials file).");
   }
   if (env.vars.NUCLEUX_TOKEN) env.log("Note: NUCLEUX_TOKEN is set in your environment and still applies.");
-  return 0;
 }

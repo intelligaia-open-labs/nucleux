@@ -10,8 +10,8 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { z } from "zod";
 
-import { runAdd, type AddEnv } from "../src/add";
-import { credentialsPath, normalizeCode, resolveAuth, runLogout, runWhoami, writeCredentials, type AuthEnv } from "../src/auth";
+import { runAdd, runLogout, type AddEnv } from "../src/add";
+import { credentialsPath, normalizeCode, resolveAuth, runWhoami, writeCredentials, type AuthEnv } from "../src/auth";
 import { createRemoteProxy } from "../src/remote";
 
 const TOKEN = "nx_" + "A1b2C3d4E5".repeat(4);
@@ -25,6 +25,7 @@ let usedCodes: Set<string>;
 let exchanges: Array<{ code: string; label: string }>;
 let mcpAuth: string[];
 let revokes: string[];
+let issueToken: string;
 
 const body = (req: IncomingMessage) =>
   new Promise<string>((resolve) => {
@@ -56,7 +57,7 @@ beforeAll(async () => {
       const c = String(code).replace("-", "").toUpperCase();
       if (c !== CODE || usedCodes.has(c)) return json(400, { error: "invalid_code" });
       usedCodes.add(c);
-      return json(200, { token: TOKEN, email: "ada@example.com", name: "Ada" });
+      return json(200, { token: issueToken, email: "ada@example.com", name: "Ada" });
     }
     if (path === "/cli/revoke" && req.method === "POST") {
       revokes.push(bearer);
@@ -144,6 +145,7 @@ beforeEach(() => {
   exchanges = [];
   mcpAuth = [];
   revokes = [];
+  issueToken = TOKEN;
   vi.spyOn(console, "error").mockImplementation(() => {});
 });
 afterEach(() => {
@@ -152,11 +154,23 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-describe("add --code", () => {
-  it("exchanges the code, saves the token 0600, and points every agent at `remote` without the token", async () => {
-    mkdirSync(join(home, ".cursor"));
-    mkdirSync(join(home, ".codex"));
-    mkdirSync(join(home, "Library/Application Support/Code/User"), { recursive: true });
+describe("add --code (direct connection)", () => {
+  const AUTH = { Authorization: `Bearer ${TOKEN}` };
+  const VSCODE = "Library/Application Support/Code/User/mcp.json";
+  const DESKTOP = "Library/Application Support/Claude/claude_desktop_config.json";
+  const mode = (f: string) => statSync(join(home, f)).mode & 0o777;
+  const allAgents = () => {
+    for (const d of [".cursor", ".codex", ".codeium/windsurf", ".gemini", "Library/Application Support/Code/User", "Library/Application Support/Claude"]) {
+      mkdirSync(join(home, d), { recursive: true });
+    }
+  };
+  /** Everything a user would see: stdout lines and every command run, except Claude Code's own --header argument. */
+  const visible = () =>
+    [...out, ...runs.map((r) => r.filter((_, i) => !(r[i - 1] === "--header")).join(" "))].join("\n");
+
+  it("exchanges the code and connects every agent directly with the token in its config (0600)", async () => {
+    allAgents();
+    writeFileSync(join(home, ".gemini/settings.json"), JSON.stringify({ theme: "dark" }));
 
     expect(await runAdd(["--code", "abcd-2345", "--no-project"], env({ has: (c) => c === "claude" }))).toBe(0);
 
@@ -167,58 +181,92 @@ describe("add --code", () => {
     expect(statSync(credsFile()).mode & 0o777).toBe(0o600);
     expect(statSync(join(home, ".config/nucleux")).mode & 0o077).toBe(0);
 
-    expect(runs).toContainEqual(["claude", "mcp", "add", "--scope", "user", "nucleux", "--", "npx", "-y", "@nucleux/mcp", "remote"]);
-    expect(json(join(home, ".cursor/mcp.json")).mcpServers.nucleux).toEqual(REMOTE);
-    expect(json(join(home, "Library/Application Support/Code/User/mcp.json")).servers.nucleux).toEqual({ type: "stdio", ...REMOTE });
-    expect(readFileSync(join(home, ".codex/config.toml"), "utf8")).toContain('args = ["-y","@nucleux/mcp","remote"]');
-    for (const f of [".cursor/mcp.json", "Library/Application Support/Code/User/mcp.json", ".codex/config.toml"]) {
-      expect(readFileSync(join(home, f), "utf8")).not.toContain("nx_");
+    expect(runs).toContainEqual([
+      "claude", "mcp", "add", "--transport", "http", "--scope", "user", "nucleux", base, "--header", `Authorization: Bearer ${TOKEN}`,
+    ]);
+    expect(json(join(home, ".cursor/mcp.json")).mcpServers.nucleux).toEqual({ url: base, headers: AUTH });
+    expect(json(join(home, VSCODE)).servers.nucleux).toEqual({ type: "http", url: base, headers: AUTH });
+    expect(json(join(home, ".codeium/windsurf/mcp_config.json")).mcpServers.nucleux).toEqual({ serverUrl: base, headers: AUTH });
+    const gemini = json(join(home, ".gemini/settings.json"));
+    expect(gemini).toEqual({ theme: "dark", mcpServers: { nucleux: { httpUrl: base, headers: AUTH } } });
+    expect(readFileSync(join(home, ".codex/config.toml"), "utf8")).toBe(
+      `[mcp_servers.nucleux]\nurl = "${base}"\nhttp_headers = { "Authorization" = "Bearer ${TOKEN}" }\n`,
+    );
+    // Claude Desktop can't send headers: it keeps the stdio proxy, and its config holds no token.
+    expect(json(join(home, DESKTOP)).mcpServers.nucleux).toEqual(REMOTE);
+    expect(readFileSync(join(home, DESKTOP), "utf8")).not.toContain("nx_");
+
+    for (const f of [".cursor/mcp.json", VSCODE, ".codeium/windsurf/mcp_config.json", ".gemini/settings.json", ".codex/config.toml"]) {
+      expect(mode(f), f).toBe(0o600);
     }
-    expect(runs.flat().join(" ")).not.toContain("nx_");
-    expect(out.join("\n")).toMatch(/Signed in to .* as Ada <ada@example\.com>/);
-    expect(out.join("\n")).not.toContain(TOKEN);
+    const shown = visible();
+    expect(shown).not.toContain(TOKEN);
+    expect(shown).toMatch(/Signed in to .* as Ada <ada@example\.com>/);
+    expect(shown).toMatch(new RegExp(`Cursor\\s+connected directly to ${base.replace(/[.]/g, "\\.")}`));
+    expect(shown).toMatch(/Claude Desktop\s+connected to .* through `npx -y @nucleux\/mcp remote` \(Claude Desktop's config can't send a token/);
+    expect(shown).toMatch(/token is in each agent's MCP config, readable only by you/);
   });
 
-  it("replaces local nucleux entries, keeps everything else, and is idempotent", async () => {
+  it("replaces local, proxy and older direct entries (rotating the token) and keeps everything else", async () => {
     mkdirSync(join(home, ".cursor"));
     writeFileSync(
       join(home, ".cursor/mcp.json"),
       JSON.stringify({ mcpServers: { other: { command: "x" }, nucleux: { command: "npx", args: ["-y", "@nucleux/mcp"] } }, keep: 1 }),
     );
+    mkdirSync(join(home, ".gemini"));
+    writeFileSync(join(home, ".gemini/settings.json"), JSON.stringify({ mcpServers: { nucleux: REMOTE } }));
     mkdirSync(join(home, ".codex"));
     writeFileSync(
       join(home, ".codex/config.toml"),
       'model = "o4"\n\n[mcp_servers.nucleux]\ncommand = "npx"\nargs = ["-y","@nucleux/mcp"]\n\n[mcp_servers.other]\ncommand = "y"\n',
     );
-    const output = () => "nucleux:\n  Command: npx\n  Args: -y @nucleux/mcp\n";
-    // Claude Code already has a (local) nucleux entry.
     const run = (cmd: string, args: string[]) => (runs.push([cmd, ...args]), 0);
+    const e = env({ has: (c) => c === "claude", run, output: () => "Args: -y @nucleux/mcp" });
 
-    expect(await runAdd(["--code", CODE, "--no-project"], env({ has: (c) => c === "claude", output, run }))).toBe(0);
+    expect(await runAdd(["--code", CODE, "--no-project"], e)).toBe(0);
 
     const cursor = json(join(home, ".cursor/mcp.json"));
     expect(cursor.keep).toBe(1);
-    expect(cursor.mcpServers.other).toEqual({ command: "x" });
-    expect(cursor.mcpServers.nucleux).toEqual(REMOTE);
+    expect(cursor.mcpServers).toEqual({ other: { command: "x" }, nucleux: { url: base, headers: AUTH } });
+    expect(json(join(home, ".gemini/settings.json")).mcpServers.nucleux).toEqual({ httpUrl: base, headers: AUTH });
     const toml = readFileSync(join(home, ".codex/config.toml"), "utf8");
     expect(toml).toContain('model = "o4"');
     expect(toml).toContain('[mcp_servers.other]\ncommand = "y"');
     expect(toml.match(/\[mcp_servers\.nucleux\]/g)).toHaveLength(1);
-    expect(toml).toContain('args = ["-y","@nucleux/mcp","remote"]');
+    expect(toml).toContain(`url = "${base}"`);
     expect(runs).toContainEqual(["claude", "mcp", "remove", "--scope", "user", "nucleux"]);
-    expect(out.join("\n")).toMatch(/Cursor\s+local server replaced by the hosted one/);
-    expect(out.join("\n")).toMatch(/Replaced the local nucleux entry in Claude Code, Cursor, Codex/);
+    expect(out.join("\n")).toMatch(/Cursor\s+connected directly to .* \(replaced the previous nucleux entry\)/);
+    expect(out.join("\n")).toMatch(/Replaced the nucleux entry in Claude Code, Cursor, Codex, Gemini CLI/);
 
-    // Second run with a fresh code: nothing to change.
+    // A new code means a new token: the direct entries are rewritten with it.
+    const ROTATED = "nx_" + "Rot4ted000".repeat(4);
+    issueToken = ROTATED;
     usedCodes.clear();
     out = [];
-    const before = [readFileSync(join(home, ".cursor/mcp.json"), "utf8"), toml];
-    expect(
-      await runAdd(["--code", CODE, "--no-project"], env({ has: (c) => c === "claude", run, output: () => "Args: -y @nucleux/mcp remote" })),
-    ).toBe(0);
-    expect([readFileSync(join(home, ".cursor/mcp.json"), "utf8"), readFileSync(join(home, ".codex/config.toml"), "utf8")]).toEqual(before);
-    expect(out.join("\n")).toMatch(/Cursor\s+already connected/);
-    expect(out.join("\n")).toMatch(/Claude Code\s+already connected/);
+    runs = [];
+    expect(await runAdd(["--code", CODE, "--no-project"], env({ has: (c) => c === "claude", run, output: () => `Type: http\nURL: ${base}` }))).toBe(0);
+    expect(json(join(home, ".cursor/mcp.json")).mcpServers.nucleux.headers.Authorization).toBe(`Bearer ${ROTATED}`);
+    expect(readFileSync(join(home, ".codex/config.toml"), "utf8")).toContain(`"Bearer ${ROTATED}"`);
+    expect(readFileSync(join(home, ".codex/config.toml"), "utf8")).not.toContain(TOKEN);
+    expect(runs).toContainEqual(["claude", "mcp", "remove", "--scope", "user", "nucleux"]);
+    expect(runs.some((r) => r.includes(`Authorization: Bearer ${ROTATED}`))).toBe(true);
+    expect(json(credsFile()).token).toBe(ROTATED);
+    expect(visible()).not.toContain(ROTATED);
+  });
+
+  it("a config it can't parse gets a hint without the token", async () => {
+    mkdirSync(join(home, ".cursor"));
+    writeFileSync(join(home, ".cursor/mcp.json"), "{ // mine\n}");
+    expect(await runAdd(["--code", CODE, "--no-project"], env())).toBe(2);
+    expect(out.join("\n")).toMatch(/One step left:[\s\S]*Cursor: .*"url":".*<token from your nucleux credentials\.json>/);
+    expect(out.join("\n")).not.toContain(TOKEN);
+  });
+
+  it("a failing `claude mcp add` gets a hint without the token", async () => {
+    const run = (cmd: string, args: string[]) => (runs.push([cmd, ...args]), args[1] === "add" ? 1 : args[1] === "get" ? 1 : 0);
+    expect(await runAdd(["--code", CODE, "--no-project"], env({ has: (c) => c === "claude", run }))).toBe(2);
+    expect(out.join("\n")).toMatch(/Claude Code: run: claude mcp add --transport http .* --header "Authorization: Bearer <token from/);
+    expect(out.join("\n")).not.toContain(TOKEN);
   });
 
   it("an unknown, used or malformed code writes nothing", async () => {
@@ -250,7 +298,7 @@ describe("add --code", () => {
     expect(existsSync(join(home, ".cursor/mcp.json"))).toBe(false);
     expect(existsSync(join(cwd, "AGENTS.md"))).toBe(false);
     expect(out.join("\n")).toMatch(/Would sign in with code ABCD-2345/);
-    expect(out.join("\n")).toMatch(/would connect the hosted Nucleux server/);
+    expect(out.join("\n")).toMatch(/Cursor\s+would be connected directly to/);
   });
 
   it("doesn't spend the code when no agent is found", async () => {
@@ -258,7 +306,7 @@ describe("add --code", () => {
     expect(exchanges).toEqual([]);
   });
 
-  it("uses %APPDATA% for credentials and cmd /c on Windows", async () => {
+  it("uses %APPDATA% for credentials, and cmd /c for the Claude Desktop proxy on Windows", async () => {
     const appData = join(home, "AppData/Roaming");
     mkdirSync(join(appData, "Claude"), { recursive: true });
     expect(await runAdd(["--code", CODE, "--no-project"], env({ platform: "win32", appData }))).toBe(0);
@@ -269,36 +317,37 @@ describe("add --code", () => {
     });
   });
 
-  it("--local swaps remote entries back to the local server and keeps the sign-in", async () => {
+  it("--local swaps direct and proxy entries back to the local server and keeps the sign-in", async () => {
     mkdirSync(join(home, ".cursor"));
-    writeFileSync(join(home, ".cursor/mcp.json"), JSON.stringify({ mcpServers: { other: { command: "x" }, nucleux: REMOTE } }));
+    writeFileSync(join(home, ".cursor/mcp.json"), JSON.stringify({ mcpServers: { other: { command: "x" }, nucleux: { url: base, headers: AUTH } } }));
+    mkdirSync(join(home, ".codeium/windsurf"), { recursive: true });
+    writeFileSync(join(home, ".codeium/windsurf/mcp_config.json"), JSON.stringify({ mcpServers: { nucleux: REMOTE } }));
     mkdirSync(join(home, ".codex"));
     writeFileSync(
       join(home, ".codex/config.toml"),
-      'model = "o4"\n\n[mcp_servers.nucleux]\ncommand = "npx"\nargs = ["-y","@nucleux/mcp","remote"]\n',
+      `model = "o4"\n\n[mcp_servers.nucleux]\nurl = "${base}"\nhttp_headers = { "Authorization" = "Bearer ${TOKEN}" }\n`,
     );
     writeCredentials(authEnv(), { server: base, token: TOKEN });
     const run = (cmd: string, args: string[]) => (runs.push([cmd, ...args]), 0);
-    let claudeArgs = "Args: -y @nucleux/mcp remote";
-    const e = env({ has: (c) => c === "claude", run, output: () => claudeArgs });
+    let claudeInfo = `nucleux:\n  Type: http\n  URL: ${base}\n`;
+    const e = env({ has: (c) => c === "claude", run, output: () => claudeInfo });
 
     expect(runAdd(["--local", "--no-project"], e)).toBe(0);
 
-    const cursor = json(join(home, ".cursor/mcp.json"));
-    expect(cursor.mcpServers).toEqual({ other: { command: "x" }, nucleux: { command: "npx", args: ["-y", "@nucleux/mcp"] } });
+    const LOCAL = { command: "npx", args: ["-y", "@nucleux/mcp"] };
+    expect(json(join(home, ".cursor/mcp.json")).mcpServers).toEqual({ other: { command: "x" }, nucleux: LOCAL });
+    expect(json(join(home, ".codeium/windsurf/mcp_config.json")).mcpServers.nucleux).toEqual(LOCAL);
     const toml = readFileSync(join(home, ".codex/config.toml"), "utf8");
     expect(toml).toContain('model = "o4"');
-    expect(toml.match(/\[mcp_servers\.nucleux\]/g)).toHaveLength(1);
+    expect(toml).not.toContain(TOKEN);
     expect(toml).toContain('args = ["-y","@nucleux/mcp"]\n');
     expect(runs).toContainEqual(["claude", "mcp", "remove", "--scope", "user", "nucleux"]);
     expect(runs).toContainEqual(["claude", "mcp", "add", "--scope", "user", "nucleux", "--", "npx", "-y", "@nucleux/mcp"]);
     expect(out.join("\n")).toMatch(/Cursor\s+hosted server replaced by the local one/);
-    expect(out.join("\n")).toMatch(/Replaced the hosted nucleux entry in Claude Code, Cursor, Codex/);
     expect(json(credsFile()).token).toBe(TOKEN);
     expect(fetches).toBe(0);
 
-    // Again: nothing left to change.
-    claudeArgs = "Args: -y @nucleux/mcp";
+    claudeInfo = "Args: -y @nucleux/mcp";
     out = [];
     runs = [];
     expect(runAdd(["--local", "--no-project"], e)).toBe(0);
@@ -309,11 +358,11 @@ describe("add --code", () => {
     expect(runAdd(["--local", "--code", CODE], e)).toBe(1);
   });
 
-  it("without --code stays local and leaves a remote entry alone", () => {
+  it("without --code stays local and leaves a hosted entry alone", () => {
     mkdirSync(join(home, ".cursor"));
-    writeFileSync(join(home, ".cursor/mcp.json"), JSON.stringify({ mcpServers: { nucleux: REMOTE } }));
+    writeFileSync(join(home, ".cursor/mcp.json"), JSON.stringify({ mcpServers: { nucleux: { url: base, headers: AUTH } } }));
     expect(runAdd(["--no-project"], env())).toBe(0);
-    expect(json(join(home, ".cursor/mcp.json")).mcpServers.nucleux).toEqual(REMOTE);
+    expect(json(join(home, ".cursor/mcp.json")).mcpServers.nucleux).toEqual({ url: base, headers: AUTH });
     expect(fetches).toBe(0);
   });
 });
@@ -353,20 +402,20 @@ describe("credentials", () => {
 
   it("logout revokes the token on the server, then deletes the credentials file", async () => {
     writeCredentials(authEnv(), { server: base, token: TOKEN });
-    expect(await runLogout([], authEnv())).toBe(0);
+    expect(await runLogout([], env())).toBe(0);
     expect(revokes).toEqual([TOKEN]);
     expect(validTokens.has(TOKEN)).toBe(false);
     expect(out.join("\n")).toMatch(/Revoked the token on .*\n.*Signed out: removed/);
     expect(existsSync(credsFile())).toBe(false);
     out = [];
-    expect(await runLogout([], authEnv())).toBe(0);
+    expect(await runLogout([], env())).toBe(0);
     expect(revokes).toHaveLength(1);
     expect(out.pop()).toMatch(/Not signed in/);
   });
 
   it("logout still deletes the file when the token is already revoked or the server is unreachable", async () => {
     writeCredentials(authEnv(), { server: base, token: "nx_gone" });
-    expect(await runLogout([], authEnv())).toBe(0);
+    expect(await runLogout([], env())).toBe(0);
     expect(out.join("\n")).toMatch(/no longer accepts this token/);
     expect(existsSync(credsFile())).toBe(false);
 
@@ -375,9 +424,43 @@ describe("credentials", () => {
     const offline: typeof fetch = async () => {
       throw new TypeError("fetch failed");
     };
-    expect(await runLogout([], authEnv({ fetch: offline }))).toBe(0);
+    expect(await runLogout([], env({ fetch: offline }))).toBe(0);
     expect(out.join("\n")).toMatch(/Couldn't revoke the token .*Revoke it at https:\/\/nucleux\.in\/mcp\/connect/);
     expect(existsSync(credsFile())).toBe(false);
+  });
+
+  it("logout removes hosted nucleux entries (direct and proxy) and keeps local and other ones", async () => {
+    writeCredentials(authEnv(), { server: base, token: TOKEN });
+    const AUTH = { Authorization: `Bearer ${TOKEN}` };
+    mkdirSync(join(home, ".cursor"));
+    writeFileSync(join(home, ".cursor/mcp.json"), JSON.stringify({ mcpServers: { other: { command: "x" }, nucleux: { url: base, headers: AUTH } }, keep: 1 }));
+    mkdirSync(join(home, ".gemini"));
+    writeFileSync(join(home, ".gemini/settings.json"), JSON.stringify({ mcpServers: { nucleux: { httpUrl: "https://elsewhere.example/mcp", headers: {} } } }));
+    mkdirSync(join(home, ".codeium/windsurf"), { recursive: true });
+    writeFileSync(join(home, ".codeium/windsurf/mcp_config.json"), JSON.stringify({ mcpServers: { nucleux: { command: "npx", args: ["-y", "@nucleux/mcp"] } } }));
+    const desktop = join(home, "Library/Application Support/Claude/claude_desktop_config.json");
+    mkdirSync(join(home, "Library/Application Support/Claude"), { recursive: true });
+    writeFileSync(desktop, JSON.stringify({ mcpServers: { nucleux: REMOTE } }));
+    mkdirSync(join(home, ".codex"));
+    writeFileSync(join(home, ".codex/config.toml"), `model = "o4"\n\n[mcp_servers.nucleux]\nurl = "${base}"\nhttp_headers = { "Authorization" = "Bearer ${TOKEN}" }\n`);
+    const run = (cmd: string, args: string[]) => (runs.push([cmd, ...args]), 0);
+
+    expect(await runLogout([], env({ has: (c) => c === "claude", run, output: () => `Type: http\nURL: ${base}` }))).toBe(0);
+
+    expect(revokes).toEqual([TOKEN]);
+    expect(existsSync(credsFile())).toBe(false);
+    expect(json(join(home, ".cursor/mcp.json"))).toEqual({ mcpServers: { other: { command: "x" } }, keep: 1 });
+    expect(json(desktop).mcpServers).toEqual({});
+    expect(readFileSync(join(home, ".codex/config.toml"), "utf8")).toBe('model = "o4"\n\n');
+    expect(runs).toContainEqual(["claude", "mcp", "remove", "--scope", "user", "nucleux"]);
+    // A direct entry for another server and the local server are left alone.
+    expect(json(join(home, ".gemini/settings.json")).mcpServers.nucleux.httpUrl).toBe("https://elsewhere.example/mcp");
+    expect(json(join(home, ".codeium/windsurf/mcp_config.json")).mcpServers.nucleux.command).toBe("npx");
+    const shown = out.join("\n");
+    expect(shown).toMatch(/Cursor: removed the hosted nucleux entry/);
+    expect(shown).toMatch(/Claude Code: removed the hosted nucleux entry/);
+    expect(shown).toMatch(/run: npx -y @nucleux\/mcp add/);
+    expect(shown).not.toContain(TOKEN);
   });
 });
 
