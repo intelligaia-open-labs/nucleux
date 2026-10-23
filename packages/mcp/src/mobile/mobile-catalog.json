@@ -60,10 +60,10 @@
  "counts": {
   "components": 37,
   "examples": 136,
-  "swiftui": 2118,
-  "compose": 1522,
-  "flutter": 2754,
-  "react-native": 1548
+  "swiftui": 2130,
+  "compose": 1532,
+  "flutter": 2769,
+  "react-native": 1558
  },
  "components": [
   {
@@ -1420,6 +1420,11 @@
          "signature": "case badgeInfo = \"\\u{E47C}\"",
          "doc": "",
          "name": "badgeInfo"
+        },
+        {
+         "signature": "case circleHelp = \"\\u{E082}\"",
+         "doc": "",
+         "name": "circleHelp"
         }
        ]
       },
@@ -1460,7 +1465,7 @@
        "members": [
         {
          "name": "entries",
-         "signature": "Plus('\\uE140'), Maximize2('\\uE116'), Minimize2('\\uE11E'), Mic('\\uE11B'), ArrowUp('\\uE04E'), Square('\\uE16A'), Check('\\uE070'), X('\\uE1B1'), ChevronDown('\\uE071'), ChevronLeft('\\uE072'), ChevronRight('\\uE073'), FileText('\\uE0D0'), FileSpreadsheet('\\uE326'), Image('\\uE0F9'), RotateCw('\\uE14C'), Pause('\\uE131'), Play('\\uE13F'), MicOff('\\uE11C'), CircleAlert('\\uE07B'), Sparkles('\\uE416'), CircleCheck('\\uE225'), LoaderCircle('\\uE10D'), Info('\\uE0FE'), Lightbulb('\\uE1C1'), Wrench('\\uE1B0'), Link('\\uE107'), Search('\\uE154'), Ban('\\uE055'), TriangleAlert('\\uE192'), FileCode('\\uE0C7'), Lock('\\uE10E'), Key('\\uE102'), Shield('\\uE15B'), MessageSquare('\\uE11A'), ExternalLink('\\uE0BD'), Eye('\\uE0BE'), Flag('\\uE0D6'), SlidersHorizontal('\\uE299'), PenLine('\\uE133'), Clock('\\uE08B'), BadgeInfo('\\uE47C')"
+         "signature": "Plus('\\uE140'), Maximize2('\\uE116'), Minimize2('\\uE11E'), Mic('\\uE11B'), ArrowUp('\\uE04E'), Square('\\uE16A'), Check('\\uE070'), X('\\uE1B1'), ChevronDown('\\uE071'), ChevronLeft('\\uE072'), ChevronRight('\\uE073'), FileText('\\uE0D0'), FileSpreadsheet('\\uE326'), Image('\\uE0F9'), RotateCw('\\uE14C'), Pause('\\uE131'), Play('\\uE13F'), MicOff('\\uE11C'), CircleAlert('\\uE07B'), Sparkles('\\uE416'), CircleCheck('\\uE225'), LoaderCircle('\\uE10D'), Info('\\uE0FE'), Lightbulb('\\uE1C1'), Wrench('\\uE1B0'), Link('\\uE107'), Search('\\uE154'), Ban('\\uE055'), TriangleAlert('\\uE192'), FileCode('\\uE0C7'), Lock('\\uE10E'), Key('\\uE102'), Shield('\\uE15B'), MessageSquare('\\uE11A'), ExternalLink('\\uE0BD'), Eye('\\uE0BE'), Flag('\\uE0D6'), SlidersHorizontal('\\uE299'), PenLine('\\uE133'), Clock('\\uE08B'), BadgeInfo('\\uE47C'), CircleHelp('\\uE082')"
         }
        ]
       },
@@ -1739,6 +1744,12 @@
          "kind": "static",
          "signature": "static const IconData badgeInfo = IconData(0xE47C, fontFamily: 'lucide', fontPackage: 'nucleux')",
          "doc": ""
+        },
+        {
+         "name": "circleHelp",
+         "kind": "static",
+         "signature": "static const IconData circleHelp = IconData(0xE082, fontFamily: 'lucide', fontPackage: 'nucleux')",
+         "doc": ""
         }
        ]
       }
@@ -1798,7 +1809,7 @@
        "file": "react-native/src/generated/icons.ts",
        "line": 2,
        "members": [],
-       "body": "export const icons = {\n  'plus': '\\uE140',\n  'maximize-2': '\\uE116',\n  'minimize-2': '\\uE11E',\n  'mic': '\\uE11B',\n  'arrow-up': '\\uE04E',\n  'square': '\\uE16A',\n  'check': '\\uE070',\n  'x': '\\uE1B1',\n  'chevron-down': '\\uE071',\n  'chevron-left': '\\uE072',\n  'chevron-right': '\\uE073',\n  'file-text': '\\uE0D0',\n  'file-spreadsheet': '\\uE326',\n  'image': '\\uE0F9',\n  'rotate-cw': '\\uE14C',\n  'pause': '\\uE131',\n  'play': '\\uE13F',\n  'mic-off': '\\uE11C',\n  'circle-alert': '\\uE07B',\n  'sparkles': '\\uE416',\n  'circle-check': '\\uE225',\n  'loader-circle': '\\uE10D',\n  'info': '\\uE0FE',\n  'lightbulb': '\\uE1C1',\n  'wrench': '\\uE1B0',\n  'link': '\\uE107',\n  'search': '\\uE154',\n  'ban': '\\uE055',\n  'triangle-alert': '\\uE192',\n  'file-code': '\\uE0C7',\n  'lock': '\\uE10E',\n  'key': '\\uE102',\n  'shield': '\\uE15B',\n  'message-square': '\\uE11A',\n  'external-link': '\\uE0BD',\n  'eye': '\\uE0BE',\n  'flag': '\\uE0D6',\n  'sliders-horizontal': '\\uE299',\n  'pen-line': '\\uE133',\n  'clock': '\\uE08B',\n  'badge-info': '\\uE47C',\n} as const;"
+       "body": "export const icons = {\n  'plus': '\\uE140',\n  'maximize-2': '\\uE116',\n  'minimize-2': '\\uE11E',\n  'mic': '\\uE11B',\n  'arrow-up': '\\uE04E',\n  'square': '\\uE16A',\n  'check': '\\uE070',\n  'x': '\\uE1B1',\n  'chevron-down': '\\uE071',\n  'chevron-left': '\\uE072',\n  'chevron-right': '\\uE073',\n  'file-text': '\\uE0D0',\n  'file-spreadsheet': '\\uE326',\n  'image': '\\uE0F9',\n  'rotate-cw': '\\uE14C',\n  'pause': '\\uE131',\n  'play': '\\uE13F',\n  'mic-off': '\\uE11C',\n  'circle-alert': '\\uE07B',\n  'sparkles': '\\uE416',\n  'circle-check': '\\uE225',\n  'loader-circle': '\\uE10D',\n  'info': '\\uE0FE',\n  'lightbulb': '\\uE1C1',\n  'wrench': '\\uE1B0',\n  'link': '\\uE107',\n  'search': '\\uE154',\n  'ban': '\\uE055',\n  'triangle-alert': '\\uE192',\n  'file-code': '\\uE0C7',\n  'lock': '\\uE10E',\n  'key': '\\uE102',\n  'shield': '\\uE15B',\n  'message-square': '\\uE11A',\n  'external-link': '\\uE0BD',\n  'eye': '\\uE0BE',\n  'flag': '\\uE0D6',\n  'sliders-horizontal': '\\uE299',\n  'pen-line': '\\uE133',\n  'clock': '\\uE08B',\n  'badge-info': '\\uE47C',\n  'circle-help': '\\uE082',\n} as const;"
       },
       {
        "name": "NucleuxIconName",
@@ -1806,7 +1817,7 @@
        "signature": "export type NucleuxIconName = keyof typeof icons",
        "doc": "",
        "file": "react-native/src/generated/icons.ts",
-       "line": 46,
+       "line": 47,
        "members": [],
        "body": "export type NucleuxIconName = keyof typeof icons;"
       }
@@ -25477,7 +25488,17 @@
     "agent glyph",
     "message bubble",
     "NucleuxIdentity",
-    "NucleuxAgentAvatar"
+    "NucleuxAgentAvatar",
+    "StatusChip",
+    "NucleuxStatusChip",
+    "status chip",
+    "color role",
+    "NucleuxColorRole",
+    "COLOR_ROLES",
+    "rename",
+    "useAgentName",
+    "NucleuxAgentNameController",
+    "agent intro"
    ],
    "kind": "Pattern",
    "description": "The pattern library's Avatar and Name patterns. One mark and one name for the agent on every surface, and neither can be mistaken for a person's.",
@@ -25489,11 +25510,11 @@
    },
    "tracker": [
     "Avatar and Name (the agent's mark and states, identity row and card, byline)",
-    "Iconography and Color (one glyph per AI meaning, two-author bubbles, presence)"
+    "Iconography and Color (one glyph per AI meaning, colour roles and status chips, two-author bubbles, presence)"
    ],
    "spec": "specs/identity.md",
    "specSummary": "The pattern library's **Avatar** and **Name** patterns (branch-2: `material-patterns.js` → `avatar` with examples `agent-vs-person`, `states`, `sizes`, and `name` with `identity-card`, `introduction`, `byline`; the simulators in `material-sim.js`; CSS `.md-agentav`, `.md-idrow`, `.md-idcard`). **One mark** and **one name** for the agent on every surface, and neither can be mistaken for a person's.\n\nThe wording and sizes live in `react-native/src/identity.ts`, with the shapes and initials in `trust.ts`. `npm run fixtures` writes `specs/identity.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.",
-   "specText": "# Identity: Avatar, Name, Iconography and Color\n\nThe pattern library's **Avatar** and **Name** patterns (branch-2: `material-patterns.js` → `avatar` with examples `agent-vs-person`, `states`, `sizes`, and `name` with `identity-card`, `introduction`, `byline`; the simulators in `material-sim.js`; CSS `.md-agentav`, `.md-idrow`, `.md-idcard`). **One mark** and **one name** for the agent on every surface, and neither can be mistaken for a person's.\n\nThe wording and sizes live in `react-native/src/identity.ts`, with the shapes and initials in `trust.ts`. `npm run fixtures` writes `specs/identity.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` (wording) |\n| Compose | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` |\n| Flutter | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` |\n| React Native | `AgentAvatar`, `PersonAvatar`, `IdentityRow`, `AgentIdentityCard`, `AgentByline`, `AgentGlyph`, `MessageBubble`, `AgentPresence` |\n\n## Avatar\n\nRevised 23 Oct from the library's 16 Oct revision (backlog item 10).\n\n| | Agent | Person |\n|---|---|---|\n| Shape | Rounded square | Circle |\n| Fill | `brandMuted` | `muted` |\n| Content | An approved abstract `image`, or the agent glyph (Lucide `sparkles` in `brand`). **Never a face, never initials.** If the image fails to load, the glyph is drawn; the shape and label stay | Initials (`initials(name)`: \"Dana Khoury\" → \"DK\") in `mutedForeground`, semibold |\n\n| Size | Box | Glyph | Initials | Corner (agent) | Use |\n|---|---|---|---|---|---|\n| `xs` | 24 | 13 | 10 | 7 | Activity, a byline |\n| `sm` | 32 | 17 | 12 | 9 | A turn in a thread, a bubble |\n| `md` | 40 | 20 | 15 | 11 | An identity row, the identity card |\n\nOne shape and one container at every size; only the glyph scales. (Before 23 Oct: 28, 40 and 56.)\n\n**State on the mark** (agent only), from the host:\n\n| State | Shown | Read aloud |\n|---|---|---|\n| `ready` | The mark | Hidden beside the name; standalone: \"Aria, AI agent\" |\n| `active` | A still 2pt `brand` ring, 4 outside the mark | Standalone: \"Aria, AI agent, active\" |\n| `working` | The ring on `brandMuted` with a quarter arc in `brand` turning once a second; still with Reduce Motion. On an `IdentityRow`, `status` under the name (\"Summarizing the meeting…\") and **Stop** | A status: \"Aria is working\"; the status line is polite; Stop says \"Stopped. Aria is still here.\" |\n| `off` (stood down) | `muted` fill, glyph in `mutedForeground` | Standalone: \"Aria, AI agent, stood down\" |\n\nThe ring turns only while the agent is actually working, never as the only signal: the words beside it carry it.\n\n`AgentMessage` and `PersonMessage` (Disclosure) use the avatars at `sm`.\n\n## Name\n\n- **`IdentityRow`:** an `md` avatar, the name (16 semibold `foreground`), \"(formerly Aria)\" after a rename, the \"AI agent\" tag, and the **role in the product's words** under it (14 `mutedForeground`): \"Customer Support Agent\", \"Meeting assistant\", or a person's team. Read as one: \"Aria, AI agent, Customer Support Agent\" (`agentNameLabel`), so compact surfaces keep the role in the spoken name. Optional `status` and `onStop` while working.\n- **`AgentIdentityCard`:** where the agent is introduced or looked up: an `md` avatar, the name (17 semibold), the role, an optional **introduction** (`agentIntro(\"Aria\", \"Northwind\", \"I can track orders, start returns and update delivery details.\")` → \"I’m Aria, an AI agent run by Northwind. I can track orders, start returns and update delivery details. I’m not a person.\"), then a divider, the \"AI agent\" chip and an optional action. Card: 1pt `border`, corner 16, padding 20.\n- **`AgentByline`:** under a record the agent wrote: an `xs` avatar, \"Written by Aria · 14 March, 10:24\", and an optional action.\n\n**A rename** (`useAgentName`, `AgentRenameNotice`): an admin renames the agent; the host uses `name` on every surface, so it lands everywhere at once. The old name shows as \"(formerly Aria)\" for a while (until `settle()`), and a line confirms it: \"Renamed to Atlas. Role and permissions are unchanged.\" with **Undo** (\"Name restored to Aria.\"). Announced: \"Aria renamed to Atlas. Role and permissions are unchanged.\" A name is refused when it is empty (\"Give it a name.\"), longer than 12 characters (\"12 characters at most.\"), or unchanged (\"That’s its name already.\").\n\nThe host's rules, from the pattern: one short name (12 characters at most), not a real person's full name; the same name and role in messages, activity, notifications, chips and email; with several agents, each its own name, role and glyph. Never claim capabilities it lacks.\n\n**Ours, not the pattern's:** the image fallback keeps `brandMuted` (the library says `muted`, which the kit uses for stood down); the active label and \"Stopped. Aria is still here.\"; the refusal wording and `settle()`; the rename confirmation as a line in place rather than a snackbar.\n\n## Iconography\n\nThe pattern library's **Iconography** pattern (`iconography`: `glyph-containers`, `in-a-menu`, `inline-entry`), revised 16 Oct: **one glyph per AI meaning, always with words**. The AI action is Lucide `sparkles` (the star, also the agent's own mark), generated content `badge-info`, working `loader-circle`, tool use `wrench` (`specs/ai-marks.md`). Each is **spent nowhere else**: not on \"new\", not on \"featured\", not on a nudge (Nudges use `lightbulb`).\n\n`AgentGlyph` shows the action mark in one of three containers; only the container changes:\n\n| Container | Fill | Glyph | Where |\n|---|---|---|---|\n| `quiet` | `muted` | `brand` | A menu row, a toolbar |\n| `tonal` | `brandMuted` | `brand` | A chip |\n| `filled` | `brand` | `brandForeground` | A primary action |\n\nIt is decorative (hidden from screen readers): the control's own label says what it does (\"Draft a reply\"). Nothing about it is animated. Pair it with a verb the first few times; don't use it on a control that doesn't generate.\n\n**Audited:** no component names an AI glyph itself (a React Native test fails if one does); each draws it from the role table, and the test lists each role's users, failing on a new one. Action: `AgentGlyph`, the AI action button and status, Improve prompt, Try a direction. Generated: the Disclosure label, \"Suggested by Aria\", a direction's header, Templates' suggested values, the recommended tone, a style Aria made. The agent's own mark: the avatar, the identity card, the Disclosure banner and introduction, the Disclaimer statement.\n\n## Color\n\nThe pattern library's **Color** pattern (`color`: `two-grounds`, `reserved-roles`, `presence`). Colour roles **held back for the agent**: `brandMuted` for its ground, `brand` for presence and working state. People stay on neutral surfaces (`muted`). Colour is never the only signal: every use has a glyph or words beside it.\n\n- **`MessageBubble`:** a turn as a bubble. The agent's: its `sm` mark beside it, `brandMuted`, corner 16 with the **bottom-left** corner sharp (4). The person's own: on the right, `muted`, the **bottom-right** corner sharp. At most 82% of the width; padding 12 / 16; text 15. The pair separates in greyscale by its corners. Read with the author first: \"Aria, Generated with AI: £4.1m, 6% ahead of plan.\" / \"You: Where did Q2 renewals land?\"\n- **`AgentPresence`:** the agent working inside a surface a person owns. While `active`: a 2pt `brand` outline around the surface (corner 16) and a status line, a `brand` dot with \"Aria is drafting in this document\" (14 semibold `brand`) and the host's line under it (\"Nothing is saved until you accept it.\"). When it stops, the outline and line go, and \"Aria has stopped.\" is announced. Starting announces the status line.\n\n## Personality\n\nThe pattern library's **Personality** pattern is the voice. It lives in `specs/voice.md`, with the checker in `react-native/src/voiceRules.ts`.\n\n## Accessibility\n\n- The identity card is one element: \"Aria, Assistant in Helpdesk, not a person\". Its action stays separately reachable.\n- The row reads like the message header: \"Aria, Generated with AI\" then its line.\n- The byline is one element: \"Written by Aria, AI agent, 14 March, 10:24\". Its action stays separately reachable.\n- Middle dots are read as commas, not \"dot\".\n- Every action has a 44pt / 48dp target.\n\n## Ours, not the pattern's\n\n- **The agent is a rounded square**, decided with Disclosure (12 Oct). The pattern keeps both marks round and separates them by colour role only; we keep its colour split and add the shape split, so the difference survives greyscale and colour-blindness.\n- **Look:** `brandMuted` and `brand` stand in for Material's primary-container and primary; `muted` for surface-container-highest. Nucleux has no secondary or tertiary container, so the tonal glyph uses `brandMuted` and the disclosure chip keeps `accent`.\n- **Bubbles are the person's own on the right.** The pattern's example doesn't say whose; in a two-party chat the person's own words go right, and a third person in a shared thread uses `PersonMessage` instead.\n- **Presence says when it ends** (\"Aria has stopped.\"), so the outline going isn't the only signal; the pattern only shows it starting.\n- **The spoken labels** (\"Aria, AI agent\", \"… stood down\", the byline's) are ours; the pattern gives only \"Aria is working\".\n- **The message avatar shrinks from 32 to 28** and shows the glyph rather than the agent's first letter, which the pattern rules out (\"initials are what people get\").\n\n## Not in scope (later)\n\n- The voice card (\"How Aria speaks\") and register switch from the Personality pattern: they're a settings surface for the host.\n- The agent's ground on a person's surface beyond presence (a whole document in `brandMuted`): the pattern warns against colour as decoration.\n- A notification or email template: the host renders those, using the same name and role line.\n",
+   "specText": "# Identity: Avatar, Name, Iconography and Color\n\nThe pattern library's **Avatar** and **Name** patterns (branch-2: `material-patterns.js` → `avatar` with examples `agent-vs-person`, `states`, `sizes`, and `name` with `identity-card`, `introduction`, `byline`; the simulators in `material-sim.js`; CSS `.md-agentav`, `.md-idrow`, `.md-idcard`). **One mark** and **one name** for the agent on every surface, and neither can be mistaken for a person's.\n\nThe wording and sizes live in `react-native/src/identity.ts`, with the shapes and initials in `trust.ts`. `npm run fixtures` writes `specs/identity.fixtures.json`, and SwiftUI, Compose and Flutter are tested against it.\n\n| Platform | Names |\n|---|---|\n| SwiftUI | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` (wording) |\n| Compose | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` |\n| Flutter | `NucleuxAgentAvatar`, `NucleuxPersonAvatar`, `NucleuxIdentityRow`, `NucleuxAgentIdentityCard`, `NucleuxAgentByline`, `NucleuxAgentGlyph`, `NucleuxMessageBubble`, `NucleuxAgentPresence`, `NucleuxIdentity` |\n| React Native | `AgentAvatar`, `PersonAvatar`, `IdentityRow`, `AgentIdentityCard`, `AgentByline`, `AgentGlyph`, `MessageBubble`, `AgentPresence` |\n\n## Avatar\n\nRevised 23 Oct from the library's 16 Oct revision (backlog item 10).\n\n| | Agent | Person |\n|---|---|---|\n| Shape | Rounded square | Circle |\n| Fill | `brandMuted` | `muted` |\n| Content | An approved abstract `image`, or the agent glyph (Lucide `sparkles` in `brand`). **Never a face, never initials.** If the image fails to load, the glyph is drawn; the shape and label stay | Initials (`initials(name)`: \"Dana Khoury\" → \"DK\") in `mutedForeground`, semibold |\n\n| Size | Box | Glyph | Initials | Corner (agent) | Use |\n|---|---|---|---|---|---|\n| `xs` | 24 | 13 | 10 | 7 | Activity, a byline |\n| `sm` | 32 | 17 | 12 | 9 | A turn in a thread, a bubble |\n| `md` | 40 | 20 | 15 | 11 | An identity row, the identity card |\n\nOne shape and one container at every size; only the glyph scales. (Before 23 Oct: 28, 40 and 56.)\n\n**State on the mark** (agent only), from the host:\n\n| State | Shown | Read aloud |\n|---|---|---|\n| `ready` | The mark | Hidden beside the name; standalone: \"Aria, AI agent\" |\n| `active` | A still 2pt `brand` ring, 4 outside the mark | Standalone: \"Aria, AI agent, active\" |\n| `working` | The ring on `brandMuted` with a quarter arc in `brand` turning once a second; still with Reduce Motion. On an `IdentityRow`, `status` under the name (\"Summarizing the meeting…\") and **Stop** | A status: \"Aria is working\"; the status line is polite; Stop says \"Stopped. Aria is still here.\" |\n| `off` (stood down) | `muted` fill, glyph in `mutedForeground` | Standalone: \"Aria, AI agent, stood down\" |\n\nThe ring turns only while the agent is actually working, never as the only signal: the words beside it carry it.\n\n`AgentMessage` and `PersonMessage` (Disclosure) use the avatars at `sm`.\n\n## Name\n\n- **`IdentityRow`:** an `md` avatar, the name (16 semibold `foreground`), \"(formerly Aria)\" after a rename, the \"AI agent\" tag, and the **role in the product's words** under it (14 `mutedForeground`): \"Customer Support Agent\", \"Meeting assistant\", or a person's team. Read as one: \"Aria, AI agent, Customer Support Agent\" (`agentNameLabel`), so compact surfaces keep the role in the spoken name. Optional `status` and `onStop` while working.\n- **`AgentIdentityCard`:** where the agent is introduced or looked up: an `md` avatar, the name (17 semibold), the role, an optional **introduction** (`agentIntro(\"Aria\", \"Northwind\", \"I can track orders, start returns and update delivery details.\")` → \"I’m Aria, an AI agent run by Northwind. I can track orders, start returns and update delivery details. I’m not a person.\"), then a divider, the \"AI agent\" chip and an optional action. Card: 1pt `border`, corner 16, padding 20.\n- **`AgentByline`:** under a record the agent wrote: an `xs` avatar, \"Written by Aria · 14 March, 10:24\", and an optional action.\n\n**A rename** (`useAgentName`, `AgentRenameNotice`): an admin renames the agent; the host uses `name` on every surface, so it lands everywhere at once. The old name shows as \"(formerly Aria)\" for a while (until `settle()`), and a line confirms it: \"Renamed to Atlas. Role and permissions are unchanged.\" with **Undo** (\"Name restored to Aria.\"). Announced: \"Aria renamed to Atlas. Role and permissions are unchanged.\" A name is refused when it is empty (\"Give it a name.\"), longer than 12 characters (\"12 characters at most.\"), or unchanged (\"That’s its name already.\").\n\nThe host's rules, from the pattern: one short name (12 characters at most), not a real person's full name; the same name and role in messages, activity, notifications, chips and email; with several agents, each its own name, role and glyph. Never claim capabilities it lacks.\n\n**Ours, not the pattern's:** the image fallback keeps `brandMuted` (the library says `muted`, which the kit uses for stood down); the active label and \"Stopped. Aria is still here.\"; the refusal wording and `settle()`; the rename confirmation as a line in place rather than a snackbar.\n\n## Iconography\n\nThe pattern library's **Iconography** pattern (`iconography`: `glyph-containers`, `in-a-menu`, `inline-entry`), revised 16 Oct: **one glyph per AI meaning, always with words**. The AI action is Lucide `sparkles` (the star, also the agent's own mark), generated content `badge-info`, working `loader-circle`, tool use `wrench` (`specs/ai-marks.md`). Each is **spent nowhere else**: not on \"new\", not on \"featured\", not on a nudge (Nudges use `lightbulb`).\n\n`AgentGlyph` shows the action mark in one of three containers; only the container changes:\n\n| Container | Fill | Glyph | Where |\n|---|---|---|---|\n| `quiet` | `muted` | `brand` | A menu row, a toolbar |\n| `tonal` | `brandMuted` | `brand` | A chip |\n| `filled` | `brand` | `brandForeground` | A primary action |\n\nIt is decorative (hidden from screen readers): the control's own label says what it does (\"Draft a reply\"). Nothing about it is animated. Pair it with a verb the first few times; don't use it on a control that doesn't generate.\n\n**Audited:** no component names an AI glyph itself (a React Native test fails if one does); each draws it from the role table, and the test lists each role's users, failing on a new one. Action: `AgentGlyph`, the AI action button and status, Improve prompt, Try a direction. Generated: the Disclosure label, \"Suggested by Aria\", a direction's header, Templates' suggested values, the recommended tone, a style Aria made. The agent's own mark: the avatar, the identity card, the Disclosure banner and introduction, the Disclaimer statement.\n\n## Color\n\nThe pattern library's **Color** pattern, revised 16 Oct (built 23 Oct, backlog item 11). **Colour that means something, from Nucleux tokens, always with a glyph and words**, so it still reads in greyscale, in dark theme and to a screen reader. An \"AI colour\" painted everywhere stops meaning the agent and buries status.\n\n| Role | Means | Ground | Glyph (default) | Words |\n|---|---|---|---|---|\n| `agent` | The agent: its mark, and its own in-progress status | `brandMuted` | `sparkles` in `brand`, or the turning mark while working | `foreground` |\n| `attention` | Needs a decision from you; not error, not warning | `info` at 14% | `circle-help` in `info` | `foreground` |\n| `evidence` | A source the agent used | `accent` | `file-text` in `mutedForeground` | `foreground` |\n| `success` | Done | `background` with a 1 `border` (the glyph carries the colour: success text on its own fill is too low in contrast) | `circle-check` in `success` | `foreground` |\n| `warning` | Something to watch elsewhere | `warning` | `triangle-alert` in `warningForeground` | `warningForeground` |\n| `error` | A failure, and only that | `destructive` at 14% | `circle-alert` in `destructive` | `foreground` |\n| `neutral` | Everything else (not started, available) | `muted` | `clock` in `mutedForeground` | `foreground` |\n\nThe roles live in `COLOR_ROLES` (`react-native/src/identity.ts`), shared through `specs/identity.fixtures.json`. A tint is the token at an opacity, as the kit's other tints are; no new tokens.\n\n- **`StatusChip`** (`role`, `label`, optional `glyph`, `working`): radius 8, padding 4 / 8, glyph 14, words 13 medium. Read as its words (\"Needs your approval\"); the glyph is decorative. With `working`, the turning mark replaces the glyph. Colour changes with state and nothing else moves: the chip swaps role, glyph and words together.\n- **`MessageBubble`:** a turn as a bubble. The agent's: its `sm` mark beside it, the page's `background` with a 1 `border`, corner 16 with the **bottom-left** corner sharp (4). The person's own: on the right, `muted`, the **bottom-right** corner sharp. At most 82% of the width; padding 12 / 16; text 15. The pair separates in greyscale by its corners and the mark. Read with the author first: \"Aria, AI agent: £4.1m, 6% ahead of plan.\" / \"You: Where did Q2 renewals land?\" (Before 23 Oct the agent's bubble was filled with `brandMuted`; the agent role is now held for its mark and its own status.)\n- **`AgentPresence`:** the agent working inside a surface a person owns. While `active`: a 2pt `brand` outline around the surface (corner 16) and a status line, a `brand` dot with \"Aria is drafting in this document\" (14 semibold `brand`) and the host's line under it (\"Nothing is saved until you accept it.\"). When it stops, the outline and line go, and \"Aria has stopped.\" is announced.\n\nNever remap error or warning to brand colours, and never use colour without the glyph and words: a coloured dot alone is the library's anti-pattern.\n\nOurs, not the pattern's: the Nucleux tokens for each role (the library's `tertiary-container` for attention becomes `info` at 14%, `secondary-container` for evidence becomes `accent`), and the default glyphs in Lucide.\n\n## Personality\n\nThe pattern library's **Personality** pattern is the voice. It lives in `specs/voice.md`, with the checker in `react-native/src/voiceRules.ts`.\n\n## Accessibility\n\n- The identity card is one element: \"Aria, Assistant in Helpdesk, not a person\". Its action stays separately reachable.\n- The row reads like the message header: \"Aria, Generated with AI\" then its line.\n- The byline is one element: \"Written by Aria, AI agent, 14 March, 10:24\". Its action stays separately reachable.\n- Middle dots are read as commas, not \"dot\".\n- Every action has a 44pt / 48dp target.\n\n## Ours, not the pattern's\n\n- **The agent is a rounded square**, decided with Disclosure (12 Oct). The pattern keeps both marks round and separates them by colour role only; we keep its colour split and add the shape split, so the difference survives greyscale and colour-blindness.\n- **Look:** `brandMuted` and `brand` stand in for Material's primary-container and primary; `muted` for surface-container-highest. Nucleux has no secondary or tertiary container, so the tonal glyph uses `brandMuted` and the disclosure chip keeps `accent`.\n- **Bubbles are the person's own on the right.** The pattern's example doesn't say whose; in a two-party chat the person's own words go right, and a third person in a shared thread uses `PersonMessage` instead.\n- **Presence says when it ends** (\"Aria has stopped.\"), so the outline going isn't the only signal; the pattern only shows it starting.\n- **The spoken labels** (\"Aria, AI agent\", \"… stood down\", the byline's) are ours; the pattern gives only \"Aria is working\".\n- **The message avatar shrinks from 32 to 28** and shows the glyph rather than the agent's first letter, which the pattern rules out (\"initials are what people get\").\n\n## Not in scope (later)\n\n- The voice card (\"How Aria speaks\") and register switch from the Personality pattern: they're a settings surface for the host.\n- The agent's ground on a person's surface beyond presence (a whole document in `brandMuted`): the pattern warns against colour as decoration.\n- A notification or email template: the host renders those, using the same name and role line.\n",
    "fixtures": [
     "specs/identity.fixtures.json"
    ],
@@ -25983,9 +26004,9 @@
        "name": "NucleuxMessageBubble",
        "kind": "struct",
        "signature": "public struct NucleuxMessageBubble: View",
-       "doc": "One turn as a bubble. With `agent`, the agent's: its mark beside it, `brandMuted`, sharp corner bottom-left.\nWithout, the person's own: `muted`, on the right, sharp corner bottom-right. Read with the author first.",
+       "doc": "One turn as a bubble. With `agent`, the agent's: its mark beside it, the page's ground with a border, sharp corner\nbottom-left.\nWithout, the person's own: `muted`, on the right, sharp corner bottom-right. Read with the author first.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 446,
+       "line": 447,
        "members": [
         {
          "signature": "public init(_ text: String, agent: String? = nil)",
@@ -26000,7 +26021,7 @@
        "signature": "public struct NucleuxAgentPresence<Content: View>: View",
        "doc": "The agent working inside a surface a person owns: while `active`, a 2pt `brand` outline around it and a status\nline. Both go when the work does, and that is said too.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 507,
+       "line": 509,
        "members": [
         {
          "signature": "public init(agent: String, activity: String, detail: String? = nil, active: Bool, @ViewBuilder content: () -> Content)",
@@ -26018,7 +26039,7 @@
        "signature": "public final class NucleuxAgentNameController",
        "doc": "The agent's name, renamed by an admin: one name everywhere at once, \"formerly\" for a while, and the confirmation\nwith Undo. Use `name` on every surface.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 560,
+       "line": 562,
        "members": [
         {
          "signature": "public private(set) var state: NucleuxIdentity.NameState",
@@ -26063,10 +26084,45 @@
        "signature": "public struct NucleuxAgentRenameNotice: View",
        "doc": "\"Renamed to Atlas. Role and permissions are unchanged.\" with Undo, after a rename, until it settles.",
        "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
-       "line": 583,
+       "line": 585,
        "members": [
         {
          "signature": "public init(_ controller: NucleuxAgentNameController)",
+         "doc": "",
+         "name": "init"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxColorRole",
+       "kind": "enum",
+       "signature": "public enum NucleuxColorRole: String, CaseIterable, Sendable",
+       "doc": "Color (library revision of 16 Oct): roles that mean something, from Nucleux tokens, always with a glyph and words.\nMust reproduce `colorRoles` in specs/identity.fixtures.json (reference: react-native/src/identity.ts).",
+       "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
+       "line": 609,
+       "members": [
+        {
+         "signature": "case agent, attention, evidence, success, warning, error, neutral",
+         "doc": "",
+         "name": "agent"
+        },
+        {
+         "signature": "public var tokens: (fill: String, alpha: Double?, ink: String, text: String, border: Bool, glyph: String)",
+         "doc": "Token names, for the shared fixtures: fill (at `alpha`), glyph ink, words, border, default glyph.",
+         "name": "tokens"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxStatusChip",
+       "kind": "struct",
+       "signature": "public struct NucleuxStatusChip: View",
+       "doc": "A status as a chip: the role's colour, its glyph and its words together, never colour alone. `working` shows\nthe turning mark in place of the glyph. Read as its words.",
+       "file": "swiftui/Sources/Nucleux/NucleuxIdentity.swift",
+       "line": 665,
+       "members": [
+        {
+         "signature": "public init(_ role: NucleuxColorRole, _ label: String, glyph: NucleuxIcon? = nil, working: Bool = false)",
          "doc": "",
          "name": "init"
         }
@@ -26416,7 +26472,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 435,
+       "line": 436,
        "members": []
       },
       {
@@ -26428,7 +26484,7 @@
         "@Stable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 482,
+       "line": 483,
        "members": [
         {
          "name": "state",
@@ -26471,7 +26527,7 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 503,
+       "line": 504,
        "members": []
       },
       {
@@ -26483,7 +26539,34 @@
         "@Composable"
        ],
        "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
-       "line": 510,
+       "line": 511,
+       "members": []
+      },
+      {
+       "name": "NucleuxColorRole",
+       "kind": "enum",
+       "signature": "public enum class NucleuxColorRole(public val key: String, public val fillToken: String, public val alpha: Float?, public val inkToken: String, public val textToken: String, public val border: Boolean, public val glyphName: String)",
+       "doc": "Color (library revision of 16 Oct): roles that mean something, from Nucleux tokens, always with a glyph and words.\nMust reproduce `colorRoles` in specs/identity.fixtures.json (reference: react-native/src/identity.ts).",
+       "annotations": [],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
+       "line": 531,
+       "members": [
+        {
+         "name": "entries",
+         "signature": "Agent(\"agent\", \"brandMuted\", null, \"brand\", \"foreground\", false, \"sparkles\"), Attention(\"attention\", \"info\", 0.14f, \"info\", \"foreground\", false, \"circle-help\"), Evidence(\"evidence\", \"accent\", null, \"mutedForeground\", \"foreground\", false, \"file-text\"), Success(\"success\", \"background\", null, \"success\", \"foreground\", true, \"circle-check\"), Warning(\"warning\", \"warning\", null, \"warningForeground\", \"warningForeground\", false, \"triangle-alert\"), Error(\"error\", \"destructive\", 0.14f, \"destructive\", \"foreground\", false, \"circle-alert\"), Neutral(\"neutral\", \"muted\", null, \"mutedForeground\", \"foreground\", false, \"clock\")"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxStatusChip",
+       "kind": "composable",
+       "signature": "public fun NucleuxStatusChip(role: NucleuxColorRole, label: String, modifier: Modifier = Modifier, glyph: NucleuxIcons? = null, working: Boolean = false)",
+       "doc": "A status as a chip: the role's colour, its glyph and its words together, never colour alone. [working] shows the\nturning mark in place of the glyph. Read as its words.",
+       "annotations": [
+        "@Composable"
+       ],
+       "file": "compose/nucleux/src/main/kotlin/com/intelligaia/nucleux/NucleuxIdentity.kt",
+       "line": 564,
        "members": []
       }
      ],
@@ -27335,7 +27418,7 @@
        "signature": "class NucleuxAgentPresence extends StatefulWidget",
        "doc": "The agent working inside a surface a person owns: while [active], a 2pt `brand` outline around it and a status\nline (\"Aria is drafting in this document\"). Both go when the work does, and that is said too.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 831,
+       "line": 832,
        "members": [
         {
          "name": "NucleuxAgentPresence",
@@ -27415,7 +27498,7 @@
        "signature": "class NucleuxAgentNameController extends ChangeNotifier",
        "doc": "The agent's name, renamed by an admin: one name everywhere at once, \"formerly\" for a while, and the confirmation\nwith Undo. Use [name] on every surface.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 940,
+       "line": 941,
        "members": [
         {
          "name": "NucleuxAgentNameController",
@@ -27476,7 +27559,7 @@
        "signature": "class NucleuxAgentRenameNotice extends StatelessWidget",
        "doc": "\"Renamed to Atlas. Role and permissions are unchanged.\" with Undo, after a rename, until it settles.",
        "file": "flutter/lib/src/identity.dart",
-       "line": 972,
+       "line": 973,
        "members": [
         {
          "name": "NucleuxAgentRenameNotice",
@@ -27496,6 +27579,87 @@
          "name": "controller",
          "kind": "field",
          "signature": "final NucleuxAgentNameController controller",
+         "doc": ""
+        }
+       ]
+      },
+      {
+       "name": "NucleuxColorRole",
+       "kind": "enum",
+       "signature": "enum NucleuxColorRole",
+       "doc": "Color (library revision of 16 Oct): roles that mean something, from Nucleux tokens, always with a glyph and words.\nMust reproduce `colorRoles` in specs/identity.fixtures.json (reference: react-native/src/identity.ts).",
+       "file": "flutter/lib/src/identity.dart",
+       "line": 1019,
+       "members": [
+        {
+         "name": "values",
+         "signature": "agent('brandMuted', null, 'brand', 'foreground', false, 'sparkles'), attention('info', 0.14, 'info', 'foreground', false, 'circle-help'), evidence('accent', null, 'mutedForeground', 'foreground', false, 'file-text'), success('background', null, 'success', 'foreground', true, 'circle-check'), warning( 'warning', null, 'warningForeground', 'warningForeground', false, 'triangle-alert', ), error( 'destructive', 0.14, 'destructive', 'foreground', false, 'circle-alert', ), neutral('muted', null, 'mutedForeground', 'foreground', false, 'clock')"
+        }
+       ]
+      },
+      {
+       "name": "NucleuxStatusChip",
+       "kind": "class",
+       "signature": "class NucleuxStatusChip extends StatelessWidget",
+       "doc": "A status as a chip: the role's colour, its glyph and its words together, never colour alone. [working] shows\nthe turning mark in place of the glyph. Read as its words.",
+       "file": "flutter/lib/src/identity.dart",
+       "line": 1070,
+       "members": [
+        {
+         "name": "NucleuxStatusChip",
+         "kind": "constructor",
+         "signature": "const NucleuxStatusChip({ super.key, required this.role, required this.label, this.glyph, this.working = false, })",
+         "doc": "",
+         "params": [
+          {
+           "name": "role",
+           "type": "NucleuxColorRole",
+           "named": true,
+           "required": true
+          },
+          {
+           "name": "label",
+           "type": "String",
+           "named": true,
+           "required": true
+          },
+          {
+           "name": "glyph",
+           "type": "IconData?",
+           "named": true,
+           "required": false
+          },
+          {
+           "name": "working",
+           "type": "bool",
+           "named": true,
+           "required": false,
+           "default": "false"
+          }
+         ]
+        },
+        {
+         "name": "role",
+         "kind": "field",
+         "signature": "final NucleuxColorRole role",
+         "doc": ""
+        },
+        {
+         "name": "label",
+         "kind": "field",
+         "signature": "final String label",
+         "doc": ""
+        },
+        {
+         "name": "glyph",
+         "kind": "field",
+         "signature": "final IconData? glyph",
+         "doc": ""
+        },
+        {
+         "name": "working",
+         "kind": "field",
+         "signature": "final bool working",
          "doc": ""
         }
        ]
@@ -27771,12 +27935,78 @@
        "members": []
       },
       {
+       "name": "ColorRole",
+       "kind": "type",
+       "signature": "export type ColorRole = 'agent' | 'attention' | 'evidence' | 'success' | 'warning' | 'error' | 'neutral'",
+       "doc": "Color (library revision of 16 Oct): roles that mean something, from Nucleux tokens, and always with a glyph and\nwords, so they still read in greyscale and to a screen reader. The agent role stays restrained (its mark and its\nown in-progress status); attention is \"needs you\", not error or warning; evidence is a source it used; success sits\non the glyph over a neutral surface; error is only for a failure. A tint is the token at `alpha`.",
+       "file": "react-native/src/identity.ts",
+       "line": 190,
+       "members": [],
+       "body": "export type ColorRole = 'agent' | 'attention' | 'evidence' | 'success' | 'warning' | 'error' | 'neutral';"
+      },
+      {
+       "name": "ColorRoleTokens",
+       "kind": "interface",
+       "signature": "export interface ColorRoleTokens",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 192,
+       "members": [
+        {
+         "name": "fill",
+         "optional": false,
+         "type": "'brandMuted' | 'info' | 'accent' | 'background' | 'warning' | 'destructive' | 'muted'",
+         "doc": "The chip's ground: a token, at `alpha` (1 when omitted)."
+        },
+        {
+         "name": "alpha",
+         "optional": true,
+         "type": "number",
+         "doc": ""
+        },
+        {
+         "name": "ink",
+         "optional": false,
+         "type": "'brand' | 'info' | 'mutedForeground' | 'success' | 'warningForeground' | 'destructive'",
+         "doc": "The glyph's colour."
+        },
+        {
+         "name": "text",
+         "optional": false,
+         "type": "'foreground' | 'warningForeground'",
+         "doc": "The words' colour."
+        },
+        {
+         "name": "border",
+         "optional": true,
+         "type": "boolean",
+         "doc": "A 1pt `border`: only where the ground is the page's own."
+        },
+        {
+         "name": "glyph",
+         "optional": false,
+         "type": "string",
+         "doc": "Lucide glyph by default; the host may pass its own."
+        }
+       ]
+      },
+      {
+       "name": "COLOR_ROLES",
+       "kind": "const",
+       "signature": "export const COLOR_ROLES: Record<ColorRole, ColorRoleTokens> …",
+       "doc": "",
+       "file": "react-native/src/identity.ts",
+       "line": 206,
+       "members": [],
+       "body": "export const COLOR_ROLES: Record<ColorRole, ColorRoleTokens> = {\n  agent: { fill: 'brandMuted', ink: 'brand', text: 'foreground', glyph: 'sparkles' },\n  attention: { fill: 'info', alpha: 0.14, ink: 'info', text: 'foreground', glyph: 'circle-help' },\n  evidence: { fill: 'accent', ink: 'mutedForeground', text: 'foreground', glyph: 'file-text' },\n  success: { fill: 'background', ink: 'success', text: 'foreground', border: true, glyph: 'circle-check' },\n  warning: { fill: 'warning', ink: 'warningForeground', text: 'warningForeground', glyph: 'triangle-alert' },\n  error: { fill: 'destructive', alpha: 0.14, ink: 'destructive', text: 'foreground', glyph: 'circle-alert' },\n  neutral: { fill: 'muted', ink: 'mutedForeground', text: 'foreground', glyph: 'clock' },\n};"
+      },
+      {
        "name": "BUBBLE",
        "kind": "const",
        "signature": "export const BUBBLE = { radius: 16, sharp: 4, maxWidth: 0.82 } as const",
-       "doc": "Two authors, two grounds: the agent's bubble on `brandMuted` with its sharp corner bottom-left, a person's on\n`muted` with its sharp corner bottom-right, so the pair still separates in greyscale.",
+       "doc": "Two authors, two grounds: the agent's bubble on the page's own `background` with a 1pt `border` and its sharp corner\nbottom-left (its mark beside it says who), a person's on `muted` with its sharp corner bottom-right, so the pair\nseparates in greyscale. Since 23 Oct the agent's is no longer filled with `brandMuted`: the agent role is held for\nits mark and its own status.",
        "file": "react-native/src/identity.ts",
-       "line": 188,
+       "line": 223,
        "members": []
       },
       {
@@ -27785,7 +28015,7 @@
        "signature": "export interface BubbleCorners",
        "doc": "",
        "file": "react-native/src/identity.ts",
-       "line": 190,
+       "line": 225,
        "members": [
         {
          "name": "topLeft",
@@ -27819,7 +28049,7 @@
        "signature": "export function bubbleCorners(fromAgent: boolean): BubbleCorners",
        "doc": "",
        "file": "react-native/src/identity.ts",
-       "line": 197,
+       "line": 232,
        "members": []
       },
       {
@@ -27828,7 +28058,7 @@
        "signature": "export function bubbleLabel(text: string, agent?: string): string",
        "doc": "A bubble read aloud: colour is never the only signal, so the author is said first.",
        "file": "react-native/src/identity.ts",
-       "line": 205,
+       "line": 240,
        "members": []
       },
       {
@@ -27837,7 +28067,7 @@
        "signature": "export function presenceLabel(agent: string, activity: string): string",
        "doc": "Presence: the agent is working inside a surface a person owns. Said as a status, with the outline, and both go\nwhen the work does. `activity`: \"drafting in this document\".",
        "file": "react-native/src/identity.ts",
-       "line": 213,
+       "line": 248,
        "members": []
       },
       {
@@ -27846,7 +28076,7 @@
        "signature": "export function presenceEnded(agent: string): string",
        "doc": "Said when the presence ends, so the outline going is not the only signal.",
        "file": "react-native/src/identity.ts",
-       "line": 218,
+       "line": 253,
        "members": []
       },
       {
@@ -27919,7 +28149,7 @@
        "signature": "export function IdentityRow({ name, detail, agent = false, state, image, status, onStop, formerly, }: { name: string; detail: string; agent?: boolean; state?: AgentState; image?: ImageSourcePropType; status?: string; onStop?: () => void; formerly?: string | null; })",
        "doc": "A name with its line: an agent (with \"AI agent\" and its role in the product's words) or a person. While the agent\nworks, `status` says what it is doing, beside the turning ring, with Stop.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 43,
+       "line": 47,
        "members": []
       },
       {
@@ -27928,7 +28158,7 @@
        "signature": "export interface AgentIdentityCardProps",
        "doc": "",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 101,
+       "line": 105,
        "members": [
         {
          "name": "agent",
@@ -27986,7 +28216,7 @@
        "signature": "export function AgentIdentityCard({ agent, role, intro, state, image, formerly, actionLabel, onAction }: AgentIdentityCardProps)",
        "doc": "Where the agent is introduced or looked up: the name with its role, the introduction, and the \"AI agent\" chip.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 116,
+       "line": 120,
        "members": []
       },
       {
@@ -27995,7 +28225,7 @@
        "signature": "export function useAgentName(initial: string)",
        "doc": "The agent's name, renamed by an admin: one name everywhere at once, \"formerly\" for a while, and the\nconfirmation with Undo. Use `name` on every surface. See specs/identity.md.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 147,
+       "line": 151,
        "members": []
       },
       {
@@ -28004,7 +28234,7 @@
        "signature": "export type AgentNameHandle = ReturnType<typeof useAgentName>",
        "doc": "",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 168,
+       "line": 172,
        "members": [],
        "body": "export type AgentNameHandle = ReturnType<typeof useAgentName>;"
       },
@@ -28014,7 +28244,7 @@
        "signature": "export function AgentRenameNotice({ agentName }: { agentName: AgentNameHandle })",
        "doc": "\"Renamed to Atlas. Role and permissions are unchanged.\" with Undo, after a rename, until it settles.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 171,
+       "line": 175,
        "members": []
       },
       {
@@ -28023,7 +28253,7 @@
        "signature": "export function AgentByline({ agent, when, actionLabel, onAction }: { agent: string; when?: string; actionLabel?: string; onAction?: () => void })",
        "doc": "Under a record the agent wrote, away from the conversation: the same mark and name.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 185,
+       "line": 189,
        "members": []
       },
       {
@@ -28032,16 +28262,16 @@
        "signature": "export function AgentGlyph({ container = 'quiet', size = 32, glyph = 18 }: { container?: AgentGlyphContainer; size?: number; glyph?: number })",
        "doc": "The reserved glyph in one of its three containers, for controls that trigger generation (a menu row, a chip, a\nprimary action) and nothing else. Decorative: the control's own label says what it does.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 202,
+       "line": 206,
        "members": []
       },
       {
        "name": "MessageBubble",
        "kind": "component",
        "signature": "export function MessageBubble({ agent, children }: { agent?: string; children: string })",
-       "doc": "One turn as a bubble. With `agent`, the agent's: its mark beside it, `brandMuted`, sharp corner bottom-left.\nWithout, the person's own: `muted`, on the right, sharp corner bottom-right. Read with the author first.",
+       "doc": "One turn as a bubble. With `agent`, the agent's: its mark beside it, the page's ground with a border, sharp corner bottom-left.\nWithout, the person's own: `muted`, on the right, sharp corner bottom-right. Read with the author first.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 220,
+       "line": 224,
        "members": []
       },
       {
@@ -28050,7 +28280,16 @@
        "signature": "export function AgentPresence({ agent, activity, detail, active, children, }: { agent: string; activity: string; detail?: string; active: boolean; children: React.ReactNode; })",
        "doc": "The agent working inside a surface a person owns: while `active`, a 2pt `brand` outline around it and a status\nline (\"Aria is drafting in this document\"). Both go when the work does, and that is said too.",
        "file": "react-native/src/AgentIdentity.tsx",
-       "line": 257,
+       "line": 263,
+       "members": []
+      },
+      {
+       "name": "StatusChip",
+       "kind": "component",
+       "signature": "export function StatusChip({ role, label, glyph, working = false, testID }: { role: ColorRole; label: string; glyph?: NucleuxIconName; working?: boolean; testID?: string })",
+       "doc": "A status as a chip: the role's colour, its glyph and its words together, never colour alone. `working` shows the\nturning mark in place of the glyph. See specs/identity.md, Color.",
+       "file": "react-native/src/AgentIdentity.tsx",
+       "line": 345,
        "members": []
       }
      ],
@@ -59487,7 +59726,7 @@
    "component": "icons",
    "framework": "swiftui",
    "title": "AgentColorScreen (iOS catalog app, SCREEN=agent-color)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:935",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1046",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct AgentColorScreen: View {\n    @State private var drafting = true\n\n    var body: some View {\n        ScrollView {\n            VStack(alignment: .leading, spacing: 20) {\n                Text(\"Ticket 5512\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                VStack(alignment: .leading, spacing: 0) {\n                    row(\"Draft a reply\", ai: true)\n                    row(\"Summarise this thread\", ai: true)\n                    Divider().overlay(NucleuxColor.border).padding(.vertical, 4)\n                    row(\"Add a note\", ai: false)\n                    row(\"Assign to someone\", ai: false)\n                }\n                .padding(.vertical, 6)\n                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(NucleuxColor.border))\n                HStack(spacing: 16) {\n                    ForEach(NucleuxIdentity.GlyphContainer.allCases, id: \\.self) { k in\n                        VStack(spacing: 6) {\n                            NucleuxAgentGlyph(k, size: 44, glyph: 22)\n                            Text(k.rawValue.capitalized).font(.system(size: 11, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                        }\n                    }\n                }\n                VStack(spacing: 10) {\n                    NucleuxMessageBubble(\"Where did Q2 renewals land?\")\n                    NucleuxMessageBubble(\"£4.1m, 6% ahead of plan — almost all of it enterprise renewals.\", agent: \"Aria\")\n                }\n                NucleuxAgentPresence(agent: \"Aria\", activity: \"drafting in this document\",\n                                     detail: \"Nothing is saved until you accept it.\", active: drafting) {\n                    Text(\"Q2 renewal summary\").font(.system(size: 15, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                    Text(\"Renewals closed at 94%, up four points.\").font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                }\n                NucleuxButton(drafting ? \"Stop Aria\" : \"Let Aria draft\", variant: .secondary, size: .sm) { drafting.toggle() }\n            }\n            .padding(16)\n        }\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func row(_ label: String, ai: Bool) -> some View {\n        HStack(spacing: 12) {\n            if ai {\n                NucleuxAgentGlyph(.quiet, size: 28, glyph: 16)\n            } else {\n                NucleuxIconView(.fileText, size: 18).foregroundStyle(NucleuxColor.mutedForeground).frame(width: 28, height: 28)\n                    .accessibilityHidden(true)\n            }\n            Text(label).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n            Spacer()\n        }\n        .padding(.horizontal, 12).frame(minHeight: 44)\n        .accessibilityElement(children: .combine)\n        .accessibilityAddTraits(.isButton)\n    }\n}",
    "lines": 60
   },
@@ -59523,7 +59762,7 @@
    "component": "button",
    "framework": "swiftui",
    "title": "TrustScreen (iOS catalog app, SCREEN=trust)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:583",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:584",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct TrustScreen: View {\n    @State private var text = \"\"\n    @State private var intro = ProcessInfo.processInfo.environment[\"INTRO\"] == \"1\"\n    @State private var banner = true\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 16) {\n                    if banner {\n                        NucleuxDisclosureBanner(\"Aria is drafting in this workspace. Everything it writes is marked before it sends.\",\n                                                actionLabel: \"Turn off\") { banner = false }\n                    }\n                    NucleuxMessage(person: \"Dana Khoury\", time: \"9:41\",\n                                   text: \"Can someone confirm where Q2 renewals actually landed? The board deck and the dashboard disagree.\")\n                    NucleuxMessage(agent: \"Aria\", time: \"10:24\",\n                                   text: \"Q2 closed at £4.1m, 6% ahead of plan. The gap is almost entirely renewals in the enterprise tier.\")\n                    NucleuxGeneratedValue(label: \"Reply to Dana\", value: \"Thanks Dana — the renewal figures are attached. Happy to walk through them on Thursday.\",\n                                          agent: \"Aria\") {\n                        NucleuxButton(\"Edit\", variant: .ghost, size: .sm) {}\n                        NucleuxButton(\"Send\", size: .sm) {}\n                    }\n                    NucleuxButton(\"About Aria\", variant: .secondary, size: .sm) { intro = true }\n                }\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Reply to this ticket\", onAddContext: {}, onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .sheet(isPresented: $intro) {\n            NucleuxDisclosureIntro(\n                agent: \"Aria\",\n                facts: [.init(.can, \"Reads your pipeline and the Q2 board pack\"),\n                        .init(.cannot, \"Cannot send mail or change a record without you\"),\n                        .init(.info, \"Conversations are kept for 30 days\")],\n                onPrimary: { intro = false },\n                secondaryLabel: \"Data & retention\", onSecondary: {}\n            )\n            .presentationDetents([.medium])\n            .presentationBackground(NucleuxColor.background)\n        }\n    }\n}",
    "lines": 48
   },
@@ -59613,7 +59852,7 @@
    "component": "prompt-composer",
    "framework": "swiftui",
    "title": "ComposerScreen (iOS catalog app)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:53",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:54",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ComposerScreen: View {\n    @State private var text = ProcessInfo.processInfo.environment[\"COMPOSER_TEXT\"] ?? \"\"\n    @State private var sent = \"\"\n    @State private var picked = \"\"\n\n    var body: some View {\n        VStack(spacing: 12) {\n            Spacer()\n            Text(sent.isEmpty ? \" \" : \"Sent: \\(sent)\")\n                .font(.footnote)\n                .foregroundStyle(NucleuxColor.mutedForeground)\n                .accessibilityIdentifier(\"sent\")\n            Text(picked.isEmpty ? \" \" : \"Picked: \\(picked)\")\n                .font(.footnote)\n                .foregroundStyle(NucleuxColor.mutedForeground)\n                .accessibilityIdentifier(\"picked\")\n            NucleuxPromptComposer(\n                text: $text,\n                label: \"Start a task with Aria\",\n                placeholder: \"What would you like to work on?\",\n                model: \"Balanced\",\n                effort: \"High\",\n                effortDescription: \"Works through it step by step\",\n                onModelPress: {},\n                onAddContext: {},\n                onVoice: {},\n                onSend: { sent = $0; text = \"\" }\n            )\n            .nucleuxAddContextMenu(\n                items: [\n                    NucleuxContextItem(id: \"file\", label: \"Attach a file\"),\n                    NucleuxContextItem(id: \"source\", label: \"Add a source\"),\n                    NucleuxContextItem(id: \"connectors\", label: \"Use connectors\", hasSubmenu: true),\n                ],\n                onSelect: { picked = $0 },\n                submenu: { _ in\n                    NucleuxAddContextMenu(\n                        items: [NucleuxContextItem(id: \"drive\", label: \"Google Drive\"), NucleuxContextItem(id: \"github\", label: \"GitHub\")],\n                        onSelect: { picked = $0 }\n                    )\n                }\n            )\n        }\n        .padding(16)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 51
   },
@@ -59649,7 +59888,7 @@
    "component": "initial-cta",
    "framework": "swiftui",
    "title": "InitialCTAScreen (iOS catalog app, SCREEN=initial-cta)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:102",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:103",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct InitialCTAScreen: View {\n    @State private var text = ProcessInfo.processInfo.environment[\"COMPOSER_TEXT\"] ?? \"\"\n    @State private var turns: [String] = []\n    private let foldAxis = ProcessInfo.processInfo.environment[\"FOLD\"]\n\n    var body: some View {\n        GeometryReader { geo in\n            NucleuxInitialCTA(\n                started: !turns.isEmpty,\n                supportingText: \"Start with a task or a question. Aria works from this project's files.\",\n                fold: foldAxis.map { axis in\n                    axis == \"horizontal\"\n                        ? NucleuxFold(axis: .horizontal, position: geo.size.height / 2, size: 24)\n                        : NucleuxFold(axis: .vertical, position: geo.size.width / 2, size: 24)\n                }\n            ) {\n                NucleuxPromptComposer(\n                    text: $text,\n                    label: turns.isEmpty ? \"Start a task with Aria\" : \"Reply to Aria\",\n                    placeholder: turns.isEmpty ? \"What would you like to work on?\" : \"Reply, or add to the request\",\n                    model: \"Balanced\", effort: \"High\",\n                    onModelPress: {}, onAddContext: {}, onVoice: {},\n                    onSend: { turns.append($0); text = \"\" }\n                )\n            } conversation: {\n                ScrollView {\n                    VStack(alignment: .trailing, spacing: 12) {\n                        ForEach(Array(turns.enumerated()), id: \\.offset) { _, turn in\n                            Text(turn)\n                                .padding(12)\n                                .background(NucleuxColor.accent, in: RoundedRectangle(cornerRadius: NucleuxRadius.lg))\n                                .accessibilityIdentifier(\"turn\")\n                        }\n                    }\n                    .frame(maxWidth: .infinity, alignment: .trailing)\n                }\n                .defaultScrollAnchor(.bottom)\n            }\n        }\n    }\n}",
    "lines": 44
   },
@@ -59676,7 +59915,7 @@
    "component": "model-menu",
    "framework": "swiftui",
    "title": "ModelMenuScreen (iOS catalog app, SCREEN=model-menu)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:144",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:145",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ModelMenuScreen: View {\n    static let models = [\n        NucleuxModelOption(id: \"balanced\", name: \"Balanced\", purpose: \"Reliable for everyday writing and analysis.\"),\n        NucleuxModelOption(id: \"fast\", name: \"Fast\", purpose: \"Quick answers for simple requests.\", meta: \"Uses less allowance\"),\n        NucleuxModelOption(id: \"deep\", name: \"Deep reasoning\", purpose: \"More depth for complex, multi-step work.\",\n                           availability: .unavailable(note: \"Try again shortly, or use Balanced in the meantime.\")),\n        NucleuxModelOption(id: \"multimodal\", name: \"Multimodal\", purpose: \"Best for images, files, and mixed content.\",\n                           availability: .restricted(note: \"Not available in your workspace. Your administrator decides this.\")),\n    ]\n    static let efforts = [\n        NucleuxEffortLevel(id: \"low\", name: \"Low\", description: \"Quick answers, stretches your usage further\"),\n        NucleuxEffortLevel(id: \"medium\", name: \"Medium\", description: \"A little more thought\"),\n        NucleuxEffortLevel(id: \"high\", name: \"High\", description: \"Works through it step by step\"),\n        NucleuxEffortLevel(id: \"extra\", name: \"Extra\", description: \"Takes longer to check its work\"),\n        NucleuxEffortLevel(id: \"max\", name: \"Max\", description: \"Most thorough; uses the most allowance\"),\n    ]\n\n    @State private var model = \"balanced\"\n    @State private var auto = false\n    @State private var effort = \"high\"\n    @State private var note: String?\n\n    private var modelName: String { auto ? \"Auto\" : Self.models.first { $0.id == model }!.name }\n    private var effortName: String { Self.efforts.first { $0.id == effort }!.name }\n\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(alignment: .leading, spacing: 8) {\n            Spacer()\n            Text(note ?? \" \")\n                .font(.footnote)\n                .foregroundStyle(NucleuxColor.mutedForeground)\n                .accessibilityIdentifier(\"change-note\")\n            NucleuxPromptComposer(\n                text: $text, label: \"Start a task with Aria\", placeholder: \"What would you like to work on?\",\n                model: modelName, effort: effortName,\n                effortDescription: Self.efforts.first { $0.id == effort }!.description,\n                onAddContext: {}, onVoice: {},\n                modelMenu: {\n                    NucleuxModelMenu(\n                        models: Self.models, selectedModelId: model,\n                        auto: NucleuxAutoOption(on: auto, description: \"Appropriate model for each request, balancing quality and speed.\"),\n                        efforts: Self.efforts, selectedEffortId: effort,\n                        onSelectModel: { model = $0; auto = false; note = nucleuxModelChangeNote(modelName) },\n                        onAutoChange: { auto = $0; note = nucleuxModelChangeNote($0 ? \"Auto\" : modelName) },\n                        onSelectEffort: { effort = $0 }\n                    )\n                },\n                onSend: { _ in text = \"\" }\n            )\n        }\n        .padding(16)\n        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 60
   },
@@ -59739,7 +59978,7 @@
    "component": "add-context-menu",
    "framework": "swiftui",
    "title": "ComposerScreen (iOS catalog app)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:53",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:54",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ComposerScreen: View {\n    @State private var text = ProcessInfo.processInfo.environment[\"COMPOSER_TEXT\"] ?? \"\"\n    @State private var sent = \"\"\n    @State private var picked = \"\"\n\n    var body: some View {\n        VStack(spacing: 12) {\n            Spacer()\n            Text(sent.isEmpty ? \" \" : \"Sent: \\(sent)\")\n                .font(.footnote)\n                .foregroundStyle(NucleuxColor.mutedForeground)\n                .accessibilityIdentifier(\"sent\")\n            Text(picked.isEmpty ? \" \" : \"Picked: \\(picked)\")\n                .font(.footnote)\n                .foregroundStyle(NucleuxColor.mutedForeground)\n                .accessibilityIdentifier(\"picked\")\n            NucleuxPromptComposer(\n                text: $text,\n                label: \"Start a task with Aria\",\n                placeholder: \"What would you like to work on?\",\n                model: \"Balanced\",\n                effort: \"High\",\n                effortDescription: \"Works through it step by step\",\n                onModelPress: {},\n                onAddContext: {},\n                onVoice: {},\n                onSend: { sent = $0; text = \"\" }\n            )\n            .nucleuxAddContextMenu(\n                items: [\n                    NucleuxContextItem(id: \"file\", label: \"Attach a file\"),\n                    NucleuxContextItem(id: \"source\", label: \"Add a source\"),\n                    NucleuxContextItem(id: \"connectors\", label: \"Use connectors\", hasSubmenu: true),\n                ],\n                onSelect: { picked = $0 },\n                submenu: { _ in\n                    NucleuxAddContextMenu(\n                        items: [NucleuxContextItem(id: \"drive\", label: \"Google Drive\"), NucleuxContextItem(id: \"github\", label: \"GitHub\")],\n                        onSelect: { picked = $0 }\n                    )\n                }\n            )\n        }\n        .padding(16)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 51
   },
@@ -59775,7 +60014,7 @@
    "component": "attachments",
    "framework": "swiftui",
    "title": "AttachmentsScreen (iOS catalog app, SCREEN=attachments)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:202",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:203",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct AttachmentsScreen: View {\n    private static let showcase: [NucleuxAttachment] = [\n        NucleuxAttachment(id: \"p\", name: \"Northwind-proposal.pdf\", kind: .document, state: .uploading, type: \"PDF · 34 pages\", size: \"2.4 MB\", progress: 44),\n        NucleuxAttachment(id: \"r\", name: \"Research-notes.docx\", kind: .document, state: .processing, type: \"Word\", size: \"320 KB\"),\n        NucleuxAttachment(id: \"i\", name: \"pricing-table.png\", kind: .image, state: .ready, type: \"PNG\", size: \"1.2 MB\",\n                          thumbnail: AttachmentsScreen.sampleThumbnail),\n        NucleuxAttachment(id: \"b\", name: \"All-hands-recording.mp4\", kind: .document, state: .tooLarge, size: \"840 MB\",\n                          note: NucleuxAttachment.tooLargeNote(limit: \"500 MB\")),\n        NucleuxAttachment(id: \"s\", name: \"Q3-pricing.xlsx\", kind: .spreadsheet, state: .failed, type: \"Excel\", size: \"180 KB\"),\n    ]\n\n    /// A stand-in photo: a soft gradient, like the pattern library's sample image.\n    static let sampleThumbnail: Image = {\n        let size = CGSize(width: 48, height: 48)\n        let image = UIGraphicsImageRenderer(size: size).image { ctx in\n            let colors = [UIColor(red: 0.84, green: 0.82, blue: 0.90, alpha: 1).cgColor, UIColor(red: 0.93, green: 0.91, blue: 0.96, alpha: 1).cgColor]\n            let gradient = CGGradient(colorsSpace: nil, colors: colors as CFArray, locations: [0, 1])!\n            ctx.cgContext.drawLinearGradient(gradient, start: .zero, end: CGPoint(x: size.width, y: size.height), options: [])\n        }\n        return Image(uiImage: image)\n    }()\n\n    @State private var text = \"\"\n    @State private var files: [NucleuxAttachment] = {\n        switch ProcessInfo.processInfo.environment[\"SHOWCASE\"] {\n        case \"1\": return AttachmentsScreen.showcase\n        case \"2\": return Array(AttachmentsScreen.showcase.suffix(3))\n        default: return []\n        }\n    }()\n\n    var body: some View {\n        VStack {\n            Spacer()\n            NucleuxPromptComposer(\n                text: $text, label: \"Start a task with Aria\", placeholder: \"What would you like to work on?\",\n                model: \"Balanced\", effort: \"High\", onModelPress: {}, onVoice: {}, onSend: { _ in text = \"\" }\n            )\n            .nucleuxAddContextMenu(items: [NucleuxContextItem(id: \"file\", label: \"Attach a file\")], onSelect: { _ in attach() })\n            .nucleuxAttachments(files, onRemove: { id in files.removeAll { $0.id == id } }, onRetry: { id in upload(id) })\n        }\n        .padding(16)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    /// The object joins the composer at once; then it uploads (with a real number), is read, and is ready.\n    private func attach() {\n        let id = \"f\\(files.count)\"\n        let fails = files.contains { $0.name == \"Northwind-proposal.pdf\" }\n        files.append(NucleuxAttachment(id: id, name: fails ? \"Q3-pricing.xlsx\" : \"Northwind-proposal.pdf\",\n                                       kind: fails ? .spreadsheet : .document, state: .uploading,\n                                       type: fails ? \"Excel\" : \"PDF · 34 pages\", size: fails ? \"180 KB\" : \"2.4 MB\", progress: 0))\n        upload(id, failAt: fails ? 40 : nil)\n    }\n\n    private func upload(_ id: String, failAt: Double? = nil) {\n        Task { @MainActor in\n            for pct in [18.0, 44, 71, 93, 100] {\n                try? await Task.sleep(for: .milliseconds(250))\n                guard let i = files.firstIndex(where: { $0.id == id }) else { return }\n                if let failAt, pct > failAt { files[i].state = .failed; files[i].progress = nil; return }\n                files[i].state = .uploading\n                files[i].progress = pct\n            }\n            guard let i = files.firstIndex(where: { $0.id == id }) else { return }\n            files[i].state = .processing\n            files[i].progress = nil\n            try? await Task.sleep(for: .milliseconds(1100))\n            guard let j = files.firstIndex(where: { $0.id == id }) else { return }\n            files[j].state = .ready\n        }\n    }\n}",
    "lines": 77
   },
@@ -59811,7 +60050,7 @@
    "component": "voice-input",
    "framework": "swiftui",
    "title": "VoiceScreen (iOS catalog app, SCREEN=voice)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:279",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:280",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct VoiceScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    @State private var text = ProcessInfo.processInfo.environment[\"COMPOSER_TEXT\"] ?? \"\"\n    @State private var sent = \"\"\n    @State private var voice = NucleuxVoiceController(\n        granted: env[\"VOICE_MODE\"] == \"granted\",\n        unavailable: env[\"VOICE_MODE\"] == \"unavailable\"\n    )\n    private let script = (env[\"VOICE_SCRIPT\"] ?? \"summarise open bugs by severity\").split(separator: \" \").map(String.init)\n\n    var body: some View {\n        VStack(spacing: 12) {\n            Spacer()\n            Text(sent.isEmpty ? \" \" : \"Sent: \\(sent)\").font(.footnote).accessibilityIdentifier(\"sent\")\n            NucleuxPromptComposer(\n                text: $text, label: \"Start a task with Aria\", placeholder: \"What would you like to work on?\",\n                model: \"Balanced\", effort: \"High\", onModelPress: {}, onAddContext: {},\n                onSend: { sent = $0; text = \"\" }\n            )\n            .nucleuxVoice(voice)\n        }\n        .padding(16)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .onChange(of: voice.session.phase) { _, phase in recognize(phase) }\n    }\n\n    private func recognize(_ phase: NucleuxVoiceSession.Phase) {\n        switch phase {\n        case .listening:\n            Task { @MainActor in\n                for word in script.dropFirst(voice.session.heard.count) {\n                    try? await Task.sleep(for: .milliseconds(450))\n                    guard voice.session.phase == .listening else { return }\n                    voice.level = Double.random(in: 0.55...1)\n                    voice.send(.heard(word))\n                    try? await Task.sleep(for: .milliseconds(120))\n                    voice.level = 0.1\n                }\n                voice.level = 0\n            }\n        case .processing:\n            Task { @MainActor in\n                try? await Task.sleep(for: .seconds(1))\n                voice.send(.finish(failed: Self.env[\"VOICE_MODE\"] == \"noisy\"))\n            }\n        default:\n            break\n        }\n    }\n}",
    "lines": 54
   },
@@ -59847,7 +60086,7 @@
    "component": "open-input",
    "framework": "swiftui",
    "title": "OpenInputScreen (iOS catalog app, SCREEN=open-input)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:334",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:335",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct OpenInputScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    @State private var text = env[\"COMPOSER_TEXT\"] ?? \"\"\n    @State private var turns: [(who: String, text: String)] = [\n        (\"You\", \"List the launch risks for 2.4.\"),\n        (\"Aria\", \"Three: the payments migration, Legal sign-off, and the Android crash on resume.\"),\n    ]\n    @State private var running = false\n    @State private var sendError: NucleuxOpenInput.SendError?\n    @State private var failNext = env[\"SEND_FAILS\"].flatMap(NucleuxOpenInput.SendError.init(rawValue:))\n    @State private var run = 0\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 14) {\n                    ForEach(Array(turns.enumerated()), id: \\.offset) { _, t in\n                        VStack(alignment: .leading, spacing: 2) {\n                            Text(t.who).font(.footnote.weight(.semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            Text(t.text).foregroundStyle(NucleuxColor.foreground)\n                        }\n                        .frame(maxWidth: .infinity, alignment: .leading)\n                        .accessibilityElement(children: .combine)\n                    }\n                    if running {\n                        Text(\"Aria is comparing with the August release…\")\n                            .foregroundStyle(NucleuxColor.mutedForeground)\n                            .accessibilityIdentifier(\"working\")\n                    }\n                }\n                .padding(.top, 16)\n            }\n            .defaultScrollAnchor(.bottom)\n            NucleuxPromptComposer(\n                text: $text, label: \"Message Aria\", placeholder: \"Ask about this project…\",\n                model: \"Balanced\", effort: \"High\", onModelPress: {}, onAddContext: {}, onVoice: {},\n                onSend: send\n            )\n            .nucleuxOpenInput(\n                running: running,\n                onStop: stop,\n                sendError: sendError,\n                onRetry: send,\n                agentName: \"Aria\",\n                sendKey: Self.env[\"SEND_KEY\"] == \"mod\" ? .mod : .enter\n            )\n            .nucleuxComposerStyle(\n                appearance: Self.env[\"APPEARANCE\"] == \"tonal\" ? .tonal : .outlined,\n                density: Self.env[\"DENSITY\"] == \"compact\" ? .compact : .regular\n            )\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func send(_ request: String) {\n        if let fail = failNext {\n            // Nothing is cleared: the request stays in the field.\n            failNext = nil\n            sendError = fail\n            return\n        }\n        sendError = nil\n        turns.append((\"You\", request))\n        text = \"\" // only now that it went through\n        running = true\n        run += 1\n        let mine = run\n        Task { @MainActor in\n            try? await Task.sleep(for: .seconds(Double(Self.env[\"ANSWER_SECONDS\"] ?? \"3\") ?? 3))\n            guard run == mine, running else { return }\n            running = false\n            turns.append((\"Aria\", \"Two of the three are new since August: payments and the Legal gate.\"))\n        }\n    }\n\n    private func stop() {\n        run += 1\n        running = false\n        turns.removeLast() // the withdrawn request; the composer gives it back\n    }\n}",
    "lines": 86
   },
@@ -59883,7 +60122,7 @@
    "component": "suggested-prompts",
    "framework": "swiftui",
    "title": "SuggestedPromptsScreen (iOS catalog app, SCREEN=suggested-prompts)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:419",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:420",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct SuggestedPromptsScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static let items = [\n        NucleuxSuggestedPrompt(id: \"risks\", title: \"Summarize release risks\",\n                               prompt: \"Summarize the biggest risks for the September release.\",\n                               description: \"The blockers and what each one holds up\"),\n        NucleuxSuggestedPrompt(id: \"decisions\", title: \"Find unresolved decisions\",\n                               prompt: \"Find the unresolved decisions blocking the September release.\",\n                               description: \"Open decisions, with their owners\"),\n        NucleuxSuggestedPrompt(id: \"update\", title: \"Draft stakeholder update\",\n                               prompt: \"Draft a short stakeholder update on the September release.\",\n                               description: \"A first draft for you to edit\"),\n    ]\n    @State private var text = \"\"\n    @State private var turns: [String] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 14) {\n                    ForEach(Array(turns.enumerated()), id: \\.offset) { _, t in\n                        Text(\"You: \\(t)\").foregroundStyle(NucleuxColor.foreground).frame(maxWidth: .infinity, alignment: .leading)\n                    }\n                }\n                .padding(.top, 16)\n            }\n            .defaultScrollAnchor(.bottom)\n            NucleuxPromptComposer(\n                text: $text, label: \"Message Aria\", placeholder: \"Ask about this release…\",\n                onAddContext: {}, onVoice: {},\n                onSend: { turns.append($0); text = \"\" }\n            )\n            .nucleuxSuggestions(\n                Self.items,\n                label: \"Suggested for the September release\",\n                started: !turns.isEmpty,\n                after: NucleuxSuggestions.AfterChoice(rawValue: Self.env[\"AFTER\"] ?? \"stay\") ?? .stay,\n                layout: Self.env[\"LAYOUT\"] == \"list\" ? .list : .chips\n            )\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 48
   },
@@ -59919,7 +60158,7 @@
    "component": "autocomplete",
    "framework": "swiftui",
    "title": "AutocompleteScreen (iOS catalog app, SCREEN=autocomplete)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:466",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:467",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct AutocompleteScreen: View {\n    static let provider = NucleuxAutocompleteProvider(\n        phrases: [\n            \"Summarize the release risks and group them by owner\",\n            \"Compare onboarding feedback with the previous quarter and highlight new issues\",\n            \"Draft a stakeholder update for the September release\",\n            \"Find unresolved decisions blocking the September release\",\n            \"List the open onboarding bugs by severity\",\n        ],\n        minChars: 10,\n        triggers: [\n            \"/\": .init(.command, [.init(\"summarize\", description: \"Summarize a doc or thread\"), .init(\"compare\", description: \"Compare two sources\"),\n                                  .init(\"draft\", description: \"Draft from notes\"), .init(\"find\", description: \"Search the workspace\")]),\n            \"@\": .init(.mention, [.init(\"Release plan\", description: \"Doc\"), .init(\"Research notes\", description: \"Doc\"),\n                                  .init(\"Dana Khoury\", key: \"dana\", description: \"Design\"), .init(\"Sam Ortiz\", key: \"sam\", description: \"Engineering\")]),\n            \"#\": .init(.tool, [.init(\"jira\", description: \"Look up issues\"), .init(\"calendar\", description: \"Check dates\"),\n                               .init(\"web-search\", description: \"Search the web\")]),\n        ]\n    )\n    @State private var text = ProcessInfo.processInfo.environment[\"COMPOSER_TEXT\"] ?? \"\"\n    @State private var sent = \"\"\n\n    var body: some View {\n        VStack(spacing: 12) {\n            Spacer()\n            Text(sent.isEmpty ? \" \" : \"Sent: \\(sent)\").font(.footnote).accessibilityIdentifier(\"sent\")\n            NucleuxPromptComposer(\n                text: $text, label: \"Message Aria\", placeholder: \"Ask about this release…\",\n                onAddContext: {}, onVoice: {},\n                onSend: { sent = $0; text = \"\" }\n            )\n            .nucleuxAutocomplete(Self.provider)\n        }\n        .padding(16)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 41
   },
@@ -59955,7 +60194,7 @@
    "component": "proactive-suggestions",
    "framework": "swiftui",
    "title": "ProactiveScreen (iOS catalog app, SCREEN=proactive)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:507",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:508",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ProactiveScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    @State private var qa = false\n    @State private var owners: [String: String] = [:]\n    @State private var clock: Double = 0\n    @State private var aria = NucleuxProactiveController(content: NucleuxProactiveContent(\n        agent: \"Aria\",\n        reason: \"QA is signed off, but two high-priority blockers still have no owner.\",\n        action: \"Assign owners before the release?\",\n        snoozeLabel: \"Remind me tomorrow\",\n        resolved: \"Resolved — both blockers have owners now.\"\n    ))\n    private let blockers = [(\"ONB-112\", \"Checklist skips the invite step on mobile\", \"Dana Khoury\"),\n                            (\"EXP-210\", \"CSV export drops the owner column\", \"Priya Shah\")]\n    private var unowned: [String] { blockers.map(\\.0).filter { owners[$0] == nil } }\n\n    var body: some View {\n        ScrollView {\n            VStack(alignment: .leading, spacing: 14) {\n                Text(\"September release · readiness\").font(.headline).foregroundStyle(NucleuxColor.foreground)\n                HStack {\n                    Text(\"QA sign-off\").foregroundStyle(NucleuxColor.foreground)\n                    Spacer()\n                    if qa { Text(\"Done\").foregroundStyle(NucleuxColor.mutedForeground) } else {\n                        NucleuxButton(\"Mark QA done\", variant: .ghost, size: .sm) { qa = true; observe() }\n                    }\n                }\n                Text(\"Release blockers\").font(.subheadline.weight(.semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                NucleuxProactiveSuggestion(\n                    aria,\n                    snoozeUntil: { (clock + 24 * 60, \"tomorrow, 9:00\") },\n                    onUndoConfirmed: { owners = [:]; observe() },\n                    emphasis: Self.env[\"EMPHASIS\"] == \"outlined\" ? .outlined : .tonal\n                ) {\n                    NucleuxProactiveReview(\n                        title: \"Assign owners\", agent: \"Aria\", confirmLabel: \"Assign \\(unowned.count) owners\",\n                        onConfirm: {\n                            let n = unowned.count\n                            for b in blockers where owners[b.0] == nil { owners[b.0] = b.2 }\n                            aria.send(.confirmed(done: \"\\(n) owners assigned\", undo: true))\n                        },\n                        onCancel: { aria.send(.cancel) }\n                    ) {\n                        ForEach(blockers.filter { owners[$0.0] == nil }, id: \\.0) { b in\n                            Text(\"\\(b.0) → \\(b.2)\").font(.subheadline).foregroundStyle(NucleuxColor.foreground)\n                        }\n                    }\n                }\n                ForEach(blockers, id: \\.0) { b in\n                    HStack {\n                        VStack(alignment: .leading) {\n                            Text(b.1).foregroundStyle(NucleuxColor.foreground)\n                            Text(\"\\(b.0) · High priority\").font(.footnote).foregroundStyle(NucleuxColor.mutedForeground)\n                        }\n                        Spacer()\n                        if let o = owners[b.0] { Text(o).font(.footnote).accessibilityIdentifier(\"owner-\\(b.0)\") } else {\n                            NucleuxButton(\"Assign \\(b.0) to me\", variant: .ghost, size: .sm) { owners[b.0] = \"You\"; observe() }\n                        }\n                    }\n                }\n                NucleuxButton(\"A day passes\", variant: .secondary, size: .sm) { clock += 24 * 60; observe() }\n            }\n            .padding(16)\n        }\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    /// Aria speaks up only on evidence: QA done and blockers without an owner.\n    private func observe() {\n        aria.notice(evidence: qa && !unowned.isEmpty ? unowned.joined(separator: \",\") : nil, now: clock)\n    }\n}",
    "lines": 76
   },
@@ -59991,7 +60230,7 @@
    "component": "disclosure",
    "framework": "swiftui",
    "title": "TrustScreen (iOS catalog app, SCREEN=trust)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:583",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:584",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct TrustScreen: View {\n    @State private var text = \"\"\n    @State private var intro = ProcessInfo.processInfo.environment[\"INTRO\"] == \"1\"\n    @State private var banner = true\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 16) {\n                    if banner {\n                        NucleuxDisclosureBanner(\"Aria is drafting in this workspace. Everything it writes is marked before it sends.\",\n                                                actionLabel: \"Turn off\") { banner = false }\n                    }\n                    NucleuxMessage(person: \"Dana Khoury\", time: \"9:41\",\n                                   text: \"Can someone confirm where Q2 renewals actually landed? The board deck and the dashboard disagree.\")\n                    NucleuxMessage(agent: \"Aria\", time: \"10:24\",\n                                   text: \"Q2 closed at £4.1m, 6% ahead of plan. The gap is almost entirely renewals in the enterprise tier.\")\n                    NucleuxGeneratedValue(label: \"Reply to Dana\", value: \"Thanks Dana — the renewal figures are attached. Happy to walk through them on Thursday.\",\n                                          agent: \"Aria\") {\n                        NucleuxButton(\"Edit\", variant: .ghost, size: .sm) {}\n                        NucleuxButton(\"Send\", size: .sm) {}\n                    }\n                    NucleuxButton(\"About Aria\", variant: .secondary, size: .sm) { intro = true }\n                }\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Reply to this ticket\", onAddContext: {}, onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .sheet(isPresented: $intro) {\n            NucleuxDisclosureIntro(\n                agent: \"Aria\",\n                facts: [.init(.can, \"Reads your pipeline and the Q2 board pack\"),\n                        .init(.cannot, \"Cannot send mail or change a record without you\"),\n                        .init(.info, \"Conversations are kept for 30 days\")],\n                onPrimary: { intro = false },\n                secondaryLabel: \"Data & retention\", onSecondary: {}\n            )\n            .presentationDetents([.medium])\n            .presentationBackground(NucleuxColor.background)\n        }\n    }\n}",
    "lines": 48
   },
@@ -60027,7 +60266,7 @@
    "component": "caveat",
    "framework": "swiftui",
    "title": "CaveatScreen (iOS catalog app, SCREEN=caveat)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1893",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:2004",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct CaveatScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    @State private var text = \"\"\n    @State private var updated = Self.env[\"STATE\"] == \"resolved\"\n    private static let content = NucleuxCaveatRules.Content(\n        message: \"2 of 8 interviews could not be opened, so this summary reflects 6.\",\n        why: \"Themes raised only in those two calls are missing, not just under-counted.\",\n        short: \"2 of 8 interviews could not be opened.\", noun: \"summary\",\n        sources: [\n            .init(name: \"6 interviews read\", note: \"Ana, Bo, Chen, Dee, Femi, Ines\", ok: true),\n            .init(name: \"Hana Kim · Oct 3\", note: \"Not opened — the file was moved\", ok: false),\n            .init(name: \"Marcus Lee · Oct 9\", note: \"Not opened — sharing was removed\", ok: false),\n        ],\n        recover: .init(label: \"Reconnect\", busy: \"Reconnecting to Research › October…\", ready: \"Both interviews are available again.\"))\n    private static let points = [\n        \"Onboarding takes too long for teams that import from spreadsheets (5 of 6 interviews).\",\n        \"Shared links expiring early is the most frequent complaint.\",\n        \"Two teams asked for a weekly digest instead of real-time alerts.\",\n    ]\n    private static let added = \"Invoice exports confuse finance teams (2 of 8 interviews).\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    Text(\"Summarize customer feedback from this month.\").font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                    NucleuxMessage(agent: \"Aria\", text: \"Customer feedback · October\")\n                    VStack(alignment: .leading, spacing: 6) {\n                        ForEach(Self.points + (updated ? [Self.added] : []), id: \\.self) { p in\n                            HStack(alignment: .top, spacing: 6) {\n                                Text(\"•\").foregroundStyle(NucleuxColor.mutedForeground)\n                                VStack(alignment: .leading, spacing: 2) {\n                                    Text(p).font(.system(size: 14)).foregroundStyle(NucleuxColor.foreground).fixedSize(horizontal: false, vertical: true)\n                                    if updated && p == Self.added { NucleuxCaveatUpdatedMark() }\n                                }\n                            }\n                        }\n                    }\n                    .padding(.leading, 4)\n                    NucleuxCaveat(Self.content, onRecover: {\n                        try? await Task.sleep(for: .seconds(1.5))\n                        return Self.env[\"RECOVER\"] != \"fails\"\n                    }, onUpdate: {\n                        try? await Task.sleep(for: .seconds(1.5))\n                        updated = true\n                        return .init(message: \"All 8 interviews read — summary updated\",\n                                     why: \"One theme was added from the two calls that were missing.\",\n                                     announcement: \"All 8 interviews read. Summary updated: one theme added.\")\n                    })\n                    Text(\"Sources: \\(updated ? 8 : 6) interview notes · Research › October\").font(.system(size: 12))\n                        .foregroundStyle(NucleuxColor.mutedForeground).accessibilityIdentifier(\"sources-line\")\n                }\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask about the interviews…\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 64
   },
@@ -60063,7 +60302,7 @@
    "component": "consent",
    "framework": "swiftui",
    "title": "ConsentScreen (iOS catalog app, SCREEN=consent)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:631",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:632",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ConsentScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static let content = NucleuxConsent.Content(\n        agent: \"Aria\", resource: \"Google Drive\",\n        why: \"The product brief is in Google Drive. Aria needs to read it to compare it with this meeting.\",\n        scope: [.init(.can, \"Read files and folders your account can open\"), .init(.cannot, \"Can’t edit, share or delete anything\"),\n                .init(.duration, \"For this conversation only\")],\n        then: \"Google Drive asks you to confirm your account, then Aria reads only the brief and finishes the comparison.\",\n        details: [.init(\"Account\", \"j.rivera@northwind.example\"), .init(\"Activity\", \"Every file Aria opens is listed in this conversation.\"),\n                  .init(\"Turn it off\", \"From this conversation, or Settings › Connected apps.\")],\n        alternatives: [.init(id: \"without\", label: \"Continue without Drive\"), .init(id: \"file\", label: \"Add the brief as a file\")],\n        granted: \"Google Drive connected for this conversation. Aria can read files your account can open.\",\n        expiresAfterDays: 30, alreadyRead: \"The brief I already read is quoted above and stays in this conversation.\")\n    @State private var answer: String?\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 16) {\n                    Text(\"Pricing sync · Oct 14 — transcript, 42 min\").font(.system(size: 13)).foregroundStyle(NucleuxColor.mutedForeground)\n                    NucleuxMessage(person: \"You\", text: \"Compare this meeting with the product brief.\")\n                    NucleuxMessage(agent: \"Aria\", text: Self.env[\"EXPIRED\"] == \"1\"\n                                   ? \"The brief is still in Google Drive, but the access you gave me has ended.\"\n                                   : \"I’ve read the meeting. The product brief is in Google Drive, which I can’t open yet.\")\n                    NucleuxConsentRequest(Self.content, expired: Self.env[\"EXPIRED\"] == \"1\", onConnect: {\n                        try? await Task.sleep(for: .seconds(1.2))\n                        return Self.env[\"CONNECT\"] != \"fails\"\n                    }, onResume: {\n                        Task {\n                            try? await Task.sleep(for: .seconds(0.8))\n                            answer = \"The meeting moved away from the brief in two places: a flat price up to 25 seats, and monthly billing first.\"\n                        }\n                    }, onRevoke: {}, onAlternative: { id in\n                        answer = id == \"without\"\n                            ? \"Without the brief, I can only summarise the decisions from this meeting.\"\n                            : \"Add the brief to the composer and I’ll compare it.\"\n                    })\n                    if let answer { NucleuxMessage(agent: \"Aria\", text: answer).accessibilityIdentifier(\"answer\") }\n                }\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask about this meeting…\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 52
   },
@@ -60099,7 +60338,7 @@
    "component": "disclaimer",
    "framework": "swiftui",
    "title": "DisclaimerScreen (iOS catalog app, SCREEN=disclaimer)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:683",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:684",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct DisclaimerScreen: View {\n    static let scope = NucleuxDisclaimerScope(\n        can: \"Search the 14,000 documents in this workspace and quote them with a link.\",\n        cannot: \"See anything filed after 31 August, or the legal team’s private space.\",\n        needsApproval: \"Sharing anything outside your team.\",\n        mayGetWrong: \"Figures in scanned tables.\"\n    )\n    @State private var text = \"\"\n    @State private var statement = ProcessInfo.processInfo.environment[\"SEEN\"] != \"1\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            Spacer()\n            VStack(spacing: 6) {\n                Text(\"Aria, research assistant\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                Text(\"Ask about anything filed in this workspace. Answers quote their source.\")\n                    .font(.system(size: 14)).foregroundStyle(NucleuxColor.mutedForeground).multilineTextAlignment(.center)\n            }\n            Spacer()\n            NucleuxPromptComposer(text: $text, label: \"Ask Aria\", placeholder: \"Ask me anything\", onAddContext: {}, onSend: { _ in text = \"\" })\n                .nucleuxDisclaimerLine(agent: \"Aria\") { statement = true }\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .sheet(isPresented: $statement) {\n            ScrollView {\n                NucleuxDisclaimerStatement(agent: \"Aria\", scope: Self.scope, onAcknowledge: { statement = false },\n                                           secondaryLabel: \"Data & retention\", onSecondary: {})\n            }\n            .presentationDetents([.medium, .large])\n            .presentationBackground(NucleuxColor.background)\n            // Nothing can be asked until it has been read.\n            .interactiveDismissDisabled(ProcessInfo.processInfo.environment[\"SEEN\"] != \"1\")\n        }\n    }\n}",
    "lines": 40
   },
@@ -60135,7 +60374,7 @@
    "component": "nudges",
    "framework": "swiftui",
    "title": "NudgesScreen (iOS catalog app, SCREEN=nudges)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:795",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:796",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct NudgesScreen: View {\n    static let lines: [(who: String, at: String, say: String)] = [\n        (\"Maya\", \"02:14\", \"We ship the pricing page Thursday, not Monday.\"),\n        (\"Jordan\", \"05:40\", \"Legal still needs the beta invite list.\"),\n        (\"Maya\", \"06:02\", \"Agreed. I’ll send the list by Monday.\"),\n        (\"Priya\", \"11:27\", \"The export timeout is fixed in 2.4.\"),\n        (\"Jordan\", \"14:55\", \"Then the retro is the week after launch.\"),\n    ]\n    @State private var tips = NucleuxTipController([\n        \"ask-selection\": .init(title: \"You can ask Aria about text you select in a transcript.\",\n                               why: \"You selected transcript text twice in this meeting.\"),\n    ])\n    @State private var selected: [Int] = []\n    @State private var text = \"\"\n    @State private var context: String?\n\n    var body: some View {\n        VStack(alignment: .leading, spacing: 10) {\n            HStack {\n                Text(\"Launch sync · transcript\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                Spacer()\n                if !selected.isEmpty {\n                    NucleuxButton(\"Clear selection\", variant: .ghost, size: .sm) { selected = []; tips.withdraw() }\n                }\n            }\n            .padding(.top, 12)\n            NucleuxTip(tips, id: \"ask-selection\") {\n                context = \"Transcript · \\(selected.count) passages\"\n                text = \"What did they agree about these?\"\n            }\n            ScrollView {\n                VStack(alignment: .leading, spacing: 4) {\n                    ForEach(Array(Self.lines.enumerated()), id: \\.offset) { i, l in\n                        let on = selected.contains(i)\n                        Button {\n                            if on { selected.removeAll { $0 == i } } else { selected.append(i) }\n                            if selected.count >= 2 { tips.earned(\"ask-selection\") }\n                            if selected.isEmpty { tips.withdraw() }\n                        } label: {\n                            VStack(alignment: .leading, spacing: 2) {\n                                Text(\"\\(l.who) · \\(l.at)\").font(.system(size: 12, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                                Text(l.say).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground).multilineTextAlignment(.leading)\n                            }\n                            .padding(10)\n                            .frame(maxWidth: .infinity, alignment: .leading)\n                            .background(on ? NucleuxColor.accent : Color.clear, in: RoundedRectangle(cornerRadius: 10))\n                        }\n                        .buttonStyle(.plain)\n                        .accessibilityAddTraits(on ? .isSelected : [])\n                        .accessibilityIdentifier(\"line-\\(i)\")\n                    }\n                }\n            }\n            if let context {\n                Text(context).font(.system(size: 13, weight: .medium)).foregroundStyle(NucleuxColor.foreground)\n                    .padding(.horizontal, 10).padding(.vertical, 6)\n                    .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(NucleuxColor.border))\n                    .accessibilityIdentifier(\"composer-context\")\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask about this meeting…\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 69
   },
@@ -60171,7 +60410,7 @@
    "component": "identity",
    "framework": "swiftui",
    "title": "IdentityScreen (iOS catalog app, SCREEN=identity)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:864",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:865",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct IdentityScreen: View {\n    @State private var seen = false\n    @State private var history = false\n    @State private var working = false\n    @State private var agentName = NucleuxAgentNameController(\"Aria\")\n\n    var body: some View {\n        ScrollView {\n            VStack(alignment: .leading, spacing: 20) {\n                Text(\"Launch sync · 2.4\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                VStack(alignment: .leading, spacing: 14) {\n                    NucleuxIdentityRow(agent: agentName.name, detail: \"Meeting assistant\", state: working ? .working : .active,\n                                       status: \"Summarizing the meeting…\", onStop: { working = false }, formerly: agentName.formerly)\n                    NucleuxIdentityRow(person: \"Maya Chen\", detail: \"Product lead\")\n                }\n                HStack(spacing: 8) {\n                    NucleuxButton(working ? \"Summarizing…\" : \"Ask \\(agentName.name) to summarize\", variant: .secondary, size: .sm,\n                                  icon: NucleuxAIRun.marks[.action]!, iconColor: NucleuxColor.brand) { working = true }\n                        .disabled(working)\n                    NucleuxButton(agentName.formerly == nil ? \"Rename to Atlas (admin)\" : \"Renamed\", variant: .ghost, size: .sm) {\n                        agentName.rename(\"Atlas\")\n                    }\n                }\n                NucleuxAgentRenameNotice(agentName)\n                NucleuxAgentIdentityCard(agent: agentName.name, role: \"Customer Support Agent\",\n                                         intro: NucleuxIdentity.intro(agentName.name, operator: \"Northwind\",\n                                                                      does: \"I can track orders, start returns and update delivery details.\"),\n                                         formerly: agentName.formerly, actionLabel: \"What \\(agentName.name) can see\") { seen = true }\n                if seen { Text(\"Aria can see: orders, returns and delivery details.\").font(.system(size: 13)).foregroundStyle(NucleuxColor.mutedForeground) }\n                VStack(alignment: .leading, spacing: 10) {\n                    Text(\"State on the mark\").font(.system(size: 13, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                    HStack(spacing: 24) {\n                        specimen(\"Ready\") { NucleuxAgentAvatar(\"Aria\") }\n                        specimen(\"Active\") { NucleuxAgentAvatar(\"Aria\", state: .active) }\n                        specimen(\"Working\") { NucleuxAgentAvatar(\"Aria\", state: .working, standalone: true) }\n                        specimen(\"Off\") { NucleuxAgentAvatar(\"Aria\", state: .off, standalone: true) }\n                    }\n                    Text(\"One shape, three sizes\").font(.system(size: 13, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n                        .padding(.top, 6)\n                    HStack(alignment: .bottom, spacing: 28) {\n                        specimen(\"24\") { NucleuxAgentAvatar(\"Aria\", size: .xs) }\n                        specimen(\"32\") { NucleuxAgentAvatar(\"Aria\", size: .sm) }\n                        specimen(\"40\") { NucleuxAgentAvatar(\"Aria\", size: .md) }\n                        specimen(\"Person\") { NucleuxPersonAvatar(\"Dana Khoury\") }\n                    }\n                }\n                VStack(alignment: .leading, spacing: 6) {\n                    Text(\"Account summary\").font(.system(size: 12)).foregroundStyle(NucleuxColor.mutedForeground)\n                    Text(\"Renewal risk moved to medium after two support escalations in March.\")\n                        .font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                    NucleuxAgentByline(agent: \"Aria\", when: \"14 March, 10:24\", actionLabel: \"History\") { history = true }\n                }\n                .padding(12)\n                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(NucleuxColor.border))\n            }\n            .padding(16)\n        }\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func specimen(_ label: String, @ViewBuilder mark: () -> some View) -> some View {\n        VStack(spacing: 8) {\n            mark()\n            Text(label).font(.system(size: 11, weight: .medium)).foregroundStyle(NucleuxColor.mutedForeground)\n        }\n    }\n}",
    "lines": 71
   },
@@ -60189,7 +60428,7 @@
    "component": "identity",
    "framework": "flutter",
    "title": "Test host from identity_test.dart",
-   "source": "flutter/test/identity_test.dart:219",
+   "source": "flutter/test/identity_test.dart:264",
    "code": "import 'package:flutter/material.dart';\nimport 'package:flutter_test/flutter_test.dart';\nimport 'package:nucleux/nucleux.dart';\n\nvar seen = false;\nvar history = false;\n\nFuture<void> story(WidgetTester tester) async {\n  tester.view.physicalSize = const Size(402, 874);\n  tester.view.devicePixelRatio = 1;\n  addTearDown(tester.view.reset);\n  await tester.pumpWidget(\n    MaterialApp(\n      home: Scaffold(\n        body: Padding(\n          padding: const EdgeInsets.all(16),\n          child: Column(\n            crossAxisAlignment: CrossAxisAlignment.start,\n            spacing: 20,\n            children: [\n              const NucleuxIdentityRow(\n                name: 'Aria',\n                detail: 'Assistant · answers from your pipeline',\n                agent: true,\n                state: NucleuxAgentState.active,\n              ),\n              const NucleuxIdentityRow(\n                name: 'Dana Khoury',\n                detail: 'Revenue operations',\n              ),\n              NucleuxAgentIdentityCard(\n                agent: 'Aria',\n                role: NucleuxIdentity.roleLine('Helpdesk'),\n                actionLabel: 'What Aria can see',\n                onAction: () => seen = true,\n              ),\n              const Row(\n                spacing: 28,\n                children: [\n                  NucleuxAgentAvatar(\n                    agent: 'Aria',\n                    state: NucleuxAgentState.working,\n                  ),\n                  NucleuxAgentAvatar(\n                    agent: 'Aria',\n                    state: NucleuxAgentState.off,\n                    standalone: true,\n                  ),\n                ],\n              ),\n              NucleuxAgentByline(\n                agent: 'Aria',\n                when: '14 March, 10:24',\n                actionLabel: 'History',\n                onAction: () => history = true,\n              ),\n            ],\n          ),\n        ),\n      ),\n    ),\n  );\n}",
    "lines": 63
   },
@@ -60198,16 +60437,16 @@
    "component": "identity",
    "framework": "react-native",
    "title": "Test host from Identity.test.tsx",
-   "source": "react-native/src/__tests__/Identity.test.tsx:130",
-   "code": "import React from 'react';\nimport { AccessibilityInfo, StyleSheet, Text } from 'react-native';\nimport { fireEvent, render, screen } from '@testing-library/react-native';\nimport {\n  AGENT_GLYPH_COLORS,\n  AVATAR_TURN_MS,\n  AGENT_NAME_MAX,\n  AGENT_NAME_PROBLEMS,\n  AGENT_STOP,\n  AgentRenameNotice,\n  agentIntro,\n  agentNameLabel,\n  agentNameProblem,\n  agentNameReduce,\n  agentStopped,\n  formerlyLabel,\n  initialAgentName,\n  renameNotice,\n  useAgentName,\n  type AgentNameEvent,\n  type AgentNameState,\n  AgentGlyph,\n  AgentPresence,\n  BUBBLE,\n  MessageBubble,\n  bubbleCorners,\n  bubbleLabel,\n  presenceEnded,\n  presenceLabel,\n  colors,\n  AVATAR_SIZES,\n  AgentAvatar,\n  AgentByline,\n  AgentIdentityCard,\n  AgentMessage,\n  IDENTITY_CHIP,\n  IdentityRow,\n  PersonAvatar,\n  agentAvatarLabel,\n  agentRoleLine,\n  bylineLabel,\n  bylineText,\n  identityLabel,\n} from '@intelligaia/nucleux';\nimport fixtures from 'nucleux-mobile/specs/identity.fixtures.json';\n\nit('active is a still ring; an image that fails falls back to the glyph, the label kept', async () => {\n  const { rerender } = await render(<AgentAvatar agent=\"Aria\" state=\"active\" standalone image={{ uri: 'https://example.com/aria.png' }} />);\n  expect(screen.getByLabelText('Aria, AI agent, active')).toBeTruthy();\n  expect(screen.getByTestId('avatar-ring', { includeHiddenElements: true })).toBeTruthy();\n  const img = screen.getByTestId('avatar-agent-image', { includeHiddenElements: true });\n  await fireEvent(img, 'error');\n  expect(screen.queryByTestId('avatar-agent-image', { includeHiddenElements: true })).toBeNull();\n  expect(screen.getByLabelText('Aria, AI agent, active')).toBeTruthy();\n  await rerender(<AgentAvatar agent=\"Aria\" standalone />);\n  expect(screen.queryByTestId('avatar-ring', { includeHiddenElements: true })).toBeNull();\n});",
-   "lines": 57
+   "source": "react-native/src/__tests__/Identity.test.tsx:132",
+   "code": "import React from 'react';\nimport { AccessibilityInfo, StyleSheet, Text } from 'react-native';\nimport { fireEvent, render, screen } from '@testing-library/react-native';\nimport {\n  AGENT_GLYPH_COLORS,\n  COLOR_ROLES,\n  StatusChip,\n  AVATAR_TURN_MS,\n  AGENT_NAME_MAX,\n  AGENT_NAME_PROBLEMS,\n  AGENT_STOP,\n  AgentRenameNotice,\n  agentIntro,\n  agentNameLabel,\n  agentNameProblem,\n  agentNameReduce,\n  agentStopped,\n  formerlyLabel,\n  initialAgentName,\n  renameNotice,\n  useAgentName,\n  type AgentNameEvent,\n  type AgentNameState,\n  AgentGlyph,\n  AgentPresence,\n  BUBBLE,\n  MessageBubble,\n  bubbleCorners,\n  bubbleLabel,\n  presenceEnded,\n  presenceLabel,\n  colors,\n  AVATAR_SIZES,\n  AgentAvatar,\n  AgentByline,\n  AgentIdentityCard,\n  AgentMessage,\n  IDENTITY_CHIP,\n  IdentityRow,\n  PersonAvatar,\n  agentAvatarLabel,\n  agentRoleLine,\n  bylineLabel,\n  bylineText,\n  identityLabel,\n} from '@intelligaia/nucleux';\nimport fixtures from 'nucleux-mobile/specs/identity.fixtures.json';\n\nit('active is a still ring; an image that fails falls back to the glyph, the label kept', async () => {\n  const { rerender } = await render(<AgentAvatar agent=\"Aria\" state=\"active\" standalone image={{ uri: 'https://example.com/aria.png' }} />);\n  expect(screen.getByLabelText('Aria, AI agent, active')).toBeTruthy();\n  expect(screen.getByTestId('avatar-ring', { includeHiddenElements: true })).toBeTruthy();\n  const img = screen.getByTestId('avatar-agent-image', { includeHiddenElements: true });\n  await fireEvent(img, 'error');\n  expect(screen.queryByTestId('avatar-agent-image', { includeHiddenElements: true })).toBeNull();\n  expect(screen.getByLabelText('Aria, AI agent, active')).toBeTruthy();\n  await rerender(<AgentAvatar agent=\"Aria\" standalone />);\n  expect(screen.queryByTestId('avatar-ring', { includeHiddenElements: true })).toBeNull();\n});",
+   "lines": 59
   },
   {
    "name": "example-gallery",
    "component": "example-gallery",
    "framework": "swiftui",
    "title": "GalleryScreen (iOS catalog app, SCREEN=gallery)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:994",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1105",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct GalleryScreen: View {\n    static let examples = [\n        NucleuxGalleryExample(id: \"risk\", category: \"Analysis\", ask: \"Which renewals are at risk this quarter?\",\n                              out: \"Seven accounts, ranked, with the signal behind each.\",\n                              full: \"Seven accounts are at risk by weighted value. Northwind and Contoso are the two that matter: both have an open escalation and lost their champion this quarter.\",\n                              title: \"Renewal risk, ranked\"),\n        NucleuxGalleryExample(id: \"note\", category: \"Drafting\", ask: \"Draft the renewal note to Dana\",\n                              out: \"A three-line message with the figures attached, ready to edit.\",\n                              full: \"Thanks Dana — the Q3 figures are attached. Enterprise is 6% ahead of plan; the two gaps are Northwind and Contoso. I can walk you through it on Thursday.\"),\n        NucleuxGalleryExample(id: \"moves\", category: \"Analysis\", ask: \"What moved in the pipeline this week?\",\n                              out: \"Movements over £50k, with what caused each one.\",\n                              full: \"Four movements over £50k. Two closed, one slipped a quarter, and one was re-scoped downwards after the security review.\"),\n    ]\n    @State private var text = ProcessInfo.processInfo.environment[\"COMPOSER_TEXT\"] ?? \"\"\n    @State private var placed: String?\n    @State private var open: NucleuxGalleryExample?\n    @State private var turns: [String] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 14) {\n                    if turns.isEmpty {\n                        Text(\"Nothing here yet. These are things people on your team actually asked, with what came back.\")\n                            .font(.system(size: 14)).foregroundStyle(NucleuxColor.mutedForeground)\n                        if let e = open {\n                            NucleuxExampleDetail(e, text: text, placed: placed, onUse: { ask in\n                                text = ask\n                                placed = ask\n                                open = nil\n                                AccessibilityNotification.Announcement(NucleuxGallery.announcement(ask: ask)).post()\n                            }, onBack: { open = nil })\n                        } else {\n                            NucleuxExampleGallery(Self.examples) { open = $0 }\n                        }\n                    }\n                    ForEach(Array(turns.enumerated()), id: \\.offset) { _, t in\n                        Text(\"You: \\(t)\").foregroundStyle(NucleuxColor.foreground).frame(maxWidth: .infinity, alignment: .leading)\n                    }\n                }\n                .padding(.top, 16)\n            }\n            if open == nil {\n                NucleuxPromptComposer(\n                    text: $text, label: \"Message Aria\", placeholder: \"Or describe what you want to know\",\n                    onAddContext: {}, onVoice: {},\n                    onSend: { turns.append($0); text = \"\" }\n                )\n            }\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 58
   },
@@ -60243,7 +60482,7 @@
    "component": "templates",
    "framework": "swiftui",
    "title": "TemplatesScreen (iOS catalog app, SCREEN=templates)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1052",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1163",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct TemplatesScreen: View {\n    static let templates: [NucleuxTemplates.Template] = [\n        .init(id: \"competitive\", name: \"Competitive analysis\", description: \"Compare competitors on the criteria you choose, from their public pages.\",\n              sections: [.init(heading: \"Sources\", items: [\"Competitors’ public pages\", \"Your workspace files\"]),\n                         .init(heading: \"Competitors\", items: [\"You list them\"]),\n                         .init(heading: \"Evaluation criteria\", items: [\"Suggested from your last analysis\"]),\n                         .init(heading: \"Output format\", items: [\"Comparison table\", \"One-page summary\"])],\n              produces: \"comparison table and summary\", uses: [\"Uses web access to read competitors’ public pages.\"],\n              fields: [.init(id: \"comp\", label: \"Competitors\", required: true, requiredHint: \"Required — add at least two\"),\n                       .init(id: \"crit\", label: \"Evaluation criteria\"), .init(id: \"fmt\", label: \"Output format\")],\n              requirements: [.init(id: \"web\", name: \"web access\", why: \"It reads each competitor’s pricing and docs pages.\",\n                                   connect: \"Turn on web access\", fallback: \"Use workspace files only\",\n                                   fallbackNote: \"Using workspace files only — public pages won’t be read.\")]),\n        .init(id: \"interviews\", name: \"Interview synthesis\", description: \"Themes and quotes across uploaded interviews.\",\n              sections: [.init(heading: \"Sources\", items: [\"Your uploaded interviews\"]), .init(heading: \"Output format\", items: [\"Themes with quotes\"])],\n              produces: \"themes with quotes\", fields: [.init(id: \"focus\", label: \"Focus\", required: true)]),\n        .init(id: \"sizing\", name: \"Market sizing\", description: \"A bottom-up estimate with stated assumptions.\",\n              sections: [.init(heading: \"Output format\", items: [\"Estimate with assumptions\"])],\n              produces: \"an estimate with assumptions\", fields: [.init(id: \"market\", label: \"Market\", required: true)]),\n    ]\n    @State private var report: String?\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 16) {\n                    NucleuxTemplateFlow(templates: Self.templates, suggest: { t in\n                        t.id == \"competitive\"\n                            ? [\"crit\": .init(\"Pricing, onboarding, integrations\", suggested: \"from your last analysis\"), \"fmt\": .init(\"Comparison table\")]\n                            : [:]\n                    }, onConnect: { _ in\n                        try? await Task.sleep(for: .seconds(0.6))\n                        return true\n                    }, onRun: { t, values in\n                        try? await Task.sleep(for: .seconds(1))\n                        report = \"\\(t.name) · \\(values[\"comp\"] ?? \"\"): a comparison table and a one-page summary.\"\n                    })\n                    if let report { NucleuxMessage(agent: \"Aria\", text: report).accessibilityIdentifier(\"report\") }\n                }\n                .padding(.top, 16)\n            }\n            .scrollDismissesKeyboard(.immediately)\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask about this research…\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 53
   },
@@ -60279,7 +60518,7 @@
    "component": "randomize",
    "framework": "swiftui",
    "title": "RandomizeScreen (iOS catalog app, SCREEN=randomize)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1104",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1215",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct RandomizeScreen: View {\n    nonisolated static let items = [\n        NucleuxDirection(title: \"Launch through customer stories\", line: \"Lead with three teams who halved their onboarding time, in their own words.\"),\n        NucleuxDirection(title: \"Turn onboarding failures into a challenge campaign\", line: \"Invite teams to beat their old setup time, and publish the leaderboard.\"),\n        NucleuxDirection(title: \"The 15-minute workspace\", line: \"Every asset shows a real team going from sign-up to a first plan in fifteen minutes.\"),\n    ]\n    @State private var text = ProcessInfo.processInfo.environment[\"COMPOSER_TEXT\"] ?? \"\"\n    @State private var turns: [String] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 14) {\n                    Text(\"Planboard 3.0 launch · campaign directions\")\n                        .font(.system(size: 14)).foregroundStyle(NucleuxColor.mutedForeground)\n                    ForEach(Array(turns.enumerated()), id: \\.offset) { _, t in\n                        Text(\"You: \\(t)\").foregroundStyle(NucleuxColor.foreground).frame(maxWidth: .infinity, alignment: .leading)\n                    }\n                }\n                .padding(.top, 16)\n                .frame(maxWidth: .infinity, alignment: .leading)\n            }\n            NucleuxPromptComposer(\n                text: $text, label: \"Message Aria\", placeholder: \"Describe the campaign direction\",\n                onAddContext: {}, onVoice: {},\n                onSend: { turns.append($0); text = \"\" }\n            )\n            .nucleuxRandomize(generate: { seen in\n                try await Task.sleep(for: .milliseconds(ProcessInfo.processInfo.environment[\"SLOW\"] == \"1\" ? 3000 : 600))\n                return NucleuxRandomize.next(from: RandomizeScreen.items, seen: seen, pick: { $0[0] })!\n            }, prompt: { \"Draft launch messaging for Planboard 3.0 around this direction: \\($0.title). \\($0.line)\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 40
   },
@@ -60315,7 +60554,7 @@
    "component": "ai-marks",
    "framework": "swiftui",
    "title": "AIMarksScreen (iOS catalog app, SCREEN=ai-marks)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1144",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1255",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct AIMarksScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static let words = NucleuxAIActionWords(verb: \"Rewrite\", doing: \"Rewriting\", status: \"Rewriting release note\", done: \"Release note rewritten.\")\n    static let draft = \"We fixed a bunch of stuff in onboarding and the export thing should work better now.\"\n    @State private var run = NucleuxAIRun()\n    @State private var text = AIMarksScreen.env[\"EMPTY\"] == \"1\" ? \"\" : AIMarksScreen.draft\n    @State private var original = \"\"\n    @State private var job: Task<Void, Never>?\n\n    var body: some View {\n        ScrollView {\n            VStack(alignment: .leading, spacing: 16) {\n                HStack(spacing: 8) {\n                    NucleuxButton(\"Preview\", variant: .ghost, size: .sm) {}\n                    HStack(spacing: 4) {\n                        NucleuxButton(\"Import changelog\", variant: .ghost, size: .sm) {}\n                        Text(\"New\").font(.system(size: 11, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            .padding(.horizontal, 6).padding(.vertical, 2)\n                            .overlay(Capsule().strokeBorder(NucleuxColor.border))\n                    }\n                    Spacer(minLength: 0)\n                    NucleuxAIActionButton(Self.words, working: run.phase == .working,\n                                          disabledReason: text.trimmingCharacters(in: .whitespaces).isEmpty ? \"Write something first\" : nil,\n                                          iconOnly: Self.env[\"ICON_ONLY\"] == \"1\") { start() }\n                }\n                Text(\"What changed\").font(.system(size: 12, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                Text(text.isEmpty ? \"Nothing written yet.\" : text)\n                    .font(.system(size: 15)).foregroundStyle(text.isEmpty ? NucleuxColor.mutedForeground : NucleuxColor.foreground)\n                    .accessibilityIdentifier(\"doc\")\n                // Disclosure: the action explains itself before it runs; the result says what was done and not checked.\n                if run.phase == .idle && !text.isEmpty {\n                    NucleuxAIActionNote(verb: Self.words.verb, sentence: \"Aria rewrites this release note. You review the result before it replaces your text.\")\n                }\n                if run.phase == .done {\n                    NucleuxGeneratedResult(details: .init(\n                        did: \"Rewrote your note to be shorter and clearer. It named the three changes and added nothing that is not in the changelog.\",\n                        used: \"Your draft, the Orbit style guide (14 terms) and the 2.4 changelog.\",\n                        notChecked: \"Whether the changes are shipped: “no longer times out” comes from changelog entry EXP-210.\",\n                        original: original), agent: \"Aria\", noun: \"release note\") { send(.undo); text = original }\n                }\n                if run.phase == .working { NucleuxAIWorkingStatus(Self.words) { job?.cancel(); send(.stop) } }\n                ForEach(Array(run.tools.enumerated()), id: \\.offset) { _, t in NucleuxToolUseLine(t) }\n            }\n            .padding(16)\n        }\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func send(_ e: NucleuxAIRun.Event) {\n        if let said = run.reduce(e, words: Self.words) { AccessibilityNotification.Announcement(said).post() }\n    }\n\n    private func start() {\n        send(.start)\n        job = Task {\n            try? await Task.sleep(for: .milliseconds(1500)); guard !Task.isCancelled else { return }\n            send(.toolStarted(\"Checking the style guide…\"))\n            try? await Task.sleep(for: .milliseconds(1500)); guard !Task.isCancelled else { return }\n            send(.toolDone(\"Style guide checked\", detail: \"Checked 14 terms against the Orbit style guide: “a bunch of stuff” named as three changes, “the export thing” → “CSV export”.\"))\n            try? await Task.sleep(for: .milliseconds(1000)); guard !Task.isCancelled else { return }\n            original = text\n            text = \"Onboarding is quicker to finish, CSV export no longer times out on large projects, and three small layout fixes are in.\"\n            send(.finish)\n        }\n    }\n}",
    "lines": 70
   },
@@ -60351,7 +60590,7 @@
    "component": "model-fallback",
    "framework": "swiftui",
    "title": "ModelFallbackScreen (iOS catalog app, SCREEN=model-fallback)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1214",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1325",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ModelFallbackScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    @State private var model = \"Deep reasoning\"\n    @State private var withdrawn = true\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 16) {\n                    NucleuxMessage(person: \"Priya\", text: \"What is the riskiest part of moving billing off the shared database?\")\n                    NucleuxMessage(agent: \"Aria\", credit: NucleuxModelCredit(answeredBy: \"Deep reasoning\"),\n                                   text: \"Dual ownership during the parallel run: if both systems can write a billing row you get double charges.\")\n                    NucleuxMessage(person: \"Priya\", text: \"And what would you do first?\")\n                    NucleuxMessage(agent: \"Aria\", credit: NucleuxModelCredit(answeredBy: \"Fast\", asked: \"Deep reasoning\"),\n                                   text: \"Make every write idempotent, then cut over behind a flag.\")\n                }\n                .padding(.top, 16)\n            }\n            if withdrawn {\n                NucleuxModelFallback(\"Deep reasoning\",\n                                     reason: Self.env[\"REASON\"] == \"restricted\" ? .restricted : .unavailable,\n                                     onUseAuto: Self.env[\"NO_AUTO\"] == \"1\" ? nil : {\n                                         model = \"Auto\"; withdrawn = false\n                                         AccessibilityNotification.Announcement(NucleuxModelFallbackText.autoChosen).post()\n                                     },\n                                     onChoose: { model = \"Balanced\"; withdrawn = false })\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask a follow-up\",\n                                  model: model, effort: \"High\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 39
   },
@@ -60387,7 +60626,7 @@
    "component": "knowledge-base",
    "framework": "swiftui",
    "title": "KnowledgeScreen (iOS catalog app, SCREEN=knowledge)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1252",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1363",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct KnowledgeScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static func base() -> [NucleuxKnowledgeSource] {\n        [(\"interviews-sept\", \"Customer interviews — Sept\", NucleuxKnowledgeSource.Kind.pdf, NucleuxKnowledgeSource.Origin.upload, \"Uploaded 2 days ago\"),\n         (\"interviews-june\", \"Customer interviews — June\", .pdf, .upload, \"Uploaded in June\"),\n         (\"analytics\", \"Onboarding analytics\", .sheet, .link, \"Linked · follows the original\"),\n         (\"funnel\", \"Activation funnel — Q3\", .sheet, .link, \"Linked · follows the original\"),\n         (\"brief\", \"Product brief v4\", .doc, .upload, \"Uploaded 3 weeks ago\"),\n         (\"notes\", \"Usability session notes\", .note, .upload, \"Uploaded 9 days ago\"),\n         (\"schema\", \"Schema definitions\", .code, .link, \"Linked · follows the original\"),\n         (\"spec\", \"Onboarding spec v2\", .drive, .link, \"Linked · follows the original\")]\n            .map { NucleuxKnowledgeSource(id: $0.0, name: $0.1, kind: $0.2, origin: $0.3, fresh: $0.4, state: .ready) }\n    }\n    static func start() -> [NucleuxKnowledgeSource] {\n        var l = base()\n        switch env[\"KB\"] {\n        case \"mixed\":\n            l[0].state = .failed; l[0].note = \"The file is password protected, so it could not be read.\"\n            l[2].state = .unavailable; l[2].note = \"The linked file is no longer shared with this project.\"\n            l[3].state = .stale; l[3].fresh = \"Linked · the original changed since it was read\"\n        case \"preparing\": l = Array(l.prefix(4)).map { var x = $0; x.state = .preparing; return x }\n        case \"empty\": l = []\n        default: break\n        }\n        return l\n    }\n    @State private var sources = KnowledgeScreen.start()\n    @State private var moment: NucleuxKnowledge.Moment? = env[\"KB\"] == \"inactive\" ? .inactive : env[\"KB\"] == \"none\" ? .nothingFound : nil\n    @State private var activity: String?\n    @State private var used: [NucleuxKnowledgeSource] = []\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 16) {\n                    NucleuxKnowledgeBasePanel(\n                        \"Product Research\", mark: \"PR\", where: \"in this project\", sources: sources, moment: moment, activity: activity,\n                        noneTopic: \"pricing\", manage: true, remove: true, switchable: true, deletable: true,\n                        onAskWithout: { moment = nil },\n                        onAction: { a in\n                            switch a {\n                            case .activate: moment = nil; say(NucleuxKnowledge.Said.active(\"Product Research\", where: \"in this project\"))\n                            case .deactivate: moment = .inactive; say(NucleuxKnowledge.Said.inactive(\"Product Research\", where: \"in this project\"))\n                            default: break\n                            }\n                        },\n                        onSourceAction: { id, a in\n                            guard let i = sources.firstIndex(where: { $0.id == id }) else { return }\n                            switch a {\n                            case .remove: sources.remove(at: i)\n                            case .retry, .reconnect, .refresh:\n                                sources[i].state = .ready; sources[i].note = nil\n                                if a == .refresh { sources[i].fresh = \"Linked · follows the original\" }\n                                say(a == .reconnect ? NucleuxKnowledge.Said.back(sources[i].name) : NucleuxKnowledge.Said.ready(sources[i].name))\n                            case .replace: break\n                            }\n                        })\n                    if !used.isEmpty {\n                        NucleuxMessage(agent: \"Aria\", text: \"Onboarding drop-off is mostly at the workspace step: 41% of new teams stop there.\")\n                        NucleuxKnowledgeProvenance(base: \"Product Research\", used: used, onOpen: { _ in })\n                    }\n                }\n                .padding(.top, 16)\n            }\n            if moment != .inactive && !sources.isEmpty {\n                HStack {\n                    NucleuxKnowledgeChip(\"Product Research\", mark: \"PR\", sources: sources, moment: moment) {}\n                    Spacer()\n                    NucleuxButton(\"Ask about onboarding\", variant: .secondary, size: .sm) { ask() }.accessibilityIdentifier(\"ask\")\n                }\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask about this project\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func say(_ s: String) { AccessibilityNotification.Announcement(s).post() }\n\n    private func ask() {\n        used = []\n        moment = .using\n        activity = NucleuxKnowledge.searching(\"Product Research\")\n        say(NucleuxKnowledge.Said.searching(\"Product Research\"))\n        Task {\n            try? await Task.sleep(for: .milliseconds(2500))\n            activity = NucleuxKnowledge.reading(4)\n            say(NucleuxKnowledge.Said.reading(4))\n            try? await Task.sleep(for: .milliseconds(2500))\n            used = Array(sources.filter { $0.state == .ready }.prefix(4))\n            moment = nil; activity = nil\n            say(NucleuxKnowledge.Said.used(used.count, base: \"Product Research\"))\n        }\n    }\n}",
    "lines": 100
   },
@@ -60423,7 +60662,7 @@
    "component": "mcp-server",
    "framework": "swiftui",
    "title": "MCPScreen (iOS catalog app, SCREEN=mcp)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1352",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1463",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct MCPScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static let jira = NucleuxMCPServer(\n        name: \"Jira MCP\", mark: \"JR\", url: \"https://mcp.atlassian.com/v1/mcp\", auth: \"OAuth 2.1\", resources: 3, prompts: 1,\n        tools: [\n            .init(name: \"search_issues\", label: \"Search issues\", what: \"Find issues by project, status or text\",\n                  does: \"Runs a JQL query against the projects your account can see and returns matching issues.\",\n                  data: \"Reads issue summaries, statuses and assignees. Writes nothing.\", risk: .read),\n            .init(name: \"get_issue\", label: \"Read issue\", what: \"Read one issue and its comments\",\n                  does: \"Fetches a single issue by key, with its description, comments and linked items.\",\n                  data: \"Reads one issue and everything attached to it. Writes nothing.\", risk: .read),\n            .init(name: \"create_issue\", label: \"Create issue\", what: \"Create a new issue in a selected project\",\n                  does: \"Opens a new issue in a project you choose, with a summary, description and type.\",\n                  data: \"Writes a new issue. Nothing existing is changed.\", risk: .write),\n            .init(name: \"update_issue\", label: \"Update issue\", what: \"Change summary, status, labels or assignee\",\n                  does: \"Edits fields on an existing issue, including moving it through the workflow.\",\n                  data: \"Overwrites fields on an issue that already exists.\", risk: .write),\n        ])\n    static let github = NucleuxMCPServer(\n        name: \"GitHub MCP\", mark: \"GH\", url: \"https://api.githubcopilot.com/mcp/\", auth: \"OAuth 2.1\", resources: 2, prompts: 0,\n        tools: [\n            .init(name: \"search_code\", label: \"Search code\", what: \"Find code across the repositories you can see\",\n                  does: \"Runs a code search scoped to the repositories your account has access to.\",\n                  data: \"Reads file contents and paths. Writes nothing.\", risk: .read),\n            .init(name: \"create_issue\", label: \"Create issue\", what: \"Open an issue on a repository\",\n                  does: \"Opens a new issue with a title, body and labels on a repository you choose.\",\n                  data: \"Writes a new issue. Nothing existing is changed.\", risk: .write),\n            .init(name: \"merge_pull_request\", label: \"Merge pull request\", what: \"Merge a pull request into its base branch\",\n                  does: \"Merges the pull request and, where the repository is set up for it, deletes the source branch.\",\n                  data: \"Changes the base branch. This can’t be undone from here.\", risk: .destroy),\n        ])\n    static let fileIt = NucleuxMCPAsk(tool: \"create_issue\", args: [(\"project\", \"WEB\"), (\"type\", \"Bug\"), (\"summary\", \"Checkout regression\"), (\"priority\", \"High\")])\n    static let failed = NucleuxMCPRun(tool: \"update_issue\", state: .failed,\n                                      why: \"WEB-482 could not be updated. Its workflow does not allow that transition from its current status.\",\n                                      raw: \"HTTP 400 · transition_not_allowed\")\n\n    private let server = env[\"MCP\"] == \"destroy\" ? MCPScreen.github : MCPScreen.jira\n    @State private var status: NucleuxMCP.Status = Self.startStatus()\n    private static func startStatus() -> NucleuxMCP.Status {\n        switch env[\"MCP\"] {\n        case \"validating\": .validating\n        case \"ready\", \"gate\", \"toolfail\", \"destroy\": .ready\n        case \"expired\": .expired\n        default: .notConnected\n        }\n    }\n    @State private var enabled: [String] = NucleuxMCP.initialEnabled(env[\"MCP\"] == \"destroy\" ? MCPScreen.github.tools : MCPScreen.jira.tools)\n        + (env[\"MCP\"] == \"destroy\" ? [\"merge_pull_request\"] : [])\n    @State private var always: [String] = []\n    @State private var ask: NucleuxMCPAsk? = Self.startAsk()\n    private static func startAsk() -> NucleuxMCPAsk? {\n        switch env[\"MCP\"] {\n        case \"gate\": MCPScreen.fileIt\n        case \"destroy\": NucleuxMCPAsk(tool: \"merge_pull_request\", args: [(\"repository\", \"signal/web\"), (\"pull\", \"#311\"), (\"method\", \"squash\")])\n        default: nil\n        }\n    }\n    @State private var run: NucleuxMCPRun? = env[\"MCP\"] == \"toolfail\" ? MCPScreen.failed : nil\n    @State private var reply = \"\"\n    @State private var text = \"\"\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    NucleuxMessage(person: \"Priya\", text: \"File a bug for the checkout regression and set it to high priority.\")\n                    NucleuxMessage(agent: \"Aria\", text: \"I can write it, but there’s no issue tracker connected. Add one and I’ll file it.\")\n                    NucleuxMCPPanel(\n                        server: server, status: status, enabled: enabled, always: always, ask: ask, run: run, agent: \"Aria\",\n                        technical: Self.env[\"TECHNICAL\"] == \"1\",\n                        onConnect: { _, _ in connect(then: nil) },\n                        onCancel: { status = .notConnected },\n                        onToggle: { t, on in enabled = on ? enabled + [t] : enabled.filter { $0 != t } },\n                        onDecide: { d in\n                            guard let a = ask else { return }\n                            ask = nil\n                            if d == .deny { reply = \"Left it alone. Nothing was sent to \\(server.name).\"; return }\n                            if d == .always { always.append(a.tool) }\n                            run = NucleuxMCPRun(tool: a.tool, state: .running)\n                            Task {\n                                try? await Task.sleep(for: .milliseconds(1000))\n                                run = NucleuxMCPRun(tool: a.tool, state: .done, detail: \"WEB-482\")\n                                reply = \"Filed as WEB-482 in WEB, priority High.\"\n                            }\n                        },\n                        onRetry: {\n                            run = NucleuxMCPRun(tool: \"update_issue\", state: .running)\n                            Task {\n                                try? await Task.sleep(for: .milliseconds(800))\n                                run = nil\n                                status = .expired\n                            }\n                        },\n                        onReconnect: { connect(then: NucleuxMCPRun(tool: \"update_issue\", state: .done, detail: \"WEB-482\")) },\n                        onDisconnect: { status = .disconnected; run = nil; ask = nil })\n                    if !reply.isEmpty { NucleuxMessage(agent: \"Aria\", text: reply) }\n                }\n                .padding(.top, 16)\n            }\n            if status == .ready {\n                HStack {\n                    NucleuxMCPChip(server.name, mark: server.mark, enabled: enabled.count, status: status) {}\n                    Spacer()\n                    if ask == nil && run == nil {\n                        NucleuxButton(\"Let it file the bug\", variant: .secondary, size: .sm) { ask = Self.fileIt }.accessibilityIdentifier(\"use\")\n                    } else if run?.state == .done && run?.tool == \"create_issue\" {\n                        NucleuxButton(\"Now let a call fail\", variant: .secondary, size: .sm) { breakOne() }.accessibilityIdentifier(\"break\")\n                    }\n                }\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask Aria\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n\n    private func connect(then: NucleuxMCPRun?) {\n        status = .reaching\n        Task {\n            try? await Task.sleep(for: .milliseconds(900))\n            status = .validating\n            try? await Task.sleep(for: .milliseconds(900))\n            status = .discovering\n            try? await Task.sleep(for: .milliseconds(900))\n            status = .ready\n            if let then { run = then; reply = \"Signed back in and the update went through.\" }\n        }\n    }\n\n    private func breakOne() {\n        reply = \"\"\n        run = NucleuxMCPRun(tool: \"update_issue\", state: .running)\n        Task {\n            try? await Task.sleep(for: .milliseconds(900))\n            run = Self.failed\n        }\n    }\n}",
    "lines": 142
   },
@@ -60459,7 +60698,7 @@
    "component": "connect-source",
    "framework": "swiftui",
    "title": "ConnectScreen (iOS catalog app, SCREEN=connect)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1494",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1605",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ConnectScreen: View {\n    private static let env = ProcessInfo.processInfo.environment\n    static func svc(_ id: String, _ name: String, _ mark: String, _ purpose: String, _ account: String, _ what: String,\n                    _ benefits: [NucleuxConnectService.Benefit], _ canSee: [String]) -> NucleuxConnectService {\n        NucleuxConnectService(id: id, name: name, mark: mark, purpose: purpose,\n                              blurb: \"Use the \\(what) you already have access to when answering relevant questions.\", account: account,\n                              benefits: benefits + [.init(icon: .shield, title: \"You stay in control\", what: \"Disconnect \\(name) whenever you want.\")],\n                              canSee: canSee, useLine: \"The agent can use \\(what) you can access.\")\n    }\n    static let drive = NucleuxConnectService(\n        id: \"googledrive\", name: \"Google Drive\", mark: \"GD\", purpose: \"Files and documents\",\n        blurb: \"Use the files and folders you already have access to when answering relevant questions.\", account: \"j.rivera@northwind.example\",\n        benefits: [.init(icon: .search, title: \"Search your files\", what: \"files and folders you can already open\"),\n                   .init(icon: .doc, title: \"Read file contents\", what: \"documents, sheets and slides you have access to\"),\n                   .init(icon: .shield, title: \"You stay in control\", what: \"Disconnect Google Drive whenever you want.\")],\n        canSee: [\"Files and folders you can access\", \"Document contents\", \"Relevant shared drives\"],\n        useLine: \"The agent can use files and folders you can access, including their contents.\")\n    static let others = [\n        svc(\"slack\", \"Slack\", \"SL\", \"Messages and channels\", \"Northwind · @jordan\", \"messages in the channels\",\n            [.init(icon: .search, title: \"Search channels you’re in\", what: \"public and private channels you already belong to\"),\n             .init(icon: .chat, title: \"Read messages and threads\", what: \"text you can already see in those channels\")],\n            [\"Channels you belong to\", \"Messages and threads\"]),\n        svc(\"github\", \"GitHub\", \"GH\", \"Issues and pull requests\", \"jordan-work\", \"issues and pull requests\",\n            [.init(icon: .search, title: \"Search repositories\", what: \"the repositories your GitHub account can already access\"),\n             .init(icon: .code, title: \"Read issues and pull requests\", what: \"titles, status, labels, comments and history\")],\n            [\"Repositories you can access\", \"Issues and pull requests\"]),\n        svc(\"notion\", \"Notion\", \"NO\", \"Docs and wikis\", \"Northwind workspace\", \"pages and databases\",\n            [.init(icon: .search, title: \"Search shared pages\", what: \"pages and databases shared with your account\")],\n            [\"Pages and databases you can access\"]),\n    ]\n    static let wall = \"The research you’re asking about is in files I’ve never been given. Connecting Google Drive lets me read the ones you can already open.\"\n\n    @State private var state: NucleuxConnect.State = Self.startState()\n    private static func startState() -> NucleuxConnect.State {\n        switch env[\"CONN\"] {\n        case \"authorise\": .authorise\n        case \"connecting\": .connecting\n        case \"connected\", \"sources\", \"manage\": .connected\n        case \"active\": .active\n        case \"stale\": .stale\n        case \"error\": .error\n        case \"blocked\": .blocked\n        default: .available\n        }\n    }\n    @State private var phase: NucleuxConnect.Phase = .reading\n    @State private var answered = false\n    @State private var sheet: String? = Self.startSheet()\n    private static func startSheet() -> String? {\n        switch env[\"CONN\"] {\n        case \"sources\": \"sources\"\n        case \"manage\": \"manage\"\n        default: nil\n        }\n    }\n    @State private var slackOn = false\n    @State private var text = \"\"\n\n    private var items: [NucleuxConnect.Item] {\n        [NucleuxConnect.Item(service: Self.drive, connected: state != .available && state != .authorise && state != .connecting && state != .error && state != .blocked,\n                             state: state == .stale ? .stale : nil),\n         NucleuxConnect.Item(service: Self.others[0], connected: true, enabled: slackOn),\n         NucleuxConnect.Item(service: Self.others[1], connected: false, state: .error),\n         NucleuxConnect.Item(service: Self.others[2], connected: false, state: .blocked)]\n    }\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    NucleuxMessage(person: \"Jordan\", text: \"Summarise the main onboarding problems from our latest customer research.\")\n                    NucleuxMessage(agent: \"Aria\") {\n                        NucleuxConnectCard(Self.drive, state: state, inline: true, wall: Self.wall,\n                                           activity: state == .active ? (phase, phase == .searching ? 0 : 5) : nil) { act($0) }\n                    }\n                    if answered {\n                        NucleuxMessage(agent: \"Aria\", text: \"Three problems come up in most sessions: the workspace step, invite emails landing in spam, and an unclear first project.\")\n                    }\n                }\n                .padding(.top, 16)\n            }\n            HStack {\n                if NucleuxConnect.states[state]!.live && state != .limited {\n                    NucleuxConnectChip(Self.drive, state: .connected) { sheet = \"manage\" }\n                }\n                Spacer()\n                NucleuxButton(\"Sources\", variant: .ghost, size: .sm) { sheet = \"sources\" }.accessibilityIdentifier(\"open-sources\")\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Ask Aria\", onSend: { _ in text = \"\" })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .sheet(isPresented: Binding(get: { sheet != nil }, set: { if !$0 { sheet = nil } })) {\n            ScrollView {\n                Group {\n                    if sheet == \"manage\" {\n                        NucleuxConnectManage(Self.drive, state: state == .stale ? .stale : .connected, onReconnect: { state = .connected; sheet = nil },\n                                             onDisconnect: { state = .available; sheet = nil }, onDone: { sheet = nil })\n                    } else {\n                        VStack(alignment: .leading, spacing: 12) {\n                            Text(\"Your data sources\").font(.system(size: 17, weight: .semibold)).foregroundStyle(NucleuxColor.foreground)\n                            NucleuxConnectSources(items, headings: true, onAction: { id, _ in if id == \"googledrive\" { sheet = nil; state = .authorise } },\n                                                  onToggle: { id, on in if id == \"slack\" { slackOn = on } }, onOpen: { _ in sheet = \"manage\" })\n                        }\n                    }\n                }\n                .padding(20)\n            }\n            .background(NucleuxColor.background)\n            .presentationDetents([.medium, .large])\n        }\n    }\n\n    private func act(_ a: NucleuxConnect.Action) {\n        switch a {\n        case .connect: state = .authorise\n        case .allow, .retry:\n            state = .connecting\n            Task {\n                try? await Task.sleep(for: .milliseconds(1500))\n                guard state == .connecting else { return }\n                state = .active\n                phase = .searching\n                try? await Task.sleep(for: .milliseconds(1000))\n                phase = .reading\n                try? await Task.sleep(for: .milliseconds(1000))\n                phase = .done\n                answered = true\n                try? await Task.sleep(for: .milliseconds(600))\n                state = .connected\n            }\n        case .cancel: state = .available\n        case .reconnect: state = .connecting; Task { try? await Task.sleep(for: .milliseconds(1200)); state = .connected }\n        case .manage: sheet = \"manage\"\n        case .ask: break\n        }\n    }\n}",
    "lines": 142
   },
@@ -60495,7 +60734,7 @@
    "component": "modes",
    "framework": "swiftui",
    "title": "ModesScreen (iOS catalog app, SCREEN=modes)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1635",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1746",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ModesScreen: View {\n    @State private var control = NucleuxModeControl(mode: ProcessInfo.processInfo.environment[\"MODE\"])\n    @State private var text = \"Help me prepare the October release.\"\n    @State private var sent: [(String, NucleuxModeOption?)] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, s in\n                        HStack(spacing: 6) {\n                            if let m = s.1 {\n                                Text(NucleuxModes.tag(m)).font(.system(size: 11, weight: .semibold)).padding(.horizontal, 6).padding(.vertical, 2)\n                                    .background(NucleuxColor.muted, in: Capsule())\n                            }\n                            Text(s.0).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                        }\n                        .accessibilityElement(children: .combine)\n                        Text(NucleuxModes.agentLine(\"Aria\", s.1)).font(.system(size: 12, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            .accessibilityIdentifier(\"agent-line\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe the task…\", onSend: { t in\n                sent.append((t, control.current))\n                control.sent()\n                text = \"\"\n            })\n            .nucleuxComposerSettings([control.setting(agent: \"Aria\")])\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 40
   },
@@ -60531,7 +60770,7 @@
    "component": "voice-tone",
    "framework": "swiftui",
    "title": "ToneScreen (iOS catalog app, SCREEN=tone)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1673",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1784",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct ToneScreen: View {\n    @State private var mode = NucleuxModeControl()\n    @State private var tone = NucleuxToneControl(choice: .init(tone: ProcessInfo.processInfo.environment[\"TONE\"]),\n                                                 recommended: .init(id: \"professional\", reason: \"Recommended for stakeholders\"))\n    @State private var text = \"Write a short update about the onboarding improvements.\"\n    @State private var sent: [(String, NucleuxTone.Choice)] = []\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, s in\n                        HStack(spacing: 6) {\n                            if let tag = NucleuxTone.tag(tone.tones, s.1) {\n                                Text(tag).font(.system(size: 11, weight: .semibold)).padding(.horizontal, 6).padding(.vertical, 2)\n                                    .background(NucleuxColor.muted, in: Capsule())\n                            }\n                            Text(s.0).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                        }\n                        .accessibilityElement(children: .combine)\n                        Text(NucleuxTone.agentLine(\"Aria\", tone.tones, s.1)).font(.system(size: 12, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            .accessibilityIdentifier(\"agent-line\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe the task…\", onSend: { t in\n                sent.append((t, tone.choice))\n                mode.sent()\n                tone.sent()\n                text = \"\"\n            })\n            .nucleuxComposerSettings([mode.setting(agent: \"Aria\"), tone.setting()])\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 43
   },
@@ -60567,7 +60806,7 @@
    "component": "preset-styles",
    "framework": "swiftui",
    "title": "StylesScreen (iOS catalog app, SCREEN=styles)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1714",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1825",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct StylesScreen: View {\n    @State private var mode = NucleuxModeControl()\n    @State private var tone = NucleuxToneControl()\n    @State private var style = NucleuxStyleControl(style: ProcessInfo.processInfo.environment[\"STYLE\"] ?? NucleuxStyles.normal, replies: true)\n    @State private var creator: NucleuxStyleCreateControl?\n    @State private var text = \"Now draft the customer email about it.\"\n    @State private var turns: [(String, String)] = [(\"Summarize the October release.\", NucleuxStyles.normal)]\n\n    static let house = NucleuxStyleDraft(\n        name: \"Release notes voice\", description: \"One line per change, the benefit first, plain verbs, no marketing words.\",\n        instructions: \"Write one short line per change. Start each line with New, Faster, Fixed or Next month. Lead with what the reader can now do. Use plain verbs; avoid marketing words and exclamation marks.\")\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(turns.enumerated()), id: \\.offset) { _, t in\n                        Text(t.0).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                        Text(NucleuxStyles.agentLine(\"Aria\", style.styles, t.1)).font(.system(size: 12, weight: .semibold)).foregroundStyle(NucleuxColor.mutedForeground)\n                            .accessibilityIdentifier(\"agent-line\")\n                    }\n                    if let creator {\n                        NucleuxStyleCreator(control: creator, preview: NucleuxStylePreviews(question: \"Summarize the October release.\",\n                            answers: [\"house\": \"New: shared dashboards — your whole team sees the same numbers. Faster: exports take half the time.\"]))\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            .scrollDismissesKeyboard(.immediately)\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe the task…\", onSend: { t in\n                turns.append((t, style.style))\n                mode.sent(); tone.sent(); style.sent()\n                text = \"\"\n            })\n            .nucleuxComposerSettings([mode.setting(agent: \"Aria\"), tone.setting(), style.setting()])\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .onAppear {\n            style.onCreate = {\n                let c = NucleuxStyleCreateControl(\n                    taken: { style.styles.map(\\.id) },\n                    // The demo's stand-in for the host's AI step.\n                    generate: { _, _ in try? await Task.sleep(for: .seconds(1)); return Self.house },\n                    onSave: { saved, use in style.add(saved, use: use); creator = nil })\n                c.open()\n                creator = c\n            }\n        }\n        .onChange(of: creator?.isOpen) { _, open in if open == false { creator = nil } }\n    }\n}",
    "lines": 57
   },
@@ -60603,7 +60842,7 @@
    "component": "additions",
    "framework": "swiftui",
    "title": "AdditionsScreen (iOS catalog app, SCREEN=additions)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1769",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1880",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct AdditionsScreen: View {\n    @State private var text = ProcessInfo.processInfo.environment[\"TEXT\"] ?? \"\"\n    @State private var sent: [String] = []\n\n    static let offer = NucleuxAdditionOffer(\n        items: [\"Include unresolved blockers\", \"Group the work by owner\", \"Compare with the August release\"],\n        why: \"Release summaries are read to decide what still needs attention — 3 blockers are open.\")\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, t in\n                        Text(t).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground).accessibilityIdentifier(\"sent\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe what you need…\", onSend: { t in\n                sent.append(t)\n                text = \"\"\n            })\n            .nucleuxOpenInput(agentName: \"Aria\")\n            // The demo's stand-in for the host: it fits a release summary that doesn't ask for blockers yet.\n            .nucleuxAdditions { t in\n                t.localizedCaseInsensitiveContains(\"release\") && !t.localizedCaseInsensitiveContains(\"blocker\") ? Self.offer : nil\n            }\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 37
   },
@@ -60639,7 +60878,7 @@
    "component": "prompt-enhancer",
    "framework": "swiftui",
    "title": "EnhancerScreen (iOS catalog app, SCREEN=enhancer)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1804",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1915",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct EnhancerScreen: View {\n    @State private var text = \"Analyze onboarding feedback.\"\n    @State private var sent: [String] = []\n    @State private var failNext = ProcessInfo.processInfo.environment[\"FAIL\"] == \"1\"\n\n    static let changes = [\n        NucleuxEnhancerChange(id: \"time\", add: \" from the last 30 days\", why: \"Keeps it to the feedback since the new flow shipped.\", assumption: \"Assumes the last 30 days.\"),\n        NucleuxEnhancerChange(id: \"step\", add: \", grouped by onboarding step\", why: \"Shows where in the flow people struggle.\"),\n        NucleuxEnhancerChange(id: \"exp\", add: \", and propose three experiments\", why: \"Turns findings into next steps — more than you asked for.\"),\n    ]\n    struct Down: Error {}\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, t in\n                        Text(t).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground).accessibilityIdentifier(\"sent\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Describe what you need…\", onSend: { t in\n                sent.append(t)\n                text = \"\"\n            })\n            .nucleuxOpenInput(agentName: \"Aria\")\n            // The demo's stand-in for the host's AI step.\n            .nucleuxEnhance { _ in\n                try await Task.sleep(for: .seconds(2))\n                if failNext { failNext = false; throw Down() }\n                return Self.changes\n            }\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n    }\n}",
    "lines": 43
   },
@@ -60675,7 +60914,7 @@
    "component": "madlibs",
    "framework": "swiftui",
    "title": "MadlibsScreen (iOS catalog app, SCREEN=madlibs)",
-   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1845",
+   "source": "catalog-apps/ios/Sources/CatalogApp.swift:1956",
    "code": "import SwiftUI\nimport Nucleux\n\nstruct MadlibsScreen: View {\n    static let madlib = NucleuxMadlib(\n        id: \"stakeholder-summary\", sentence: \"Create a summary of {project} for {audience}[, focusing on {topic}].\",\n        blanks: [\n            .init(id: \"project\", label: \"Project\", required: true, suggestions: [\"Checkout redesign\", \"Mobile onboarding\", \"Pricing v2\"]),\n            .init(id: \"audience\", label: \"Audience\", required: true, suggestions: [\"leadership\", \"sales\", \"customer success\"]),\n            .init(id: \"topic\", label: \"Topic\", required: false, suggestions: [\"risks\", \"the timeline\", \"customer impact\"]),\n        ])\n    @State private var text = \"\"\n    @State private var placed: String?\n    @State private var sent: [String] = []\n    @State private var control: NucleuxMadlibControl?\n\n    var body: some View {\n        VStack(spacing: 8) {\n            ScrollView {\n                VStack(alignment: .leading, spacing: 12) {\n                    Text(\"I need a summary for stakeholders.\").font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground)\n                    Text(\"Tell me which project, who it’s for and what to focus on:\").font(.system(size: 15)).foregroundStyle(NucleuxColor.mutedForeground)\n                    if let control { NucleuxMadlibCard(control: control, useLabel: NucleuxMadlibs.useLabel(composerText: text, placed: placed)) }\n                    ForEach(Array(sent.enumerated()), id: \\.offset) { _, t in\n                        Text(t).font(.system(size: 15)).foregroundStyle(NucleuxColor.foreground).accessibilityIdentifier(\"sent\")\n                    }\n                }\n                .frame(maxWidth: .infinity, alignment: .leading)\n                .padding(.top, 16)\n            }\n            NucleuxPromptComposer(text: $text, label: \"Message Aria\", placeholder: \"Or write your own request…\", onSend: { t in\n                sent.append(t)\n                text = \"\"\n            })\n        }\n        .padding(.horizontal, 16).padding(.bottom, 8)\n        .frame(maxWidth: .infinity, maxHeight: .infinity)\n        .background(NucleuxColor.background)\n        .onAppear {\n            guard control == nil else { return }\n            let c = NucleuxMadlibControl(Self.madlib) { t in text = t; placed = t }\n            // The demo's stand-in for a value the host can infer from the page.\n            if ProcessInfo.processInfo.environment[\"INFER\"] == \"1\" { c.send(.suggest(\"project\", \"Checkout redesign\")) }\n            control = c\n        }\n    }\n}",
    "lines": 47
   },
@@ -61034,6 +61273,15 @@
    "NucleuxColor.successForeground",
    "NucleuxColor.warning",
    "NucleuxColor.warningForeground",
+   "NucleuxColorRole",
+   "NucleuxColorRole.agent",
+   "NucleuxColorRole.attention",
+   "NucleuxColorRole.error",
+   "NucleuxColorRole.evidence",
+   "NucleuxColorRole.neutral",
+   "NucleuxColorRole.success",
+   "NucleuxColorRole.tokens",
+   "NucleuxColorRole.warning",
    "NucleuxCompletion",
    "NucleuxCompletion.inline",
    "NucleuxCompletion.menu",
@@ -61496,6 +61744,7 @@
    "NucleuxIcon.chevronRight",
    "NucleuxIcon.circleAlert",
    "NucleuxIcon.circleCheck",
+   "NucleuxIcon.circleHelp",
    "NucleuxIcon.clock",
    "NucleuxIcon.externalLink",
    "NucleuxIcon.eye",
@@ -62272,6 +62521,8 @@
    "NucleuxSpacing.xl",
    "NucleuxSpacing.xs",
    "NucleuxSpacing.xxl",
+   "NucleuxStatusChip",
+   "NucleuxStatusChip.init",
    "NucleuxStyleControl",
    "NucleuxStyleControl.add",
    "NucleuxStyleControl.agent",
@@ -63050,6 +63301,14 @@
    "NucleuxCaveatRules.updateLabel",
    "NucleuxCaveatRules.updating",
    "NucleuxCaveatUpdatedMark",
+   "NucleuxColorRole",
+   "NucleuxColorRole.Agent",
+   "NucleuxColorRole.Attention",
+   "NucleuxColorRole.Error",
+   "NucleuxColorRole.Evidence",
+   "NucleuxColorRole.Neutral",
+   "NucleuxColorRole.Success",
+   "NucleuxColorRole.Warning",
    "NucleuxColors",
    "NucleuxCompletion",
    "NucleuxCompletion.Inline",
@@ -63391,6 +63650,7 @@
    "NucleuxIcons.ChevronRight",
    "NucleuxIcons.CircleAlert",
    "NucleuxIcons.CircleCheck",
+   "NucleuxIcons.CircleHelp",
    "NucleuxIcons.Clock",
    "NucleuxIcons.ExternalLink",
    "NucleuxIcons.Eye",
@@ -63958,6 +64218,7 @@
    "NucleuxSpacing.xl",
    "NucleuxSpacing.xs",
    "NucleuxSpacing.xxl",
+   "NucleuxStatusChip",
    "NucleuxStyleControl",
    "NucleuxStyleControl.add",
    "NucleuxStyleControl.onCreate",
@@ -64878,6 +65139,14 @@
    "NucleuxCaveatStep.updating",
    "NucleuxCaveatUpdatedMark",
    "NucleuxCaveatUpdatedMark.NucleuxCaveatUpdatedMark",
+   "NucleuxColorRole",
+   "NucleuxColorRole.agent",
+   "NucleuxColorRole.attention",
+   "NucleuxColorRole.error",
+   "NucleuxColorRole.evidence",
+   "NucleuxColorRole.neutral",
+   "NucleuxColorRole.success",
+   "NucleuxColorRole.warning",
    "NucleuxColors",
    "NucleuxColors.NucleuxColors",
    "NucleuxColors.accent",
@@ -65462,6 +65731,7 @@
    "NucleuxIcons.chevronRight",
    "NucleuxIcons.circleAlert",
    "NucleuxIcons.circleCheck",
+   "NucleuxIcons.circleHelp",
    "NucleuxIcons.clock",
    "NucleuxIcons.externalLink",
    "NucleuxIcons.eye",
@@ -66374,6 +66644,12 @@
    "NucleuxSpacing.xl",
    "NucleuxSpacing.xs",
    "NucleuxSpacing.xxl",
+   "NucleuxStatusChip",
+   "NucleuxStatusChip.NucleuxStatusChip",
+   "NucleuxStatusChip.glyph",
+   "NucleuxStatusChip.label",
+   "NucleuxStatusChip.role",
+   "NucleuxStatusChip.working",
    "NucleuxStyleControl",
    "NucleuxStyleControl.NucleuxStyleControl",
    "NucleuxStyleControl.add",
@@ -67293,6 +67569,7 @@
    "CAVEAT_REVIEW",
    "CAVEAT_UPDATED",
    "COLLAPSE_LABEL",
+   "COLOR_ROLES",
    "COMPOSER_LINES",
    "CONNECT_ACTION_LABEL",
    "CONNECT_SAID",
@@ -67342,6 +67619,14 @@
    "CaveatState.step",
    "CaveatStep",
    "CaveatUpdatedMark",
+   "ColorRole",
+   "ColorRoleTokens",
+   "ColorRoleTokens.alpha",
+   "ColorRoleTokens.border",
+   "ColorRoleTokens.fill",
+   "ColorRoleTokens.glyph",
+   "ColorRoleTokens.ink",
+   "ColorRoleTokens.text",
    "Completion",
    "CompletionItem",
    "CompletionItem.description",
@@ -68114,6 +68399,7 @@
    "SourceKind",
    "SourceOrigin",
    "SourceState",
+   "StatusChip",
    "StyleCreateEvent",
    "StyleCreateState",
    "StyleCreateState.description",
@@ -68700,6 +68986,7 @@
   "sliders-horizontal",
   "pen-line",
   "clock",
-  "badge-info"
+  "badge-info",
+  "circle-help"
  ]
 }
